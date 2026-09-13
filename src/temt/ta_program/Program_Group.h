@@ -65,7 +65,7 @@ public:
   virtual void  RestorePanels();
   // if the panel was pinned when the program was saved redisplay it on project open
   virtual bool  RunStartupProgs();
-  // run programs marked as STARTUP_RUN -- typically only done by system at startup -- returns true if any run
+  // run STARTUP_RUN programs in noninteractive jobs, or explicitly opted-in STARTUP_RUN_GUI programs in the interactive GUI; called after project initialization; returns true if any run
 
   virtual void  BrowserSelectFirstEl();
   // #EXPERT callback to select first element in the group

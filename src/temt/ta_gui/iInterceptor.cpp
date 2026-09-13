@@ -35,6 +35,7 @@
 
 #include <qtextstream.h>
 #include <qsocketnotifier.h>
+#include <QFile>
 
 using namespace std;
 
@@ -88,14 +89,16 @@ void iInterceptor::initialize(int outFd)
     rc = ::fcntl(m_pipeFd[0], F_SETFL, rc | O_NONBLOCK); // otherwise atEnd() will block!
     assert(rc != -1);
 #endif
-    FILE * f = fdopen(m_pipeFd[0], "r");
-    assert(f != 0);
+    QFile* input = new QFile(this);
+    if(!input->open(m_pipeFd[0], QIODevice::ReadOnly, QFileDevice::AutoCloseHandle))
+      qFatal("Could not open console output pipe");
 
     if (m_stream != 0) delete m_stream;
     if (m_notifier != 0) delete m_notifier;
-    m_stream = new QTextStream(f);
+    m_stream = new QTextStream(input);
     m_notifier = new QSocketNotifier(m_pipeFd[0], QSocketNotifier::Read);
-    QObject::connect(m_notifier, SIGNAL(activated(int)), SLOT(received()));
+    QObject::connect(m_notifier, &QSocketNotifier::activated, this,
+                     [this](QSocketDescriptor, QSocketNotifier::Type) { received(); });
 }
 
 void iInterceptor::received()
@@ -116,11 +119,13 @@ void iInterceptor::finish()
    
     // Restore original state
     delete m_notifier;
-    delete m_stream;
     m_notifier = 0;
+    // Restore writers before closing the read end, including concurrent loggers.
+    ::dup2(m_origFdCopy, m_origFd);
+    ::close(m_origFdCopy);
+    QIODevice* input = m_stream->device();
+    delete m_stream;
+    delete input; // QFile owns and closes the pipe's reading descriptor.
     m_stream = 0;
-   
-    ::dup2(m_origFdCopy, m_origFd); // restore the output descriptor
-    ::close(m_origFdCopy); // close the copy as it's redundant now
-    ::close(m_pipeFd[0]);  // close the reading end of the pipe
+    m_pipeFd[0] = -1;
 }

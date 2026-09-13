@@ -41,7 +41,7 @@ iDataTableRowHeaderView::iDataTableRowHeaderView(QWidget* parent)
 #if (QT_VERSION >= 0x050000)
   this->setSectionResizeMode(QHeaderView::Interactive);
 #else
-  this->setResizeMode(QHeaderView::Interactive);
+  this->setSectionResizeMode(QHeaderView::Interactive);
 #endif
 
   connect(this, SIGNAL(sectionMoved(int, int, int)), this, SLOT(movedSection(int, int, int)));
@@ -53,7 +53,7 @@ iDataTableRowHeaderView::~iDataTableRowHeaderView() {
 }
 
 void iDataTableRowHeaderView::movedSection(int logicalIdx, int oldVisualIdx, int newVisualIdx)
-{
+{ (void)logicalIdx;
   if (m_section_move_complete == false) {
     m_section_move_complete = true;
     this->moveSection(newVisualIdx, oldVisualIdx);

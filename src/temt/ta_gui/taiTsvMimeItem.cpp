@@ -14,6 +14,7 @@
 //   Lesser General Public License for more details.
 
 #include "taiTsvMimeItem.h"
+#include <QIODevice>
 #include <taiMimeSource>
 #include <taiTabularDataMimeItem>
 #include <taiTabularDataMimeFactory>
@@ -56,4 +57,3 @@ taiMimeItem* taiTsvMimeItem::Extract(taiMimeSource* ms,
 
 void taiTsvMimeItem::Initialize() {
 }
-

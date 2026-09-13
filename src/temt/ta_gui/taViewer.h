@@ -82,13 +82,13 @@ public:
   virtual void          Show();         // make the item visible, if this is applicable
   virtual void          Hide();         // hide (but don't delete) the item, if applicable
 
-  virtual void          FrameSizeToSize(iSize& sz) {} // #IGNORE converts a frame size to a window/widget size -- only applies to top level wins, and is hacky/OS-dependent (we don't need the reverse, because we call frameGeometry() to get that)
+  virtual void          FrameSizeToSize(iSize& sz) { (void)sz; } // #IGNORE converts a frame size to a window/widget size -- only applies to top level wins, and is hacky/OS-dependent (we don't need the reverse, because we call frameGeometry() to get that)
 
   virtual bool          GetWinState(); // copy gui state to us (impl) override; true if done (ie mapped)
   virtual bool          SetWinState(); // set gui state from us (override impl)
 
   virtual void          ResolveChanges(CancelOp& cancel_op); // #IGNORE resolve all changes (if mapped)
-  virtual void          WindowClosing(CancelOp& cancel_op) {}
+  virtual void          WindowClosing(CancelOp& cancel_op) { (void)cancel_op; }
    // #IGNORE cb from m_widget, subordinate wins may not be cancellable
   virtual void          WidgetDeleting(); // #IGNORE lets us do any cleanup -- override the impl
 
@@ -111,7 +111,7 @@ protected:
   // from taDataView
   void                  CloseWindow_impl() override; // closes the widget, only called if mapped, default calls the Close on the IDVW
 
-  virtual IViewerWidget* ConstrWidget_impl(QWidget* gui_parent) {return NULL;}
+  virtual IViewerWidget* ConstrWidget_impl(QWidget* gui_parent) { (void)gui_parent; return NULL;}
     // implement this to create and set the m_widget instance -- only called if !m_widget
   void                  Constr_post() override;
   void                  Dump_Save_pre() override;

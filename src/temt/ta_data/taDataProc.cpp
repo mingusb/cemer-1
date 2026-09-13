@@ -1267,7 +1267,6 @@ bool taDataProc::SplitRowsN(DataTable* src, DataTable* dest_1, int n1, DataTable
   if(!src) { taMisc::Error("taDataProc::SplitRowsN: src is NULL"); return false; }
   int nary[6] = {n1, n2, n3, n4, n5, n6};
   DataTable* dary[6] = {dest_1, dest_2, dest_3, dest_4, dest_5, dest_6};
-  int n_split = 0;
   int rest_idx = -1;
   int n_tot = 0;
   for(int i=0;i<6;i++) {
@@ -1289,7 +1288,6 @@ bool taDataProc::SplitRowsN(DataTable* src, DataTable* dest_1, int n1, DataTable
       rest_idx = i;
     }
     n_tot += nary[i];
-    n_split++;
   }
 
   if(n_tot > src->rows) {
@@ -1340,7 +1338,6 @@ bool taDataProc::SplitRowsNPermuted
   if(!src) { taMisc::Error("taDataProc::SplitRowsNPermuted: src is NULL"); return false; }
   int nary[6] = {n1, n2, n3, n4, n5, n6};
   DataTable* dary[6] = {dest_1, dest_2, dest_3, dest_4, dest_5, dest_6};
-  int n_split = 0;
   int rest_idx = -1;
   int n_tot = 0;
   for(int i=0;i<6;i++) {
@@ -1364,7 +1361,6 @@ bool taDataProc::SplitRowsNPermuted
     else {
       n_tot += nary[i];
     }
-    n_split++;
   }
 
   if(n_tot > src->rows) {
@@ -1720,7 +1716,6 @@ bool taDataProc::Join(DataTable* dest, DataTable* src_a, DataTable* src_b,
 bool taDataProc::ConcatCols(DataTable* dest, DataTable* src_a, DataTable* src_b) {
   if(!src_a) { taMisc::Error("taDataProc::ConcatCols: src_a is NULL"); return false; }
   if(!src_b) { taMisc::Error("taDataProc::ConcatCols: src_b is NULL"); return false; }
-  bool in_place_req = false;
 
   // This is not good. The in place op here should PRESERVE ALL DATA!
   // concatenation does not involve deleting anything.

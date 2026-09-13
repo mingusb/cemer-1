@@ -449,7 +449,7 @@ void NETWORK_STATE::Compute_dWt_Thr(int thr_no) {
   EndTimer(NT_DWT, thr_no);
 }
 
-bool NETWORK_STATE::Compute_Weights_Test_impl(int trial_no) {
+bool NETWORK_STATE::Compute_Weights_Test_impl(int trial_no) { (void)trial_no;
   if(train_mode == TEST) return false;
   if(wt_update == ON_LINE) return true;
   if(wt_update == BATCH) return false;
@@ -945,7 +945,7 @@ void NETWORK_STATE::AllocSpecMem() {
 }
 
 
-LAYER_SPEC_CPP* NETWORK_STATE::NewLayerSpec(int spec_type) const {
+LAYER_SPEC_CPP* NETWORK_STATE::NewLayerSpec(int spec_type) const { (void)spec_type;
   return new LAYER_SPEC_CPP;
 }
 
@@ -1031,11 +1031,11 @@ PRJN_SPEC_CPP* NETWORK_STATE::NewPrjnSpec(int spec_type) const {
   return new STATE_CLASS_CPP(ProjectionSpec)();
 }
 
-UNIT_SPEC_CPP* NETWORK_STATE::NewUnitSpec(int spec_type) const {
+UNIT_SPEC_CPP* NETWORK_STATE::NewUnitSpec(int spec_type) const { (void)spec_type;
   return new UNIT_SPEC_CPP;
 }
 
-CON_SPEC_CPP* NETWORK_STATE::NewConSpec(int spec_type) const {
+CON_SPEC_CPP* NETWORK_STATE::NewConSpec(int spec_type) const { (void)spec_type;
   return new CON_SPEC_CPP;
 }
 

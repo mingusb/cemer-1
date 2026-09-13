@@ -45,7 +45,7 @@ iDiffTextView::iDiffTextView( QWidget *parent, bool enable_icons )
   in_text_changed = false;
 
   QHBoxLayout* mhb = new QHBoxLayout(this);
-  mhb->setMargin( 0 );
+  mhb->setContentsMargins(0, 0, 0, 0);
 
   split = new iSplitter(this);
   mhb->addWidget(split);
@@ -54,10 +54,10 @@ iDiffTextView::iDiffTextView( QWidget *parent, bool enable_icons )
   fr0->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
   QVBoxLayout* vb0 = new QVBoxLayout(fr0);
   vb0->setSpacing( 2 );
-  vb0->setMargin( 0 );
+  vb0->setContentsMargins(0, 0, 0, 0);
   QLabel* hdr0 = new QLabel("<b>Previous / Original</b>");
   QHBoxLayout* hdb0 = new QHBoxLayout;
-  hdb0->setMargin(0);
+  hdb0->setContentsMargins(0, 0, 0, 0);
   hdb0->addStretch();
   hdb0->addWidget(hdr0);
   hdb0->addStretch();
@@ -65,7 +65,7 @@ iDiffTextView::iDiffTextView( QWidget *parent, bool enable_icons )
 
   QHBoxLayout* hb0 = new QHBoxLayout;
   hb0->setSpacing( 3 );
-  hb0->setMargin( 0 );
+  hb0->setContentsMargins(0, 0, 0, 0);
   vb0->addLayout(hb0);
 
   view0 = new iTextEdit( this );
@@ -89,10 +89,10 @@ iDiffTextView::iDiffTextView( QWidget *parent, bool enable_icons )
   fr1->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
   QVBoxLayout* vb1 = new QVBoxLayout(fr1);
   vb1->setSpacing( 2 );
-  vb1->setMargin( 0 );
+  vb1->setContentsMargins(0, 0, 0, 0);
   QLabel* hdr1 = new QLabel("<b>Current / Modified</b>");
   QHBoxLayout* hdb1 = new QHBoxLayout;
-  hdb1->setMargin(0);
+  hdb1->setContentsMargins(0, 0, 0, 0);
   hdb1->addStretch();
   hdb1->addWidget(hdr1);
   hdb1->addStretch();
@@ -100,7 +100,7 @@ iDiffTextView::iDiffTextView( QWidget *parent, bool enable_icons )
 
   QHBoxLayout* hb1 = new QHBoxLayout;
   hb1->setSpacing( 3 );
-  hb1->setMargin( 0 );
+  hb1->setContentsMargins(0, 0, 0, 0);
   vb1->addLayout(hb1);
 
   view1 = new iTextEdit( this );

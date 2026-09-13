@@ -12,12 +12,12 @@
   // #CAT_State derived classes MUST override this and pass correct global type id
 
   INLINE virtual bool ConnectPassCheck(PRJN_STATE* prjn, NETWORK_STATE* net, int pass) const
-  { return (pass == 1); }
+  { (void)net; (void)prjn; return (pass == 1); }
   // #CAT_State check if this projection should Connect_impl for given pass number (1 or 2), which sets value of make_cons -- default is to run on pass 1 and not 2 -- typically pass 2 is used for making symmetric connections -- spec must handle make_cons = 2 properly if this is true!
 
   INIMPL virtual void Connect_Sizes(PRJN_STATE* prjn, NETWORK_STATE* net);
   // #CAT_State first-pass connects the network, doing Connect_impl(false), ending up with target allocation sizes
-  INIMPL virtual void Connect_impl(PRJN_STATE* prjn, NETWORK_STATE* net, int make_cons) { };
+  INIMPL virtual void Connect_impl(PRJN_STATE* prjn, NETWORK_STATE* net, int make_cons) { (void)make_cons; (void)net; (void)prjn; };
   // #CAT_State actually implements specific connection code -- called in *three* passes -- first with make_cons = 0 / false does allocation, and second with make_cons = 1 -- third pass with make_cons = 2 is only called if ConnectPass2() is true -- typically for symmetric connections
   INIMPL virtual void Connect_Cons(PRJN_STATE* prjn, NETWORK_STATE* net, int pass);
   // #CAT_State second pass connection -- actually makes the connections via Connect_impl(true), and then calls Init_Weights -- called in two passes 1 for most cons, 2 for symmetric cons (or other special cases) that might depend on others -- see ConnectPassCheck
@@ -45,7 +45,7 @@
   INLINE virtual bool HasRandomScale() { return init_wts && set_scale; }
   // #CAT_Weights does this projection spec set a randomized scale value -- by default this returns true when init_wts && set_scale is true -- other specs that do set_scale in a different way (e.g., a non-random topographic pattern) may yet return false in this case -- this has implications for saving the scale value with the weights file for example
 
-  INLINE virtual void Init_PrjnState(PRJN_STATE* prjn, NETWORK_STATE* net) { };
+  INLINE virtual void Init_PrjnState(PRJN_STATE* prjn, NETWORK_STATE* net) { (void)net; (void)prjn; };
   // #CAT_State initialize projection state -- for projections that have extra state variables
   
   INIMPL virtual void  Connect_Gps

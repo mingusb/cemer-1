@@ -80,7 +80,7 @@ iTreeViewItem::~iTreeViewItem() {
 
 }
 
-bool iTreeViewItem::canAcceptDrop(const QMimeData* mime) const {
+bool iTreeViewItem::canAcceptDrop(const QMimeData* mime) const { (void)mime;
  return true;
 /*obs always say yes, since we put up a drop menu, and this decode
   // would be done all the time
@@ -107,7 +107,7 @@ void iTreeViewItem::CreateChildren() {
   DecorateDataNode();
 }
 
-void iTreeViewItem::SigEmit_impl(int sls, void* op1_, void* op2_) {
+void iTreeViewItem::SigEmit_impl(int sls, void* op1_, void* op2_) { (void)op1_; (void)op2_;
   if (sls != SLS_ITEM_UPDATED) return;
   if (this->dn_flags & iTreeViewItem::DNF_UPDATE_NAME) {
     String nm = link()->GetName();

@@ -4227,7 +4227,7 @@ yyreduce:
 #line 1421 "css_parse.y"
     { (yyval.ival) = (yyvsp[(2) - (3)].ival); Code1(cssBI::make_matrix);
 	    int act_args = (yyvsp[(2) - (3)].ival);
-	    cssMisc::parsing_matrix = false;
+	    cssMisc::parsing_matrix = (yyvsp[(1) - (3)].ival);
 	    if(act_args > cssElFun::ArgMax) {
 	      cssMisc::Warning(cssMisc::cur_top->Prog(), "Too many initializer values for matrix, should have at most:", String(cssElFun::ArgMax), "got:",String(act_args)); }
 	  }
@@ -4235,7 +4235,7 @@ yyreduce:
 
   case 278:
 #line 1430 "css_parse.y"
-    { (yyval.ival) = Code1(cssMisc::VoidElPtr); /* an arg stop */
+    { (yyval.ival) = cssMisc::parsing_matrix; Code1(cssMisc::VoidElPtr); /* an arg stop */
 	    cssMisc::parsing_matrix = true; }
     break;
 

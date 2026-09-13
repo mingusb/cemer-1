@@ -145,7 +145,7 @@ T3Panel* T3PanelViewer::FirstEmptyT3Panel() {
   return NULL;
 }
 
-void T3PanelViewer::PanelChanged(T3Panel* panel) {
+void T3PanelViewer::PanelChanged(T3Panel* panel) { (void)panel;
   // just update all the tab names, in case that is what changed
   if (isMapped()) {
     for (int i = 0; i < panels.size; ++i) {

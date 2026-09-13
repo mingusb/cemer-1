@@ -61,9 +61,9 @@ public:
   TypeDef*      GetTypeDef() const override {return &TA_taiMethod;}
 protected:
   virtual taiWidgetMethod* GetButtonMethodRep_impl(void* base, IWidgetHost* host_,
-    taiWidget* par, QWidget* gui_parent_, int flags_) {return NULL;}
+    taiWidget* par, QWidget* gui_parent_, int flags_) { (void)base; (void)flags_; (void)gui_parent_; (void)host_; (void)par; return NULL;}
   virtual taiWidgetMethod* GetMenuMethodRep_impl(void* base, IWidgetHost* host_,
-    taiWidget* par, QWidget* gui_parent_, int flags_) {return NULL;}
+    taiWidget* par, QWidget* gui_parent_, int flags_) { (void)base; (void)flags_; (void)gui_parent_; (void)host_; (void)par; return NULL;}
 };
 
 #define TAI_METHOD_SUBCLASS(x, y)        \

@@ -251,7 +251,7 @@ String taSigLinkTaBase::GetName() const {
   return data()->GetName();
 }
 
-String taSigLinkTaBase::GetDisplayName(bool desc_ok) const {
+String taSigLinkTaBase::GetDisplayName(bool desc_ok) const { (void)desc_ok;
   MemberDef* md = GetDataMemberDef();
   if (md) {
     return md->name;

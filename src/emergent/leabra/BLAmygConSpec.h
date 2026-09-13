@@ -5,7 +5,7 @@
 
   INLINE void C_Compute_dWt_BLA_Delta
     (float& dwt, const float su_act, const float ru_act, const float ru_act_prv,
-    const float da_p, const float lrate_eff, const float wt) {
+    const float da_p, const float lrate_eff, const float wt) { (void)wt;
       
     float ru_act_delta = ru_act - ru_act_prv;
      

@@ -105,6 +105,9 @@ T3UnitNode::T3UnitNode(T3DataView* dataView_, float max_x, float max_y, float ma
 		       float un_spc, float disp_sc)
   : inherited(dataView_)
 {
+  (void)max_x;
+  (void)max_y;
+  (void)max_z;
   SO_NODE_CONSTRUCTOR(T3UnitNode);
   spacing = un_spc;
   disp_scale = disp_sc;
@@ -127,7 +130,7 @@ void T3UnitNode::setAppearance(NetView* nv, float act, const iColor& color, floa
 
 void T3UnitNode::setAppearance_impl(NetView* nv, float act, const iColor& color,
                                     float max_z, bool act_invalid) 
-{
+{ (void)act_invalid; (void)max_z;
   material()->diffuseColor = (SbColor)(T3Color)color;
   //  material()->specularColor = (SbColor)color;
   //  material()->emissiveColor = (SbColor)color;

@@ -260,7 +260,7 @@ void ActrProceduralModule::ComputeReward(float rew) {
   last_rew = rew;
 }
 
-bool ActrProceduralModule::SetParam(const String& param_nm, Variant par1, Variant par2) {
+bool ActrProceduralModule::SetParam(const String& param_nm, Variant par1, Variant par2) { (void)par2;
   bool got = false;
   if(param_nm == "ul") {
     util.learn = par1.toBool();

@@ -96,7 +96,7 @@ String If::GetDisplayName() const {
   return "if (" + cond.GetFullExpr() + ")";
 }
 
-bool If::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const {
+bool If::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const { (void)scope_el;
   String code = code_str; code.downcase();
   if(!(code.startsWith("if(") || code.startsWith("if "))) return false;
   if(code.endsWith("return") || code.endsWith("continue") || code.endsWith("break"))

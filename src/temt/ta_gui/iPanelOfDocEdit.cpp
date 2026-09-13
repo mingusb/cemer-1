@@ -78,7 +78,7 @@ void iPanelOfDocEdit::UpdatePanel_impl() {
   if (de) de->ReShow_Async();
 }
 
-void iPanelOfDocEdit::ResolveChanges_impl(CancelOp& cancel_op) {
+void iPanelOfDocEdit::ResolveChanges_impl(CancelOp& cancel_op) { (void)cancel_op;
  // per semantics elsewhere, we just blindly apply changes
   if (de && de->HasChanged()) {
     de->Apply();

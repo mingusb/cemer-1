@@ -24,7 +24,7 @@ void DataAnalCall::Initialize() {
   object_type = &TA_taDataAnal;
 }
 
-bool DataAnalCall::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool DataAnalCall::CanCvtFmCode(const String& code, ProgEl* /*scope_el*/) const {
   if(!code.contains("::")) return false;
   if(!code.contains('(')) return false;
   String lhs = code.before('(');

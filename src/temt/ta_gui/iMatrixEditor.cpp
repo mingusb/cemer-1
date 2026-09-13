@@ -35,7 +35,7 @@ iMatrixEditor::~iMatrixEditor() {
 void iMatrixEditor::init() {
   m_mat = NULL;
   layOuter = new QVBoxLayout(this);
-  layOuter->setMargin(2); layOuter->setSpacing(2);
+  layOuter->setContentsMargins(2, 2, 2, 2); layOuter->setSpacing(2);
 //  layDims = new QHBoxLayout(layOuter);
   layDims = new QHBoxLayout; layOuter->addLayout(layDims);
   tv = new iMatrixTableView(this);
@@ -63,7 +63,7 @@ void iMatrixEditor::Refresh() {
   }
 }
 
-void iMatrixEditor::setMatrix(taMatrix* mat_, bool pat_4d) {
+void iMatrixEditor::setMatrix(taMatrix* mat_, bool pat_4d) { (void)pat_4d;
   tv->clearExtSelection();	// nuke any existing selection
   QAbstractItemModel* mod = (mat_) ? mat_->GetTableModel() : NULL;
   if(mod)

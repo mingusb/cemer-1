@@ -377,7 +377,7 @@ void GridTableView::AddHorizLabels
                                    
 void GridTableView::AddVertLabels
 (const DataTable& tab, const Variant& label_col,
- bool gp_names, bool lines, bool bot_zero, float top_st, float height) {
+ bool gp_names, bool lines, bool bot_zero, float top_st, float height) { (void)lines;
   
   DataCol* nmda = tab.GetColData(label_col, true); // errmsg
   if(!nmda) return;
@@ -488,7 +488,6 @@ void GridTableView::DataUnitsXForm(taVector3f& pos, taVector3f& size) {
   for (int col = col_range.min; col <= col_range.max; col++) {
     GridColView* cvs = (GridColView*)colVis(col);
     if (!cvs) continue;
-    DataCol* dc = cvs->dataCol();
     if(col_ctr < tcol) {
       pos.x += col_widths[col_idx++];
       col_ctr++;
@@ -772,6 +771,7 @@ void GridTableView::GetScaleRange() {
 
 #ifndef TA_QT3D
 void GridTableView_ColScrollCB(SoScrollBar* sb, int val, void* user_data) {
+  (void)sb;
   GridTableView* gtv = (GridTableView*)user_data;
   gtv->scrolling_ = true;
   gtv->ViewCol_At(val);
@@ -779,6 +779,7 @@ void GridTableView_ColScrollCB(SoScrollBar* sb, int val, void* user_data) {
 }
 
 void GridTableView_RowScrollCB(SoScrollBar* sb, int val, void* user_data) {
+  (void)sb;
   GridTableView* gtv = (GridTableView*)user_data;
   gtv->scrolling_ = true;
   gtv->ViewRow_At(val);
@@ -1747,7 +1748,7 @@ void T3GridViewNode_MouseCB(void* userData, SoEventCallback* ecb) {
       if(matrix->dims() == 4) {
         yp--;                   // yp has 1 extra in 4d by some reason.. spacing..
         int xmax = matrix->dim(0);      int ymax = matrix->dim(1);
-        int xxmax = matrix->dim(2);     int yymax = matrix->dim(3);
+        int yymax = matrix->dim(3);
 
         int oxp = xp / (xmax+1);        int oyp = yp / (ymax+1);
         int ixp = xp % (xmax+1);        int iyp = yp % (ymax+1);

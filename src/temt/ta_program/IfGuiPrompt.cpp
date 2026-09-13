@@ -83,7 +83,7 @@ ProgVar* IfGuiPrompt::FindVarName(const String& var_nm) const {
   return pv;
 }
 
-bool IfGuiPrompt::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool IfGuiPrompt::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if (CvtFmCodeCheckNames(code))
     return true;
   
@@ -93,7 +93,7 @@ bool IfGuiPrompt::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
   return false;
 }
 
-bool IfGuiPrompt::CvtFmCode(const String& code) {
+bool IfGuiPrompt::CvtFmCode(const String& code) { (void)code;
   // nothing to do
   return true;
 }

@@ -2,7 +2,7 @@
 // {
 
 bool STATE_CLASS(LeabraContextUnitSpec)::ShouldUpdateNow
-  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
 
   LEABRA_LAYER_STATE* lay = u->GetOwnLayer(net);
   bool do_update = lay->HasLayerFlag(LAYER_STATE::LAY_FLAG_1);

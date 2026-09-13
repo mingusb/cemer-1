@@ -57,7 +57,7 @@ void iTabView::Init() {
   panels.m_tabView = this;
   layDetail = new QVBoxLayout(this);
   // no margins/spacing needed
-  layDetail->setMargin(0);
+  layDetail->setContentsMargins(0, 0, 0, 0);
   layDetail->setSpacing(0);
   tbPanels = new iTabBar(this);
 #if (QT_VERSION >= 0x040200)
@@ -98,7 +98,7 @@ bool iTabView::ActivatePanel(taiSigLink* dl) {
 bool iTabView::AddPanel(iPanelBase* panel) {
   if (!panels.AddUnique(panel))
     return false; // refs us on add
-    wsPanels->addWidget(panel);
+  wsPanels->addWidget(panel);
   if (panels.size == 1) wsPanels->setCurrentWidget(panel); // always show first
   iPanelViewer* itv = tabViewerWin();
   if (itv) panel->OnWindowBind(itv);
@@ -203,9 +203,9 @@ void iTabView::FillTabBarContextMenu(QMenu* contextMenu, int tab_idx) {
   if (!dp || dp->lockInPlace()) return;
   contextMenu->addSeparator();
   if (dp->pinned()) {
-    act = new iAction("&Unpin",  dp, SLOT(Unpin()), Qt::CTRL+Qt::Key_P );
+    act = new iAction("&Unpin",  dp, SLOT(Unpin()), Qt::CTRL | Qt::Key_P );
   } else {
-    act = new iAction("&Pin in place",  dp, SLOT(Pin()), Qt::CTRL+Qt::Key_P );
+    act = new iAction("&Pin in place",  dp, SLOT(Pin()), Qt::CTRL | Qt::Key_P );
   }//TODO
   act->setParent(contextMenu);
   contextMenu->addAction(act);

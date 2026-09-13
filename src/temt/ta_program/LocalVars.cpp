@@ -98,7 +98,7 @@ ProgVar* LocalVars::AddVarMatrix() {
   return rval;
 }
 
-bool LocalVars::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool LocalVars::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   String dc = code;
   dc.downcase();
   // look for container
@@ -116,7 +116,7 @@ bool LocalVars::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
   return false;
 }
 
-bool LocalVars::CvtFmCode(const String& code) {
+bool LocalVars::CvtFmCode(const String& code) { (void)code;
   // if the Can Cvt passes, then we don't care at this point -- 
   // any var creation is done before this point by ProgEl
   return true;

@@ -65,8 +65,9 @@ public:
     NO_STOP_STEP        = 0x0001, // #AKA_NO_STOP this program cannot be stopped by Stop or Step buttons -- set this flag for simple helper programs to prevent them from showing up in the step list of other programs
     SELF_STEP           = 0x0002, // #NO_BIT this program has a StopStepPoint program element within it, and thus it shows up within its own list of Step programs -- this flag is set automatically during Init
     TRACE               = 0x0004, // trace the running of this program by recording each line to the css console as the program runs
-    STARTUP_RUN         = 0x0008, // run this prgram at startup (after project is fully loaded and everything else has been initialized) -- if multiple programs are so marked, they will be run in the order they appear in the browser (depth first)
+    STARTUP_RUN         = 0x0008, // run this program at startup in noninteractive jobs (after project is fully loaded and everything else has been initialized) -- if multiple programs are so marked, they will be run in the order they appear in the browser (depth first)
     OBJS_UPDT_GUI       = 0x0010, // when this flag is set, changes to the objs objects update the gui as they happen -- otherwise they are only updated after the program finishes (much faster)
+    STARTUP_RUN_GUI     = 0x0040, // explicitly run this program when its project opens in an interactive GUI, after views and networks are initialized; independent of noninteractive STARTUP_RUN
     TIMING              = 0x0020, // output time used after every time this program is used -- otherwise you can examine it or monitor it in the timer variable in this program -- it is always updated
   };
 

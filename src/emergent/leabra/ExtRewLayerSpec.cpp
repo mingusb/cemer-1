@@ -26,7 +26,6 @@ float STATE_CLASS(ExtRewLayerSpec)::GetOutErrRew(LEABRA_LAYER_STATE* lay, LEABRA
 
   // first pass: find the layers: use COMP if no TARG is found
   int   n_targs = 0;            // number of target layers
-  int   n_comps = 0;            // number of comp layers
   const int nrg = u->NRecvConGps(net);
   for(int g=0; g<nrg; g++) {
     LEABRA_CON_STATE* recv_gp = u->RecvConState(net, g);
@@ -37,7 +36,6 @@ float STATE_CLASS(ExtRewLayerSpec)::GetOutErrRew(LEABRA_LAYER_STATE* lay, LEABRA
     if(rew_lay->LayerNameIs("RewTarg")) continue;
 
     if(rew_lay->HasExtFlag(UNIT_STATE::TARG)) n_targs++;
-    else if(rew_lay->HasExtFlag(UNIT_STATE::COMP)) n_comps++;
   }
 
   int rew_chk_flag = UNIT_STATE::TARG;

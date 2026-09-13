@@ -34,7 +34,7 @@ iFlowLayout::iFlowLayout(QWidget *parent, int margin, int spacing,
 :  QLayout(parent),
   malignment(aligment), cached_width(0)
 {
-  setMargin(margin);
+  setContentsMargins(margin, margin, margin, margin);
   setSpacing(spacing);
   init();
 }
@@ -91,7 +91,7 @@ QSize iFlowLayout::minimumSize() const
     foreach (item, itemList)
         size = size.expandedTo(item->minimumSize());
 
-    size += QSize(2*margin(), 2*margin());
+    size += QSize(2*contentsMargins().left(), 2*contentsMargins().left());
     return size;
 }
 
@@ -102,7 +102,7 @@ QLayoutItem *iFlowLayout::takeAt(int index)
     if (index >= 0 && index < itemList.size())
         return itemList.takeAt(index);
     else
-        return 0;
+        return {};
 }
 
 void iFlowLayout::setAlignment(Qt::Alignment value) {
@@ -123,7 +123,7 @@ QSize iFlowLayout::sizeHint() const
 
 Qt::Orientations iFlowLayout::expandingDirections() const
 {
-    return 0;
+    return {};
 }
 
 /* QLayoutIterator iFlowLayout::iterator()
@@ -184,8 +184,8 @@ void iFlowLayout::layoutLine(const QRect& r, QLayoutItemList& line_it) {
 }
 
 int iFlowLayout::doLayout( const QRect &r, bool testonly ) {
-  int x = r.x() + margin(); // x,y are the top left of where we are at
-  int y = r.y() + margin();
+  int x = r.x() + contentsMargins().left(); // x,y are the top left of where we are at
+  int y = r.y() + contentsMargins().left();
   int h = 0;          //height of this line so far.
   int lines = 0;
   QLayoutItemList line_it; // items for current line
@@ -193,7 +193,7 @@ int iFlowLayout::doLayout( const QRect &r, bool testonly ) {
   QLayoutItem *o;
   foreach (o, itemList ) {
       int nextX = x + o->sizeHint().width() + spacing();
-      if ( (nextX - spacing() > (r.right() - margin())) && (h > 0) ) {
+      if ( (nextX - spacing() > (r.right() - contentsMargins().left())) && (h > 0) ) {
         if (lines > 0)  y += spacing();
         // set geometry of items for this line
         if ( !testonly ) {
@@ -215,9 +215,9 @@ int iFlowLayout::doLayout( const QRect &r, bool testonly ) {
   if (line_it.count() > 0) {
     if (lines > 0)  y += spacing();
     if ( !testonly ) {
-      layoutLine(QRect(r.x() + margin(), y, r.width() - margin(), h), line_it); //l t w h
+      layoutLine(QRect(r.x() + contentsMargins().left(), y, r.width() - contentsMargins().left(), h), line_it); //l t w h
     }
     ++lines;
   }
-  return (y + h + margin()) - r.y();
+  return (y + h + contentsMargins().left()) - r.y();
 }

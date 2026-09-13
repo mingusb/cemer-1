@@ -15,8 +15,8 @@ void STATE_CLASS(GpOneToOnePrjnSpec)::Connect_impl(PRJN_STATE* prjn, NETWORK_STA
   LAYER_STATE* recv_lay = prjn->GetRecvLayer(net);
   LAYER_STATE* send_lay = prjn->GetSendLayer(net);
 
-  int n_recv = recv_lay->n_units - recv_start;
-  int n_send = send_lay->un_geom_n - send_start;
+
+
 
   // special case where we map units to groups, only if no offsets..
   if(send_lay->HasUnitGroups() && recv_lay->n_units == send_lay->gp_geom_n) {
@@ -28,8 +28,8 @@ void STATE_CLASS(GpOneToOnePrjnSpec)::Connect_impl(PRJN_STATE* prjn, NETWORK_STA
     return;
   }
 
-  int ru_nunits = recv_lay->un_geom_n;
-  int su_nunits = send_lay->un_geom_n;
+
+
 
   int r_st = recv_start;
   int s_st = send_start;

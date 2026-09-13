@@ -301,14 +301,14 @@ void iDialogItemChooser::Constr(taiWidgetItemChooser* client_) {
   m_client = client_; // revoked at end
 
   QVBoxLayout* blay = new QVBoxLayout(this);
-  blay->setMargin(0);
+  blay->setContentsMargins(0, 0, 0, 0);
   blay->setSpacing(0);
   body = new QFrame(this);
   body->setFrameStyle(QFrame::Panel); //  | QFrame::Sunken);
   blay->addWidget(body);
 
   layOuter = new QVBoxLayout(body);
-  layOuter->setMargin(taiM->vsep_c);
+  layOuter->setContentsMargins(taiM->vsep_c, taiM->vsep_c, taiM->vsep_c, taiM->vsep_c);
   layOuter->setSpacing(taiM->vspc_c);
   QHBoxLayout* layFilter = NULL; // only if needed
   QLabel* lbl = NULL;
@@ -316,7 +316,7 @@ void iDialogItemChooser::Constr(taiWidgetItemChooser* client_) {
   // we only put a cats selector if there are cats
   if (client_->catCount() > 0) {
     if (!layFilter) {
-      layFilter = new QHBoxLayout(); layFilter->setMargin(0); // sp ok
+      layFilter = new QHBoxLayout(); layFilter->setContentsMargins(0, 0, 0, 0); // sp ok
     }
     lbl = new QLabel("category", body);
     layFilter->addWidget(lbl);
@@ -336,7 +336,7 @@ void iDialogItemChooser::Constr(taiWidgetItemChooser* client_) {
   // we only put up a view selector if more than 1 view supported
   if (client_->viewCount() > 1) {
     if (!layFilter) {
-      layFilter = new QHBoxLayout(); layFilter->setMargin(0); // sp ok
+      layFilter = new QHBoxLayout(); layFilter->setContentsMargins(0, 0, 0, 0); // sp ok
     }
     lbl = new QLabel("view", body);
     layFilter->addWidget(lbl);
@@ -403,7 +403,7 @@ void iDialogItemChooser::Constr(taiWidgetItemChooser* client_) {
   filter->setFocus();
 }
 
-void iDialogItemChooser::items_itemDoubleClicked(QTreeWidgetItem* itm, int col) {
+void iDialogItemChooser::items_itemDoubleClicked(QTreeWidgetItem* itm, int col) { (void)col; (void)itm;
   accept();
 }
 
@@ -432,7 +432,7 @@ void iDialogItemChooser::Refresh() {
       if (i == 0 && first_col_max_chars >= 0) {
         QFont font = hi->font(0);
         QFontMetrics fm(font);
-        int font_width = fm.width('m');
+        int font_width = fm.horizontalAdvance('m');
         if (items->columnWidth(0) > font_width * first_col_max_chars) {
           items->setColumnWidth(0, font_width * first_col_max_chars);
         }
@@ -598,7 +598,6 @@ void iDialogItemChooser::SelectItem(QTreeWidgetItem* itm, bool is_first) {
   // problem seems to be when items are hidden -- only happens when the filter
   // is in place -- oh well, couldn't find a better workaround..
   items->selectItem(itm);
-  QModelIndex idx = items->indexFromItem(itm);
   QCoreApplication* app = QCoreApplication::instance();
   app->postEvent(items, new QKeyEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier));
   if(!is_first) {

@@ -553,7 +553,7 @@ bool TiledSubGpRFPrjnSpec::TrgSendFmRecv(int recv_x, int recv_y) {
 #include "TiledRFPrjnSpec.cpp"
 TA_BASEFUNS_CTORS_DEFN(TiledRFPrjnSpec);
 
-void TiledRFPrjnSpec::SelectRF(Projection* prjn) {
+void TiledRFPrjnSpec::SelectRF(Projection* prjn) { (void)prjn;
   // if(!InitRFSizes(prjn, net)) return;
   // todo: fixme
 

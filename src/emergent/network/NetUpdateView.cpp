@@ -72,14 +72,14 @@ bool NetUpdateView::GenCssBody_impl(Program* prog) {
   return true;
 }
 
-bool NetUpdateView::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool NetUpdateView::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   String dc = code;  dc = trim(dc.downcase());
   if(dc.startsWith("net up"))
     return true;
   return false;
 }
 
-bool NetUpdateView::CvtFmCode(const String& code) {
+bool NetUpdateView::CvtFmCode(const String& code) { (void)code;
   SigEmitUpdated();
   return true;
 }

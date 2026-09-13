@@ -1,7 +1,7 @@
 // this is included directly in LeabraExtraUnitSpecs_cpp / _cuda
 // {
 
-void STATE_CLASS(InvertUnitSpec)::Compute_ActFmSource(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+void STATE_CLASS(InvertUnitSpec)::Compute_ActFmSource(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   LEABRA_CON_STATE* cg = u->RecvConState(net, 0);
   LEABRA_UNIT_STATE* su = cg->UnState(0, net);
   LEABRA_LAYER_STATE* fmlay = cg->GetSendLayer(net);

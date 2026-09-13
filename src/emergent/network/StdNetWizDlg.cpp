@@ -61,7 +61,6 @@ void StdNetWizDlg::ConfigOneLayer(int lay_no, const String& nm, const String& ty
 void StdNetWizDlg::NewNetDefaultConfig() {
   // local variables
   int n_lays;  n_lays = 0;
-  Layer* lay;  lay = NULL;
   int i;  i = 0;
   n_lays = net_config->rows;
 
@@ -122,7 +121,7 @@ void StdNetWizDlg::RefreshLayerList() {
 bool StdNetWizDlg::DoDialog() {
   int new_net;  new_net = 0;
   String curow;
-  ProjectBase* proj = GET_MY_OWNER(ProjectBase);
+
   String mypath = GetPathFromProj();  // stop at proj - just use path from wizards on
   if(mypath.startsWith("*(."))
     mypath = String("*(") + mypath.after("*(.");

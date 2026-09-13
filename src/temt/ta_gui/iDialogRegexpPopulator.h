@@ -22,7 +22,11 @@
 // member includes:
 
 // declare all other types mentioned but not required to include:
-class QStringList; // 
+#ifndef __MAKETA__
+#include <QStringList>
+#else
+class QStringList; //
+#endif
 class QString; // 
 
 
@@ -34,7 +38,7 @@ public:
   virtual void        setLabels(const QStringList& labels) = 0;
   virtual QString getSeparator() const = 0;
   virtual void    setSource(const void *fieldOwner) = 0;
-  virtual void adjustTitle(QString &title, const void *fieldOwner) const { }
+  virtual void adjustTitle(QString &title, const void *fieldOwner) const { (void)fieldOwner; (void)title; }
   virtual ~iDialogRegexpPopulator() { }
 };
 

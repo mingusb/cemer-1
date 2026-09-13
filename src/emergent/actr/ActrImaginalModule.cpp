@@ -147,7 +147,7 @@ void ActrImaginalModule::ModImaginalChunk(ActrEvent& event) {
   ClearModuleFlag(BUSY);
 }
 
-bool ActrImaginalModule::SetParam(const String& param_nm, Variant par1, Variant par2) {
+bool ActrImaginalModule::SetParam(const String& param_nm, Variant par1, Variant par2) { (void)par2;
   bool got = false;
   if(param_nm == "imaginal_activation" && buffer) {
     buffer->act_total = par1.toFloat();

@@ -197,7 +197,7 @@ void ForLoop::ChangeLoopVar(const String& to_var) {
   SigEmitUpdated();
 }
 
-bool ForLoop::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const {
+bool ForLoop::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const { (void)scope_el;
   String code = code_str; code.downcase();
   if(code.startsWith("for")) {
     String remainder_code = trim(code.after("for"));

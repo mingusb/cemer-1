@@ -36,7 +36,7 @@ taiTreeNodeTypeSpace::taiTreeNodeTypeSpace(taSigLinkTypeItemSpace* link_,
   init(link_, flags_);
 }
 
-void taiTreeNodeTypeSpace::init(taSigLinkTypeItemSpace* link_, int flags_) {
+void taiTreeNodeTypeSpace::init(taSigLinkTypeItemSpace* link_, int flags_) { (void)flags_; (void)link_;
 }
 
 taiTreeNodeTypeSpace::~taiTreeNodeTypeSpace() {
@@ -55,19 +55,6 @@ void taiTreeNodeTypeSpace::CreateChildren_impl() {
 //  inherited::CreateChildren();
   String tree_nm;
   taiTreeNode* last_child_node = NULL;
-  int flags = 0;
-    switch (tik) {
-    case TypeItem::TIK_MEMBERSPACE:
-      flags = iTreeViewItem::DNF_NO_CAN_DROP;
-      break;
-    case TypeItem::TIK_METHODSPACE:
-      flags = iTreeViewItem::DNF_NO_CAN_DROP;
-      break;
-    case TypeItem::TIK_TYPESPACE: 
-      flags = iTreeViewItem::DNF_CAN_BROWSE | iTreeViewItem::DNF_NO_CAN_DROP;
-      break;
-    default: break;
-    }
   for (int i = 0; i < data()->size; ++i) {
     // do global processing for the type item
 //none    
@@ -101,14 +88,14 @@ void taiTreeNodeTypeSpace::CreateChildren_impl() {
   }
 }
 
-bool taiTreeNodeTypeSpace::ShowItem(TypeItem* ti) const {
+bool taiTreeNodeTypeSpace::ShowItem(TypeItem* ti) const { (void)ti;
   // // default doesn't show hidden items
   // if (ti->HasOption("HIDDEN") || ti->HasOption("NO_SHOW"))
   //   return false;
   return true;
 }
 
-bool taiTreeNodeTypeSpace::ShowMember(MemberDef* md) const {
+bool taiTreeNodeTypeSpace::ShowMember(MemberDef* md) const { (void)md;
   return true;
 //  if (!ShowItem(md)) return false;
 //  return true;
@@ -116,7 +103,7 @@ bool taiTreeNodeTypeSpace::ShowMember(MemberDef* md) const {
   //   TypeItem::SC_ANY); // note: don't say "tree" because this is a meta context
 }
 
-bool taiTreeNodeTypeSpace::ShowMethod(MethodDef* md) const {
+bool taiTreeNodeTypeSpace::ShowMethod(MethodDef* md) const { (void)md;
   return true;
 //  if (!ShowItem(md)) return false;
 //  return true;

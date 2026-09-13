@@ -218,7 +218,7 @@ void TemtClient::cmdOpenProject() {
     return;
   }
   // if proj has a value, then we should view the existing, else open it
-  bool clear_dirty = true; // only for new loads, or old views when not dirty already
+
   if (proj) {
     SendOk();
     return;
@@ -472,14 +472,12 @@ bool TemtClient::TableParams::ValidateParams(TemtClient::TableParams::Cmd comd, 
   markers = false;
   
   // cmd decodes
-  bool get = false;
   bool get_set = false;
   bool remove = false;
   bool append = false;
   bool is_cell = false;
   switch (comd) {
     case TemtClient::TableParams::Get:
-      get = true;
       get_set = true;
       break;
     case TemtClient::TableParams::Append:
@@ -1475,7 +1473,7 @@ void TemtClient::HandleLines() {
   }
 }
 
-void TemtClient::sock_stateChanged(QAbstractSocket::SocketState socketState) {
+void TemtClient::sock_stateChanged(QAbstractSocket::SocketState socketState) { (void)socketState;
   //nothing yet
 }
 
@@ -1488,7 +1486,7 @@ void TemtClient::SendError(const String& err_msg, TemtClient::ServerError err) {
     SendErrorNATIVE(err_msg);
 }
 
-void TemtClient::SendErrorNATIVE(const String& err_msg, TemtClient::ServerError err) {
+void TemtClient::SendErrorNATIVE(const String& err_msg, TemtClient::ServerError err) { (void)err;
   String ln = "ERROR";
   if (err_msg.length() > 0)
     ln.cat(" ").cat(err_msg);
@@ -1573,13 +1571,11 @@ void TemtClient::WriteLine(const String& ln) {
 
 // used by json calls
 bool TemtClient::CalcRowParams(String operation, DataTable* table, int& row_from, int& rows, int row_to) {
-  bool row_from_set = false;  // did user pass the parameter
   bool row_to_set = false;    // did user pass the parameter
   
   row_from = 0;  // default to first row
   if (!name_params.GetVal("row_from").isNull()) {
     row_from = name_params.GetVal("row_from").toInt();
-    row_from_set = true;
     bool in_range = table->RowInRangeNormalize(row_from);
     if (!in_range) {
       SendError("the parameter 'row_from' is out of range", TemtClient::RUNTIME);
@@ -1758,7 +1754,7 @@ void TemtClient::cmdSetImage() {
       if (img) {
         QString image_data = name_params.GetVal("image_data").toString();
         QByteArray ba;
-        ba.append(image_data);
+        ba.append(image_data.toLatin1());
         good_result = img->LoadImageFromBase64(ba);
       }
     }

@@ -369,6 +369,9 @@ void taProject::Dump_Load_post() {
     bool startup_run = programs.RunStartupProgs();      // run startups now..
     if(!taMisc::gui_active && startup_run) taiMC_->Quit();
   }
+  else if(taMisc::gui_active) {
+    programs.RunStartupProgs();
+  }
 }
 
 void taProject::DoView() {
@@ -871,7 +874,7 @@ void taProject::SaveAsTemplate(const String& template_name, const String& desc,
   Project_Group::proj_templates.FindProjects();
 }
 
-int taProject::Load(const String& fname, taBase** loaded_obj_ptr) {
+int taProject::Load(const String& fname, taBase** loaded_obj_ptr) { (void)fname; (void)loaded_obj_ptr;
   TestError(true, "Load", "Cannot load a new project file on top of an existing project -- must load an entirely new project");
   return 0;
 }
@@ -982,7 +985,7 @@ String taProject::GetDir() {
 void taProject::SvnBrowser() {
   String path = taMisc::GetDirFmPath(GetFileName());
   if(path.nonempty()) {
-    iSubversionBrowser* svb = iSubversionBrowser::OpenBrowser("", path);
+    iSubversionBrowser::OpenBrowser("", path);
   }
 }
 
@@ -1470,7 +1473,7 @@ String taProject::GetAutoFileName(const String& suffix, const String& ftype_ext)
 }
 
 void taProject::SaveRecoverFile_strm(ostream& strm) {
-  int rval = GetTypeDef()->Dump_Save(strm, (void*)this);
+  GetTypeDef()->Dump_Save(strm, (void*)this);
   //  setDirty(false);  // definitely not
 }
 
@@ -1550,10 +1553,10 @@ bool taProject::AutoSave(bool force) {
     if(taMisc::undo.debug)
       taMisc::Info("Autosave start...");
     ++taMisc::is_auto_saving;
-    int rval = GetTypeDef()->Dump_Save(*flr->ostrm, (void*)this);
+    GetTypeDef()->Dump_Save(*flr->ostrm, (void*)this);
     // note: not using Save_strm to preserve the dirty bit!
     --taMisc::is_auto_saving;
-    saved = true;
+    saved = flr->ostrm->good();
     if(taMisc::undo.debug)
       taMisc::Info("Autosave end.");
   }
@@ -1568,7 +1571,7 @@ bool taProject::AutoSave(bool force) {
   if(vwr) {
     vwr->SetWinName();
   }
-  return true;
+  return saved;
 }
 
 void taProject::CloseLater() {

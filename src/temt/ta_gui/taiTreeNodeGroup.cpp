@@ -36,7 +36,7 @@ taiTreeNodeGroup::taiTreeNodeGroup(taSigLinkGroup* link_, MemberDef* md_, iTreeV
   init(link_, dn_flags_);
 }
 
-void taiTreeNodeGroup::init(taSigLinkGroup* link_, int dn_flags_) {
+void taiTreeNodeGroup::init(taSigLinkGroup* link_, int dn_flags_) { (void)dn_flags_; (void)link_;
 }
 
 taiTreeNodeGroup::~taiTreeNodeGroup()

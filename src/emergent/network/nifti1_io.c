@@ -3250,13 +3250,14 @@ static int fileext_n_compare(const char * test_ext,
 /* return 1 if there are uppercase but no lowercase */
 static int is_uppercase(const char * str)
 {
-   int c, hasupper = 0;
+   size_t c;
+   int hasupper = 0;
 
    if( !str || !*str ) return 0;
 
-   for(c = 0; c < strlen(str); c++ ) {
-      if( islower(str[c]) ) return 0;
-      if( !hasupper && isupper(str[c]) ) hasupper = 1;
+   for(c = 0; str[c] != '\0'; c++ ) {
+      if( islower((unsigned char)str[c]) ) return 0;
+      if( !hasupper && isupper((unsigned char)str[c]) ) hasupper = 1;
    }
 
    return hasupper;
@@ -3265,13 +3266,14 @@ static int is_uppercase(const char * str)
 /* return 1 if there are both uppercase and lowercase characters */
 static int is_mixedcase(const char * str)
 {
-   int c, hasupper = 0, haslower = 0;
+   size_t c;
+   int hasupper = 0, haslower = 0;
 
    if( !str || !*str ) return 0;
 
-   for(c = 0; c < strlen(str); c++ ) {
-      if( !haslower && islower(str[c]) ) haslower = 1;
-      if( !hasupper && isupper(str[c]) ) hasupper = 1;
+   for(c = 0; str[c] != '\0'; c++ ) {
+      if( !haslower && islower((unsigned char)str[c]) ) haslower = 1;
+      if( !hasupper && isupper((unsigned char)str[c]) ) hasupper = 1;
 
       if( haslower && hasupper ) return 1;
    }
@@ -3286,8 +3288,8 @@ static int make_uppercase(char * str)
 
    if( !str || !*str ) return 0;
 
-   for(c = 0; c < strlen(str); c++ )
-      if( islower(str[c]) ) str[c] = toupper(str[c]);
+   for(c = 0; str[c] != '\0'; c++ )
+      if( islower((unsigned char)str[c]) ) str[c] = toupper((unsigned char)str[c]);
 
    return 0;
 }
@@ -3299,8 +3301,8 @@ static int make_lowercase(char * str)
 
    if( !str || !*str ) return 0;
 
-   for(c = 0; c < strlen(str); c++ )
-      if( isupper(str[c]) ) str[c] = tolower(str[c]);
+   for(c = 0; str[c] != '\0'; c++ )
+      if( isupper((unsigned char)str[c]) ) str[c] = tolower((unsigned char)str[c]);
 
    return 0;
 }
@@ -4723,7 +4725,8 @@ int nifti_is_valid_ecode( int ecode )
  *----------------------------------------------------------------------*/
 static int nifti_check_extension(nifti_image *nim, int size, int code, int rem)
 {
-   /* check for bad code before bad size */
+   /* Preserve unknown extension codes for forward compatibility. */
+   (void)code;
    if( size < 16 ){
       if( g_opts.debug > 2 )
          fprintf(stderr,"-d ext size %d, no extension\n",size);
@@ -6062,15 +6065,15 @@ char *nifti_image_to_ascii( const nifti_image *nim )
 
    sprintf( buf+strlen(buf) , "  image_offset = '%d'\n" , nim->iname_offset );
 
-                       sprintf( buf+strlen(buf), "  ndim = '%d'\n", nim->ndim);
-                       sprintf( buf+strlen(buf), "  nx = '%d'\n",   nim->nx  );
+   sprintf( buf+strlen(buf), "  ndim = '%d'\n", nim->ndim);
+   sprintf( buf+strlen(buf), "  nx = '%d'\n",   nim->nx  );
    if( nim->ndim > 1 ) sprintf( buf+strlen(buf), "  ny = '%d'\n",   nim->ny  );
    if( nim->ndim > 2 ) sprintf( buf+strlen(buf), "  nz = '%d'\n",   nim->nz  );
    if( nim->ndim > 3 ) sprintf( buf+strlen(buf), "  nt = '%d'\n",   nim->nt  );
    if( nim->ndim > 4 ) sprintf( buf+strlen(buf), "  nu = '%d'\n",   nim->nu  );
    if( nim->ndim > 5 ) sprintf( buf+strlen(buf), "  nv = '%d'\n",   nim->nv  );
    if( nim->ndim > 6 ) sprintf( buf+strlen(buf), "  nw = '%d'\n",   nim->nw  );
-                       sprintf( buf+strlen(buf), "  dx = '%g'\n",   nim->dx  );
+   sprintf( buf+strlen(buf), "  dx = '%g'\n",   nim->dx  );
    if( nim->ndim > 1 ) sprintf( buf+strlen(buf), "  dy = '%g'\n",   nim->dy  );
    if( nim->ndim > 2 ) sprintf( buf+strlen(buf), "  dz = '%g'\n",   nim->dz  );
    if( nim->ndim > 3 ) sprintf( buf+strlen(buf), "  dt = '%g'\n",   nim->dt  );
@@ -6309,14 +6312,14 @@ int nifti_short_order(void)   /* determine this CPU's byte order */
 nifti_image *nifti_image_from_ascii( const char *str, int * bytes_read )
 {
    char lhs[1024] , rhs[1024] ;
-   int ii , spos, nn , slen ;
+   int ii , spos, nn ;
    nifti_image *nim ;              /* will be output */
 
    if( str == NULL || *str == '\0' ) return NULL ;  /* bad input!? */
 
    /* scan for opening string */
 
-   spos = 0 ; slen = (int)strlen(str) ;
+   spos = 0 ;
    ii = sscanf( str+spos , "%1023s%n" , lhs , &nn ) ; spos += nn ;
    if( ii == 0 || strcmp(lhs,"<nifti_image") != 0 ) return NULL ;
 

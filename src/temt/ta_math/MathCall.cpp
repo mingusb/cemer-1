@@ -27,7 +27,7 @@ void MathCall::Initialize() {
   object_type = &TA_taMath_float;
 }
 
-bool MathCall::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool MathCall::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if(!code.contains("::")) return false;
   if(!code.contains('(')) return false;
   String lhs = code.before('(');

@@ -145,7 +145,7 @@ void ProgLib::SetWikiInfoToObj(taBase* obj, const String& wiki_name) {
 
 void ProgLib::GetWikiInfoFromObj
 (taBase* obj, String*& tags, String*& desc, taProjVersion*& version, String*& author,
- String*& email, String*& pub_cite) {
+ String*& email, String*& pub_cite) { (void)pub_cite;
   Program* prg = (Program*)obj;
   tags = &prg->tags;
   desc = &prg->desc;

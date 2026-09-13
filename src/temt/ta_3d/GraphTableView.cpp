@@ -832,7 +832,7 @@ void GraphTableView::ComputeAxisRanges() {
 }
 
 #ifndef TA_QT3D
-void GraphTableView_RowScrollCB(SoScrollBar* sb, int val, void* user_data) {
+void GraphTableView_RowScrollCB(SoScrollBar* sb, int val, void* user_data) { (void)sb;
   GraphTableView* gtv = (GraphTableView*)user_data;
   gtv->scrolling_ = true;
   gtv->ViewRow_At(val);
@@ -1084,7 +1084,7 @@ void GraphTableView::UpdateFromDataTable_this(bool first) {
 
 void GraphTableView::DataUnitsXForm(taVector3f& pos, taVector3f& size) {
   GraphPlotView* mainy = MainY();
-  GraphPlotView* alty = AltY();
+  AltY();
   
   if(x_axis.on) {
     pos.x = x_axis.DataToPlot(pos.x);
@@ -1148,7 +1148,7 @@ void GraphTableView::RenderGraph() {
   RenderAxes();
   
   GraphPlotView* mainy = MainY();
-  GraphPlotView* alty = AltY();
+  AltY();
   
   if(graph_type == MATRIX && mainy && mainy->GetDAPtr()->is_matrix) {
     if(matrix_mode == SEP_GRAPHS)
@@ -1208,7 +1208,6 @@ void GraphTableView::RenderAxes() {
   zax->removeAllChildren();
   SoSeparator* yax = node->y_axes();
   yax->removeAllChildren();
-  SoTranslation* tr;
 
   t3_x_axis = new T3Axis((T3Axis::Axis)x_axis.axis, &x_axis, axis_font_size);
   t3_x_axis_top = new T3Axis((T3Axis::Axis)x_axis.axis, &x_axis, axis_font_size);
@@ -1572,10 +1571,7 @@ void GraphTableView::RenderLegend() {
   // graph line apparently already takes into account width!?
   float over_amt = (1.0 / (float)n_across) * .9f * x_axis.axis_length;
   float dn_amt = -1.1f * label_font_size;
-  int xpos = 0;
-  int ypos = 0;
   int mv_dn = n_down;
-  int lidx = 0;
   
   taVector2f cur_tr;
   
@@ -1940,7 +1936,7 @@ void GraphTableView::RenderGraph_Matrix_Zi() {
   if (!node) return;
   
   GraphPlotView* mainy = MainY();
-  GraphPlotView* alty = AltY();
+  AltY();
   if(!mainy) return;
   
   DataCol* da_1 = mainy->GetDAPtr();
@@ -1980,7 +1976,7 @@ void GraphTableView::RenderGraph_Matrix_Sep() {
   if (!node) return;
   
   GraphPlotView* mainy = MainY();
-  GraphPlotView* alty = AltY();
+  AltY();
   if(!mainy) return;
   
   DataCol* da_1 = mainy->GetDAPtr();
@@ -2618,12 +2614,6 @@ void GraphTableView::PlotData_Bar(SoSeparator* gr1, GraphPlotView& plv, GraphPlo
     }
   }
   
-  GraphAxisBase* ax_rst = NULL;
-  DataCol* da_rst = NULL;
-  if(graph_type == RASTER) {
-    ax_rst = &raster_axis;
-    da_rst = raster_axis.GetDAPtr();
-  }
   
   bool matz = false;
   if((mat_cell >= 0) && (matrix_mode == Z_INDEX)) matz = true;

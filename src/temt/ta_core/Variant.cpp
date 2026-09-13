@@ -75,7 +75,7 @@ istream& operator>>(istream& s, Variant& x) {
 
 const String Variant::formatNumber_impl(const Variant& val,
                                         short prec, bool hex) const
-{
+{ (void)val;
   switch (m_type) {
   case T_Invalid: return _nilString;
     //case T_Bool:
@@ -2737,27 +2737,27 @@ Variant::Variant(const QString& val) {
 
 
 void Variant::setQVariant(const QVariant& cp) {
-  switch (cp.userType()) {
-  case QVariant::Invalid:
+  switch (cp.metaType().id()) {
+  case QMetaType::UnknownType:
     setInvalid(); break;
-  case QVariant::Bool:
+  case QMetaType::Bool:
     setBool(cp.toBool(), cp.isNull()); break;
-  case QVariant::Int:
+  case QMetaType::Int:
     setInt(cp.toInt(), cp.isNull()); break;
-  case QVariant::UInt:
+  case QMetaType::UInt:
     setUInt(cp.toUInt(), cp.isNull()); break;
-  case QVariant::LongLong:
+  case QMetaType::LongLong:
     setInt64(cp.toLongLong(), cp.isNull()); break;
-  case QVariant::ULongLong:
+  case QMetaType::ULongLong:
     setUInt64(cp.toULongLong(), cp.isNull()); break;
-  case QVariant::Double:
+  case QMetaType::Double:
     setDouble(cp.toDouble(), cp.isNull()); break;
-  case QVariant::Char:
+  case QMetaType::QChar:
     setChar(cp.toChar().toLatin1(), cp.isNull()); break;
 #ifdef String
 #undef String
 #endif
-  case QVariant::String:
+  case QMetaType::QString:
 #define String taString
     setString(cp.toString(), cp.isNull()); break;
   default:

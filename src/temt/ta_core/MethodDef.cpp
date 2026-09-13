@@ -137,7 +137,7 @@ bool MethodDef::CompareArgs(MethodDef* it) const {
   return true;
 }
 
-void MethodDef::CallFun(void* base, const String& args_str) const {
+void MethodDef::CallFun(void* base, const String& args_str) const { (void)args_str; (void)base;
 #if !defined(NO_TA_BASE) && defined(TA_GUI)
   if(args_str.empty()) {
     taiWidgetMethod* mth_rep = NULL;
@@ -173,6 +173,10 @@ void MethodDef::CallFun(void* base, const String& args_str) const {
       ok = cssTA::SetCssObjArgsFromString(obj, this, fun_argc, type_el, args_str);
       if(ok) {
         cssEl* rval = (*(stubp))(base, obj->members->size-1, obj->members->els);
+        if(rval) {
+          cssEl::Ref(rval);
+          cssEl::unRefDone(rval);
+        }
       }
     }
     delete obj;

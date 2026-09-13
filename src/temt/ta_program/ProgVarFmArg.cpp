@@ -92,7 +92,7 @@ void ProgVarFmArg::GenRegArgs(Program* prg) {
                              + " var_name = " + var_name + "\");");
 }
 
-bool ProgVarFmArg::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool ProgVarFmArg::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if (CvtFmCodeCheckNames(code))
     return true;
   

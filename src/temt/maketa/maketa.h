@@ -30,7 +30,16 @@
 #include "mta_parse.h"
 #endif
 
-using namespace std;
+using std::cerr;
+using std::cin;
+using std::cout;
+using std::endl;
+using std::ends;
+using std::fstream;
+using std::ios;
+using std::istream;
+using std::ostream;
+using std::ws;
 
 int yyparse(void);
 void yyerror(const char *s);

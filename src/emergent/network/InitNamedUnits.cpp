@@ -151,14 +151,13 @@ bool InitNamedUnits::InitUnitNamesFmInputData(DataTable* unit_names,
   for(int i=0;i<input_data->cols();i++) {
     DataCol* idc = input_data->data.FastEl(i);
     if(!idc->isNumeric() || !idc->isMatrix()) continue;
-    DataCol* ndc;
     if(idc->cell_dims() == 4)
-      ndc = unit_names->FindMakeColMatrix(idc->name, VT_STRING,
+      unit_names->FindMakeColMatrix(idc->name, VT_STRING,
                                           idc->cell_dims(),
                                           idc->GetCellGeom(0), idc->GetCellGeom(1),
                                           idc->GetCellGeom(2), idc->GetCellGeom(3));
     else
-      ndc = unit_names->FindMakeColMatrix(idc->name, VT_STRING,
+      unit_names->FindMakeColMatrix(idc->name, VT_STRING,
                                           idc->cell_dims(),
                                           idc->GetCellGeom(0), idc->GetCellGeom(1));
   }
@@ -255,7 +254,7 @@ bool InitNamedUnits::ViewDataLegend() {
   return true;
 }
 
-bool InitNamedUnits::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool InitNamedUnits::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if (CvtFmCodeCheckNames(code))
     return true;
   
@@ -265,7 +264,7 @@ bool InitNamedUnits::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
   return false;
 }
 
-bool InitNamedUnits::CvtFmCode(const String& code) {
+bool InitNamedUnits::CvtFmCode(const String& code) { (void)code;
   // nothing to do
   return true;
 }

@@ -94,7 +94,10 @@ void Program_Group::ClearAllBreakpoints() {
 bool Program_Group::RunStartupProgs() {
   bool any_run = false;
   FOREACH_ELEM_IN_GROUP(Program, prog, *this) {
-    if(!prog->HasProgFlag(Program::STARTUP_RUN)) continue;
+    const Program::ProgFlags startup_flag =
+      taMisc::interactive ? Program::STARTUP_RUN_GUI : Program::STARTUP_RUN;
+    if(taMisc::interactive && !taMisc::gui_active) continue;
+    if(!prog->HasProgFlag(startup_flag)) continue;
     taMisc::Info("Running startup program:", prog->name);
     prog->Init();
     if((prog->ret_val == Program::RV_OK) && (prog->run_state == Program::DONE)) {

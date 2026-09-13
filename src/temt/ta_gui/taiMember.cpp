@@ -64,7 +64,7 @@ bool taiMember::handlesReadOnly() const {
 
 taiWidget* taiMember::GetWidgetRep(IWidgetHost* host_, taiWidget* par, QWidget* gui_parent_,
                                taiType* parent_type_, int flags_, MemberDef*)
-{//note: we ignore MemberDef because we use our own
+{ (void)parent_type_;//note: we ignore MemberDef because we use our own
   bool ro = isReadOnly(par, host_);
   // we must communicate read_only when getting item
   //TODO: probably should also use parent_type in determining ro, as base class does
@@ -140,7 +140,7 @@ void taiMember::GetImage(taiWidget* dat, const void* base) {
 
 void taiMember::CheckProcessCondEnum(taiTypeOfEnum* et, taiWidget* dat,
     const void* base)
-{
+{ (void)et;
   taiWidgetBitBox* bb = dynamic_cast<taiWidgetBitBox*>(dat); // should be, except maybe if ro
   if (!bb) return;
   for (int i = 0; i < mbr->type->enum_vals.size; ++i) {
@@ -363,7 +363,7 @@ void taiMember::GetArbitrateImage(taiWidget* dat, const void* base) {
   }
 }
 
-void taiMember::GetArbitrateMbrValue(taiWidget* dat, void* base, bool& first_diff) {
+void taiMember::GetArbitrateMbrValue(taiWidget* dat, void* base, bool& first_diff) { (void)first_diff;
 //  if (HasLowerBidder()) {
 //    LowerBidder()->GetMbrValue(dat, base, first_diff);
 //  }

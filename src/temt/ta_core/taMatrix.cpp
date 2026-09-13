@@ -103,10 +103,17 @@ void taMatrix::Destroy() {
     SliceDestroying(slice_par, this);
     slice_par = NULL;
   }
-  if (sliceCount() > 0) {
-    DebugInfo("Destroy", "taMatrix being destroyed with slice_cnt=", String(sliceCount()));
-  }
   if (slices) {
+    // A matrix embedded in a DataCol can be destroyed with its owner even
+    // while a script retains a slice. Invalidate and detach those views;
+    // their later destruction must not access this parent again.
+    while (slices->size > 0) {
+      taMatrix* child = slices->FastEl(0);
+      slices->RemoveIdx(0);
+      child->slice_par = NULL;
+      taBase::unRef(this); // balance SliceInitialize without deleting again
+      child->Slice_Collapse();
+    }
     delete slices;
     slices = NULL;
   }
@@ -140,7 +147,7 @@ void taMatrix::BatchUpdate(bool begin, bool struc) {
   }
 }
 
-String& taMatrix::Print(String& strm, int indent) const {
+String& taMatrix::Print(String& strm, int indent) const { (void)indent;
   if(IsSingleElemView()) {      // if just a single guy, that's all we print
     TA_FOREACH(vitm, *this) {
       strm << vitm.toString();
@@ -914,7 +921,7 @@ void taMatrix::Clear_impl(int fm, int to) {
 
 void taMatrix::CanCopyCustom_impl(bool to, const taBase* cp, bool quiet,
     bool& allowed, bool& forbidden) const
-{
+{ (void)forbidden; (void)quiet;
   if (to) return; // no strictures
   if (cp->InheritsFrom(&TA_taMatrix)) {
     allowed = true; // generally allowed
@@ -1123,7 +1130,7 @@ bool taMatrix::SetValStr(const String& val, void* par, MemberDef* memb_def,
 }
 
 int taMatrix::ReplaceValStr(const String& srch, const String& repl, const String& mbr_filt, void* par,
-                            TypeDef* par_typ, MemberDef* memb_def, TypeDef::StrContext sc, bool replace_deep) {
+                            TypeDef* par_typ, MemberDef* memb_def, TypeDef::StrContext sc, bool replace_deep) { (void)mbr_filt; (void)memb_def; (void)par; (void)par_typ; (void)replace_deep; (void)sc;
   int rval = 0;
   String mypath = DisplayPath();
   for(int i=0; i<size; i++) {
@@ -1336,7 +1343,7 @@ void taMatrix::BinaryLoad(const String& fname) {
 
 // This is *the* routine for resizing, so all data change ops/tracking
 // can go through this
-bool taMatrix::EnforceFrames(int n, bool notify) {
+bool taMatrix::EnforceFrames(int n, bool notify) { (void)notify;
   // note: we enforce the size in terms of underlying cells, for when
   // dimensions are changed (even though that is frowned on...)
   if (!AllocFrames(n)) return false; // does legality test
@@ -1731,7 +1738,7 @@ taMatrix* taMatrix::FindSlice(void* el_, const MatrixGeom& geom_) const {
   return NULL;
 }
 
-bool taMatrix::InRange(int d0, int d1, int d2, int d3, int d4, int d5, int d6) const {
+bool taMatrix::InRange(int d0, int d1, int d2, int d3, int d4, int d5, int d6) const { (void)d5; (void)d6;
   switch (geom.dims()) {
   case 0: return false; // not initialized
   case 1: return ((d0 >= 0) && (d0 < geom[0]));

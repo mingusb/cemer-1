@@ -33,7 +33,7 @@ String DoneWritingDataRow::GetDisplayName() const {
   return rval;
 }
 
-bool DoneWritingDataRow::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool DoneWritingDataRow::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if (CvtFmCodeCheckNames(code))
     return true;
   

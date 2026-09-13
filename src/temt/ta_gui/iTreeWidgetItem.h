@@ -58,19 +58,19 @@ public:
   bool                  willHaveChildren() const;
     // only called when resolving lazy children status -- true if (likely) will have children
   
-  virtual bool          canAcceptDrop(const QMimeData* mime) const {return false;}
+  virtual bool          canAcceptDrop(const QMimeData* mime) const { (void)mime; return false;}
     // returns whether we can accept the given data in a drop upon us
   
   virtual void               CreateChildren(); // creates the children, called automatically on expand if lazy_children; normally override _impl
   void                             UpdateLazyChildren(); // only call when you think child status may have changed, to add or remove the placeholder +
 
-  virtual void         itemEdited(int column, int move_after = 0) { };
+  virtual void         itemEdited(int column, int move_after = 0) { (void)column; (void)move_after; };
   // automatically called when an item is edited -- can get new text that was entered with text() function -- move_after is direction to move down (+1) or up (-1) or nowhere 0
-  virtual void          lookupKeyPressed(iLineEdit* le, int column) { };
+  virtual void          lookupKeyPressed(iLineEdit* le, int column) { (void)column; (void)le; };
   // called by editor for lookup key
-  virtual void          characterEntered(iLineEdit* le, int column) { };
+  virtual void          characterEntered(iLineEdit* le, int column) { (void)column; (void)le; };
   // called by editor
-  virtual String          PostCompletionEdit(iCodeCompleter* completer) { return _nilString; }
+  virtual String          PostCompletionEdit(iCodeCompleter* completer) { (void)completer; return _nilString; }
   // called by editor
   virtual bool          ChildrenCreated() { return children_created; };
   
@@ -84,10 +84,10 @@ protected:
   uint                  children_created : 1;
   
   virtual void          dropped(const QMimeData* mime, const QPoint& pos, 
-    int key_mods, WhereIndicator where) {}
+    int key_mods, WhereIndicator where) { (void)key_mods; (void)mime; (void)pos; (void)where; }
     // what to do when data dropped, usually we put up a drop context menu
   virtual void          itemExpanded(bool expanded); // called when exanded or closed
-  virtual void          willHaveChildren_impl(bool& will) const {}
+  virtual void          willHaveChildren_impl(bool& will) const { (void)will; }
     // set true if will, and only need to call inherited if still false
   virtual void          CreateChildren_impl() {} // override this to create the true children
 private:

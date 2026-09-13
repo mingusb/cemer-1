@@ -101,7 +101,7 @@ Program* OtherProgramVar::GetOtherProg() {
   return other_prog.ptr();
 }
 
-bool OtherProgramVar::GenCss_OneVar(Program* prog, ProgVarRef& var, int var_no) {
+bool OtherProgramVar::GenCss_OneVar(Program* prog, ProgVarRef& var, int var_no) { (void)var_no;
   if(!var) return false;
   if(set_other) {
     prog->AddVerboseLine(this, false, "\"setting other prog's variable named: "+var->name +
@@ -142,7 +142,7 @@ void OtherProgramVar::GenCssPost_impl(Program* prog) {
   prog->AddLine(this, "} // other program var");
 }
 
-bool OtherProgramVar::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool OtherProgramVar::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if (CvtFmCodeCheckNames(code))
     return true;
   
@@ -158,7 +158,6 @@ bool OtherProgramVar::CvtFmCode(const String& code) {
   String tn = GetTypeDef()->name; tn.downcase();
   if(dc.startsWith(tbn) || dc.startsWith(tn)) return true; // nothing we can do
 
-  bool set_oth = false;
   if(dc.startsWith("vars to:") || dc.startsWith("var to:"))
     set_other = true;
   else
@@ -228,8 +227,7 @@ bool OtherProgramVar::CvtFmCode(const String& code) {
 //  if(dc.startsWith(tbn) || dc.startsWith(tn)) return true; // nothing we can do
 //
 //
-//  bool set_oth = false;
-//  if(dc.startsWith("vars to:")) set_other = true;
+////  if(dc.startsWith("vars to:")) set_other = true;
 //  else                          set_other = false;
 //  String dtnm = code.after(": ");
 //  if(dtnm.empty()) return true;

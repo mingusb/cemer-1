@@ -21,7 +21,7 @@ iHColorBar::iHColorBar(ColorScale* c, QWidget* parent)
 :inherited(c, parent)
 {};
 
-void iHColorBar::paintEvent(QPaintEvent* ev) {
+void iHColorBar::paintEvent(QPaintEvent* ev) { (void)ev;
   if (!scale) return; // some kind of zombie happening...
   QRect r = rect();
   int w_tot = r.width();

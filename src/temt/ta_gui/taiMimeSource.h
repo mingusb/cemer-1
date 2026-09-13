@@ -31,7 +31,11 @@
 class QMimeData; //
 class QString; //
 class QByteArray; //
+#ifndef __MAKETA__
+#include <QStringList>
+#else
 class QStringList; //
+#endif
 
 /* taiMimeSource
 

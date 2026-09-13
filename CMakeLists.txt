@@ -194,6 +194,12 @@ add_subdirectory(src/emergent/actr)
 add_subdirectory(src/emergent/lib)
 add_subdirectory(src/emergent/bin)
 
+if(BUILD_TESTING)
+  add_subdirectory(src/temt/ta_gui/tests)
+  add_subdirectory(src/emergent/virt_env/tests)
+  add_subdirectory(src/emergent/network/tests)
+endif()
+
 
 ####################################
 #  plugin commands -- use these after make install to remake plugins
@@ -236,6 +242,7 @@ add_subdirectory(css_lib)
 add_subdirectory(test)
 add_subdirectory(bench/actual)
 add_subdirectory(demo/actr)
+add_subdirectory(demo/InductorHead)
 add_subdirectory(demo/audioproc)
 add_subdirectory(demo/bp)
 add_subdirectory(demo/cs)

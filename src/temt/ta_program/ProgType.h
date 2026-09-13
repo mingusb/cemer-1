@@ -58,9 +58,9 @@ public:
 protected:
   void         UpdateAfterEdit_impl() override;
   void         CheckThisConfig_impl(bool quiet, bool& rval) override;
-  virtual void          GenCssPre_impl(Program* prog) {}; // #IGNORE generate the Css prefix code (if any) for this object
-  virtual void          GenCssBody_impl(Program* prog) {}; // #IGNORE generate the Css body code for this object
-  virtual void          GenCssPost_impl(Program* prog) {}; // #IGNORE generate the Css postfix code (if any) for this object
+  virtual void          GenCssPre_impl(Program* prog) { (void)prog;}; // #IGNORE generate the Css prefix code (if any) for this object
+  virtual void          GenCssBody_impl(Program* prog) { (void)prog;}; // #IGNORE generate the Css body code for this object
+  virtual void          GenCssPost_impl(Program* prog) { (void)prog;}; // #IGNORE generate the Css postfix code (if any) for this object
 private:
   void  Initialize();
   void  Destroy();

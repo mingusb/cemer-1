@@ -668,7 +668,7 @@ bool taGuiDialog::AddDataTable(DataTable* dt, const String& nm, const String& pa
 }
 
 bool taGuiDialog::AddVBoxLayout(const String& nm, const String& parent,
-                                const String& widget, const String& attributes) {
+                                const String& widget, const String& attributes) { (void)attributes;
   taGuiLayout* par = NULL;
   if(parent.nonempty()) {
     par = FindLayout(parent, true);
@@ -694,7 +694,7 @@ bool taGuiDialog::AddVBoxLayout(const String& nm, const String& parent,
 }
 
 bool taGuiDialog::AddHBoxLayout(const String& nm, const String& parent,
-                                const String& widget, const String& attributes) {
+                                const String& widget, const String& attributes) { (void)attributes;
   taGuiLayout* par = NULL;
   if(parent.nonempty()) {
     par = FindLayout(parent, true);

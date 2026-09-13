@@ -157,7 +157,6 @@ void VEJoint::Init() {
 
   if(!joint_id || joint_type != cur_type) CreateODE();
   if(!joint_id) return;
-  dJointID jid = (dJointID)joint_id;
 
   // reset probe vals!
   pos = 0.0f;
@@ -233,11 +232,13 @@ void VEJoint::Init_Anchor() {
     dJointSetUniversalAxis2(jid, axis2.x, axis2.y, axis2.z);
     dJointSetUniversalAnchor(jid, wanchor.x, wanchor.y, wanchor.z);
     break;
-  case HINGE2:
-    dJointSetHinge2Axis1(jid, axis.x, axis.y, axis.z);
-    dJointSetHinge2Axis2(jid, axis2.x, axis2.y, axis2.z);
+  case HINGE2: {
+    const dVector3 first_axis = {axis.x, axis.y, axis.z, 0};
+    const dVector3 second_axis = {axis2.x, axis2.y, axis2.z, 0};
+    dJointSetHinge2Axes(jid, first_axis, second_axis);
     dJointSetHinge2Anchor(jid, wanchor.x, wanchor.y, wanchor.z);
     break;
+  }
   case FIXED:
     dJointSetFixed(jid);
     break;

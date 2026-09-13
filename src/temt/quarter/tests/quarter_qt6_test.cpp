@@ -9,6 +9,8 @@
 #include <Inventor/nodes/SoMaterial.h>
 #include <Inventor/nodes/SoRotationXYZ.h>
 #include <QAction>
+#include <QApplication>
+#include <QSurfaceFormat>
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
 #include <QTest>
@@ -120,7 +122,10 @@ private slots:
     widget.show();
     QVERIFY(QTest::qWaitForWindowExposed(&second));
     QTRY_VERIFY(widget.isValid());
-    QVERIFY(widget.getCacheContextId() != oldcache);
+    if (QCoreApplication::testAttribute(Qt::AA_ShareOpenGLContexts))
+      QCOMPARE(widget.getCacheContextId(), oldcache);
+    else
+      QVERIFY(widget.getCacheContextId() != oldcache);
     verifyFrame();
     QVERIFY(widget.getContextMenu());
     for (QAction *action : widget.renderModeActions()) {
@@ -136,5 +141,18 @@ private slots:
   }
 };
 
-QTEST_MAIN(QuarterQt6Test)
+int main(int argc, char **argv) {
+  if (qEnvironmentVariableIsSet("CEMER_TEST_SHARE_CONTEXTS"))
+    QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+  QSurfaceFormat format;
+  format.setRenderableType(QSurfaceFormat::OpenGL);
+  format.setVersion(2, 1);
+  format.setProfile(QSurfaceFormat::NoProfile);
+  format.setDepthBufferSize(24);
+  format.setStencilBufferSize(8);
+  QSurfaceFormat::setDefaultFormat(format);
+  QApplication app(argc, argv);
+  QuarterQt6Test test;
+  return QTest::qExec(&test, argc, argv);
+}
 #include "quarter_qt6_test.moc"

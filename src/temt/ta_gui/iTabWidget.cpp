@@ -35,7 +35,7 @@ void iTabWidget::emit_customContextMenuRequested2(const QPoint& pos,
   emit customContextMenuRequested2(pos, tab_idx);
 }
 
-void iTabWidget::contextMenuEvent(QContextMenuEvent* e) {
+void iTabWidget::contextMenuEvent(QContextMenuEvent* e) { (void)e;
   // NOTE: this is not a good thing because the viewer has its own menu that
   // does everything it needs, and this conflicts
 //   QPoint gpos = mapToGlobal(e->pos());

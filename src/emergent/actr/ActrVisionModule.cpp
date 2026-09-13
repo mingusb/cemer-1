@@ -342,7 +342,7 @@ void ActrVisionModule::VisualLocationRequest(ActrEvent& event) {
 bool ActrVisionModule::FindMatchingLocation(ActrChunk* ck, Attended attd,
                                             Nearest nearest,
                                             float nx, float ny,
-                                            float ctrx, float ctry) {
+                                            float ctrx, float ctry) { (void)ctrx; (void)ctry;
   ActrChunk cpck;               // need a local copy
   cpck.CopyFrom(ck);
   float_Array lohivals;               // contains lowest and highest values
@@ -515,7 +515,6 @@ bool ActrVisionModule::FindMatchingLocation(ActrChunk* ck, Attended attd,
   }
     
   for(int i=eligible.size-1; i>=0; i--) {
-    ActrChunk* oc = eligible.FastEl(i);
     float dist = dsts[i];
     if(dist > min_dist) {
       eligible.RemoveIdx(i);
@@ -663,8 +662,8 @@ void ActrVisionModule::EncodingComplete(ActrEvent& event) {
   buffer->ClearReq();
 }
 
-void ActrVisionModule::StartTrackingRequest(ActrEvent& event) {
-  ActrChunk* ck = event.chunk_arg;
+void ActrVisionModule::StartTrackingRequest(ActrEvent& event) { (void)event;
+
   ActrModel* mod = Model();
   last_cmd = "start_tracking";
 
@@ -710,8 +709,8 @@ void ActrVisionModule::ClearRequest(ActrEvent& event) {
   buffer->ClearReq();
 }
 
-void ActrVisionModule::ClearSceneChangeRequest(ActrEvent& event) {
-  ActrChunk* ck = event.chunk_arg;
+void ActrVisionModule::ClearSceneChangeRequest(ActrEvent& event) { (void)event;
+
   ActrModel* mod = Model();
   last_cmd = "clear_scene_change";
 
@@ -781,8 +780,6 @@ bool ActrVisionModule::ProcessQuery(ActrBuffer* buf, const String& query, bool w
     // todo: check if not schene changed within past onset_span seconds
   }
   else if(quer.startsWith("scene_change_value")) {
-    String valstr = quer.after("scene_change_value");
-    float val = (float)valstr;
     // todo: check if not schene changed within past onset_span seconds
   }
   // todo: last_command
@@ -798,7 +795,7 @@ bool ActrVisionModule::ProcessQuery(ActrBuffer* buf, const String& query, bool w
 }
 
 
-bool ActrVisionModule::SetParam(const String& param_nm, Variant par1, Variant par2) {
+bool ActrVisionModule::SetParam(const String& param_nm, Variant par1, Variant par2) { (void)par2;
   bool got = false;
   if(param_nm == "visual_activation" && buffer) {
     buffer->act_total = par1.toFloat();

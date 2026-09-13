@@ -612,7 +612,7 @@ static inline Vec16f pow(Vec16f const & a, int n) {
     }
 }
 // prevent implicit conversion of exponent to int
-static Vec16f pow(Vec16f const & x, float y);
+static inline Vec16f pow(Vec16f const & x, float y);
 
 
 // Raise floating point numbers to integer power n, where n is a compile-time constant
@@ -745,7 +745,7 @@ static inline Vec16f exp2(Vec16i const & n) {
     return Vec16f(exp2(n.get_low()), exp2(n.get_high()));
 }
 
-static Vec16f exp2(Vec16f const & x); // defined in vectormath_exp.h
+static inline Vec16f exp2(Vec16f const & x); // defined in vectormath_exp.h
 
 
 
@@ -1211,7 +1211,7 @@ static inline Vec8d pow(Vec8d const & a, int n) {
     }
 }
 // prevent implicit conversion of exponent to int
-static Vec8d pow(Vec8d const & x, double y);
+static inline Vec8d pow(Vec8d const & x, double y);
 
 
 // Raise floating point numbers to integer power n, where n is a compile-time constant
@@ -1378,7 +1378,7 @@ static inline Vec8d fraction(Vec8d const & a) {
 static inline Vec8d exp2(Vec8q const & n) {
     return Vec8d(exp2(n.get_low()), exp2(n.get_high()));
 }
-static Vec8d exp2(Vec8d const & x); // defined in vectormath_exp.h
+static inline Vec8d exp2(Vec8d const & x); // defined in vectormath_exp.h
 
 
 // Categorization functions

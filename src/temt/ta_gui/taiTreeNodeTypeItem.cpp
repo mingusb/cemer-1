@@ -36,7 +36,7 @@ taiTreeNodeTypeItem::taiTreeNodeTypeItem(taSigLinkTypeItem* link_, MemberDef* md
   init(link_, flags_);
 }
 
-void taiTreeNodeTypeItem::init(taSigLinkTypeItem* link_, int flags_) {
+void taiTreeNodeTypeItem::init(taSigLinkTypeItem* link_, int flags_) { (void)flags_; (void)link_;
 }
 
 taiTreeNodeTypeItem::~taiTreeNodeTypeItem() {

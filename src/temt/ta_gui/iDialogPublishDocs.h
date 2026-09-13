@@ -26,7 +26,11 @@ class QLineEdit;
 class QObject;
 class QStatusBar;
 class QString;
-class QStringList;
+#ifndef __MAKETA__
+#include <QStringList>
+#else
+class QStringList; //
+#endif
 class QTextEdit;
 class QCheckBox;
 

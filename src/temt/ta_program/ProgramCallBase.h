@@ -44,15 +44,15 @@ public:
   // safe call to get target: emits error if target is null (used by program) -- call during runtime
   virtual Program*      GetTarget_Compile() { return NULL; }
   // safe call to get target during compile time -- fail silently
-  virtual void          AddTargetsToListAll(Program_List& all_lst) { };
+  virtual void          AddTargetsToListAll(Program_List& all_lst) { (void)all_lst; };
   // #IGNORE add any actual targets of this program to the all list-- use LinkUnique -- only non-null!
-  virtual bool          CallsProgram(Program* prg) { return false; }
+  virtual bool          CallsProgram(Program* prg) { (void)prg; return false; }
   // #IGNORE return true if this program call calls given program
-  virtual bool          WillGenCompileScript(Program* prg) { return false; }
+  virtual bool          WillGenCompileScript(Program* prg) { (void)prg; return false; }
   // #IGNORE generate code to compile script on target
-  virtual void          GenCompileScript(Program* prg) { };
+  virtual void          GenCompileScript(Program* prg) { (void)prg; };
   // #IGNORE generate code to compile script on target
-  virtual void          GenCallInit(Program* prg) { };
+  virtual void          GenCallInit(Program* prg) { (void)prg; };
   // #IGNORE generate code to call init on target
 
   virtual bool          LoadInitTarget() { return false; }

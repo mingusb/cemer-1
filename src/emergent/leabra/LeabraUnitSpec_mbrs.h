@@ -416,7 +416,7 @@ public:
   float         dt;             // #READ_ONLY #EXPERT rate = 1 / tau
   float         lrn_fact;       // #READ_ONLY #EXPERT (lrn_max - lrn_min) / (avg_l_max - min)
 
-  INLINE void   UpdtAvgL(float& avg_l, const float act, float lay_avg) {
+  INLINE void   UpdtAvgL(float& avg_l, const float act, float lay_avg) { (void)lay_avg;
     avg_l += dt * (gain * act - avg_l);
     if(avg_l < min) avg_l = min;
   }

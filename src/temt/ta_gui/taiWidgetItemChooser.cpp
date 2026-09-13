@@ -48,7 +48,7 @@ taiWidgetItemChooser::taiWidgetItemChooser(TypeDef* typ_,
   if (HasFlag(flgEditDialog) || !HasFlag(flgNoHelp)) {
     act_par = MakeLayoutWidget(gui_parent_);
     lay = new QHBoxLayout(act_par);
-    lay->setMargin(0);
+    lay->setContentsMargins(0, 0, 0, 0);
     lay->setSpacing(1);
     // put the stuff in the gui
     m_but = new QToolButton(act_par);
@@ -106,7 +106,7 @@ taiWidgetItemChooser::~taiWidgetItemChooser() {
   cats = NULL;
 }
 
-void taiWidgetItemChooser::BuildChooser(iDialogItemChooser* ic, int view) {
+void taiWidgetItemChooser::BuildChooser(iDialogItemChooser* ic, int view) { (void)view;
   // if (ic->GetSelectedObject() != NULL) {  // don't add NewFunRole if there is no selected object (data_gen, data_base, ...)
     if(new1_par) {
       QTreeWidgetItem* item = ic->AddItem(new1_text, NULL, (void*)new1_par, targ_typ->name);
@@ -193,7 +193,7 @@ bool taiWidgetItemChooser::OpenChooser() {
   return rval;
 }
 
-bool taiWidgetItemChooser::ShowItemFilter(void* base, void* item, const String& itnm) const {
+bool taiWidgetItemChooser::ShowItemFilter(void* base, void* item, const String& itnm) const { (void)itnm;
 //   if(filter_start_txt.nonempty() && !itnm.startsWith(filter_start_txt)) return false;
   if (item_filter) {
     if(base == NULL) {

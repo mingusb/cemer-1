@@ -312,7 +312,7 @@ protected:
   void                  CutLinks() override; // don't override this -- use _impl instead
   virtual MainWindowViewer* MakeProjectBrowser_impl(); // make a standard viewer for this project type
   int                   GetOwnerEditableState_impl(int mask) const override
-    {return 0;} // the readonly stops here!
+    { (void)mask;return 0;} // the readonly stops here!
   void                  DoView();
 
 private:

@@ -23,7 +23,6 @@
 #include <QString>
 #include <QStringList>
 
-#include <QRegExp>
 #include <QFile>
 #include <QXmlStreamReader>
 #include <QFileInfo>

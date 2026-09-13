@@ -101,7 +101,7 @@ bool STATE_CLASS(VTAUnitSpec)::GetRecvLayers_N
 }
 
 void STATE_CLASS(VTAUnitSpec)::Compute_DaP
-  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   
   LEABRA_LAYER_STATE* pptg_lay_p = NULL;
   LEABRA_LAYER_STATE* lhb_lay = NULL;
@@ -216,7 +216,7 @@ void STATE_CLASS(VTAUnitSpec)::Compute_DaP
 }
 
 void STATE_CLASS(VTAUnitSpec)::Compute_DaN
-  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   
   LEABRA_LAYER_STATE* negpv_lay = NULL;
   //LEABRA_LAYER_STATE* pptg_lay_n = NULL;
@@ -297,7 +297,7 @@ void STATE_CLASS(VTAUnitSpec)::Compute_DaN
 }
 
 void STATE_CLASS(VTAUnitSpec)::Send_Da
-  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   
   const float snd_val = u->act_eq;
   const int nsg = u->NSendConGps(net); 

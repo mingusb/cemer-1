@@ -178,7 +178,7 @@ void taiTabularDataMimeFactory::Mat_EditActionS(taMatrix* mat,
 
 iClipData* taiTabularDataMimeFactory::Mat_GetClipData(taMatrix* mat,
     const CellRange& sel, int src_edit_action, bool for_drag) const
-{
+{ (void)for_drag;
   iClipData* cd = new iClipData(src_edit_action);
   AddMatDesc(cd, mat, sel);
   String str = mat->FlatRangeToTSV(sel);
@@ -188,7 +188,7 @@ iClipData* taiTabularDataMimeFactory::Mat_GetClipData(taMatrix* mat,
 
 void taiTabularDataMimeFactory::AddMatDesc(QMimeData* md,
   taMatrix* mat, const CellRange& sel) const
-{
+{ (void)mat;
   String str;
   AddDims(sel, str);
   md->setData(tacss_matrixdesc, StrToByteArray(str));
@@ -342,7 +342,7 @@ void taiTabularDataMimeFactory::Table_EditActionS(DataTable* tab,
 
 iClipData* taiTabularDataMimeFactory::Table_GetClipData(DataTable* tab,
     const CellRange& sel, int src_edit_action, bool for_drag) const
-{
+{ (void)for_drag;
   iClipData* cd = new iClipData(src_edit_action);
   AddTableDesc(cd, tab, sel);
   String str = tab->RangeToTSV(sel);

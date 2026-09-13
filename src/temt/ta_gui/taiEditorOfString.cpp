@@ -120,7 +120,7 @@ void taiEditorOfString::btnPrint_clicked() {
   edit->document()->print(&pr);
 }
 
-void taiEditorOfString::SigLinkRecv(taSigLink* dl, int sls, void* op1, void* op2) {
+void taiEditorOfString::SigLinkRecv(taSigLink* dl, int sls, void* op1, void* op2) { (void)dl; (void)op1; (void)op2; (void)sls;
 }
 
 void taiEditorOfString::DoConstr_Dialog(iDialogEditor*& dlg) {
@@ -156,7 +156,7 @@ void taiEditorOfString::GetValue() {
   }
 }
 
-void taiEditorOfString::ResolveChanges(CancelOp& cancel_op, bool* discarded) {
+void taiEditorOfString::ResolveChanges(CancelOp& cancel_op, bool* discarded) { (void)cancel_op; (void)discarded;
   // called by root on closing, dialog on closing, etc. etc.
   if (modified) {
     GetValue();

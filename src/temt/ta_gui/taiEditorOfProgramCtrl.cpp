@@ -53,7 +53,7 @@ taiEditorOfProgramCtrl::taiEditorOfProgramCtrl(Program* prog, bool read_only_,
 taiEditorOfProgramCtrl::~taiEditorOfProgramCtrl() {
 }
 
-bool taiEditorOfProgramCtrl::ShowMember(MemberDef* md) const {
+bool taiEditorOfProgramCtrl::ShowMember(MemberDef* md) const { (void)md;
   return false;
 }
 
@@ -153,7 +153,7 @@ void taiEditorOfProgramCtrl::Constr_Widget_Labels() {
   } // j == set
 }
 
-void taiEditorOfProgramCtrl::SigDestroying_Ref(taBase_RefList* ref, taBase* base) {
+void taiEditorOfProgramCtrl::SigDestroying_Ref(taBase_RefList* ref, taBase* base) { (void)base;
   // we need to rebuild...
   if (ref == &refs)
     ReShow_Async();
@@ -162,7 +162,7 @@ void taiEditorOfProgramCtrl::SigDestroying_Ref(taBase_RefList* ref, taBase* base
 
 void taiEditorOfProgramCtrl::SigEmit_Ref(taBase_RefList* ref, taBase* base,
     int sls, void* op1, void* op2)
-{
+{ (void)op1; (void)op2;
   if (ignoreSigEmit()) return; // not visible, so ignore!
   Program* prog = this->prog(); //cache
   if (!prog) return;
@@ -189,7 +189,7 @@ void taiEditorOfProgramCtrl::SigEmit_Ref(taBase_RefList* ref, taBase* base,
 
 MemberDef* taiEditorOfProgramCtrl::GetMemberPropsForSelect(int sel_idx, taBase** base,
     String& lbl, String& desc)
-{
+{ (void)base; (void)desc; (void)lbl; (void)sel_idx;
   return NULL;
 /*
   MemberDef* md = NULL;

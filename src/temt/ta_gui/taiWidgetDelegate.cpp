@@ -54,7 +54,7 @@ QWidget* taiWidgetDelegate::createEditor(QWidget* parent,
     dat->SetMemberDef(md);
     rep = dat->GetRep(); // note: rep may get replaced by rep_par
     hbl = new QHBoxLayout(rep_par);
-    hbl->setMargin(0);
+    hbl->setContentsMargins(0, 0, 0, 0);
     hbl->setSpacing(0);
     hbl->addWidget(rep);
     // some controls do better without stretch
@@ -73,7 +73,7 @@ exit:
 
 void taiWidgetDelegate::EditorCreated(QWidget* parent, QWidget* editor,
     const QStyleOptionViewItem& option, const QModelIndex& index) const
-{
+{ (void)index; (void)option;
   // resize the column to accommodate the controls
   // (this seems the only place that works -- DataDelegate::sizeHint()
   //  gets called *before* createEditor() so we don't know its
@@ -201,15 +201,10 @@ void taiWidgetDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
     drawBackground(painter, option, index);
   } else { // normal, which also means interpret rich text!
     // this stuff all from qitemdelegate.cpp
-    QStyleOptionViewItemV4 opt = setOptions(index, option); // or V2 for Qt4.2
-    const QStyleOptionViewItemV2 *v2 = qstyleoption_cast<const QStyleOptionViewItemV2 *>
-      (&option);
-    opt.features = v2 ? v2->features
-      : QStyleOptionViewItemV2::ViewItemFeatures(QStyleOptionViewItemV2::None);
-    const QStyleOptionViewItemV3 *v3 = qstyleoption_cast<const QStyleOptionViewItemV3 *>
-      (&option);
-    opt.locale = v3 ? v3->locale : QLocale();
-    opt.widget = v3 ? v3->widget : 0;
+    QStyleOptionViewItem opt = setOptions(index, option);
+    opt.features = option.features;
+    opt.locale = option.locale;
+    opt.widget = option.widget;
 
     // draw rich text:
     painter->save();
@@ -230,7 +225,7 @@ void taiWidgetDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
   }
 }
 
-void taiWidgetDelegate::rep_destroyed(QObject* rp) {
+void taiWidgetDelegate::rep_destroyed(QObject* rp) { (void)rp;
 }
 
 QSize taiWidgetDelegate::sizeHint(const QStyleOptionViewItem& option,
@@ -245,14 +240,14 @@ QSize taiWidgetDelegate::sizeHint(const QStyleOptionViewItem& option,
 
 void taiWidgetDelegate::setEditorData(QWidget* editor,
     const QModelIndex& index) const
-{
+{ (void)editor; (void)index;
   if (!dat) return;
   GetImage();
 }
 
 void taiWidgetDelegate::setModelData(QWidget* editor,
   QAbstractItemModel* model, const QModelIndex& index) const
-{
+{ (void)editor; (void)index; (void)model;
   if (!dat) return;
   GetValue();
 //note: -- testing has indicated that this call only happens once

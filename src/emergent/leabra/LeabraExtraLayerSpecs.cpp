@@ -196,7 +196,6 @@ void ScalarValLayerSpec::LabelUnits_ugp
   llay->SetUnitNames(true);     // use names
   
   LEABRA_UNGP_STATE* ug = lay->GetUnGpState(net, gpidx);
-  LEABRA_UNIT_SPEC_CPP* us = lay->GetUnitSpec(net);
   const int nunits = ug->n_units;
   scalar.InitVal(0.0f, nunits, unit_range.min, unit_range.range);
   if(nunits < 1) return;        // must be at least a few units..
@@ -481,7 +480,6 @@ void TwoDValLayerSpec::ReConfig(Network* main_net, int n_units) {
     }
 
     LeabraUnitSpec* us = (LeabraUnitSpec*)llay->GetMainUnitSpec();
-    LEABRA_UNIT_STATE* u = lay->GetUnitState(net, 0);
 
     if(twod.rep == TwoDValSpec::LOCALIST) {
       twod.min_sum_act = .2f;

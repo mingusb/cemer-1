@@ -37,12 +37,15 @@
 #ifdef TA_GUI
 # include "css_qt.h"
 #include <taiMiscCore>
+#include <QScopedValueRollback>
 #endif
 
 #include <QPointer>
 
 #include <algorithm> // std::sort
+#include <cstdint>
 #include <sstream>
+#include <vector>
 
 int yyparse(void);
 void yyerror(const char* s);
@@ -178,12 +181,6 @@ int cssMisc::GetSourceLn(cssProg* prog) {
 }
 
 void cssMisc::OutputSourceLoc(cssProg* prog) {
-  cssProgSpace* top;
-  if(prog)
-    top = prog->top;
-  else
-    top = cssMisc::cur_top;
-
   if(taMisc::dmem_proc == 0) {
     taMisc::ConsoleOutput(GetSourceLoc(prog), true, false);
   }
@@ -272,6 +269,9 @@ void cssMisc::SyntaxError(const char* er) {
   else {
     msg = String(er) + " " + src;
   }
+
+  if(taMisc::InMainThread())
+    cssMisc::last_err_msg = msg;
 
   taMisc::LogEvent("css" + msg);
 
@@ -1022,7 +1022,7 @@ cssEl* cssEl::GetMemberFmName_impl(TypeDef* typ, void* base, const String& memb)
 //   return GetElFromTA(md->type, mbr, md->name, md, (cssEl*)this);
 }
 
-cssEl* cssEl::GetMemberEl_impl(TypeDef* typ, void* base, MemberDef* md) const {
+cssEl* cssEl::GetMemberEl_impl(TypeDef* /*typ*/, void* base, MemberDef* md) const {
   if(!base) {
     cssMisc::Error(prog, "GetMember: NULL pointer in: ", name);
     return &cssMisc::Void;
@@ -1164,11 +1164,14 @@ void cssElFun::Copy(const cssElFun& cp) {
 //              no args
 
 void cssElFun::BindArgs(cssEl** args, int& act_argc) {
+  BindArgs(args, act_argc, prog->Stack());
+}
+
+void cssElFun::BindArgs(cssEl** args, int& act_argc, cssSpace* stack) {
   args[0] = this;               // first argument is always selfptr
   act_argc = 0;
   if(argc == NoArg) return;
 
-  cssSpace* stack = prog->Stack();
   int stack_start;              // where to start getting things off of the stack
 
   if(argc == 0) {
@@ -1476,11 +1479,8 @@ cssEl::RunStat cssElInCFun::Do(cssProg* prg) {
   dostat = cssEl::Running;
   //note: argc can be -2 sentinel
   int targc = (argc >= 0) ? argc : 0;
-#ifdef _MSC_VER
-  cssEl* args[ArgMax + 1];      // only need fixed amount
-#else
-  cssEl* args[targc + 1];       // only need fixed amount
-#endif
+  std::vector<cssEl*> argument_storage(targc + 1);
+  cssEl** args = argument_storage.data();
   int act_argc;
   BindArgs(args, act_argc);
   if(act_argc < 0) return cssEl::ExecError;
@@ -1781,7 +1781,7 @@ cssEl::RunStat cssCodeBlock::FunDone(cssProg* prg) {
   return prg->top->run_stat;    // some other kind of stopping
 }
 
-cssEl* cssCodeBlock::MakeToken_stub(int na, cssEl* arg[]) {
+cssEl* cssCodeBlock::MakeToken_stub(int /*na*/, cssEl* /*arg*/[]) {
   return new cssInt(0);         // default retv is int, not void
 }
 
@@ -1882,13 +1882,17 @@ void cssScriptFun::Define(cssProg* prg, bool, const String& nm) {
 
 cssEl::RunStat cssScriptFun::Do(cssProg* prg) {
   prog = prg;
+  // Direct recursion shares the program but needs the caller's old stack.
+  cssSpace* caller_stack = prg->Stack();
   fun->AddFrame();              // need to add the new frame first
   fun->Frame()->AllocArgs();    // explicitly allocate the args
   cssEl** args = fun->Args();   //
   int& act_argc = fun->ActArgc();
-  BindArgs(args, act_argc);     // get arguments from previous space
-  if(act_argc < 0)
+  BindArgs(args, act_argc, caller_stack);     // get arguments from previous space
+  if(act_argc < 0) {
+    fun->DelFrame();
     return cssEl::ExecError;
+  }
 
   fun->SetTop(prg->top);        // propagate top to fun
   prg->top->AddProg(fun);       // push new state (not Shove, needed to add frame before)
@@ -1909,11 +1913,12 @@ cssEl::RunStat cssScriptFun::FunDone(cssProg* prg) {
   cssEl* tmp = (argv[0].El())->AnonClone(); // create clone of retval
   tmp->prog = prg;
   prg->top->PopProg();  // note -- cannot run Pull (DelFrame + Pop) cuz need frame for args!
-  if(!prog->top->external_stop && (tmp)) {
-    prg->Stack()->Push(tmp);
-  }
   DoneArgs(args, act_argc);
-  fun->DelFrame(); // now it is safe to delete the frame, after done args!
+  fun->DelFrame(); // restore the caller frame before publishing the result
+  if(!prog->top->external_stop && tmp)
+    prg->Stack()->Push(tmp);
+  else if(tmp)
+    cssEl::Done(tmp);
   return cssEl::Running;        // returning from a running program
 }
 
@@ -2083,13 +2088,17 @@ void cssMbrScriptFun::Define(cssProg* prg, bool decl, const String& nm) {
 
 cssEl::RunStat cssMbrScriptFun::Do(cssProg* prg) {
   prog = prg;
+  // Direct recursion shares the program but needs the caller's old stack.
+  cssSpace* caller_stack = prg->Stack();
   fun->AddFrame();              // need to add the new frame first
   fun->Frame()->AllocArgs();    // explicitly allocate the args
   cssEl** args = fun->Args();   //
   int& act_argc = fun->ActArgc();
-  BindArgs(args, act_argc);   // get arguments from previous space
-  if(act_argc < 0)
+  BindArgs(args, act_argc, caller_stack);   // get arguments from previous space
+  if(act_argc < 0) {
+    fun->DelFrame();
     return cssEl::ExecError;
+  }
 
   fun->SetTop(prg->top);        // propagate top to fun
   prg->top->AddProg(fun);       // push new state (not Shove, needed to add frame before)
@@ -2135,11 +2144,12 @@ cssEl::RunStat cssMbrScriptFun::FunDone(cssProg* prg) {
   tmp->prog = prg;
   // prg->top->PopTop(old_top);                // restore previous top todo: not doing!
   prg->top->PopProg();  // note -- cannot run Pull (DelFrame + Pop) cuz need frame for args!
-  if(!prog->top->external_stop && (tmp)) {
-    prg->Stack()->Push(tmp);
-  }
   DoneArgs(args, act_argc);
-  fun->DelFrame(); // now it is safe to delete the frame, after done args!
+  fun->DelFrame(); // restore the caller frame before publishing the result
+  if(!prog->top->external_stop && tmp)
+    prg->Stack()->Push(tmp);
+  else if(tmp)
+    cssEl::Done(tmp);
   return cssEl::Running;                // returning from a running program
 }
 
@@ -2360,25 +2370,31 @@ void cssCPtr::UpdateAfterEdit() {
 }
 
 cssEl* cssCPtr::operator==(cssEl& s) {
-  if(s.GetType() == T_C_Ptr) {
+  if(s.GetType() == T_C_Ptr || s.GetType() == T_TA) {
     cssCPtr* pt = (cssCPtr*)s.GetNonRefObj();
     if(SamePtrLevel(pt))
       return new cssBool(ptr == pt->ptr);
     else
       return new cssBool(false);
   }
-  return new cssBool((Int)(long)(ptr) == (Int)s);
+  const std::uintptr_t numeric = s.GetType() == T_Int64
+    ? static_cast<std::uintptr_t>(static_cast<ta_uint64_t>(s))
+    : static_cast<std::uintptr_t>(static_cast<Int>(s));
+  return new cssBool(reinterpret_cast<std::uintptr_t>(ptr) == numeric);
 }
 
 cssEl* cssCPtr::operator!=(cssEl& s) {
-  if(s.GetType() == T_C_Ptr) {
+  if(s.GetType() == T_C_Ptr || s.GetType() == T_TA) {
     cssCPtr* pt = (cssCPtr*)s.GetNonRefObj();
     if(SamePtrLevel(pt))
       return new cssBool(ptr != pt->ptr);
     else
       return new cssBool(false);
   }
-  return new cssBool((Int)(long)(ptr) != (Int)s);
+  const std::uintptr_t numeric = s.GetType() == T_Int64
+    ? static_cast<std::uintptr_t>(static_cast<ta_uint64_t>(s))
+    : static_cast<std::uintptr_t>(static_cast<Int>(s));
+  return new cssBool(reinterpret_cast<std::uintptr_t>(ptr) != numeric);
 }
 
 
@@ -2677,7 +2693,7 @@ String& cssSpace::PrintVals(String& fh, int indent, int per_line) const {
   return fh;
 }
 
-String& cssSpace::PrintNames(String& fh, int indent, int per_line) const {
+String& cssSpace::PrintNames(String& fh, int indent, int /*per_line*/) const {
   taMisc::IndentString(fh, indent);
   fh << "Element Names of Space: " << name << " [" << size << "]\n";
   String_PArray nms;
@@ -2740,7 +2756,7 @@ String& cssSpace::PrintTypeNameVals(String& fh, int indent) const {
   return fh;
 }
 
-String cssSpace::PrintStr(int indent, int per_line) const {
+String cssSpace::PrintStr(int /*indent*/, int /*per_line*/) const {
   String rval;
   String_PArray nms;
   nms.Alloc(size);
@@ -2752,7 +2768,7 @@ String cssSpace::PrintStr(int indent, int per_line) const {
   return rval;
 }
 
-String cssSpace::PrintFStr(int indent, int per_line) const {
+String cssSpace::PrintFStr(int /*indent*/, int /*per_line*/) const {
   String rval;
   String_PArray nms;
   nms.Alloc(size);
@@ -2767,7 +2783,7 @@ String cssSpace::PrintFStr(int indent, int per_line) const {
 namespace { // anonymous
   // Functor to sort cssEl pointers
   struct SortPtrCssEl
-    : public std::binary_function<const cssEl *, const cssEl *, bool>
+
   {
     bool operator()(const cssEl *el1, const cssEl *el2) const
     {
@@ -2812,7 +2828,7 @@ String cssInst::PrintStr() const {
   return prog->top->GetSrcLn(line);
 }
 
-String& cssInst::PrintSrc(String& fh, int indent) const {
+String& cssInst::PrintSrc(String& fh, int /*indent*/) const {
   fh << PrintStr();
   return fh;
 }
@@ -3289,7 +3305,7 @@ void cssProg::ZapFrom(int zp_size) {
   size = zp_size;
 }
 
-int cssProg::Undo(int srcln) {
+int cssProg::Undo(int /*srcln*/) {
   // todo: not currently supported
   cssMisc::Warning(this, "Undo not currently supported, sorry!");
   return -1;
@@ -3342,7 +3358,6 @@ int cssProg::OptimizeCode() {
     first_src_ln = insts[0]->line;
     last_src_ln = insts[0]->line;
   }
-  int last_src = -1;
   int nopt = 0;
   for(int i=0; i < size; i++) {
     if(insts[i]->line < first_src_ln) first_src_ln = insts[i]->line;
@@ -3635,7 +3650,7 @@ bool cssProg::SetBreak(int srcln) {
     }
     return false;
   }
-  bool added = breaks.AddUnique(srcdx);      // key to do unique so it isn't duplicated!!
+  breaks.AddUnique(srcdx);      // key to do unique so it isn't duplicated!!
   // don't advertise the adds -- just the failure to add
   // if(added) {
   //   taMisc::Info("Set break point number:", String(breaks.size-1), "from:", top->name,
@@ -4456,7 +4471,7 @@ int cssProgSpace::GetFile(fstream& fh, const String& fname) {
 }
 
 // this compiles one line of code, does not allow for run-last type shell execution
-int cssProgSpace::CompileLn(istream& fh, bool* err) {
+int cssProgSpace::CompileLn(istream& /*fh*/, bool* err) {
   cssProg* parse_prog = Prog();
   int parse_prog_sz = Prog()->size;
 
@@ -4694,6 +4709,8 @@ bool cssProgSpace::CheckNameConflictSpace(const cssSpace& sp) {
   bool rval = false;
   for(int i=0; i<sp.size; i++) {
     cssEl* el = sp.FastEl(i);
+    // Internal control-flow labels are not user-declared symbols.
+    if(el->GetType() == cssEl::T_CodeBlock) continue;
 
     cssElPtr s;
     int psi = 0;
@@ -4702,7 +4719,7 @@ bool cssProgSpace::CheckNameConflictSpace(const cssSpace& sp) {
       if((spc == &(cssMisc::Commands) && !AmCmdProg())) // don't process commands unless I'm a command prog!
         continue;
       if((s = spc->FindName(el->name)) != 0) {
-        if(s.El() == el) continue; // just found us..
+        if(s.El() == el || s.El()->GetType() == cssEl::T_CodeBlock) continue;
         cssMisc::Warning(Prog(), "variable named:", el->name, "in space:", sp.name,
                          "has name conflict with item in space:", spc->name);
         rval = true;
@@ -4828,9 +4845,11 @@ cssEl* cssProgSpace::Cont() {
 	break;
       }
       cssProg* prv_prg = Prog(size-2);
-      if(prv_prg->PC() > 0) {	// only if not called manually
+      // Recursive activations share cssProg, but retain distinct frame PCs.
+      const css_progdx caller_pc = prv_prg->PC(ProgStack(size-2)->fr_no);
+      if(caller_pc > 0) {	// only if not called manually
 	// should be fun or code block that shoved current prog
-	cssEl* fun_el = prv_prg->insts[prv_prg->PC()-1]->inst.El();
+	cssEl* fun_el = prv_prg->insts[caller_pc-1]->inst.El();
 	if(!fun_el->HasSubProg()) {
 	  cssMisc::Warning(NULL, "Internal error: Function or code block ended without finding proper start of block!");
 	  Pull();
@@ -4840,7 +4859,7 @@ cssEl* cssProgSpace::Cont() {
 	  if((debug >= 2) && (cmd_shell)) {
 	    String strm;
 	    strm << cssMisc::Indent(size-1) << "FunDone at "
-		 << taMisc::LeadingZeros(prv_prg->PC()-1,4)
+		 << taMisc::LeadingZeros(caller_pc-1,4)
 		 << " el: " << fun_el->PrintStr();
 	    cmd_shell->OutputLine(strm, true);
 	  }
@@ -4909,8 +4928,8 @@ void cssProgSpace::Stop() {
   external_stop = true;
 }
 
-cssEl* cssProgSpace::RunFun(const String& fun_name, cssEl* arg1, cssEl* arg2,
-    cssEl* arg3, cssEl* arg4, cssEl* arg5, cssEl* arg6) {
+cssEl* cssProgSpace::RunFun(const String& fun_name, cssEl* /*arg1*/, cssEl* /*arg2*/,
+    cssEl* /*arg3*/, cssEl* /*arg4*/, cssEl* /*arg5*/, cssEl* /*arg6*/) {
   cssElPtr fun = ParseName(fun_name);
   if(!(bool)fun) {
     cssMisc::Error(NULL, "RunFun: function named:", fun_name,
@@ -5596,8 +5615,13 @@ void cssCmdShell::AcceptNewLine_Qt(QString ln, bool eof) {
 
 // this is the work-horse of the shell: a new string line is sent to it by some
 // outer-loop, and it is processed (compiled, etc).
-void cssCmdShell::AcceptNewLine(const String& ln, bool eof) {
-  cmd_prog->CompileCode(ln);
+void cssCmdShell::AcceptNewLine(const String& ln, bool /*eof*/) {
+  if(!cmd_prog->CompileCode(ln)) {
+    // Compilation has unwound, so it is now safe to discard a malformed command.
+    cmd_prog->Reset();
+    UpdatePrompt();
+    return;
+  }
   if(cmd_prog->debug >= 2) {
     String fh;
     cmd_prog->ListSrc(fh, 0);
@@ -5673,7 +5697,7 @@ void cssCmdShell::StartupShellInit(istream& fhi, ostream& fho) {
     cssMisc::TopShell->Shell_Gui_Console(prmpt);
   }
   else if(taMisc::interactive) {
-    cssMisc::TopShell->Shell_No_Console(prmpt);
+    cssMisc::TopShell->Shell_No_Console(cssMisc::prompt);
   }
   else {
     cssMisc::TopShell->PushSrcProg(cssMisc::Top);
@@ -5724,7 +5748,8 @@ void cssCmdShell::SetPrompt(const String& prmpt, bool disp_prompt) {
 extern "C" {
   extern char* rl_readline(char*);
   extern void add_history(char*);
-//  extern int (*rl_event_hook)(void);    // rl callback routine -- only used in NoConsole
+  extern int (*rl_event_hook)(void);
+  extern int rl_done;
 }
 
 void cssCmdShell::UpdatePrompt(bool disp_prompt) {
@@ -5789,11 +5814,23 @@ void cssCmdShell::Shell_No_Console(const String& prmpt) {
 }
 
 void cssCmdShell::Shell_NoConsole_Run() {
-//TODO: rejig this for batch or piped contexts:
-// end = EOF, no readline, non-blocking input
-//  rl_event_hook = taiMiscCore::rl_callback;
+#ifdef TA_GUI
+  // readline waits for terminal input while periodically servicing Qt sockets
+  // and timers. Restore any caller's hook when this interactive shell exits.
+  QScopedValueRollback<decltype(rl_event_hook)> eventHook(rl_event_hook, []() {
+    taiMiscCore::rl_callback();
+    if(taMisc::quitting || (cssMisc::TopShell && cssMisc::TopShell->external_exit))
+      rl_done = 1;
+    return 0;
+  });
+#endif
   while(!external_exit && !taMisc::quitting) {
+    rl_done = 0;
     char* curln = rl_readline((char*)act_prompt);
+    if(external_exit || taMisc::quitting) {
+      free(curln);
+      break;
+    }
     // NULL result is defined as EOF
     if (curln == (char*)0) {
       Exit();

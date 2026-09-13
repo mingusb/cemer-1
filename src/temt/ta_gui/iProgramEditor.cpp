@@ -83,7 +83,7 @@ void iProgramEditor::Init() {
   brow_hist = new iBrowseHistory(this);
 
   layout_all = new QVBoxLayout(this);
-  layout_all->setMargin(0);
+  layout_all->setContentsMargins(0, 0, 0, 0);
   layout_all->setSpacing(0);
 
   propsCodeSplitter = new iSplitter(this);
@@ -98,13 +98,13 @@ void iProgramEditor::Init() {
   propsWidget->setLayout(layout_props);
   codeWidget->setLayout(layout_code);
 
-  // layout_props->setMargin(2);
+  // layout_props->setContentsMargins(2, 2, 2, 2);
   // layout_props->setSpacing(taiM->vsep_c);
-  layout_props->setMargin(0);
+  layout_props->setContentsMargins(0, 0, 0, 0);
   layout_props->setSpacing(0);
-  // layout_code->setMargin(2);
+  // layout_code->setContentsMargins(2, 2, 2, 2);
   // layout_code->setSpacing(taiM->vsep_c);
-  layout_code->setMargin(0);
+  layout_code->setContentsMargins(0, 0, 0, 0);
   layout_code->setSpacing(0);
 
   scrBody = new QScrollArea(propsWidget);
@@ -125,7 +125,7 @@ void iProgramEditor::Init() {
   defEditBgColor();
 
   layButtons = new QHBoxLayout();
-  layButtons->setMargin(0);
+  layButtons->setContentsMargins(0, 0, 0, 0);
   layButtons->setSpacing(0);
   tb = new QToolBar(this);
   int icon_sz = taiM_->label_height(currentSizeSpec) * .5;
@@ -178,7 +178,7 @@ void iProgramEditor::Init() {
 #if (QT_VERSION >= 0x050000)
   items->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
 #else
-  items->header()->setResizeMode(0, QHeaderView::ResizeToContents);
+  items->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
 #endif
 
   // items->setColKey(1, taBase::key_desc); //note: ProgVars and Els have nice disp_name desc's
@@ -311,7 +311,7 @@ void iProgramEditor::Controls_Add() {
 
   // make main layout
   QVBoxLayout* lay = new QVBoxLayout(body);
-  lay->setMargin(0);
+  lay->setContentsMargins(0, 0, 0, 0);
   lay->setSpacing(0);
 
   // ok, we know how much room we have, so allocate and divide
@@ -389,7 +389,7 @@ void iProgramEditor::Controls_Add() {
     taiMemberWidgets* ms = membs.FastEl(j);
     if (ms->memb_el.size == 0) continue; // actually, is end
     QHBoxLayout* hbl = new QHBoxLayout();
-    //hbl->setMargin(ln_vmargin);
+    //hbl->setContentsMargins(ln_vmargin, ln_vmargin, ln_vmargin, ln_vmargin);
     hbl->addItem(new QSpacerItem(0, line_ht, QSizePolicy::Minimum, QSizePolicy::Fixed));
     hbl->setSpacing(0);
     hbl->addSpacing(taiM->hsep_c);
@@ -434,7 +434,7 @@ void iProgramEditor::Controls_Add() {
   }
 
   layMeths = new QHBoxLayout; // def margins ok
-  layMeths->setMargin(0);
+  layMeths->setContentsMargins(0, 0, 0, 0);
   layMeths->addSpacing(2); //no stretch: we left-justify
   layMeths->addItem(new QSpacerItem(0, ln_sz + (2 * ln_vmargin),
                                     QSizePolicy::Fixed, QSizePolicy::Fixed));
@@ -549,11 +549,11 @@ const iColor iProgramEditor::colorOfCurRow() const {
   }
 }
 
-void iProgramEditor::SigLinkDestroying(taSigLink* dl) {
+void iProgramEditor::SigLinkDestroying(taSigLink* dl) { (void)dl;
   setEditNode(NULL, false);
 }
 
-void iProgramEditor::SigLinkRecv(taSigLink* dl, int sls, void* op1, void* op2) {
+void iProgramEditor::SigLinkRecv(taSigLink* dl, int sls, void* op1, void* op2) { (void)dl; (void)op1; (void)op2;
   if (m_changing > 0) return; // gets triggered when we do the GetValue on ctrl0
   if (sls <= SLS_ITEM_UPDATED_ND) {
     // if it has been edited, (maybe??) warn user, else just silently update it
@@ -789,7 +789,6 @@ void iProgramEditor::DoRmvFmControlPanel(QAction* act) {
 }
 
 void iProgramEditor::DoGoToControlPanel() {
-  taBase* rbase = sel_item_base;
   MemberDef* md = sel_item_mbr;
   ControlPanel* pset = base->MemberControlPanel(md->name);
   if(pset) {
@@ -823,7 +822,7 @@ void iProgramEditor::setEditBgColor(const iColor& value) {
 }
 
 void iProgramEditor::defEditBgColor() {
-  setEditBgColor(QApplication::palette().color(QPalette::Active, QPalette::Background));
+  setEditBgColor(QApplication::palette().color(QPalette::Active, QPalette::Window));
 }
 
 void iProgramEditor::setEditNode(taBase* value, bool autosave) {

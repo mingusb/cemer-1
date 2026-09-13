@@ -62,7 +62,7 @@
   // #IGNORE ext us delta
   inline void C_Compute_dWt_BasAmyg_Ext_DaSuRu
     (float& dwt, const float su_act, const float ru_act, const float us,
-     const float da_p, const bool d2r, const float lrate_eff) {
+     const float da_p, const bool d2r, const float lrate_eff) { (void)us;
     const float da = GetDa(da_p, d2r);
     dwt += lrate_eff * su_act * ru_act * da;
   }

@@ -20,7 +20,7 @@ using namespace std;
 
 
 
-bool taGenDoc::TypeDef_Filter_Type(TypeDef* td, TypeSpace* ts) {
+bool taGenDoc::TypeDef_Filter_Type(TypeDef* td, TypeSpace* ts) { (void)ts;
   /////////////////////////////////////////////////////////////
   // 	Filters! Returns true if you should filter this TypeDef
 

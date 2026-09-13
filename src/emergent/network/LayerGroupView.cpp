@@ -198,7 +198,7 @@ void LayerGroupView::Render_impl() {
   if(!node_so) return;
 
   float net_margin = 0.05f;
-  float gpz_2d = 0.01f;
+
 
   if(nv->render_svg) {
     nv->svg_str << taSvg::Group();

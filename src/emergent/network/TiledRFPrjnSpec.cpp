@@ -67,7 +67,7 @@ void STATE_CLASS(TiledRFPrjnSpec)::Connect_impl
   LAYER_STATE* send_lay = prjn->GetSendLayer(net);
 
   int ru_nunits = recv_lay->un_geom_n;
-  int su_nunits = send_lay->un_geom_n;
+
 
   TAVECTOR2I ruc;
   for(ruc.y = recv_gp_border.y; ruc.y < recv_gp_ed.y; ruc.y++) {

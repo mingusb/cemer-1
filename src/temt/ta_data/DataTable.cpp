@@ -211,7 +211,7 @@ bool DataTable::CopyCellName(const String& dest_col_name, int dest_row,
 
 bool DataTable::CopyCell_impl(DataCol* dar, int dest_row, const DataTable& src,
     DataCol* sar, int src_row)
-{
+{ (void)src;
   if(TestError(!dar || !sar, "CopyCell", "column(s) out of range, not copied!"))
     return false;
   dar->CopyFromRow_Robust(dest_row, *sar, src_row);
@@ -234,7 +234,6 @@ void DataTable::UpdateAfterEdit_impl() {
 
   // if true - user likely just checked the save file flag - provide default name
   if(HasDataFlag(SAVE_FILE) && auto_load_file.empty()) {
-    taProject* proj = GetMyProj();
     String full_path = GetProjDir() + "/" + GetName() + ".dat";
     auto_load_file = full_path;
   }
@@ -2897,7 +2896,7 @@ void DataTable::AppendData(const String& fname, Delimiters delim, bool quote_str
   taRefN::unRefDone(flr);
 }
 
-void DataTable::SaveDataLog(const String& fname, bool append, bool dmem_proc_0) {
+void DataTable::SaveDataLog(const String& fname, bool append, bool dmem_proc_0) { (void)dmem_proc_0;
   ClearDataFlag(LOG_HEADER_OUT);
   if(!log_file) return;         // shouldn't happen
   if(log_file->IsOpen())
@@ -3407,7 +3406,10 @@ void DataTable::ImportDataJSON(const String& fname) {
 #if (QT_VERSION >= 0x050000)
   QFile file;
   file.setFileName(fname);
-  file.open(QIODevice::ReadOnly | QIODevice::Text);
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    taMisc::Error("ImportDataJSON: cannot open ", fname, ": ", file.errorString());
+    return;
+  }
   
   QJsonParseError json_error;
   QJsonDocument json_doc = QJsonDocument::fromJson(file.readAll(), &json_error);
@@ -3535,7 +3537,6 @@ bool DataTable::SetColumnFromJSON(const QJsonObject& aCol, int start_row, int st
   }
   
   // make/find columns & write to the data table
-  bool makeNew = true;
   dc = this->data.FindName(columnName);
   if (!dc) {
     if (!isMatrix) {
@@ -3812,7 +3813,7 @@ void DataTable::LoadAnyData_stream(istream &stream, bool append, bool has_header
 
   // Get the current stream position so we can reset back to that
   // position after auto-detecting the file format.
-  std::ios::streampos cur_stream_pos = stream.tellg();
+  std::streampos cur_stream_pos = stream.tellg();
 
   // These are passed as out-parameters to an auto-detection function.
   Delimiters delimeter_type = COMMA;
@@ -3976,7 +3977,7 @@ void DataTable::ImportHeaderCols(const String& hdr_ln, const String& dat_ln,
     Delimiters delim, bool quote_str) {
   char cdlm = GetDelim(delim);
   ResetLoadSchema();
-  int hc; int dc;
+  int dc;
   int hdr_idx = 0;
   int dat_idx = 0;
   int nohdr_col_idx = -1;
@@ -3988,7 +3989,7 @@ void DataTable::ImportHeaderCols(const String& hdr_ln, const String& dat_ln,
   while(cont) {
     String hstr;
     if(hdr_ln.nonempty())
-      hc = ReadTillDelim_Str(hdr_ln, hdr_idx, hstr, cdlm, quote_str, hdr_got_quote);
+      ReadTillDelim_Str(hdr_ln, hdr_idx, hstr, cdlm, quote_str, hdr_got_quote);
     String dstr;
     dc = ReadTillDelim_Str(dat_ln, dat_idx, dstr, cdlm, quote_str, dat_got_quote);
 
@@ -4103,11 +4104,11 @@ taBase::ValType DataTable::DecodeImportDataType(const String& dat_str) {
   // Test if it's an integer.
   // This will fail if the string is actually a floating point value.
   char *endptr = 0;
-  long int li = strtol(dat_str.chars(), &endptr, 0);
+  strtol(dat_str.chars(), &endptr, 0);
   if (isWhitespace(endptr)) return VT_INT;
 
   // Not an integer, test if it's a floating point value.
-  double d = strtod(dat_str.chars(), &endptr);
+  strtod(dat_str.chars(), &endptr);
   if (isWhitespace(endptr)) return VT_DOUBLE;
 
   // Otherwise a string.
@@ -4811,7 +4812,7 @@ bool DataTable::SplitStringToColsCol(DataCol* da,
   StructUpdate(true);
   // make the cols first
   for(int i=0;i<cls;i++) {
-    DataCol* scda = FindMakeCol(clstub + String(i), da->valType());
+    FindMakeCol(clstub + String(i), da->valType());
   }
   for(int j=0;j<rows;j++) {
     String sc = da->GetValAsString(j);
@@ -4829,7 +4830,7 @@ bool DataTable::SplitStringToColsCol(DataCol* da,
 ////////////////////////////////////////////////////////////////////////////
 //              DMEM
 
-void DataTable::DMem_ShareRows(MPI_Comm comm, int n_rows) {
+void DataTable::DMem_ShareRows(MPI_Comm comm, int n_rows) { (void)comm; (void)n_rows;
 #ifdef DMEM_COMPILE
   if(rows == 0) return;
   if(n_rows < 1) n_rows = rows;
@@ -4996,7 +4997,7 @@ bool DataTable::RunAnalysis(DataCol* column, AnalysisRun::AnalysisType type) {
   return rval;
 }
 
-taBase* DataTable::ChooseNew(taBase* origin, const String& choice_text) {
+taBase* DataTable::ChooseNew(taBase* origin, const String& choice_text) { (void)choice_text;
   // location of new DataTable can be the current program, if one, and any subgroup of project data tables
   if (origin == NULL)
     return NULL;

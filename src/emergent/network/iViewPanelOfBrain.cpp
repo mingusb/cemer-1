@@ -14,6 +14,7 @@
 //   GNU General Public License for more details.
 
 #include "iViewPanelOfBrain.h"
+#include <QRegularExpression>
 #include <Network>
 #include <BrainView>
 #include <BrainAtlasRegexpPopulator>
@@ -87,12 +88,12 @@ iViewPanelOfBrain::iViewPanelOfBrain(BrainView* dv_)
   widg = new QWidget();
   layTopCtrls = new QVBoxLayout(widg);
   layTopCtrls->setSpacing(2);
-  layTopCtrls->setMargin(2);
+  layTopCtrls->setContentsMargins(2, 2, 2, 2);
 
   layViewParams = new QVBoxLayout();
   layTopCtrls->addLayout(layViewParams);
   layViewParams->setSpacing(2);
-  layViewParams->setMargin(0);
+  layViewParams->setContentsMargins(0, 0, 0, 0);
 
   /////////////////////////////////////////////////////////////////////
   QHBoxLayout* bvControls = new QHBoxLayout();
@@ -308,7 +309,7 @@ iViewPanelOfBrain::iViewPanelOfBrain(BrainView* dv_)
   layDisplayValues = new QVBoxLayout();
   layTopCtrls->addLayout(layDisplayValues); //gbDisplayValues);
   layDisplayValues->setSpacing(2);
-  layDisplayValues->setMargin(0);
+  layDisplayValues->setContentsMargins(0, 0, 0, 0);
 
   layiColorBar = new QHBoxLayout();
   layDisplayValues->addLayout(layiColorBar);
@@ -428,7 +429,6 @@ void iViewPanelOfBrain::UpdatePanel_impl()
 
 
   // update var selection
-  int i = 0;
   QTreeWidgetItemIterator it(lvDisplayValues);
   QTreeWidgetItem* item = NULL;
   while (*it) {
@@ -437,7 +437,6 @@ void iViewPanelOfBrain::UpdatePanel_impl()
     item->setSelected(is_selected);
     // if list is size 1 make sure that there is a scale_range entry for this one
     ++it;
-    ++i;
   }
   
   // update state items
@@ -523,7 +522,7 @@ void iViewPanelOfBrain::SetColorBrain(int state)
 void iViewPanelOfBrain::ColorBrainRegexpEdited()
 {
   QString regexp = fldBrainColorRegexp->GetValue().toQString();
-  QRegExp re(regexp);
+  QRegularExpression re(regexp);
   if (re.isValid()) {
     SetColorBrainRegexp(regexp);
     m_chk_color_brain->setCheckable(true);
@@ -545,7 +544,7 @@ void iViewPanelOfBrain::SetViewAtlas(int state)
 void iViewPanelOfBrain::ViewAtlasRegexpEdited()
 {
   QString regexp = fldBrainAtlasRegexp->GetValue().toQString();
-  QRegExp re(regexp);
+  QRegularExpression re(regexp);
   if (re.isValid()) {
     if(regexp == ".*/.*/.*/.*/.*") {
       taMisc::Warning("You cannot set the match-all regular expression .*/.*/.*/.*/.* -- fills in the whole brain with squares and takes forever.");
@@ -783,7 +782,7 @@ void iViewPanelOfBrain::GetNetVars() {
 
 void iViewPanelOfBrain::InitPanel()
 {
-  if (BrainView *bv = getBrainView()) {
+  if (getBrainView()) {
     ++updating;
     // fill monitor values
     GetVars();

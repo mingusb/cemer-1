@@ -296,7 +296,7 @@ bool RetinaProc::LookAtImageName(const String& right_eye_img_fname,
 ///////////////////////////////////////////////////////////////////////
 // Misc other processing operations
 
-bool RetinaProc::AttendRegion(DataTable* dt, VisRegionParams::Region region) {
+bool RetinaProc::AttendRegion(DataTable* dt, VisRegionParams::Region region) { (void)dt; (void)region;
 //   VisRegionSpecBase* fov_spec = regions.FindRetinalRegion(region);
 //   if(!fov_spec) return false;
 

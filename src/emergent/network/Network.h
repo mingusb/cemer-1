@@ -740,7 +740,7 @@ public:
   virtual bool  DMem_ConfirmHash(bool incl_weights = true);
   // #CAT_DMem create a unique hash code of the entire state of the network, and confirm that it is the same across all nodes in current DMem group -- triggers an error and returns false if they do not match
 #else
-  virtual bool  DMem_ConfirmHash(bool incl_weights = true) { return true; }
+  virtual bool  DMem_ConfirmHash(bool incl_weights = true) { (void)incl_weights; return true; }
   // #CAT_DMem create a unique hash code of the entire state of the network, and confirm that it is the same across all nodes in current DMem group -- triggers an error and returns false if they do not match (null function if not dmem)
 #endif  
   

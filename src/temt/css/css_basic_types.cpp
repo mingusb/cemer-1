@@ -901,7 +901,8 @@ cssArray::cssArray(const cssArrayType& cp, const String& nm) {
   Fill(el_type);
 }
 cssArray::~cssArray() {
-  if(ptr.NotNull())
+  // An empty array has a valid container pointer but no referenced element.
+  if(ptr.El() != &cssMisc::Void)
     cssEl::unRefDone(ptr.El());
   ptr.Reset();
   if(items != NULL)

@@ -12,8 +12,6 @@
 #include <math.h>
 #include <ctype.h>
 
-#define HAVE_ZLIB 1
-
 #ifndef DONT_INCLUDE_ANALYZE_STRUCT
 #define DONT_INCLUDE_ANALYZE_STRUCT  /*** not needed herein ***/
 #endif

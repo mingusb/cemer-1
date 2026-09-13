@@ -33,7 +33,7 @@
 #include <Inventor/nodes/SoDrawStyle.h>
 #include <Inventor/nodes/SoLineSet.h>
 #include <Inventor/nodes/SoCube.h>
-#include <Inventor/nodes/SoCylinder.h>
+#include <Inventor/nodes/SoFaceSet.h>
 #include <Inventor/draggers/SoTransformBoxDragger.h>
 
 TA_BASEFUNS_CTORS_DEFN(T3AnnotationView);
@@ -102,15 +102,19 @@ void T3AnnotationView::Render_pre() {
     case T3Annotation::ELLIPSE: {
 #ifdef TA_QT3D
 #else // TA_QT3D
+      SoSeparator* ellipse = new SoSeparator();
       SoDrawStyle* ds = new SoDrawStyle();
-      ssep->addChild(ds);
+      ellipse->addChild(ds);
       SoLineSet* line = new SoLineSet();
       line->vertexProperty.setValue(new SoVertexProperty());
-      ssep->addChild(line);
-      if(ob->fill) {
-        SoCylinder* cyl = new SoCylinder();
-        ssep->addChild(cyl);
-      }
+      ellipse->addChild(line);
+      SoSeparator* fill = new SoSeparator();
+      fill->addChild(new SoMaterial());
+      SoFaceSet* faces = new SoFaceSet();
+      faces->vertexProperty.setValue(new SoVertexProperty());
+      fill->addChild(faces);
+      ellipse->addChild(fill);
+      ssep->addChild(ellipse);
 #endif // TA_QT3D
       break;
     }
@@ -305,6 +309,40 @@ void T3AnnotationView::Render_impl() {
     }
     break;
   }
+  case T3Annotation::ELLIPSE: {
+    const int segments = 64;
+    SoSeparator* ellipse = (SoSeparator*)ssep->getChild(ssep->getNumChildren()-1);
+    SoDrawStyle* style = (SoDrawStyle*)ellipse->getChild(0);
+    style->lineWidth.setValue(ob->line_width);
+    SoLineSet* line = (SoLineSet*)ellipse->getChild(1);
+    SoVertexProperty* outline = (SoVertexProperty*)line->vertexProperty.getValue();
+    outline->vertex.setNum(segments + 1);
+    for(int i = 0; i <= segments; ++i) {
+      const float angle = 2.0f * taMath_float::pi * i / segments;
+      const float x = 0.5f * (1.0f + taMath_float::cos(angle));
+      const float y = 0.5f * (1.0f + taMath_float::sin(angle));
+      outline->vertex.set1Value(i, ob->size.x * x, ob->size.y * y, -ob->size.z * y);
+    }
+    line->numVertices.setValue(segments + 1);
+    SoSeparator* fill = (SoSeparator*)ellipse->getChild(2);
+    SoMaterial* fillMaterial = (SoMaterial*)fill->getChild(0);
+    fillMaterial->diffuseColor.setValue(ob->fill_color.r, ob->fill_color.g, ob->fill_color.b);
+    fillMaterial->transparency.setValue(1.0f - ob->fill_color.a);
+    SoFaceSet* faces = (SoFaceSet*)fill->getChild(1);
+    SoVertexProperty* vertices = (SoVertexProperty*)faces->vertexProperty.getValue();
+    faces->numVertices.setNum(ob->fill ? segments : 0);
+    vertices->vertex.setNum(ob->fill ? 3 * segments : 0);
+    if(ob->fill) {
+      for(int i = 0; i < segments; ++i) {
+        vertices->vertex.set1Value(3*i, 0.5f * ob->size.x, 0.5f * ob->size.y,
+                                   -0.5f * ob->size.z);
+        vertices->vertex.set1Value(3*i+1, outline->vertex[i]);
+        vertices->vertex.set1Value(3*i+2, outline->vertex[i+1]);
+        faces->numVertices.set1Value(i, 3);
+      }
+    }
+    break;
+  }
   case T3Annotation::TEXT: {
     SoSeparator* tsep = (SoSeparator*)ssep->getChild(ssep->getNumChildren()-1);
     SoFont* fnt = (SoFont*)tsep->getChild(1);
@@ -334,7 +372,6 @@ void T3AnnotationNode_DragFinishCB(void* userData, SoDragger* dragr) {
   T3AnnotationNode* nvoso = (T3AnnotationNode*)userData;
   T3AnnotationView* nvov = static_cast<T3AnnotationView*>(nvoso->dataView());
   T3Annotation* nvo = nvov->Anno();
-  T3DataViewMain* nv = GET_OWNER(nvov, T3DataViewMain);
 
   SbRotation cur_rot;
   cur_rot.setValue(SbVec3f(nvo->rot.x, nvo->rot.y, nvo->rot.z), nvo->rot.rot);

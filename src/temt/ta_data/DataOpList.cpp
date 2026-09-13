@@ -104,11 +104,11 @@ void DataOpList::AddAllColumns_gui(DataTable* dt, bool excl_strings) {
   }
 }
 
-String DataOpList::GetArgForCompletion(const String& method, const String& arg) {
+String DataOpList::GetArgForCompletion(const String& method, const String& arg) { (void)arg; (void)method;
   return "dt";
 }
 
-void DataOpList::GetArgCompletionList(const String& method, const String& arg, const String_Array& arg_values, taBase* arg_obj, const String& cur_txt, Completions& completions) {
+void DataOpList::GetArgCompletionList(const String& method, const String& arg, const String_Array& arg_values, taBase* arg_obj, const String& cur_txt, Completions& completions) { (void)arg; (void)arg_values; (void)cur_txt; (void)method;
   if (arg_obj) {
     if (arg_obj->InheritsFrom(&TA_DataTable)) {
       DataTable* table = (DataTable*)arg_obj;

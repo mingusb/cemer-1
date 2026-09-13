@@ -246,10 +246,10 @@ public: \
 
 // dummy, for when nothing to copy in this class
 #define NOCOPY(y) \
-  void Copy_(const y& cp){}
+  void Copy_(const y& cp){(void)cp;}
 
 #define TMPLT_NOCOPY(y,T) \
-  void Copy_(const y<T>& cp){}
+  void Copy_(const y<T>& cp){(void)cp;}
 
 // this is the typical guy to use for most classes, esp if they keep Tokens
 // the 2 versions bake in the inherited guy, so you don't need to do that
@@ -690,13 +690,13 @@ public:
   // #CAT_ObjectMgmt Create n_objs objects of given type (type is optional)
 
   virtual taBase*       ChooseNew(taBase* origin, const String& choice_text)
-  { return NULL; }
+  { (void)choice_text; (void)origin;  return NULL; }
   // #IGNORE called by taiWidgetTokenChooser to create a new object of this type from the chooser, if the user so chooses
   virtual bool          HasChooseNew()            { return false; }
   // #IGNORE return true if this class defines a ChooseNew function
 protected:
   virtual taBase*       New_impl(int n_objs, TypeDef* type,
-    const String& nm) { return NULL; }
+    const String& nm) { (void)n_objs; (void)nm; (void)type;  return NULL; }
 
   ////////////////////////////////////////////////////////////////////,T///////
   //    Object managment flags (taBase supports up to 8 flags for basic object mgmt purposes)
@@ -744,17 +744,17 @@ public:
 
   virtual int           GetIndex() const {return -1;}
   // #CAT_ObjectMgmt object's index within an owner list.  cached by some objs.
-  virtual void          SetIndex(int value) {};
+  virtual void          SetIndex(int value) { (void)value; };
   // #IGNORE set the objects index value.  note: typically don't do a notify, because list itself will take care of notifying gui clients
   virtual int           GetEnabled() const {return -1;}
   // #IGNORE for items that support an enabled/disabled state; -1=n/a, 0=disabled, 1=enabled (note: (bool)-1 = true)
-  virtual void          SetEnabled(bool value) {};
+  virtual void          SetEnabled(bool value) { (void)value; };
   // #IGNORE
   virtual int           GetSpecialState() const { return -1; }
   // #IGNORE for items that support an alternative special state that should be communicated to users via a subtle background color (e.g., a flag of some sort is set that alters behavior in an important way) -- -1 = n/a, 0 = in non-special (default) state, 1..4 = special states -- multiple levels are supported with different colors: 1 = lavender, 2 = light yellow, 3 = light green, 4 = light red (pink)
   virtual bool          HasName() const { return false; }
   // #CAT_ObjectMgmt does the object have a name field that can be set?
-  virtual bool          SetName(const String& nm) {return false;}
+  virtual bool          SetName(const String& nm) { (void)nm; return false;}
   // #CAT_ObjectMgmt #SET_name Set the object's name
   virtual String        GetName() const         { return _nilString; }
   // #CAT_ObjectMgmt #GET_name Get the name of the object
@@ -769,7 +769,7 @@ public:
   virtual void          SetDefaultName() {} // #IGNORE note: called non-virtually in every constructor
   void                  SetDefaultName_(); // #IGNORE default behavior for >=taNBase -- you can call this manually for taOBase (or others that implement Name)
   virtual void          SetDefaultName_impl(int idx); // #IGNORE called from within, or by list -- NAME_TYPE will determine what we do with idx
-  virtual bool          SetCopyName(const taBase& cp) {return false;} // #IGNORE called by Copy_ in taNBase and specific non-taNBase classes that need to set object copy name
+  virtual bool          SetCopyName(const taBase& cp) { (void)cp; return false;} // #IGNORE called by Copy_ in taNBase and specific non-taNBase classes that need to set object copy name
   virtual String        GetTypeDecoKey() const { return _nilString; }
   // #IGNORE lookup key for visual decoration of an item reflecting its overall type information, used for font colors in the gui browser, for example
   virtual bool          GetQuiet() const {return false;}
@@ -789,7 +789,7 @@ public:
   { return ElemPath(path, NULL, true); }
   // #IGNORE returns taBase item at given path under this object -- path can skip over steps -- a search is conducted to find items -- this provides the same kind of flexibility that css provides in accessing elements of the structural hierarchy -- it is just a call to ElemPath with err_msg set to true, so you can use directly, in chained expressions etc, for cases where you know the items should exist -- use ElemPath in code where it may not exist
   virtual Variant       Elem(const Variant& idx, IndexMode mode = IDX_UNK) const
-  { return _nilVariant; }
+  { (void)idx; (void)mode;  return _nilVariant; }
   // #CAT_Access get element(s) from container -- return can be a single item or a Matrix of multiple items, depending on the index -- see IndexMode for all the possible indexing modes and associated return values (some of which are not applicable to some containers, as documented for that container)
     virtual IndexMode   IndexModeDecode(const Variant& idx, int cont_dims) const;
     // #CAT_Access #EXPERT decode index mode from variant index, and number of dimensions in the container object
@@ -834,7 +834,7 @@ public:
     virtual bool        IterPrev_impl(taBaseItr& itr) const;
     // #IGNORE implementation function to actually get prev item -- returns true if there is a valid prev item in iterator, false otherwise.  does NOT call DelItr if not valid.  default should work for most cases
 
-    virtual Variant     IterElem(taBaseItr& itr) const   { return _nilVariant; }
+    virtual Variant     IterElem(taBaseItr& itr) const   { (void)itr;  return _nilVariant; }
     // #IGNORE access current item according to iterator -- this is used by IterFirst and IterNext, etc and not typically required for end users
     virtual bool        FixSliceValsFromSize(int& start, int& end, int size) const;
     // #IGNORE fix the start and end slice values based on actual size -- returns false if values are invalid after all that
@@ -905,7 +905,7 @@ public:
   //////////////////////////////////////////////////////////////////////
   //    Saving and Loading to/from files
 public:
-  virtual bool          SetFileName(const String& val)  {return false;}
+  virtual bool          SetFileName(const String& val)  { (void)val; return false;}
   // #CAT_File set file name for object
   virtual String        GetFileName() const     { return _nilString; }
   // #CAT_File get file name object was last saved with
@@ -1025,7 +1025,7 @@ public:
   //    Updating of object properties
 public:
   virtual void          UpdatePointersAfterCopy_(const taBase& cp);
-  virtual void          UpdatePointersAfterCopy_impl(const taBase& cp) { };
+  virtual void          UpdatePointersAfterCopy_impl(const taBase& cp) { (void)cp;  };
   virtual void          UpdateAfterEdit();
   // #CAT_ObjectMgmt (aka UAE) called after editing, or any user change to members (eg. in the interface, script)
   virtual void          UpdateAfterEdit_NoGui();
@@ -1071,7 +1071,7 @@ public:
 protected:  // Impl
   virtual void          UpdateAfterEdit_impl() { };
   // this is the preferred place to put all UAE actions, so they all take place before the notify
-  virtual void          UpdateAfterMove_impl(taBase* old_owner) { };
+  virtual void          UpdateAfterMove_impl(taBase* old_owner) { (void)old_owner;  };
   // for actions that should be performed after object has been moved from one location to another in the structure hierarchy
 
   ///////////////////////////////////////////////////////////////////////////
@@ -1090,10 +1090,10 @@ protected:      // Impl
   virtual void          SmartRef_SigDestroying(taSmartRef* ref, taBase* obj);
   // #IGNORE the obj (to which we had a ref) is about to destroy (the ref has already been NULL'ed)
   virtual void          SmartRef_SigEmit(taSmartRef* ref, taBase* obj,
-    int sls, void* op1_, void* op2_) {}
+    int sls, void* op1_, void* op2_) { (void)obj; (void)op1_; (void)op2_; (void)ref; (void)sls; }
   // #IGNORE the obj (to which we have a ref) has signalled the indicated data change
   virtual void          SmartRef_SigChanging(taSmartRef* ref,
-    taBase* obj, bool setting) {}
+    taBase* obj, bool setting) { (void)obj; (void)ref; (void)setting; }
   // #IGNORE the obj ref has either been removed (smartref now null) or added (smartref already set to that object)
 
 
@@ -1149,9 +1149,9 @@ public:
 protected: // impl
   virtual bool          CheckConfig_impl(bool quiet);
   // #IGNORE usually not overridden, see Check[This/Child]_impl
-  virtual void          CheckThisConfig_impl(bool quiet, bool& ok) {}
+  virtual void          CheckThisConfig_impl(bool quiet, bool& ok) { (void)ok; (void)quiet; }
   // impl for us; can include embedded objects (but don't incl them in Child check); only clear ok (if invalid), don't set
-  virtual void          CheckChildConfig_impl(bool quiet, bool& ok) {}
+  virtual void          CheckChildConfig_impl(bool quiet, bool& ok) { (void)ok; (void)quiet; }
   // impl for checking children; only clear ok (if invalid), don't set
 
   ///////////////////////////////////////////////////////////////////////////
@@ -1211,7 +1211,7 @@ public:
 
 protected:
   virtual String        ChildGetColText_impl(taBase* child, const KeyString& key,
-    int itm_idx = -1) const {return _nilKeyString;}
+    int itm_idx = -1) const { (void)child; (void)itm_idx; (void)key; return _nilKeyString;}
 
   ///////////////////////////////////////////////////////////////////////////
   //    Edit Dialog gui
@@ -1242,7 +1242,7 @@ public:
   virtual String        BrowserEditString() const { return GetDisplayName(); }
   // #IGNORE the string representation to use for editing this item in the browser
   virtual bool          BrowserEditSet(const String& new_val_str, int move_after = 0)
-  { return false; }
+  { (void)move_after; (void)new_val_str;  return false; }
   // #IGNORE browser edit calls this with new value string to update value of item when editing is applied -- return true if edit is successful -- move_after is direction to move after editing  (+1 - down 1, -1 up 1) -- only needed if the edit causes something to interfere with the normal flow of the editor (e.g., a new object is created), where the object then needs to recapitulate that movement
   virtual bool          GuiFindFromMe(const String& find_str=NULLStr);
   // #CAT_Display activate the gui find dialog starting from this object, with given find string
@@ -1257,23 +1257,23 @@ public:
 
 #if defined(TA_GUI) && !defined(__MAKETA__)
   virtual const QPixmap* GetDataNodeBitmap(int, int& flags_supported) const
-    {return NULL; } // #IGNORE gets the NodeBitmapFlags for the tree or list node -- see ta_qtbrowse_def.h
+    { (void)flags_supported; return NULL; } // #IGNORE gets the NodeBitmapFlags for the tree or list node -- see ta_qtbrowse_def.h
 #endif
   virtual Completions*  StringFieldLookupForCompleter(const String& cur_txt, int cur_pos,
-                                             const String& mbr_name, int& new_pos) { return NULL; }
+                                             const String& mbr_name, int& new_pos) { (void)cur_pos; (void)cur_txt; (void)mbr_name; (void)new_pos;  return NULL; }
   // #IGNORE returns a list of options that are legal entries for the field given the current contents and cursor position, used in expression fields and called after each character to present a list of options or called when Ctrl-L entered to display options in a chooser dialog
-  virtual void          GetMemberCompletionList(const MemberDef* md, const String& cur_txt, Completions& completions) { };
+  virtual void          GetMemberCompletionList(const MemberDef* md, const String& cur_txt, Completions& completions) { (void)completions; (void)cur_txt; (void)md;  };
   // #IGNORE populates list with appropriate completion choices, variable names, columnn names, etc - used for non-code_expression completions;
   virtual void          GetArgCompletionList(const String& method, const String& arg, const String_Array& arg_values, taBase* arg_obj, const String& cur_txt, Completions& completions);
   // #IGNORE populates list with appropriate completion choices, columnn names, etc - used for cssi_arg_dialogs which are generated from the method signature; arg_obj is the object pointed to by another one of the arguments and that arguments name is returned by GetArgForCompletion()
-  virtual String        GetArgForCompletion(const String& method, const String& arg) { return _nilString; }
+  virtual String        GetArgForCompletion(const String& method, const String& arg) { (void)arg; (void)method;  return _nilString; }
   // #IGNORE some uses of GetArgCompletionList() require a base object from which to get the list - this method is called first to get the name of the argument that will have the pointer to that base object. So this method is called before GetArgCompletionList, return _nilString in other casse. arg_values are indexed to match the args in dialog
   
   virtual void          CallFun(const String& fun_name, const String& args_str=NULLStr);
   // #CAT_ObjectMgmt call function (method) of given name on this object, using args as comma-separated simple literal expressions for argument values, or prompting for args using gui interface otherwise if needed
   static  void          CallObjFun(taBase* obj, const String& fun_name);
   // #CAT_ObjectMgmt #CSS_LIST_EXPAND_1 call function (method) of given name on given object, prompting for args using gui interface
-  virtual bool          ShowCallFunDialog(const String& method_name = "") { return true; }
+  virtual bool          ShowCallFunDialog(const String& method_name = "") { (void)method_name;  return true; }
   // #IGNORE there are cases when you want to call the function via CallFun but skip the parameter dialog - this allows you to test those conditions - switch on method name
 
   static  void          SetMemberStr(taBase* obj, const String& memb_name,
@@ -1282,7 +1282,7 @@ public:
   static  void          SetMemberVar(taBase* obj, const String& memb_name,
                                      const Variant& val);
   // #CAT_ObjectMgmt #CSS_LIST_EXPAND_1 set member value based on variant -- memb_name can be an arbitrary full path below the obj
-  virtual void          MemberUpdateAfterEdit(MemberDef* md, bool edit_dialog = false) { };
+  virtual void          MemberUpdateAfterEdit(MemberDef* md, bool edit_dialog = false) { (void)edit_dialog; (void)md;  };
   // #IGNORE the given member was just edited to a new value -- apply any member-specific changes before the global UpdateAfterEdit function is called.  if called from a gui edit dialog interface, the edit_dialog flag is set, so that behavior can be appropriately differentiated
   virtual bool          IsMemberEditable(const String& memb_name) const;
   // #IGNORE is the given member editable -- by default looks at the MemberDef flags for READ_ONLY etc, isReadOnly -- subclasses may have other ways of determining editability
@@ -1290,7 +1290,7 @@ public:
   virtual Variant       GetGuiArgVal(const String& fun_name, int arg_idx);
   // #IGNORE overload this to get default initial arg values for given function and arg index -- function must be marked with ARG_VAL_FM_FUN[_n] comment directive, and _nilVariant rval will be ignored (NOTE: definitely call inherited:: because this is used for ChangeMyType!
   
-  virtual Variant::VarType GetGuiVariantType(const String& fun_name, int arg_idx) { return Variant::T_Invalid; }
+  virtual Variant::VarType GetGuiVariantType(const String& fun_name, int arg_idx) { (void)arg_idx; (void)fun_name;  return Variant::T_Invalid; }
   // #IGNORE overload this to get default initial variant type -- function must be marked with VARIANT_TYPE_FM_FUN comment directive
   
   ///////////////////////////////////////////////////////////////////////////
@@ -1345,11 +1345,11 @@ protected: // impl
   virtual void          CanCopy_impl(const taBase* cpy_from, bool quiet,
     bool& ok, bool virt) const;
     // basic query interface impl, only passed frm >= our class; may get called repeatedly, so subs are allowed to add an empty stub
-  virtual void          CopyFromCustom_impl(const taBase* cp) {} // this is the generic copy, that enables common subclass or disparate class copying; follow pattern of Copy_assign, except we are always called in a Struct bracket
-  virtual void          CopyToCustom_impl(taBase* targ) const {} // this is a fairly rarely used one for the case where the src actually does the copy; follow pattern of Copy_assign, except we are always called in a Struct bracket
+  virtual void          CopyFromCustom_impl(const taBase* cp) { (void)cp; } // this is the generic copy, that enables common subclass or disparate class copying; follow pattern of Copy_assign, except we are always called in a Struct bracket
+  virtual void          CopyToCustom_impl(taBase* targ) const { (void)targ; } // this is a fairly rarely used one for the case where the src actually does the copy; follow pattern of Copy_assign, except we are always called in a Struct bracket
 
   virtual void          CanCopyCustom_impl(bool to, const taBase* cp,
-    bool quiet, bool& allowed, bool& forbidden) const {}
+    bool quiet, bool& allowed, bool& forbidden) const { (void)allowed; (void)cp; (void)forbidden; (void)quiet; (void)to; }
     // we need an allowed/forbidden paradigm here, so we can always call inherited -- only issue msg on forbidden; caller will supply msg if not allowed -- this routine is called for self (to=0), and we also call the proposed buddy (to=1) -- either one can forbid; us forbidding trumps cp allowing; since cp-controlled is so unusual, it is given priority
 
   ///////////////////////////////////////////////////////////////////////////
@@ -1488,7 +1488,7 @@ public:
   //    User Data: optional configuration settings for objects
 public:
   virtual UserDataItem_List* GetUserDataList(bool force_create = false) const
-    {return NULL;}
+    { (void)force_create; return NULL;}
   // #CAT_UserData #EXPERT gets the userdatalist for this class
   bool                  HasUserDataList() const
     {return (GetUserDataList(false) != NULL);}
@@ -1561,9 +1561,9 @@ public:
   ///////////////////////////////////////////////////////////////////////////
   //    Misc container functionality
 
-  virtual taBase*       CopyChildBefore(taBase* src, taBase* child_pos) { return NULL; }
+  virtual taBase*       CopyChildBefore(taBase* src, taBase* child_pos) { (void)child_pos; (void)src;  return NULL; }
   // #CAT_ListMgmt implemented by container (list) objects: make a copy of the src object and insert it at the position of the child_pos object within this list -- copies the name of the object too
-  virtual taBase*       CopyChildBeforeIndex(taBase* src, int child_pos) { return NULL; }
+  virtual taBase*       CopyChildBeforeIndex(taBase* src, int child_pos) { (void)child_pos; (void)src;  return NULL; }
   // #CAT_ListMgmt implemented by container (list) objects: make a copy of the src object and insert it at the position of the child_pos object within this list -- copies the name of the object too
 
 

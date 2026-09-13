@@ -68,6 +68,7 @@ class TA_API taBasicAtomicInt : public QBasicAtomicInt {
   // ##SMART_INT a basic atomic integer for threadsafe processing
 public:
 # if (QT_VERSION >= 0x050000)
+  void store(int newValue) { storeRelaxed(newValue); }
   // Non-atomic API
   inline bool operator==(int value) const
     {return _q_value == value;}

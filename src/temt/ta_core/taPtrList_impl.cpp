@@ -652,7 +652,7 @@ void taPtrList_impl::PopAll() {
     Pop_();
 }
 
-void taPtrList_impl::Permute(int thr_no) {
+void taPtrList_impl::Permute(int thr_no) { (void)thr_no;
   int i, nv;
   for(i=0; i<size; i++) {
 #ifndef NO_TA_BASE

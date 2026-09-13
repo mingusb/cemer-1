@@ -70,7 +70,7 @@ bool Comment::BrowserEditSet(const String& code, int move_after) {
 }
 
 
-bool Comment::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool Comment::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   String trimmed_code = triml(code);
   if(trimmed_code.startsWith("//") || trimmed_code.startsWith("/*")) return true;
   return false;

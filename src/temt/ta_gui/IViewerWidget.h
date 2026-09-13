@@ -57,7 +57,7 @@ protected:
   virtual void          Constr_post() {} // called virtually, in DV::Constr_post -- entire win struct is now available
   virtual void          OnClosing_impl(CancelOp& cancel_op); // invoked in dtor (uncancellable); you should also invoke in the closeEvent (maybe cancellable)
   virtual void          Refresh_impl() {}
-  virtual void          ResolveChanges_impl(CancelOp& cancel_op) {}
+  virtual void          ResolveChanges_impl(CancelOp& cancel_op) { (void)cancel_op; }
 };
 
 #endif // IViewerWidget_h

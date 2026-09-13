@@ -59,7 +59,6 @@ float STATE_CLASS(PFCUnitSpec)::Compute_NetinExtras
     return net_ex;
   }
   
-  LEABRA_LAYER_STATE* lay = u->GetOwnLayer(net);
   LEABRA_UNGP_STATE* ugd = u->GetOwnUnGp(net);
   if(u->thal_cnt == 0.0f) {     // just gated -- only maint if nothing else
     if(ugd->netin_raw.max < 0.05f) { //
@@ -113,7 +112,7 @@ void STATE_CLASS(PFCUnitSpec)::Compute_PFCGating
   }
 }
 
-void STATE_CLASS(PFCUnitSpec)::Compute_DeepRaw(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+void STATE_CLASS(PFCUnitSpec)::Compute_DeepRaw(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   if(!deep.on || !Quarter_DeepRawNow(net->quarter)) return;
 
   // NOTE: only super does anything here -- this is where the gating is detected and updated
@@ -139,7 +138,7 @@ void STATE_CLASS(PFCUnitSpec)::Compute_DeepRaw(LEABRA_UNIT_STATE* u, LEABRA_NETW
 }
 
 void STATE_CLASS(PFCUnitSpec)::GetThalCntFromSuper
-  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   
   // look for layer we recv a deep context con from, that is also a PFCUnitSpec SUPER
   const int nrg = u->NRecvConGps(net); 
@@ -186,7 +185,6 @@ void STATE_CLASS(PFCUnitSpec)::Compute_DeepStateUpdt
   if(!deep.on || !Quarter_DeepRawPrevQtr(net->quarter)) return;
 
   if(maint.use_dyn && deep.IsDeep() && u->thal_cnt >= 0) { // update dynamics!
-    LEABRA_LAYER_STATE* lay = u->GetOwnLayer(net);
     int unidx = u->ungp_un_idx;
     int dyn_row = unidx % n_dyns;
     if(u->thal_cnt <= 1.0f) { // first gating -- should only ever be 1.0 here..
@@ -204,7 +202,6 @@ void STATE_CLASS(PFCUnitSpec)::Compute_DeepStateUpdt
 void STATE_CLASS(PFCUnitSpec)::ClearOtherMaint
   (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
   
-  LEABRA_LAYER_STATE* lay = u->GetOwnLayer(net);
   LEABRA_UNGP_STATE* ugd = u->GetOwnUnGp(net);
   if(ugd->acts_eq.max < 0.1f)   // we can't clear anyone if nobody in our group is active!
     return;

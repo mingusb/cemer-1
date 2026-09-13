@@ -23,7 +23,9 @@ TA_BASEFUNS_CTORS_DEFN(taSound);
 #include <taFiler>
 #include <float_Matrix>
 #include <QAudioFormat>
-#include <QAudioDeviceInfo>
+#include <QAudioDevice>
+#include <QMediaDevices>
+#include <cmath>
 #include <taSound_QObj>
 
 #ifdef TA_SNDFILE
@@ -75,15 +77,21 @@ int taSound::ChannelCount() const {
 }
 
 int taSound::SampleSize() const {
-  return q_buf.format().sampleSize();
+  return q_buf.format().bytesPerSample() * 8;
 }
 
 taSound::SoundSampleType taSound::SampleType() const {
-  return (SoundSampleType)q_buf.format().sampleType();
+  switch(q_buf.format().sampleFormat()) {
+  case QAudioFormat::UInt8: return UnSignedInt;
+  case QAudioFormat::Int16:
+  case QAudioFormat::Int32: return SignedInt;
+  case QAudioFormat::Float: return Float;
+  default: return Unknown;
+  }
 }
 
 taSound::Endian taSound::ByteOrder() const {
-  return (Endian)q_buf.format().byteOrder();
+  return Q_BYTE_ORDER == Q_BIG_ENDIAN ? BigEndian : LittleEndian;
 }
 
 int taSound::BytesForDuration(int64_t duration) const {
@@ -120,10 +128,14 @@ bool taSound::InitBuffer(int frame_count, int sample_rate, int channels,
   QAudioFormat fmt;
   fmt.setSampleRate(sample_rate);
   fmt.setChannelCount(channels);
-  fmt.setSampleSize(sample_size);
-  fmt.setSampleType((QAudioFormat::SampleType)sample_type);
-  fmt.setByteOrder((QAudioFormat::Endian)byte_order);
-  fmt.setCodec("audio/pcm");    // only format we support..
+  QAudioFormat::SampleFormat format = QAudioFormat::Unknown;
+  if(sample_type == UnSignedInt && sample_size == 8) format = QAudioFormat::UInt8;
+  else if(sample_type == SignedInt && sample_size == 16) format = QAudioFormat::Int16;
+  else if(sample_type == SignedInt && sample_size == 32) format = QAudioFormat::Int32;
+  else if(sample_type == Float && sample_size == 32) format = QAudioFormat::Float;
+  fmt.setSampleFormat(format);
+  if(TestError(sample_size > 8 && byte_order != ByteOrder(), "InitBuffer",
+               "Qt audio buffers require native byte order")) return false;
   if(TestError(!fmt.isValid(), "InitBuffer", "format is not valid!")) {
     return false;
   }
@@ -183,13 +195,13 @@ bool taSound::LoadSound(const String& fname) {
   }
 
   if(sample_size == 16) {
-    sfh->readf((short*)q_buf.data(), frame_count);
+    sfh->readf((short*)q_buf.data<char>(), frame_count);
   }
   else if(sample_type == Float) {
-    sfh->readf((float*)q_buf.data(), frame_count);
+    sfh->readf((float*)q_buf.data<char>(), frame_count);
   }
   else {                        // 24, 32 bit
-    sfh->readf((int*)q_buf.data(), frame_count);
+    sfh->readf((int*)q_buf.data<char>(), frame_count);
   }
 
   delete sfh;
@@ -275,13 +287,13 @@ bool taSound::SaveSound(const String& fname) {
   }
 
   if(sample_size == 16) {
-    sfh->writef((const short*)q_buf.constData(), frame_count);
+    sfh->writef((const short*)q_buf.constData<char>(), frame_count);
   }
   else if(sample_type == Float) {
-    sfh->writef((const float*)q_buf.constData(), frame_count);
+    sfh->writef((const float*)q_buf.constData<char>(), frame_count);
   }
   else {                        // 32 bit int
-    sfh->writef((const int*)q_buf.constData(), frame_count);
+    sfh->writef((const int*)q_buf.constData<char>(), frame_count);
   }
 
   delete sfh;
@@ -306,19 +318,19 @@ bool taSound::PlaySound(const String& device_name) {
 
 String taSound::ListSoundDevices() {
   String rval;
-  QList<QAudioDeviceInfo> devs = QAudioDeviceInfo::availableDevices(QAudio::AudioOutput);
+  QList<QAudioDevice> devs = QMediaDevices::audioOutputs();
   for(int i=0; i<devs.count(); i++) {
-    QAudioDeviceInfo ad = devs[i];
+    QAudioDevice ad = devs[i];
     if(i == 0)
-      rval = ad.deviceName();
+      rval = ad.description();
     else
-      rval += ", " + ad.deviceName();
+      rval += ", " + ad.description();
   }
   return rval;
 }
 
 const void* taSound::SoundData() {
-  return q_buf.constData();
+  return q_buf.constData<char>();
 }
 
 float taSound::GetFloatAtIdx(const void* buf, int idx, taSound::SoundSampleType styp,
@@ -326,8 +338,8 @@ float taSound::GetFloatAtIdx(const void* buf, int idx, taSound::SoundSampleType 
   switch(styp) {
   case SignedInt: {
     if(samp_size == 32) {
-      qint16* dat = (qint16*)buf;
-      return ((float)dat[idx] / (float)0x7FFFFFFF);
+      const qint32* dat = static_cast<const qint32*>(buf);
+      return qMax(-1.0f, float(double(dat[idx]) / 2147483647.0));
     }
     else if(samp_size == 24) {
       qint16* dat = (qint16*)buf;
@@ -349,8 +361,8 @@ float taSound::GetFloatAtIdx(const void* buf, int idx, taSound::SoundSampleType 
       return ((float)dat[idx] / (float)0xFFFF);
     }
     else if(samp_size == 8) {
-      const quint8* dat = (quint8*)buf;
-      return ((float)dat[idx] / (float)0xFF);
+      const quint8* dat = static_cast<const quint8*>(buf);
+      return (float(dat[idx]) - 128.0f) / (dat[idx] <= 128 ? 128.0f : 127.0f);
     }
     break;
   }
@@ -371,16 +383,16 @@ void taSound::WriteFloatAtIdx(const float& val, void* buf, int idx, SoundSampleT
   switch(styp) {
   case SignedInt: {
     if(samp_size == 32) {
-      qint16* dat = (qint16*)buf;
-      dat[idx] = val * (float)0x7FFFFFFF;
+      qint32* dat = static_cast<qint32*>(buf);
+      dat[idx] = qint32(std::lround(qBound(-1.0, double(val), 1.0) * 2147483647.0));
     }
     else if(samp_size == 24) {
       qint16* dat = (qint16*)buf;
       dat[idx] = val * (float)0x7FFFFF;
     }
     else if(samp_size == 16) {
-      qint16* dat = (qint16*)buf;
-      dat[idx] = val * (float)0x7FFF;
+      qint16* dat = static_cast<qint16*>(buf);
+      dat[idx] = qint16(std::lround(qBound(-1.0, double(val), 1.0) * 32767.0));
     }
     else if(samp_size == 8) {
       qint8* dat = (qint8*)buf;
@@ -394,8 +406,9 @@ void taSound::WriteFloatAtIdx(const float& val, void* buf, int idx, SoundSampleT
       dat[idx] = val * (float)0xFFFF;
     }
     else if(samp_size == 8) {
-      quint8* dat = (quint8*)buf;
-      dat[idx] = val * (float)0xFF;
+      quint8* dat = static_cast<quint8*>(buf);
+      const double sample = qBound(-1.0, double(val), 1.0);
+      dat[idx] = quint8(std::lround(sample * (sample <= 0.0 ? 128.0 : 127.0) + 128.0));
     }
     break;
   }
@@ -414,13 +427,13 @@ float taSound::GetSample_frame(int frame, int channel) {
                "Sound is not valid!")) {
     return 0.0f;
   }
-  if(TestError(frame >= q_buf.frameCount(), "GetSample_frame",
+  if(TestError(frame < 0 || frame >= q_buf.frameCount(), "GetSample_frame",
                "frame index:", String(frame), "exceeds frame count:",
                String(q_buf.frameCount()))) {
     return 0.0f;
   }
   int n_chan = ChannelCount();
-  if(TestError(channel >= n_chan, "GetSample_frame",
+  if(TestError(channel < 0 || channel >= n_chan, "GetSample_frame",
                "channel index:", String(channel), "exceeds channel count:",
                String(n_chan))) {
     return 0.0f;
@@ -428,7 +441,7 @@ float taSound::GetSample_frame(int frame, int channel) {
   int idx = frame * n_chan + channel;
   SoundSampleType styp = SampleType();
   int samp_size = SampleSize();
-  return GetFloatAtIdx(q_buf.constData(), idx, styp, samp_size);
+  return GetFloatAtIdx(q_buf.constData<char>(), idx, styp, samp_size);
 }
 
 float taSound::GetSample_msec(int64_t microsec, int channel) {
@@ -443,9 +456,11 @@ bool taSound::SoundToMatrix(float_Matrix& sound_data, int channel) {
     return false;
   }
   int n_chan = ChannelCount();
+  if(TestError(channel >= n_chan, "SoundToMatrix", "channel index exceeds channel count"))
+    return false;
   SoundSampleType styp = SampleType();
   int samp_size = SampleSize();
-  const void* buf = q_buf.constData();
+  const void* buf = q_buf.constData<char>();
   if(channel < 0 && n_chan > 1) {
     sound_data.SetGeom(2, n_chan, n_frm);
     int idx = 0;
@@ -489,6 +504,8 @@ bool taSound::SoundFromMatrix(const float_Matrix& sound_data, int channel,
                "matrix must only have up to 2 dimensions (channels, frames)")) {
     return false;
   }
+  if(TestError(channel >= n_chan, "SoundFromMatrix", "channel index exceeds channel count"))
+    return false;
   int n_chan_write = n_chan;
   if(channel >= 0)
     n_chan_write = 1;
@@ -499,7 +516,7 @@ bool taSound::SoundFromMatrix(const float_Matrix& sound_data, int channel,
     return false;
   }
     
-  void* buf = q_buf.data();
+  void* buf = q_buf.data<char>();
   if(channel < 0 && n_chan > 1) {
     int idx = 0;
     for(int i=0; i < n_frm; i++) {
@@ -516,7 +533,7 @@ bool taSound::SoundFromMatrix(const float_Matrix& sound_data, int channel,
     }
     else {
       for(int i=0; i < n_frm; i++) {
-        WriteFloatAtIdx(sound_data.FastEl2d(i, channel), buf, i, stype, samp_size);
+        WriteFloatAtIdx(sound_data.FastEl2d(channel, i), buf, i, stype, samp_size);
       }
     }
   }

@@ -97,7 +97,7 @@ void ActrCondition::CheckThisConfig_impl(bool quiet, bool& rval) {
     CheckError(unit_name.empty(), quiet, rval,
                "network unit name unit_name is empty -- specify name");
     if(src && unit_name.nonempty()) {
-      Layer* lay = (Layer*)src.ptr();
+
       // todo: fixme
       // Unit* un = lay->FindUnitNamed(unit_name, true); // true = error if not found
       // if(un) {
@@ -117,7 +117,7 @@ void ActrCondition::CheckThisConfig_impl(bool quiet, bool& rval) {
     CheckError(obj_path.empty(), quiet, rval,
                "object path obj_path is empty -- specify path to comparison value");
     taBase* obj = src.ptr();
-    void* mbr_base = NULL;      // base for conditionalizing member itself
+
     int net_base_off = 0;
     TypeDef* eff_td = (TypeDef*)obj->GetTypeDef();
     MemberDef* md = TypeDef::FindMemberPathStatic(eff_td, net_base_off, obj_path, true); // yes warn..
@@ -319,7 +319,7 @@ bool ActrCondition::Matches(ActrProduction& prod, bool why_not) {
     break;
   }
   case NET_UNIT: {
-    Layer* lay = (Layer*)src.ptr();
+
     // todo: fixme
     // Unit* un = lay->FindUnitNamed(unit_name, true); // true = error if not found
     // if(un) {

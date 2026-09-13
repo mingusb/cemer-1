@@ -1,0 +1,54 @@
+== InductorHead: a pattern-completion laboratory ==
+
+'''Start here.''' Open the '''Laboratory''' control panel. Press '''Generate sequence''', then '''Show circuit'''. Drag the 3D network to rotate it and use the wheel to zoom. Press '''Step token''' to move the current query through the sequence. The CSS console reports each prediction; the '''CircuitState''' data table exposes every matrix numerically.
+
+== The experiment ==
+
+An earlier token pair tells the circuit how to continue a later occurrence: '''[A] [B] ... [A] → [B]'''. A new seed permutes the token vocabulary. The circuit does not contain a table saying that A must be followed by B: it obtains B from the current context. The '''Sequence''' table is editable, so you can construct your own repeated-token tasks. After editing it, press '''Run circuit'''.
+
+== Two heads in two attention layers ==
+
+The first, previous-token head has a fixed positional attention pattern. At source position j > 0 it copies the embedding of token j−1 into a separate residual-stream subspace. This is the key used by the second head.
+
+The second, induction head compares the current token's one-hot query with those keys. Matching keys receive a higher score. Softmax turns scores into attention weights, and the value/output path copies the original token at the attended source position. Thus a query A attends to an earlier B whose key contains A.
+
+The construction uses k[j] = onehot(token[j−1]), q[i] = onehot(token[i]), and v[j] = onehot(token[j]). The attention weight is proportional to exp((dot(q[i], k[j])−1)/temperature) for 1 ≤ j ≤ i. Future sources j > i are masked to exactly zero. Position zero has no previous-token key. Subtracting one is a shared softmax shift that keeps the calculation numerically stable.
+
+== Read the 3D display ==
+
+* '''Token Embeddings''': position × vocabulary, with the presented tokens active.
+* '''Previous Token Keys''': the first head's shifted token identities.
+* '''Current Query''': the selected token's one-hot query vector.
+* '''Causal Attention''': source position × query position. Its triangular mask prevents access to future tokens.
+* '''Copied Values''': the selected query's attention mass, routed to the attended token identities.
+* '''Next Token Prediction''': the sum of the copied values. The highest component is the prediction.
+
+Unit labels are position:token, or query←source for attention. Activation colors and 3D block heights show the live numeric values. The actual attention calculations are embedded CSS Programs; the BpNetwork is their native Emergent state display. Its Bp synapses are not being trained to create these activations.
+
+== Controls and tasks ==
+
+* '''Sequence length''' (5–32) and '''Vocabulary size''' (4–16) control task size. Press Generate after changing them.
+* '''Seed''' selects a reproducible random vocabulary permutation.
+* '''Temperature''' controls attention sharpness. Higher values spread probability over nonmatching positions.
+* '''Noise''' replaces intermediate repeated tokens with a held-out distractor; the first exemplar and final query remain intact.
+* '''Cursor''' selects the query position. Run recomputes that position; Step advances it cyclically.
+* '''Ablate previous head''' removes the copied keys. Compare its near-uniform attention with the intact prefix match.
+* '''Ablate induction head''' removes the copying output. Prediction becomes −1 because the circuit provides no evidence for any token.
+* '''Evaluate permutations''' tests 64 new seeds, with intact, previous-head-ablated and induction-head-ablated conditions. Results and confidence are saved in Experiments. It restores the original controls afterward.
+
+== Suggested investigations ==
+
+1. Set noise to zero and temperature to 0.1. Generate several seeds: does the target change while the circuit still predicts it?
+2. Inspect a bright attention cell. Is its source token preceded by the current query token?
+3. Raise temperature and observe how confidence changes. Distinguish the prediction's argmax from confidence.
+4. Ablate the previous head, then the induction head. Which mathematical term did each intervention remove?
+5. Put conflicting continuations after the same prefix in Sequence. Explain the resulting distribution over next tokens.
+6. Add distractors, run the permutation evaluation, and compare the intact and ablated conditions.
+
+== What this project demonstrates ==
+
+This is a deliberately constructed, mechanistic two-head circuit. It demonstrates causal prefix matching, copying, generalization to new token permutations, and interventions. It is not a trained transformer, a language model, or evidence that gradient descent will discover this circuit. No training or learned-model accuracy is claimed. Confidence here is copied attention mass, not a calibrated probability of real language.
+
+== Primary references ==
+
+[https://transformer-circuits.pub/2021/framework/index.html Elhage et al. (2021), A Mathematical Framework for Transformer Circuits] develops the attention-composition analysis. [https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/ Olsson et al. (2022), In-context Learning and Induction Heads] studies prefix matching and copying in repeated-token tasks. These papers provide the scientific motivation; this project is an educational construction rather than a reproduction of their trained models.

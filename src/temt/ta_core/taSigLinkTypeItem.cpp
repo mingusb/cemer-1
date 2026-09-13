@@ -55,7 +55,7 @@ String taSigLinkTypeItem::GetName() const {
   return data()->name;
 }
 
-String taSigLinkTypeItem::GetDisplayName(bool desc_ok) const {
+String taSigLinkTypeItem::GetDisplayName(bool desc_ok) const { (void)desc_ok;
   return data()->name;
 }
 
@@ -68,7 +68,7 @@ iPanelBase* taSigLinkTypeItem::CreateDataPanel_impl() {
 } 
 
 
-bool taSigLinkTypeItem::ShowMember(MemberDef* md) {
+bool taSigLinkTypeItem::ShowMember(MemberDef* md) { (void)md;
   return false; // na
 }
 

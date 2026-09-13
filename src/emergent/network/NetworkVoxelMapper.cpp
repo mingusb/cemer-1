@@ -362,7 +362,7 @@ NetworkVoxelMapper::ClearVoxelAssignmentForLayer(LayerInfo *li)
   // Iterate through units.
   for (unsigned idx = 0; idx < li->num_units; ++idx) {
     // Reset each unit's voxel list.
-    if (UnitState_cpp *unit = li->GetUnit(idx)) {
+    if (li->GetUnit(idx)) {
       // if(unit->voxels)
       //   unit->voxels->Reset();
     }

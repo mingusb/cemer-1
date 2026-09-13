@@ -94,8 +94,8 @@ FIRFilter::~FIRFilter()
 void
 FIRFilter::reset()
 {
-  for (int i=0; i<data_.size(); i++)
-    data_[i] = 0.0;
+  for (auto& sample : data_)
+    sample = 0.0;
   ptr_ = 0;
 }
 

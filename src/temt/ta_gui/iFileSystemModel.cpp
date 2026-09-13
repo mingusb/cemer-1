@@ -26,14 +26,13 @@ QVariant iFileSystemModel::data(const QModelIndex& index, int role) const {
   if(role != Qt::EditRole)
     return inherited::data(index, role);
 
-  int idx = index.row() - 1;    // +1 for ..
   int col = index.column();
 
   if(col == 1) {
     return size(index);
   }
   else if(col == 3) {
-    return lastModified(index).toTime_t();
+    return lastModified(index).toSecsSinceEpoch();
   }
   return inherited::data(index, role);
 }

@@ -186,7 +186,6 @@ void T3GridViewNode::setWidth(float wdth) {
 
 void T3GridViewNode::render() {
   float frmg2 = 2.0f * frame_margin;
-  float vert_off = frame_margin + frmg2;
 
   if(show_drag_) {
     String expr = "oA = vec3f(" + String(.5f * width_ + 1.5f * frame_width) + " + A[0], "

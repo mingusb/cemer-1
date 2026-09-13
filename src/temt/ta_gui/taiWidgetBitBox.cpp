@@ -84,7 +84,7 @@ void taiWidgetBitBox::Initialize(QWidget* gui_parent_) {
   m_par_obj_base = NULL;
   SetRep(MakeLayoutWidget(gui_parent_));
   lay = new QHBoxLayout(m_rep);
-  lay->setMargin(0); // in Qt4 it adds style-dependent defaults
+  lay->setContentsMargins(0, 0, 0, 0); // in Qt4 it adds style-dependent defaults
   
   QFont font = rep()->font();
   font.setPointSize(taMisc::GetCurrentFontSize("labels"));
@@ -111,7 +111,7 @@ void taiWidgetBitBox::Clear() {
 //   }
   taiMisc::DeleteChildrenNow(m_rep);
   lay = new QHBoxLayout(m_rep);
-  lay->setMargin(0); // in Qt4 it adds style-dependent defaults
+  lay->setContentsMargins(0, 0, 0, 0); // in Qt4 it adds style-dependent defaults
 }
 
 void taiWidgetBitBox::AddBoolItem(bool auto_apply, String name, int val,

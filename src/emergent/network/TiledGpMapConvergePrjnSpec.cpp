@@ -33,7 +33,7 @@ void STATE_CLASS(TiledGpMapConvergePrjnSpec)::Connect_impl
   TAVECTOR2I su_geo;
   su_geo.SetXY(send_lay->un_geom_x, send_lay->un_geom_y); // un_geom!
   int ru_nunits = recv_lay->un_geom_n;
-  int su_nunits = send_lay->un_geom_n;
+
 
   int su_ngps = send_lay->gp_geom_n;
 
@@ -88,7 +88,7 @@ void STATE_CLASS(TiledGpMapConvergePrjnSpec)::Connect_Reciprocal
   int ru_nunits = recv_lay->un_geom_n;
   int su_nunits = send_lay->un_geom_n;
 
-  int su_ngps = send_lay->gp_geom_n;
+
 
   TAVECTOR2I ruc;
   if(!make_cons) {

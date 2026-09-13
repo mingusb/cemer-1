@@ -22,7 +22,7 @@
 
 iClipData* IObjectSelectable::GetClipDataSingle(int src_edit_action,
   bool for_drag, GuiContext sh_typ) const
-{
+{ (void)for_drag;
   // if it is taBase, we can make an object
   taBase* obj = this->taData(sh_typ);
   if (!obj) return NULL;
@@ -35,7 +35,7 @@ iClipData* IObjectSelectable::GetClipDataSingle(int src_edit_action,
 
 iClipData* IObjectSelectable::GetClipDataMulti(const ISelectable_PtrList& sel_items,
     int src_edit_action, bool for_drag, GuiContext sh_typ) const
-{
+{ (void)for_drag; (void)sh_typ;
   iClipData* rval = NULL;
   //note: although a bit sleazy, we just do this by optimistically
   // assuming all are taBase (which realistically, they are)

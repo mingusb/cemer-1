@@ -25,7 +25,7 @@ int taiViewTypeOftaBase::BidForView(TypeDef* td) {
   return 0;
 }
 
-taiSigLink* taiViewTypeOftaBase::CreateSigLink_impl(taBase* data_) {
+taiSigLink* taiViewTypeOftaBase::CreateSigLink_impl(taBase* data_) { (void)data_;
   return NULL; //no taBase implementation for now
 }
 
@@ -61,7 +61,7 @@ void taiViewTypeOftaBase::CreateDataPanel_impl(taiSigLink* dl)
   DataPanelCreated(edit_panel);
 }
 
-taiSigLink* taiViewTypeOftaBase::GetSigLink(void* data_, TypeDef* el_typ) {
+taiSigLink* taiViewTypeOftaBase::GetSigLink(void* data_, TypeDef* el_typ) { (void)el_typ;
   //NOTE: replaced in taiViewTypeOftaOBase with an optimized version
   taBase* data = (taBase*)data_;
   if(data->isDestroying()) return NULL;

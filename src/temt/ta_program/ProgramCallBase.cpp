@@ -57,7 +57,6 @@ void ProgramCallBase::GenCssArgSet_impl(Program* prog, const String trg_var_nm) 
     prog->AddLine(this, "// set global vars of target", ProgLine::COMMENT);
   }
   String nm;
-  bool set_one = false;
   for (int i = 0; i < prog_args.size; ++i) {
     ProgArg* ths_arg = prog_args.FastEl(i);
     nm = ths_arg->name;
@@ -65,7 +64,6 @@ void ProgramCallBase::GenCssArgSet_impl(Program* prog, const String trg_var_nm) 
     ths_arg->expr.ParseExpr();          // re-parse just to be sure!
     String argval = ths_arg->expr.GetFullExpr();
     if (!prg_var || argval.empty() || argval == "<no_arg>") continue;
-    set_one = true;
     prog->AddLine(this, trg_var_nm + "->SetVar(\"" + prg_var->name + "\", " + argval + ");");
   }
 }

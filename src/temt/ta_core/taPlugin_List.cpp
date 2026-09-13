@@ -172,6 +172,7 @@ void taPlugin_List::ReconcilePlugins() {
       }
       pl->name = ip->name();
       pl->desc = ip->desc();
+      pl->url = ip->url();
       ip->GetVersion(ver);
       pl->version = ver.toString();
     }

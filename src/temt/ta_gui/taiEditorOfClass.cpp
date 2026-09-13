@@ -90,7 +90,7 @@ taiEditorOfClass::taiEditorOfClass(void* base, TypeDef* typ_, bool read_only_,
   no_meth_menu = false;
   bgrp = new QButtonGroup(this);
   bgrp->setExclusive(false);
-  connect(bgrp, SIGNAL(buttonClicked(int)),
+  connect(bgrp, SIGNAL(idClicked(int)),
     this, SLOT(bgrp_buttonClicked(int)) );
   menu = NULL;
   InitGuiFields(false);
@@ -507,7 +507,7 @@ void taiEditorOfClass::DoGoToControlPanel() {
 
 MemberDef* taiEditorOfClass::GetMemberPropsForSelect(int sel_idx, taBase** base,
     String& lbl, String& desc)
-{
+{ (void)desc;
   MemberDef* md = NULL;
   if (!(membs.GetFlatWidgetItem(sel_idx, &md) && md))
     return NULL;
@@ -578,7 +578,7 @@ void taiEditorOfClass::FillLabelContextMenu_CtrlPanel(QMenu* mnu, int& last_id)
      SLOT(DoAddToControlPanel_Short(QAction*)), SLOT(DoGoToControlPanel()));
 }
 
-void taiEditorOfClass::UpdateMethodsEnabled(bool force) {
+void taiEditorOfClass::UpdateMethodsEnabled(bool force) { (void)force;
   // taMisc::DebugInfo("UpdateMethodsEnabled", String(force));
   if(!typ || !mwidget)  return;
   // NOTE: visibility tests seem to prevent needed updates -- just do it!
@@ -753,7 +753,7 @@ void taiEditorOfClass::GetValueInline_impl(void* base) const {
     typ->it->GetValue(mb_dat, base);
 }
 
-void taiEditorOfClass::ResolveChanges(CancelOp& cancel_op, bool* discarded) {
+void taiEditorOfClass::ResolveChanges(CancelOp& cancel_op, bool* discarded) { (void)cancel_op; (void)discarded;
   // called by root on closing, dialog on closing, SLS_RESOLVE_NOW op, etc. etc.
   if (HasChanged()) {
     if(!mwidget->isVisible()) {

@@ -55,7 +55,7 @@ String IfContinue::GetDisplayName() const {
     return "if(" + cond.GetFullExpr() + ") continue";
 }
 
-bool IfContinue::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const {
+bool IfContinue::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const { (void)scope_el;
   String code = code_str; code.downcase();
   if(code.startsWith("if") && code.contains("continue")) return true;
   if(code == "continue") return true;

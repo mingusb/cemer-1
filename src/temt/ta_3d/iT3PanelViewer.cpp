@@ -46,7 +46,7 @@ iT3PanelViewer::~iT3PanelViewer() {
 void iT3PanelViewer::Init() {
   last_idx = -1;
   QVBoxLayout* lay = new QVBoxLayout(this);
-  lay->setSpacing(0);  lay->setMargin(0);
+  lay->setSpacing(0);  lay->setContentsMargins(0, 0, 0, 0);
   tw = new iTabWidget(this); //top, standard tabs
 #if (QT_VERSION >= 0x040200)
   tw->setUsesScrollButtons(true);
@@ -130,14 +130,14 @@ void iT3PanelViewer::SetAllColorScheme(int tab_idx) {
   }
 }
 
-void iT3PanelViewer::FixAllTabNames(int tab_idx) {
+void iT3PanelViewer::FixAllTabNames(int tab_idx) { (void)tab_idx;
   for (int i = 0; i < viewer()->panels.size; ++i) {
     T3Panel* panl = viewer()->panels.FastEl(i);
     panl->fix_name = true;
   }
 }
 
-void iT3PanelViewer::UnFixAllTabNames(int tab_idx) {
+void iT3PanelViewer::UnFixAllTabNames(int tab_idx) { (void)tab_idx;
   for (int i = 0; i < viewer()->panels.size; ++i) {
     T3Panel* panl = viewer()->panels.FastEl(i);
     panl->fix_name = false;

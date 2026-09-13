@@ -39,7 +39,7 @@ int taiMemberOfDynEnum::BidForMember(MemberDef* md, TypeDef* td){
 }
 
 taiWidget* taiMemberOfDynEnum::GetWidgetRep_impl(IWidgetHost* host_, taiWidget* par,
-  QWidget* gui_parent_, int flags_, MemberDef* mbr_) {
+  QWidget* gui_parent_, int flags_, MemberDef* mbr_) { (void)mbr_;
   flags_ |= taiWidget::flgAutoApply; // always auto-apply
   taiWidgetDeck* rval = new taiWidgetDeck(NULL, host_, par, gui_parent_, flags_);
   rval->InitLayout();

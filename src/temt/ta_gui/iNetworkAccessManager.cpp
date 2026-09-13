@@ -14,6 +14,7 @@
 //   Lesser General Public License for more details.
 
 #include "iNetworkAccessManager.h"
+#include <QStandardPaths>
 
 /****************************************************************************
 **
@@ -330,7 +331,7 @@ iAuthSaver::~iAuthSaver() {
 void iAuthSaver::save() {
   QString directory;
 #if (QT_VERSION >= 0x050000)
-  directory = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+  directory = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 #else
   directory = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
 #endif
@@ -353,7 +354,7 @@ void iAuthSaver::save() {
 void iAuthSaver::load() {
   QString directory;
 #if (QT_VERSION >= 0x050000)
-  directory = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+  directory = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 #else
   directory = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
 #endif

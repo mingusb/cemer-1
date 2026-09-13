@@ -30,13 +30,17 @@
 QcssConsole* QcssConsole::theInstance = NULL;
 
 QcssConsole::~QcssConsole() {
+  if(theInstance == this)
+    theInstance = NULL;
 }
 
 QcssConsole::QcssConsole(QObject* parent, cssCmdShell* cs) :
   inherited((QWidget*)parent, "css> ", true)
 {
   cmd_shell = cs;
-  setFontNameSize(taMisc::font_names.general, taMisc::font_sizes.console);
+  setObjectName(QStringLiteral("cssConsole"));
+  setAccessibleName(QStringLiteral("CSS command console"));
+  setFontNameSize(taMisc::font_names.console, taMisc::GetCurrentFontSize("console"));
   setPager(false);              // we have our own front-end pager
 }
 
@@ -48,7 +52,13 @@ QcssConsole* QcssConsole::getInstance(QObject* parent, cssCmdShell* cs) {
 
 QString QcssConsole::interpretCommand(QString command, int* res) {
   *res = 0;
+  if(!cmd_shell) {
+    *res = 1;
+    return QStringLiteral("CSS command shell is not available.");
+  }
+  cssMisc::last_err_msg = "";
   cmd_shell->AcceptNewLine_Qt(command, false);
+  *res = cssMisc::last_err_msg.empty() ? 0 : 1;
   inherited::interpretCommand(command, res);
   return "";
 }
@@ -64,7 +74,12 @@ void QcssConsole::keyPressEvent(QKeyEvent *key_event) {
   
   switch (action) {
     case taiMisc::CONSOLE_STOP:
-      cmd_shell->src_prog->Stop();
+    case taiMisc::CONSOLE_STOP_II:
+      ctrlCPressed();
+      if(cmd_shell && cmd_shell->src_prog)
+        cmd_shell->src_prog->Stop();
+      key_event->accept();
+      break;
     default:
       inherited::keyPressEvent(key_event);
   }

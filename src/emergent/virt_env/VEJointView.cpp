@@ -282,7 +282,7 @@ void VEJointView::Render_impl() {
 
 #ifndef TA_QT3D
 // callback for transformer dragger
-void T3VEJoint_DragFinishCB(void* userData, SoDragger* dragr) {
+void T3VEJoint_DragFinishCB(void* userData, SoDragger* dragr) { (void)dragr; (void)userData;
   // TODO: write this
 //  SoTransformBoxDragger* dragger = (SoTransformBoxDragger*)dragr;
 //  T3VEJoint* obso = (T3VEJoint*)userData;

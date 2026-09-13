@@ -67,7 +67,6 @@ void BP_NETWORK_STATE::Compute_NetinAct_Thr(int thr_no) {
 void BP_NETWORK_STATE::Compute_dEdA_dEdNet_Thr(int thr_no) {
   const int nlay = n_layers_built;
   for(int li = nlay-1; li >= 0; li--) { // go in reverse order!
-    LAYER_STATE* lay = GetLayerState(li);
     const int ust = ThrLayUnStart(thr_no, li);
     const int ued = ThrLayUnEnd(thr_no, li);
     for(int ui = ust; ui < ued; ui++) {

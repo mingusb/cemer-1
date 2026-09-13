@@ -36,8 +36,8 @@ public:
   taStringDiffItem_PArray()                             { };
   taStringDiffItem_PArray(const taStringDiffItem_PArray& cp)    { Copy_Duplicate(cp); }
 protected:
-  String        El_GetStr_(const void* it) const { return _nilString; }
-  void          El_SetFmStr_(void* it, const String& val) {  };
+  String        El_GetStr_(const void* it) const { (void)it;  return _nilString; }
+  void          El_SetFmStr_(void* it, const String& val) { (void)it; (void)val;   };
 };
 
 #endif // taStringDiffItem_PArray_h

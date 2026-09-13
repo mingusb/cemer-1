@@ -66,13 +66,13 @@ bool BlankLineEl::BrowserEditSet(const String& code, int move_after) {
 }
 
 
-bool BlankLineEl::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool BlankLineEl::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   String cd = code;
   cd = trim(cd);
   if(cd.empty()) return true;
   return false;
 }
 
-bool BlankLineEl::CvtFmCode(const String& code) {
+bool BlankLineEl::CvtFmCode(const String& code) { (void)code;
   return true;
 }

@@ -87,6 +87,9 @@ void ProjectBase::Dump_Load_post() {
     if(!taMisc::gui_active && startup_run)
       taiMC_->Quit(CO_NORMAL_QUIT);
   }
+  else if(taMisc::gui_active) {
+    programs.RunStartupProgs();
+  }
 }
 
 void ProjectBase::SaveRecoverFile_strm(ostream& strm) {

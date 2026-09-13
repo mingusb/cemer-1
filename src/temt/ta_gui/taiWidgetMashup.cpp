@@ -91,7 +91,7 @@ void taiWidgetMashup::Constr(QWidget* gui_parent_) {
   SetRep(MakeLayoutWidget(gui_parent_));
   if (host != NULL) {
     QPalette pal = rep()->palette();
-    pal.setColor(QPalette::Background, host->colorOfCurRow());
+    pal.setColor(QPalette::Window, host->colorOfCurRow());
     rep()->setPalette(pal); 
   }
 }
@@ -103,7 +103,7 @@ void taiWidgetMashup::ChildRemove(taiWidget* child) {
   inherited::ChildRemove(child);
 }
 
-void taiWidgetMashup::GetImage_impl(const void* base_) {
+void taiWidgetMashup::GetImage_impl(const void* base_) { (void)base_;
   if(memb_bases.size != memb_el.size) {
     taMisc::Error("taiWidgetMashup: programmer error -- must call SetBases or AddBase so that memb_bases is same size as memb_el");
     return;
@@ -123,7 +123,7 @@ void taiWidgetMashup::GetImage_impl(const void* base_) {
   m_child_base = NULL;
 }
 
-void taiWidgetMashup::GetValue_impl(void* base_) const {
+void taiWidgetMashup::GetValue_impl(void* base_) const { (void)base_;
   if(memb_bases.size != memb_el.size) {
     taMisc::Error("taiWidgetMashup: programmer error -- must call SetBases or AddBase so that memb_bases is same size as memb_el");
     return;

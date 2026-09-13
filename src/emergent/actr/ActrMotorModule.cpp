@@ -666,7 +666,7 @@ ActrMotorStyle* ActrMotorModule::MakeMotorCmd(const String& nm, MotorStyles styl
                                               const Variant& par2,
                                               const Variant& par3,
                                               const Variant& par4,
-                                              const Variant& par5) {
+                                              const Variant& par5) { (void)par5;
   ActrMotorStyle* st = NULL;
   switch(style) {
   case PUNCH:
@@ -892,7 +892,7 @@ ActrMotorStyle* ActrMotorModule::PrepCursorPly(float r, float theta, float coeff
 
 ActrMotorStyle* ActrMotorModule::PrepCursorPlyToCoord(int to_col, int to_row,
                                                       float coeff_mult,
-                                                      float targ_width) {
+                                                      float targ_width) { (void)targ_width;
   int col = cursor_pos.x;
   int row = cursor_pos.y;
   float r = taMath_float::euc_dist((float)to_col,(float)to_col,(float)col, (float)row);
@@ -1096,7 +1096,7 @@ bool ActrMotorModule::ProcessQuery(ActrBuffer* buf, const String& query, bool wh
   return ProcessQuery_std(buf, query, why_not);
 }
 
-bool ActrMotorModule::SetParam(const String& param_nm, Variant par1, Variant par2) {
+bool ActrMotorModule::SetParam(const String& param_nm, Variant par1, Variant par2) { (void)par2;
   bool got = false;
   if(param_nm == "motor_activation" && buffer) {
     buffer->act_total = par1.toFloat();

@@ -392,7 +392,7 @@ bool Projection::ConSpecUpdated() {
   if((!(bool)layer) || (!(bool)from)) return false;
   Network* mynet = GET_MY_OWNER(Network);
   if(!mynet || !mynet->IsBuiltIntact()) return false;
-  NetworkState_cpp* net_state = mynet->net_state;
+
   if(sp) {
     if(TestWarning(!con_type->InheritsFrom(sp->min_obj_type), "UpdateConSpec",
                    "connection type set to:",sp->min_obj_type->name,
@@ -791,7 +791,7 @@ DataTable* Projection::ConVarsToTable(DataTable* dt, const String& var1, const S
   return dt;
 }
 
-String Projection::GetArgForCompletion(const String& method, const String& arg) {
+String Projection::GetArgForCompletion(const String& method, const String& arg) { (void)arg;
   if (method == "MonitorVar") {
     return "projection";
   }
@@ -799,7 +799,7 @@ String Projection::GetArgForCompletion(const String& method, const String& arg) 
 }
 
 void Projection::GetArgCompletionList(const String& method, const String& arg, const String_Array& arg_values, taBase* arg_obj,
-                                 const String& cur_txt, Completions& completions) {
+                                 const String& cur_txt, Completions& completions) { (void)arg_obj; (void)arg_values; (void)cur_txt;
   if (method == "MonitorVar" && arg == "variable") {
     MemberSpace mbr_space = GetTypeDef()->members;
     for (int i = 0; i < mbr_space.size; ++i) {

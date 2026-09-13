@@ -242,7 +242,7 @@ void DataTableView::SigRecvUpdateAfterEdit_impl() {
 }
 
 
-void DataTableView::UpdateFromDataTable_this(bool first) {
+void DataTableView::UpdateFromDataTable_this(bool first) { (void)first;
   UpdateName();
 }
 
@@ -297,7 +297,6 @@ ALSO: need to probably revise the scheme for reordering -- maybe user
   // items: add missing, order correctly, and update existing (will be only action 1st time)
   for (i = 0; i < cols->size; ++i) {
     dc = cols->FastEl(i);
-    bool firstcol = false;
     int fm = children.FindNameIdx(dc->GetName());
     if (fm >= 0) {
       dcs = (DataColView*)children.FastEl(fm);
@@ -308,7 +307,6 @@ ALSO: need to probably revise the scheme for reordering -- maybe user
       }
     }
     else {
-      firstcol = true;
       // taMisc::DebugInfo("making new view guy for:", dc->GetName());
       dcs = (DataColView*)taBase::MakeToken(children.el_typ); // of correct type for this
       children.Insert(dcs, i);

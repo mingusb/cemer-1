@@ -79,7 +79,7 @@ void NetMonitor::SmartRef_SigDestroying(taSmartRef* ref, taBase* obj) {
 
 void NetMonitor::SmartRef_SigEmit(taSmartRef* ref, taBase* obj,
                                   int sls, void* op1_, void* op2_)
-{
+{ (void)op1_; (void)op2_; (void)ref;
   if(sls != SLS_STRUCT_UPDATE_END || !obj || !obj->InheritsFrom(&TA_Network)) {
     return;
   }

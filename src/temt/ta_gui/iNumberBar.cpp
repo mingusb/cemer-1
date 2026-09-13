@@ -57,12 +57,12 @@ iNumberBar::iNumberBar( QWidget *parent, bool enable_icons)
   // Make room for 4 digits and the breakpoint icon
   cur_lineno = 0;
   icons_enabled = enable_icons;
-  text_width = fontMetrics().width( QString("0000"));
+  text_width = fontMetrics().horizontalAdvance( QString("0000"));
   text_height = fontMetrics().height();
-  icon_width = fontMetrics().width( QString("BRK"));
+  icon_width = fontMetrics().horizontalAdvance( QString("BRK"));
   total_width = text_width;
   if(enable_icons) {
-    total_width += icon_width + fontMetrics().width( QString("=>"));
+    total_width += icon_width + fontMetrics().horizontalAdvance( QString("=>"));
 //     // note: can't seem to find these icons!  need to get them somehow..
 //     stopMarker = QPixmap( "images/no.png" );
 //     currentMarker = QPixmap( "images/next.png" );
@@ -137,7 +137,6 @@ QRectF iNumberBar::rectFromLineNumber(int lineno) {
   int contentsY = edit->verticalScrollBar()->value();
   QRectF rval;
   if(lineno < 1 || lineno >= edit->document()->blockCount()) return rval;
-  int lineCount = 1;
   QTextBlock block = edit->document()->findBlockByNumber(lineno);
   if(!block.isValid()) return rval;
 
@@ -171,7 +170,7 @@ void iNumberBar::paintEvent( QPaintEvent * ) {
       break;
 
     const QString txt = QString::number( lineCount );
-    p.drawText( width() - fm.width(txt), qRound( position.y() ) - contentsY + ascent, txt );
+    p.drawText( width() - fm.horizontalAdvance(txt), qRound( position.y() ) - contentsY + ascent, txt );
 
     if(icons_enabled) {
       int lflag = lineFlags(lineCount);

@@ -97,12 +97,12 @@ public:
   virtual bool  SetLibElFromFile(ObjLibEl* lib_el);
   // #IGNORE parse dump file for name, tags, desc info, to populate ObjLibEl -- should work for most classes..
   
-  virtual void  SetWikiInfoToObj(taBase*obj, const String& wiki_name) { };
+  virtual void  SetWikiInfoToObj(taBase*obj, const String& wiki_name) { (void)obj; (void)wiki_name; };
   // #IGNORE subclasses must implement this to set wiki name if relevant into object, prior to uploading to wiki
 
   virtual void  GetWikiInfoFromObj
     (taBase* obj, String*& tags, String*& desc, taProjVersion*& version, String*& author,
-     String*& email, String*& pub_cite) { };
+     String*& email, String*& pub_cite) { (void)author; (void)desc; (void)email; (void)obj; (void)pub_cite; (void)tags; (void)version; };
   // #IGNORE subclasses must implement this to get wiki info from object, prior to uploading to wiki
   
 

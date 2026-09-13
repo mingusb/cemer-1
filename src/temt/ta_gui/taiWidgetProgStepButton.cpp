@@ -104,7 +104,7 @@ QWidget* taiWidgetProgStepButton::GetButtonRep() {
 
   // QWidget* stpwidg = new QWidget();
   // QHBoxLayout* hbl = new QHBoxLayout(stpwidg);
-  // hbl->setMargin(0); hbl->setSpacing(0);
+  // hbl->setContentsMargins(0, 0, 0, 0); hbl->setSpacing(0);
   for(int i=0;i<prg->sub_progs_step.size; i++) {
     Program* sp = (Program*)prg->sub_progs_step[i];
     QToolButton* tbut = new iContextMenuButton();

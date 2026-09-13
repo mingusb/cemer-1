@@ -37,7 +37,7 @@ void iTreeListWidget::init() {
 }
 
 void iTreeListWidget::dropEvent(QDropEvent* e) {
-  QModelIndex drop_index = indexAt(e->pos());
+  QModelIndex drop_index = indexAt(e->position().toPoint());
   DropIndicatorPosition drop_indicator = dropIndicatorPosition();
   
   if (!drop_index.parent().isValid() && drop_index.row() != -1)

@@ -41,7 +41,7 @@ iClipData::iClipData(int src_edit_action_)
 
 
 const QString iClipData::GetCommonDescHeader() const {
-  QString rval =  QString::number(src_edit_action) + ';' +
+  QString rval =  QString::number(src_edit_action) + QLatin1Char(';') +
         QString::number(taMisc::ProcessId()) + ";";
   return rval;
 }
@@ -54,4 +54,3 @@ void iClipData::setTextFromStr(const String& str) {
   // sets text without doubly converting from String->QString->ByteArray
   setData(taiMimeFactory::text_plain, taiMimeFactory::StrToByteArray(str));
 }
-

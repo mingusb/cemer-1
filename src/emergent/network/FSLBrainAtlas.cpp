@@ -14,6 +14,7 @@
 //   GNU General Public License for more details.
 
 #include "FSLBrainAtlas.h"
+#include <QRegularExpression>
 #include <FSLBrainAtlasFileParser>
 #include <FSLBrainAtlasFileComposer>
 #include <BrainAtlasInfo>
@@ -77,7 +78,7 @@ QList<BrainAtlasLabel> FSLBrainAtlas::Labels(const QString& labels_regexp) const
   // Labels are fully populated during constructor's parsing
   // of file. This method returns a subset of those labels.
   QList<BrainAtlasLabel> list; 
-  QRegExp regexp(labels_regexp);
+  QRegularExpression regexp(labels_regexp);
 
   foreach(BrainAtlasLabel label, m_labels){
     if (label.Text().contains(regexp)){
@@ -97,7 +98,7 @@ QList<taVector3f> FSLBrainAtlas::VoxelCoordinates(const QString& labels_regexp) 
   
   // We don't currently support 2mm atlas image data 
   // files since we render to a 1mm brain 
-  const QRegExp regexp("2mm");
+  const QRegularExpression regexp("2mm");
   assert(!m_image_filename.contains(regexp));
   
   // get labels that match the regexp

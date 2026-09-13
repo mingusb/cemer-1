@@ -17,7 +17,7 @@ void STATE_CLASS(TiledGpRFPrjnSpec)::Initialize_core() {
   wt_range.max = 0.6f;
 }
 
-bool STATE_CLASS(TiledGpRFPrjnSpec)::ConnectPassCheck(PRJN_STATE* prjn, NETWORK_STATE* net, int pass) const {
+bool STATE_CLASS(TiledGpRFPrjnSpec)::ConnectPassCheck(PRJN_STATE* prjn, NETWORK_STATE* net, int pass) const { (void)net; (void)prjn;
   if(p_con < 1.0f && reciprocal && symmetric) return (pass == 2);
   return (pass == 1);
 }
@@ -41,10 +41,9 @@ void STATE_CLASS(TiledGpRFPrjnSpec)::Connect_impl(PRJN_STATE* prjn, NETWORK_STAT
     su_geo = 1;
   }
   int ru_nunits = recv_lay->un_geom_n;
-  int su_nunits = send_lay->un_geom_n;
 
-  int sg_sz_tot = send_gp_size.Product();
-  int alloc_no = sg_sz_tot * su_nunits;
+
+
 
   if(share_cons) {
     if(ru_nunits % net->n_thrs_built != 0) {
@@ -112,7 +111,6 @@ void STATE_CLASS(TiledGpRFPrjnSpec)::Init_Weights_Gaussian
   //   send_lay = prjn->layer;
   // }
 
-  bool no_send_gp = (send_gp_size.Product() == 1);
 
 
   TAVECTOR2I send_un_geo;

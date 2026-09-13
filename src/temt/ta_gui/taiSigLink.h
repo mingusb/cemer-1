@@ -48,17 +48,17 @@ public:
   virtual taiSigLink*   ownLink() const {return NULL;} // owner link (NOT gui par)
 
   virtual void          FillContextMenu(taiWidgetActions* menu); // only override to prepend to menu
-  virtual void          FillContextMenu_EditItems(taiWidgetActions* menu, int allowed) {}
-  virtual bool          GetIcon(int bmf, int& flags_supported, QIcon& ic) {return false;}
-  virtual taiSigLink*   GetListChild(int itm_idx) {return NULL;} // returns NULL when no more
-  virtual taiSigLink*   GetListChild(void* el) {return NULL;} // get link when item is known (esp for change notifies)
+  virtual void          FillContextMenu_EditItems(taiWidgetActions* menu, int allowed) { (void)allowed; (void)menu; }
+  virtual bool          GetIcon(int bmf, int& flags_supported, QIcon& ic) { (void)bmf; (void)flags_supported; (void)ic; return false;}
+  virtual taiSigLink*   GetListChild(int itm_idx) { (void)itm_idx; return NULL;} // returns NULL when no more
+  virtual taiSigLink*   GetListChild(void* el) { (void)el; return NULL;} // get link when item is known (esp for change notifies)
   virtual String        GetPath() const {return _nilString;} // esp taBase path
   virtual String        GetPathNames() const {return _nilString;} // esp taBase path
   virtual String        GetTypeDecoKey() const {return _nilString;}
   virtual String        GetStateDecoKey() const {return _nilString;}
   virtual const QVariant GetColData(const KeyString& key, int role) const
-    {return QVariant();} // for getting things like status text, tooltip text, etc.
-  virtual void          Search(iDialogSearch* dlg) {} // called to do a search
+    { (void)key; (void)role; return QVariant();} // for getting things like status text, tooltip text, etc.
+  virtual void          Search(iDialogSearch* dlg) { (void)dlg; } // called to do a search
 
   iPanelBase*           CreateDataPanel();
   taiTreeNode*          CreateTreeDataNode(MemberDef* md, taiTreeNode* parent,
@@ -75,7 +75,7 @@ protected:
   taSigLink_QObj*        qobj; // #IGNORE delegate object, when we need to connect or signal
 
   virtual void          Assert_QObj(); // makes sure the qobj is created
-  virtual void          FillContextMenu_impl(taiWidgetActions* menu) {} // this is usually the one to override
+  virtual void          FillContextMenu_impl(taiWidgetActions* menu) { (void)menu; } // this is usually the one to override
   virtual iPanelBase*   CreateDataPanel_impl(); // default uses taiView
   taiTreeNode*          CreateTreeDataNode(MemberDef* md,
     taiTreeNode* nodePar, iTreeView* tvPar, taiTreeNode* after,
@@ -87,13 +87,13 @@ protected:
   virtual ~taiSigLink(); // we only ever implicitly destroy, when 0 clients
 
 public: // DO NOT CALL
-  virtual void          QueryEditActions_impl(taiMimeSource* ms, int& allowed, int& forbidden) {}
+  virtual void          QueryEditActions_impl(taiMimeSource* ms, int& allowed, int& forbidden) { (void)allowed; (void)forbidden; (void)ms; }
     // get edit items allowed for this one item
-  virtual int           EditAction_impl(taiMimeSource* ms, int ea) {return 0;}
+  virtual int           EditAction_impl(taiMimeSource* ms, int ea) { (void)ea; (void)ms; return 0;}
   virtual void          ChildQueryEditActions_impl(const MemberDef* par_md, taiSigLink* child,
-    taiMimeSource* ms, int& allowed, int& forbidden) {}
+    taiMimeSource* ms, int& allowed, int& forbidden) { (void)allowed; (void)child; (void)forbidden; (void)ms; (void)par_md; }
   virtual int           ChildEditAction_impl(const MemberDef* par_md, taiSigLink* child,
-    taiMimeSource* ms, int ea) {return 0;} //
+    taiMimeSource* ms, int ea) { (void)child; (void)ea; (void)ms; (void)par_md; return 0;} //
 };
 
 #endif // taiSigLink_h

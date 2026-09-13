@@ -407,10 +407,10 @@ public:
   void UpdateAfterEdit() override       { cssref->UpdateAfterEdit(); }
 
   bool   MembersDynamic() override      { return true; }
-  int    GetMemberNo(const String& memb) const override { return -1; } // never static lookup
+  int    GetMemberNo(const String& memb) const override { (void)memb; return -1; } // never static lookup
   cssEl* GetMemberFmNo(int s) const override            { return cssref->GetMemberFmNo(s); }
   cssEl* GetMemberFmName(const String& s) const override { return cssref->GetMemberFmName(s); }
-  int    GetMethodNo(const String& memb) const override { return -1; }
+  int    GetMethodNo(const String& memb) const override { (void)memb; return -1; }
   cssEl* GetMethodFmNo(int s) const override            { return cssref->GetMethodFmNo(s); }
   cssEl* GetMethodFmName(const String& s) const override        { return cssref->GetMethodFmName(s); }
   cssEl* GetScoped(const String& s) const override      { return cssref->GetScoped(s); }

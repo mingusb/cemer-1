@@ -191,7 +191,7 @@ public:
   
   virtual TypeDef* GetElType() const {return NULL;}
   // #IGNORE Default type for objects in group
-  virtual void  SigEmit(int sls, void* op1 = NULL, void* op2 = NULL) {}
+  virtual void  SigEmit(int sls, void* op1 = NULL, void* op2 = NULL) { (void)op1; (void)op2; (void)sls; }
   // #IGNORE called when list has changed -- more fine-grained than Dirty(), and may be multiple calls per event
   inline int    Index(int idx) const { if(idx < 0) idx += size; return idx; }
   // #EXPERT #CAT_Access get actual index from index value that can also be negative, meaning access from end of list
@@ -287,12 +287,12 @@ public:
   // browsing -- browse client lists must override
   virtual int           NumListCols() const {return 0;}
   // #IGNORE number of columns in a list view for this item type
-  virtual const KeyString GetListColKey(int col) const {return _nilKeyString;}
+  virtual const KeyString GetListColKey(int col) const { (void)col; return _nilKeyString;}
   // #IGNORE col key for the default list column
-  virtual String        GetColHeading(const KeyString& key) const {return _nilKeyString;}
+  virtual String        GetColHeading(const KeyString& key) const { (void)key; return _nilKeyString;}
   // #IGNORE header text for the given key
   virtual String        ChildGetColText(void* child, TypeDef* typ, const KeyString& key,
-                                        int itm_idx = -1) const {return _nilKeyString;}
+                                        int itm_idx = -1) const { (void)child; (void)itm_idx; (void)key; (void)typ; return _nilKeyString;}
   // #IGNORE itm_idx is a hint from source, -1 means not specified or ignore
   
   // output

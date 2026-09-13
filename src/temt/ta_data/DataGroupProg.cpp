@@ -88,7 +88,7 @@ void DataGroupProg::AddAllColumns() {
   group_spec.AddAllColumns(GetSrcData());
 }
 
-bool DataGroupProg::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool DataGroupProg::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   return CvtFmCodeCheckNames(code);
 }
 

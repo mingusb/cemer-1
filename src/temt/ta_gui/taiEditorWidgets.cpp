@@ -39,7 +39,7 @@ void taiEditorWidgets::DoFillLabelContextMenu_CtrlPanel
 (QMenu* menu, int& last_id, taBase* rbase, MemberDef* md, QWidget* menu_par,
  QObject* slot_obj, const char* add_slot, const char* rmv_slot, const char* add_short_slot,
    const char* goto_slot)
-{
+{ (void)last_id; (void)menu_par;
   // have to be a taBase to use ControlPanel
   if (!rbase || !md) return;
   // get list of control panels
@@ -217,7 +217,7 @@ void taiEditorWidgets::Constr_Methods_impl() { //note: conditional constructions
     tmp->setVisible(false); // prevents it showing as global win in some situations
     tmp->setAutoFillBackground(true); // for when disconnected from us
     QPalette pal = tmp->palette();
-    pal.setColor(QPalette::Background, bg_color);
+    pal.setColor(QPalette::Window, bg_color);
     tmp->setPalette(pal); 
     tmp->setFrameStyle( QFrame::Panel | QFrame::Sunken );
     tmp->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum));
@@ -250,7 +250,7 @@ void taiEditorWidgets::Insert_Methods() {
   }
 }
 
-void taiEditorWidgets::SigLinkRecv(taSigLink* dl, int sls, void* op1, void* op2) {
+void taiEditorWidgets::SigLinkRecv(taSigLink* dl, int sls, void* op1, void* op2) { (void)dl; (void)op1; (void)op2;
 //note: nothing in base, by design
   //NOTE: list/group subclasses typically detect changes in their GetImage routine
   //  so we don't really subclass this routine or explicitly detect the list/group notifies
@@ -321,7 +321,7 @@ void taiEditorWidgets::label_contextMenuInvoked(iLabel* sender, QContextMenuEven
   delete menu;
 }
 
-void taiEditorWidgets::FillLabelContextMenu(QMenu* menu, int& last_id) {
+void taiEditorWidgets::FillLabelContextMenu(QMenu* menu, int& last_id) { (void)last_id;
   // only add member help if exists
   if (ctrl_panel_mbr) {
     menu->addAction("&Help", this, SLOT(helpMenu_triggered()));
@@ -348,7 +348,7 @@ void taiEditorWidgets::Ok_impl() { //note: only used for Dialogs
   }
 }
 
-void taiEditorWidgets::ClearBody(bool waitproc) {
+void taiEditorWidgets::ClearBody(bool waitproc) { (void)waitproc;
   StartEndLayout(true);
   ClearBody_impl();
   if (!(state & SHOW_CHANGED)) return; // probably just destroying

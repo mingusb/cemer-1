@@ -68,7 +68,7 @@ bool NewViewHelper::inSameProject() {
 bool NewViewHelper::objectAlreadyInFrame() {
   if (fr_) {
     // check if already viewing this obj there, warn user
-    if (T3DataView *dv = fr_->FindRootViewOfData(obj_)) {
+    if (fr_->FindRootViewOfData(obj_)) {
       const char *question =
         "This network is already shown in that frame -- would you like"
         " to show it in a new frame?";

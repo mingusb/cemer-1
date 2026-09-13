@@ -40,7 +40,7 @@
     INIMPL virtual void Quarter_Init_TargFlags_Layer_ugp
       (LEABRA_LAYER_STATE* lay, LEABRA_NETWORK_STATE* net, int gpidx);
     // #IGNORE
-  INLINE void  Quarter_Init_Layer_Post(LEABRA_LAYER_STATE* lay, LEABRA_NETWORK_STATE* net) override;
+  INIMPL void  Quarter_Init_Layer_Post(LEABRA_LAYER_STATE* lay, LEABRA_NETWORK_STATE* net) override;
   
   INLINE void  Compute_CycleStats_Pre(LEABRA_LAYER_STATE* lay, LEABRA_NETWORK_STATE* net) override {
     inherited::Compute_CycleStats_Pre(lay, net);

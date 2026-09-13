@@ -86,7 +86,7 @@ String IfReturn::GetDisplayName() const {
     return "if(" + cond.GetFullExpr() + ") return";
 }
 
-bool IfReturn::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const {
+bool IfReturn::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const { (void)code_str; (void)scope_el;
   return false; // obsolete - gets replaced on load by separate if and return statements
 //  String code = code_str; code.downcase();
 //  if(code.startsWith("if") && code.contains("return")) return true;
@@ -94,7 +94,7 @@ bool IfReturn::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const {
 //  return false;
 }
 
-bool IfReturn::CvtFmCode(const String& code) {
+bool IfReturn::CvtFmCode(const String& code) { (void)code;
   return false;
 //  String cd = trim(code.after("if"));
 //  cd = trim(cd.before("return"));

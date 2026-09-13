@@ -77,7 +77,7 @@ public:
   virtual void          ReBuildAll();
   // calls Reset, BuildAll, Render -- a full rebuild -- when something structural has changed (outside of normal signal mechanism, which does this automatically on SigRecvStructUpdateEnd_impl
 
-  virtual void          DataUnitsXForm(taVector3f& pos, taVector3f& size) { };
+  virtual void          DataUnitsXForm(taVector3f& pos, taVector3f& size) { (void)pos; (void)size; };
   // transform position and size values into native units of the display (e.g., for a graph, the units of what is being graphed) -- override in implementations
 
   virtual void          SaveImageSVG(const String& svg_fname);
@@ -134,9 +134,9 @@ public:
   virtual void          AnnoteClearAll();
   // #MENU_BUTTON remove all existing annotations
   
-  virtual int           GetNetTextItemWidth(const String& name) { return -1; }
+  virtual int           GetNetTextItemWidth(const String& name) { (void)name; return -1; }
   // get saved width for this state var - subclasses should implement if they have state vars to display
-  virtual void          SetNetTextItemWidth(const String& name, int width) { ; }
+  virtual void          SetNetTextItemWidth(const String& name, int width) { (void)name; (void)width; ; }
   // update saved width for this state var - subclasses should implement if they have state vars to display
 
   void         InitLinks() override;

@@ -27,29 +27,27 @@ class TEMPLATE_API TemplatePlugin : public QObject,
 { // #NO_CSS #NO_MEMBERS
   Q_OBJECT
 #ifndef __MAKETA__
-#if (QT_VERSION >= 0x050000)
   Q_PLUGIN_METADATA(IID "@EMERGENT_PLUGIN_UNIQUEID@")
-#endif
   // Tells Qt which interfaces are implemented by this class
   Q_INTERFACES(IPlugin)
 #endif
 public:
   static const taVersion	version;
   
-  TemplatePlugin(QObject* par = NULL);
+  explicit TemplatePlugin(QObject* parent = nullptr);
 
 public: // IPlugin interface
   TYPED_OBJECT(TemplatePlugin)
-  const char*	desc();
-  const char*	name() {return "Template";}
-  const char*	uniqueId();
-  const char*	url();
+  const char*	desc() override;
+  const char*	name() override {return "Template";}
+  const char*	uniqueId() override;
+  const char*	url() override;
   
-  int		NotifyTacssVersion(const taVersion& tav, bool& is_ok) {return 0;}
+  int		NotifyTacssVersion(const taVersion& tav, bool& is_ok) override {(void)tav; is_ok = true; return 0;}
     // we pass temt version; set is_ok false if this version is no good for plugin
-  int		GetVersion(taVersion& tav) {tav = version; return 0;}
-  int 		InitializeTypes();
-  int 		InitializePlugin();
+  int		GetVersion(taVersion& tav) override {tav = version; return 0;}
+  int 		InitializeTypes() override;
+  int 		InitializePlugin() override;
 };
 
 // Associates a string with the interface TemplatePlugin

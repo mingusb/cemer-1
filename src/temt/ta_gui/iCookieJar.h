@@ -17,7 +17,11 @@
 #define iCookieJar_h 1
 
 #include <QNetworkCookieJar>
+#ifndef __MAKETA__
 #include <QStringList>
+#else
+class QStringList; //
+#endif
 
 class iNetworkCookieJarPrivate;
 class iNetworkCookieJar : public QNetworkCookieJar {
@@ -51,8 +55,6 @@ class iCookieJar : public iNetworkCookieJar {
     Q_PROPERTY(QStringList blockedCookies READ blockedCookies WRITE setBlockedCookies)
     Q_PROPERTY(QStringList allowedCookies READ allowedCookies WRITE setAllowedCookies)
     Q_PROPERTY(QStringList allowForSessionCookies READ allowForSessionCookies WRITE setAllowForSessionCookies)
-    Q_ENUMS(KeepPolicy)
-    Q_ENUMS(AcceptPolicy)
 
     signals:
     void cookiesChanged();
@@ -63,12 +65,14 @@ public:
     AcceptNever,
     AcceptOnlyFromSitesNavigatedTo
   };
+  Q_ENUM(AcceptPolicy)
 
   enum KeepPolicy {
     KeepUntilExpire,
     KeepUntilExit,
     KeepUntilTimeLimit
   };
+  Q_ENUM(KeepPolicy)
 
   iCookieJar(QObject *parent = 0);
   ~iCookieJar();

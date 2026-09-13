@@ -108,7 +108,7 @@ String MemberAssign::GetDisplayName() const {
   return rval;
 }
 
-bool MemberAssign::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool MemberAssign::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if(!code.contains('=')) return false;
   String lhs = code.before('=');
   if(!(lhs.contains('.') || lhs.contains("->"))) return false;

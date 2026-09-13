@@ -31,7 +31,7 @@ class TA_API taiWidgetTaBaseMenu: public taiWidget {
 public:
   taBase*               cur_obj;
   void         SigEmit(taiWidget* chld = NULL) override; // do autoapply
-  virtual void  GetMenu(taiWidgetActions* actions, iMenuAction* actn = NULL) {} // variant provided for MenuGroup_impl in winbase
+  virtual void  GetMenu(taiWidgetActions* actions, iMenuAction* actn = NULL) { (void)actions; (void)actn; } // variant provided for MenuGroup_impl in winbase
   void          setCur_obj(taBase* value, bool do_chng = true); // set cur_obj and notifies change if different
   taiWidgetTaBaseMenu(taiWidgetActions* actions_, TypeDef* tp, IWidgetHost* host, taiWidget* par, QWidget* gui_parent_, int flags_ = 0);
   ~taiWidgetTaBaseMenu();

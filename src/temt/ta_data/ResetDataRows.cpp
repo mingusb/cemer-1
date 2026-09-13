@@ -45,7 +45,7 @@ bool ResetDataRows::GenCssBody_impl(Program* prog) {
   return true;
 }
 
-bool ResetDataRows::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool ResetDataRows::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   String dc = code;  dc.downcase();
   String tbn = GetToolbarName(); tbn.downcase();
   String tn = GetTypeDef()->name; tn.downcase();

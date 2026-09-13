@@ -107,7 +107,7 @@ void iPanelOfProgramBase::UpdatePanel_impl() {
   pe->Refresh();
 }
 
-void iPanelOfProgramBase::ResolveChanges_impl(CancelOp& cancel_op) {
+void iPanelOfProgramBase::ResolveChanges_impl(CancelOp& cancel_op) { (void)cancel_op;
  // per semantics elsewhere, we just blindly apply changes
   if (pe->HasChanged()) {
     pe->Apply();

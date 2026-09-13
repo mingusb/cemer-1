@@ -71,7 +71,7 @@ if (WIN32)
 else (WIN32)
   # args need to be in list format for MAKETA_CPP, but FLAGS are space separated string
   # so we convert to list by replacing spaces with ; list separator -- do for all 
-  set(mtacppstr "-x c++-header -std=c++${CMAKE_CXX_STANDARD} -E ${EMERGENT_FULL_CXX_FLAGS}")
+  set(mtacppstr "-x c++-header -std=c++${CMAKE_CXX_STANDARD} -Wall -Wextra -Werror -E ${EMERGENT_FULL_CXX_FLAGS}")
   string(REPLACE " " ";" mtacpplist ${mtacppstr})
   set(MAKETA_CPP "${CMAKE_CXX_COMPILER}" ${mtacpplist})
 #  message(STATUS "MAKETA_CPP ${MAKETA_CPP}")
@@ -98,8 +98,12 @@ macro(CREATE_MAKETA_COMMAND infile outfile)
   
   add_custom_command(
     OUTPUT ${outfile}
-    COMMAND ${MAKETA_CMD} ${MAKETA_FLAGS} ${maketa_includes} -o ${outfile} ${infile}
-    DEPENDS ${infile}
+    # Preserve the output timestamp when a generator rebuild produces identical
+    # reflection code, so Ninja can avoid recompiling unaffected translation units.
+    COMMAND ${MAKETA_CMD} ${MAKETA_FLAGS} ${maketa_includes} -o "${outfile}.tmp" ${infile}
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${outfile}.tmp" "${outfile}"
+    COMMAND ${CMAKE_COMMAND} -E rm -f "${outfile}.tmp"
+    DEPENDS ${MAKETA_CMD} ${infile}
   )
   # IMPORTANT: setting these props triggers a full rebuild of the source whenever
   # the list of files changes -- so we cannot do this -- now with distributed maketa
@@ -138,8 +142,12 @@ macro(CREATE_MAKETA_COMMAND_MI infile outfile extradep)
 
   add_custom_command(
     OUTPUT ${outfile}
-    COMMAND ${MAKETA_CMD} ${MAKETA_FLAGS} ${maketa_includes} -o ${outfile} ${infile}
-    DEPENDS ${infile} ${exdeplist}
+    # Preserve the output timestamp when a generator rebuild produces identical
+    # reflection code, so Ninja can avoid recompiling unaffected translation units.
+    COMMAND ${MAKETA_CMD} ${MAKETA_FLAGS} ${maketa_includes} -o "${outfile}.tmp" ${infile}
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${outfile}.tmp" "${outfile}"
+    COMMAND ${CMAKE_COMMAND} -E rm -f "${outfile}.tmp"
+    DEPENDS ${MAKETA_CMD} ${infile} ${exdeplist}
   )
 endmacro (CREATE_MAKETA_COMMAND_MI)
 

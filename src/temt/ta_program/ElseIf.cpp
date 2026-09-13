@@ -102,7 +102,7 @@ String ElseIf::GetDisplayName() const {
   return "else if (" + cond.GetFullExpr() + ")";
 }
 
-bool ElseIf::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const {
+bool ElseIf::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const { (void)scope_el;
   String code = code_str; code.downcase();
   if(code.startsWith("else if") || code.startsWith("elseif")) return true;
   return false;

@@ -20,7 +20,11 @@
 
 // parent includes:
 #include <QCompleter>
+#ifndef __MAKETA__
 #include <QStringList>
+#else
+class QStringList; //
+#endif
 #include <QStringListModel>
 #include <QListView>
 

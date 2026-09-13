@@ -59,7 +59,7 @@ void StopStepPoint::InitLinks() {
   InitLinks_taAuto(&TA_StopStepPoint);
 }
 
-void StopStepPoint::PreGenMe_impl(int item_id) {
+void StopStepPoint::PreGenMe_impl(int item_id) { (void)item_id;
   // register as a subproc
   Program* prog = program();
   if (!prog) return; // shouldn't normally happen

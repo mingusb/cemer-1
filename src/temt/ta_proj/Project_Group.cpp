@@ -52,7 +52,7 @@ int Project_Group::Load_strm(istream& strm, taBase* par, taBase** loaded_obj_ptr
 
 int Project_Group::LoadFromWiki(const String wiki, const String project_name) {
   int rval = 0;
-  String path = QDir::tempPath() + PATH_SEP + project_name + ".proj";
+  String path = String(QDir::tempPath()) + PATH_SEP + project_name + ".proj";
   QFileInfo fi(path);
   if (!taMediaWiki::DownloadFile(wiki, project_name, path)) {
     taMisc::Error("Failed to download project " + project_name + " from wiki " + wiki);

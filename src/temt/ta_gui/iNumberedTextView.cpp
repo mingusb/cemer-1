@@ -76,7 +76,7 @@ iNumberedTextView::iNumberedTextView( QWidget *parent, bool enable_icons )
 
   box = new QHBoxLayout( this );
   box->setSpacing( 3 );	// some space btwn
-  box->setMargin( 0 );
+  box->setContentsMargins(0, 0, 0, 0);
   box->addWidget( numbers );
   box->addWidget( view );
 }

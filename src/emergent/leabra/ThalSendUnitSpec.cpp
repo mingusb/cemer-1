@@ -1,7 +1,7 @@
 // this is included directly in LeabraExtraUnitSpecs_cpp / _cuda
 // {
 
-void STATE_CLASS(ThalSendUnitSpec)::Send_Thal(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+void STATE_CLASS(ThalSendUnitSpec)::Send_Thal(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   const float snd_val = u->act_eq;
   const int nsg = u->NSendConGps(net); 
   for(int g=0; g<nsg; g++) {

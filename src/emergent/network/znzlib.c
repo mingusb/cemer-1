@@ -97,13 +97,23 @@ znzFile znzdopen(int fd, const char *mode, int use_compression)
   } else {
 #endif
     file->withz = 0;
-#ifdef HAVE_FDOPEN
+#ifdef _WIN32
+    file->nzfptr = _fdopen(fd,mode);
+#else
     file->nzfptr = fdopen(fd,mode);
 #endif
 #ifdef HAVE_ZLIB
     file->zfptr = NULL;
   };
 #endif
+  if (file->nzfptr == NULL
+#ifdef HAVE_ZLIB
+      && file->zfptr == NULL
+#endif
+     ) {
+    free(file);
+    return NULL;
+  }
   return file;
 }
 

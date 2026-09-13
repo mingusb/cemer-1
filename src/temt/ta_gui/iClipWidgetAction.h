@@ -19,7 +19,11 @@
 #include "ta_def.h"
 
 #include <QWidgetAction>
+#ifndef __MAKETA__
 #include <QStringList>
+#else
+class QStringList; //
+#endif
 
 class QMimeData;
 

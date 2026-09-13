@@ -60,9 +60,9 @@ public:
   bool                  auto_edit; // #HIDDEN #NO_SAVE #OBSOLETE automatically activate control panel upon loading -- replaced with user data user_pinned 
 
   ControlPanelMember*   mbr(int i) const; // convenience accessor for flat access
-  int                   mbrSize(int i) const {return mbrs.leaves;} // flat size
+  int                   mbrSize(int i) const { (void)i;return mbrs.leaves;} // flat size
   ControlPanelMethod*   mth(int i) const; // convenience accessor for flat access
-  int                   mthSize(int i) const {return mths.leaves;} // flat size
+  int                   mthSize(int i) const { (void)i;return mths.leaves;} // flat size
 
   String                GetTypeDecoKey() const override { return "ControlPanel"; }
   String                GetDesc() const override { return desc; } //

@@ -59,7 +59,7 @@ bool STATE_CLASS(LHbRMTgUnitSpec)::GetRecvLayers
   return true;
 }
 
-void STATE_CLASS(LHbRMTgUnitSpec)::Compute_Lhb(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+void STATE_CLASS(LHbRMTgUnitSpec)::Compute_Lhb(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   LEABRA_LAYER_STATE* pv_pos_lay = NULL;
   LEABRA_LAYER_STATE* vspatch_pos_D1_lay = NULL;
   LEABRA_LAYER_STATE* vspatch_pos_D2_lay = NULL;
@@ -71,7 +71,6 @@ void STATE_CLASS(LHbRMTgUnitSpec)::Compute_Lhb(LEABRA_UNIT_STATE* u, LEABRA_NETW
   LEABRA_LAYER_STATE* vsmatrix_neg_D1_lay = NULL;
   LEABRA_LAYER_STATE* vsmatrix_neg_D2_lay = NULL;
   
-  LEABRA_LAYER_STATE* lay = u->GetOwnLayer(net);
   
   GetRecvLayers(u, net, pv_pos_lay, vspatch_pos_D1_lay, vspatch_pos_D2_lay,
                 vsmatrix_pos_D1_lay, vsmatrix_pos_D2_lay, pv_neg_lay,

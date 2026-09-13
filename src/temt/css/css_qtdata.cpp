@@ -42,7 +42,7 @@ cssiPolyData::~cssiPolyData() {
   data_el.Reset();
 }
 
-void cssiPolyData::Constr(QWidget* gui_parent_) {
+void cssiPolyData::Constr(QWidget* /*gui_parent_*/) {
   /* TODO:
   rep = taiM->layout->hbox();
   ivResource::ref(rep);

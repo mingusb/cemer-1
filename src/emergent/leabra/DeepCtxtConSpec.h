@@ -29,9 +29,9 @@
 
   // don't send regular net inputs..
   INLINE void Send_NetinDelta(LEABRA_CON_STATE* cg, LEABRA_NETWORK_STATE* net, int thr_no, 
-                              const float su_act_delta) override { };
+                              const float su_act_delta) override { (void)cg; (void)net; (void)su_act_delta; (void)thr_no; };
   INLINE float Compute_Netin(CON_STATE* cg, NETWORK_STATE* net, int thr_no) override
-  { return 0.0f; }
+  { (void)cg; (void)net; (void)thr_no; return 0.0f; }
 
   INLINE float C_Compute_dWt_Delta
     (const float ru_avg_s, const float ru_avg_m, const float su_deep_prv) {
@@ -52,12 +52,11 @@
     GetLrates(cg, net, thr_no, clrate, deep_on, bg_lrate, fg_lrate);
 
     const float su_su_avg_s_lrn = su->su_avg_s_lrn;
-    const float su_ru_avg_s_lrn = su->ru_avg_s_lrn;
+
     const float su_avg_s = su->deep_raw_prv; // value sent on prior trial..
     const float su_avg_m = su->deep_raw_prv;
     const int sz = cg->size;
     
-    LEABRA_PRJN_STATE* prjn = cg->GetPrjnState(net);
     if(momentum.on) {
       clrate *= momentum.lr_comp;
     }

@@ -68,7 +68,7 @@ void taiWidgetPoly::Constr(QWidget* gui_parent_) {
   SetRep(MakeLayoutWidget(gui_parent_));
   if (host != NULL) {
     QPalette pal = rep()->palette();
-    pal.setColor(QPalette::Background, host->colorOfCurRow());
+    pal.setColor(QPalette::Window, host->colorOfCurRow());
     rep()->setPalette(pal); 
   }
 }

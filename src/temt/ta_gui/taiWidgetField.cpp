@@ -176,7 +176,6 @@ void taiWidgetField::lookupKeyPressed_dialog() {
 
   QTextCursor cursor(edit_dialog->txtText->textCursor());
   Completions* completions = NULL;
-  taBase* tab = (taBase*)lookupfun_base;
   int cur_pos = cursor.position();
   
   iCodeCompleter* completer = rep()->GetCompleter();
@@ -305,7 +304,6 @@ void taiWidgetField::characterEntered_dialog() {
   if (!edit_dialog) return;
   
   int cur_pos = edit_dialog->txtText->textCursor().position();
-  int new_pos = -1;
   iCodeCompleter* completer = edit_dialog->txtText->GetCompleter();
   if (completer) {
     member_completions.Reset();
@@ -330,9 +328,6 @@ void taiWidgetField::MemberCompletion() {
   
   member_completions.Reset();
   taBase* tab = (taBase*)lookupfun_base;
-  int cur_pos = rep()->cursorPosition();
-  
-  iCodeCompleter* completer = rep()->GetCompleter();
   String text = rep()->text();
   String pre_text = text;
   if (text.contains('.')) {

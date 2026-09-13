@@ -722,7 +722,7 @@ bool AuditoryProc::FilterTrial(int chan) {
   return true;
 }
 
-void AuditoryProc::DftInput(int chan, int step) {
+void AuditoryProc::DftInput(int chan, int step) { (void)chan; (void)step;
   taMath_float::fft_real(&dft_out, &window_in);
 }
 
@@ -798,7 +798,7 @@ void AuditoryProc::GaborFilter_impl(int chan, const AudGaborSpec& spec,
                                     const float_Matrix& filters, float_Matrix& out_raw,
                                     float_Matrix& out) {
   const int t_half_sz = spec.sz_time / 2;
-  const int h_half_sz = spec.sz_freq / 2;
+
 
   const int t_off = t_half_sz - input.border_steps;
   int t_min = t_off;
@@ -904,7 +904,7 @@ bool AuditoryProc::OutputToTable(int chan) {
   return true;
 }
 
-bool AuditoryProc::MelOutputToTable(DataTable* dtab, int chan, bool fmt_only) {
+bool AuditoryProc::MelOutputToTable(DataTable* dtab, int chan, bool fmt_only) { (void)dtab;
   DataCol* col;
   int idx;
   String col_sufx;

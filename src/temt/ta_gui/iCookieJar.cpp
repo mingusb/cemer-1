@@ -14,6 +14,15 @@
 //   Lesser General Public License for more details.
 
 #include "iCookieJar.h"
+#include <algorithm>
+#include <QIODevice>
+
+// Return end for an absent key, preserving the lookup semantics used by the trie.
+template <typename Iterator, typename Value>
+static Iterator cookieBinaryFind(Iterator begin, Iterator end, const Value& value) {
+  const Iterator found = std::lower_bound(begin, end, value);
+  return found != end && !(value < *found) ? found : end;
+}
 
 /*
   Copyright (C) 2009 Torch Mobile Inc. http://www.torchmobile.com/
@@ -124,6 +133,7 @@ static const char *const twoLevelDomains[] = {
 
 #if defined(TRIE_DEBUG)
 #include <qdebug.h>
+#include <algorithm>
 #endif
 
 // #define COOKIE_DEBUG 1
@@ -224,7 +234,7 @@ bool Trie<T>::remove(const QStringList &key, const T &value) {
       Trie<T> *parent = walkTo(parentKey, false);
       Q_ASSERT(parent);
       QStringList::iterator iterator;
-      iterator = qBinaryFind(parent->childrenKeys.begin(),
+      iterator = cookieBinaryFind(parent->childrenKeys.begin(),
 			     parent->childrenKeys.end(),
 			     currentLevelKey);
       Q_ASSERT(iterator != parent->childrenKeys.end());
@@ -293,7 +303,7 @@ const Trie<T>* Trie<T>::walkTo(const QStringList &key) const {
     const QString currentLevelKey = key.at(depth--);
     begin = node->childrenKeys.constBegin();
     end = node->childrenKeys.constEnd();
-    childIterator = qBinaryFind(begin, end, currentLevelKey);
+    childIterator = cookieBinaryFind(begin, end, currentLevelKey);
     if (childIterator == end)
       return 0;
     node = &node->children.at(childIterator - begin);
@@ -311,7 +321,7 @@ Trie<T>* Trie<T>::walkTo(const QStringList &key, bool create) {
     const QString currentLevelKey = key.at(depth--);
     begin = node->childrenKeys.begin();
     end = node->childrenKeys.end();
-    iterator = qBinaryFind(begin, end, currentLevelKey);
+    iterator = cookieBinaryFind(begin, end, currentLevelKey);
 #if defined(TRIE_DEBUG)
     qDebug() << "\t" << node << key << currentLevelKey << node->childrenKeys;
 #endif
@@ -319,7 +329,7 @@ Trie<T>* Trie<T>::walkTo(const QStringList &key, bool create) {
     if (iterator == end) {
       if (!create)
 	return 0;
-      iterator = qLowerBound(begin,
+      iterator = std::lower_bound(begin,
 			     end,
 			     currentLevelKey);
       index = iterator - begin;
@@ -376,6 +386,7 @@ public:
 // qDebug any cookies that are rejected for further inspection
 #define NETWORKCOOKIEJAR_LOGREJECTEDCOOKIES
 #include <qdebug.h>
+#include <algorithm>
 #endif
 
 #include <qurl.h>
@@ -383,6 +394,7 @@ public:
 
 #if defined(NETWORKCOOKIEJAR_DEBUG)
 #include <qdebug.h>
+#include <algorithm>
 #endif
 
 
@@ -398,7 +410,7 @@ iNetworkCookieJar::~iNetworkCookieJar()
 }
 
 static QStringList splitHost(const QString &host) {
-  QStringList parts = host.split(QLatin1Char('.'), QString::KeepEmptyParts);
+  QStringList parts = host.split(QLatin1Char('.'), Qt::KeepEmptyParts);
   // Remove empty components that are on the start and end
   while (!parts.isEmpty() && parts.last().isEmpty())
     parts.removeLast();
@@ -442,7 +454,7 @@ QList<QNetworkCookie> iNetworkCookieJar::cookiesForUrl(const QUrl &url) const
   if (cookies.isEmpty())
     return cookies;
 
-  QDateTime now = QDateTime::currentDateTime().toTimeSpec(Qt::UTC);
+  QDateTime now = QDateTime::currentDateTime().toUTC();
   const QString urlPath = d->urlPath(url);
   const bool isSecure = url.scheme().toLower() == QLatin1String("https");
   QList<QNetworkCookie>::iterator i = cookies.begin();
@@ -477,7 +489,7 @@ QList<QNetworkCookie> iNetworkCookieJar::cookiesForUrl(const QUrl &url) const
   }
 
   // shorter paths should go first
-  qSort(cookies.begin(), cookies.end(), shorterPaths);
+  std::sort(cookies.begin(), cookies.end(), shorterPaths);
 #if defined(COOKIE_DEBUG)
   qDebug() << "iNetworkCookieJar::" << __FUNCTION__ << "returning" << cookies.count();
   qDebug() << cookies;
@@ -522,7 +534,7 @@ bool iNetworkCookieJar::restoreState(const QByteArray &state)
 void iNetworkCookieJar::endSession()
 {
   const QList<QNetworkCookie> cookies = d->tree.all();
-  QDateTime now = QDateTime::currentDateTime().toTimeSpec(Qt::UTC);
+  QDateTime now = QDateTime::currentDateTime().toUTC();
   QList<QNetworkCookie>::const_iterator i = cookies.constBegin();
   for (; i != cookies.constEnd();) {
     if (i->isSessionCookie()
@@ -539,7 +551,7 @@ bool iNetworkCookieJar::setCookiesFromUrl(const QList<QNetworkCookie> &cookieLis
   qDebug() << "iNetworkCookieJar::" << __FUNCTION__ << url;
   qDebug() << cookieList;
 #endif
-  QDateTime now = QDateTime::currentDateTime().toTimeSpec(Qt::UTC);
+  QDateTime now = QDateTime::currentDateTime().toUTC();
   bool changed = false;
   QString fullUrlPath = url.path();
   QString defaultPath = fullUrlPath.mid(0, fullUrlPath.lastIndexOf(QLatin1Char('/')) + 1);
@@ -646,7 +658,7 @@ bool iNetworkCookieJarPrivate::matchesBlacklist(const QString &string) const
     setSecondLevelDomain = true;
   }
   QStringList::const_iterator i =
-    qBinaryFind(secondLevelDomains.constBegin(), secondLevelDomains.constEnd(), string);
+    cookieBinaryFind(secondLevelDomains.constBegin(), secondLevelDomains.constEnd(), string);
   return (i != secondLevelDomains.constEnd());
 }
 
@@ -671,7 +683,7 @@ bool iNetworkCookieJarPrivate::matchingDomain(const QNetworkCookie &cookie, cons
   if (parts.count() == 2 && matchesBlacklist(parts.last()))
     return false;
 
-  QStringList urlParts = url.host().toLower().split(QLatin1Char('.'), QString::SkipEmptyParts);
+  QStringList urlParts = url.host().toLower().split(QLatin1Char('.'), Qt::SkipEmptyParts);
   if (urlParts.isEmpty())
     return false;
   while (urlParts.count() > parts.count())
@@ -690,7 +702,7 @@ void iNetworkCookieJar::setSecondLevelDomains(const QStringList &secondLevelDoma
 {
   d->setSecondLevelDomain = true;
   d->secondLevelDomains = secondLevelDomains;
-  qSort(d->secondLevelDomains);
+  std::sort(d->secondLevelDomains.begin(), d->secondLevelDomains.end());
 }
 
 /*
@@ -776,6 +788,7 @@ void iNetworkCookieJar::setSecondLevelDomains(const QStringList &secondLevelDoma
 #endif // USE_QT_WEBENGINE
 
 #include <qdebug.h>
+#include <algorithm>
 
 static const unsigned int JAR_VERSION = 23;
 
@@ -844,11 +857,11 @@ void iCookieJar::load()
   if (m_loaded)
     return;
   // load cookies and exceptions
-  qRegisterMetaTypeStreamOperators<QList<QNetworkCookie> >("QList<QNetworkCookie>");
+  qRegisterMetaType<QList<QNetworkCookie> >("QList<QNetworkCookie>");
 
   QString cookie_dir;
 #if (QT_VERSION >= 0x050000)
-  cookie_dir = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+  cookie_dir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 #else
   cookie_dir = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
 #endif
@@ -858,9 +871,9 @@ void iCookieJar::load()
   m_exceptions_block = cookieSettings.value(QLatin1String("block")).toStringList();
   m_exceptions_allow = cookieSettings.value(QLatin1String("allow")).toStringList();
   m_exceptions_allowForSession = cookieSettings.value(QLatin1String("allowForSession")).toStringList();
-  qSort(m_exceptions_block.begin(), m_exceptions_block.end());
-  qSort(m_exceptions_allow.begin(), m_exceptions_allow.end());
-  qSort(m_exceptions_allowForSession.begin(), m_exceptions_allowForSession.end());
+  std::sort(m_exceptions_block.begin(), m_exceptions_block.end());
+  std::sort(m_exceptions_allow.begin(), m_exceptions_allow.end());
+  std::sort(m_exceptions_allowForSession.begin(), m_exceptions_allowForSession.end());
 
   loadSettings();
 }
@@ -896,7 +909,7 @@ void iCookieJar::save()
   purgeOldCookies();
   QString directory;
 #if (QT_VERSION >= 0x050000)
-  directory = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+  directory = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 #else
   directory = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
 #endif
@@ -912,7 +925,7 @@ void iCookieJar::save()
     if (cookies.at(i).isSessionCookie())
       cookies.removeAt(i);
   }
-  cookieSettings.setValue(QLatin1String("cookies"), qVariantFromValue<QList<QNetworkCookie> >(cookies));
+  cookieSettings.setValue(QLatin1String("cookies"), QVariant::fromValue<QList<QNetworkCookie> >(cookies));
   cookieSettings.beginGroup(QLatin1String("Exceptions"));
   cookieSettings.setValue(QLatin1String("block"), m_exceptions_block);
   cookieSettings.setValue(QLatin1String("allow"), m_exceptions_allow);
@@ -985,9 +998,9 @@ bool iCookieJar::setCookiesFromUrl(const QList<QNetworkCookie> &cookieList, cons
 #endif // USE_QT_WEBENGINE
 
   QString host = url.host();
-  bool eBlock = qBinaryFind(m_exceptions_block.begin(), m_exceptions_block.end(), host) != m_exceptions_block.end();
-  bool eAllow = qBinaryFind(m_exceptions_allow.begin(), m_exceptions_allow.end(), host) != m_exceptions_allow.end();
-  bool eAllowSession = qBinaryFind(m_exceptions_allowForSession.begin(), m_exceptions_allowForSession.end(), host) != m_exceptions_allowForSession.end();
+  bool eBlock = std::binary_search(m_exceptions_block.begin(), m_exceptions_block.end(), host);
+  bool eAllow = std::binary_search(m_exceptions_allow.begin(), m_exceptions_allow.end(), host);
+  bool eAllowSession = std::binary_search(m_exceptions_allowForSession.begin(), m_exceptions_allowForSession.end(), host);
 
   bool addedCookies = false;
   // pass exceptions
@@ -1103,7 +1116,7 @@ void iCookieJar::setBlockedCookies(const QStringList &list)
   if (!m_loaded)
     load();
   m_exceptions_block = list;
-  qSort(m_exceptions_block.begin(), m_exceptions_block.end());
+  std::sort(m_exceptions_block.begin(), m_exceptions_block.end());
   m_saveTimer->changeOccurred();
 }
 
@@ -1112,7 +1125,7 @@ void iCookieJar::setAllowedCookies(const QStringList &list)
   if (!m_loaded)
     load();
   m_exceptions_allow = list;
-  qSort(m_exceptions_allow.begin(), m_exceptions_allow.end());
+  std::sort(m_exceptions_allow.begin(), m_exceptions_allow.end());
   m_saveTimer->changeOccurred();
 }
 
@@ -1121,6 +1134,6 @@ void iCookieJar::setAllowForSessionCookies(const QStringList &list)
   if (!m_loaded)
     load();
   m_exceptions_allowForSession = list;
-  qSort(m_exceptions_allowForSession.begin(), m_exceptions_allowForSession.end());
+  std::sort(m_exceptions_allowForSession.begin(), m_exceptions_allowForSession.end());
   m_saveTimer->changeOccurred();
 }

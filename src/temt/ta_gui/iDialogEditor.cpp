@@ -32,7 +32,7 @@ iDialogEditor::iDialogEditor(taiEditor* owner_, QWidget* parent, int wflags)
   scr = new iScrollArea(this);
   scr->setWidgetResizable(true);
   layOuter = new QVBoxLayout(this);
-  layOuter->setMargin(0);
+  layOuter->setContentsMargins(0, 0, 0, 0);
   layOuter->setSpacing(0); // none needed
   layOuter->addWidget(scr, 1);
 

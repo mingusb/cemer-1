@@ -233,7 +233,7 @@ void ProgVar::UpdateAfterEdit_impl() {
       ProgElChoiceDlg dlg;
       taBase::Ref(dlg);
       int choice = 1;  // global
-      if (this->flags | LOCAL_VAR) {
+      if (HasVarFlag(LOCAL_VAR)) {
         choice = 0;
       }
       ProgVar::VarType vt = ProgVar::T_UnDef;
@@ -1174,7 +1174,7 @@ bool ProgVar::SetTypeAndName(const String& ty_nm) {
 
 int ProgVar::ReplaceValStr
 (const String& srch, const String& repl, const String& mbr_filt,
- void* par, TypeDef* par_typ, MemberDef* memb_def, TypeDef::StrContext sc, bool replace_deep) {
+ void* par, TypeDef* par_typ, MemberDef* memb_def, TypeDef::StrContext sc, bool replace_deep) { (void)mbr_filt; (void)memb_def; (void)par; (void)par_typ; (void)replace_deep; (void)sc;
   String cur_val = BrowserEditString(); // current best string rep
   int rval = cur_val.gsub(srch, repl);
   if(rval > 0) {
@@ -1228,7 +1228,7 @@ String ProgVar::GetDiffString() const {
   return rval;
 }
 
-bool ProgVar::BrowserEditSet(const String& code, int move_after) {
+bool ProgVar::BrowserEditSet(const String& code, int move_after) { (void)move_after;
   String cd = ProgEl::CodeGetDesc(code, desc);
   if(cd.empty()) return false;
   if(cd.contains("undefined")) return false;
@@ -1385,7 +1385,7 @@ bool ProgVar::ReplaceWithVar(ProgVar* repl_var) {
   return prog->UpdatePointers_NewObj(this, repl_var);
 }
 
-void ProgVar::GetMemberCompletionList(const MemberDef* md, const String& cur_txt, Completions& completions) {
+void ProgVar::GetMemberCompletionList(const MemberDef* md, const String& cur_txt, Completions& completions) { (void)md;
   TypeDef* completion_td = NULL;
   bool ref = false;
   if (completion_type.nonempty()) {

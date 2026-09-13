@@ -17,6 +17,8 @@
 // builtin functions, constants, etc.
 
 #include <sstream>
+#include <memory>
+#include <vector>
 #include "css_machine.h"
 #include "css_basic_types.h"
 #include "css_c_ptr_types.h"
@@ -313,6 +315,24 @@ static cssEl* cssElCFun_make_matrix_stub(int na, cssEl* arg[]) {
     return new cssTA_Matrix(new int_Matrix);
   }
 
+  // An indexed matrix element is a writable one-element view.  Use its
+  // scalar value while constructing coordinates or a matrix literal, just as
+  // scalar arithmetic does; the original argument remains alive until DoneArgs.
+  std::vector<cssEl*> matrix_args(arg, arg + na + 1);
+  std::vector<std::unique_ptr<cssVariant>> scalar_args;
+  for(int i = 1; i <= na; ++i) {
+    cssEl* aobj = arg[i]->GetActualObj();
+    if(!cssTA_Matrix::IsMatrix(*aobj)) continue;
+    taMatrix* mat = cssTA_Matrix::MatrixPtr(*aobj);
+    if(!mat->IsSingleElemView()) continue;
+    TA_FOREACH(value, *mat) {
+      scalar_args.push_back(std::make_unique<cssVariant>(value));
+      matrix_args[i] = scalar_args.back().get();
+      break;
+    }
+  }
+  arg = matrix_args.data();
+
   // first see what we've got and do some basic optimizations
   int n_int = 0;
   int n_real = 0;
@@ -499,6 +519,10 @@ static cssEl* cssElCFun_make_matrix_stub(int na, cssEl* arg[]) {
     }
   }
 
+  if(!rval) {
+    cssMisc::Error(cp, "make_matrix: cannot mix scalar values and non-scalar matrices");
+    return &cssMisc::Void;
+  }
   return rval;
 }
 
@@ -617,7 +641,7 @@ static cssEl* cssElCFun_call_stub(int na, cssEl* arg[]) {
   return rval;
 }
 
-static cssEl* cssElCFun_set_stub(int na, cssEl* arg[]) {
+static cssEl* cssElCFun_set_stub(int /*na*/, cssEl* arg[]) {
   cssProg* cp = arg[0]->prog;
   taBase* obj = (taBase*)arg[1]->GetVoidPtrOfType(&TA_taBase);
   if(!obj) {
@@ -696,8 +720,10 @@ static cssEl* cssElCFun_lshift_stub(int, cssEl* arg[]) {
 	  return arg[1];
 	}
 	if(arg[2]->name == "ends") {
-	  if(!conout)
-	    *strm << ends;  return arg[1];
+	  if(!conout) {
+	    *strm << ends;
+	  }
+	  return arg[1];
 	}
 	if(arg[2]->name == "dec") {
 	  *strm << dec;  return arg[1];
@@ -772,7 +798,7 @@ static cssEl* cssElCFun_arg_swap_stub(int na, cssEl* arg[]) {
   cp->Stack()->Push(arg[2]);	// push this on the stack
   return arg[1];		// and this goes after it
 }
-static cssEl* cssElCFun_fun_done_stub(int na, cssEl* arg[]) {
+static cssEl* cssElCFun_fun_done_stub(int /*na*/, cssEl* arg[]) {
   cssProg* cp = arg[0]->prog;
   cssEl* fun_el = cp->insts[cp->PC()-2]->inst.El(); // 
   taMisc::Info("fun_done: pc: ", String(cp->PC()-2), " el: ", fun_el->name);
@@ -1393,7 +1419,7 @@ static cssEl* cssElCFun_setout_stub(int, cssEl* arg[]) {
   csh->fout = strm;
   return &cssMisc::Void;
 }
-static cssEl* cssElCFun_source_stub(int, cssEl* arg[]) {
+static cssEl* cssElCFun_source_stub(int, cssEl* /*arg*/[]) {
 //   cssProg* cp = arg[0]->prog;
   // todo: not clear what to do about this one!  it requires self-modification.  the one
   // case of a do-after flag required..
@@ -1665,7 +1691,7 @@ static cssEl* cssElCFun_min_stub(int na, cssEl* arg[]) {
   }
 }
 
-static cssEl* cssElCFun_abs_stub(int na, cssEl* arg[]) {
+static cssEl* cssElCFun_abs_stub(int /*na*/, cssEl* arg[]) {
   if(arg[1]->IsTaMatrix()) {
     taMatrix* mat1 = cssTA_Matrix::MatrixPtr(*arg[1]);
     if(!mat1) {
@@ -1828,7 +1854,7 @@ static void Install_Math() {
 
   cssConstReal_inst_nm(cssMisc::Constants, INT_MAX,             "INT_MAX");
   cssConstReal_inst_nm(cssMisc::Constants, INT_MIN,             "INT_MIN");
-  cssConstReal_inst_nm(cssMisc::Constants, LONG_MAX,            "LONG_MAX");
+  cssConstReal_inst_nm(cssMisc::Constants, static_cast<Real>(LONG_MAX),            "LONG_MAX");
   cssConstReal_inst_nm(cssMisc::Constants, LONG_MIN,            "LONG_MIN");
 
   cssMisc::Constants.Push(new cssConstReal(taMath_double::nan, "NAN"));

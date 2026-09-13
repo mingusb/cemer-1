@@ -65,9 +65,9 @@ public:
   /////////////////////////////////////////////
   //    Main interface: init/update (impl in subclasses)
 
-  virtual void          InitDisplay(bool init_panel = true) { };
+  virtual void          InitDisplay(bool init_panel = true) { (void)init_panel; };
   // does a hard reset on the display, reinitializing variables etc.  Note does NOT do Updatedisplay -- that is a separate step
-  virtual void          UpdateDisplay(bool update_panel = true) { };
+  virtual void          UpdateDisplay(bool update_panel = true) { (void)update_panel; };
   // full re-render of the display (generally calls Render_impl)
 
   virtual void          InitPanel();

@@ -548,7 +548,6 @@ void iViewPanelOfGraphTable::InitPanel_impl() {
 
 bool iViewPanelOfGraphTable::BuildPlots() {
   const int LAYBODY_MARGIN = 1;
-  const int LAYBODY_SPACING = 0;
   int font_spec = taiMisc::fonMedium;
   int list_flags = taiWidget::flgNullOk | taiWidget::flgAutoApply | taiWidget::flgNoHelp;
   
@@ -610,13 +609,13 @@ bool iViewPanelOfGraphTable::BuildPlots() {
   // Y AXes
   // create a signal mapper to pass the plot number as a parameter to butSetLineStyle()
   QSignalMapper* sig_map_for_prop_buttons = new QSignalMapper(this);
-  connect(sig_map_for_prop_buttons, SIGNAL(mapped(int)), this, SLOT(butSetLineStyle(int)));
+  connect(sig_map_for_prop_buttons, SIGNAL(mappedInt(int)), this, SLOT(butSetLineStyle(int)));
   QSignalMapper* sig_map_for_chooser_buttons = new QSignalMapper(this);
-  connect(sig_map_for_chooser_buttons, SIGNAL(mapped(int)), this, SLOT(ChooseVarPressed(int)));
+  connect(sig_map_for_chooser_buttons, SIGNAL(mappedInt(int)), this, SLOT(ChooseVarPressed(int)));
   
   for(int i=0;i<pltsz; i++) {
     layYAxis[i] = new QHBoxLayout;
-    layYAxis[i]->setMargin(0);
+    layYAxis[i]->setContentsMargins(0, 0, 0, 0);
     layYAxis[i]->addStrut(row_height); // make it full height, so controls center
     
     String lbl = "Y" + String(i+1) + ":";
@@ -1048,11 +1047,10 @@ void iViewPanelOfGraphTable::label_contextMenuInvoked(iLabel* sender, QContextMe
   taiWidgetMenu* menu = new taiWidgetMenu(this, taiWidgetMenu::normal, taiMisc::fonSmall);
   Q_CHECK_PTR(menu);
   
-  iAction* act = NULL;
-  act = menu->AddItem("Insert Before", taiWidgetMenu::normal, iAction::int_act, this, SLOT(InsertPlotBefore(int)), sender->index());
-  act = menu->AddItem("Insert After", taiWidgetMenu::normal, iAction::int_act, this, SLOT(InsertPlotAfter(int)), sender->index());
-  act = menu->AddItem("Delete", taiWidgetMenu::normal, iAction::int_act, this, SLOT(DeletePlot(int)), sender->index());
-  act = menu->AddItem("Move Before", taiWidgetMenu::normal, iAction::int_act, this, SLOT(MovePlotBefore(int)), sender->index());
+  menu->AddItem("Insert Before", taiWidgetMenu::normal, iAction::int_act, this, SLOT(InsertPlotBefore(int)), sender->index());
+  menu->AddItem("Insert After", taiWidgetMenu::normal, iAction::int_act, this, SLOT(InsertPlotAfter(int)), sender->index());
+  menu->AddItem("Delete", taiWidgetMenu::normal, iAction::int_act, this, SLOT(DeletePlot(int)), sender->index());
+  menu->AddItem("Move Before", taiWidgetMenu::normal, iAction::int_act, this, SLOT(MovePlotBefore(int)), sender->index());
   menu->exec(sender->mapToGlobal(e->pos()));
   delete menu;
 }

@@ -120,7 +120,7 @@ public:
 #endif
 
   void                  Close() override; // usually delegates to parent->CloseChild
-  virtual void          CloseChild(taDataView* child) override {}
+  virtual void          CloseChild(taDataView* child) override { (void)child; }
   virtual void          BuildAll() {}
   // subclass-dependent operation -- reinvoked after major update -- builds any sub-dataview objects, but not the corresponding So guys (which is done in render)
   void                  SigLinkRecv(taSigLink* dl, int sls, void* op1, void* op2) override;
@@ -163,7 +163,7 @@ protected:
   void                  ChildRemoving(taDataView* child) override; // #IGNORE called from list; we also forward to taViewer; we also remove visually
   virtual void          Constr_Node_impl() {} // create the node_so rep -- called in RenderPre, null'ed in Clear
 
-  virtual void          OnWindowBind_impl(iT3Panel* vw) {} // override for something this class
+  virtual void          OnWindowBind_impl(iT3Panel* vw) { (void)vw; } // override for something this class
   void                  Clear_impl() override;
   virtual void          ReInit_impl(); // default just calls clear() on the so, if it exists
   void                  Render_pre() override;

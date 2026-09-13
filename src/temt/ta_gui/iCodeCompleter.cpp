@@ -34,11 +34,11 @@
 
 taTypeDef_Of(Function);
 
-iCodeCompleter::iCodeCompleter(QObject* parent) {
+iCodeCompleter::iCodeCompleter(QObject* parent) { (void)parent;
   Init();
 }
 
-iCodeCompleter::iCodeCompleter(QAbstractItemModel *model, QObject *parent) {
+iCodeCompleter::iCodeCompleter(QAbstractItemModel *model, QObject *parent) { (void)model; (void)parent;
   Init();
 }
 

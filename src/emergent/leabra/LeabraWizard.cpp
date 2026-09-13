@@ -632,19 +632,16 @@ bool LeabraWizard::DeepLeabraCopy(LeabraNetwork* net, const String& lay_name_con
   LeabraLayer* src_s_lay = NULL;
   LeabraLayer* src_trc_lay = NULL;
   
-  LeabraUnitSpec* s_uns = NULL;
   LeabraUnitSpec* d_uns = NULL;
   LeabraUnitSpec* trc_uns = NULL;
 
-  LeabraLayerSpec* s_ls = NULL;
-  LeabraLayerSpec* d_ls = NULL;
   LeabraLayerSpec* trc_ls = NULL;
   
   DeepCtxtConSpec* ti_ctxt = NULL;
   LeabraConSpec* d_fm_trc = NULL;
   LeabraConSpec* s_fm_trc = NULL;
   LeabraConSpec* to_trc = NULL;
-  LeabraConSpec* deep_td = NULL;
+
   SendDeepRawConSpec* d_to_trc = NULL;
   SendDeepModConSpec* dmod = NULL;
   ProjectionSpec* deep_to_trc_prjn = NULL;
@@ -655,7 +652,6 @@ bool LeabraWizard::DeepLeabraCopy(LeabraNetwork* net, const String& lay_name_con
   ProjectionSpec* s_fm_d_prjn = NULL;
 
   d_uns = (LeabraUnitSpec*)src_d_lay->GetMainUnitSpec();
-  d_ls = (LeabraLayerSpec*)src_d_lay->GetMainLayerSpec();
   
   Projection* prjn;
   for(int ip=0; ip<src_d_lay->projections.size; ip++) {
@@ -683,8 +679,6 @@ bool LeabraWizard::DeepLeabraCopy(LeabraNetwork* net, const String& lay_name_con
                "could not find source TRC layer from source deep layer -- looked for recv prjn from layer ending with trc"))
     return false;
 
-  s_uns = (LeabraUnitSpec*)src_s_lay->GetMainUnitSpec();
-  s_ls = (LeabraLayerSpec*)src_s_lay->GetMainLayerSpec();
   
   trc_uns = (LeabraUnitSpec*)src_trc_lay->GetMainUnitSpec();
   trc_ls = (LeabraLayerSpec*)src_trc_lay->GetMainLayerSpec();
@@ -903,7 +897,7 @@ bool LeabraWizard::TD(LeabraNetwork* net, bool td_mod_all) {
   int i;
   for(i=0;i<net->layers.size;i++) {
     LeabraLayer* lay = (LeabraLayer*)net->layers[i];
-    LeabraLayerSpec* laysp = (LeabraLayerSpec*)lay->spec.SPtr();
+
     // todo: add any new bg layer exclusions here!
     if(lay != rew_targ_lay && lay != tdrp && lay != extrew && lay != tdint && lay != tdda) {
       other_lays.Link(lay);
@@ -1066,7 +1060,7 @@ bool LeabraWizard::PVLV_Specs(LeabraNetwork* net) {
   FMChild(TANUnitSpec, tan_units, pvlv_units, "TANUnits");
   tan_units->is_new = false;   // unused in base pvlv -- prevent prompt
   FMChild(LeabraUnitSpec, cem_units, pvlv_units, "CeMUnits");
-  FMChild(LeabraUnitSpec, la_units, pvlv_units, "LatAmygUnits");
+  pvlv_units->FindMakeChild("LatAmygUnits", &TA_LeabraUnitSpec);
   FMChild(BasAmygUnitSpec, baapd1_units, pvlv_units, "BAAcqPosD1Units");
   FMChild(BasAmygUnitSpec, baepd2_units, baapd1_units, "BAExtPosD2Units");
   FMChild(BasAmygUnitSpec, baand2_units, baapd1_units, "BAAcqNegD2Units");
@@ -1113,21 +1107,21 @@ bool LeabraWizard::PVLV_Specs(LeabraNetwork* net) {
   FMChild(LeabraConSpec, ba_to_ca, fix_cons, "BAtoCA_Fixed");
   FMChild(LeabraConSpec, fm_pv, fix_cons, "FmPV_Fixed");
 
-  FMSpec(MarkerConSpec, marker_con, pvlvspgp, "PVLVMarkerCons");
+  pvlvspgp->FindMakeSpec("PVLVMarkerCons", &TA_MarkerConSpec);
 
   FMSpec(LeabraLayerSpec, laysp, pvlvspgp, "PVLVLayers");
   laysp->is_new = false;   // unused parent -- prevent prompt
-  FMChild(LeabraLayerSpec, pvsp, laysp, "PVLayers");
+  laysp->FindMakeChild("PVLayers", &TA_LeabraLayerSpec);
   FMChild(LeabraLayerSpec, dasp, laysp, "DALayers");
   FMChild(LeabraLayerSpec, amygsp, laysp, "AmygLayer");
-  FMChild(LeabraLayerSpec, amyextp, amygsp, "AmygExtLayer");
+  amygsp->FindMakeChild("AmygExtLayer", &TA_LeabraLayerSpec);
   FMChild(LeabraLayerSpec, vspsp, laysp, "VSPatchLayer");
   FMChild(LeabraLayerSpec, vsmsp, laysp, "VSMatrixLayer");
   FMChild(ExtRewLayerSpec, ersp, laysp, "ExtRewLayer");
 
-  FMSpec(FullPrjnSpec, fullprjn, pvlvspgp, "PVLVFullPrjn");
-  FMSpec(OneToOnePrjnSpec, onetoone, pvlvspgp, "PVLVOneToOne");
-  FMSpec(GpOneToOnePrjnSpec, gponetoone, pvlvspgp, "PVLVGpOneToOne");
+  pvlvspgp->FindMakeSpec("PVLVFullPrjn", &TA_FullPrjnSpec);
+  pvlvspgp->FindMakeSpec("PVLVOneToOne", &TA_OneToOnePrjnSpec);
+  pvlvspgp->FindMakeSpec("PVLVGpOneToOne", &TA_GpOneToOnePrjnSpec);
   FMSpec(TesselPrjnSpec, pv_fm_er, pvlvspgp, "PVFmExtRew");
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -1660,7 +1654,7 @@ bool LeabraWizard::PVLV_SetLrate(LeabraNetwork* net, float base_lrate) {
 
 // todo: set td_mod.on = true for td_mod_all; need to get UnitSpec..
 
-bool LeabraWizard::PVLV(LeabraNetwork* net, int n_pos_pv, int n_neg_pv, bool da_mod_all) {
+bool LeabraWizard::PVLV(LeabraNetwork* net, int n_pos_pv, int n_neg_pv, bool da_mod_all) { (void)da_mod_all;
   LeabraProject* proj = GET_MY_OWNER(LeabraProject);
   if(!net) {
     net = (LeabraNetwork*)proj->GetNewNetwork();
@@ -1755,7 +1749,7 @@ bool LeabraWizard::PVLV(LeabraNetwork* net, int n_pos_pv, int n_neg_pv, bool da_
   int i;
   for(i=0;i<net->layers.leaves;i++) {
     LeabraLayer* lay = (LeabraLayer*)net->layers.Leaf(i);
-    LeabraLayerSpec* laysp = (LeabraLayerSpec*)lay->spec.SPtr();
+
     if(lay->owner->GetName().contains("PVLV_")) continue;
     other_lays.Link(lay);
     if(lay->pos.z == 0) lay->pos.z = 2; // nobody allowed in 0!
@@ -1894,8 +1888,8 @@ bool LeabraWizard::PVLV(LeabraNetwork* net, int n_pos_pv, int n_neg_pv, bool da_
   drn->un_geom.SetXYN(1,1,1);
 
   int sp = 3;
-  int neg_st = n_pos_pv * 2 + sp;
-  int da_st = neg_st + n_neg_pv * 2 + sp;
+
+
 
   Layer* firstlay = net->layers.Leaf(0);
   
@@ -2327,7 +2321,7 @@ bool LeabraWizard::PBWM_Defaults(LeabraNetwork* net, const String& prefix) {
 // this is how to access a pvlv spec of a given type, by name:
 #define PbwmSp(pth,T) ((T*)pbwmspgp->ElemPath(pth, T::StatTypeDef(0), true))
 
-bool LeabraWizard::PBWM_Specs(LeabraNetwork* net, const String& prefix, bool set_defs) {
+bool LeabraWizard::PBWM_Specs(LeabraNetwork* net, const String& prefix, bool set_defs) { (void)set_defs;
   if(!net) {
     if(TestError(!net, "PBWM_Specs", "network is NULL -- only makes sense to run on an existing network -- aborting!"))
       return false;
@@ -2368,15 +2362,15 @@ bool LeabraWizard::PBWM_Specs(LeabraNetwork* net, const String& prefix, bool set
   FMChild(DeepCtxtConSpec, deep_ctxt, pfc_lrn_cons, "PFCDeepCtxt");
   FMChild(LeabraConSpec, to_pfc, pfc_lrn_cons, "ToPFC");
   FMChild(LeabraConSpec, pfc_fm_trc, pfc_lrn_cons, "PFCfmTRC");
-  FMChild(LeabraConSpec, pfc_to_trc, pfc_lrn_cons, "PFCtoTRC");
+  pfc_lrn_cons->FindMakeChild("PFCtoTRC", &TA_LeabraConSpec);
   FMChild(LeabraConSpec, to_out_cons, pfc_lrn_cons, "PFCtoOutput");
 
   FMSpec(LeabraConSpec, fix_cons, pbwmspgp, prefix + "FixedCons");
   FMChild(LeabraBiasSpec, fix_bias, fix_cons, prefix + "FixedBias");
-  FMChild(MarkerConSpec, marker_cons, fix_cons, prefix + "MarkerCons");
+  fix_cons->FindMakeChild(prefix + "MarkerCons", &TA_MarkerConSpec);
   FMChild(SendDeepModConSpec, pfc_deep_mod, fix_cons, "PFCSendDeepMod");
-  FMChild(LeabraConSpec, pfcd_mnt_out, fix_cons, "PFCdMntToOut");
-  FMChild(SendDeepRawConSpec, d5b_lrn_cons, fix_cons, prefix + "DeepRawPlus");
+  fix_cons->FindMakeChild("PFCdMntToOut", &TA_LeabraConSpec);
+  fix_cons->FindMakeChild(prefix + "DeepRawPlus", &TA_SendDeepRawConSpec);
 
   ////////////	LayerSpecs
 
@@ -2387,13 +2381,13 @@ bool LeabraWizard::PBWM_Specs(LeabraNetwork* net, const String& prefix, bool set
   FMChild(LeabraLayerSpec, gpi_sp, pbwm_sp, "GPiLayer");
   FMChild(LeabraLayerSpec, gp_nogo_sp, gpi_sp, "GPeNoGoLayer");
   FMChild(LeabraLayerSpec, pfc_sp, pbwm_sp, "PFCLayer");
-  FMChild(LeabraLayerSpec, pfc_trc_sp, pfc_sp, "PFCtrcLayer");
+  pfc_sp->FindMakeChild("PFCtrcLayer", &TA_LeabraLayerSpec);
 
   ////////////	PrjnSpecs
 
-  FMSpec(FullPrjnSpec, fullprjn, pbwmspgp, prefix + "FullPrjn");
-  FMSpec(OneToOnePrjnSpec, onetoone, pbwmspgp, prefix + "OneToOne");
-  FMSpec(GpOneToOnePrjnSpec, gponetoone, pbwmspgp, prefix + "GpOneToOne");
+  pbwmspgp->FindMakeSpec(prefix + "FullPrjn", &TA_FullPrjnSpec);
+  pbwmspgp->FindMakeSpec(prefix + "OneToOne", &TA_OneToOnePrjnSpec);
+  pbwmspgp->FindMakeSpec(prefix + "GpOneToOne", &TA_GpOneToOnePrjnSpec);
 
   FMSpec(BgPfcPrjnSpec, bgpfcprjn, pbwmspgp, "BgPfcPrjn");
   FMChild(BgPfcPrjnSpec, bgpfcprjn_toout, bgpfcprjn, "BgPfcPrjnToOut");
@@ -2895,7 +2889,6 @@ can be sure everything is ok.";
   Layer_Group* pvlv_laygp_amyg = (Layer_Group*)net->layers.gp.FindName("PVLV_Amyg");
 
   LeabraLayer* rew_targ_lay = NULL;
-  LeabraLayer* ext_rew = NULL;
   LeabraLayer* vta = NULL;
   LeabraLayer* pos_pv = NULL;
   LeabraLayer* vspatch_posd1 = NULL;
@@ -2905,7 +2898,6 @@ can be sure everything is ok.";
   if(pvlv_laygp_pv) {
     pos_pv = (LeabraLayer*)pvlv_laygp_pv->FindName("PosPV");
     rew_targ_lay = (LeabraLayer*)pvlv_laygp_pv->FindName("RewTarg");
-    ext_rew = (LeabraLayer*)pvlv_laygp_pv->FindName("ExtRew");
     vspatch_posd1 = (LeabraLayer*)pvlv_laygp_pv->FindName("VSPatchPosD1");
   }
   if(pvlv_laygp_da) {
@@ -3246,7 +3238,7 @@ can be sure everything is ok.";
   ///////////////	PFC Layout first -- get into z = 1
 
   int pfcu_n = 35; int pfcu_x = 5; int pfcu_y = 7;
-  int pfc_z = 1;
+
   if(new_pfc) {
     pfc_mnt_trc->PositionAbove(matrix_go, mtx_y_sz * 2 * 3);
     pfc_mnt_trc->un_geom.SetXYN(4, 4, 16);

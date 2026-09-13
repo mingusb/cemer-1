@@ -1,7 +1,7 @@
 // this is included directly in LeabraExtraUnitSpecs_cpp / _cuda
 // {
 
-void STATE_CLASS(TANUnitSpec)::Compute_PlusPhase_Netin(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+void STATE_CLASS(TANUnitSpec)::Compute_PlusPhase_Netin(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   float max_send_act = 0.0f;
   const int nrg = u->NRecvConGps(net);
   for(int g=0; g<nrg; g++) {
@@ -20,7 +20,7 @@ void STATE_CLASS(TANUnitSpec)::Compute_PlusPhase_Netin(LEABRA_UNIT_STATE* u, LEA
   u->net = u->ext;
 }
 
-void STATE_CLASS(TANUnitSpec)::Send_ACh(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+void STATE_CLASS(TANUnitSpec)::Send_ACh(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   const float snd_val = u->act_eq;
   const int nsg = u->NSendConGps(net); 
   for(int g=0; g<nsg; g++) {

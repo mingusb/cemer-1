@@ -40,7 +40,7 @@ void taiWidgetCompletionChooser::SetCompletions(Completions* completions_info) {
   completions = completions_info;
 }
 
-void taiWidgetCompletionChooser::BuildChooser(iDialogItemChooser* item_chooser, int view) {
+void taiWidgetCompletionChooser::BuildChooser(iDialogItemChooser* item_chooser, int view) { (void)view;
   //assume only called if needed
   
   if (!completions) {
@@ -82,7 +82,7 @@ int taiWidgetCompletionChooser::Populate(iDialogItemChooser* item_chooser, Compl
     if (!md)  continue;
     
     display_string = md->name;
-    QTreeWidgetItem* item = item_chooser->AddItem(display_string  + " (member)", top_item, md, md->desc, 1, TYPE_ITEM);
+    item_chooser->AddItem(display_string  + " (member)", top_item, md, md->desc, 1, TYPE_ITEM);
     ++item_count;
   }
   
@@ -93,7 +93,7 @@ int taiWidgetCompletionChooser::Populate(iDialogItemChooser* item_chooser, Compl
     
     display_string = md->name;
     display_string = display_string + "()";  // always for methods
-    QTreeWidgetItem* item = item_chooser->AddItem(display_string, top_item, md, md->desc, 1, TYPE_ITEM);
+    item_chooser->AddItem(display_string, top_item, md, md->desc, 1, TYPE_ITEM);
    ++item_count;
   }
   
@@ -103,7 +103,7 @@ int taiWidgetCompletionChooser::Populate(iDialogItemChooser* item_chooser, Compl
     if (!ed)  continue;
     
     display_string = ed->name;
-    QTreeWidgetItem* item = item_chooser->AddItem(display_string, top_item, ed, "", 1, TYPE_ITEM);
+    item_chooser->AddItem(display_string, top_item, ed, "", 1, TYPE_ITEM);
     ++item_count;
   }
 
@@ -148,7 +148,7 @@ int taiWidgetCompletionChooser::columnCount(int view) const {
   }
 }
 
-const String taiWidgetCompletionChooser::headerText(int index, int view) const {
+const String taiWidgetCompletionChooser::headerText(int index, int view) const { (void)view;
   // *** ignore view argument ***
   int member_method_count = completions->member_completions.size + completions->method_completions.size;
   

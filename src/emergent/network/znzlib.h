@@ -47,7 +47,11 @@ extern "C" {
 #include <string.h>
 #include <stdarg.h>
 
-#include "taconfig.h"
+/* Emergent bundles NIfTI with required gzip support. Keep this definition
+   shared by the low-level implementation and every NIfTI caller. */
+#ifndef HAVE_ZLIB
+#define HAVE_ZLIB 1
+#endif
 
 #ifdef HAVE_ZLIB
 #if defined(ITKZLIB)

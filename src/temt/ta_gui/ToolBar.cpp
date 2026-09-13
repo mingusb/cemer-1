@@ -37,7 +37,7 @@ void ToolBar::Copy_(const ToolBar& cp) {
 
 void ToolBar::Constr_impl(QWidget* gui_parent) {
   inherited::Constr_impl(gui_parent);
-  widget()->setObjectName(name);
+  widget()->setObjectName(name.toQString());
 }
 
 void ToolBar::GetWinState_impl() {
@@ -68,4 +68,3 @@ void ToolBar::WidgetDeleting_impl() {
   inherited::WidgetDeleting_impl();
   visible = false;
 }
-

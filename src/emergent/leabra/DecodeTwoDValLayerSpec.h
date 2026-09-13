@@ -3,7 +3,7 @@
 
   INIMPL void  ReadValue_ugp(LEABRA_LAYER_STATE* lay, LEABRA_NETWORK_STATE* net, int gpidx) override;
 
-  INLINE void  Compute_Inhib(LEABRA_LAYER_STATE* lay, LEABRA_NETWORK_STATE* net) override { };
+  INLINE void  Compute_Inhib(LEABRA_LAYER_STATE* lay, LEABRA_NETWORK_STATE* net) override { (void)lay; (void)net; };
 
   INLINE void Initialize_core() {
   }

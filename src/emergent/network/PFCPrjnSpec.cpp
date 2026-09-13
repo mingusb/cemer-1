@@ -59,19 +59,15 @@ void STATE_CLASS(PFCPrjnSpec)::Connect_impl(PRJN_STATE* prjn, NETWORK_STATE* net
 void STATE_CLASS(PFCPrjnSpec)::Connect_row1to1
   (PRJN_STATE* prjn, NETWORK_STATE* net, int make_cons, int rx, int ry, int recv_x, bool recv_gps) {
   
-  LAYER_STATE* recv_lay = prjn->GetRecvLayer(net);
   LAYER_STATE* send_lay = prjn->GetSendLayer(net);
 
-  int send_y;
   int send_x;
   bool send_gps = true;
 
   if(send_lay->HasUnitGroups() && send_lay->gp_geom_y > 1) {
-    send_y = send_lay->gp_geom_y;
     send_gps = true;
   }
   else {
-    send_y = send_lay->flat_geom_y;
     send_gps = false;
   }
   if(send_lay->HasUnitGroups() && send_lay->gp_geom_x > 1) {
@@ -100,7 +96,6 @@ void STATE_CLASS(PFCPrjnSpec)::Connect_row1to1
 void STATE_CLASS(PFCPrjnSpec)::Connect_rowall
   (PRJN_STATE* prjn, NETWORK_STATE* net, int make_cons, int rx, int ry, int recv_x, bool recv_gps) {
 
-  LAYER_STATE* recv_lay = prjn->GetRecvLayer(net);
   LAYER_STATE* send_lay = prjn->GetSendLayer(net);
 
   int send_y;

@@ -688,7 +688,7 @@ bool VTAUnitSpec::CheckConfig_Unit(Layer* lay, bool quiet) {
   else {
     // TODO: add more recv layer checks as we determine which layers VTAn should receive from - only sure of NegPV currently
     LEABRA_LAYER_STATE* negpv_lay = NULL;
-    LEABRA_LAYER_STATE* pptg_lay_n = NULL;
+
     LEABRA_LAYER_STATE* lhb_lay_n = NULL;
     LEABRA_LAYER_STATE* vspatchnegd1_lay = NULL;
     LEABRA_LAYER_STATE* vspatchnegd2_lay = NULL;
@@ -783,8 +783,7 @@ bool BFCSUnitSpec::CheckConfig_Unit(Layer* lay, bool quiet) {
   if(!inherited::CheckConfig_Unit(lay, quiet)) return false;
   bool rval = true;
 
-  LeabraNetwork* main_net = (LeabraNetwork*)lay->own_net;
-  LEABRA_NETWORK_STATE* net = (LEABRA_NETWORK_STATE*)main_net->net_state;
+
   if(lay->n_units == 0) return rval;
   // LEABRA_UNIT_STATE* un = lay->GetUnitState(net, 0);
   
@@ -1199,25 +1198,20 @@ bool CA1UnitSpec::CheckConfig_Unit(Layer* lay, bool quiet) {
   LEABRA_UNIT_STATE* un = (LEABRA_UNIT_STATE*)lay->GetUnitState(net, 0);
   
   bool got_ec_in = false;
-  bool got_ec_out = false;
-  bool got_ca3 = false;
   const int nrg = un->NRecvConGps(net); 
   for(int g=0; g< nrg; g++) {
     LEABRA_CON_STATE* recv_gp = un->RecvConState(net, g);
     if(!recv_gp->PrjnIsActive(net)) continue; // key!! just check for prjn, not con group!
     LEABRA_LAYER_STATE* from = recv_gp->GetSendLayer(net);
-    LEABRA_CON_SPEC_CPP* cs = recv_gp->GetConSpec(net);
     // cs->SetUnique("wt_scale", true); // be sure!
     if(from->LayerNameContains("EC")) {
       if(from->LayerNameContains("out")) {
-        got_ec_out = true;
       }
       else if(from->LayerNameContains("in")) {
         got_ec_in = true;
       }
     }
     if(from->LayerNameContains("CA3")) {
-      got_ca3 = true;
     }
   }
 

@@ -253,7 +253,7 @@ int taGroup_impl::UpdatePointersToMyKids_impl(taBase* scope_obj, taBase* new_ptr
 }
 
 String taGroup_impl::GetValStr(void* par, MemberDef* memb_def, TypeDef::StrContext sc,
-                              bool force_inline) const {
+                              bool force_inline) const { (void)force_inline; (void)memb_def; (void)par; (void)sc;
   String nm = " Size: ";
   nm += String(size);
   if(gp.size > 0)
@@ -265,7 +265,7 @@ String taGroup_impl::GetValStr(void* par, MemberDef* memb_def, TypeDef::StrConte
 }
 
 bool taGroup_impl::SetValStr(const String& val, void* par, MemberDef* memb_def,
-                            TypeDef::StrContext sc, bool force_inline) {
+                            TypeDef::StrContext sc, bool force_inline) { (void)force_inline; (void)memb_def; (void)par; (void)sc;
   if(val != String::con_NULL) {
     String tmp = val;
     if(tmp.contains('(')) {

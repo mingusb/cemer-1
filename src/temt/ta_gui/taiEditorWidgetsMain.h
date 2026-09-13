@@ -77,7 +77,7 @@ public: // ISigLinkClient i/f -- note: only registered though for taiEDH and lat
 
 protected:
 
-  virtual void  SetMultiSize(int rows, int cols) {}
+  virtual void  SetMultiSize(int rows, int cols) { (void)cols; (void)rows; }
   int           AddSectionLabel(int row, QWidget* wid, const String& desc);
   // add a widget, usually a label or checkbox, that will span both columns (no data)
   int           AddNameWidget(int row, const String& name, const String& desc,

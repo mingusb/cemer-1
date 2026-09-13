@@ -60,7 +60,7 @@ void iT3Panel::Constr_impl() {
 
 void iT3Panel::Init() {
   QVBoxLayout* lay = new QVBoxLayout(this);
-  lay->setSpacing(0);  lay->setMargin(0);
+  lay->setSpacing(0);  lay->setContentsMargins(0, 0, 0, 0);
   //create the so viewer
   t3vs = new iT3ViewspaceWidget(this);
   lay->addWidget(t3vs);
@@ -127,7 +127,7 @@ void iT3Panel::fileExportInventor() {
 #endif // TA_QT3D
 }
 
-void iT3Panel::NodeDeleting(T3Node* node) {
+void iT3Panel::NodeDeleting(T3Node* node) { (void)node;
   if (t3vs->sel_so) {
     // deselect all the damn nodes because too complicated to try to figure out
     // how to deselect just one
@@ -194,7 +194,7 @@ void iT3Panel::setSceneTop(SoNode* node) {
 }
 #endif
 
-void iT3Panel::T3DataViewClosing(T3DataView* node) {
+void iT3Panel::T3DataViewClosing(T3DataView* node) { (void)node;
 }
 
 iT3PanelViewer* iT3Panel::viewerWidget() const {

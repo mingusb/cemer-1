@@ -8,7 +8,9 @@
 # Step 1: ensure we have the right version of cmake and set build params
 # typically no need to change this stuff, but it has to come first
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6.2 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.22...4.1)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
@@ -33,8 +35,8 @@ if (WIN32)
   endif (EMERGENTDIR)
 else (WIN32)
   # use manual override first
-  set(EMERGENT_INSTALL_PREFIX $ENV{EMERGENT_PREFIX_DIR})
-  if (NOT "${EMERGENT_INSTALL_PREFIX}")
+  set(EMERGENT_INSTALL_PREFIX "$ENV{EMERGENT_PREFIX_DIR}")
+  if (EMERGENT_INSTALL_PREFIX STREQUAL "")
     # find the path, in terms of an equivalent to CMAKE_INSTALL_PREFIX
     find_path(EMERGENT_INSTALL_PREFIX share/Emergent/AUTHORS PATHS
       /usr/local
@@ -43,7 +45,7 @@ else (WIN32)
       /opt
       NO_DEFAULT_PATH
     )
-  endif (NOT "${EMERGENT_INSTALL_PREFIX}")
+  endif (EMERGENT_INSTALL_PREFIX STREQUAL "")
 endif (WIN32)
 
 ################################################################
@@ -67,10 +69,10 @@ if ("${EMERGENT_PLUGIN_TYPE}" STREQUAL "System")
 else ("${EMERGENT_PLUGIN_TYPE}" STREQUAL "System")
   # user is default
   set(EMERGENT_PLUGIN_TYPE "User")  # in case it was never set
-  if ($ENV{EMERGENT_USER_PLUGIN_DIR})
-    set(CMAKE_INSTALL_PREFIX $ENV{EMERGENT_USER_PLUGIN_DIR} CACHE INTERNAL "do not change")
+  if(DEFINED ENV{EMERGENT_USER_PLUGIN_DIR} AND NOT "$ENV{EMERGENT_USER_PLUGIN_DIR}" STREQUAL "")
+    set(CMAKE_INSTALL_PREFIX "$ENV{EMERGENT_USER_PLUGIN_DIR}" CACHE INTERNAL "do not change")
     set(EMERGENT_PLUGIN_DEST .)
-  else ($ENV{EMERGENT_USER_PLUGIN_DIR})
+  else()
     if (WIN32)
       set(CMAKE_INSTALL_PREFIX $ENV{USERPROFILE} CACHE INTERNAL "do not change")
       set(EMERGENT_PLUGIN_DEST Emergent/plugins64)
@@ -81,7 +83,7 @@ else ("${EMERGENT_PLUGIN_TYPE}" STREQUAL "System")
       set(CMAKE_INSTALL_PREFIX $ENV{HOME} CACHE INTERNAL "do not change")
       set(EMERGENT_PLUGIN_DEST lib/Emergent/plugins)
     endif (WIN32)
-  endif ($ENV{EMERGENT_USER_PLUGIN_DIR})
+  endif(DEFINED ENV{EMERGENT_USER_PLUGIN_DIR} AND NOT "$ENV{EMERGENT_USER_PLUGIN_DIR}" STREQUAL "")
 endif ("${EMERGENT_PLUGIN_TYPE}" STREQUAL "System")
 
 set(mod_path "${EMERGENT_SHARE_DIR}/CMakeModules")

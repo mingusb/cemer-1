@@ -153,7 +153,7 @@ public:
   }
   // #CAT_Quaternion return three Euler angles from quaternion
 
-  inline void   ToEulerVec(taVector3f& euler, bool homogenous=true) const {
+  inline void   ToEulerVec(taVector3f& euler, bool homogenous=true) const { (void)homogenous;
     ToEuler(euler.x, euler.y, euler.z);
   }
   // #CAT_Quaternion return three Euler angles from quaternion into a 3D vector

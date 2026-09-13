@@ -610,7 +610,7 @@ bool NetworkState_cpp::NetworkLoadWeights_strm(istream& strm, bool quiet) {
 //  Layer-level  Save/Load Weights
 
 
-void NetworkState_cpp::LayerSaveWeights_LayerVars(ostream& strm, LayerState_cpp* lay, WtSaveFormat fmt) {
+void NetworkState_cpp::LayerSaveWeights_LayerVars(ostream& strm, LayerState_cpp* lay, WtSaveFormat fmt) { (void)fmt; (void)lay; (void)strm;
   // overload this to save specific layer state -- see Leabra for example
 }
 
@@ -633,7 +633,7 @@ void NetworkState_cpp::LayerSaveWeights_strm(ostream& strm, LayerState_cpp* lay,
 }
 
 int NetworkState_cpp::LayerLoadWeights_LayerVars(istream& strm, LayerState_cpp* lay, WtSaveFormat fmt,
-                                                  bool quiet) {
+                                                  bool quiet) { (void)fmt; (void)lay; (void)quiet; (void)strm;
   // overload this to load specific layer state -- see Leabra for example
   return TAG_END;
 }
@@ -769,7 +769,7 @@ int NetworkState_cpp::UnitLoadWeights_strm(istream& strm, UnitState_cpp* u, WtSa
 //      Unit-level  Save/Load Weights
 
 void NetworkState_cpp::ConsSaveWeights_strm(ostream& strm, ConState_cpp* cg, UnitState_cpp* un,
-                                            WtSaveFormat fmt) {
+                                            WtSaveFormat fmt) { (void)un;
   if(cg->NotActive()) {
     strm << "<Cn 0>\n" << "</Cn>\n";
     return;

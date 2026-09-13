@@ -94,7 +94,7 @@ void iViewPanel::Changed() {
 }
 
 const iColor iViewPanel::colorOfCurRow() const {
-  return this->palette().color(QPalette::Active, QPalette::Background);
+  return this->palette().color(QPalette::Active, QPalette::Window);
 }
 
 void iViewPanel::customEvent(QEvent* ev_) {
@@ -147,7 +147,7 @@ void iViewPanel::MakeButtons(QBoxLayout* lay, QWidget* par) {
   if (!par) par = this;
 
   QHBoxLayout* layButtons = new QHBoxLayout();
-  layButtons->setMargin(0);
+  layButtons->setContentsMargins(0, 0, 0, 0);
   layButtons->setSpacing(0);
   btnCopyFrom = new iHiLightButton("&Copy From", par);
   layButtons->addWidget(btnCopyFrom);
@@ -172,7 +172,7 @@ void iViewPanel::MakeButtons(QBoxLayout* lay, QWidget* par) {
   InternalSetModified(false);
 }
 
-void iViewPanel::ResolveChanges_impl(CancelOp& cancel_op) {
+void iViewPanel::ResolveChanges_impl(CancelOp& cancel_op) { (void)cancel_op;
   // called by root on closing, dialog on closing, etc. etc., when hiding
   if (HasChanged()) {
     Apply();

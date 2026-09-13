@@ -385,7 +385,6 @@ void UnitGroupView::Render_pre() {
 void UnitGroupView::Render_impl() {
   Layer* lay = this->layer(); //cache
   if(!lay) return;
-  NetView* nv = getNetView();
 
   inherited::Render_impl();
 }
@@ -1143,7 +1142,7 @@ void UnitGroupView::UpdateUnitValues_blocks() {
   float val;
   float sc_val;
   taVector2i pos;
-  float zp1;
+
 
   String val_fmt = ValToDispTextFmt(nv->font_sizes.un_val_prec);
 
@@ -1293,7 +1292,7 @@ void UnitGroupView::SaveHist() {
   taVector2i coord;
   for(coord.y = 0; coord.y < lay->flat_geom.y; coord.y++) {
     for(coord.x = 0; coord.x < lay->flat_geom.x; coord.x++) {
-      UnitState_cpp* unit = lay->GetUnitStateFlatXY(net->net_state, coord.x, coord.y);
+      lay->GetUnitStateFlatXY(net->net_state, coord.x, coord.y);
       for(int midx=0; midx < nv->membs.size; midx++) {
         void* base;
         float val = GetUnitDisplayVal_Idx(coord, midx, base);

@@ -85,7 +85,7 @@ void taiWidgetMemberDefChooser::BuildChooser_0(iDialogItemChooser* ic) {
     if (!ShowMember(mbr)) continue;
     cat = mbr->OptionAfter("CAT_");
     if(cat == "IGNORE") continue;
-    QTreeWidgetItem* item = ic->AddItem(cat, mbr->name, NULL, (void*)mbr, mbr->desc);
+    ic->AddItem(cat, mbr->name, NULL, (void*)mbr, mbr->desc);
   }
 }
 
@@ -97,11 +97,11 @@ void taiWidgetMemberDefChooser::BuildChooser_1(iDialogItemChooser* ic) {
     if(!mbr->HasExpert()) continue;
     cat = mbr->OptionAfter("CAT_");
     if(cat == "IGNORE") continue;
-    QTreeWidgetItem* item = ic->AddItem(cat, mbr->name, NULL, (void*)mbr, mbr->desc);
+    ic->AddItem(cat, mbr->name, NULL, (void*)mbr, mbr->desc);
   }
 }
 
-int taiWidgetMemberDefChooser::columnCount(int view) const {
+int taiWidgetMemberDefChooser::columnCount(int view) const { (void)view;
   return 2;                     // always 2
 }
 

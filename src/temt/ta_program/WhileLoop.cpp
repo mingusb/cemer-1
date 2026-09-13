@@ -42,7 +42,7 @@ String WhileLoop::GetDisplayName() const {
   return "while (" + test.GetFullExpr() + ")";
 }
 
-bool WhileLoop::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const {
+bool WhileLoop::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const { (void)scope_el;
   String code = code_str; code.downcase();
   if(code.startsWith("while")) return true;
   return false;

@@ -57,7 +57,7 @@ int ActrModel::Peekc() {
   return load_str[load_pos];
 }
 
-void ActrModel::unGetc(int c) {
+void ActrModel::unGetc(int c) { (void)c;
   load_col--;
   load_pos--;
 }
@@ -206,14 +206,12 @@ int ActrModel::Lex() {
     }
 
     if((c == '.') || isdigit(c)) {	// number: note no -
-      int gotreal = 0;
       load_buf = (char)c;
-      if(c == '.') gotreal = 1;
       
       while(((c=Peekc()) != EOF) &&
 	    ((c == '.') || isxdigit(c) || (c == 'x') || (c == 'e') || (c == '-') ||
 	     (c == 'X') || (c == 'E')))	{
-	load_buf += (char)c; if(c == '.') gotreal = 1;
+	load_buf += (char)c;
 	Getc();
       } 
 

@@ -158,7 +158,7 @@ void ActrAction::CheckThisConfig_impl(bool quiet, bool& rval) {
                "object path obj_path is empty -- specify path to member to set");
     if(dest) {
       taBase* obj = dest.ptr();
-      void* mbr_base = NULL;      // base for conditionalizing member itself
+
       int net_base_off = 0;
       TypeDef* eff_td = (TypeDef*)obj->GetTypeDef();
       MemberDef* md = TypeDef::FindMemberPathStatic(eff_td, net_base_off, obj_path, true); // yes warn..

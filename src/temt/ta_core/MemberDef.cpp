@@ -28,8 +28,6 @@ void MemberDef::GetMembDesc(MemberDef* md, String& dsc_str, String indent) {
   String defval = md->OptionAfter("DEF_");
   if(!defval.empty())
     desc = String("[Default: ") + defval + "] " + desc;
-  else
-    desc = desc;
   if(!indent.empty())
     desc = indent + md->GetLabel() + String(": ") + desc;
   if (!dsc_str.empty())
@@ -277,7 +275,7 @@ void MemberDef::PrintType(String& col1, String& col2) const {
   PrintType_OptsLists(col2);
 }
 
-void MemberDef::Print(String& col1, String& col2, void* base, int indent) const {
+void MemberDef::Print(String& col1, String& col2, void* base, int indent) const { (void)indent;
   void* new_base = GetOff(base);
   col1 = type->Get_C_Name();
   col1 << "  ";
@@ -297,7 +295,7 @@ void MemberDef::Print(String& col1, String& col2, void* base, int indent) const 
 //  dummy versions of dump load/save: see ta_dump.cc    //
 //////////////////////////////////////////////////////////
 
-bool MemberDef::DumpMember(void* par) {
+bool MemberDef::DumpMember(void* par) { (void)par;
   return false;
 }
 

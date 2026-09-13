@@ -25,7 +25,7 @@ void STATE_CLASS(ECoutUnitSpec)::ClampFromECin(LEABRA_UNIT_STATE* u, LEABRA_NETW
 
 float STATE_CLASS(ECoutUnitSpec)::Compute_SSE(UNIT_STATE* ru, NETWORK_STATE* rnet, int thr_no, bool& has_targ) {
   LEABRA_UNIT_STATE* u = (LEABRA_UNIT_STATE*)ru;
-  LEABRA_NETWORK_STATE* net = (LEABRA_NETWORK_STATE*)rnet;
+
   
   float uerr = u->act_p - u->act_q1;
   if(fabsf(uerr) >= sse_tol) {

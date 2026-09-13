@@ -142,10 +142,10 @@ public:
   taiWidget*     GetWidgetRep(IWidgetHost* host_, taiWidget* par, QWidget* gui_parent_,
                                    taiType* parent_type_ = NULL, int flags = 0, MemberDef* mbr = NULL) override;
 
-  void GetImage(taiWidget* dat, const void* base) override {}
+  void GetImage(taiWidget* /*dat*/, const void* /*base*/) override {}
   void          GetImage(taiWidget* dat)  { GetImage(dat, cur_base); }
 
-  void GetValue(taiWidget* dat, void* base) override {}
+  void GetValue(taiWidget* /*dat*/, void* /*base*/) override {}
   void          GetValue(taiWidget* dat)  { GetValue(dat, cur_base); }
 
   CSS_TYPE_FUNS(cssiArrayType,taiType);

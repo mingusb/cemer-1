@@ -217,7 +217,7 @@ bool ProgVar_List::BrowserCollapseAll() {
   return prog->BrowserCollapseAll_ProgItem(this);
 }
 
-taBase* ProgVar_List::ChooseNew(taBase* origin, const String& choice_text) {
+taBase* ProgVar_List::ChooseNew(taBase* origin, const String& choice_text) { (void)origin;
   String var_nm;
   ProgVar* rval = NULL;
   ProgElChoiceDlg dlg;

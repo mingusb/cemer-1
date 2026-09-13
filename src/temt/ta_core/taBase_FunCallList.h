@@ -56,7 +56,7 @@ public: // ITypedObject interface
 
 public: // ISigLinkClient interface
   void         SigLinkDestroying(taSigLink* dl) override;
-  void         SigLinkRecv(taSigLink* dl, int sls, void* op1, void* op2) override {}
+  void         SigLinkRecv(taSigLink* dl, int sls, void* op1, void* op2) override { (void)dl; (void)op1; (void)op2; (void)sls; }
 
 protected:
   void El_Done_(void* it) override; // unref link

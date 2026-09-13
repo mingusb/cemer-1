@@ -53,7 +53,7 @@ public:
   virtual void          SigLinkRecv(taSigLink* dl, int sls, void* op1, void* op2) = 0;
   // this is how we receive a signal from the siglink
   virtual void          IgnoredSigEmit(taSigLink* dl, int sls,
-    void* op1, void* op2) {} // called instead if ignoreSigEmit was true
+    void* op1, void* op2) { (void)dl; (void)op1; (void)op2; (void)sls; } // called instead if ignoreSigEmit was true
 
   ISigLinkClient() {m_link = NULL;}
   ~ISigLinkClient();

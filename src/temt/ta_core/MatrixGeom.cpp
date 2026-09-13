@@ -360,13 +360,13 @@ void MatrixGeom::FromString(const String& str_, const String& ldelim, const Stri
 }
 
 String MatrixGeom::GetValStr(void* par, MemberDef* memb_def, TypeDef::StrContext sc,
-                              bool force_inline) const {
+                              bool force_inline) const { (void)force_inline; (void)memb_def; (void)par; (void)sc;
   // always inline effectively
   return ToString();
 }
 
 bool MatrixGeom::SetValStr(const String& val, void* par, MemberDef* memb_def,
-                           TypeDef::StrContext sc, bool force_inline) {
+                           TypeDef::StrContext sc, bool force_inline) { (void)force_inline; (void)memb_def; (void)par; (void)sc;
   // always inline effectively
   FromString(val);
   return true;

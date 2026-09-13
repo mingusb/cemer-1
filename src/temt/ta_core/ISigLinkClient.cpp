@@ -34,7 +34,7 @@ bool ISigLinkClient::AddSigLink(taSigLink* dl) {
   return r;
 }
 
-bool ISigLinkClient::RemoveSigLink(taSigLink* dl) {
+bool ISigLinkClient::RemoveSigLink(taSigLink* dl) { (void)dl;
   bool r = (0 != m_link);
   m_link = NULL;
   return r;

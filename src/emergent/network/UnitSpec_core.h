@@ -20,7 +20,7 @@
   }
   // #CAT_Structure get the bias con spec 
 
-  INLINE virtual void  Init_UnitState(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void  Init_UnitState(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     u->ext_flag = UNIT_STATE::NO_EXTERNAL;
     u->unit_flag = UNIT_STATE::NO_UNIT_FLAG;
     u->ext = 0.0f;
@@ -32,14 +32,14 @@
   }
   // #CAT_Activation initialize all unit state -- do NOT access anything else, e.g., at congroup level
 
-  INLINE virtual void  Init_InputData(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void  Init_InputData(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     u->ClearExtFlag(UNIT_STATE::COMP_TARG_EXT);
     u->ext = 0.0f;
     u->targ = 0.0f;
   }
   // #CAT_Activation initialize unit activation state variables for input data
 
-  INLINE virtual void  Init_Acts(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void  Init_Acts(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     u->ClearExtFlag(UNIT_STATE::COMP_TARG_EXT);
     u->ext = 0.0f;
     u->targ = 0.0f;
@@ -71,14 +71,14 @@
   }
   // #CAT_Structure post-initialize state variables (ie. for scaling symmetrical weights, other wt state keyed off of weights, etc) -- threaded for speed
 
-  INLINE virtual void  LoadBiasWtVal(float bwt, UNIT_STATE* u, NETWORK_STATE* net) {
+  INLINE virtual void  LoadBiasWtVal(float bwt, UNIT_STATE* u, NETWORK_STATE* net) { (void)net;
     u->bias_wt = bwt;
   }
   // #CAT_Structure load bias weight value into bias weights of given unit -- handles any post-loading updates directly
 
 
   INLINE virtual void ApplyInputData(UNIT_STATE* u, NETWORK_STATE* net, float val,
-                                     UnitState_cpp::ExtFlags act_ext_flags, bool na_by_range) {
+                                     UnitState_cpp::ExtFlags act_ext_flags, bool na_by_range) { (void)net;
     // note: not all flag values are valid, so following is a fuzzy cascade
     if(na_by_range) {
       if(!act_range.RangeTestEq(val)) {
@@ -126,7 +126,7 @@
   }
   // #CAT_Activation called by network-level Send_Netin function to integrate sent netin value with current net input value -- default is just to set to net val + bias wt if avail
 
-  INLINE virtual void  Compute_Act(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void  Compute_Act(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     if(u->HasExtFlag(UNIT_STATE::EXT))
       u->act = u->ext;
     else
@@ -156,7 +156,7 @@
   }
   // #CAT_Learning update weights from deltas
 
-  INLINE virtual float Compute_SSE(UNIT_STATE* u, NETWORK_STATE* net, int thr_no, bool& has_targ) {
+  INLINE virtual float Compute_SSE(UNIT_STATE* u, NETWORK_STATE* net, int thr_no, bool& has_targ) { (void)net; (void)thr_no;
     float sse = 0.0f;
     has_targ = false;
     if(u->HasExtFlag(UNIT_STATE::COMP_TARG)) {
@@ -171,7 +171,7 @@
 
   INLINE virtual bool  Compute_PRerr
     (UNIT_STATE* u, NETWORK_STATE* net, int thr_no,
-     float& true_pos, float& false_pos, float& false_neg, float& true_neg) {
+     float& true_pos, float& false_pos, float& false_neg, float& true_neg) { (void)net; (void)thr_no;
     true_pos = 0.0f; false_pos = 0.0f; false_neg = 0.0f; true_neg = 0.0f;
     bool has_targ = false;
     if(u->HasExtFlag(UNIT_STATE::COMP_TARG)) {

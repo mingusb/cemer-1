@@ -21,7 +21,6 @@ void STATE_CLASS(GradientWtsPrjnSpec)::Init_Weights_Prjn
 
   UNIT_STATE* ru = cg->OwnUnState(net);
   LAYER_STATE* recv_lay = prjn->GetRecvLayer(net);
-  LAYER_STATE* send_lay = prjn->GetSendLayer(net);
 
   if(use_gps && recv_lay->HasUnitGroups()) {
     InitWeights_RecvGps(prjn, net, thr_no, cg, ru);
@@ -34,7 +33,7 @@ void STATE_CLASS(GradientWtsPrjnSpec)::Init_Weights_Prjn
 
 void STATE_CLASS(GradientWtsPrjnSpec)::SetWtFmDist
 (PRJN_STATE* prjn, NETWORK_STATE* net, int thr_no, CON_STATE* cg, UNIT_STATE* ru,
- float dist, int cg_idx) {
+ float dist, int cg_idx) { (void)ru;
 
   float wt_val = wt_range.min;
   if(grad_type == LINEAR) {

@@ -20,6 +20,7 @@
 #include <taMath_float>
 
 #include <QByteArray>
+#include <QTransform>
 
 #include <taMisc>
 
@@ -434,7 +435,7 @@ bool taImage::RotateImage(float norm_deg, bool smooth) {
   }
   ImageChanging();
   float deg = norm_deg * 360.0f;
-  QMatrix mat;
+  QTransform mat;
   mat.rotate(deg);
   if(smooth)
     q_img = q_img.transformed(mat, Qt::SmoothTransformation);
@@ -516,7 +517,7 @@ bool taImage::TranslateImage(float move_x, float move_y, bool smooth) {
   int ht = q_img.height();
   int nw_move_x= (int)(move_x * (float)wd);
   int nw_move_y = (int)(move_y * (float)ht);
-  QMatrix mat;
+  QTransform mat;
   mat.translate(nw_move_x, nw_move_y);
   if(smooth)
     q_img = q_img.transformed(mat, Qt::SmoothTransformation);

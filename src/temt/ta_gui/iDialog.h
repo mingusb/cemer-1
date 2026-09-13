@@ -25,7 +25,7 @@ class TA_API iDialog : public QDialog
   Q_OBJECT
 
 public:
-  explicit iDialog(QWidget *parent = 0, Qt::WindowFlags f = 0);
+  explicit iDialog(QWidget *parent = 0, Qt::WindowFlags f = {});
 
   int exec() override;
 

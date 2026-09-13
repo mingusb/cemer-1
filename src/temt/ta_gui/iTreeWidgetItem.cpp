@@ -116,20 +116,20 @@ void iTreeWidgetItem::setBackgroundColor(const QColor& color, int col)
 {
   if (col < 0) {
     for (int i = 0; i < columnCount(); ++i) {
-      setData(i, Qt::BackgroundColorRole, color);
+      setData(i, Qt::BackgroundRole, color);
     }
   } else if (col < columnCount()) {
-    setData(col, Qt::BackgroundColorRole, color);
+    setData(col, Qt::BackgroundRole, color);
   }
 }
 
 void iTreeWidgetItem::setTextColor(const QColor& color, int col) {
   if (col < 0) {
     for (int i = 0; i < columnCount(); ++i) {
-      setData(i, Qt::TextColorRole, color);
+      setData(i, Qt::ForegroundRole, color);
     }
   } else if (col < columnCount()) {
-    setData(col, Qt::TextColorRole, color);
+    setData(col, Qt::ForegroundRole, color);
   }
 }
 
@@ -148,14 +148,14 @@ void iTreeWidgetItem::resetBackgroundColor(int col) {
   QVariant var; // check for existing color, don't set if not necessary
   if (col < 0) {
     for (int i = 0; i < columnCount(); ++i) {
-      var = data(i, Qt::BackgroundColorRole);
+      var = data(i, Qt::BackgroundRole);
       if (var.isValid())
-        setData(i, Qt::BackgroundColorRole, QVariant());
+        setData(i, Qt::BackgroundRole, QVariant());
     }
   } else if (col < columnCount()) {
-    var = data(col, Qt::BackgroundColorRole);
+    var = data(col, Qt::BackgroundRole);
     if (var.isValid())
-      setData(col, Qt::BackgroundColorRole, QVariant());
+      setData(col, Qt::BackgroundRole, QVariant());
   }
 }
 
@@ -163,14 +163,14 @@ void iTreeWidgetItem::resetTextColor(int col) {
   QVariant var; // check for existing color, don't set if not necessary
   if (col < 0) {
     for (int i = 0; i < columnCount(); ++i) {
-      var = data(i, Qt::TextColorRole);
+      var = data(i, Qt::ForegroundRole);
       if (var.isValid())
-        setData(i, Qt::TextColorRole, QVariant());
+        setData(i, Qt::ForegroundRole, QVariant());
     }
   } else if (col < columnCount()) {
-    var = data(col, Qt::TextColorRole);
+    var = data(col, Qt::ForegroundRole);
     if (var.isValid())
-      setData(col, Qt::TextColorRole, QVariant());
+      setData(col, Qt::ForegroundRole, QVariant());
   }
 }
 

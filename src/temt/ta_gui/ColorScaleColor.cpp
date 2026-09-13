@@ -37,7 +37,7 @@ void ColorScaleColor::SetColor(float r, float g, float b, float a, RGBA* backgro
   float 	dr=0.0f,dg=0.0f,db=0.0f;
 #ifdef TA_GUI
   if(taMisc::gui_active) {
-    ((iColor)(QApplication::palette().color(QPalette::Active,                   QPalette::Background))).intensities(dr, dg, db);
+    ((iColor)(QApplication::palette().color(QPalette::Active,                   QPalette::Window))).intensities(dr, dg, db);
   }
 #endif
   bgc += ((dr+dg+db)/3.0f) * ((background == NULL) ? 1.0 :

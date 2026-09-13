@@ -19,8 +19,8 @@
   }
 
   // no learning in this one..
-  INLINE void  Compute_dWt(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { };
-  INLINE void  Compute_Weights(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { };
+  INLINE void  Compute_dWt(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no; (void)u; };
+  INLINE void  Compute_Weights(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no; (void)u; };
 
   INLINE void Initialize_core() {
     gate_qtr = Q1_Q3;

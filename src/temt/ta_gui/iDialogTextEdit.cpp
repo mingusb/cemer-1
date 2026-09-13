@@ -16,7 +16,7 @@
 #include "iDialogTextEdit.h"
 
 #include <QApplication>
-#include <QDesktopWidget>
+#include <QScreen>
 #include <QLayout>
 #include <QPushButton>
 #include <QPrintDialog>
@@ -35,7 +35,7 @@ iDialogTextEdit::iDialogTextEdit(bool readOnly_, QWidget* parent)
 
 void iDialogTextEdit::init(bool readOnly_) {
   m_readOnly = readOnly_;
-  QRect rect(QApplication::desktop()->screenGeometry(0));
+  QRect rect(screen()->availableGeometry());
   int wd = (rect.width() * 3) / 4;
   int ht = (rect.height() * 3) / 4;
   if(wd > 640) wd = 640;        // don't make it too wide..
@@ -44,7 +44,7 @@ void iDialogTextEdit::init(bool readOnly_) {
   txtText = new iTextEdit(this);
   layOuter->addWidget(txtText);
   QHBoxLayout* layButtons = new QHBoxLayout();
-  layButtons->setMargin(2);
+  layButtons->setContentsMargins(2, 2, 2, 2);
   layButtons->setSpacing(4);
   layOuter->addLayout(layButtons);
   layButtons->addStretch();

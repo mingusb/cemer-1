@@ -35,7 +35,7 @@ public:
 
   virtual BaseSpec* GetSpec() const     { return NULL; } // get the spec pointer
 
-  virtual bool  SetSpec_impl(BaseSpec* es, bool update_if_set) { return false; }
+  virtual bool  SetSpec_impl(BaseSpec* es, bool update_if_set) { (void)es; (void)update_if_set; return false; }
   // set the spec pointer -- if update_if_set then UAE called on owner if a new spec is set -- don't do this for SetDefaultSpec
   inline bool   SetSpec(BaseSpec* es) { return SetSpec_impl(es, true); }
   // default set spec call -- does UAE

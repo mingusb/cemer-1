@@ -103,7 +103,7 @@ bool DataCalcCopyCommonCols::GenCssBody_impl(Program* prog) {
   return true;
 }
 
-bool DataCalcCopyCommonCols::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool DataCalcCopyCommonCols::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if (CvtFmCodeCheckNames(code))
     return true;
   
@@ -115,7 +115,7 @@ bool DataCalcCopyCommonCols::CanCvtFmCode(const String& code, ProgEl* scope_el) 
   return false;
 }
 
-bool DataCalcCopyCommonCols::CvtFmCode(const String& code) {
+bool DataCalcCopyCommonCols::CvtFmCode(const String& code) { (void)code;
   return true;
 }
 

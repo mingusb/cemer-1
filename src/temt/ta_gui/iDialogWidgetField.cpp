@@ -64,7 +64,7 @@ void iDialogWidgetField::init(bool read_only_, const String& desc) {
   }
   layOuter->addWidget(txtText);
   QHBoxLayout* layButtons = new QHBoxLayout();
-  layButtons->setMargin(2);
+  layButtons->setContentsMargins(2, 2, 2, 2);
   layButtons->setSpacing(4);
   layOuter->addLayout(layButtons);
   layButtons->addStretch();

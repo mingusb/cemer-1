@@ -68,7 +68,7 @@ int MTA::Peekc() {
   return file_str[strm_pos];
 }
 
-void MTA::unGetc(int c) {
+void MTA::unGetc(int c) { (void)c;
   col--;
   strm_pos--;
 }
@@ -535,14 +535,13 @@ int MTA::lex() {
     }
 
     if((c == '.') || isdigit(c) || (c == '-')) {	// number
-      int iv, gotreal = 0;
+      int iv;
       LexBuf = (char)c;
-      if(c == '.') gotreal = 1;
       
       while(((c=Peekc()) != EOF) &&
 	    ((c == '.') || isxdigit(c) || (c == 'x') || (c == 'e') || (c == '-') ||
 	     (c == 'X') || (c == 'E')))	{
-	LexBuf += (char)c; if(c == '.') gotreal = 1;
+	LexBuf += (char)c;
 	Getc();
       } 
 

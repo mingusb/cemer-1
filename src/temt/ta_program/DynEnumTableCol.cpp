@@ -78,7 +78,7 @@ void DynEnumTableCol::SmartRef_SigDestroying(taSmartRef* ref, taBase* obj) {
 
 void DynEnumTableCol::SmartRef_SigEmit(taSmartRef* ref, taBase* obj,
     int sls, void* op1_, void* op2_)
-{
+{ (void)op1_; (void)op2_; (void)ref; (void)sls;
   // DataTable change - update the enums
   if(TestError(obj != src_table, "SmartRef_SigEmit", "data table doesn't match the member value - should not happen - report bug"))
     return;

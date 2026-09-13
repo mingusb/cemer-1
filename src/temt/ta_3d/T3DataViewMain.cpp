@@ -164,7 +164,7 @@ void T3DataViewMain::ReBuildAll() {
   Render();
 }
 
-void T3DataViewMain::SaveImageSVG(const String& svg_fnm) {
+void T3DataViewMain::SaveImageSVG(const String& svg_fnm) { (void)svg_fnm;
   taMisc::Error("Sorry, SVG output not (yet) supported for this type of object");
   // code generally looks like this:
   // T3ExaminerViewer* vw = GetViewer();

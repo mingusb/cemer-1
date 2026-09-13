@@ -23,10 +23,10 @@
 
 iComboBoxPrevNext::iComboBoxPrevNext(QWidget* parent) : QWidget(parent) {
   lay = new QHBoxLayout(this);
-  lay->setMargin(0); lay->setSpacing(1);
+  lay->setContentsMargins(0, 0, 0, 0); lay->setSpacing(1);
 
   vlay = new QVBoxLayout();
-  vlay->setMargin(0); lay->setSpacing(0);
+  vlay->setContentsMargins(0, 0, 0, 0); lay->setSpacing(0);
   lay->addLayout(vlay);
 
   int sz = taiM->combo_height(taiMisc::defSize) / 2;
@@ -54,14 +54,14 @@ iComboBoxPrevNext::iComboBoxPrevNext(QWidget* parent) : QWidget(parent) {
   connect(combo_box, SIGNAL(editTextChanged(const QString &)), this,
           SIGNAL(editTextChanged(const QString &)));
   connect(combo_box, SIGNAL(activated(int)), this, SIGNAL(activated(int)));
-  connect(combo_box, SIGNAL(activated(const QString &)), this,
+  connect(combo_box, SIGNAL(textActivated(const QString &)), this,
           SIGNAL(activated(const QString &)));
   connect(combo_box, SIGNAL(highlighted(int)), this, SIGNAL(highlighted(int)));
-  connect(combo_box, SIGNAL(highlighted(const QString &)), this,
+  connect(combo_box, SIGNAL(textHighlighted(const QString &)), this,
           SIGNAL(highlighted(const QString &)));
   connect(combo_box, SIGNAL(currentIndexChanged(int)), this,
           SIGNAL(currentIndexChanged(int)));
-  connect(combo_box, SIGNAL(currentIndexChanged(const QString &)), this,
+  connect(combo_box, SIGNAL(currentTextChanged(const QString &)), this,
           SIGNAL(currentIndexChanged(const QString &)));
   connect(combo_box, SIGNAL(currentTextChanged(const QString &)), this,
           SIGNAL(currentTextChanged(const QString &)));

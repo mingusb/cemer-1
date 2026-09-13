@@ -249,7 +249,7 @@ void taiEditorOfUserData::Constr_Methods_impl() {
   Insert_Methods();
 }
 
-void taiEditorOfUserData::SigLinkRecv(taSigLink* dl, int sls, void* op1, void* op2) {
+void taiEditorOfUserData::SigLinkRecv(taSigLink* dl, int sls, void* op1, void* op2) { (void)dl; (void)op1; (void)op2;
 //note: we completely replace default, and basically rebuild on any Group notify,
 // and ignore the other notifies (i.e the List guys, which will be echoes of a Group
 
@@ -291,7 +291,7 @@ void taiEditorOfUserData::DoRenameUserDataItem() {
 
 void taiEditorOfUserData::FillLabelContextMenu_CtrlPanel(QMenu* menu,
   int& last_id)
-{
+{ (void)last_id;
   UserDataItemBase* item = dynamic_cast<UserDataItemBase*>(ctrl_panel_base);
   if (item == NULL) return;
 
@@ -322,7 +322,7 @@ void taiEditorOfUserData::GetValue_Membs_def() {
 
 void taiEditorOfUserData::tw_currentCellChanged(int row,
     int col, int previousRow, int previousColumn)
-{
+{ (void)previousColumn; (void)previousRow;
   if ((row < 0) || (col < 1)) return;
   // edit of item
   QTableWidgetItem* twi = tw->item(row, col);

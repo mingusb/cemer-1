@@ -57,7 +57,7 @@ void taiWidgetPlusToggle::GetImage(bool chk) {
   but_rep->setChecked(chk);
 }
 
-void taiWidgetPlusToggle::SigEmit_impl(taiWidget* chld) {
+void taiWidgetPlusToggle::SigEmit_impl(taiWidget* chld) { (void)chld;
   but_rep->setChecked(true);
 }
 

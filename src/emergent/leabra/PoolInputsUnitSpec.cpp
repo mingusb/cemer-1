@@ -2,7 +2,7 @@
 // {
 
 void STATE_CLASS(PoolInputsUnitSpec)::Compute_PooledAct
-  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   float new_act = 0.0f;
   int tot_n = 0;
   const int rsz = u->NRecvConGps(net);

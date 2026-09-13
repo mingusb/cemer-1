@@ -152,13 +152,12 @@ void iHelpBrowser::init() {
   this->setWindowTitle("C++ Class Reference / Web Browser");
 //  this->setSizeGripEnabled(true);
 
-  int font_spec = taiMisc::fonMedium;
 
   split = new iSplitter;
 
   QWidget* tvw = new QWidget;
   QVBoxLayout* lay_tv = new QVBoxLayout(tvw);
-  lay_tv->setMargin(0);
+  lay_tv->setContentsMargins(0, 0, 0, 0);
 
   QToolBar* tool_bar = new QToolBar(tvw);
   lay_tv->addWidget(tool_bar);
@@ -191,7 +190,7 @@ void iHelpBrowser::init() {
 
   QWidget* wid_tab = new QWidget;
   QVBoxLayout* lay_tab = new QVBoxLayout(wid_tab);
-  lay_tab->setMargin(0);
+  lay_tab->setContentsMargins(0, 0, 0, 0);
 
   tool_bar = new QToolBar(wid_tab);
   lay_tab->addWidget(tool_bar);
@@ -388,7 +387,9 @@ void iHelpBrowser::AddTypesR(TypeSpace* ts) {
 iWebView* iHelpBrowser::AddWebView(const String& label) {
   ++m_changing;
   iWebView* brow = new iWebView;
-  float trg_font_sz = 12.0f;    // fonts got upsized..
+#ifdef USE_QT_WEBVIEW
+  float trg_font_sz = 12.0f;
+#endif    // fonts got upsized..
 
   int brow_fs = taMisc::GetCurrentFontSize("browser");
 
@@ -461,14 +462,10 @@ void iHelpBrowser::ApplyFiltering() {
   QTreeWidgetItem* item;
   QString s;
   //QTreeWidgetItem* first_item = NULL;
-  int n_items = 0;
   while ((item = *it)) {
     // TODO (maybe): don't hide NULL item
     bool show = ShowItem(item);
     item->setHidden(!show);
-    if(show) {
-      n_items++;
-    }
     ++it;
   }
   taMisc::DoneBusy();
@@ -477,7 +474,7 @@ void iHelpBrowser::ApplyFiltering() {
 
 #ifdef USE_QT_WEBENGINE
 
-void iHelpBrowser::brow_createWindow(QWebEnginePage::WebWindowType type, QWebEngineView*& window) {
+void iHelpBrowser::brow_createWindow(QWebEnginePage::WebWindowType type, QWebEngineView*& window) { (void)type;
   // fork to browser -- always!
   // if (type == QWebEnginePage::WebBrowserWindow) {
     window = AddWebView(_nilString);
@@ -836,7 +833,7 @@ void iHelpBrowser::timFilter_timeout() {
   else SetFilter(text);
 }
 
-void iHelpBrowser::tv_currentItemChanged(QTreeWidgetItem* curr, QTreeWidgetItem* prev) {
+void iHelpBrowser::tv_currentItemChanged(QTreeWidgetItem* curr, QTreeWidgetItem* prev) { (void)prev;
   if (m_changing) return;
   ItemChanged(curr);
 }

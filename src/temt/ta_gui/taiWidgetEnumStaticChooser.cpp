@@ -121,7 +121,7 @@ void taiWidgetEnumStaticChooser::BuildChooser_0(iDialogItemChooser* ic) {
       for(int j=0;j< td->enum_vals.size; j++) {
         EnumDef* ed = td->enum_vals.FastEl(j);
         if(!ShowEnum(ed)) continue;
-        QTreeWidgetItem* item = ic->AddItem(cat, ed->name + " (enum)", NULL, (void*)ed,
+        ic->AddItem(cat, ed->name + " (enum)", NULL, (void*)ed,
                                             ed->desc);
       }
     }
@@ -134,7 +134,7 @@ void taiWidgetEnumStaticChooser::BuildChooser_0(iDialogItemChooser* ic) {
     cat = mbr->OptionAfter("CAT_");
     if(cat == "IGNORE") continue;
     cat = "member: " + cat;
-    QTreeWidgetItem* item = ic->AddItem(cat, mbr->name + " (member)", NULL, (void*)mbr,
+    ic->AddItem(cat, mbr->name + " (member)", NULL, (void*)mbr,
                                         mbr->desc);
   }
 
@@ -160,7 +160,7 @@ void taiWidgetEnumStaticChooser::BuildChooser_1(iDialogItemChooser* ic) {
       for(int j=0;j< td->enum_vals.size; j++) {
         EnumDef* ed = td->enum_vals.FastEl(j);
         if(!ShowEnum(ed)) continue;
-        QTreeWidgetItem* item = ic->AddItem(cat, ed->name, NULL, (void*)ed, ed->desc);
+        ic->AddItem(cat, ed->name, NULL, (void*)ed, ed->desc);
       }
     }
   }
@@ -175,7 +175,7 @@ void taiWidgetEnumStaticChooser::BuildChooser_2(iDialogItemChooser* ic) {
     cat = mbr->OptionAfter("CAT_");
     if(cat == "IGNORE") continue;
     cat = "member: " + cat;
-    QTreeWidgetItem* item = ic->AddItem(cat, mbr->name, NULL, (void*)mbr, mbr->desc);
+    ic->AddItem(cat, mbr->name, NULL, (void*)mbr, mbr->desc);
   }
 }
 
@@ -202,7 +202,7 @@ void taiWidgetEnumStaticChooser::BuildChooser_4(iDialogItemChooser* ic) {
       for(int j=0;j< td->enum_vals.size; j++) {
         EnumDef* ed = td->enum_vals.FastEl(j);
         if(!ed->HasOption("EXPERT")) continue;
-        QTreeWidgetItem* item = ic->AddItem(cat, ed->name + " (enum)", NULL, (void*)ed,
+        ic->AddItem(cat, ed->name + " (enum)", NULL, (void*)ed,
                                             ed->desc);
       }
     }
@@ -215,7 +215,7 @@ void taiWidgetEnumStaticChooser::BuildChooser_4(iDialogItemChooser* ic) {
     cat = mbr->OptionAfter("CAT_");
     if(cat == "IGNORE") continue;
     cat = "member: " + cat;
-    QTreeWidgetItem* item = ic->AddItem(cat, mbr->name + " (member)", NULL, (void*)mbr,
+    ic->AddItem(cat, mbr->name + " (member)", NULL, (void*)mbr,
                                         mbr->desc);
   }
 
@@ -232,7 +232,7 @@ void taiWidgetEnumStaticChooser::BuildChooser_4(iDialogItemChooser* ic) {
   }
 }
 
-int taiWidgetEnumStaticChooser::columnCount(int view) const {
+int taiWidgetEnumStaticChooser::columnCount(int view) const { (void)view;
   return 2;                     // always 2
 }
 

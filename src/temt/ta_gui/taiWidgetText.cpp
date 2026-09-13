@@ -42,7 +42,7 @@ taiWidgetText::taiWidgetText(TypeDef* typ_, IWidgetHost* host_, taiWidget* par, 
   if (needs_edit_button) {
     QWidget* act_par = MakeLayoutWidget(gui_parent_);
     QHBoxLayout* lay = new QHBoxLayout(act_par);
-    lay->setMargin(0);
+    lay->setContentsMargins(0, 0, 0, 0);
     lay->setSpacing(1);
     
     bool add_completer = (lookupfun_md && (md->HasOption("ADD_COMPLETER_EXPR") || lookupfun_md->HasOption("ADD_COMPLETER_SIMPLE")));

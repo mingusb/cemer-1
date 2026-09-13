@@ -42,7 +42,7 @@ void TopLevelViewer::CutLinks() {
 }
 
 
-void TopLevelViewer::Copy_(const TopLevelViewer& cp) {
+void TopLevelViewer::Copy_(const TopLevelViewer& cp) { (void)cp;
   if (!GetName().empty())
     SetName(GetName() + "_copy");
 }

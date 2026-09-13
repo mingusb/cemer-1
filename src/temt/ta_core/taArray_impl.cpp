@@ -195,7 +195,7 @@ bool taArray_impl::SwapIdx(int pos1, int pos2) {
   return true;
 }
 
-void taArray_impl::Permute(int thr_no) {
+void taArray_impl::Permute(int thr_no) { (void)thr_no;
   int i, nv;
   void* tmp = El_GetTmp_();
   for(i=0; i<size; i++) {

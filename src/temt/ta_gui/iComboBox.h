@@ -20,7 +20,11 @@
 
 #include <QObject>
 #include <QComboBox>
+#ifndef __MAKETA__
 #include <QStringList>
+#else
+class QStringList; //
+#endif
 
 class TA_API iComboBox: public QComboBox {
   Q_OBJECT

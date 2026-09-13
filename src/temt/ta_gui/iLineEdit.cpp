@@ -20,7 +20,7 @@
 #include <taMisc>
 #include <taiMisc>
 #include <QCoreApplication>
-#include <QDesktopWidget>
+#include <QScreen>
 #include <QPalette>
 #include <QApplication>
 #include <QTextEdit>
@@ -61,7 +61,7 @@ void iLineEdit::init(bool add_completer) {
   mchar_width = 0;
   ext_select_on = false;
   // this seems unnecessary, and conflicts with ctrl-U select-all!
-//   QShortcut* sc = new QShortcut(QKeySequence(/*Qt::ALT +*/ Qt::CTRL + Qt::Key_U), this);
+//   QShortcut* sc = new QShortcut(QKeySequence(/*Qt::ALT +*/ Qt::CTRL | Qt::Key_U), this);
 //   sc->setContext(Qt::WidgetShortcut);
   
   completer = NULL;
@@ -360,7 +360,6 @@ void iLineEdit::DoCompletion(bool extend) {
 }
 
 void iLineEdit::CompletionDone() {
-  QModelIndex index = GetCompleter()->currentIndex();
   emit completed(GetCompleter()->currentIndex());
 }
 

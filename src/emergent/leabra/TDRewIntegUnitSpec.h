@@ -14,9 +14,9 @@
   }    
 
   // nullify other major routines:
-  INLINE void   Compute_NetinInteg(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) override { };
-  INLINE void   Compute_dWt(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { };
-  INLINE void   Compute_Weights(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { };
+  INLINE void   Compute_NetinInteg(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no; (void)u; };
+  INLINE void   Compute_dWt(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no; (void)u; };
+  INLINE void   Compute_Weights(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no; (void)u; };
 
   INLINE void Initialize_core() {
     act_range.min = -100.0f;

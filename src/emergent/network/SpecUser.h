@@ -32,7 +32,7 @@ class E_API SpecUser : public taNBase {
 INHERITED(taNBase)
 public:
 
-  virtual bool  ApplySpecToMe(BaseSpec* spec) { return false; }
+  virtual bool  ApplySpecToMe(BaseSpec* spec) { (void)spec; return false; }
   // this is the one key method that must be overwritten in each base case to call the proper method to apply the given spec to this object -- returns true upon success, false for failure
   
   TA_BASEFUNS_NOCOPY(SpecUser);

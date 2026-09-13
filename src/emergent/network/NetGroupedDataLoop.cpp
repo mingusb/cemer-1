@@ -226,12 +226,12 @@ String NetGroupedDataLoop::GetDisplayName() const {
     + " item index: " + item_index_nm +")";
 }
 
-bool NetGroupedDataLoop::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool NetGroupedDataLoop::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if(code.startsWith("Net Grouped Data Loop"))
     return true;
   return false;
 }
 
-bool NetGroupedDataLoop::CvtFmCode(const String& code) {
+bool NetGroupedDataLoop::CvtFmCode(const String& code) { (void)code;
   return true;
 }

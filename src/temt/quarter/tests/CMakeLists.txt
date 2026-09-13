@@ -24,3 +24,6 @@ endif()
 
 enable_testing()
 add_test(NAME quarter_qt6_test COMMAND quarter_qt6_test)
+add_test(NAME quarter_qt6_shared_contexts COMMAND quarter_qt6_test)
+set_tests_properties(quarter_qt6_shared_contexts PROPERTIES
+  ENVIRONMENT "CEMER_TEST_SHARE_CONTEXTS=1")

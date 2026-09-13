@@ -1,0 +1,36 @@
+// Park-Miller RNG using Schrage's overflow-free integer recurrence.
+// Fisher-Yates chooses a fresh vocabulary permutation for each seed.
+int_Matrix ih_permutation;
+ih_permutation.SetGeom(1, ih_v);
+int ih_rng = ih_seed;
+int ih_a;
+for(ih_a = 0; ih_a < ih_v; ih_a++) ih_permutation[ih_a] = ih_a;
+for(ih_a = ih_v - 1; ih_a > 0; ih_a--) {
+  ih_rng = 16807 * (ih_rng % 127773) - 2836 * (ih_rng / 127773);
+  if(ih_rng <= 0) ih_rng += 2147483647;
+  int ih_swap = ih_rng % (ih_a + 1);
+  int ih_tmp = ih_permutation[ih_a];
+  ih_permutation[ih_a] = ih_permutation[ih_swap];
+  ih_permutation[ih_swap] = ih_tmp;
+}
+int ih_period = ih_n / 2;
+if(ih_period > ih_v - 1) ih_period = ih_v - 1;
+ih_sequence->RemoveAllRows();
+ih_sequence->AddRows(ih_n);
+for(ih_a = 0; ih_a < ih_n; ih_a++) {
+  int ih_token = ih_permutation[ih_a % ih_period];
+  // Keep the first exemplar and final query intact. Corrupt intermediate
+  // repetitions with the held-out distractor token at the requested rate.
+  ih_rng = 16807 * (ih_rng % 127773) - 2836 * (ih_rng / 127773);
+  if(ih_rng <= 0) ih_rng += 2147483647;
+  double ih_draw = ih_rng / 2147483647.0;
+  if(ih_a >= ih_period && ih_a < ih_n - 1 && ih_draw < ih_noise)
+    ih_token = ih_permutation[ih_v - 1];
+  ih_sequence->SetVal(ih_a, "position", ih_a);
+  ih_sequence->SetVal(ih_token, "token", ih_a);
+  ih_sequence->SetVal(String(ih_token), "label", ih_a);
+  int ih_next_token = ih_permutation[(ih_a + 1) % ih_period];
+  ih_sequence->SetVal(ih_next_token, "next_token", ih_a);
+}
+ih_cursor = ih_n - 1;
+ih_cfg->SetVar("cursor", ih_cursor);

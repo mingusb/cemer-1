@@ -155,7 +155,7 @@ SoOffscreenRendererQt::getGLRenderAction(void) const
 
 static void
 pre_render_cb(void * userdata, SoGLRenderAction * action)
-{
+{ (void)userdata;
   glClear(GL_DEPTH_BUFFER_BIT|GL_COLOR_BUFFER_BIT);
   action->setRenderingIsRemote(FALSE);
 }

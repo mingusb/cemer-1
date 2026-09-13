@@ -41,7 +41,7 @@ void iTreeSearch::Constr() {
   QHBoxLayout* lay = new QHBoxLayout(this);
   srch_bar = new QToolBar(this);
   lay->addWidget(srch_bar);
-  lay->setMargin(0);
+  lay->setContentsMargins(0, 0, 0, 0);
   lay->setSpacing(0);
   
   srch_mode_button = new iActionMenuButton();
@@ -146,7 +146,7 @@ void iTreeSearch::Search(iTreeSearch::SearchMode mode) {
         ++it; continue;
       }
     }
-    if(!tree_view->isItemExpanded(item) && !item->ChildrenCreated()) {
+    if(!item->isExpanded() && !item->ChildrenCreated()) {
       // do full recursive search if not already expanded
       sub_srch.Reset();
       tab->Search(ftxt, sub_srch, NULL, text_only, true, case_sens, false, false, false, false, false, false); // go with defaults for now
@@ -203,7 +203,7 @@ void iTreeSearch::unHighlightFound() {
   tree_view->Refresh();
 }
 
-void iTreeSearch::selectCurrent(bool replace) {
+void iTreeSearch::selectCurrent(bool replace) { (void)replace;
   if(!tree_view)
     return;
   if(cur_item < 0 || cur_item >= found_items.size)

@@ -2,7 +2,7 @@
 // {
 
 void STATE_CLASS(CerebGranuleUnitSpec)::Compute_GranLearnAct
-  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
   
   int time_since_thr = (int)TimeSinceThr(u);
   float& act_lag = ActLag(u);

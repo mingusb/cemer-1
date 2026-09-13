@@ -66,7 +66,7 @@ public:
 
   static inline float sRGBvalFromLinear(const float lin) {
     if(lin <= 0.0031308f) return 12.92f * lin;
-    return (1.055f * powf(lin, 1.0f / 2.4f) + 0.055f);
+    return (1.055f * powf(lin, 1.0f / 2.4f) - 0.055f);
   }
   // #CAT_ColorSpace convert an sRGB rgb linear component to non-linear sRGB value -- used in converting from XYZ to sRGB 
  
@@ -114,7 +114,7 @@ public:
   }
   // #CAT_ColorSpace convert XYZ CIE standard color space into sRGB
 
-  static inline void XYZrenormD65(float& X, float& Y, float& Z) {
+  static inline void XYZrenormD65(float& X, float& Y, float& Z) { (void)Y;
     X *= (1.0f / 0.95047f); Z *= (1.0f / 1.08883f);
   }
   // #CAT_ColorSpace renormalize XZY values relative to the D65 outdoor white light values
@@ -169,17 +169,19 @@ public:
 
   static inline void LMStoXYZ_CAT02(float& X, float& Y, float& Z,
                                     const float L, const float M, const float S) {
-    X = 1.096124f * L + 0.4296f * Y + -0.1624f * Z;
-    Y = -0.7036f * X + 1.6975f * Y + 0.0061f * Z;
-    Z = 0.0030f * X + 0.0136f * Y + 0.9834 * Z;
+    // Inverse of the XYZtoLMS_CAT02 matrix above, rounded to float precision.
+    X = 1.09612382084f * L - 0.278869000218f * M + 0.182745179383f * S;
+    Y = 0.454369041975f * L + 0.473533154307f * M + 0.0720978037172f * S;
+    Z = -0.00962760873843f * L - 0.00569803121611f * M + 1.01532563995f * S;
   }
   // #CAT_ColorSpace convert Long, Medium, Short cone-based responses to XYZ, using the CAT02 transform from CIECAM02 color appearance model (MoroneyFairchildHuntEtAl02)
 
   static inline void LMStoXYZ_HPE(float& X, float& Y, float& Z,
                                     const float L, const float M, const float S) {
-    X = 1.096124f * L + 0.4296f * Y + -0.1624f * Z;
-    Y = -0.7036f * X + 1.6975f * Y + 0.0061f * Z;
-    Z = 0.0030f * X + 0.0136f * Y + 0.9834 * Z;
+    // Inverse of the XYZtoLMS_HPE matrix above, rounded to float precision.
+    X = 1.91019683405f * L - 1.11212389279f * M + 0.201907956767f * S;
+    Y = 0.370950088249f * L + 0.629054257393f * M - 0.00000805514218436f * S;
+    Z = S;
   }
   // #CAT_ColorSpace convert Long, Medium, Short cone-based responses to XYZ, using the Hunt-Pointer-Estevez transform -- this is closer to the actual response functions of the L,M,S cones apparently
 
@@ -204,7 +206,7 @@ public:
                                     float& LvM, float& SvLM, float& grey,
                                     const float L, const float M, const float S) {
     float L_rc = ResponseCompression(L); float M_rc = ResponseCompression(M); float S_rc = ResponseCompression(S);
-    const float LmM = L_rc - M_rc;  const float MmS = M_rc - S_rc;  const float SmL = S_rc - L_rc;
+
     // subtract min and mult by 6 gets values roughly into 1-0 range for L,M
     L_c = 6.0f * (((L_rc + (1.0f / 11.0f) * S_rc)) - 0.109091f); 
     M_c = 6.0f * (((12.0f / 11.0f) * M_rc) - 0.109091f); 

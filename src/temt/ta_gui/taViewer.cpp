@@ -172,7 +172,7 @@ QPixmap taViewer::GrabImage(bool& got_image) {
     return QPixmap();
   }
   got_image = true;
-  return QPixmap::grabWidget(widget());
+  return widget()->grab();
   //  return QPixmap::grabWindow(widget()->winId());
 }
 

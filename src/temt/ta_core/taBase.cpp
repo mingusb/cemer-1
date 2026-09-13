@@ -1829,7 +1829,7 @@ int taBase::Load_String(const String& load_str, taBase* par, taBase** loaded_obj
   return rval;
 }
 
-taBase::DumpQueryResult taBase::Dump_QuerySaveMember(MemberDef* md) {
+taBase::DumpQueryResult taBase::Dump_QuerySaveMember(MemberDef* md) { (void)md;
   return DQR_DEFAULT;
 }
 
@@ -1932,7 +1932,7 @@ String taBase::GetValStr(void* par, MemberDef* memb_def, TypeDef::StrContext sc,
 }
 
 String taBase::GetValStr_ptr(const TypeDef* td, const void* base, void* par, MemberDef* memb_def,
-                             TypeDef::StrContext sc, bool force_inline) {
+                             TypeDef::StrContext sc, bool force_inline) { (void)force_inline; (void)memb_def; (void)par; (void)td;
   taBase* rbase = *((taBase**)base);
   if(rbase && (rbase->GetOwner() || (rbase == tabMisc::root))) {
     switch(sc) {
@@ -1968,7 +1968,7 @@ bool taBase::SetValStr(const String& val, void* par, MemberDef* memb_def,
 }
 
 bool taBase::SetValStr_ptr(const String& val, TypeDef* td, void* base, void* par,
-                           MemberDef* memb_def, TypeDef::StrContext sc, bool force_inline) {
+                           MemberDef* memb_def, TypeDef::StrContext sc, bool force_inline) { (void)force_inline;
   taBase* bs = NULL;
   if((val != String::con_NULL) && (val != "Null")) {
     String tmp_val(val); // FindFromPath can change it
@@ -2273,7 +2273,7 @@ void taBase::BatchUpdate(bool begin, bool struc) {
   }
 }
 
-void taBase::SmartRef_SigDestroying(taSmartRef* ref, taBase* obj) {
+void taBase::SmartRef_SigDestroying(taSmartRef* ref, taBase* obj) { (void)obj; (void)ref;
   if(!isDestroying())
     UpdateAfterEdit();
 }
@@ -2470,16 +2470,16 @@ void taBase::Copy_impl(const taBase& cp) { // note: not a virtual method
   base_flags = (BaseFlags)((base_flags & ~COPY_MASK) | (cp.base_flags & COPY_MASK));
 }
 
-void taBase::Copy_assign(const taBase& cp) { // note: not a virtual method
+void taBase::Copy_assign(const taBase& cp) { (void)cp;  // note: not a virtual method
   // no updating etc at this level -- nothing copied!
 }
 
-bool taBase::CanAppend(const taBase* appendee) const {
+bool taBase::CanAppend(const taBase* appendee) const { (void)appendee;
   return false;
 }
 
 // base class does no appending
-bool taBase::Append(taBase* appendee) {
+bool taBase::Append(taBase* appendee) { (void)appendee;
   return false;
 }
 
@@ -3110,7 +3110,7 @@ const String taBase::GetToolTip(const KeyString& key) const {
   return GetColText(key);
 }
 
-String taBase::GetColText(const KeyString& key, int itm_idx) const {
+String taBase::GetColText(const KeyString& key, int itm_idx) const { (void)itm_idx;
   if (key == key_name) return GetName();
   else if (key == key_type) return GetTypeName();
   else if (key == key_type_desc) return GetTypeDef()->desc;
@@ -3338,7 +3338,7 @@ Variant taBase::GetGuiArgVal(const String& fun_name, int arg_idx) {
   return Variant(GetStemBase()->name); // taiTypeOfTypePtrArgType will convert from String
 }
 
-bool taBase::ControlPanelStdItemFilter(void* base_, void* ctrl_panel_) {
+bool taBase::ControlPanelStdItemFilter(void* base_, void* ctrl_panel_) { (void)base_;
   if(!ctrl_panel_) return false;
   ControlPanel* pan = (ControlPanel*)ctrl_panel_;
   if(pan->IsClone()) return false;
@@ -3347,7 +3347,7 @@ bool taBase::ControlPanelStdItemFilter(void* base_, void* ctrl_panel_) {
   return true;
 }
 
-bool taBase::ControlPanelNoParamSetItemFilter(void* base_, void* ctrl_panel_) {
+bool taBase::ControlPanelNoParamSetItemFilter(void* base_, void* ctrl_panel_) { (void)base_;
   if(!ctrl_panel_) return false;
   ControlPanel* pan = (ControlPanel*)ctrl_panel_;
   if(pan->InheritsFrom(&TA_ParamSet)) return false;
@@ -3752,7 +3752,6 @@ int taBase::UpdatePointers_NewPar(taBase* old_par, taBase* new_par) {
   // taMisc::Info("uptr_npar:", DisplayPath());
   TypeDef* td = GetTypeDef();
   int nchg = 0;                 // total number changed
-  int mychg = 0;                // my actual guys changed
   for(int m=0;m<td->members.size;m++) {
     MemberDef* md = td->members[m];
     if(md->HasOption("NO_UPDATE_POINTER")) continue;
@@ -3761,11 +3760,11 @@ int taBase::UpdatePointers_NewPar(taBase* old_par, taBase* new_par) {
       taBase** ptr = (taBase**)md->GetOff(this);
       if(md->HasNoSetPointer()) {
         int chg = UpdatePointers_NewPar_PtrNoSet(ptr, old_par, new_par);
-        nchg += chg; mychg += chg;
+        nchg += chg;
       }
       else {
         int chg = UpdatePointers_NewPar_Ptr(ptr, old_par, new_par);
-        nchg += chg; mychg += chg;
+        nchg += chg;
       }
     }
     else if(md->type->IsNotPtr()) {
@@ -3812,12 +3811,12 @@ int taBase::UpdatePointers_NewPar(taBase* old_par, taBase* new_par) {
         }
         
         int chg = UpdatePointers_NewPar_Ref(*ref, old_par, new_par, null_not_found);
-        nchg += chg; mychg += chg;
+        nchg += chg;
       }
       if(md->type->InheritsFrom(TA_taSmartPtr)) {
         taSmartPtr* ref = (taSmartPtr*)md->GetOff(this);
         int chg = UpdatePointers_NewPar_SmPtr(*ref, old_par, new_par);
-        nchg += chg; mychg += chg;
+        nchg += chg;
       }
       else if(md->type->IsActualTaBase()) {
         taBase* obj = (taBase*)md->GetOff(this);
@@ -4095,7 +4094,7 @@ void taBase::WarnSettingToNull(taBase* old_par, taBase* new_par) {
   }
 }
 
-void taBase::GetArgCompletionList(const String& method, const String& arg, const String_Array& arg_values, taBase* base_obj, const String& cur_txt, Completions& completions) {
+void taBase::GetArgCompletionList(const String& method, const String& arg, const String_Array& arg_values, taBase* base_obj, const String& cur_txt, Completions& completions) { (void)arg_values; (void)base_obj; (void)cur_txt;
   if (method == "SetMember" && arg == "member") {
     TypeDef* td = GetTypeDef();
     if (td) {

@@ -570,9 +570,9 @@ namespace taFilerUtil
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QFrame>
+#include <QGridLayout>
 #include <QLayout>
-// #include <QScopedPointer> // not avail it seems on some relatively recent platforms
-#include <memory> // std::auto_ptr
+#include <memory>
 #include <QWidget>
 #include <QUrl>
 
@@ -660,14 +660,9 @@ bool taFiler::GetFileName(FileOperation filerOperation) {
   // * filters can only be added in ctor
   // * some use-cases cause no Save dialog if prev is Open
   // DO NOT MAKE STATIC!!!!
-  // Use QScopedPointer to manage memory within this scope (function).
-  //  QScopedPointer<QFileDialog> fd(new QFileDialog(NULL, "", eff_dir, filtext));
-  std::auto_ptr<QFileDialog> fd(new QFileDialog(NULL, "", eff_dir, filtext));
-
-#ifdef TA_OS_MAC
-  // native dialog does not support compression stuff
-  fd->setOptions(QFileDialog::DontUseNativeDialog);
-#endif
+  auto fd = std::make_unique<QFileDialog>(nullptr, "", eff_dir, filtext);
+  // The compression control is part of the Qt dialog layout.
+  fd->setOption(QFileDialog::DontUseNativeDialog);
 
   taRootBase* root = tabMisc::root;
   taProject* proj = NULL;
@@ -710,8 +705,14 @@ bool taFiler::GetFileName(FileOperation filerOperation) {
   // we keep more history than the default..
   fd->setHistory(hist_paths);
 
-  taiFileDialogExtension* fde = new taiFileDialogExtension();
-  // fd->setExtension(fde);
+  auto* fde = new taiFileDialogExtension(fd.get());
+  if(auto* grid = qobject_cast<QGridLayout*>(fd->layout())) {
+    grid->addWidget(fde, grid->rowCount(), 0, 1, grid->columnCount());
+  }
+  else {
+    fd->layout()->addWidget(fde);
+  }
+  fde->setVisible(filerOperation == foSaveAs);
 
   fd->setDirectory(eff_dir);
 #if (QT_VERSION >= 0x050000)
@@ -749,15 +750,14 @@ bool taFiler::GetFileName(FileOperation filerOperation) {
       return true;
 
     case foSaveAs:
-      fd->showExtension(true);
-      fd->setConfirmOverwrite(HasFilerFlag(CONFIRM_OVERWRITE));
+      fd->setOption(QFileDialog::DontConfirmOverwrite, !HasFilerFlag(CONFIRM_OVERWRITE));
       fd->setAcceptMode(QFileDialog::AcceptSave);
       fd->setFileMode(QFileDialog::AnyFile);
       caption = String("Save: ") + filter;
       break;
 
     case foAppend:
-      fd->setConfirmOverwrite(HasFilerFlag(CONFIRM_OVERWRITE));
+      fd->setOption(QFileDialog::DontConfirmOverwrite, !HasFilerFlag(CONFIRM_OVERWRITE));
       fd->setAcceptMode(QFileDialog::AcceptSave);
       fd->setFileMode(QFileDialog::AnyFile);
       caption = String("Append: ") + filter;

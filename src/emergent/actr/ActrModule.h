@@ -71,13 +71,13 @@ public:
 
   virtual void  InitModule() { };
   // #CAT_ActR initialize the module -- ensure we have our appropriate buffer in model, and set our buffer pointer, etc
-  virtual void  ProcessEvent(ActrEvent& event) { };
+  virtual void  ProcessEvent(ActrEvent& event) { (void)event; };
   // #CAT_ActR process a given event, defined in a module-specific way
   virtual bool  ProcessQuery(ActrBuffer* buf, const String& query,
                              bool why_not = false);
   // #CAT_ActR process queries directed at the given buffer -- buffers delegate queries to their module so that modules can process more advanced queries
   virtual bool  SetParam(const String& param_nm, Variant par1, Variant par2)
-  { return false; }
+  { (void)par1; (void)par2; (void)param_nm; return false; }
   // #CAT_ActR set given parameter name to given values -- returns true if param was recognized by this module, otherwise false
   virtual void  Init();
   // #CAT_ActR perform run-time initialization at start of processing -- derived classes should call parent which resets basic stuff including buffer and calls InitModule -- don't call that!

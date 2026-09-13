@@ -46,7 +46,7 @@ void iPanelViewer::Init() {
   //  m_tabViews = new  iTabView_PtrList();
   cur_item = NULL;
   QVBoxLayout* lay = new QVBoxLayout(this);
-  lay->setMargin(0);  lay->setSpacing(0);
+  lay->setContentsMargins(0, 0, 0, 0);  lay->setSpacing(0);
   m_curTabView = new iTabView(this, this);
   lay->addWidget(m_curTabView);
   //  m_tabViews->Add(rval);

@@ -55,7 +55,7 @@ String DataSelectRowsProg::GetDisplayName() const {
   return rval;
 }
 
-bool DataSelectRowsProg::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool DataSelectRowsProg::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if (CvtFmCodeCheckNames(code))
     return true;
   
@@ -134,11 +134,11 @@ void DataSelectRowsProg::AddAllColumns() {
   select_spec.AddAllColumns(GetSrcData());
 }
 
-String DataSelectRowsProg::GetArgForCompletion(const String& method, const String& arg) {
+String DataSelectRowsProg::GetArgForCompletion(const String& method, const String& arg) { (void)arg; (void)method;
   return "dt";
 }
 
-void DataSelectRowsProg::GetArgCompletionList(const String& method, const String& arg, const String_Array& arg_values, taBase* arg_obj, const String& cur_txt, Completions& completions) {
+void DataSelectRowsProg::GetArgCompletionList(const String& method, const String& arg, const String_Array& arg_values, taBase* arg_obj, const String& cur_txt, Completions& completions) { (void)arg; (void)arg_values; (void)cur_txt; (void)method;
   if (arg_obj) {
     if (arg_obj->InheritsFrom(&TA_DataTable)) {
       DataTable* table = (DataTable*)arg_obj;

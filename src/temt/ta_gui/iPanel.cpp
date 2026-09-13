@@ -59,7 +59,7 @@ void iPanel::AddMinibarWidget(QWidget* ctrl) {
   if (!m_minibar_ctrls) {
     m_minibar_ctrls = new QWidget; // not owned, because panel set inserts
     lay_minibar_ctrls = new QHBoxLayout(m_minibar_ctrls);
-    lay_minibar_ctrls->setMargin(0);
+    lay_minibar_ctrls->setContentsMargins(0, 0, 0, 0);
     lay_minibar_ctrls->setSpacing(2);
   }
   ctrl->setParent(m_minibar_ctrls);

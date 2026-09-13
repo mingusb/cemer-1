@@ -50,7 +50,7 @@ public:
 protected:
   String        El_GetName_(void* it) const { if(((ProgVarRef*)it)->ptr()) return ((ProgVarRef*)it)->ptr()->GetName(); return _nilString; }
   void          El_Done_(void* it)      { delete (ProgVarRef*)it; }
-  void*         El_MakeToken_(void* it) { return new ProgVarRef; }
+  void*         El_MakeToken_(void* it) { (void)it; return new ProgVarRef; }
   void*         El_Copy_(void* trg, void* src)
   { *((ProgVarRef*)trg) = *((ProgVarRef*)src); return trg; }
 

@@ -90,7 +90,7 @@ void PropertyDef::InitOptsFlags() {
   inherited::InitOptsFlags();
 }
 
-void PropertyDef::SetValVar(const Variant& val, void* base, void* par) {
+void PropertyDef::SetValVar(const Variant& val, void* base, void* par) { (void)par;
   if (prop_set)
     prop_set(base, val);
 }

@@ -96,16 +96,7 @@ if(GSL_FOUND)
 endif (GSL_FOUND)
 
 # ZLIB
-if (WIN32)
-  if (QT_USE_5)
-    find_package(ZLIB)
-    message(STATUS "Found ZLIB for Windows in = ${ZLIB_LIBRARIES}")
-  else (QT_USE_5)
-    set(ZLIB_LIBRARIES "")
-  endif (QT_USE_5)
-else (WIN32)
-  find_package(ZLIB)
-endif (WIN32)
+find_package(ZLIB REQUIRED)
 
 # JPEG -- not needed
 # if (WIN32)
@@ -238,5 +229,4 @@ message(STATUS "FULL CMAKE_CXX_FLAGS: ${EMERGENT_FULL_CXX_FLAGS}")
 
 get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
 message(STATUS "FULL INCLUDE_DIRECTORIES: ${dirs}")
-
 

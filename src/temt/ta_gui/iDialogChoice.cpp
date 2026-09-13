@@ -213,7 +213,7 @@ const String iDialogChoiceSepBut::delimiter("!|");
 iDialogChoiceSepBut::iDialogChoiceSepBut(QMessageBox::Icon icon, const QString& title,
   const QString& text, String but_list_sep, String but_list, QWidget* parent)
 :inherited(parent)
-{
+{ (void)icon;
   // from qmessagebox.cpp:
   label = new QLabel(this);
   label->setObjectName(QLatin1String("qt_msgbox_label"));
@@ -236,7 +236,7 @@ iDialogChoiceSepBut::iDialogChoiceSepBut(QMessageBox::Icon icon, const QString& 
   sep_but_lay = new QHBoxLayout(sep_buts);
 
   QGridLayout *grid = new QGridLayout;
-  bool hasIcon = iconLabel->pixmap() && !iconLabel->pixmap()->isNull();
+  bool hasIcon = !iconLabel->pixmap().isNull();
 
   if (hasIcon)
     grid->addWidget(iconLabel, 0, 0, 2, 1, Qt::AlignTop);
@@ -251,7 +251,7 @@ iDialogChoiceSepBut::iDialogChoiceSepBut(QMessageBox::Icon icon, const QString& 
 #ifdef TA_OS_MAC
   grid->addWidget(sep_buts, grid->rowCount(), hasIcon ? 2 : 1, 1, 1);
   grid->addWidget(buttonBox, grid->rowCount(), hasIcon ? 2 : 1, 1, 1);
-  grid->setMargin(0);
+  grid->setContentsMargins(0, 0, 0, 0);
   grid->setVerticalSpacing(8);
   grid->setHorizontalSpacing(0);
   setContentsMargins(24, 15, 24, 20);
@@ -283,7 +283,7 @@ iDialogChoiceSepBut::iDialogChoiceSepBut(QMessageBox::Icon icon, const QString& 
   bgChoiceButtons = new QButtonGroup(this); // note: not a widget, invisible
   bgChoiceButtons->setExclusive(false); // not really applicable
 
-  QObject::connect(bgChoiceButtons, SIGNAL(buttonClicked(int)),
+  QObject::connect(bgChoiceButtons, SIGNAL(idClicked(int)),
                    this, SLOT(dialogButtonClicked(int)));
   // direct it to return value!
 

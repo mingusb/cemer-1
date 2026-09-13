@@ -208,7 +208,6 @@ void iDataTableView::FillContextMenu_impl(ContextArea ca, taiWidgetMenu* menu, c
   iAction* act = NULL;
   
   DataCol* dc = dataTable()->data.FastEl(sel.col_fr);
-  int row = sel.row_fr;
 
   // generic col guys
   if (dc && ca == CA_COL_HDR) {
@@ -497,7 +496,7 @@ void iDataTableView::UpdateRowHeightColWidth() {
         }
 #else
         if(col_header->resizeMode(col_idx) != QHeaderView::ResizeToContents) {
-          col_header->setResizeMode(col_idx, QHeaderView::ResizeToContents);
+          col_header->setSectionResizeMode(col_idx, QHeaderView::ResizeToContents);
         }
 #endif
       }
@@ -510,7 +509,7 @@ void iDataTableView::UpdateRowHeightColWidth() {
         }
 #else
         if(col_header->resizeMode(col_idx) != QHeaderView::Interactive) {
-          col_header->setResizeMode(col_idx, QHeaderView::Interactive);
+          col_header->setSectionResizeMode(col_idx, QHeaderView::Interactive);
           setColumnWidth(col_idx, pix_wd); // qt version
         }
 #endif        
@@ -536,7 +535,7 @@ void iDataTableView::ResizeColumnToContents(int column) {
 #if (QT_VERSION >= 0x050200)
   horizontalHeader()->setSectionResizeMode(column, QHeaderView::ResizeToContents);
 #else
-  horizontalHeader()->setResizeMode(column, QHeaderView::ResizeToContents);
+  horizontalHeader()->setSectionResizeMode(column, QHeaderView::ResizeToContents);
 #endif
 }
 
@@ -589,9 +588,10 @@ inherited(own_tw)
 
 QWidget* iTableViewCheckboxDelegate::createEditor(QWidget *parent,
                                                   const QStyleOptionViewItem &option,
-                                                  const QModelIndex &index) const {
+                                                  const QModelIndex &index) const { (void)index; (void)option;
   QCheckBox* editor = new QCheckBox(parent);
-  connect(editor, SIGNAL(stateChanged(int)), this, SLOT(CheckBoxStateChanged(int)));
+  connect(editor, &QCheckBox::checkStateChanged, this,
+          &iTableViewCheckboxDelegate::CheckBoxStateChanged);
   return editor;
 }
 
@@ -621,6 +621,5 @@ void iTableViewCheckboxDelegate::paint(QPainter *painter, const QStyleOptionView
   QApplication::style()->drawControl(QStyle::CE_CheckBox, &button_style, painter);
 }
 
-void iTableViewCheckboxDelegate::CheckBoxStateChanged(int value) {
-  QModelIndex current = own_table_widg->currentIndex();
+void iTableViewCheckboxDelegate::CheckBoxStateChanged(int value) { (void)value;
 }

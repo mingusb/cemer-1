@@ -190,7 +190,6 @@ float STATE_CLASS(PolarRndPrjnSpec)::GetDistProb
   if(rnd_dist.type == STATE_CLASS(Random)::UNIFORM)
     return p_con;
   
-  LAYER_STATE* recv_lay = prjn->GetRecvLayer(net);
   LAYER_STATE* send_lay = prjn->GetSendLayer(net);
 
   TAVECTOR2I ruc;
@@ -207,14 +206,11 @@ float STATE_CLASS(PolarRndPrjnSpec)::GetDistProb
     prob += p_con * rnd_dist.Density(UnitDist(prjn, net, dist_type, ruc, suc));
     suc.y += su_geom.y; // wrap around in x & y
     prob += p_con * rnd_dist.Density(UnitDist(prjn, net, dist_type, ruc, suc));
-    suc.x = suc.x;          // just y
     prob += p_con * rnd_dist.Density(UnitDist(prjn, net, dist_type, ruc, suc));
-    suc = suc;
     suc.x -= su_geom.x; // wrap around in x
     prob -= p_con * rnd_dist.Density(UnitDist(prjn, net, dist_type, ruc, suc));
     suc.y -= su_geom.y; // wrap around in y
     prob += p_con * rnd_dist.Density(UnitDist(prjn, net, dist_type, ruc, suc));
-    suc.x = suc.x;          // just y
     prob += p_con * rnd_dist.Density(UnitDist(prjn, net, dist_type, ruc, suc));
   }
   return prob;

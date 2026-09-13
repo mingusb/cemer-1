@@ -30,7 +30,7 @@
 
   INLINE int  GetStateSpecType() const override { return BP_NETWORK_STATE::T_BpConSpec; }
 
-  INLINE void   Init_dWt(CON_STATE* cg, NETWORK_STATE* net, int thr_no) override {
+  INLINE void   Init_dWt(CON_STATE* cg, NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no;
     float* dwts = cg->OwnCnVar(DWT);
     float* pdws = cg->OwnCnVar(PDW);
     for(int i=0; i<cg->size; i++) {
@@ -39,7 +39,7 @@
     }
   }
 
-  INLINE void   Init_Weights_post(CON_STATE* cg, NETWORK_STATE* net, int thr_no) override {
+  INLINE void   Init_Weights_post(CON_STATE* cg, NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no;
     float* pdws = cg->OwnCnVar(PDW);
     for(int i=0; i<cg->size; i++) {
       pdws[i] = 0.0f;
@@ -61,7 +61,7 @@
   INLINE float          C_Compute_dEdA(const float wt, const float ru_dEdNet)
   { return wt * ru_dEdNet; }
   // #IGNORE 
-  INLINE virtual float  Compute_dEdA(CON_STATE* cg, NETWORK_STATE* net, int thr_no) {
+  INLINE virtual float  Compute_dEdA(CON_STATE* cg, NETWORK_STATE* net, int thr_no) { (void)thr_no;
     // this is ptr-con based and thus very slow..
     float rval = 0.0f;
     if (!no_bp) {
@@ -297,16 +297,16 @@
     ApplyLimits(cg, net, thr_no);
   }
 
-  INLINE void B_Init_dWt(UNIT_STATE* uv, NETWORK_STATE* net, int thr_no) override {
+  INLINE void B_Init_dWt(UNIT_STATE* uv, NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no;
     C_Init_dWt(uv->bias_dwt);
     ((BP_UNIT_STATE*)uv)->bias_pdw = 0.0f;
   }
 
-  INLINE void B_Compute_dWt(UNIT_STATE* uv, NETWORK_STATE* net, int thr_no) override {
+  INLINE void B_Compute_dWt(UNIT_STATE* uv, NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no;
     uv->bias_dwt += ((BP_UNIT_STATE*)uv)->dEdNet;
   }
     
-  INLINE void B_Compute_Weights(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override {
+  INLINE void B_Compute_Weights(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no;
     BP_UNIT_STATE* uv = (BP_UNIT_STATE*)u;
     switch(wt_updt) {
     case WU_DWT_ONLY:

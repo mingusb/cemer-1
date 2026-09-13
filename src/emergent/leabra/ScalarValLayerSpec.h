@@ -49,7 +49,7 @@
   }
     
   INIMPL void  Quarter_Init_Layer(LEABRA_LAYER_STATE* lay, LEABRA_NETWORK_STATE* net) override;
-  INLINE void  Quarter_Init_Layer_Post(LEABRA_LAYER_STATE* lay, LEABRA_NETWORK_STATE* net) override;
+  INIMPL void  Quarter_Init_Layer_Post(LEABRA_LAYER_STATE* lay, LEABRA_NETWORK_STATE* net) override;
   
   INLINE void  Quarter_Final_GetMinus(LEABRA_LAYER_STATE* lay, LEABRA_NETWORK_STATE* net) override {
     inherited::Quarter_Final_GetMinus(lay, net);

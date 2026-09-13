@@ -85,7 +85,7 @@ void iDialogObjDiffFilter::Constr() {
   nm_not = val_not = false;
 
   layOuter = new QVBoxLayout(this);
-  layOuter->setMargin(taiM->vsep_c);
+  layOuter->setContentsMargins(taiM->vsep_c, taiM->vsep_c, taiM->vsep_c, taiM->vsep_c);
   layOuter->setSpacing(taiM->vspc_c);
 
   String lb_txt = "Select types of diffs records to change, and value to set\n";

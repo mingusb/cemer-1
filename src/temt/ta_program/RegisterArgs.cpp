@@ -75,7 +75,7 @@ void RegisterArgs::AddArgsFmCode(Program* prog, ProgEl_List& progs) {
   }
 }
 
-bool RegisterArgs::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool RegisterArgs::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   String dc = code; dc.downcase();
   String dn = GetDisplayName().downcase();
   if (dc.startsWith(dn))
@@ -83,7 +83,7 @@ bool RegisterArgs::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
   return false;
 }
 
-bool RegisterArgs::CvtFmCode(const String& code) {
+bool RegisterArgs::CvtFmCode(const String& code) { (void)code;
   return true;
 }
 

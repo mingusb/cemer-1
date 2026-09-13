@@ -51,7 +51,7 @@ String ControlPanelsFmArgs::GetDisplayName() const {
   return rval;
 }
 
-bool ControlPanelsFmArgs::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool ControlPanelsFmArgs::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if (CvtFmCodeCheckNames(code))
     return true;
 

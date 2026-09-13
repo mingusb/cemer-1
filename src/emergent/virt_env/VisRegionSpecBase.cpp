@@ -183,7 +183,7 @@ void VisRegionSpecBase::IncrTime() {
   // note: override in derived classes..
 }
 
-bool VisRegionSpecBase::FilterImage_impl(bool motion_only) {
+bool VisRegionSpecBase::FilterImage_impl(bool motion_only) { (void)motion_only;
   if(!data_table || save_mode == NONE_SAVE) // bail now
     return false;
 
@@ -351,7 +351,7 @@ bool VisRegionSpecBase::InitDataTable() {
   if(!data_table) {
     return false;
   }
-  int idx;
+
   if(OutSaveOk(image_save)) {
     ImageToTable(data_table, NULL, NULL, true); // fmt only
   }
@@ -368,7 +368,7 @@ bool VisRegionSpecBase::ImageToTable(DataTable* dtab, float_Matrix* right_eye_im
 }
 
 bool VisRegionSpecBase::ImageToTable_impl(DataTable* dtab, float_Matrix* img,
-                                          const String& col_sufx, bool fmt_only) {
+                                          const String& col_sufx, bool fmt_only) { (void)dtab;
   DataCol* col;
   int idx;
   if(region.color == VisRegionParams::COLOR) {
@@ -463,7 +463,7 @@ bool VisRegionSpecBase::ImageToTable_impl(DataTable* dtab, float_Matrix* img,
 
 
 bool VisRegionSpecBase::FourDimMatrixToTable(DataTable* dtab, float_Matrix* out,
-                                        const String& col_nm, bool fmt_only) {
+                                        const String& col_nm, bool fmt_only) { (void)dtab;
   DataCol* col;
   int idx;
   col = data_table->FindMakeColName

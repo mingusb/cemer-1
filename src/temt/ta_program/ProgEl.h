@@ -264,15 +264,15 @@ protected:
 
   virtual bool          useDesc() const {return true;} // hack for CommentEl
 
-  virtual void          PreGenMe_impl(int item_id) {}
-  virtual void          PreGenChildren_impl(int& item_id) {}
-  virtual void          GenCssPre_impl(Program* prog) {};
+  virtual void          PreGenMe_impl(int item_id) { (void)item_id;}
+  virtual void          PreGenChildren_impl(int& item_id) { (void)item_id;}
+  virtual void          GenCssPre_impl(Program* prog) { (void)prog;};
   // #IGNORE generate the Css prefix code (if any) for this object
-  virtual bool          GenCssBody_impl(Program* prog) { return false; }
+  virtual bool          GenCssBody_impl(Program* prog) { (void)prog; return false; }
   // #IGNORE generate the Css body code for this object
-  virtual void          GenCssPost_impl(Program* prog) {};
+  virtual void          GenCssPost_impl(Program* prog) { (void)prog;};
   // #IGNORE generate the Css postfix code (if any) for this object
-  virtual const String  GenListing_children(int indent_level) const { return _nilString; }
+  virtual const String  GenListing_children(int indent_level) const { (void)indent_level; return _nilString; }
   // generate listing of any children of this progel
 
 private:

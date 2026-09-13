@@ -14,6 +14,7 @@
 //   Lesser General Public License for more details.
 
 #include "taCanvas.h"
+#include <QPainterPath>
 
 #include <QSvgRenderer>
 #include <taMisc>
@@ -190,7 +191,7 @@ void taCanvas::DeletePath() {
 void taCanvas::TextLeft(const String& txt, float x, float y) {
   if(!CheckInit()) return;
   q_painter.save();
-  q_painter.resetMatrix();
+  q_painter.resetTransform();
   int cur_wd, cur_ht;
   GetImageSize(cur_wd, cur_ht);
   float xp, yp;
@@ -203,18 +204,18 @@ void taCanvas::TextLeft(const String& txt, float x, float y) {
   q_painter.drawText(QPointF(xp,yp), txt);
   q_painter.restore();
 }
-void taCanvas::TextCenter(const String& txt, float x, float y) {
+void taCanvas::TextCenter(const String& txt, float x, float y) { (void)txt; (void)x; (void)y;
   if(!CheckInit()) return;
   // this is harder.. need a rectangle..
 //   q_painter.drawText(QPointF(x,y), Qt::AlignCenter, txt);
 }
-void taCanvas::TextRight(const String& txt, float x, float y) {
+void taCanvas::TextRight(const String& txt, float x, float y) { (void)txt; (void)x; (void)y;
   if(!CheckInit()) return;
   // this is harder.. need a rectangle..
   //  q_painter.drawText(QPointF(x,y), Qt::AlignRight, txt);
 }
 
-void taCanvas::ClipRect(float l, float b, float r, float t) {
+void taCanvas::ClipRect(float l, float b, float r, float t) { (void)b; (void)l; (void)r; (void)t;
   if(!CheckInit()) return;
 }
 

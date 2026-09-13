@@ -44,7 +44,7 @@ taiEditor::taiEditor(TypeDef* typ_, bool read_only_,
   state = EXISTS;
 
 
-  setBgColor(QApplication::palette().color(QPalette::Active, QPalette::Background));
+  setBgColor(QApplication::palette().color(QPalette::Active, QPalette::Window));
 
   InitGuiFields(false);
 
@@ -214,11 +214,11 @@ void taiEditor::Constr_impl() {
   widButtons = new QWidget(); // parented when we do setButtonsWidget
   widButtons->setAutoFillBackground(true);
   QPalette pal = widButtons->palette();
-  pal.setColor(QPalette::Background, bg_color);
+  pal.setColor(QPalette::Window, bg_color);
   widButtons->setPalette(pal); 
   layButtons = new QHBoxLayout(widButtons);
-  layButtons->setMargin(0);
-//def  layButtons->setMargin(2); // facilitates container
+  layButtons->setContentsMargins(0, 0, 0, 0);
+//def  layButtons->setContentsMargins(2, 2, 2, 2); // facilitates container
   Constr_Buttons();
   Constr_Final();
   StartEndLayout(false);
@@ -237,13 +237,13 @@ void taiEditor::Constr_Widget() {
   if (mwidget != NULL) return;
   mwidget = new QWidget();
   QPalette pal = widget()->palette();
-  pal.setColor(QPalette::Background, bg_color);
+  pal.setColor(QPalette::Window, bg_color);
   widget()->setPalette(pal); 
   widget()->setFont(taiM->dialogFont(ctrl_size));
   last_font_size = taMisc::GetCurrentFontSize("labels");
   vblDialog = new QVBoxLayout(widget()); //marg=2
   vblDialog->setSpacing(0); // need to manage ourself to get nicest look
-  vblDialog->setMargin(2);
+  vblDialog->setContentsMargins(2, 2, 2, 2);
 }
 
 void taiEditor::Constr_Prompt() {
@@ -318,14 +318,14 @@ void taiEditor::Constr_Buttons() {
   }
 }
 
-void taiEditor::SigLinkDestroying(taSigLink* dl) {
+void taiEditor::SigLinkDestroying(taSigLink* dl) { (void)dl;
 // TENT, TODO: confirm this is right...
 //NO!  if (!isConstructed()) return;
   Cancel();
   root = NULL;
 }
 
-void taiEditor::SigLinkRecv(taSigLink* dl, int sls, void* op1, void* op2) {
+void taiEditor::SigLinkRecv(taSigLink* dl, int sls, void* op1, void* op2) { (void)dl; (void)op1; (void)op2; (void)sls;
 //inherited class completely implements
 }
 
@@ -568,7 +568,7 @@ void taiEditor::GetImage_Async() {
   async_getimage_list.LinkUnique(this);
 }
 
-void taiEditor::DebugDestroy(QObject* obj) {
+void taiEditor::DebugDestroy(QObject* obj) { (void)obj;
 }
 
 void taiEditor::ClearExceptionRows() {

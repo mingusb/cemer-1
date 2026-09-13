@@ -2,7 +2,7 @@
 // {
 
 void STATE_CLASS(TDDeltaUnitSpec)::Compute_TD
-  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   if(!Quarter_DeepRawNow(net->quarter)) { // plus phase marker..
     u->da_p = 0.0f;
     u->ext = u->da_p;
@@ -32,7 +32,7 @@ void STATE_CLASS(TDDeltaUnitSpec)::Compute_TD
   u->act_eq = u->act_nd = u->act = u->net = u->ext;
 }
 
-void STATE_CLASS(TDDeltaUnitSpec)::Send_TD(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+void STATE_CLASS(TDDeltaUnitSpec)::Send_TD(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   float snd_val = u->act_eq;
   const int nsg = u->NSendConGps(net); 
   for(int g=0; g<nsg; g++) {

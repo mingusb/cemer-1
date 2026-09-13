@@ -88,11 +88,11 @@ public:
 
   virtual int           NumListCols() const {return 1;} // number of columns in a list view for this item type
   static const KeyString key_name; // "name" note: also on taBase
-  virtual const KeyString GetListColKey(int col) const {return key_name;} // key of default list view
-  virtual String        GetColHeading(const KeyString& key) const {return KeyString("Item");}
+  virtual const KeyString GetListColKey(int col) const { (void)col; return key_name;} // key of default list view
+  virtual String        GetColHeading(const KeyString& key) const { (void)key; return KeyString("Item");}
     // header text for the indicated column
   virtual String        GetColText(const KeyString& key, int itm_idx = -1) const
-    {return GetName();} // text for the indicated column
+    { (void)itm_idx; (void)key; return GetName();} // text for the indicated column
   virtual String        ChildGetColText(taSigLink* child, const KeyString& key,
     int itm_idx = -1) const  {return child->GetColText(key, itm_idx);}
     // default delegates to child; lists can override to control this

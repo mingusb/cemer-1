@@ -22,7 +22,7 @@ iVColorBar::iVColorBar(ColorScale* c, QWidget* parent)
 {}
 
 
-void iVColorBar::paintEvent(QPaintEvent* ev) {
+void iVColorBar::paintEvent(QPaintEvent* ev) { (void)ev;
   if (!scale) return; // some kind of zombie happening...
   QRect r = rect();
   int h_tot = r.height();

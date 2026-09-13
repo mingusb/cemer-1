@@ -837,17 +837,11 @@ bool taDataAnal::MultiClassClassificationViaLinearRegression(DataTable* src_data
   double_Matrix* ConfusionMatrix = (double_Matrix*)confusion->FindColName("ConfusionMatrix")->GetValAsMatrix(0);
 
   double tp = 0.0f, fp = 0.0f, tn = 0.0f, fn = 0.0f;     // True/False Positive/Negative counts
-  double ctp = 0.0f, cfp = 0.0f, ctn = 0.0f, cfn = 0.0f;
   double fpr = 0.0f, tpr = 0.0f;                         // True/False Positive Rate
-  double ctpr = 0.0f, cfpr = 0.0f;
-  double precision = 0.0f, recall = 0.0f;                // Precision and Recall
-  double cprecision = 0.0f, crecall = 0.0f;
-  double fm = 0.0f;                                      // F-measure
-  double cfm = 0.0f;
-  double acc = 0.0f;                                     // Accuracy 
-  double cacc = 0.0f;
+
+
   double roc_acc = 0.0f;                                 // ROC Accuracy
-  double croc_acc = 0.0f;
+
 
   // c_mat - Final class-level confusion matrix
   // ConfusionMatrix (above and below) is the raw item-level classifier outputs
@@ -858,7 +852,6 @@ bool taDataAnal::MultiClassClassificationViaLinearRegression(DataTable* src_data
   double_Matrix* slice = new double_Matrix; taBase::Ref(slice);
 
   int max_index = 0; // Index of the classifier with the largest response
-  double max = 0.0f; // Actual max value. Not Used.
   int ctr = 0; // Iterator used to keep track of the stimulus
   int class_length; // Number of stimuli in this class
   int n_classes = classes->size;
@@ -872,7 +865,7 @@ bool taDataAnal::MultiClassClassificationViaLinearRegression(DataTable* src_data
     for (int k=0; k < class_length; k++) {
 
       taMath_double::mat_slice(slice, ConfusionMatrix, ctr, ctr);
-      max = taMath_double::vec_max(slice, max_index);
+      taMath_double::vec_max(slice, max_index);
 
       // If max_index is this class then score one true positive and
       // one true negative for every other class
@@ -896,10 +889,6 @@ bool taDataAnal::MultiClassClassificationViaLinearRegression(DataTable* src_data
 
   tpr = tp / (tp + fn);
   fpr = fp / (tn + fp);
-  precision = tp / (tp + fp);
-  recall = tp / (tp + fn);
-  fm = 2.0f / ((1.0f / precision) + (1.0f / recall));
-  acc = (tp + tn) / (tp + tn + fp + fn);
   roc_acc = 1.0f - sqrt(fpr*fpr + 1.0f - 2.0f*tpr + tpr*tpr);
 
 
@@ -952,7 +941,7 @@ bool taDataAnal::ReceiverOperatingCharacteristic(DataTable* src_data,
 						 DataTable* dest_data,
 						 const String& signal_data_col_nm,
 						 const String& noise_data_col_nm,
-						 float PRE_thr) {
+						 float PRE_thr) { (void)view;
 
   String fun_name = "ReceiverOperatingCharacteristic";
   
@@ -1049,7 +1038,7 @@ bool taDataAnal::ReceiverOperatingCharacteristic(DataTable* src_data,
     dest_data->SetVal(fmeasure, "Fmeasure", i);
   }
 
-  int obs = vec_signal->size;
+
  
   // Add 1,0 0,1 to tpr/fpr to help constrain the fit
   double_Matrix* vec_tpr = new double_Matrix; taBase::Ref(vec_tpr);
@@ -1629,7 +1618,7 @@ void taDataAnal::DistMatrixGroupSimilarityCluster(DataTable* sumdt, DataTable* s
   bool rval = DistMatrix(&dmat, src_data, data_col_nm, taMath::INNER_PROD, true, 0.0f, false);
   if(!rval) return;
 
-  float avg_sim = 0.0f;
+
   String cur_cat;
   
   int n = dmat.dim(0);
@@ -1637,7 +1626,7 @@ void taDataAnal::DistMatrixGroupSimilarityCluster(DataTable* sumdt, DataTable* s
     String nm1 = nmda->GetValAsString(i);
     if(cur_cat != nm1 || i == n-1) {
       if(cur_cat != "") {
-        DataCol* cc = sumdt->FindMakeCol(cur_cat, VT_FLOAT);
+        sumdt->FindMakeCol(cur_cat, VT_FLOAT);
         sumdt->AddBlankRow();
         snmda->SetVal(cur_cat, -1);
       }
@@ -2502,7 +2491,7 @@ bool taDataAnal::MatrixCellFreq
   return true;
 }
 
-void taDataAnal::GetArgCompletionList(const String& method, const String& arg, const String_Array& arg_values, taBase* arg_obj, const String& cur_txt, Completions& completions) {
+void taDataAnal::GetArgCompletionList(const String& method, const String& arg, const String_Array& arg_values, taBase* arg_obj, const String& cur_txt, Completions& completions) { (void)arg; (void)arg_values; (void)cur_txt; (void)method;
   if (arg_obj) {
     if (arg_obj->InheritsFrom(&TA_DataTable)) {
       DataTable* table = (DataTable*)arg_obj;

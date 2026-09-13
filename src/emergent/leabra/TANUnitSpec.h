@@ -8,7 +8,7 @@
   INIMPL virtual void  Compute_PlusPhase_Netin(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no);
   // compute netin from plus phase activations from marker cons inputs
 
-  INLINE virtual void  Compute_PlusPhase_Act(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void  Compute_PlusPhase_Act(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     u->act_eq = u->act_nd = u->act = u->net = u->ext;
     u->da = 0.0f;
   }

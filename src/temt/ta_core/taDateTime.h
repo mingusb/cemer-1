@@ -22,6 +22,7 @@
 // member includes:
 #if !defined(__MAKETA__)
 # include <QDateTime>
+# include <QLocale>
 # include <QTime>
 #else
 class QDateTime; // #IGNORE
@@ -46,9 +47,9 @@ public:
   static QString TimeStampFormat; // #IGNORE "hh_mm_ss"
  
 #ifndef __MAKETA__
-  QDateTime qDateTime() const { return QDateTime::fromTime_t((uint)secs_1jan_1970); }
+  QDateTime qDateTime() const { return QDateTime::fromSecsSinceEpoch(secs_1jan_1970); }
   // #IGNORE
-  void      fmQDateTime(const QDateTime& qdt)     { secs_1jan_1970 = qdt.toTime_t(); }
+  void      fmQDateTime(const QDateTime& qdt)     { secs_1jan_1970 = qdt.toSecsSinceEpoch(); }
   // #IGNORE
 
   void operator=(const QDateTime& qdt) { fmQDateTime(qdt); }
@@ -131,10 +132,10 @@ public:
   static String   SecondsToDHM(uint64_t duration);
   // convert seconds into a string showing the equivalent days, hours, minutes
 
-  static String longDayName(int weekday) { return QDate::longDayName(weekday); }
-  static String longMonthName(int month) { return QDate::longMonthName(month); }
-  static String shortDayName(int weekday) { return QDate::shortDayName(weekday); }
-  static String shortMonthName(int month) { return QDate::shortMonthName(month); }
+  static String longDayName(int weekday) { return QLocale().dayName(weekday, QLocale::LongFormat); }
+  static String longMonthName(int month) { return QLocale().monthName(month, QLocale::LongFormat); }
+  static String shortDayName(int weekday) { return QLocale().dayName(weekday, QLocale::ShortFormat); }
+  static String shortMonthName(int month) { return QLocale().monthName(month, QLocale::ShortFormat); }
 
   static String CurrentDateTimeStampString();
   // return a string for the current date and time in a good default format for recording a time stamp

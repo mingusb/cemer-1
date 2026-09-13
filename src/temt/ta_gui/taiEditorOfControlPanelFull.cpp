@@ -314,7 +314,7 @@ void taiEditorOfControlPanelFull::DoEditLabel() {
 
 void taiEditorOfControlPanelFull::FillLabelContextMenu_CtrlPanel(QMenu* menu,
   int& last_id)
-{
+{ (void)last_id;
   taProject* proj = (taProject*)ctrlpan->GetThisOrOwner(&TA_taProject);
   if (!proj) return;
   
@@ -354,12 +354,10 @@ void taiEditorOfControlPanelFull::FillLabelContextMenu_CtrlPanel(QMenu* menu,
         taBase* agp = cp->GetOwner(&TA_ArchivedParams_Group);
         if(agp) continue;       // skip all archived elements
         String nm = cp->GetName();
-        bool is_cp = false;
         ControlPanel* cpr = NULL;
-        if(cpr == ctrlpan) continue; // don't include self!
+        if(cp == ctrlpan) continue; // don't include self!
         ControlPanel_Group* gp = NULL;
         if(cp->InheritsFrom(&TA_ControlPanel)) {
-          is_cp = true;
           cpr = (ControlPanel*)cp;
           if(cpr->IsClone()) continue; // don't clutter with clones!
         }

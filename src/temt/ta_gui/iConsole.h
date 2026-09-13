@@ -22,7 +22,11 @@
 #include <iInterceptor>
 #endif
 
+#ifndef __MAKETA__
 #include <QStringList>
+#else
+class QStringList; //
+#endif
 #include <QTextBrowser>
 #include <QMouseEvent>
 #include <QKeyEvent>
@@ -78,6 +82,8 @@ public slots:
   virtual void exit();          // exit shell
   virtual void onQuit();        // used to notify the console that the application is quitting.
   virtual void linkClicked(const QUrl & link);
+  void cut();
+  void paste();
 
 protected:
   // code that new specific implementation should override:
@@ -103,18 +109,22 @@ protected:
   // Redefined virtual methods
   void keyPressEvent(QKeyEvent* e) override;
   void resizeEvent(QResizeEvent* e) override;
-  void paste();
+  void insertFromMimeData(const QMimeData* source) override;
+  void inputMethodEvent(QInputMethodEvent* event) override;
+  void dropEvent(QDropEvent* event) override;
   void mousePressEvent(QMouseEvent *e) override;
   void mouseMoveEvent(QMouseEvent *e) override;
   void mouseReleaseEvent(QMouseEvent *e) override;
   void contextMenuEvent(QContextMenuEvent* e) override;
 
   virtual void getDisplayGeom();
+  void prepareCommandEdit();
+  void appendOutput(const QString& line, const QColor& color);
 
 
 public:
   virtual void displayPrompt(bool force = false);
-  // displays the prompt, force = definitely do so
+  // displays the prompt; force also repaints an already visible prompt
   virtual void  gotoPrompt(QTextCursor& cursor, bool select=false);
   // set position to just after prompt (moves anchor)
   virtual void  gotoEnd(QTextCursor& cursor, bool select=true);
@@ -124,9 +134,9 @@ public:
   virtual bool  scrolledToEnd(); // check if display is scrolled to the end
   virtual QString getCurrentCommand();                       // get text after prompt
   virtual void replaceCurrentCommand(QString newCommand);    // Replace current command with a new one
-  virtual bool cursorInCurrentCommand();        // cursor is in the current command editing zone
+  virtual bool cursorInCurrentCommand();        // cursor/selection can safely backspace within the command
 #ifndef TA_OS_WIN
-  virtual bool stdDisplay(QTextStream *s);
+  virtual bool stdDisplay(QTextStream *s, bool err = false);
   // displays redirected stdout/stderr: return true for noPaging mode if anything was output, and if in paging mode returns true if user is waiting for more stuff
 #endif
 
@@ -143,11 +153,13 @@ protected:
   bool noPager;                 // completely disable pager mechanism
   bool quitPager;               // quit pager until next time
   bool contPager;               // continue pager until next time
+  bool executingCommand;       // defer prompt changes until command execution finishes
   bool promptDisp;              // just displayed the prompt -- no output in between
   bool waiting_for_key;         // in promptForKeyResponse -- waiting for keypress -- this gets turned off when response is made
   int key_response;             // key response made in promptForKeyResponse
   int promptLength;             // cached prompt length
   QString prompt;               // The prompt string
+  QString historyDraft;        // unfinished command restored after browsing history
   QStringList history;  // The commands history
   QStringList recordedScript; // commands that have succeeded
   int historyIndex; // Current history index (needed because afaik QStringList does not have such an index)

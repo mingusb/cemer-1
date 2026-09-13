@@ -125,7 +125,7 @@
   // #IGNORE cache mem_start and cnmem_start pointers -- must be called on-device after all the ConState has been allocated
   
   INLINE void           CacheUnitLoHiIdxs(NETWORK_STATE* net, int thr_no)
-  { if(size == 0) return;
+  { (void)net; (void)thr_no; if(size == 0) return;
     un_lo_idx = UnIdx(0);  un_hi_idx = UnIdx(size-1);
     for(int i=1; i < size-1; i++) {
       int dx = UnIdx(i);

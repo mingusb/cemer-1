@@ -247,7 +247,7 @@ void ControlPanel::BaseRemoved(ControlPanelItem* sei) {
   base_refs.RemoveEl(base);
 }
 
-void ControlPanel::SigDestroying_Ref(taBase_RefList* src, taBase* base) {
+void ControlPanel::SigDestroying_Ref(taBase_RefList* src, taBase* base) { (void)src;
   // note: item will already have been removed from ref base list
   if (m_changing) return;
   m_changing++;
@@ -259,7 +259,7 @@ void ControlPanel::SigDestroying_Ref(taBase_RefList* src, taBase* base) {
 
 void ControlPanel::SigEmit_Ref(taBase_RefList* src, taBase* ta,
     int sls, void* op1, void* op2)
-{
+{ (void)op1; (void)op2; (void)src;
   if(sls >= SLS_UPDATE_VIEWS) return;
   if(!ta) return;
 
@@ -304,7 +304,7 @@ void ControlPanel::SigEmit_Ref(taBase_RefList* src, taBase* ta,
 
 void ControlPanel::SigEmit_Group(taGroup_impl* grp,
                                  int sls, void* op1, void* op2)
-{
+{ (void)grp; (void)op2;
   if (m_changing) return;
   if (taMisc::is_loading) return; // note: base's aren't set yet, so we can't add
   if (sls == SLS_GROUP_ITEM_REMOVE) {
@@ -553,11 +553,9 @@ void ControlPanel::CopyToDataTable(DataTable* table, int row_num) {
     return;
   }
   table->StructUpdate(true);
-  bool blank_table = false;
   if(table->cols() == 0) {      // new table: initialize name column
     table->NewCol(VT_STRING, "name");
     table->NewCol(VT_STRING, "desc");
-    blank_table = true;
   }
   if(row_num < 0) {
     row_num = table->FindVal(name, 0, 0, false); // false = no err msg
@@ -732,7 +730,7 @@ bool ControlPanel::AddMemberPrompt(taBase* base, MemberDef* mbr, bool short_labe
 
 bool ControlPanel::AddMember_impl
 (taBase* base, MemberDef* md, const String& full_lbl, const String& dscr, const String& sub_gp_nm, bool custom_label, bool custom_desc, bool short_label)
-{
+{ (void)dscr;
   int bidx = -1;
   // this looks at the leaves:
   ControlPanelMember* item = (ControlPanelMember*)ControlPanelItem::StatFindItemBase(&mbrs, base, md, bidx);

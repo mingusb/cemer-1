@@ -61,7 +61,7 @@ ProgVar* CodeBlock::FindVarName(const String& var_nm) const {
   return prog_code.FindVarName(var_nm);
 }
 
-bool CodeBlock::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool CodeBlock::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if(code.startsWith("{")) return true;
   if(CvtFmCodeCheckNames(code)) return true;
   
@@ -71,7 +71,7 @@ bool CodeBlock::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
   return false;
 }
 
-bool CodeBlock::CvtFmCode(const String& code) {
+bool CodeBlock::CvtFmCode(const String& code) { (void)code;
   // just open bracket is all there is!
   return true;
 }

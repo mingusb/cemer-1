@@ -179,7 +179,7 @@ void taBrainAtlas::EditAtlas() {
   // rfield->SetFieldOwner(rfield);
   iBrainViewEditDialog* red = new iBrainViewEditDialog(NULL, name, atlas_regexp_pop,
 						       (void*)this, false, true);
-  bool rval = red->exec();
+  red->exec();
   delete red;
   delete atlas_regexp_pop;
 }

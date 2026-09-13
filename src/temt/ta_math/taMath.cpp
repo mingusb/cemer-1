@@ -29,7 +29,7 @@ TA_BASEFUNS_CTORS_DEFN(taMath);
 // gsl error handler -- needed to prevent default from raising abort!
 void ta_gsl_err_handler(const char * reason,
   const char * file, int line, int gsl_errno)
-{
+{ (void)file; (void)gsl_errno; (void)line;
   // note, the rest of the info is really not helpful to users, so we
   // only print the reason -- Emergent programs will then print the
   // CSS line number, which can be helpful

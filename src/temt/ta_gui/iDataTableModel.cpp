@@ -43,17 +43,17 @@ iDataTableModel::~iDataTableModel() {
   }
 }
 
-int iDataTableModel::columnCount(const QModelIndex& parent) const {
+int iDataTableModel::columnCount(const QModelIndex& parent) const { (void)parent;
   return (m_dt) ? m_dt->cols() : 0;
 }
 
-void iDataTableModel::SigLinkDestroying(taSigLink* dl) {
+void iDataTableModel::SigLinkDestroying(taSigLink* dl) { (void)dl;
   m_dt = NULL;
 }
 
 void iDataTableModel::SigLinkRecv(taSigLink* dl, int sls,
                                   void* op1, void* op2)
-{ // called from DataTable::SigEmit
+{ (void)dl; (void)op1; (void)op2; // called from DataTable::SigEmit
   if (notifying) return;
   //this is primarily for code-driven changes
   if ((sls <= SLS_ITEM_UPDATED_ND) || // data itself updated
@@ -105,7 +105,7 @@ QVariant iDataTableModel::data(const QModelIndex& index, int role) const {
       else
         return QVariant(Qt::AlignLeft | Qt::AlignVCenter);
     } break;
-    case Qt::BackgroundColorRole : //-- QColor
+    case Qt::BackgroundRole : //-- QColor
       if (TableCellHasMatch(index)) {
         return QColor(Qt::yellow);
       }
@@ -119,7 +119,7 @@ QVariant iDataTableModel::data(const QModelIndex& index, int role) const {
         return QColor(247, 247, 247);  // very light gray
       //    else if (index.column() == 2 && index.row() == 3)
       break;
-    case Qt::TextColorRole: { // QColor: color of text
+    case Qt::ForegroundRole: { // QColor: color of text
       if (col->is_matrix)
         return QColor(Qt::blue);
       
@@ -185,9 +185,9 @@ void iDataTableModel::emit_layoutChanged() {
 }
 
 Qt::ItemFlags iDataTableModel::flags(const QModelIndex& index) const {
-  if (!m_dt || !index.isValid()) return 0;
+  if (!m_dt || !index.isValid()) return {};
   
-  Qt::ItemFlags rval = 0;
+  Qt::ItemFlags rval;
   if (ValidateIndex(index)) {
     // don't enable null cells
     if (m_dt->hasData(index.column(), index.row() )) {
@@ -197,7 +197,7 @@ Qt::ItemFlags iDataTableModel::flags(const QModelIndex& index) const {
                    col->isGuiReadOnly()) )
         rval |= Qt::ItemIsEditable;
       if (col && col->isBool()) {
-        rval = 0;
+        rval = {};
         rval |= Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
       }
     }
@@ -240,7 +240,7 @@ void iDataTableModel::refreshViews() {
    createIndex(rowCount() - 1, columnCount() - 1));*/
 }
 
-int iDataTableModel::rowCount(const QModelIndex& parent) const {
+int iDataTableModel::rowCount(const QModelIndex& parent) const { (void)parent;
   return (m_dt) ? m_dt->rows : 0;
 }
 
@@ -355,4 +355,3 @@ bool iDataTableModel::TableCellHasMatch(const QModelIndex& index) const {
   }
   return false;
 }
-

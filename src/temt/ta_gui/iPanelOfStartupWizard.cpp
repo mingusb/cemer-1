@@ -61,10 +61,10 @@ iPanelOfStartupWizard::iPanelOfStartupWizard(taiSigLink* dl_)
   npfrm->setFrameStyle(QFrame::Panel); //  | QFrame::Sunken);
 
   QVBoxLayout* lay_np = new QVBoxLayout(npfrm);
-  lay_np->setMargin(0); lay_np->setSpacing(2);
+  lay_np->setContentsMargins(0, 0, 0, 0); lay_np->setSpacing(2);
 
   hb = new QHBoxLayout;
-  hb->setMargin(0);
+  hb->setContentsMargins(0, 0, 0, 0);
   lbl = new QLabel("<b>Create New Project -- Choose Starting Template</b>");
   lbl->setToolTip(taiMisc::ToolTipPreProcess("Select from one of the following templates as a starting point for creating a new project -- you can also save your own custom templates"));
   hb->addStretch();
@@ -92,10 +92,10 @@ iPanelOfStartupWizard::iPanelOfStartupWizard(taiSigLink* dl_)
   nwfrm->setFrameStyle(QFrame::Panel); //  | QFrame::Sunken);
 
   QVBoxLayout* lay_nw = new QVBoxLayout(nwfrm);
-  lay_nw->setMargin(0); lay_nw->setSpacing(2);
+  lay_nw->setContentsMargins(0, 0, 0, 0); lay_nw->setSpacing(2);
 
   hb = new QHBoxLayout;
-  hb->setMargin(0);
+  hb->setContentsMargins(0, 0, 0, 0);
   lbl = new QLabel("<b>Open Project From Web -- Choose Wiki To Browse</b>");
   lbl->setToolTip(taiMisc::ToolTipPreProcess("Select from one of the following wiki locations to browse for downloading and opening a new project"));
   hb->addStretch();
@@ -124,10 +124,10 @@ iPanelOfStartupWizard::iPanelOfStartupWizard(taiSigLink* dl_)
   rpfrm->setFrameStyle(QFrame::Panel); //  | QFrame::Sunken);
 
   QVBoxLayout* lay_rp = new QVBoxLayout(rpfrm);
-  lay_rp->setMargin(0); lay_rp->setSpacing(2);
+  lay_rp->setContentsMargins(0, 0, 0, 0); lay_rp->setSpacing(2);
 
   hb = new QHBoxLayout;
-  hb->setMargin(0);
+  hb->setContentsMargins(0, 0, 0, 0);
   lbl = new QLabel("<b>Select Recently Opened Project</b>");
   lbl->setToolTip(taiMisc::ToolTipPreProcess("Select a project from among the following list of recently opened projects, presented in order of recency"));
   hb->addStretch();
@@ -263,7 +263,7 @@ bool iPanelOfStartupWizard::ignoreSigEmit() const {
   //  return !isVisible(); -- this doesn't seem to be giving accurate results!!!
 }
 
-void iPanelOfStartupWizard::SigLinkDestroying(taSigLink* dl) {
+void iPanelOfStartupWizard::SigLinkDestroying(taSigLink* dl) { (void)dl;
   
 }
 

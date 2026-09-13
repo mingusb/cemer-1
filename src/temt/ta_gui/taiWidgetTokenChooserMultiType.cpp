@@ -134,7 +134,7 @@ int taiWidgetTokenChooserMultiType::BuildChooser_0(iDialogItemChooser* ic, TypeD
   return rval;
 }
 
-int taiWidgetTokenChooserMultiType::columnCount(int view) const {
+int taiWidgetTokenChooserMultiType::columnCount(int view) const { (void)view;
   return 4;
 }
 
@@ -151,7 +151,7 @@ void taiWidgetTokenChooserMultiType::GetImageScoped(taBase* ths, TypeDef* targ_t
   inherited::GetImage((void*)ths, targ_typ_);
 }
 
-const String taiWidgetTokenChooserMultiType::headerText(int index, int view) const {
+const String taiWidgetTokenChooserMultiType::headerText(int index, int view) const { (void)view;
   switch (index) {
   case 0: return "Name";
   case 1: return "Type";

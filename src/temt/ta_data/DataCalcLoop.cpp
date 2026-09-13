@@ -302,7 +302,7 @@ DataOpEl* DataCalcLoop::AddDestColumn(const String& col_name) {
   return rval;
 }
 
-bool DataCalcLoop::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool DataCalcLoop::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if (CvtFmCodeCheckNames(code))
     return true;
   
@@ -336,7 +336,7 @@ bool DataCalcLoop::CvtFmCode(const String& code) {
   return true;
 }
 
-void DataCalcLoop::GetArgCompletionList(const String& method, const String& arg, const String_Array& arg_values, taBase* arg_obj, const String& cur_txt, Completions& completions) {
+void DataCalcLoop::GetArgCompletionList(const String& method, const String& arg, const String_Array& arg_values, taBase* arg_obj, const String& cur_txt, Completions& completions) { (void)arg; (void)arg_obj; (void)arg_values; (void)cur_txt;
     if (method == "AddSrcColumn") {
       if (GetSrcData()) {
         FOREACH_ELEM_IN_LIST(DataCol, col, GetSrcData()->data) {

@@ -50,7 +50,7 @@ protected:
   void  Render_pre() override; //
   // note: _impl is done by the LayerView
 private:
-  void  Copy_(const UnitView& cp) {m_nv = NULL;}
+  void  Copy_(const UnitView& cp) { (void)cp;m_nv = NULL;}
   void  Initialize();
   void  Destroy() {CutLinks();}
 

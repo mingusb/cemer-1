@@ -41,7 +41,8 @@
 #  APU_CONFIG_PATH - path where apu-config or apu-1-config are located
 #
 #  The variables set by this macro are:
-#  SUBVERSION_FOUND - system has subversion libraries
+#  SUBVERSION_FOUND - system has Subversion 1.11 or newer libraries
+#  SUBVERSION_VERSION - detected Subversion version
 #  SUBVERSION_INCLUDE_DIRS - the include directories to link to subversion
 #  SUBVERSION_LIBRARIES - The libraries needed to link to subversion
 #  Copyright (c) 2009      Lambert CLARA <lambert.clara@yahoo.fr>
@@ -93,7 +94,7 @@ IF (NOT WIN32)
 
 
     IF(APR_CONFIG_PATH)
-        FIND_PROGRAM(APR_CONFIG NAMES apr-config apr-1-config
+        FIND_PROGRAM(APR_CONFIG NAMES apr-2-config apr-1-config apr-config
             PATHS
             ${APR_CONFIG_PATH}
 	    /opt/local/bin
@@ -101,13 +102,24 @@ IF (NOT WIN32)
 	    /usr/local/bin
         )
     ELSE(APR_CONFIG_PATH)
-        FIND_PROGRAM(APR_CONFIG NAMES apr-config apr-1-config
+        FIND_PROGRAM(APR_CONFIG NAMES apr-2-config apr-1-config apr-config
             PATHS
 	    /opt/local/bin
             /usr/local/apr/bin
 	    /usr/local/bin
         )
     ENDIF(APR_CONFIG_PATH)
+
+    # APR 2 incorporates APR-Util. Expose its configuration through both
+    # legacy variables so callers use one coherent APR ABI and installation.
+    IF(APR_CONFIG)
+        execute_process(COMMAND "${APR_CONFIG}" --version
+            OUTPUT_VARIABLE APR_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE
+            COMMAND_ERROR_IS_FATAL ANY)
+        IF(APR_VERSION VERSION_GREATER_EQUAL "2.0")
+            SET(APU_CONFIG "${APR_CONFIG}")
+        ENDIF()
+    ENDIF()
 
     IF(APU_CONFIG_PATH)
         FIND_PROGRAM(APU_CONFIG NAMES apu-config apu-1-config
@@ -513,6 +525,46 @@ ELSE (NOT APU_LIBRARY)
   SET(SUBVERSION_LIBRARIES ${SUBVERSION_LIBRARIES} ${APU_LIBRARY})
 ENDIF(NOT APU_LIBRARY)
 
+# The client implementation uses svn_client_diff7 and svn_client_revert4,
+# introduced in Subversion 1.11. Check even when include/library paths are cached.
+SET(_SUBVERSION_MINIMUM_VERSION "1.11")
+IF(SubversionLibrary_FIND_VERSION VERSION_GREATER _SUBVERSION_MINIMUM_VERSION)
+  SET(_SUBVERSION_MINIMUM_VERSION "${SubversionLibrary_FIND_VERSION}")
+ENDIF()
+SET(SUBVERSION_VERSION "")
+IF(EXISTS "${SUBVERSION_INCLUDE_DIR}/svn_version.h")
+  FILE(READ "${SUBVERSION_INCLUDE_DIR}/svn_version.h" _SUBVERSION_VERSION_HEADER)
+  FOREACH(_part MAJOR MINOR PATCH)
+    STRING(REGEX MATCH "#[ \t]*define[ \t]+SVN_VER_${_part}[ \t]+([0-9]+)"
+      _match "${_SUBVERSION_VERSION_HEADER}")
+    SET(_SUBVERSION_VERSION_${_part} "${CMAKE_MATCH_1}")
+  ENDFOREACH()
+  IF(NOT "${_SUBVERSION_VERSION_MAJOR}" STREQUAL "" AND
+     NOT "${_SUBVERSION_VERSION_MINOR}" STREQUAL "" AND
+     NOT "${_SUBVERSION_VERSION_PATCH}" STREQUAL "")
+    SET(SUBVERSION_VERSION
+      "${_SUBVERSION_VERSION_MAJOR}.${_SUBVERSION_VERSION_MINOR}.${_SUBVERSION_VERSION_PATCH}")
+  ENDIF()
+ENDIF()
+IF(NOT SUBVERSION_VERSION OR SUBVERSION_VERSION VERSION_LESS _SUBVERSION_MINIMUM_VERSION)
+  SET(SUBVERSION_FOUND false)
+  SET(_SUBVERSION_VERSION_ERROR
+    "Subversion ${_SUBVERSION_MINIMUM_VERSION} or newer is required; detected '${SUBVERSION_VERSION}' in '${SUBVERSION_INCLUDE_DIR}'.")
+ELSEIF(SubversionLibrary_FIND_VERSION_EXACT AND
+       NOT SUBVERSION_VERSION VERSION_EQUAL SubversionLibrary_FIND_VERSION)
+  SET(SUBVERSION_FOUND false)
+  SET(_SUBVERSION_VERSION_ERROR
+    "Subversion ${SubversionLibrary_FIND_VERSION} was requested exactly; detected ${SUBVERSION_VERSION}.")
+ELSE()
+  UNSET(_SUBVERSION_VERSION_ERROR)
+  IF(NOT SubversionLibrary_FIND_QUIETLY)
+    MESSAGE(STATUS "Found Subversion version: ${SUBVERSION_VERSION}")
+  ENDIF()
+ENDIF()
+SET(SubversionLibrary_FOUND ${SUBVERSION_FOUND})
+LIST(REMOVE_DUPLICATES SUBVERSION_LIBRARIES)
+LIST(REMOVE_DUPLICATES SUBVERSION_INCLUDE_DIRS)
+
 SET(SUBVERSION_LIBRARIES ${SUBVERSION_LIBRARIES} CACHE STRING "List of all subversion and related libraries")
 SET(SUBVERSION_INCLUDE_DIRS ${SUBVERSION_INCLUDE_DIRS} CACHE STRING "List of all subversion and related libraries include directories")
 #SET(SUBVERSION_INCLUDE_DIR ${SUBVERSION_INCLUDE_DIR} CACHE PATH "Path of subversion include directory")
@@ -534,7 +586,11 @@ MARK_AS_ADVANCED(
 )
 
 IF (SubversionLibrary_FIND_REQUIRED AND NOT SUBVERSION_FOUND)
-  MESSAGE(FATAL_ERROR "Subversion libraries were not found.")
+  IF(_SUBVERSION_VERSION_ERROR)
+    MESSAGE(FATAL_ERROR "${_SUBVERSION_VERSION_ERROR}")
+  ELSE()
+    MESSAGE(FATAL_ERROR "Subversion libraries were not found.")
+  ENDIF()
 ENDIF()
 
 #kate: space-indent on; indent-width 2; tab-width: 2; replace-tabs on; auto-insert-doxygen on

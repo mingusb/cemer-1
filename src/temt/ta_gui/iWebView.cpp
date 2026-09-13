@@ -31,9 +31,10 @@
 #include <QWebEngineProfile>
 #include <QWebEngineSettings>
 #include <QContextMenuEvent>
-#include <QWebEngineDownloadItem>
+#include <QWebEngineDownloadRequest>
 #include <QStandardPaths>
 #include <QFileDialog>
+#include <QApplication>
 #include <iNetworkAccessManager>
 
 iWebPage::iWebPage(QWidget* parent) :
@@ -50,7 +51,7 @@ bool iWebPage::acceptNavigationRequest(const QUrl &url, NavigationType type,
                                        bool isMainFrame) {
   QObject* own = parent();
   iPanelOfDocView* dv = NULL;
-  if(own->inherits("iWebView")) {
+  if(own && own->inherits("iWebView")) {
     iWebView* wv = (iWebView*)own;
     dv = wv->own_docview;
   }
@@ -70,8 +71,8 @@ iWebView::iWebView(QWidget* parent, iPanelOfDocView* docview)
 {
   QWebEnginePage* pg = new iWebPage(temtProfile(), this);
   setPage(pg);
-  connect(temt_profile, SIGNAL(downloadRequested(QWebEngineDownloadItem*)),
-          this, SLOT(downloadRequested(QWebEngineDownloadItem*)));
+  connect(temt_profile, &QWebEngineProfile::downloadRequested,
+          this, &iWebView::downloadRequested);
   connect(pg, SIGNAL(authenticationRequired(const QUrl &, QAuthenticator*)),
           this,
           SLOT(authenticationRequired(const QUrl &, QAuthenticator*)));
@@ -95,30 +96,34 @@ QWebEngineProfile* iWebView::temtProfile() {
   return temt_profile;
 }
 
-void iWebView::downloadRequested(QWebEngineDownloadItem* down) {
-  if(!down || down->state() != QWebEngineDownloadItem::DownloadRequested)
+void iWebView::downloadRequested(QWebEngineDownloadRequest* down) {
+  if(!down || down->page() != page() ||
+     down->state() != QWebEngineDownloadRequest::DownloadRequested)
     return;
   QString defaultLocation =
     QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
 
   QString defaultFileName = QFileInfo
-    (defaultLocation, QFileInfo(down->path()).fileName()).absoluteFilePath();
+    (defaultLocation, down->downloadFileName()).absoluteFilePath();
   QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                                   defaultFileName);
   if (fileName.isEmpty()) {
     down->cancel();
     return;
   }
-  down->setPath(QFileInfo(fileName).absoluteFilePath());
+  const QFileInfo destination(fileName);
+  down->setDownloadDirectory(destination.absolutePath());
+  down->setDownloadFileName(destination.fileName());
   down->accept();
 }
 
 void iWebView::authenticationRequired(const QUrl& url, QAuthenticator* auth) {
-  taiMisc::net_access_mgr->provideAuthenticationUrl(url, auth);
+  if(taiMisc::net_access_mgr)
+    taiMisc::net_access_mgr->provideAuthenticationUrl(url, auth);
 }
 
 void iWebView::proxyAuthenticationRequired(const QUrl& url, QAuthenticator* auth,
-                                           const QString& whatisthis) {
+                                           const QString& whatisthis) { (void)auth; (void)url; (void)whatisthis;
   // todo: this is not yet supported!
 }
 
@@ -132,6 +137,14 @@ QWebEngineView* iWebView::createWindow(QWebEnginePage::WebWindowType type) {
 
 void iWebView::cleanupWeb() {
   if(temt_profile) {
+    // Qt requires pages to be destroyed before the profile that owns their
+    // Chromium context. Cleanup runs before the application's windows die.
+    for(QWidget* widget : QApplication::allWidgets()) {
+      if(iWebView* view = qobject_cast<iWebView*>(widget)) {
+        if(view->page()->profile() == temt_profile)
+          delete view->page();
+      }
+    }
     delete temt_profile;
     temt_profile = NULL;
   }
@@ -147,7 +160,7 @@ void iWebView::childEvent(QChildEvent* ev) {
 }
 
 void iWebView::contextMenuEvent(QContextMenuEvent *event) {
-  QMenu* menu = page()->createStandardContextMenu();
+  QMenu* menu = createStandardContextMenu();
   connect(menu, &QMenu::aboutToHide, menu, &QObject::deleteLater);
   menu->addSeparator();
   if(hasSelection()) {
@@ -267,4 +280,3 @@ bool iWebView::handleTaLinkClick(const QUrl& url, iPanelOfDocView* docview) {
 
   return true;
 }
-

@@ -25,7 +25,7 @@ void MiscCall::Initialize() {
   object_type = &TA_taMisc;
 }
 
-bool MiscCall::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool MiscCall::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if(!code.contains("::")) return false;
   if(!code.contains('(')) return false;
   String lhs = code.before('(');

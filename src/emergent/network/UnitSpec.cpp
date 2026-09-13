@@ -66,7 +66,7 @@ void UnitSpec::CheckBiasSpec() {
             min_bs->name, "bias_spec name:", bs->name, "type:", bs->GetTypeDef()->name);
 }
 
-bool UnitSpec::CheckConfig_Unit(Layer* lay, bool quiet) {
+bool UnitSpec::CheckConfig_Unit(Layer* lay, bool quiet) { (void)lay; (void)quiet;
   return true;
 }
 

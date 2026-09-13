@@ -27,7 +27,7 @@ int taiMemberOfProgVarValue::BidForMember(MemberDef* md, TypeDef* td){
 }
 
 taiWidget* taiMemberOfProgVarValue::GetWidgetRep_impl(IWidgetHost* host_, taiWidget* par,
-  QWidget* gui_parent_, int flags_, MemberDef* mbr_) {
+  QWidget* gui_parent_, int flags_, MemberDef* mbr_) { (void)mbr_;
   taiWidgetProgVarValue* rval = new taiWidgetProgVarValue(NULL, host_, par, gui_parent_, flags_);
   return rval;
 }

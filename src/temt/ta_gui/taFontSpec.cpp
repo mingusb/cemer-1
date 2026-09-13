@@ -85,7 +85,7 @@ void taFontSpec::SelectFont() {
   QFont fnt;
   copyTo(fnt);
   bool ok;
-  QFontDialog::getFont(&ok, fnt, NULL, NULL);
+  fnt = QFontDialog::getFont(&ok, fnt);
   if (ok) {
     this->copyFrom(fnt);
     UpdateAfterEdit();

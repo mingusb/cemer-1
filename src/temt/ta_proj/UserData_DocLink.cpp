@@ -22,7 +22,7 @@ void UserData_DocLink::Initialize() {
 }
 
 void UserData_DocLink::SmartRef_SigDestroying(taSmartRef* ref, taBase* obj)
-{
+{ (void)obj;
   // destroy ourself, so we don't have this stale ref left over
   if(isDestroying()) return;    // already going..
   if (ref == &doc)

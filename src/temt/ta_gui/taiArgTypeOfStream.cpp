@@ -66,7 +66,7 @@ taiWidget* taiArgTypeOfStream::GetWidgetRep_impl(IWidgetHost* host_, taiWidget* 
   return new taiWidgetFileButton(NULL, host_, par, gui_parent_, flags_);
 }
 
-void taiArgTypeOfStream::GetImage_impl(taiWidget* dat, const void* base){
+void taiArgTypeOfStream::GetImage_impl(taiWidget* dat, const void* base){ (void)base;
   if (arg_base == NULL)
     return;
   taiWidgetFileButton* fbut = (taiWidgetFileButton*) dat;
@@ -74,7 +74,7 @@ void taiArgTypeOfStream::GetImage_impl(taiWidget* dat, const void* base){
   fbut->GetImage();
 }
 
-void taiArgTypeOfStream::GetValue_impl(taiWidget* dat, void*) {
+void taiArgTypeOfStream::GetValue_impl(taiWidget* dat, void*) { (void)dat;
   if (arg_base == NULL)
     return;
   GetValueFromGF();

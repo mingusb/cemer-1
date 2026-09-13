@@ -268,7 +268,7 @@ void ProgEl::CheckThisConfig_impl(bool quiet, bool& rval) {
 }
 
 void ProgEl::SmartRef_SigEmit(taSmartRef* ref, taBase* obj,
-                              int sls, void* op1_, void* op2_) {
+                              int sls, void* op1_, void* op2_) { (void)op1_; (void)op2_; (void)ref;
   if(sls != SLS_ITEM_UPDATED || !obj || !obj->InheritsFrom(&TA_ProgVar)) {
     return;
   }
@@ -477,7 +477,7 @@ void ProgEl::PreGen(int& item_id) {
   PreGenChildren_impl(item_id);
 }
 
-ProgVar* ProgEl::FindVarName(const String& var_nm) const {
+ProgVar* ProgEl::FindVarName(const String& var_nm) const { (void)var_nm;
   return NULL;
 }
 
@@ -685,7 +685,7 @@ const String ProgEl::GetToolTip(const KeyString& key) const {
 }
 
 
-bool ProgEl::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool ProgEl::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if (CvtFmCodeCheckNames(code))
     return true;
   
@@ -708,7 +708,7 @@ bool ProgEl::CvtFmCodeCheckNames(const String& code) const {
   return false;
 }
 
-bool ProgEl::CvtFmCode(const String& code) {
+bool ProgEl::CvtFmCode(const String& code) { (void)code;
   // nothing to initialize
   return true;
 }
@@ -721,7 +721,7 @@ bool ProgEl::CvtFmSavedCode() {
 
 int ProgEl::ReplaceValStr
 (const String& srch, const String& repl, const String& mbr_filt,
- void* par, TypeDef* par_typ, MemberDef* memb_def, TypeDef::StrContext sc, bool replace_deep) {
+ void* par, TypeDef* par_typ, MemberDef* memb_def, TypeDef::StrContext sc, bool replace_deep) { (void)memb_def; (void)par; (void)par_typ;
   String cur_val = BrowserEditString(); // current best string rep
   int rval = cur_val.gsub(srch, repl);
   if(rval > 0) {
@@ -876,7 +876,7 @@ bool ProgEl::RevertToCode() {
 }
 
 Completions* ProgEl::StringFieldLookupForCompleter(const String& cur_txt, int cur_pos,
-                                    const String& mbr_name, int& new_pos) {
+                                    const String& mbr_name, int& new_pos) { (void)mbr_name;
   Program* own_prg = GET_MY_OWNER(Program);
   if(!own_prg) return NULL;
   Function* own_fun = GET_MY_OWNER(Function);

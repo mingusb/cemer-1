@@ -465,8 +465,6 @@ void DoGRegionSpec::DoGFilterImageMonoNet_thread(int thr_no) {
   const float* net_flt = (const float*)cur_dog_filter->net_filter.data();
   int   flt_wd = cur_dog_filter->half_size; // half-size
   int   flt_wdf = cur_dog_filter->size;     // full-size
-  int   flt_vecw = flt_wdf / 4;
-  flt_vecw *= 4;
 
   taVector2i st_ne = (flt_wd - input_size.border); // no edge
   taVector2i ed_ne = dog_img_geom - (flt_wd - input_size.border);
@@ -558,7 +556,7 @@ bool DoGRegionSpec::DoGOutputToTable(DataTable* dtab, bool fmt_only) {
 }
 
 bool DoGRegionSpec::DoGOutputToTable_impl(DataTable* dtab, float_Matrix* out,
-                                          const String& col_sufx, bool fmt_only) {
+                                          const String& col_sufx, bool fmt_only) { (void)dtab;
   DataCol* col;
   int idx;
   if(dog_save & SEP_MATRIX) {

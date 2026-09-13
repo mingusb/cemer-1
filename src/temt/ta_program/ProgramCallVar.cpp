@@ -89,7 +89,7 @@ Program* ProgramCallVar::GetTarget_Compile() {
   return prog_group->Leaf(0);   // just return first guy
 }
 
-void ProgramCallVar::PreGenMe_impl(int item_id) {
+void ProgramCallVar::PreGenMe_impl(int item_id) { (void)item_id;
   if(HasProgFlag(OFF)) return;  // this should already have been caught earlier
   // register as a subproc
   Program* prog = program();
@@ -116,7 +116,7 @@ void ProgramCallVar::AddTargetsToListAll(Program_List& all_lst) {
   }
 }
 
-bool ProgramCallVar::WillGenCompileScript(Program* prg) {
+bool ProgramCallVar::WillGenCompileScript(Program* prg) { (void)prg;
   return (bool)prog_group;
 }
 
@@ -218,7 +218,7 @@ String ProgramCallVar::GetDisplayName() const {
   return rval;
 }
 
-bool ProgramCallVar::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool ProgramCallVar::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if (CvtFmCodeCheckNames(code))
     return true;
   

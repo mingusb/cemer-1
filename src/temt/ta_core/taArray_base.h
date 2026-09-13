@@ -78,7 +78,7 @@ public:
   TA_ABSTRACT_BASEFUNS(taArray_base) //
 
 protected:
-  virtual Variant       El_GetVar_(const void* itm) const { return _nilVariant; }
+  virtual Variant       El_GetVar_(const void* itm) const { (void)itm;  return _nilVariant; }
   // #IGNORE convert item to Variant
 
 private:

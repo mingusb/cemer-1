@@ -3,7 +3,7 @@
 
   STATE_CLASS(ChlSpecs) chl;            // #CAT_Learning CHL learning parameters
 
-  INLINE float Compute_SAvgCor(LEABRA_CON_STATE* cg, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE float Compute_SAvgCor(LEABRA_CON_STATE* cg, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
     LEABRA_LAYER_STATE* slay = cg->GetSendLayer(net);
     float savg = .5f + chl.savg_cor * (slay->acts_p_avg_eff - .5f);
     savg = fmaxf(chl.savg_thresh, savg); // keep this computed value within bounds

@@ -235,7 +235,7 @@ void SoScrollBar::valueChangedCB() {
     (*valueChanged_cb_)(this, value_, valueChanged_ud_);
 }
 
-void SoScrollBar::DragStartCB(SoTranslate1Dragger* dragger) {
+void SoScrollBar::DragStartCB(SoTranslate1Dragger* dragger) { (void)dragger;
   start_val_ = value_;
   T3ExaminerViewer::so_scrollbar_is_dragging = true;
 }

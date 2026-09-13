@@ -194,7 +194,6 @@ void LEABRA_LAYER_SPEC::Compute_MaxDwts(LEABRA_LAYER_STATE* lay, LEABRA_NETWORK_
     LEABRA_PRJN_STATE* prjn = lay->GetSendPrjnState(net, i);
     if(prjn->NotActive(net)) continue;
 
-    LEABRA_CON_SPEC_CPP* cs = prjn->GetConSpec(net);
 
     prjn->am_err_dwt.InitVals();
     prjn->am_bcm_dwt.InitVals();

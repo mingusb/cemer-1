@@ -114,7 +114,7 @@ public:
   // update enabled status of method elements
 
 public: // routines for the taiDelegate style of edit host
-  virtual void          GetImage_Item(int row) {} // called from GetImage and ed->GetValue
+  virtual void          GetImage_Item(int row) { (void)row; } // called from GetImage and ed->GetValue
 
 public: // ITypedObject i/f (common to IDLC and IDH)
   TypeDef*              GetTypeDef() const override {return &TA_taiEditorOfClass;}

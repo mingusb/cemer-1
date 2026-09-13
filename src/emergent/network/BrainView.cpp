@@ -255,7 +255,7 @@ void BrainView::SigRecvUpdateAfterEdit_impl() {
   UpdateDisplay();
 }
 
-void BrainView::SigRecvUpdateAfterEdit_Child_impl(taDataView* chld) {
+void BrainView::SigRecvUpdateAfterEdit_Child_impl(taDataView* chld) { (void)chld;
   // called when lays/specs are updated; typically just update spec view
   UpdatePanel();
 }
@@ -301,7 +301,7 @@ void BrainView::GetMembs() {
 
   setUnitDispMd(NULL);
   membs.Reset();
-  TypeDef* prv_td = NULL;
+
 
   // only get units that have been mapped to voxel coords...
   FOREACH_ELEM_IN_GROUP(Layer, lay, net()->layers) {
@@ -441,7 +441,7 @@ void BrainView::GetUnitDisplayVals(BrainVolumeView* bvv, UnitState_cpp* u, float
 }
 
 void BrainView::GetUnitDisplayVals(BrainVolumeView* bvv, taVector2i& co, float& val,
-                                   iColor& col, float& sc_val) {
+                                   iColor& col, float& sc_val) { (void)bvv; (void)co; (void)col; (void)sc_val; (void)val;
 //  sc_val = scale.zero;
 //  void* base = NULL;
 //  if(unit_disp_md && unit_md_flags != MD_UNKNOWN)

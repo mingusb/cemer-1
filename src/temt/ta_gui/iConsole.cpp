@@ -51,6 +51,9 @@
 #include <QTextDocumentFragment>
 #include <QClipboard>
 #include <QDesktopServices>
+#include <QInputMethodEvent>
+#include <QDropEvent>
+#include <QTextDocument>
 
 //#include <QDebug>
 
@@ -63,9 +66,9 @@ class MyQTextEditMimeData : public QMimeData
 public:
     inline MyQTextEditMimeData(const QTextDocumentFragment &aFragment) : fragment(aFragment) {}
 
-    virtual QStringList formats() const;
+    QStringList formats() const override;
 protected:
-    virtual QVariant retrieveData(const QString &mimeType, QVariant::Type type) const;
+    QVariant retrieveData(const QString &mimeType, QMetaType type) const override;
 private:
     void setup() const;
 
@@ -81,7 +84,7 @@ QStringList MyQTextEditMimeData::formats() const
         return QMimeData::formats();
 }
 
-QVariant MyQTextEditMimeData::retrieveData(const QString &mimeType, QVariant::Type type) const
+QVariant MyQTextEditMimeData::retrieveData(const QString &mimeType, QMetaType type) const
 {
     if (!fragment.isEmpty())
         setup();
@@ -91,7 +94,7 @@ QVariant MyQTextEditMimeData::retrieveData(const QString &mimeType, QVariant::Ty
 void MyQTextEditMimeData::setup() const
 {
     MyQTextEditMimeData *that = const_cast<MyQTextEditMimeData *>(this);
-    that->setData(QLatin1String("text/html"), fragment.toHtml("utf-8").toUtf8());
+    that->setData(QLatin1String("text/html"), fragment.toHtml().toUtf8());
     that->setText(fragment.toPlainText());
     fragment = QTextDocumentFragment();
 }
@@ -110,7 +113,7 @@ void iConsole::InitHistory(QStringList& string_list) {
       int start = string_list.length() - max_commands;
       for (int i=start; i<string_list.length(); i++) {
         QString command = string_list[i];
-        out << command << endl;
+        out << command << Qt::endl;
       }
       history_file.close();
     }
@@ -144,7 +147,7 @@ void iConsole::setPager(bool pager) {
 void iConsole::getDisplayGeom() {
   QFontMetrics fm(currentFont());
   fontHeight = fm.height();
-  fontWidth = fm.charWidth("m",0);
+  fontWidth = fm.horizontalAdvance("m");
   if(fontHeight < 5) fontHeight = 5;
   if(fontWidth < 5) fontWidth = 5;
   maxLines = (height() / fontHeight) - 4;
@@ -157,6 +160,9 @@ void iConsole::getDisplayGeom() {
 void iConsole::clear() {
   setFontNameSize(taMisc::font_names.console, taMisc::GetCurrentFontSize("console"));
   inherited::clear();
+  promptDisp = false;
+  historyIndex = history.size();
+  historyDraft.clear();
   setFontNameSize(taMisc::font_names.console, taMisc::GetCurrentFontSize("console"));
   ext_select_on = false;
   getDisplayGeom();
@@ -166,25 +172,22 @@ void iConsole::clear() {
   contPager = false;
   waiting_for_key = false;
   key_response = 0;
-  setAcceptRichText(false);     // just plain
+  setAcceptRichText(false);     // pasted commands are always plain text
+  setUndoRedoEnabled(false);    // document undo must never remove submitted output or prompts
   setReadOnly(false);           // this determines if links are clickable
   setOpenExternalLinks(false);
   setOpenLinks(false);          // we do it ourselves b/c it doesn't seem to work otherwise
 
-  for(int i=0; i<maxLines; i++) { // scroll to end
-    outputLine(" ");
-  }
   displayPrompt(true);          // force
 }
 
 //Reset the console
 void iConsole::reset() {
-  clear();
-  //init attributes
   historyIndex = 0;
   history.clear();
   recordedScript.clear();
-  promptDisp = false;
+  historyDraft.clear();
+  clear();
 }
 
 void iConsole::exit() {
@@ -202,11 +205,24 @@ iConsole::iConsole(QWidget *parent, const char *name, bool initiInterceptor)
   , errColor(Qt::red)
   , outColor(Qt::black)
   , completionColor(Qt::darkGreen)
+  , curPromptPos(0), curOutputLn(0), maxLines(10), maxCols(10)
+  , fontHeight(0), fontWidth(0)
   , applicationIsQuitting(false)
+  , noPager(true), quitPager(false), contPager(false)
+  , executingCommand(false), promptDisp(false), waiting_for_key(false)
+  , key_response(0), promptLength(0)
+  , prompt(name && *name ? QString::fromUtf8(name) : QStringLiteral("> "))
+  , historyIndex(0), ext_select_on(false)
 #ifndef TA_OS_WIN
   , stdoutiInterceptor(NULL), stderriInterceptor(NULL)
 #endif
 {
+  outColor = palette().color(QPalette::Text);
+  if(palette().color(QPalette::Base).lightness() < 128) {
+    cmdColor = QColor(100, 180, 255);
+    errColor = QColor(255, 110, 110);
+    completionColor = QColor(120, 220, 150);
+  }
   //resets the console
   reset();
 
@@ -228,11 +244,25 @@ iConsole::iConsole(QWidget *parent, const char *name, bool initiInterceptor)
 
 //Sets the prompt and cache the prompt length to optimize the processing speed
 void iConsole::setPrompt(QString newPrompt, bool display) {
-  prompt = newPrompt;
-  promptLength = prompt.length();
-  //display the new prompt
-  if (display)
+  prompt = newPrompt.isEmpty() ? QStringLiteral("> ") : newPrompt;
+  if(!display || executingCommand)
+    return;
+  if(promptDisp) {
+    // Change the shell context without losing a partially typed command.
+    QTextCursor savedCursor = textCursor();
+    QTextCursor cursor(document());
+    cursor.setPosition(curPromptPos - promptLength);
+    cursor.setPosition(curPromptPos, QTextCursor::KeepAnchor);
+    QTextCharFormat format;
+    format.setForeground(cmdColor);
+    cursor.insertText(prompt, format);
+    curPromptPos = cursor.position();
+    promptLength = prompt.length();
+    setTextCursor(savedCursor);
+  }
+  else {
     displayPrompt();
+  }
 }
 
 void iConsole::flushOutput() {
@@ -242,12 +272,10 @@ void iConsole::flushOutput() {
   bool waiting = false;
   do {
     if(stdoutiInterceptor) {
-      setTextColor(outColor);
       waiting = stdDisplay(stdoutiInterceptor->textIStream());
     }
     if(stderriInterceptor) {
-      setTextColor(errColor);
-      waiting = (stdDisplay(stderriInterceptor->textIStream()) || waiting);
+      waiting = (stdDisplay(stderriInterceptor->textIStream(), true) || waiting);
     }
     if(waiting) {
       // doing any kind of pending / process events here is bad -- causes hangs!
@@ -261,24 +289,25 @@ void iConsole::flushOutput() {
 
 int iConsole::queryForKeyResponse(QString query) {
   flushOutput();
-  QTextCursor cursor(textCursor());
-  gotoEnd(cursor, false);
-  append(query);
+  const int queryStart = promptDisp ? curPromptPos - promptLength
+                                    : document()->characterCount() - 1;
+  appendOutput(query, cmdColor);
+  const int queryEnd = promptDisp ? curPromptPos - promptLength
+                                  : document()->characterCount() - 1;
+  QTextCursor queryCursor(document());
+  queryCursor.setPosition(queryStart);
+  queryCursor.setPosition(queryEnd, QTextCursor::KeepAnchor);
+  queryCursor.setKeepPositionOnInsert(true);
   waiting_for_key = true;
   key_response = 0;
-  while (waiting_for_key && !applicationIsQuitting) {
+  while(waiting_for_key && !applicationIsQuitting) {
     QCoreApplication::processEvents();
-    taMisc::SleepMs(10); //note: 1ms is fine, shorter values result in cpu thrashing
-    // keypress event turns off waiting_for_key and sets key_response
+    taMisc::SleepMs(10);
   }
-  // get rid of prompt
-  cursor.movePosition(QTextCursor::StartOfLine, QTextCursor::MoveAnchor);
-  cursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
-  cursor.removeSelectedText();
-  cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
-  cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor);
-  cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
-  cursor.removeSelectedText();
+  // Remove only the temporary question, preserving output received while waiting.
+  if(promptDisp && curPromptPos >= queryCursor.selectionEnd())
+    curPromptPos -= queryCursor.selectionEnd() - queryCursor.selectionStart();
+  queryCursor.removeSelectedText();
   return key_response;
 }
 
@@ -289,23 +318,28 @@ void iConsole::stdReceived() {
 // Displays the prompt and move the cursor to the end of the line.
 void iConsole::displayPrompt(bool force) {
   flushOutput();
-  if(!force && promptDisp) {
-    repaint();
+  if(promptDisp) {
+    if(force) {
+      ensureCursorVisible();
+      repaint();
+    }
     return;
   }
-  QTextCursor cursor(textCursor());
-  // displays the prompt
-  gotoEnd(cursor, false);
+  QTextCursor cursor(document());
+  cursor.movePosition(QTextCursor::End);
+  if(!document()->isEmpty())
+    cursor.insertBlock();
+  QTextCharFormat format;
+  format.setForeground(cmdColor);
+  cursor.insertText(prompt, format);
   setTextCursor(cursor);
-  setTextColor(cmdColor);
-  append(prompt);
-  gotoEnd(cursor, false);
-  setTextCursor(cursor);
-  curPromptPos = cursor.position(); // save this position for future reference
-  quitPager = false;            // reset this flag whenver prompt returns
+  curPromptPos = cursor.position();
+  promptLength = prompt.length();
+  quitPager = false;
   contPager = false;
   promptDisp = true;
-  repaint();                    // do a direct repaint when new info comes in!
+  ensureCursorVisible();
+  repaint();
 }
 
 void iConsole::gotoPrompt(QTextCursor& cursor, bool select) {
@@ -335,44 +369,70 @@ bool iConsole::scrolledToEnd() {
   return (vscr->value() >= vscr->maximum() - 4); // give a few lines at the end leeway
 }
 
-void iConsole::outputLine(QString line, bool err) {
-  bool scrolled_to_end = scrolledToEnd();
-
-  // reset any residual formatting -- otherwise links carry over..
-  QTextCharFormat nf;
-  setCurrentCharFormat(nf);
-
-  if(err) {
-    setTextColor(errColor);
+void iConsole::appendOutput(const QString& line, const QColor& color) {
+  const bool atEnd = scrolledToEnd();
+  const bool editing = promptDisp;
+  QTextCursor savedCursor = textCursor();
+  const int commandPosition = curPromptPos;
+  const int cursorOffset = savedCursor.position() - commandPosition;
+  const int anchorOffset = savedCursor.anchor() - commandPosition;
+  const QString command = editing ? getCurrentCommand() : QString();
+  QTextCursor cursor(document());
+  if(editing) {
+    // Background output belongs above the live prompt, so it cannot consume input.
+    cursor.setPosition(curPromptPos - promptLength);
+    cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
+    cursor.removeSelectedText();
   }
   else {
-    setTextColor(outColor);
+    cursor.movePosition(QTextCursor::End);
+    if(!document()->isEmpty())
+      cursor.insertBlock();
   }
-  promptDisp = false;
-  append(line);
-  setTextColor(outColor);       // reset to default
-  if(scrolled_to_end) {         // keep on keeping on..
-    gotoEnd();
+  QTextCharFormat format;
+  format.setForeground(color);
+  cursor.setCharFormat(format);
+  if(Qt::mightBeRichText(line))
+    cursor.insertHtml(line);
+  else
+    cursor.insertText(line);
+  if(editing) {
+    cursor.insertBlock();
+    format.setForeground(cmdColor);
+    cursor.insertText(prompt, format);
+    curPromptPos = cursor.position();
+    promptLength = prompt.length();
+    cursor.insertText(command, format);
+    cursor.setPosition(anchorOffset >= 0 ? curPromptPos + anchorOffset : savedCursor.anchor());
+    cursor.setPosition(cursorOffset >= 0 ? curPromptPos + cursorOffset : savedCursor.position(),
+                       QTextCursor::KeepAnchor);
+    setTextCursor(cursor);
   }
-  repaint();                    // do a direct repaint when new info comes in!
+  else if(atEnd) {
+    setTextCursor(cursor);
+  }
+  if(atEnd)
+    ensureCursorVisible();
+  viewport()->update();
+}
+
+void iConsole::outputLine(QString line, bool err) {
+  appendOutput(line, err ? errColor : outColor);
 }
 
 #ifndef TA_OS_WIN
 // displays redirected stdout/stderr
-bool iConsole::stdDisplay(QTextStream* s) {
+bool iConsole::stdDisplay(QTextStream* s, bool err) {
   // always grab output!  no paging at all ever on std out -- need to get it!
   bool scrolled_to_end = scrolledToEnd();
   int n_lines_recvd = 0;
   // no pager mode just grabs everything and returns true if any lines were recv'd
   while(true) {
-    QString line = s->readLine(maxCols);
+    QString line = s->readLine();
     if(line.isNull()) break;
-    if(line.endsWith("invalid drawable")) continue; // skip this error!
     n_lines_recvd++;
-    promptDisp = false;
     if(taMisc::ext_messages) {
-      append(line);
-      repaint();                    // do a direct repaint when new info comes in!
+      appendOutput(line, err ? errColor : outColor);
     }
     taMisc::LogEvent(line);
     if(logfile.isOpen()) {
@@ -381,42 +441,12 @@ bool iConsole::stdDisplay(QTextStream* s) {
       logfile.flush();
     }
   }
-  // }
-  // else {
-  //   // pager mode has more complicated logic
-  //   while((curOutputLn < maxLines) || contPager || quitPager) {
-  //     QString line = s->readLine(maxCols);
-  //     if(line.isNull()) break;
-  //     if(line.endsWith("invalid drawable")) continue; // skip this error!
-  //     n_lines_recvd++;
-  //     if(!quitPager) {
-  //       promptDisp = false;
-  //       if(taMisc::ext_messages) {
-  //         append(line);
-  //       }
-  //       repaint();                    // do a direct repaint when new info comes in!
-  //       taMisc::LogEvent(line);
-  //       if(logfile.isOpen()) {
-  //         logfile.write(line.toLocal8Bit());
-  //         logfile.write("\n", strlen("\n"));
-  //         logfile.flush();
-  //       }
-  //       if(!contPager) {
-  //         curOutputLn++;
-  //         if(curOutputLn >= maxLines) {
-  //           append("---Press Return for More, q=quit displaying, c=continue without paging ---");
-  //           viewport()->update();       // repaint the window, in case it is weird
-  //           return true;
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
 
-  if(scrolled_to_end) {         // keep on keeping on..
+  if(scrolled_to_end && !promptDisp) {
     gotoEnd();
   }
-  emit receivedNewStdin(n_lines_recvd);
+  if(n_lines_recvd > 0)
+    emit receivedNewStdin(n_lines_recvd);
   return (n_lines_recvd > 0);
 }
 #endif
@@ -429,7 +459,24 @@ void iConsole::resizeEvent(QResizeEvent* e) {
 // Reimplemented key press event
 void iConsole::keyPressEvent(QKeyEvent* key_event)
 {
+  if(waiting_for_key) {
+    if(key_event->key() == Qt::Key_Control || key_event->key() == Qt::Key_Shift ||
+       key_event->key() == Qt::Key_Alt || key_event->key() == Qt::Key_Meta) {
+      key_event->accept();
+      return;
+    }
+    key_response = key_event->key();
+    waiting_for_key = false;
+    key_event->accept();
+    return;
+  }
   taiMisc::BoundAction action = taiMisc::GetActionFromKeyEvent(taiMisc::CONSOLE_CONTEXT, key_event);
+  if(executingCommand) {
+    if(action == taiMisc::CONSOLE_UNDO || action == taiMisc::CONSOLE_UNDO_II)
+      ctrlCPressed();
+    key_event->accept();
+    return;
+  }
 
   if (curOutputLn >= maxLines) {
     if (key_event->key() == Qt::Key_Return || key_event->key() == Qt::Key_Enter) {
@@ -477,6 +524,9 @@ void iConsole::keyPressEvent(QKeyEvent* key_event)
   switch(action) {
     case taiMisc::CONSOLE_UNDO:         // undo the current command
     case taiMisc::CONSOLE_UNDO_II:
+      replaceCurrentCommand(QString());
+      historyIndex = history.size();
+      historyDraft.clear();
       ctrlCPressed();
       key_event->accept();
       displayPrompt();
@@ -492,20 +542,18 @@ void iConsole::keyPressEvent(QKeyEvent* key_event)
         command = intersect;
         replaceCurrentCommand(command);
       }
-      QString str = sl.join(" ");
       if(sl.count() == 1) {
         replaceCurrentCommand(sl[0]);
       }
       else if(sl.count() > 1) {
-        setTextColor(completionColor);
-        append(sl.join(" "));
-        displayPrompt(true);      // force!
-        cursor.insertText(command);
+        appendOutput(sl.join(" "), completionColor);
+        replaceCurrentCommand(command);
       }
       break;
     }
     case taiMisc::CONSOLE_BACKSPACE:
     case taiMisc::CONSOLE_BACKSPACE_II:
+      prepareCommandEdit();
       if(cursorInCurrentCommand()) {       // don't backup into prompt
         inherited::keyPressEvent(key_event);
       }
@@ -522,6 +570,8 @@ void iConsole::keyPressEvent(QKeyEvent* key_event)
     case taiMisc::CONSOLE_HISTORY_BACKWARD_II:
       key_event->accept();
       if(history.size() > 0) {
+        if(historyIndex == history.size())
+          historyDraft = getCurrentCommand();
         historyIndex--; if(historyIndex < 0) historyIndex = 0;
         QString cmd = history[historyIndex];
         if(!cmd.isEmpty())
@@ -532,10 +582,8 @@ void iConsole::keyPressEvent(QKeyEvent* key_event)
     case taiMisc::CONSOLE_HISTORY_FORWARD_II:
       key_event->accept();
       if(history.size() > 0) {
-        historyIndex++; if(historyIndex >= history.size()) historyIndex = history.size() -1;
-        QString cmd = history[historyIndex];
-        if(!cmd.isEmpty())
-          replaceCurrentCommand(cmd);
+        historyIndex++; if(historyIndex > history.size()) historyIndex = history.size();
+        replaceCurrentCommand(historyIndex == history.size() ? historyDraft : history[historyIndex]);
       }
       break;
       // these deselects don't work - rohrlich 11/20/14
@@ -580,6 +628,8 @@ void iConsole::keyPressEvent(QKeyEvent* key_event)
     case taiMisc::CONSOLE_DELETE:
     case taiMisc::CONSOLE_DELETE_II:
       key_event->accept();
+      prepareCommandEdit();
+      cursor = textCursor();
       cursor.deleteChar();
       setTextCursor(cursor);
       break;
@@ -587,6 +637,8 @@ void iConsole::keyPressEvent(QKeyEvent* key_event)
     case taiMisc::CONSOLE_KILL_II:
     {
       key_event->accept();
+      prepareCommandEdit();
+      cursor = textCursor();
       cursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
       QTextDocumentFragment frag = cursor.selection();
       MyQTextEditMimeData* md = new MyQTextEditMimeData(frag);
@@ -598,7 +650,7 @@ void iConsole::keyPressEvent(QKeyEvent* key_event)
     case taiMisc::CONSOLE_PASTE:
     case taiMisc::CONSOLE_PASTE_II:
       key_event->accept();
-      inherited::paste();         // don't go to end first!
+      paste();
       ext_select_on = false;
       break;
     case taiMisc::CONSOLE_CUT:
@@ -613,7 +665,21 @@ void iConsole::keyPressEvent(QKeyEvent* key_event)
         waiting_for_key = false;
         key_event->accept();
       }
+      else if(key_event->matches(QKeySequence::Cut)) {
+        cut();
+      }
+      else if(key_event->matches(QKeySequence::Paste)) {
+        paste();
+      }
       else {
+        if(!key_event->text().isEmpty() || key_event->key() == Qt::Key_Delete ||
+           key_event->key() == Qt::Key_Backspace) {
+          prepareCommandEdit();
+          if(key_event->key() == Qt::Key_Backspace && !cursorInCurrentCommand()) {
+            key_event->accept();
+            break;
+          }
+        }
         inherited::keyPressEvent(key_event);
       }
   }
@@ -638,13 +704,12 @@ void iConsole::mouseMoveEvent(QMouseEvent *e) {
 void iConsole::mouseReleaseEvent(QMouseEvent *e) {
   inherited::mouseReleaseEvent(e);
   setReadOnly(false);           // undo the RO for link clicking
-#if defined(TA_OS_MAC) || defined(TA_OS_WIN)
-  if(e->button() & Qt::MidButton) {
-    paste();
+  if(e->button() == Qt::MiddleButton) {
+    const QClipboard::Mode mode = QApplication::clipboard()->supportsSelection()
+      ? QClipboard::Selection : QClipboard::Clipboard;
+    insertFromMimeData(QApplication::clipboard()->mimeData(mode));
   }
-  else
-#endif
- if(e->button() & Qt::LeftButton) {
+  else if(e->button() == Qt::LeftButton) {
     copy();                     // always copy!
   }
   // this is actually confusing to people -- just let it be..
@@ -655,13 +720,17 @@ void iConsole::mouseReleaseEvent(QMouseEvent *e) {
 }
 
 void iConsole::contextMenuEvent(QContextMenuEvent *event) {
-  QMenu* menu = createStandardContextMenu();
-  menu->addSeparator();
-  menu->addAction("&Clear All", this, SLOT(clear()),  QKeySequence("Ctrl+."));
-  taMisc::in_eventproc++;       // this is an event proc!
-  menu->exec(event->globalPos());
+  QMenu menu(this);
+  const bool selection = textCursor().hasSelection();
+  menu.addAction(tr("Cu&t"), this, &iConsole::cut)->setEnabled(selection);
+  menu.addAction(tr("&Copy"), this, &iConsole::copy)->setEnabled(selection);
+  menu.addAction(tr("&Paste"), this, &iConsole::paste)->setEnabled(canPaste());
+  menu.addSeparator();
+  menu.addAction(tr("Select &All"), this, &iConsole::selectAll);
+  menu.addAction(tr("&Clear All"), this, &iConsole::clear);
+  taMisc::in_eventproc++;
+  menu.exec(event->globalPos());
   taMisc::in_eventproc--;
-  delete menu;
 }
 
 //Get the current command
@@ -670,7 +739,7 @@ QString iConsole::getCurrentCommand() {
   gotoPrompt(cursor);
   gotoEnd(cursor, true);
   QString command = cursor.selectedText();
-  if(command.isNull() || command.isEmpty()) command = "\n";
+  command.replace(QChar::ParagraphSeparator, QLatin1Char('\n'));
   cursor.clearSelection();
   return command;
 }
@@ -682,35 +751,33 @@ void iConsole::replaceCurrentCommand(QString newCommand) {
   gotoEnd(cursor, true); // select
   cursor.insertText(newCommand);                                   // replaces
   cursor.clearSelection();
+  setTextCursor(cursor);
+  ensureCursorVisible();
 }
 
 bool iConsole::cursorInCurrentCommand() {
   QTextCursor cursor = textCursor();
-  int pos = cursor.position();
-  return (pos > curPromptPos);
+  return cursor.hasSelection() ? cursor.selectionStart() >= curPromptPos
+                               : cursor.position() > curPromptPos;
 }
 
 //execCommand(QString) executes the command and displays back its result
 void iConsole::execCommand(QString command, bool writeCommand, bool showPrompt) {
-  //Display the prompt with the command first
-  if (writeCommand) {
-    if(getCurrentCommand() != "")
-      displayPrompt(true);      // force
-    append(command);
+  if(writeCommand) {
+    displayPrompt();
+    replaceCurrentCommand(command);
   }
-  //execute the command and get back its text result and its return value
+  gotoEnd();
+  promptDisp = false;
+  executingCommand = true;
   int res = 0;
   QString strRes = interpretCommand(command, &res);
-  //According to the return value, display the result either in red or in blue
-  if (res == 0)
-    setTextColor(outColor);
-  else
-    setTextColor(errColor);
   if(!strRes.isEmpty())
-    append(strRes);
-  // Display the prompt again
+    appendOutput(strRes, res == 0 ? outColor : errColor);
+  flushOutput();
+  executingCommand = false;
   if(showPrompt)
-    displayPrompt(true);
+    displayPrompt();
 }
 
 int iConsole::saveContents(QString fileName) {
@@ -753,6 +820,7 @@ int iConsole::loadScript(QString fileName) {
       break; //done
     execCommand(command, true, false);
   }
+  displayPrompt();
   f.close();
   return 0;
 }
@@ -769,11 +837,80 @@ int iConsole::setStdLogfile(QString fileName) {
   return 0;
 }
 
-//Allows pasting with middle mouse button (x window)
-//when clicking outside of the edition zone
+// Only the text after the current prompt is editable. Mouse selections in
+// previous output remain useful for copying, but cannot destroy the transcript.
+void iConsole::prepareCommandEdit() {
+  if(!promptDisp)
+    displayPrompt();
+  QTextCursor cursor = textCursor();
+  if(cursor.hasSelection() && cursor.selectionEnd() > curPromptPos) {
+    const int start = qMax(cursor.selectionStart(), curPromptPos);
+    const int end = cursor.selectionEnd();
+    cursor.setPosition(start);
+    cursor.setPosition(end, QTextCursor::KeepAnchor);
+  }
+  else if(cursor.selectionStart() < curPromptPos) {
+    cursor.movePosition(QTextCursor::End);
+  }
+  setTextCursor(cursor);
+}
+
+void iConsole::cut() {
+  if(executingCommand || waiting_for_key) {
+    copy();
+    return;
+  }
+  if(textCursor().selectionEnd() <= curPromptPos) {
+    copy();
+    return;
+  }
+  prepareCommandEdit();
+  inherited::cut();
+}
+
 void iConsole::paste() {
-  gotoEnd();
-  inherited::paste();
+  insertFromMimeData(QApplication::clipboard()->mimeData());
+}
+
+void iConsole::insertFromMimeData(const QMimeData* source) {
+  if(executingCommand || waiting_for_key || !source || !source->hasText())
+    return;
+  prepareCommandEdit();
+  QTextCursor cursor = textCursor();
+  cursor.insertText(source->text());
+  setTextCursor(cursor);
+  ensureCursorVisible();
+}
+
+void iConsole::inputMethodEvent(QInputMethodEvent* event) {
+  if(executingCommand || waiting_for_key) {
+    event->accept();
+    return;
+  }
+  prepareCommandEdit();
+  const int start = textCursor().position() + event->replacementStart();
+  if(start < curPromptPos) {
+    const int removedPrefix = curPromptPos - start;
+    event->setCommitString(event->commitString(),
+                          curPromptPos - textCursor().position(),
+                          qMax(0, event->replacementLength() - removedPrefix));
+  }
+  inherited::inputMethodEvent(event);
+}
+
+void iConsole::dropEvent(QDropEvent* event) {
+  if(executingCommand || waiting_for_key) {
+    event->ignore();
+    return;
+  }
+  if(event->mimeData()->hasText()) {
+    insertFromMimeData(event->mimeData());
+    event->setDropAction(Qt::CopyAction);
+    event->accept();
+  }
+  else {
+    event->ignore();
+  }
 }
 
 ///////////////////////////////////////////////////////
@@ -784,11 +921,12 @@ void iConsole::paste() {
 QString iConsole::interpretCommand(QString command, int *res) {
   //Add the command to the recordedScript list
   if(command.isEmpty() || (command == "\n")) return "";
-  if (*res)
+  if (*res == 0)
     recordedScript.append(command);
   //update the history and its index
   history.append(command);
   historyIndex = history.size();
+  historyDraft.clear();
   
   // write history to file for reloading
   // it is a bit excessive to save this every single command, OTOH there aren't many
@@ -797,11 +935,11 @@ QString iConsole::interpretCommand(QString command, int *res) {
   QFile history_file(filename);
   if (history_file.open(QIODevice::Append)) {
     QTextStream out(&history_file);
-    out << command << endl;
+    out << command << Qt::endl;
     history_file.close();
   }
   //emit the commandExecuted signal
-  //   emit commandExecuted(command);
+  emit commandExecuted(command);
   return "";
 }
 
@@ -865,7 +1003,7 @@ void iConsole::linkClicked(const QUrl & link) {
 }
 
 //default implementation: command always complete
-bool iConsole::isCommandComplete(QString cmd) {
+bool iConsole::isCommandComplete(QString cmd) { (void)cmd;
 //   if(cmd.isEmpty()) return false;
   return true;
 }

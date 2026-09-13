@@ -60,7 +60,7 @@ void ConSpec::UpdateAfterEdit_impl() {
   }
 }
 
-bool ConSpec::CheckConfig_RecvCons(Projection* prjn, bool quiet) {
+bool ConSpec::CheckConfig_RecvCons(Projection* prjn, bool quiet) { (void)prjn; (void)quiet;
   return true;
 }
 

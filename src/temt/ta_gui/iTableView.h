@@ -99,12 +99,12 @@ public:
 #endif
 
  public slots: // cliphandler i/f
-  virtual void          EditAction(int ea) {}
-  virtual void          GetEditActionsEnabled(int& ea) {}
+  virtual void          EditAction(int ea) { (void)ea; }
+  virtual void          GetEditActionsEnabled(int& ea) { (void)ea; }
 
-  virtual void          ViewAction(int va) {}
-  virtual void          ResetColorScaleAction(int va) {}
-  virtual void          SetColorSpecAction(int va) {}
+  virtual void          ViewAction(int va) { (void)va; }
+  virtual void          ResetColorScaleAction(int va) { (void)va; }
+  virtual void          SetColorSpecAction(int va) { (void)va; }
 #ifndef __MAKETA__
  signals:
   void                  UpdateUi();
@@ -144,7 +144,7 @@ public:
   void                  wheelEvent(QWheelEvent *) override;
   bool                  eventFilter(QObject* obj, QEvent* event) override;
   virtual void          FillContextMenu_impl(ContextArea ca, taiWidgetMenu* menu, const CellRange& sel);
-  virtual void          RowColOp_impl(int op_code, const CellRange& sel) {};
+  virtual void          RowColOp_impl(int op_code, const CellRange& sel) { (void)op_code; (void)sel; };
   virtual bool          isFixedRowCount() const { return false; } // true, ex. for tab mat cells with fixed rows
   virtual bool          isFixedColCount() const { return false; } // true, ex. for tab mat cells with fixed geom
 

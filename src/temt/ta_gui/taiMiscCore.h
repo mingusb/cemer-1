@@ -73,7 +73,7 @@ public:
   const String          classname(); // #IGNORE 3.x compatability, basically the app name
 
   int                   Exec(); // #IGNORE enter the event loop, either QCoreApplication or QApplication
-  virtual void          Busy_(bool busy) {} // #IGNORE impl for gui in taiMisc
+  virtual void          Busy_(bool busy) { (void)busy; } // #IGNORE impl for gui in taiMisc
   virtual void          CheckConfigResult_(bool ok);
     // #IGNORE this is the nogui version; taiMisc does the gui version
 

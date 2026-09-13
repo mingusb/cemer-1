@@ -1,191 +1,60 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Configure a generated emergent plugin using the app's Clang / Qt 6 environment.
+set -euo pipefail
+source_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+build_dir=build
+plugin_type=User
+clean=false
+cmake_args=()
+usage() {
+  cat <<'HELP'
+Usage: ./configure [options]
+  --debug                     Debug build (default: RelWithDebInfo)
+  --prefix=User|System        Plugin installation scope (default: User)
+  --suffix=NAME               Extra application/library suffix
+  --mpi                       Enable MPI
+  --build-dir=PATH            Build directory (default: build)
+  --generator=NAME, -G NAME   CMake generator, for example Ninja
+  --qtdir=PATH                Qt 6 SDK prefix (otherwise use CMAKE_PREFIX_PATH)
+  --qt6                       Qt 6 is required and selected by default
+  --clean                     Remove the selected build directory's CMake cache
+  --verbose                   Verbose build output
+  --not-native                Portable CPU settings (the default)
+  --sse8                      Enable the application's 8-way SIMD option
+  --yes                       Accepted for compatibility; configuration never prompts
+  -DNAME=VALUE                Additional CMake option
 
-# NOTE: this is a simple script wrapper around the cmake command line tools, for
-# those used to the autotools configure script conventions
-# also, cmake has rather lame command-line args so this is generally quite useful
-# for the lazy typers as well.
-
-echo "Running simple configure script wrapper around cmake build system!"
-echo "args are (special for plugins):"
-echo "  --enable-debug (or --debug)  enable debug, non-optimized build"
-echo "  --prefix=User|System         where to install plugin: user's home dir, or system;" 
-echo "                                 defaults to User if not specified"
-echo "  --suffix=<name>              add an extra custom suffix on the end of build files"
-echo "  --enable-mpi (or --mpi)      enable MPI distributed memory parallel build"
-echo "  --clean                      clean existing cmake cache etc first: start fresh"
-echo "  --build-dir=<name>           provide a custom build directory name (else auto)"
-echo "  --generator=\"<name>\"         use given code generator *IN QUOTES* (-G in cmake, which also works)"
-echo "  --verbose-build (or --verbose or -v) turn on verbose make output: for make probs"
-echo "  --not-native                 don't define -march=native for compilation, which is otherwise the default -- only needed for making packages that will run more broadly"
-echo "  --emer-mac-arch-bits=NN      set up for 32-bit or 64-bit compilation"
-echo "  --qt5                        configure for Qt5 -- must set QTDIR enviro var to qt install dir (e.g., /usr/local/Qt5.2.0/5.2.0/clang_64)"
-echo "  --qt4                        configure for Qt4 -- either qt5 or 4 must be explicitly set, just to be sure you got the right one"
-echo "  --c++11                      enable c++11 support, using e.g., -std=c++11 flag"
-echo "  --sse8                       define USE_SSE8 to take advantage of 8-way parallel SIMD (SSE) ops -- only useful for clang compiler, where it is auto-enabled"
-echo "  --yes (or --y or -y)         do not pause for confirmation before running cmake"
-echo " "
-echo "  (note: -- before args is optional, and - works too!)"
-echo " "
-
-cmake_cmd="cmake ../"
-build_dir="build"
-prefix="User"
-extra_suffix=""
-not_native=""
-qt_version=""
-
-while [ $# -gt 0 ]
-do
-  preq=${1%=*}			# get part before =
-  case $preq
-  in
-    --help | -help | help)
-      exit 0
-    ;;
-    --suffix | -suffix | suffix)
-      extra_suffix=${1##*=}		# get part after =
-      cmake_cmd="$cmake_cmd -DEXTRA_SUFFIX=$extra_suffix"
-      build_dir="${build_dir}${extra_suffix}"
-      shift 1
-    ;;
-    --debug | --enable-debug | debug | enable-debug | -debug | -enable-debug | d | -d)
-      debug=true
-      cmake_cmd="$cmake_cmd -DCMAKE_BUILD_TYPE=Debug"
-      build_dir="build_dbg"
-      shift 1
-    ;;
-    
-    --prefix | -prefix | prefix | p | -p)
-      prefix=${1##*=}		# get part after =
-      cmake_cmd="$cmake_cmd -DEMERGENT_PLUGIN_TYPE=$prefix"
-      shift 1
-    ;;
-
-    --enable-mpi | --mpi | mpi | enable-mpi | -mpi | -enable-mpi)
-      mpi=true
-      cmake_cmd="$cmake_cmd -DMPI_BUILD=true"
-      shift 1
-    ;;
-
-    --clean | -clean | clean | -c)
-      clean=true
-      shift 1
-    ;;
-
-    --verbose-build | --verbose | verbose | -v | v | -verbose | verbose-build | -verbose-build)
-      verbose_build=true
-      shift 1
-    ;;
-
-    --build-dir | -build-dir | build-dir | build | --build | -build)
-      build_dir=${1##*=}		# get part after =
-      shift 1
-    ;;
-
-    --generator | -generator | generator | --gen | -gen | gen | -G)
-#      generator="-G ${1##*=}"		# get part after =
-#      cmake_cmd="$cmake_cmd $generator"
-#      shift 1
-echo "generator command is not working -- omit to use the default, 'Unix Makefiles'"
-exit 1
-    ;;
-
-    --not-native | -not-native | not-native)
-      not_native="not-native"
-      cmake_cmd="$cmake_cmd -DNOT_NATIVE=not-native"
-      shift 1
-    ;;
-
-    --emer-mac-arch-bits)
-      cmake_cmd="$cmake_cmd -DEMER_MAC_ARCH_BITS=${1##*=}"
-      shift 1
-    ;;
-
-    --qt5 | -qt5 | qt5)
-      cmake_cmd="$cmake_cmd -DQT_USE_5=ON -DQTDIR=$QTDIR"
-      qt_version="qt5"
-      shift 1
-    ;;
-
-    --qt4 | -qt4 | qt4)
-      cmake_cmd="$cmake_cmd -DQT_USE_4=ON -DQTDIR=$QTDIR"
-      qt_version="qt4"
-      shift 1
-    ;;
-
-    --sse8 | -sse8 | sse8)
-      cmake_cmd="$cmake_cmd -DCMAKE_CXX_FLAGS=-DUSE_SSE8"
-      shift 1
-    ;;
-
-    --c++11 | -c++11 | c++11)
-      cmake_cmd="$cmake_cmd -DCMAKE_CXX_FLAGS=-std=c++11"
-      shift 1
-    ;;
-
-    --yes | -yes | yes | -y)
-      yes=true
-      shift 1
-    ;;
-
-    *)
-      invalid=true
-      shift 1
-    ;;
+Source the same compiler/Qt environment used for emergent first.
+Set EMERGENT_PREFIX_DIR to the emergent installation prefix when needed.
+HELP
+}
+while (($#)); do
+  case "$1" in
+    --help|-h) usage; exit 0 ;;
+    --debug|--enable-debug|-d) cmake_args+=(-DCMAKE_BUILD_TYPE=Debug); build_dir=build_dbg ;;
+    --prefix=*) plugin_type=${1#*=} ;;
+    --suffix=*) cmake_args+=("-DEXTRA_SUFFIX=${1#*=}") ;;
+    --mpi|--enable-mpi) cmake_args+=(-DMPI_BUILD=ON) ;;
+    --build-dir=*) build_dir=${1#*=} ;;
+    --generator=*) cmake_args+=(-G "${1#*=}") ;;
+    -G) shift; cmake_args+=(-G "${1:?missing generator after -G}") ;;
+    --qtdir=*) cmake_args+=("-DQTDIR=${1#*=}") ;;
+    --qt6|--yes|-y) ;;
+    --clean) clean=true ;;
+    --verbose|--verbose-build|-v) cmake_args+=(-DCMAKE_VERBOSE_MAKEFILE=ON) ;;
+    --not-native) cmake_args+=(-DEMERGENT_NATIVE_ARCH=OFF) ;;
+    --sse8) cmake_args+=(-DCMAKE_CXX_FLAGS=-DUSE_SSE8) ;;
+    --qt4|--qt5|--c++11) printf '%s\n' 'This plugin requires Qt 6 and C++17 or newer.' >&2; exit 2 ;;
+    -D*=*) cmake_args+=("$1") ;;
+    *) printf 'Unknown option: %s\n' "$1" >&2; usage >&2; exit 2 ;;
   esac
+  shift
 done
-
-if [[ "$qt_version" == "" ]]; then
-    echo "ERROR: you must specify either qt5 or qt4 -- pretty soon it will default to qt5, but right now there is enough ambiguity that you must specify which one explicitly."
-    exit 1
+case "$plugin_type" in User|System) ;; *) printf '%s\n' '--prefix must be User or System' >&2; exit 2 ;; esac
+if [[ $build_dir != /* ]]; then build_dir="$source_dir/$build_dir"; fi
+if $clean; then
+  rm -f -- "$build_dir/CMakeCache.txt"
+  rm -rf -- "$build_dir/CMakeFiles"
 fi
-
-if [[ $verbose_build == "true" ]]; then
-    cmake_cmd="$cmake_cmd -DCMAKE_VERBOSE_MAKEFILE=ON"
-else 
-    cmake_cmd="$cmake_cmd -DCMAKE_VERBOSE_MAKEFILE=OFF"
-fi
-
-if [[ $invalid == "true" ]]; then
-  echo "Invalid argument(s) encountered -- please see above list"
-  exit 1
-fi
-
-echo " "
-echo "####################################################"
-echo "configure script settings:"
-echo "  debug:        $debug"
-echo "  prefix:       $prefix"
-echo "  mpi:          $mpi"
-echo "  clean:        $clean"
-echo "  build-dir:    $build_dir"
-echo "  qt-version:   $qt_version"
-echo "  generator:    $generator"
-echo "  verbose:      $verbose_build"
-echo " "
-echo "  cmake command: $cmake_cmd"
-echo " "
-
-if [[ $yes != "true" ]]; then
-  read -p "Press any key to continue (Ctrl-C to cancel)..."
-fi
-
-# dir prolly exists, so try a gentle cd with mkdir if that fails
-cd "$build_dir" || { { mkdir "$build_dir" && cd "$build_dir"; } || exit 1; }
-if [[ $clean == "true" ]]; then
-    echo "NOTE: Cleaning files now!"
-    /bin/rm -rf *
-fi
-$cmake_cmd
-
-echo " "
-echo "####################################################"
-if [[ $prefix == "System" ]]; then
-  echo "Now you must type: cd $build_dir; make; sudo make install"
-elif [[ $prefix == "User" ]]; then
-  echo "Now you must type: cd $build_dir; make; make install"
-else
-  echo "WARNING: unknown prefix -- you may not be able"
-fi
-echo "to actually build and install the software"
-echo " "
+cmake -S "$source_dir" -B "$build_dir" "-DEMERGENT_PLUGIN_TYPE=$plugin_type" "${cmake_args[@]}"
+printf 'Build:   cmake --build %q\nInstall: cmake --install %q\n' "$build_dir" "$build_dir"

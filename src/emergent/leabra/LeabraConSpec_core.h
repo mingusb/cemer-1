@@ -122,7 +122,7 @@
     }
   }
 
-  INLINE void Init_Weights_post(CON_STATE* pcg, NETWORK_STATE* net, int thr_no) override {
+  INLINE void Init_Weights_post(CON_STATE* pcg, NETWORK_STATE* net, int thr_no) override { (void)thr_no;
     LEABRA_CON_STATE* cg = (LEABRA_CON_STATE*)pcg;
     cg->Init_ConState();
     
@@ -154,7 +154,7 @@
     cg->Cn(cidx, FWT, net) = linwt;
   }
 
-  INLINE void SetConScale(float scale, CON_STATE* cg, int cidx, NETWORK_STATE* net, int thr_no) override {
+  INLINE void SetConScale(float scale, CON_STATE* cg, int cidx, NETWORK_STATE* net, int thr_no) override { (void)thr_no;
     cg->Cn(cidx, SCALE, net) = scale;
   }
 
@@ -168,7 +168,7 @@
   // #CAT_Learning initialize specs and specs update network flags -- e.g., set current learning rate based on schedule given epoch (or error value)
 
   INLINE void  RenormScales(CON_STATE* cg, NETWORK_STATE* net, int thr_no, bool mult_norm,
-                            float avg_wt) override {
+                            float avg_wt) override { (void)thr_no;
     const int sz = cg->size;
     if(sz < 2) return;
     float avg = 0.0f;
@@ -271,7 +271,7 @@
   INLINE float  C_Compute_Netin(const float wt, const float su_act)
   { return wt * su_act; }
   // #IGNORE NOTE: doesn't work with spiking -- need a separate function to use act_eq for that case -- using act_eq does NOT work with scalarval etc
-  INLINE float  Compute_Netin(CON_STATE* rcg, NETWORK_STATE* net, int thr_no) override  {
+  INLINE float  Compute_Netin(CON_STATE* rcg, NETWORK_STATE* net, int thr_no) override  { (void)thr_no;
     LEABRA_CON_STATE* cg = (LEABRA_CON_STATE*)rcg;
     LEABRA_PRJN_STATE* prjn = cg->GetPrjnState(net);
     // this is slow b/c going through the PtrCn
@@ -289,7 +289,7 @@
   // CtLeabraXCAL code
 
   INLINE void   GetLrates(LEABRA_CON_STATE* cg, LEABRA_NETWORK_STATE* net, int thr_no,
-                          float& clrate, bool& deep_on, float& bg_lrate, float& fg_lrate)  {
+                          float& clrate, bool& deep_on, float& bg_lrate, float& fg_lrate)  { (void)thr_no;
     LEABRA_LAYER_STATE* rlay = cg->GetRecvLayer(net);
     clrate = cur_lrate * rlay->lrate_mod;
     deep_on = deep.on;
@@ -443,11 +443,10 @@
 
     const float su_su_avg_s_lrn = su->su_avg_s_lrn;
     const float su_ru_avg_s_lrn = su->ru_avg_s_lrn;
-    const float su_avg_s = su->avg_s;
+
     const float su_avg_m = su->avg_m;
     const int sz = cg->size;
 
-    LEABRA_PRJN_STATE* prjn = cg->GetPrjnState(net);
     if(momentum.on) {
       clrate *= momentum.lr_comp;
     }
@@ -540,7 +539,7 @@
   INLINE void   C_Compute_Weights_CtLeabraXCAL
     (float& wt, float dwt, float& fwt, float& swt, float& scale,
      const float wb_inc, const float wb_dec, int thr_no)
-  {
+  { (void)swt; (void)thr_no;
     if(dwt == 0.0f) return;
     if(wt_sig.soft_bound) {
       if(dwt > 0.0f)    dwt *= wb_inc * (1.0f - fwt);
@@ -566,7 +565,7 @@
   INLINE void   C_Compute_Weights_CtLeabraXCAL_slow
     (float& wt, float dwt, float& fwt, float& swt, float& scale,
      const float wb_inc, const float wb_dec, int thr_no)
-  { 
+  { (void)thr_no;
     if(wt_sig.soft_bound) {
       if(dwt > 0.0f)    dwt *= wb_inc * (1.0f - fwt);
       else              dwt *= wb_dec * fwt;
@@ -607,7 +606,7 @@
   }
   // #IGNORE do dwt sharing or just dwt, depending on dwt_sh
 
-  INLINE void   Compute_Weights(CON_STATE* scg, NETWORK_STATE* net, int thr_no) override {
+  INLINE void   Compute_Weights(CON_STATE* scg, NETWORK_STATE* net, int thr_no) override { (void)net;
     if(!learn) return;
     LEABRA_CON_STATE* cg = (LEABRA_CON_STATE*)scg;
     float* wts = cg->OwnCnVar(WT);      float* dwts = cg->OwnCnVar(DWT);
@@ -663,7 +662,7 @@
   }
 
   INLINE virtual void DwtNorm_SendCons(LEABRA_CON_STATE* cg, LEABRA_NETWORK_STATE* net,
-                                       int thr_no) {
+                                       int thr_no) { (void)net; (void)thr_no;
     float* dwnorms = cg->OwnCnVar(DWNORM);
     const int sz = cg->size;
     float max_dwnorm = 0.0f;
@@ -687,7 +686,7 @@
     
     float sum_wt = 0.0f;
     int sum_n = 0;
-    float max_dwnorm = 0.0f;
+
     
     const int sz = cg->size;
     for(int i=0; i<sz; i++) {
@@ -715,10 +714,10 @@
   // #IGNORE compute weight balance factors and / or DwtNorm at a recv level
 
   INLINE virtual void Compute_EpochWeights(LEABRA_CON_STATE* cg, LEABRA_NETWORK_STATE* net,
-                                           int thr_no) { };
+                                           int thr_no) { (void)cg; (void)net; (void)thr_no; };
   // #IGNORE compute epoch-level weights
 
-  inline void Compute_CopyWeights(LEABRA_CON_STATE* cg, LEABRA_CON_STATE* src_cg, LEABRA_NETWORK_STATE* net) {
+  inline void Compute_CopyWeights(LEABRA_CON_STATE* cg, LEABRA_CON_STATE* src_cg, LEABRA_NETWORK_STATE* net) { (void)net;
     const int mx = MIN(cg->size, src_cg->size);
     float* wts = cg->OwnCnVar(WT);
     float* src_wts = src_cg->OwnCnVar(WT);
@@ -733,16 +732,16 @@
   //    Bias Weights
 
   // same as original:
-  INLINE void B_Init_dWt(UNIT_STATE* uv, NETWORK_STATE* net, int thr_no) override {
+  INLINE void B_Init_dWt(UNIT_STATE* uv, NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no;
     C_Init_dWt(uv->bias_dwt);
   }
 
-  INLINE void B_Init_Weights_post(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override {
+  INLINE void B_Init_Weights_post(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no;
     LEABRA_UNIT_STATE* uv = (LEABRA_UNIT_STATE*)u;
     float wt = uv->bias_wt; uv->bias_swt = wt; uv->bias_fwt = wt;
   }
 
-  INLINE void B_Compute_dWt(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override {
+  INLINE void B_Compute_dWt(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no;
     if(!learn) return;
     LEABRA_UNIT_STATE* uv = (LEABRA_UNIT_STATE*)u;
     // only err is useful contributor to this learning
@@ -750,7 +749,7 @@
     uv->bias_dwt += cur_lrate * dw;
   }
 
-  INLINE void B_Compute_Weights(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override {
+  INLINE void B_Compute_Weights(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no;
     if(!learn) return;
     LEABRA_UNIT_STATE* uv = (LEABRA_UNIT_STATE*)u;
     float& wt =  uv->bias_wt;

@@ -75,7 +75,7 @@ protected:
   void                  hideEvent(QHideEvent* e) override;
   void                  showEvent(QShowEvent* e) override;
   virtual void          Showing(bool showing); // #IGNORE called by the show/hide handlers
-  virtual void          SelectionChanged_impl(ISelectableHost* src_host) {}
+  virtual void          SelectionChanged_impl(ISelectableHost* src_host) { (void)src_host; }
     // we call this when we receive a valid incoming change, or maybe new focus
 
 private:

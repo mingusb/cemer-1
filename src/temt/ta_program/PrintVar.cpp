@@ -93,7 +93,7 @@ String PrintVar::GetDisplayName() const {
   return rval;
 }
 
-bool PrintVar::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const {
+bool PrintVar::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const { (void)scope_el;
   String code = code_str; code.downcase();
   // this conditional avoids the dreaded choice dialog
   if (code.startsWith("printexpr"))

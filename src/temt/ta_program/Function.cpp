@@ -286,7 +286,7 @@ void Function::UpdateCallerArgs() {
   ListCallers();
 }
 
-bool Function::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool Function::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)code; (void)scope_el;
   return false; // never convert from a ProgCode guy..
 }
 

@@ -487,7 +487,7 @@ public:
 
   void                  Copy(const cssEl& cp);
   // for copying to existing structs -- does NOT copy name -- must call inherited
-  void                  CopyType(const cssEl& cp) { };
+  void                  CopyType(const cssEl& cp) { (void)cp; };
   // only copies type-level information, not value-level information (for els that carry type information around)
 
   virtual cssEl*        Clone() const                   { return new cssEl(*this); }
@@ -636,7 +636,7 @@ public:
   virtual cssEl* operator*()       { NopErr("*"); return &cssMisc::Void; } // unary de-ptr
   virtual cssEl* operator~()       { NopErr("~"); return &cssMisc::Void; } // unary bitwise negation
   virtual cssEl* operator[](const Variant& idx) const
-  { NopErr("[]"); return &cssMisc::Void; }
+  { (void)idx; NopErr("[]"); return &cssMisc::Void; }
 
   static cssEl* GetElFromTA(TypeDef* td, void* itm, const String& nm, 
                             MemberDef* md = NULL, cssEl* class_parent = NULL);
@@ -651,15 +651,15 @@ public:
   // this is called during parsing to compile in an index for the member, instead of looking up by name -- return -1 if member lookup should be dynamic (e.g., if a pointer and type might change later)
   virtual cssEl* GetMemberFmNo(int) const  { NopErr(".,->"); return &cssMisc::Void; }
   // subsequent function to actually get the member el from the number
-  virtual cssEl* GetMemberFmName(const String& nm) const  { NopErr(".,->"); return &cssMisc::Void; }
+  virtual cssEl* GetMemberFmName(const String& nm) const  { (void)nm; NopErr(".,->"); return &cssMisc::Void; }
   // dynamic version that takes the name and gets the el
 
   virtual int    GetMethodNo(const String&) const { NopErr(".,->()"); return -1; }
   // see above for members: get index to method for strong types
   virtual cssEl* GetMethodFmNo(int) const { NopErr(".,->()"); return &cssMisc::Void; }
-  virtual cssEl* GetMethodFmName (const String& nm) const { NopErr(".,->()"); return &cssMisc::Void; }
+  virtual cssEl* GetMethodFmName (const String& nm) const { (void)nm; NopErr(".,->()"); return &cssMisc::Void; }
 
-  virtual cssEl* GetScoped(const String& nm) const { NopErr("::"); return &cssMisc::Void; }
+  virtual cssEl* GetScoped(const String& nm) const { (void)nm; NopErr("::"); return &cssMisc::Void; }
   // get  a scoped type element (type::thing)
 
   virtual cssEl* NewOpr();
@@ -819,6 +819,7 @@ public:
   cssEl*        GetTypeObject() const   { return (cssEl*)this; }
 
   void          BindArgs(cssEl** args, int& act_argc);
+  void          BindArgs(cssEl** args, int& act_argc, cssSpace* caller_stack);
   // bind arguments -- decides which of the above to use based on situation
 
   void          DoneArgs(cssEl** args, int& act_argc);     // Done with args
@@ -1359,7 +1360,7 @@ public:
   virtual String&       PrintMachine(String& fh, int indent = 0) const; // machine impl
 
   virtual cssEl::RunStat Do();
-  virtual void          SetJump(css_progdx it)  { };
+  virtual void          SetJump(css_progdx it)  { (void)it; };
   virtual css_progdx    GetJump()               { return -1; }
   virtual bool          IsJump()                { return false; }
 

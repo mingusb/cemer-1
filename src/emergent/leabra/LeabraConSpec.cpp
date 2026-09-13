@@ -271,7 +271,7 @@ void LeabraConSpec::GraphXCALdWtFun(DataTable* graph_data, float thr_p, float x_
   graph_data->FindMakeGraphView();
 }
 
-void LeabraConSpec::GraphLearnDWts(DataTable* graph_data, LeabraUnitSpec* unit_spec, float su_act_m, float su_act_p, float ru_act_inc, float ru_avg_l, float ru_avg_l_lrn, float ru_margin) {
+void LeabraConSpec::GraphLearnDWts(DataTable* graph_data, LeabraUnitSpec* unit_spec, float su_act_m, float su_act_p, float ru_act_inc, float ru_avg_l, float ru_avg_l_lrn, float ru_margin) { (void)ru_margin;
   taProject* proj = GetMyProj();
   if(!graph_data) {
     graph_data = proj->GetNewAnalysisDataTable(name + "_LearnDWts", true);

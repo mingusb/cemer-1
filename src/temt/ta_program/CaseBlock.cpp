@@ -91,7 +91,7 @@ String CaseBlock::GetDisplayName() const {
   return "case: " + case_val.expr;
 }
 
-bool CaseBlock::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const {
+bool CaseBlock::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const { (void)scope_el;
   String code = code_str; code.downcase();
   if(code.startsWith("case") || code.startsWith("default")) return true;
   return false;

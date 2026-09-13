@@ -53,7 +53,7 @@ void DataCalcSetSrcRow::InitLinks() {
   GetDataPtrsFmLoop();
 }
 
-void DataCalcSetSrcRow::Copy_(const DataCalcSetSrcRow& cp) {
+void DataCalcSetSrcRow::Copy_(const DataCalcSetSrcRow& cp) { (void)cp;
   GetDataPtrsFmLoop();
 }
 
@@ -101,7 +101,7 @@ bool DataCalcSetSrcRow::GenCssBody_impl(Program* prog) {
   return true;
 }
 
-bool DataCalcSetSrcRow::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool DataCalcSetSrcRow::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if (CvtFmCodeCheckNames(code))
     return true;
   
@@ -114,6 +114,6 @@ bool DataCalcSetSrcRow::CanCvtFmCode(const String& code, ProgEl* scope_el) const
   return false;
 }
 
-bool DataCalcSetSrcRow::CvtFmCode(const String& code) {
+bool DataCalcSetSrcRow::CvtFmCode(const String& code) { (void)code;
     return true;
 }

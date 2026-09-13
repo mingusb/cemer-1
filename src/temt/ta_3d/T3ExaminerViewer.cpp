@@ -169,21 +169,21 @@ T3ExaminerViewer::T3ExaminerViewer(iT3ViewspaceWidget* parent)
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   
   main_vbox = new QVBoxLayout(this);
-  main_vbox->setMargin(0); main_vbox->setSpacing(0);
+  main_vbox->setContentsMargins(0, 0, 0, 0); main_vbox->setSpacing(0);
   
   net_state_layout = new iFlowLayout(); // margin, space, align
   main_vbox->addLayout(net_state_layout);
 
   main_hbox = new QHBoxLayout;
-  main_hbox->setMargin(0); main_hbox->setSpacing(0);
+  main_hbox->setContentsMargins(0, 0, 0, 0); main_hbox->setSpacing(0);
   main_vbox->addLayout(main_hbox);
   
   bot_hbox = new QHBoxLayout;
-  bot_hbox->setMargin(0); main_hbox->setSpacing(0);
+  bot_hbox->setContentsMargins(0, 0, 0, 0); main_hbox->setSpacing(0);
   main_vbox->addLayout(bot_hbox);
   
   lhs_vbox = new QVBoxLayout;
-  lhs_vbox->setMargin(0); lhs_vbox->setSpacing(0);
+  lhs_vbox->setContentsMargins(0, 0, 0, 0); lhs_vbox->setSpacing(0);
   main_hbox->addLayout(lhs_vbox);
 
 #ifdef TA_QT3D
@@ -278,6 +278,7 @@ T3ExaminerViewer::T3ExaminerViewer(iT3ViewspaceWidget* parent)
     fmt.setSamples(taMisc::antialiasing_level);
   }
   fmt.setProfile(QSurfaceFormat::CompatibilityProfile);
+  fmt.setVersion(2, 1); // Coin's renderer uses the fixed-function OpenGL API.
   // fmt.setRedBufferSize(8);
   // fmt.setGreenBufferSize(8);
   // fmt.setBlueBufferSize(8);
@@ -315,7 +316,7 @@ T3ExaminerViewer::T3ExaminerViewer(iT3ViewspaceWidget* parent)
 #endif
   
   rhs_vbox = new QVBoxLayout;
-  rhs_vbox->setMargin(0); rhs_vbox->setSpacing(0);
+  rhs_vbox->setContentsMargins(0, 0, 0, 0); rhs_vbox->setSpacing(0);
   main_hbox->addLayout(rhs_vbox);
   
   ///// make wheels all together
@@ -358,7 +359,7 @@ T3ExaminerViewer::T3ExaminerViewer(iT3ViewspaceWidget* parent)
   /////  lhs_vbox
   
   lhs_button_vbox = new QVBoxLayout;
-  lhs_button_vbox->setMargin(0); lhs_button_vbox->setSpacing(0);
+  lhs_button_vbox->setContentsMargins(0, 0, 0, 0); lhs_button_vbox->setSpacing(0);
   lhs_vbox->addLayout(lhs_button_vbox);
   
   lhs_vbox->addStretch();
@@ -368,7 +369,7 @@ T3ExaminerViewer::T3ExaminerViewer(iT3ViewspaceWidget* parent)
   /////  rhs_vbox
   
   rhs_button_vbox = new QVBoxLayout;
-  rhs_button_vbox->setMargin(0); rhs_button_vbox->setSpacing(0);
+  rhs_button_vbox->setContentsMargins(0, 0, 0, 0); rhs_button_vbox->setSpacing(0);
   rhs_vbox->addLayout(rhs_button_vbox);
   
   rhs_vbox->addStretch();
@@ -399,7 +400,7 @@ T3ExaminerViewer::T3ExaminerViewer(iT3ViewspaceWidget* parent)
   bot_hbox->addStretch();
   
   bot_button_hbox = new QHBoxLayout;
-  bot_button_hbox->setMargin(0); rhs_button_vbox->setSpacing(0);
+  bot_button_hbox->setContentsMargins(0, 0, 0, 0); rhs_button_vbox->setSpacing(0);
   bot_hbox->addLayout(bot_button_hbox);
   
   bot_hbox->addStretch();
@@ -1525,7 +1526,9 @@ bool T3ExaminerViewer::event(QEvent* ev_) {
 #ifdef TA_QT3D
   return inherited::event(ev_);
 #else
+#ifndef QT_OPEN_GL_WIDGET
   static bool inside_event_loop = false;
+#endif
   
   //NOTE: the base classes don't check if event is already handled, so we have to skip
   // calling inherited if we handle it ourselves
@@ -1569,13 +1572,15 @@ bool T3ExaminerViewer::eventFilter(QObject* obj, QEvent* ev_) {
       ISelectable* ci = t3vw->curItem();
       if (!ci) goto do_inherited;
       ev->accept();
-      t3vw->ContextMenuRequested(ev->globalPos());
+      t3vw->ContextMenuRequested(ev->globalPosition().toPoint());
       return true;
     }
   }
   
 do_inherited:
+#ifndef QT_OPEN_GL_WIDGET
   static bool inside_event_loop = false;
+#endif
   
 #ifndef QT_OPEN_GL_WIDGET
   if(so_scrollbar_is_dragging) {
@@ -1616,7 +1621,7 @@ void T3ExaminerViewer::UpdateStateValues(const NameVar_Array& state_strs) {
   if (!state_labels_inited || state_labels.count() != state_strs.size) {
     QFont font = taiM->buttonFont(taiMisc::sizMedium); 
     QFontMetrics fm(font);
-    int font_width = fm.width('m');
+    int font_width = fm.horizontalAdvance('m');
     int height = taiM->label_height(taiMisc::sizMedium);
     ClearStateValues();
     for (int i=0; i<state_strs.size; i++) {
@@ -1629,7 +1634,7 @@ void T3ExaminerViewer::UpdateStateValues(const NameVar_Array& state_strs) {
       state_labels.append(button);
       button->setStyleSheet("background-color: white; color: black; border: 1px solid #AAAAAA; margin: 1px; padding: 1px; Text-align:left");
       String label_part = var.through(':');
-      int label_part_in_pixels = fm.width(label_part) + 10;  // allow for padding etc so label is always readable
+      int label_part_in_pixels = fm.horizontalAdvance(label_part) + 10;  // allow for padding etc so label is always readable
       int fixed_width_total = label_part_in_pixels + value_width_in_chars * font_width;
       button->setFixedSize(fixed_width_total, height);
       net_state_layout->addWidget(button);

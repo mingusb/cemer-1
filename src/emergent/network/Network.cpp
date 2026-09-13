@@ -707,7 +707,7 @@ void Network::Compute_TrialStats() {
   SyncAllState();
 }
 
-void Network::DMem_ShareTrialData(DataTable* dt, int n_rows) {
+void Network::DMem_ShareTrialData(DataTable* dt, int n_rows) { (void)dt; (void)n_rows;
 #ifdef DMEM_COMPILE
   dt->DMem_ShareRows(dmem_trl_comm.comm, n_rows);
 #endif
@@ -1131,7 +1131,7 @@ void Network::UpdateAllStateConSpecs() {
   }
 }
 
-bool Network::UpdateAllSpecs(bool force) {
+bool Network::UpdateAllSpecs(bool force) { (void)force;
   specs.UpdateAllSpecs();
   UpdateAllStateSpecs();
   return true;
@@ -2085,7 +2085,7 @@ void Network::NetStructFmTable(DataTable* dt) {
   }
 }
 
-DataTable* Network::NetPrjnsToTable(DataTable* dt, bool include_off) {
+DataTable* Network::NetPrjnsToTable(DataTable* dt, bool include_off) { (void)include_off;
   bool new_table = false;
   if(!dt) {
     dt = proj->GetNewAnalysisDataTable("NetPrjns_" + name, true);
@@ -2402,7 +2402,7 @@ void Network::SaveToFirstWeights() {
   SaveToWeights(wts);
 }
 
-bool Network::LoadFmFirstWeights(bool quiet) {
+bool Network::LoadFmFirstWeights(bool quiet) { (void)quiet;
   if(TestError(weights.size == 0, "LoadFmWeights", "There is not an existing first Weights object -- nothing to load from -- must call SaveToFirstWeights first")) {
     return false;
   }
@@ -2475,7 +2475,6 @@ void Network::LayerPos_RelPos() {
     if(!lay->pos_rel.IsRel()) {
       continue;
     }
-    bool has_loop = false;
     loop_check.Reset();
     Layer* cur = lay;
     while(cur) {
@@ -2485,7 +2484,6 @@ void Network::LayerPos_RelPos() {
       if(TestWarning(fidx >= 0, "RelPosLoopCheck",
                      "a loop was found in the connection graph of relative positioning of layers -- severing last link!")) {
         cur->pos_rel.other = NULL;
-        has_loop = true;
         break;
       }
       loop_check.Link(cur);
@@ -2708,7 +2706,7 @@ void Network::MonitorItemChange() {
   }
 }
 
-void Network::NetControlPanel(ControlPanel* ctrl_panel, const String& extra_label, const String& sub_gp_nm) {
+void Network::NetControlPanel(ControlPanel* ctrl_panel, const String& extra_label, const String& sub_gp_nm) { (void)extra_label;
   if(!ctrl_panel) {
     if(TestError(!proj, "NetControlPanel", "cannot find project")) return;
     ctrl_panel = (ControlPanel*)proj->ctrl_panels.New(1);
@@ -2810,7 +2808,7 @@ int Network::LesionUnits(float p_lesion, bool permute) {
 void Network::UnLesionUnits() {
   taMisc::Busy();
   StructUpdate(true);
-  int rval = 0;
+
   FOREACH_ELEM_IN_GROUP(Layer, lay, layers) {
     if(!lay->lesioned())
       lay->UnLesionUnits();
@@ -3585,7 +3583,7 @@ bool Network::RemovePrjn(Layer* recv, Layer* send, ProjectionSpec* ps, ConSpec* 
   return false;
 }
 
-taBase* Network::ChooseNew(taBase* origin, const String& choice_text) {
+taBase* Network::ChooseNew(taBase* origin, const String& choice_text) { (void)choice_text;
   Network* ntwrk = NULL;
   ProjectBase* prjn = GET_OWNER(origin, ProjectBase);  // who initiated the choice/new datatable call?
   if(prjn) {
@@ -3594,7 +3592,7 @@ taBase* Network::ChooseNew(taBase* origin, const String& choice_text) {
   return ntwrk;
 }
 
-String Network::GetArgForCompletion(const String& method, const String& arg) {
+String Network::GetArgForCompletion(const String& method, const String& arg) { (void)arg;
   if (method == "MonitorVar") {
     return "network";
   }
@@ -3602,7 +3600,7 @@ String Network::GetArgForCompletion(const String& method, const String& arg) {
 }
 
 void Network::GetArgCompletionList(const String& method, const String& arg, const String_Array& arg_values, taBase* arg_obj,
-                                   const String& cur_txt, Completions& completions) {
+                                   const String& cur_txt, Completions& completions) { (void)arg_obj; (void)arg_values; (void)cur_txt;
   if (method == "MonitorVar" && arg == "variable") {
     MemberSpace mbr_space = GetTypeDef()->members;
     for (int i = 0; i < mbr_space.size; ++i) {
@@ -3904,7 +3902,7 @@ void Network::Cuda_ConStateToDevice() {
 void Network::Cuda_UpdateSpecs() {
 }
 
-String Network::Cuda_TimingReport(bool print) {
+String Network::Cuda_TimingReport(bool print) { (void)print;
   taMisc::Info("CUDA not compiled!");
   return "";
 }

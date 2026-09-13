@@ -79,7 +79,7 @@ void taiWidgetComposite::InitLayout() { //virtual/overridable
       break;
       //no default -- must handle all cases
   }
-  lay->setMargin(0); // supposedly deprecated...
+  lay->setContentsMargins(0, 0, 0, 0); // supposedly deprecated...
   lay->setSpacing(0);
   last_spc = taiM->hsep_c; // give it a bit of room
 }
@@ -148,7 +148,7 @@ void taiWidgetComposite::AddChildMember(MemberDef* md, int column, bool mbr_type
     case LT_Flow:
     case LT_Stacked:
       QHBoxLayout* hbl = new QHBoxLayout(wid);
-      hbl->setMargin(0);
+      hbl->setContentsMargins(0, 0, 0, 0);
       hbl->setSpacing(taiM->hsep_c);
       if(add_labels)
         hbl->addWidget(lbl);

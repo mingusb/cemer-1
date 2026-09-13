@@ -29,11 +29,11 @@ void STATE_CLASS(ProjectionSpec)::Connect_Cons(PRJN_STATE* prjn, NETWORK_STATE* 
   // Init_Weights(prjn); // connection is NOT init weights -- now definitivitely 2 separate steps -- this is super slow for large nets
 }
 
-int STATE_CLASS(ProjectionSpec)::ProbAddCons_impl(PRJN_STATE* prjn, NETWORK_STATE* net, float p_add_con, float init_wt) {
+int STATE_CLASS(ProjectionSpec)::ProbAddCons_impl(PRJN_STATE* prjn, NETWORK_STATE* net, float p_add_con, float init_wt) { (void)init_wt; (void)net; (void)p_add_con; (void)prjn;
   return 0;
 }
 
-int STATE_CLASS(ProjectionSpec)::ProbAddCons(PRJN_STATE* prjn, NETWORK_STATE* net, float p_add_con, float init_wt) {
+int STATE_CLASS(ProjectionSpec)::ProbAddCons(PRJN_STATE* prjn, NETWORK_STATE* net, float p_add_con, float init_wt) { (void)init_wt;
   int rval = ProbAddCons_impl(prjn, net, p_add_con);
   return rval;
 }
@@ -48,7 +48,7 @@ void STATE_CLASS(ProjectionSpec)::SetCnWtScale(PRJN_STATE* prjn, NETWORK_STATE* 
   }
 }
 
-void STATE_CLASS(ProjectionSpec)::SetCnWt(PRJN_STATE* prjn, NETWORK_STATE* net, int thr_no, CON_STATE* cg, int cn_idx, float wt_val) {
+void STATE_CLASS(ProjectionSpec)::SetCnWt(PRJN_STATE* prjn, NETWORK_STATE* net, int thr_no, CON_STATE* cg, int cn_idx, float wt_val) { (void)prjn;
   CON_SPEC_CPP* cs = cg->GetConSpec(net);
   if(add_rnd_var) {
     int eff_thr_no = net->HasNetFlag(NETWORK_STATE::INIT_WTS_1_THREAD) ? 0 : thr_no;
@@ -60,7 +60,7 @@ void STATE_CLASS(ProjectionSpec)::SetCnWt(PRJN_STATE* prjn, NETWORK_STATE* net, 
   cs->C_Init_dWt(cg->Cn(cn_idx,CON_STATE::DWT,net));
 }
 
-void STATE_CLASS(ProjectionSpec)::SetCnWtRnd(PRJN_STATE* prjn, NETWORK_STATE* net, int thr_no, CON_STATE* cg, int cn_idx) {
+void STATE_CLASS(ProjectionSpec)::SetCnWtRnd(PRJN_STATE* prjn, NETWORK_STATE* net, int thr_no, CON_STATE* cg, int cn_idx) { (void)prjn;
   CON_SPEC_CPP* cs = cg->GetConSpec(net);
   float& wt_val = cg->Cn(cn_idx,CON_STATE::WT,net);
   int eff_thr_no = net->HasNetFlag(NETWORK_STATE::INIT_WTS_1_THREAD) ? 0 : thr_no;
@@ -68,7 +68,7 @@ void STATE_CLASS(ProjectionSpec)::SetCnWtRnd(PRJN_STATE* prjn, NETWORK_STATE* ne
   cs->C_Init_dWt(cg->Cn(cn_idx,CON_STATE::DWT,net));
 }
 
-void STATE_CLASS(ProjectionSpec)::SetCnScale(PRJN_STATE* prjn, NETWORK_STATE* net, int thr_no, CON_STATE* cg, int cn_idx, float sc_val) {
+void STATE_CLASS(ProjectionSpec)::SetCnScale(PRJN_STATE* prjn, NETWORK_STATE* net, int thr_no, CON_STATE* cg, int cn_idx, float sc_val) { (void)prjn;
   CON_SPEC_CPP* cs = cg->GetConSpec(net);
   cs->SetConScale(sc_val, cg, cn_idx, net, thr_no);
 }
@@ -323,7 +323,7 @@ void STATE_CLASS(ProjectionSpec)::Connect_Gps_ProbSymSameLay
   LAYER_STATE* recv_lay = prjn->GetRecvLayer(net);
   LAYER_STATE* send_lay = prjn->GetSendLayer(net);
   int ru_nunits = recv_lay->un_geom_n;
-  int su_nunits = send_lay->un_geom_n;
+
 
   // within the same layer, i want to make connections symmetric: either i'm the
   // first to connect to other group, or other group has already connected to me

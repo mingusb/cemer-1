@@ -317,7 +317,6 @@ void VEStaticView::Render_impl() {
   if(!obv) return;
   VEStatic* ob = Static();
   if(!ob) return;
-  VEWorldView* wv = parent();
 
 #ifdef TA_QT3D
   if(ob->shape == VEStatic::PLANE) {

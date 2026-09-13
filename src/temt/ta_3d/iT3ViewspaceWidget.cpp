@@ -28,7 +28,7 @@
 #include <taRootBase>
 
 
-#include <QGLWidget>
+#include <QOpenGLWidget>
 
 #ifdef TA_QT3D
 
@@ -101,36 +101,6 @@ void iT3ViewspaceWidget::resizeEvent(QResizeEvent* ev) {
   if (m_t3viewer) {
     m_t3viewer->resize(sz);
   }
-}
-
-// #include <GL/gl.h>
-static bool CheckExtension(const char *extName ) {
-  /*
-  ** Search for extName in the extensions string.  Use of strstr()
-  ** is not sufficient because extension names can be prefixes of
-  ** other extension names.  Could use strtok() but the constant
-  ** string returned by glGetString can be in read-only memory.
-  */
-  const char *exts = (char *) glGetString(GL_EXTENSIONS);
-  const char *p = exts;
-
-  const char *end;
-  std::size_t extNameLen = strlen(extName);
-  end = p + strlen(p);
-
-  while (p < end) {
-    std::size_t n = strcspn(p, " ");
-    if ((extNameLen == n) && (strncmp(extName, p, n) == 0)) {
-      return true;
-    }
-    p += (n + 1);
-  }
-  taMisc::Error("This display does NOT have OpenGL support for the extension:",
-                extName, "which is required -- your system will likely crash soon.",
-                "Please read the emergent manual for required 3D graphics driver information."
-                "Here is a list of your extensions:",
-                exts);
-  return false;
 }
 
 void iT3ViewspaceWidget::setT3viewer(T3ExaminerViewer* value) {
@@ -227,7 +197,7 @@ void iT3ViewspaceWidget::SoSelectionEvent(iSoSelectionEvent* ev) {
   Emit_GotFocusSignal();
 }
 
-SoPath* iT3ViewspaceWidget::SoPickFilterCallback(void* inst, const SoPickedPoint* ppoint) {
+SoPath* iT3ViewspaceWidget::SoPickFilterCallback(void* inst, const SoPickedPoint* ppoint) { (void)inst;
   SoPath* path = ppoint->getPath();
   T3DataView* t3node = T3DataView::GetViewFromPath(path);
   if (!t3node) return NULL;     // not eligible for selection

@@ -686,7 +686,7 @@ taBase* taList_impl::CopyChildBeforeIndex(taBase* src, int child_pos) {
 
 
 String taList_impl::GetValStr(void* par, MemberDef* memb_def, TypeDef::StrContext sc,
-                              bool force_inline) const {
+                              bool force_inline) const { (void)force_inline; (void)memb_def; (void)par; (void)sc;
   String nm = " Size: ";
   nm += String(size);
   nm += String(" (") + el_typ->name + ")";
@@ -694,7 +694,7 @@ String taList_impl::GetValStr(void* par, MemberDef* memb_def, TypeDef::StrContex
 }
 
 bool taList_impl::SetValStr(const String& val, void* par, MemberDef* memb_def,
-                            TypeDef::StrContext sc, bool force_inline) {
+                            TypeDef::StrContext sc, bool force_inline) { (void)force_inline; (void)memb_def; (void)par; (void)sc;
   if(val != String::con_NULL) {
     String tmp = val;
     if(tmp.contains('(')) {
@@ -759,9 +759,8 @@ int taList_impl::Dump_Save_PathR(ostream& strm, taBase* par, int indent) {
   // item path one level above, so only need its members, and children
 
   // first save any sub-members (there usually aren't any)
-  int rval = GetTypeDef()->Dump_Save_PathR(strm, (void*)this, (void*)par, indent);
+  GetTypeDef()->Dump_Save_PathR(strm, (void*)this, (void*)par, indent);
 
-//   if (IsEmpty())  return rval;
   // actually need to save this to be able to undo back to an empty group
 
   strm << "\n";                 // actually saving a path: put a newline

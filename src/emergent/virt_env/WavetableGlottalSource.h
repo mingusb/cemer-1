@@ -72,7 +72,7 @@ private:
   float basicIncrement_;
   float currentPosition_;
   std::vector<float> wavetable_;
-  std::auto_ptr<FIRFilter> firFilter_;
+  std::unique_ptr<FIRFilter> firFilter_;
 };
 
 #endif /* TRM_WAVETABLE_GLOTTAL_SOURCE_H_ */

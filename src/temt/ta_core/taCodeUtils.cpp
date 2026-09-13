@@ -1102,7 +1102,7 @@ bool taCodeUtils::CreateNewSrcFilesExisting(const String& type_nm, const String&
     return false;
   }
 
-  bool new_file = CreateNewSrcFiles(td->name, top_path, src_dir);
+  CreateNewSrcFiles(td->name, top_path, src_dir);
   String fname = td->name;
 
   String src_path = top_path + PATH_SEP + src_dir + PATH_SEP;
@@ -1263,7 +1263,6 @@ bool taCodeUtils::CopyrightUpdateFile(const String& filename) {
   String styr;
   int dashidx = curyr.index('-');
   if(dashidx > 0) {             // deal with dashed-year
-    int est = nxtidx + dashidx;
     styr = curyr.before('-');
     curyr = curyr.after('-');
     dashidx += nxtidx;          // for srcstr coords

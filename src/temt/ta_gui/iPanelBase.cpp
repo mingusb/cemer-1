@@ -37,7 +37,7 @@ iPanelBase::iPanelBase(taiSigLink* dl_)
   scr->setWidgetResizable(true);
   m_saved_scroll_pos = 0;
   layOuter = new QVBoxLayout(this);
-  layOuter->setMargin(0);
+  layOuter->setContentsMargins(0, 0, 0, 0);
   layOuter->setSpacing(2); //def
   layOuter->addWidget(scr, 1);
 
@@ -75,7 +75,7 @@ void iPanelBase::customEvent(QEvent* ev_) {
 }
 
 
-void iPanelBase::SigEmit_impl(int sls, void* op1, void* op2) {
+void iPanelBase::SigEmit_impl(int sls, void* op1, void* op2) { (void)op1; (void)op2;
   if (sls <= SLS_ITEM_UPDATED_ND) {
     if (tabView())
       tabView()->UpdateTabName(this); //in case changed

@@ -77,7 +77,7 @@ void taiEditorOfWizard::Constr_Widget_Labels()
       iStripeWidget* tab = new iStripeWidget();
       tabs->addTab(tab, page_names.SafeEl(i));
       QPalette pal = tab->palette();
-      pal.setColor(QPalette::Background, bg_color);
+      pal.setColor(QPalette::Window, bg_color);
       tab->setPalette(pal); 
       tab->setHiLightColor(bg_color_dark);
       tab->setStripeHeight(row_height + (2 * 1));
@@ -87,7 +87,7 @@ void taiEditorOfWizard::Constr_Widget_Labels()
 
 void taiEditorOfWizard::Constr_Widget_Labels_impl(int& idx, Member_List* ms,
      taiWidget_List* dl)
-{
+{ (void)dl; (void)idx; (void)ms;
 }
 
 void taiEditorOfWizard::Constr_Strings() {
@@ -149,7 +149,7 @@ void taiEditorOfWizard::Constr_Members() {
 void taiEditorOfWizard::GetValue() {
 }*/
 
-void taiEditorOfWizard::ResolveChanges(CancelOp& cancel_op, bool* discarded) {
+void taiEditorOfWizard::ResolveChanges(CancelOp& cancel_op, bool* discarded) { (void)cancel_op; (void)discarded;
   // called by root on closing, dialog on closing, etc. etc.
   if (modified) {
     GetValue();

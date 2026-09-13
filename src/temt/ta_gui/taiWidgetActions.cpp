@@ -14,6 +14,7 @@
 //   Lesser General Public License for more details.
 
 #include "taiWidgetActions.h"
+#include <QActionGroup>
 #include <taiWidgetMenu>
 #include <taiWidgetMenuButton>
 #include <iActionSubMenuEl>
@@ -416,4 +417,3 @@ void taiWidgetActions::setLabel(const String& val) {
     emitLabelChanged(mlabel);
   }
 }
-

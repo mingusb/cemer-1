@@ -1,0 +1,34 @@
+// Read the laboratory controls. Bounds keep the live display legible and
+// the softmax numerically stable, and are written back to the control panel.
+BpProject* ih_project = project;
+Program* ih_cfg = ih_project->programs["RunCircuit"];
+BpNetwork* ih_net = ih_project->networks["InductionCircuit"];
+DataTable* ih_sequence = ih_project->data["Sequence"];
+DataTable* ih_states = ih_project->data["CircuitState"];
+DataTable* ih_results = ih_project->data["Experiments"];
+int ih_n = ih_cfg->GetVar("sequence_length");
+int ih_v = ih_cfg->GetVar("vocabulary_size");
+int ih_seed = ih_cfg->GetVar("seed");
+double ih_temp = ih_cfg->GetVar("temperature");
+double ih_noise = ih_cfg->GetVar("noise");
+int ih_cursor = ih_cfg->GetVar("cursor");
+bool ih_ablate_previous = ih_cfg->GetVar("ablate_previous");
+bool ih_ablate_induction = ih_cfg->GetVar("ablate_induction");
+if(ih_n < 5) ih_n = 5;
+if(ih_n > 32) ih_n = 32;
+if(ih_v < 4) ih_v = 4;
+if(ih_v > 16) ih_v = 16;
+if(ih_temp < 0.02) ih_temp = 0.02;
+if(ih_temp > 5.0) ih_temp = 5.0;
+if(ih_noise < 0.0) ih_noise = 0.0;
+if(ih_noise > 1.0) ih_noise = 1.0;
+if(ih_seed < 1) ih_seed = 1;
+if(ih_seed > 1000000) ih_seed = 1000000;
+if(ih_cursor < 1) ih_cursor = 1;
+if(ih_cursor >= ih_n) ih_cursor = ih_n - 1;
+ih_cfg->SetVar("sequence_length", ih_n);
+ih_cfg->SetVar("vocabulary_size", ih_v);
+ih_cfg->SetVar("temperature", ih_temp);
+ih_cfg->SetVar("noise", ih_noise);
+ih_cfg->SetVar("seed", ih_seed);
+ih_cfg->SetVar("cursor", ih_cursor);

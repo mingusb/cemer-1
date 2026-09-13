@@ -135,7 +135,7 @@ String MatrixAssign::GetDisplayName() const {
   return rval;
 }
 
-bool MatrixAssign::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool MatrixAssign::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if(code.endsWith(';')) return false; // don't pick up css exprs
   if(code.freq('=') >= 1) {
     String lhs = code.before('=');

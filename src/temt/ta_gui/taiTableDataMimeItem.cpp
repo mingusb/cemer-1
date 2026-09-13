@@ -166,11 +166,9 @@ void taiTableDataMimeItem::WriteTable(DataTable* tab, const CellRange& sel_) {
         DataCol* da = tab->GetColData(dst_col, true); // quiet
         if (da) da->Get2DCellGeom(dst_cell_cols, dst_cell_rows);
         int src_cell_cols = 0;
-        int src_cell_rows = 0;
         if (src_col < src_cols) {
           taiTableColDesc& tcd = col_descs[src_col];
           src_cell_cols = tcd.flat_geom.w;
-          src_cell_rows = tcd.flat_geom.h;
         }
         int cell_cols = MAX(src_cell_cols, dst_cell_cols);
         for (int cell_col = 0; cell_col < cell_cols; ++cell_col) {

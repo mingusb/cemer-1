@@ -47,7 +47,7 @@ bool NetCounterInit::GenCssBody_impl(Program* prog) {
   return true;
 }
 
-bool NetCounterInit::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool NetCounterInit::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if (CvtFmCodeCheckNames(code))
     return true;
   

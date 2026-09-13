@@ -26,7 +26,7 @@ void MemberFmArg::Initialize() {
   prv_obj = NULL;
 }
 
-void MemberFmArg::Copy_(const MemberFmArg& cp) {
+void MemberFmArg::Copy_(const MemberFmArg& cp) { (void)cp;
   prv_obj = obj.ptr();
 }
 
@@ -105,7 +105,7 @@ String MemberFmArg::GetDisplayName() const {
   return rval;
 }
 
-bool MemberFmArg::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool MemberFmArg::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if(!code.contains("Arg: ")) return false;
   String lhs = code.before('=');
   if(!(lhs.contains('.') || lhs.contains("->"))) return false;

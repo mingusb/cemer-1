@@ -36,15 +36,15 @@ const String taiWidgetStringArrayChooser::titleText() {
 
 void taiWidgetStringArrayChooser::BuildChooser(iDialogItemChooser* ic, int view) {
   //assume only called if needed
-  
+
   if (!str_ary) {
     taMisc::Error("taiWidgetStringArrayChooser::BuildChooser: str_ary needed");
     return;
   }
   switch (view) {
-  case 0: 
-    BuildChooser_0(ic); 
-    break; 
+  case 0:
+    BuildChooser_0(ic);
+    break;
   default: break; // shouldn't happen
   }
 }
@@ -56,15 +56,15 @@ void taiWidgetStringArrayChooser::GetImage(String_Array* ary, String* it) {
 
 int taiWidgetStringArrayChooser::BuildChooser_0(iDialogItemChooser* ic) {
   int rval = 0;
-  
+
   for (int i = 0; i < str_ary->size; ++i) {
     String* st = &(str_ary->FastEl(i));
     if(filter_start_txt.nonempty()) {
       if(!st->startsWith(filter_start_txt)) continue;
     }
-    // QTreeWidgetItem* item = ic->AddItem(taMisc::LeadingZeros(i,2), NULL, st); 
+    // QTreeWidgetItem* item = ic->AddItem(taMisc::LeadingZeros(i,2), NULL, st);
     // item->setText(1, *st);
-    QTreeWidgetItem* item = ic->AddItem(*st, NULL, st); 
+    ic->AddItem(*st, NULL, st);
     ++rval;
   }
   return rval;
@@ -80,9 +80,9 @@ int taiWidgetStringArrayChooser::columnCount(int view) const {
 const String taiWidgetStringArrayChooser::headerText(int index, int view) const {
   switch (view) {
   case 0: switch (index) {
-    // case 0: return "No."; 
-    case 0: return "String"; 
-    } break; 
+    // case 0: return "No.";
+    case 0: return "String";
+    } break;
   default: break; // compiler food
   }
   return _nilString; // shouldn't happen
@@ -90,7 +90,7 @@ const String taiWidgetStringArrayChooser::headerText(int index, int view) const 
 
 const String taiWidgetStringArrayChooser::viewText(int index) const {
   switch (index) {
-  case 0: return "Array Items"; 
+  case 0: return "Array Items";
   default: return _nilString;
   }
 }

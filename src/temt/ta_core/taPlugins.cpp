@@ -68,7 +68,7 @@ taPluginInst* taPlugins::ProbePlugin(const String& fileName) {
   AppendLogEntry(log_entry);
 
   QFileInfo fi(fileName);
-  rval->mod_time_int = fi.lastModified().toTime_t();
+  rval->mod_time_int = fi.lastModified().toSecsSinceEpoch();
   rval->mod_time = fi.lastModified().toString();
   if(rval->mod_time_int < taMisc::exe_mod_time_int) {
     String msg;
@@ -385,11 +385,8 @@ bool taPlugins::MakePlugin_impl(const String& plugin_path, const String& plugin_
       cmake_cmd += "-DEXTRA_SUFFIX=" + extra_suffix + " ";
     }
 
-#if (QT_VERSION >= 0x050000)
-    cmake_cmd += "-DQT_USE_5=ON -DQTDIR=$QTDIR ";
-#else
-    cmake_cmd += "-DQT_USE_4=ON -DQTDIR=$QTDIR ";
-#endif
+    // CMAKE_PREFIX_PATH (or QTDIR) selects the same Qt 6 SDK as the app.
+    // The plugin CMake modules require Qt 6 directly.
 
 #if defined(USE_SSE8)
     cmake_cmd += "-DCMAKE_CXX_FLAGS=-DUSE_SSE8 ";

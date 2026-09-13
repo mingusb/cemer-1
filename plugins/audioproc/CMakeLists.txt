@@ -21,7 +21,9 @@
 ################################################################
 # Step 0: ensure we have the right version of cmake -- this
 # has to go here at the top of this file otherwise cmake complains
-CMAKE_MINIMUM_REQUIRED(VERSION 2.4.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.22...4.1)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 ################################################################

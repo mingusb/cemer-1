@@ -1010,10 +1010,6 @@ bool VEArm::SetPose_impl() {
   VEBody* ulna = bodies[ULNA];
   VEBody* hand = bodies[HAND];
   VEJoint* elbow = joints[ELBOW];
-  VEJoint* wrist = joints[WRIST];
-  dJointID elbow_jid = (dJointID)elbow->joint_id;
-  dJointID wrist_jid = (dJointID)wrist->joint_id;
-  VEWorld* ArmWorld = GetWorld();
 
   //------ Rotating humerus -------
 
@@ -2884,7 +2880,6 @@ void VEArm::ReadArmDelProData() {
     return;
   }
 
-  DataCol* dc_t = dt.FindColName("time");
   DataCol* dc_l = dt.FindColName("lens_norm");
   DataCol* dc_v = dt.FindColName("vels_norm");
 
@@ -2909,7 +2904,6 @@ void VEArm::ReadArmDelVisData() {
     return;
   }
 
-  DataCol* dc_t = dt.FindColName("time");
   DataCol* dc_p = dt.FindColName("hand_pos_norm");
   DataCol* dc_v = dt.FindColName("hand_vel_norm");
 
@@ -2933,7 +2927,6 @@ void VEArm::ReadArmDelEffData() {
     return;
   }
 
-  DataCol* dc_t = dt.FindColName("time");
   DataCol* dc_s = dt.FindColName("stims");
   DataCol* dc_g = dt.FindColName("gains");
 

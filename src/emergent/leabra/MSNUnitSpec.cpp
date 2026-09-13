@@ -41,7 +41,7 @@ void STATE_CLASS(MSNUnitSpec)::Init_UnitState
 }
 
 STATE_CLASS(MSNUnitSpec)::GateType STATE_CLASS(MSNUnitSpec)::MatrixGateType
-  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   
   LEABRA_LAYER_STATE* lay = u->GetOwnLayer(net);
   int ugidx = u->gp_idx;

@@ -253,19 +253,6 @@ int _search_ci(const char* s, int start, int sl, const char* t, int tl) {
   return -1;
 }
 
-// string compare: first argument is known to be non-null
-
-inline static int ncmp(const char* a, int al, const char* b, int bl)
-{
-  int n = (al <= bl) ? al : bl;
-  while (n-- > 0) {
-    int diff = *a++ - *b++;
-    if (diff != 0) {
-      return diff;
-    }
-  }
-  return al - bl;
-}
 
 
 //////////////////////////

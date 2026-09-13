@@ -41,7 +41,7 @@ String ReturnExpr::GetDisplayName() const {
   return rval;
 }
 
-bool ReturnExpr::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const {
+bool ReturnExpr::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const { (void)scope_el;
   String code = code_str; code.downcase();
   if(code.startsWith("return")) return true;
   return false;

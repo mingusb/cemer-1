@@ -16,6 +16,6 @@
 #include "BrainAtlasFileParser.h"
 
 
-BrainAtlasFileParser::BrainAtlasFileParser(const QString& filename) {}
+BrainAtlasFileParser::BrainAtlasFileParser(const QString& filename) { (void)filename;}
 BrainAtlasFileParser::~BrainAtlasFileParser() {}
 

@@ -40,7 +40,7 @@ iDockViewer::~iDockViewer()
 void iDockViewer::Init() {
   // set the features
   DockViewer::DockViewerFlags dock_flags = viewer()->dock_flags; // cache
-  DockWidgetFeatures dwf = 0;
+  DockWidgetFeatures dwf;
   if (dock_flags & DockViewer::DV_CLOSABLE)
     dwf |= QDockWidget::DockWidgetClosable;
   if (dock_flags & DockViewer::DV_MOVABLE)
@@ -107,4 +107,3 @@ void iDockViewer::Showing(bool showing) {
   if (showing == me->isChecked()) return;
   me->setChecked(showing); //note: triggers event
 }
-

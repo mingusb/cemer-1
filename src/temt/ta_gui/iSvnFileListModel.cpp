@@ -52,7 +52,7 @@ bool iSvnFileListModel::CommitFile(const String& file_path, bool single_file, co
   return rval;
 }
 
-bool iSvnFileListModel::AddFile(const String& file_path, const String& name, const String& msg) {
+bool iSvnFileListModel::AddFile(const String& file_path, const String& name, const String& msg) { (void)msg;
   iSvnFileListModel* svn_file_model = new iSvnFileListModel();
   svn_file_model->setWcPath(file_path);
   String wc_url;
@@ -134,7 +134,7 @@ bool iSvnFileListModel::setWcPath(const QString& wc_path) {
   return true;
 }
 
-bool iSvnFileListModel::setUrlWcPath(const QString& url, const QString& wc_path, int rev) {
+bool iSvnFileListModel::setUrlWcPath(const QString& url, const QString& wc_path, int rev) { (void)wc_path;
   if(!setWcPath(url)) return false;
   return setUrl(url, rev);
 }
@@ -417,7 +417,7 @@ bool iSvnFileListModel::moveFile(const String& from_nm, const String& to_nm, boo
   return true;
 }
 
-bool iSvnFileListModel::moveFileLocal(const String& from_nm, const String& to_nm, bool force) {
+bool iSvnFileListModel::moveFileLocal(const String& from_nm, const String& to_nm, bool force) { (void)force;
   if(!svn_client)
     return false;
   if(wc_path().isEmpty()) {
@@ -514,9 +514,8 @@ bool iSvnFileListModel::commit(const String& msg) {
     taMisc::Error("working copy path is empty -- can only commit with working copy");
     return false;
   }
-  int nw_rv = -1;
   try {
-    nw_rv = svn_client->Checkin(msg);
+    svn_client->Checkin(msg);
   }
   catch (const SubversionClient::Exception &ex) {
     taMisc::Error("Subversion client error in commit\n", ex.what());
@@ -647,7 +646,7 @@ bool iSvnFileListModel::refresh() {
   return true;
 }
 
-int iSvnFileListModel::columnCount(const QModelIndex& parent) const {
+int iSvnFileListModel::columnCount(const QModelIndex& parent) const { (void)parent;
   return SVN_N_COLS;
 }
 
@@ -708,7 +707,7 @@ QVariant iSvnFileListModel::data(const QModelIndex& index, int role) const {
         return file_times[idx];
       }
       else {
-        QDateTime dm = QDateTime::fromTime_t(file_times[idx]);
+        QDateTime dm = QDateTime::fromSecsSinceEpoch(file_times[idx]);
         QString dmstr = dm.toString("yyyy MM/dd hh:mm:ss");
         return dmstr;
       }
@@ -751,7 +750,7 @@ QVariant iSvnFileListModel::data(const QModelIndex& index, int role) const {
     return QVariant();
     break;
   }
-/*Qt::TextColorRole
+/*Qt::ForegroundRole
   QColor: color of text
 Qt::CheckStateRole*/
   default: break;
@@ -760,7 +759,7 @@ Qt::CheckStateRole*/
 }
 
 Qt::ItemFlags iSvnFileListModel::flags(const QModelIndex& index) const {
-  Qt::ItemFlags rval = 0;
+  Qt::ItemFlags rval;
   if (validateIndex(index)) {
     rval = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
   }
@@ -788,23 +787,23 @@ QVariant iSvnFileListModel::headerData(int section,
   return QAbstractItemModel::headerData(section, orientation, role);
 }
 
-int iSvnFileListModel::rowCount(const QModelIndex& parent) const {
+int iSvnFileListModel::rowCount(const QModelIndex& parent) const { (void)parent;
   if(!svn_client) return 0;
   return file_names.size+1;
 }
 
-bool iSvnFileListModel::setData(const QModelIndex& index, const QVariant & value, int role) {
+bool iSvnFileListModel::setData(const QModelIndex& index, const QVariant & value, int role) { (void)index; (void)role; (void)value;
   return false;
 }
 
-QModelIndex iSvnFileListModel::index(int row, int column, const QModelIndex &parent) const {
+QModelIndex iSvnFileListModel::index(int row, int column, const QModelIndex &parent) const { (void)parent;
   if(!svn_client) return QModelIndex();
   if (column < 0 || column >= SVN_N_COLS || row < 0 || row > file_names.size)
     return QModelIndex();
   return createIndex(row, column);
 }
 
-QModelIndex iSvnFileListModel::parent(const QModelIndex &child) const {
+QModelIndex iSvnFileListModel::parent(const QModelIndex &child) const { (void)child;
   return QModelIndex();
 }
 

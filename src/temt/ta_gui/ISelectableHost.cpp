@@ -73,7 +73,7 @@ void ISelectableHost::AddSelectedItem(ISelectable* item,  bool forced) {
 
 void ISelectableHost::AddDynActions(taiWidgetActions* menu, int dyn_list,
   ISelectable::GuiContext gc_typ)
-{
+{ (void)gc_typ;
   if (dyn_actions[dyn_list].count() == 0) {
     return;
   }

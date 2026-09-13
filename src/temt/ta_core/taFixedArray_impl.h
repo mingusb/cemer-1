@@ -86,7 +86,7 @@ protected:
     // 'true' if not null, and same size and els
   virtual int           Find_(const void* it, int where=0) const;       // #IGNORE -- based on El_Equal_; default is linear
   virtual void          InitVals_(const void* it, int start=0, int end=-1);// #IGNORE
-  virtual void          ReclaimOrphans_(int start, int end) {}// #IGNORE called when array is shortened, leaving orphaned values; note 'size' may already be trimmed: NOT called when el[] is replaced
+  virtual void          ReclaimOrphans_(int start, int end) { (void)end; (void)start; }// #IGNORE called when array is shortened, leaving orphaned values; note 'size' may already be trimmed: NOT called when el[] is replaced
 
 };
 

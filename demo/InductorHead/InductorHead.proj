@@ -1,0 +1,4103 @@
+// ta_Dump File v3.0 -- code v8.6.1.0 rev-1
+BpProject .projects[0] { 
+ Doc_Group @.docs = [1] {
+  taDoc @[0] { 
+   UserDataItem_List @*(.user_data_) {
+    UserDataItem @[0] { };
+   };
+  };
+ };
+
+ Wizard_Group @.wizards = [1] {
+  Wizard @[0] { 
+   UserDataItem_List @*(.user_data_) {
+    UserDataItem @[0] { };
+   };
+  };
+ };
+
+ ControlPanel_Group @.ctrl_panels = [2] {
+  ClusterRun @[0] { 
+   ControlPanelMember_Group @.mbrs = [0] {
+   };
+
+   ControlPanelMethod_Group @.mths = [0] {
+   };
+
+   ParamSearchAlgo_List @.search_algos = [0] {
+   };
+  };
+  ControlPanel @[1] { 
+   UserDataItem_List @*(.user_data_) {
+    UserDataItem @[0] { };
+   };
+
+   ControlPanelMember_Group @.mbrs = [13] {
+    ControlPanelMember @[0] { };
+    ControlPanelMember @[1] { };
+    ControlPanelMember @[2] { };
+    ControlPanelMember @[3] { };
+    ControlPanelMember @[4] { };
+    ControlPanelMember @[5] { };
+    ControlPanelMember @[6] { };
+    ControlPanelMember @[7] { };
+    ControlPanelMember @[8] { };
+    ControlPanelMember @[9] { };
+    ControlPanelMember @[10] { };
+    ControlPanelMember @[11] { };
+    ControlPanelMember @[12] { };
+   };
+
+   ControlPanelMethod_Group @.mths = [0] {
+    ControlPanelMethod_Group @.gp[0] = [5] { 
+     ControlPanelMethod @[0] { };
+     ControlPanelMethod @[1] { };
+     ControlPanelMethod @[2] { };
+     ControlPanelMethod @[3] { };
+     ControlPanelMethod @[4] { };
+    };
+   };
+  };
+ };
+
+ ParamSet_Group @.active_params = [1] {
+  ParamSet @[0] { 
+   ControlPanelMember_Group @.mbrs = [0] {
+   };
+
+   ControlPanelMethod_Group @.mths = [0] {
+   };
+  };
+ };
+
+ ArchivedParams_Group @.archived_params = [1] {
+  ParamSet @[0] { 
+   ControlPanelMember_Group @.mbrs = [0] {
+   };
+
+   ControlPanelMethod_Group @.mths = [0] {
+   };
+  };
+ };
+
+ DataTable_Group @.data = [3] {
+  DataTable @[0] { 
+   DataTableCols @.data = [4] {
+    int_Data @[0] { 
+     UserDataItem_List @*(.user_data_) {
+      UserDataItem @[0] { };
+     };
+    };
+    int_Data @[1] { 
+     UserDataItem_List @*(.user_data_) {
+      UserDataItem @[0] { };
+     };
+    };
+    String_Data @[2] { };
+    int_Data @[3] { 
+     UserDataItem_List @*(.user_data_) {
+      UserDataItem @[0] { };
+     };
+    };
+   };
+
+   DataOpList @.last_sort_spec.ops = [0] {
+   };
+  };
+  DataTable @[1] { 
+   DataTableCols @.data = [5] {
+    float_Data @[0] { };
+    float_Data @[1] { };
+    float_Data @[2] { };
+    float_Data @[3] { };
+    float_Data @[4] { };
+   };
+
+   DataOpList @.last_sort_spec.ops = [0] {
+   };
+  };
+  DataTable @[2] { 
+   DataTableCols @.data = [6] {
+    int_Data @[0] { 
+     UserDataItem_List @*(.user_data_) {
+      UserDataItem @[0] { };
+     };
+    };
+    int_Data @[1] { 
+     UserDataItem_List @*(.user_data_) {
+      UserDataItem @[0] { };
+     };
+    };
+    int_Data @[2] { 
+     UserDataItem_List @*(.user_data_) {
+      UserDataItem @[0] { };
+     };
+    };
+    int_Data @[3] { 
+     UserDataItem_List @*(.user_data_) {
+      UserDataItem @[0] { };
+     };
+    };
+    double_Data @[4] { };
+    int_Data @[5] { 
+     UserDataItem_List @*(.user_data_) {
+      UserDataItem @[0] { };
+     };
+    };
+   };
+
+   DataOpList @.last_sort_spec.ops = [0] {
+   };
+  };
+  DataTable_Group @.gp[0] { 
+  };
+  DataTable_Group @.gp[1] { 
+  };
+  DataTable_Group @.gp[2] { 
+  };
+ };
+
+ Program_TopGroup @.programs = [5] {
+  Program @[0] { 
+   UserDataItem_List @*(.user_data_) {
+    UserData_DocLink @[0] { };
+   };
+
+   ProgObjList @.objs = [0] {
+   };
+
+   ProgVar_List @.objs_vars = [0] {
+   };
+
+   ProgType_List @.types = [0] {
+   };
+
+   ProgVar_List @.args = [0] {
+   };
+
+   ProgVar_List @.vars = [1] {
+    ProgVar @[0] { };
+   };
+
+   Function_List @.functions = [0] {
+   };
+
+   ProgEl_List @.init_code = [0] {
+   };
+
+   ProgEl_List @.prog_code = [2] {
+    LocalVars @[0] { 
+     ProgVar_List @.local_vars = [0] {
+     };
+    };
+    UserScript @[1] { };
+   };
+  };
+  Program @[1] { 
+   UserDataItem_List @*(.user_data_) {
+    UserData_DocLink @[0] { };
+   };
+
+   ProgObjList @.objs = [0] {
+   };
+
+   ProgVar_List @.objs_vars = [0] {
+   };
+
+   ProgType_List @.types = [0] {
+   };
+
+   ProgVar_List @.args = [0] {
+   };
+
+   ProgVar_List @.vars = [14] {
+    ProgVar @[0] { };
+    ProgVar @[1] { };
+    ProgVar @[2] { };
+    ProgVar @[3] { };
+    ProgVar @[4] { };
+    ProgVar @[5] { };
+    ProgVar @[6] { };
+    ProgVar @[7] { };
+    ProgVar @[8] { };
+    ProgVar @[9] { };
+    ProgVar @[10] { };
+    ProgVar @[11] { };
+    ProgVar @[12] { };
+    ProgVar @[13] { };
+   };
+
+   Function_List @.functions = [0] {
+   };
+
+   ProgEl_List @.init_code = [0] {
+   };
+
+   ProgEl_List @.prog_code = [2] {
+    LocalVars @[0] { 
+     ProgVar_List @.local_vars = [0] {
+     };
+    };
+    UserScript @[1] { };
+   };
+  };
+  Program @[2] { 
+   UserDataItem_List @*(.user_data_) {
+    UserData_DocLink @[0] { };
+   };
+
+   ProgObjList @.objs = [0] {
+   };
+
+   ProgVar_List @.objs_vars = [0] {
+   };
+
+   ProgType_List @.types = [0] {
+   };
+
+   ProgVar_List @.args = [0] {
+   };
+
+   ProgVar_List @.vars = [1] {
+    ProgVar @[0] { };
+   };
+
+   Function_List @.functions = [0] {
+   };
+
+   ProgEl_List @.init_code = [0] {
+   };
+
+   ProgEl_List @.prog_code = [2] {
+    LocalVars @[0] { 
+     ProgVar_List @.local_vars = [0] {
+     };
+    };
+    UserScript @[1] { };
+   };
+  };
+  Program @[3] { 
+   UserDataItem_List @*(.user_data_) {
+    UserData_DocLink @[0] { };
+   };
+
+   ProgObjList @.objs = [0] {
+   };
+
+   ProgVar_List @.objs_vars = [0] {
+   };
+
+   ProgType_List @.types = [0] {
+   };
+
+   ProgVar_List @.args = [0] {
+   };
+
+   ProgVar_List @.vars = [1] {
+    ProgVar @[0] { };
+   };
+
+   Function_List @.functions = [0] {
+   };
+
+   ProgEl_List @.init_code = [0] {
+   };
+
+   ProgEl_List @.prog_code = [2] {
+    LocalVars @[0] { 
+     ProgVar_List @.local_vars = [0] {
+     };
+    };
+    UserScript @[1] { };
+   };
+  };
+  Program @[4] { 
+   UserDataItem_List @*(.user_data_) {
+    UserData_DocLink @[0] { };
+   };
+
+   ProgObjList @.objs = [0] {
+   };
+
+   ProgVar_List @.objs_vars = [0] {
+   };
+
+   ProgType_List @.types = [0] {
+   };
+
+   ProgVar_List @.args = [0] {
+   };
+
+   ProgVar_List @.vars = [1] {
+    ProgVar @[0] { };
+   };
+
+   Function_List @.functions = [0] {
+   };
+
+   ProgEl_List @.init_code = [0] {
+   };
+
+   ProgEl_List @.prog_code = [2] {
+    LocalVars @[0] { 
+     ProgVar_List @.local_vars = [0] {
+     };
+    };
+    UserScript @[1] { };
+   };
+  };
+ };
+
+ taViewer_List @.viewers = [0] {
+ };
+
+ Network_Group @.networks = [1] {
+  BpNetwork @[0] { 
+   BaseSpec_Group @.specs = [2] {
+    BpUnitSpec @[0] { 
+     BaseSpec_Group @.children = [0] {
+     };
+    };
+    BpConSpec @[1] { 
+     BaseSpec_Group @.children = [0] {
+     };
+
+     Schedule @.lrate_sched = [0] {
+     };
+    };
+   };
+
+   ParamSeq_Group @.param_seqs = [0] {
+   };
+
+   NetMonItem_List @.monitor.items = [0] {
+   };
+
+   DataTableCols @.mon_data.data = [0] {
+   };
+
+   DataOpList @.mon_data.last_sort_spec.ops = [0] {
+   };
+
+   Layer_Group @.layers = [6] {
+    BpLayer @[0] { 
+     Projection_List @.projections = [0] {
+     };
+    };
+    BpLayer @[1] { 
+     Projection_List @.projections = [0] {
+     };
+    };
+    BpLayer @[2] { 
+     Projection_List @.projections = [0] {
+     };
+    };
+    BpLayer @[3] { 
+     Projection_List @.projections = [0] {
+     };
+    };
+    BpLayer @[4] { 
+     Projection_List @.projections = [0] {
+     };
+    };
+    BpLayer @[5] { 
+     Projection_List @.projections = [0] {
+     };
+    };
+   };
+
+   Weights_List @.weights = [0] {
+   };
+  };
+ };
+};
+BpProject .projects[0] {
+ name="InductorHead";
+ desc=;
+ tags="Tutorial, Transformer, Attention, Induction, Mechanistic Interpretability";
+ version {
+  major=0;
+  minor=0;
+  step=0;
+ };
+ author="Emergent contributors";
+ email=;
+ license {
+  license=NO_LIC;
+  owner_name=;
+  org=;
+  year="2026";
+  custom=;
+ };
+ pub_cite=;
+ wiki {wiki="": page_name="": };
+ docs {
+  name=;
+  el_typ=taDoc;
+  el_def=0;
+  taDoc @[0] {
+   UserDataItem_List @*(.user_data_) {
+    name=;
+    el_typ=UserDataItem;
+    el_def=0;
+    UserDataItem @[0] {name="user_pinned": value=1: val_type_fixed=0: };
+   };
+   name="ProjectDoc";
+   desc="InductorHead: interactive two-head attention tutorial and experiments";
+   web_doc=0;
+   wiki=;
+   url="local";
+   full_url="local";
+   text_size=1;
+   text="== InductorHead: a pattern-completion laboratory ==
+
+'''Start here.''' Open the '''Laboratory''' control panel. Press '''Generate sequence''', then '''Show circuit'''. Drag the 3D network to rotate it and use the wheel to zoom. Press '''Step token''' to move the current query through the sequence. The CSS console reports each prediction; the '''CircuitState''' data table exposes every matrix numerically.
+
+== The experiment ==
+
+An earlier token pair tells the circuit how to continue a later occurrence: '''[A] [B] ... [A] → [B]'''. A new seed permutes the token vocabulary. The circuit does not contain a table saying that A must be followed by B: it obtains B from the current context. The '''Sequence''' table is editable, so you can construct your own repeated-token tasks. After editing it, press '''Run circuit'''.
+
+== Two heads in two attention layers ==
+
+The first, previous-token head has a fixed positional attention pattern. At source position j > 0 it copies the embedding of token j−1 into a separate residual-stream subspace. This is the key used by the second head.
+
+The second, induction head compares the current token's one-hot query with those keys. Matching keys receive a higher score. Softmax turns scores into attention weights, and the value/output path copies the original token at the attended source position. Thus a query A attends to an earlier B whose key contains A.
+
+The construction uses k[j] = onehot(token[j−1]), q[i] = onehot(token[i]), and v[j] = onehot(token[j]). The attention weight is proportional to exp((dot(q[i], k[j])−1)/temperature) for 1 ≤ j ≤ i. Future sources j > i are masked to exactly zero. Position zero has no previous-token key. Subtracting one is a shared softmax shift that keeps the calculation numerically stable.
+
+== Read the 3D display ==
+
+* '''Token Embeddings''': position × vocabulary, with the presented tokens active.
+* '''Previous Token Keys''': the first head's shifted token identities.
+* '''Current Query''': the selected token's one-hot query vector.
+* '''Causal Attention''': source position × query position. Its triangular mask prevents access to future tokens.
+* '''Copied Values''': the selected query's attention mass, routed to the attended token identities.
+* '''Next Token Prediction''': the sum of the copied values. The highest component is the prediction.
+
+Unit labels are position:token, or query←source for attention. Activation colors and 3D block heights show the live numeric values. The actual attention calculations are embedded CSS Programs; the BpNetwork is their native Emergent state display. Its Bp synapses are not being trained to create these activations.
+
+== Controls and tasks ==
+
+* '''Sequence length''' (5–32) and '''Vocabulary size''' (4–16) control task size. Press Generate after changing them.
+* '''Seed''' selects a reproducible random vocabulary permutation.
+* '''Temperature''' controls attention sharpness. Higher values spread probability over nonmatching positions.
+* '''Noise''' replaces intermediate repeated tokens with a held-out distractor; the first exemplar and final query remain intact.
+* '''Cursor''' selects the query position. Run recomputes that position; Step advances it cyclically.
+* '''Ablate previous head''' removes the copied keys. Compare its near-uniform attention with the intact prefix match.
+* '''Ablate induction head''' removes the copying output. Prediction becomes −1 because the circuit provides no evidence for any token.
+* '''Evaluate permutations''' tests 64 new seeds, with intact, previous-head-ablated and induction-head-ablated conditions. Results and confidence are saved in Experiments. It restores the original controls afterward.
+
+== Suggested investigations ==
+
+1. Set noise to zero and temperature to 0.1. Generate several seeds: does the target change while the circuit still predicts it?
+2. Inspect a bright attention cell. Is its source token preceded by the current query token?
+3. Raise temperature and observe how confidence changes. Distinguish the prediction's argmax from confidence.
+4. Ablate the previous head, then the induction head. Which mathematical term did each intervention remove?
+5. Put conflicting continuations after the same prefix in Sequence. Explain the resulting distribution over next tokens.
+6. Add distractors, run the permutation evaluation, and compare the intact and ablated conditions.
+
+== What this project demonstrates ==
+
+This is a deliberately constructed, mechanistic two-head circuit. It demonstrates causal prefix matching, copying, generalization to new token permutations, and interventions. It is not a trained transformer, a language model, or evidence that gradient descent will discover this circuit. No training or learned-model accuracy is claimed. Confidence here is copied attention mass, not a calibrated probability of real language.
+
+== Primary references ==
+
+[https://transformer-circuits.pub/2021/framework/index.html Elhage et al. (2021), A Mathematical Framework for Transformer Circuits] develops the attention-composition analysis. [https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/ Olsson et al. (2022), In-context Learning and Induction Heads] studies prefix matching and copying in repeated-token tasks. These papers provide the scientific motivation; this project is an educational construction rather than a reproduction of their trained models.
+";
+   html_text="<h2> InductorHead: a pattern-completion laboratory </h2>
+<P>
+ <b>Start here.</b>  Open the  <b>Laboratory</b>  control panel. Press  <b>Generate sequence</b> , then  <b>Show circuit</b> . Drag the 3D network to rotate it and use the wheel to zoom. Press  <b>Step token</b>  to move the current query through the sequence. The CSS console reports each prediction; the  <b>CircuitState</b>  data table exposes every matrix numerically.
+<P>
+<h2> The experiment </h2>
+<P>
+An earlier token pair tells the circuit how to continue a later occurrence:  <b>[A] [B] ... [A] → [B]</b> . A new seed permutes the token vocabulary. The circuit does not contain a table saying that A must be followed by B: it obtains B from the current context. The  <b>Sequence</b>  table is editable, so you can construct your own repeated-token tasks. After editing it, press  <b>Run circuit</b> .
+<P>
+<h2> Two heads in two attention layers </h2>
+<P>
+The first, previous-token head has a fixed positional attention pattern. At source position j > 0 it copies the embedding of token j−1 into a separate residual-stream subspace. This is the key used by the second head.
+<P>
+The second, induction head compares the current token's one-hot query with those keys. Matching keys receive a higher score. Softmax turns scores into attention weights, and the value/output path copies the original token at the attended source position. Thus a query A attends to an earlier B whose key contains A.
+<P>
+The construction uses k[j] = onehot(token[j−1]), q[i] = onehot(token[i]), and v[j] = onehot(token[j]). The attention weight is proportional to exp((dot(q[i], k[j])−1)/temperature) for 1 ≤ j ≤ i. Future sources j > i are masked to exactly zero. Position zero has no previous-token key. Subtracting one is a shared softmax shift that keeps the calculation numerically stable.
+<P>
+<h2> Read the 3D display </h2>
+<P>
+<ul><li>  <b>Token Embeddings</b> : position × vocabulary, with the presented tokens active.
+<li>  <b>Previous Token Keys</b> : the first head's shifted token identities.
+<li>  <b>Current Query</b> : the selected token's one-hot query vector.
+<li>  <b>Causal Attention</b> : source position × query position. Its triangular mask prevents access to future tokens.
+<li>  <b>Copied Values</b> : the selected query's attention mass, routed to the attended token identities.
+<li>  <b>Next Token Prediction</b> : the sum of the copied values. The highest component is the prediction.
+</ul>
+Unit labels are position:token, or query←source for attention. Activation colors and 3D block heights show the live numeric values. The actual attention calculations are embedded CSS Programs; the BpNetwork is their native Emergent state display. Its Bp synapses are not being trained to create these activations.
+<P>
+<h2> Controls and tasks </h2>
+<P>
+<ul><li>  <b>Sequence length</b>  (5–32) and  <b>Vocabulary size</b>  (4–16) control task size. Press Generate after changing them.
+<li>  <b>Seed</b>  selects a reproducible random vocabulary permutation.
+<li>  <b>Temperature</b>  controls attention sharpness. Higher values spread probability over nonmatching positions.
+<li>  <b>Noise</b>  replaces intermediate repeated tokens with a held-out distractor; the first exemplar and final query remain intact.
+<li>  <b>Cursor</b>  selects the query position. Run recomputes that position; Step advances it cyclically.
+<li>  <b>Ablate previous head</b>  removes the copied keys. Compare its near-uniform attention with the intact prefix match.
+<li>  <b>Ablate induction head</b>  removes the copying output. Prediction becomes −1 because the circuit provides no evidence for any token.
+<li>  <b>Evaluate permutations</b>  tests 64 new seeds, with intact, previous-head-ablated and induction-head-ablated conditions. Results and confidence are saved in Experiments. It restores the original controls afterward.
+</ul>
+<h2> Suggested investigations </h2>
+<P>
+1. Set noise to zero and temperature to 0.1. Generate several seeds: does the target change while the circuit still predicts it?
+2. Inspect a bright attention cell. Is its source token preceded by the current query token?
+3. Raise temperature and observe how confidence changes. Distinguish the prediction's argmax from confidence.
+4. Ablate the previous head, then the induction head. Which mathematical term did each intervention remove?
+5. Put conflicting continuations after the same prefix in Sequence. Explain the resulting distribution over next tokens.
+6. Add distractors, run the permutation evaluation, and compare the intact and ablated conditions.
+<P>
+<h2> What this project demonstrates </h2>
+<P>
+This is a deliberately constructed, mechanistic two-head circuit. It demonstrates causal prefix matching, copying, generalization to new token permutations, and interventions. It is not a trained transformer, a language model, or evidence that gradient descent will discover this circuit. No training or learned-model accuracy is claimed. Confidence here is copied attention mass, not a calibrated probability of real language.
+<P>
+<h2> Primary references </h2>
+<P>
+[https://transformer-circuits.pub/2021/framework/index.html Elhage et al. (2021), A Mathematical Framework for Transformer Circuits] develops the attention-composition analysis. [https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/ Olsson et al. (2022), In-context Learning and Induction Heads] studies prefix matching and copying in repeated-token tasks. These papers provide the scientific motivation; this project is an educational construction rather than a reproduction of their trained models.
+";
+  };
+ };
+ wizards {
+  name=;
+  el_typ=Wizard;
+  el_def=0;
+  Wizard @[0] {
+   UserDataItem_List @*(.user_data_) {
+    name=;
+    el_typ=UserDataItem;
+    el_def=0;
+    UserDataItem @[0] {name="NO_CLIP": value=1: val_type_fixed=0: };
+   };
+   name="Wizard_0";
+  };
+ };
+ ctrl_panels {
+  name="ControlPanel_Group_0";
+  el_typ=ControlPanel;
+  el_def=0;
+  master_and_clones=0;
+  ClusterRun @[0] {
+   name="ClusterRun";
+   cp_state=REGULAR;
+   updt_while_running=0;
+   desc=;
+   mbrs {
+    name="mbrs";
+    el_typ=ControlPanelMember;
+    el_def=0;
+   };
+   mths {
+    name="mths";
+    el_typ=ControlPanelMethod;
+    el_def=0;
+    group_type=GT_BUTTONS;
+   };
+   search_algos {
+    name="search_algos";
+    el_typ=ParamSearchAlgo;
+    el_def=0;
+   };
+   use_search_algo=0;
+   cur_search_algo=NULL;
+   set_proj_name=0;
+   proj_name=;
+   auto_updt_interval=10;
+   auto_updt_timeout=30;
+   load_data_size_max=10000000;
+   cluster=;
+   clusters=;
+   users=;
+   last_submit_time=;
+   notes=;
+   label=;
+   extra_files=;
+   svn_repo=;
+   repo_url=;
+   queue=;
+   run_time=;
+   exe_cmd="emergent";
+   ram_gb=0;
+   n_threads=1;
+   use_cuda=0;
+   use_mpi=0;
+   mpi_nodes=10;
+   mpi_per_node=1;
+   parallel_batch=0;
+   pb_batches=10;
+   pb_n_batches_per=1;
+   nowin_x=0;
+   enable_kill=0;
+   enable_load=0;
+   enable_notes=1;
+  };
+  ControlPanel @[1] {
+   UserDataItem_List @*(.user_data_) {
+    name=;
+    el_typ=UserDataItem;
+    el_def=0;
+    UserDataItem @[0] {name="user_pinned": value=1: val_type_fixed=0: };
+   };
+   name="Laboratory";
+   cp_state=REGULAR;
+   updt_while_running=0;
+   desc=;
+   mbrs {
+    name="mbrs";
+    el_typ=ControlPanelMember;
+    el_def=0;
+    ControlPanelMember @[0] {
+     label="sequence_length";
+     short_label=1;
+     cust_label=0;
+     desc="Number of token positions; Generate applies changes (5–32).";
+     cust_desc=0;
+     base=.programs[1].vars[1]$$;
+     mbr=ProgVar::int_val;
+     data {ctrl_type=CONTROL: is_numeric=1: is_single=1: state=EXPLORE: saved_value="13": range="": notes="": };
+    };
+    ControlPanelMember @[1] {
+     label="vocabulary_size";
+     short_label=1;
+     cust_label=0;
+     desc="Distinct token identities (4–16).";
+     cust_desc=0;
+     base=.programs[1].vars[2]$$;
+     mbr=ProgVar::int_val;
+     data {ctrl_type=CONTROL: is_numeric=1: is_single=1: state=EXPLORE: saved_value="8": range="": notes="": };
+    };
+    ControlPanelMember @[2] {
+     label="seed";
+     short_label=1;
+     cust_label=0;
+     desc="Reproducible permutation seed; Generate applies changes.";
+     cust_desc=0;
+     base=.programs[1].vars[3]$$;
+     mbr=ProgVar::int_val;
+     data {ctrl_type=CONTROL: is_numeric=1: is_single=1: state=EXPLORE: saved_value="1729": range="": notes="": };
+    };
+    ControlPanelMember @[3] {
+     label="temperature";
+     short_label=1;
+     cust_label=0;
+     desc="Softmax temperature: low values sharpen prefix matching.";
+     cust_desc=0;
+     base=.programs[1].vars[4]$$;
+     mbr=ProgVar::real_val;
+     data {ctrl_type=CONTROL: is_numeric=1: is_single=1: state=EXPLORE: saved_value="0.1": range="": notes="": };
+    };
+    ControlPanelMember @[4] {
+     label="noise";
+     short_label=1;
+     cust_label=0;
+     desc="Probability of a distractor in intermediate repetitions (0–1).";
+     cust_desc=0;
+     base=.programs[1].vars[5]$$;
+     mbr=ProgVar::real_val;
+     data {ctrl_type=CONTROL: is_numeric=1: is_single=1: state=EXPLORE: saved_value="0": range="": notes="": };
+    };
+    ControlPanelMember @[5] {
+     label="cursor";
+     short_label=1;
+     cust_label=0;
+     desc="Current query position, counted from zero.";
+     cust_desc=0;
+     base=.programs[1].vars[6]$$;
+     mbr=ProgVar::int_val;
+     data {ctrl_type=CONTROL: is_numeric=1: is_single=1: state=EXPLORE: saved_value="12": range="": notes="": };
+    };
+    ControlPanelMember @[6] {
+     label="ablate_previous";
+     short_label=1;
+     cust_label=0;
+     desc="Remove the previous-token head's key contribution.";
+     cust_desc=0;
+     base=.programs[1].vars[7]$$;
+     mbr=ProgVar::bool_val;
+     data {ctrl_type=CONTROL: is_numeric=0: is_single=1: state=EXPLORE: saved_value="false": range="": notes="": };
+    };
+    ControlPanelMember @[7] {
+     label="ablate_induction";
+     short_label=1;
+     cust_label=0;
+     desc="Remove the induction head's copied output.";
+     cust_desc=0;
+     base=.programs[1].vars[8]$$;
+     mbr=ProgVar::bool_val;
+     data {ctrl_type=CONTROL: is_numeric=0: is_single=1: state=EXPLORE: saved_value="false": range="": notes="": };
+    };
+    ControlPanelMember @[8] {
+     label="prediction";
+     short_label=1;
+     cust_label=0;
+     desc="Predicted next token; −1 means no evidence.";
+     cust_desc=0;
+     base=.programs[1].vars[9]$$;
+     mbr=ProgVar::int_val;
+     data {ctrl_type=CONTROL: is_numeric=1: is_single=1: state=EXPLORE: saved_value="-1": range="": notes="": };
+    };
+    ControlPanelMember @[9] {
+     label="target";
+     short_label=1;
+     cust_label=0;
+     desc="Next token of the uncorrupted repeated pattern.";
+     cust_desc=0;
+     base=.programs[1].vars[10]$$;
+     mbr=ProgVar::int_val;
+     data {ctrl_type=CONTROL: is_numeric=1: is_single=1: state=EXPLORE: saved_value="-1": range="": notes="": };
+    };
+    ControlPanelMember @[10] {
+     label="confidence";
+     short_label=1;
+     cust_label=0;
+     desc="Attention mass assigned to the predicted token.";
+     cust_desc=0;
+     base=.programs[1].vars[11]$$;
+     mbr=ProgVar::real_val;
+     data {ctrl_type=CONTROL: is_numeric=1: is_single=1: state=EXPLORE: saved_value="0": range="": notes="": };
+    };
+    ControlPanelMember @[11] {
+     label="accuracy";
+     short_label=1;
+     cust_label=0;
+     desc="Intact accuracy over the most recent 64 held-out seeds.";
+     cust_desc=0;
+     base=.programs[1].vars[12]$$;
+     mbr=ProgVar::real_val;
+     data {ctrl_type=CONTROL: is_numeric=1: is_single=1: state=EXPLORE: saved_value="0": range="": notes="": };
+    };
+    ControlPanelMember @[12] {
+     label="status";
+     short_label=1;
+     cust_label=0;
+     desc="Current circuit result.";
+     cust_desc=0;
+     base=.programs[1].vars[13]$$;
+     mbr=ProgVar::string_val;
+     data {ctrl_type=CONTROL: is_numeric=0: is_single=1: state=EXPLORE: saved_value="Generate a sequence to begin.": range="": notes="": };
+    };
+   };
+   mths {
+    name="mths";
+    el_typ=ControlPanelMethod;
+    el_def=0;
+    group_type=GT_BUTTONS;
+    ControlPanelMethod_Group @.gp[0] {
+     name="Tasks";
+     el_typ=ControlPanelMethod;
+     el_def=0;
+     group_type=GT_MENU_BUTTON;
+     ControlPanelMethod @[0] {
+      label="Generate sequence";
+      short_label=1;
+      cust_label=1;
+      desc="Run this laboratory task";
+      cust_desc=1;
+      base=.programs[0]$$;
+      mth=Program::Run_Gui;
+     };
+     ControlPanelMethod @[1] {
+      label="Show circuit";
+      short_label=1;
+      cust_label=1;
+      desc="Run this laboratory task";
+      cust_desc=1;
+      base=.programs[3]$$;
+      mth=Program::Run_Gui;
+     };
+     ControlPanelMethod @[2] {
+      label="Run circuit";
+      short_label=1;
+      cust_label=1;
+      desc="Run this laboratory task";
+      cust_desc=1;
+      base=.programs[1]$$;
+      mth=Program::Run_Gui;
+     };
+     ControlPanelMethod @[3] {
+      label="Step token";
+      short_label=1;
+      cust_label=1;
+      desc="Run this laboratory task";
+      cust_desc=1;
+      base=.programs[2]$$;
+      mth=Program::Run_Gui;
+     };
+     ControlPanelMethod @[4] {
+      label="Evaluate permutations";
+      short_label=1;
+      cust_label=1;
+      desc="Run this laboratory task";
+      cust_desc=1;
+      base=.programs[4]$$;
+      mth=Program::Run_Gui;
+     };
+    };
+   };
+  };
+ };
+ active_params {
+  name="ParamSet_Group_0";
+  el_typ=ParamSet;
+  el_def=0;
+  master_and_clones=1;
+  ParamSet @[0] {
+   name="NewMaster";
+   cp_state=MASTER;
+   updt_while_running=0;
+   desc=;
+   mbrs {
+    name="mbrs";
+    el_typ=ControlPanelMember;
+    el_def=0;
+   };
+   mths {
+    name="mths";
+    el_typ=ControlPanelMethod;
+    el_def=0;
+    group_type=GT_BUTTONS;
+   };
+   date=;
+  };
+ };
+ archived_params {
+  name="ArchivedParams_Group_0";
+  el_typ=ParamSet;
+  el_def=0;
+  master_and_clones=1;
+  ParamSet @[0] {
+   name="NewMaster";
+   cp_state=MASTER;
+   updt_while_running=0;
+   desc=;
+   mbrs {
+    name="mbrs";
+    el_typ=ControlPanelMember;
+    el_def=0;
+   };
+   mths {
+    name="mths";
+    el_typ=ControlPanelMethod;
+    el_def=0;
+    group_type=GT_BUTTONS;
+   };
+   date=;
+  };
+ };
+ data {
+  name="DataTable_Group_0";
+  el_typ=DataTable;
+  el_def=0;
+  save_tables=1;
+  DataTable @[0] {
+   name="Sequence";
+   desc=;
+   data {
+    name="data";
+    el_typ=int_Data;
+    el_def=0;
+    int_Data @[0] {
+     UserDataItem_List @*(.user_data_) {
+      name=;
+      el_typ=UserDataItem;
+      el_def=0;
+      UserDataItem @[0] {name="NARROW": value=1: val_type_fixed=0: };
+     };
+     name="position";
+     col_flags=SAVE_DATA|AUTO_WIDTH;
+     is_matrix=0;
+     cell_geom{ 1;     };
+     calc_expr {
+      expr=;
+     };
+     dim_names {
+      name="dim_names";
+     [0]      };
+     width=0;
+     matrix_col_width=10;
+     ar {
+      name="ar";
+     [13] 0;1;2;3;4;5;6;7;8;9;
+10;11;12;     };
+    };
+    int_Data @[1] {
+     UserDataItem_List @*(.user_data_) {
+      name=;
+      el_typ=UserDataItem;
+      el_def=0;
+      UserDataItem @[0] {name="NARROW": value=1: val_type_fixed=0: };
+     };
+     name="token";
+     col_flags=SAVE_DATA|AUTO_WIDTH;
+     is_matrix=0;
+     cell_geom{ 1;     };
+     calc_expr {
+      expr=;
+     };
+     dim_names {
+      name="dim_names";
+     [0]      };
+     width=0;
+     matrix_col_width=10;
+     ar {
+      name="ar";
+     [13] 0;6;2;3;5;1;0;6;2;3;
+5;1;0;     };
+    };
+    String_Data @[2] {
+     name="label";
+     col_flags=SAVE_DATA|AUTO_WIDTH;
+     is_matrix=0;
+     cell_geom{ 1;     };
+     calc_expr {
+      expr=;
+     };
+     dim_names {
+      name="dim_names";
+     [0]      };
+     width=0;
+     matrix_col_width=10;
+     ar {
+      name="ar";
+     [13] "0";"6";"2";"3";"5";"1";"0";"6";"2";"3";
+"5";"1";"0";     };
+    };
+    int_Data @[3] {
+     UserDataItem_List @*(.user_data_) {
+      name=;
+      el_typ=UserDataItem;
+      el_def=0;
+      UserDataItem @[0] {name="NARROW": value=1: val_type_fixed=0: };
+     };
+     name="next_token";
+     col_flags=SAVE_DATA|AUTO_WIDTH;
+     is_matrix=0;
+     cell_geom{ 1;     };
+     calc_expr {
+      expr=;
+     };
+     dim_names {
+      name="dim_names";
+     [0]      };
+     width=0;
+     matrix_col_width=10;
+     ar {
+      name="ar";
+     [13] 6;2;3;5;1;0;6;2;3;5;
+1;0;6;     };
+    };
+   };
+   data_flags=SAVE_ROWS|AUTO_CALC;
+   auto_load=NO_AUTO_LOAD;
+   auto_load_file=;
+   row_height=1;
+   max_col_width=50;
+   keygen 4 0=0;
+   row_indexes {
+    name=;
+   [13] 0;1;2;3;4;5;6;7;8;9;
+10;11;12;   };
+   last_sort_spec {
+    name="DataSortSpec_17";
+    ops {
+     name="ops";
+     el_typ=DataSortEl;
+     el_def=0;
+    };
+   };
+   row_with_hilite=-1;
+  };
+  DataTable @[1] {
+   name="CircuitState";
+   desc=;
+   data {
+    name="data";
+    el_typ=float_Data;
+    el_def=0;
+    float_Data @[0] {
+     name="TokenEmbeddings";
+     col_flags=SAVE_DATA|AUTO_WIDTH;
+     is_matrix=1;
+     cell_geom{ 13;8;     };
+     calc_expr {
+      expr=;
+     };
+     dim_names {
+      name="dim_names";
+     [2] ;;     };
+     width=0;
+     matrix_col_width=10;
+     ar {
+      name="ar";
+     [13 8 1] 1;0;0;0;0;0;1;0;0;0;
+0;0;1;0;0;0;0;0;1;0;
+0;0;0;0;1;0;0;0;1;0;
+0;0;0;0;1;0;0;0;0;0;
+0;0;1;0;0;0;0;0;1;0;
+0;0;0;0;0;0;0;0;0;0;
+0;0;0;0;0;0;0;0;0;1;
+0;0;0;0;0;1;0;0;0;1;
+0;0;0;0;0;1;0;0;0;0;
+0;0;0;0;0;0;0;0;0;0;
+0;0;0;0;     };
+    };
+    float_Data @[1] {
+     name="PreviousTokenKeys";
+     col_flags=SAVE_DATA|AUTO_WIDTH;
+     is_matrix=1;
+     cell_geom{ 13;8;     };
+     calc_expr {
+      expr=;
+     };
+     dim_names {
+      name="dim_names";
+     [2] ;;     };
+     width=0;
+     matrix_col_width=10;
+     ar {
+      name="ar";
+     [13 8 1] 0;1;0;0;0;0;0;1;0;0;
+0;0;0;0;0;0;0;0;0;1;
+0;0;0;0;0;1;0;0;0;1;
+0;0;0;0;0;1;0;0;0;0;
+0;0;0;1;0;0;0;0;0;1;
+0;0;0;0;0;0;0;0;0;0;
+0;0;0;0;0;0;0;0;0;0;
+1;0;0;0;0;0;1;0;0;0;
+1;0;0;0;0;0;1;0;0;0;
+0;0;0;0;0;0;0;0;0;0;
+0;0;0;0;     };
+    };
+    float_Data @[2] {
+     name="CausalAttention";
+     col_flags=SAVE_DATA|AUTO_WIDTH;
+     is_matrix=1;
+     cell_geom{ 13;13;     };
+     calc_expr {
+      expr=;
+     };
+     dim_names {
+      name="dim_names";
+     [2] ;;     };
+     width=0;
+     matrix_col_width=10;
+     ar {
+      name="ar";
+     [13 13 1] 0;0;0;0;0;0;0;0;0;0;
+0;0;0;0;1;0;0;0;0;0;
+0;0;0;0;0;0;0;0.5;0.5;0;
+0;0;0;0;0;0;0;0;0;0;
+0.33333334;0.33333334;0.33333334;0;0;0;0;0;0;0;
+0;0;0;0.25;0.25;0.25;0.25;0;0;0;
+0;0;0;0;0;0;0.2;0.2;0.2;0.2;
+0.2;0;0;0;0;0;0;0;0;0.99977309;
+4.5389628e-05;4.5389628e-05;4.5389628e-05;4.5389628e-05;4.5389628e-05;0;0;0;0;0;
+0;0;4.5387569e-05;0.99972767;4.5387569e-05;4.5387569e-05;4.5387569e-05;4.5387569e-05;4.5387569e-05;0;
+0;0;0;0;0;4.5385506e-05;4.5385506e-05;0.99968231;4.5385506e-05;4.5385506e-05;
+4.5385506e-05;4.5385506e-05;4.5385506e-05;0;0;0;0;0;4.5383447e-05;4.5383447e-05;
+4.5383447e-05;0.99963689;4.5383447e-05;4.5383447e-05;4.5383447e-05;4.5383447e-05;4.5383447e-05;0;0;0;
+0;4.5381385e-05;4.5381385e-05;4.5381385e-05;4.5381385e-05;0.99959153;4.5381385e-05;4.5381385e-05;4.5381385e-05;4.5381385e-05;
+4.5381385e-05;0;0;0;4.5379333e-05;4.5379333e-05;4.5379333e-05;4.5379333e-05;4.5379333e-05;0.99954623;
+4.5379333e-05;4.5379333e-05;4.5379333e-05;4.5379333e-05;4.5379333e-05;0;0;0.49988654;2.2694814e-05;2.2694814e-05;
+2.2694814e-05;2.2694814e-05;2.2694814e-05;0.49988654;2.2694814e-05;2.2694814e-05;2.2694814e-05;2.2694814e-05;2.2694814e-05;     };
+    };
+    float_Data @[3] {
+     name="CopiedValues";
+     col_flags=SAVE_DATA|AUTO_WIDTH;
+     is_matrix=1;
+     cell_geom{ 13;8;     };
+     calc_expr {
+      expr=;
+     };
+     dim_names {
+      name="dim_names";
+     [2] ;;     };
+     width=0;
+     matrix_col_width=10;
+     ar {
+      name="ar";
+     [13 8 1] 0;0;0;0;0;0;2.2694814e-05;0;0;0;
+0;0;2.2694814e-05;0;0;0;0;0;2.2694814e-05;0;
+0;0;0;0;2.2694814e-05;0;0;0;2.2694814e-05;0;
+0;0;0;0;2.2694814e-05;0;0;0;0;0;
+0;0;2.2694814e-05;0;0;0;0;0;2.2694814e-05;0;
+0;0;0;0;0;0;0;0;0;0;
+0;0;0;0;0;0;0;0;0;2.2694814e-05;
+0;0;0;0;0;2.2694814e-05;0;0;0;0.49988654;
+0;0;0;0;0;0.49988654;0;0;0;0;
+0;0;0;0;0;0;0;0;0;0;
+0;0;0;0;     };
+    };
+    float_Data @[4] {
+     name="Prediction";
+     col_flags=SAVE_DATA|AUTO_WIDTH;
+     is_matrix=1;
+     cell_geom{ 8;     };
+     calc_expr {
+      expr=;
+     };
+     dim_names {
+      name="dim_names";
+     [1] ;     };
+     width=0;
+     matrix_col_width=10;
+     ar {
+      name="ar";
+     [8 1] 4.5389628e-05;4.5389628e-05;4.5389628e-05;4.5389628e-05;0;4.5389628e-05;0.99977309;0;     };
+    };
+   };
+   data_flags=SAVE_ROWS|AUTO_CALC;
+   auto_load=NO_AUTO_LOAD;
+   auto_load_file=;
+   row_height=1;
+   max_col_width=50;
+   keygen 4 0=0;
+   row_indexes {
+    name=;
+   [1] 0;   };
+   last_sort_spec {
+    name="DataSortSpec_18";
+    ops {
+     name="ops";
+     el_typ=DataSortEl;
+     el_def=0;
+    };
+   };
+   row_with_hilite=-1;
+  };
+  DataTable @[2] {
+   name="Experiments";
+   desc=;
+   data {
+    name="data";
+    el_typ=int_Data;
+    el_def=0;
+    int_Data @[0] {
+     UserDataItem_List @*(.user_data_) {
+      name=;
+      el_typ=UserDataItem;
+      el_def=0;
+      UserDataItem @[0] {name="NARROW": value=1: val_type_fixed=0: };
+     };
+     name="seed";
+     col_flags=SAVE_DATA|AUTO_WIDTH;
+     is_matrix=0;
+     cell_geom{ 1;     };
+     calc_expr {
+      expr=;
+     };
+     dim_names {
+      name="dim_names";
+     [0]      };
+     width=0;
+     matrix_col_width=10;
+     ar {
+      name="ar";
+     [0]      };
+    };
+    int_Data @[1] {
+     UserDataItem_List @*(.user_data_) {
+      name=;
+      el_typ=UserDataItem;
+      el_def=0;
+      UserDataItem @[0] {name="NARROW": value=1: val_type_fixed=0: };
+     };
+     name="condition";
+     col_flags=SAVE_DATA|AUTO_WIDTH;
+     is_matrix=0;
+     cell_geom{ 1;     };
+     calc_expr {
+      expr=;
+     };
+     dim_names {
+      name="dim_names";
+     [0]      };
+     width=0;
+     matrix_col_width=10;
+     ar {
+      name="ar";
+     [0]      };
+    };
+    int_Data @[2] {
+     UserDataItem_List @*(.user_data_) {
+      name=;
+      el_typ=UserDataItem;
+      el_def=0;
+      UserDataItem @[0] {name="NARROW": value=1: val_type_fixed=0: };
+     };
+     name="prediction";
+     col_flags=SAVE_DATA|AUTO_WIDTH;
+     is_matrix=0;
+     cell_geom{ 1;     };
+     calc_expr {
+      expr=;
+     };
+     dim_names {
+      name="dim_names";
+     [0]      };
+     width=0;
+     matrix_col_width=10;
+     ar {
+      name="ar";
+     [0]      };
+    };
+    int_Data @[3] {
+     UserDataItem_List @*(.user_data_) {
+      name=;
+      el_typ=UserDataItem;
+      el_def=0;
+      UserDataItem @[0] {name="NARROW": value=1: val_type_fixed=0: };
+     };
+     name="target";
+     col_flags=SAVE_DATA|AUTO_WIDTH;
+     is_matrix=0;
+     cell_geom{ 1;     };
+     calc_expr {
+      expr=;
+     };
+     dim_names {
+      name="dim_names";
+     [0]      };
+     width=0;
+     matrix_col_width=10;
+     ar {
+      name="ar";
+     [0]      };
+    };
+    double_Data @[4] {
+     name="confidence";
+     col_flags=SAVE_DATA|AUTO_WIDTH;
+     is_matrix=0;
+     cell_geom{ 1;     };
+     calc_expr {
+      expr=;
+     };
+     dim_names {
+      name="dim_names";
+     [0]      };
+     width=0;
+     matrix_col_width=10;
+     ar {
+      name="ar";
+     [0]      };
+    };
+    int_Data @[5] {
+     UserDataItem_List @*(.user_data_) {
+      name=;
+      el_typ=UserDataItem;
+      el_def=0;
+      UserDataItem @[0] {name="NARROW": value=1: val_type_fixed=0: };
+     };
+     name="correct";
+     col_flags=SAVE_DATA|AUTO_WIDTH;
+     is_matrix=0;
+     cell_geom{ 1;     };
+     calc_expr {
+      expr=;
+     };
+     dim_names {
+      name="dim_names";
+     [0]      };
+     width=0;
+     matrix_col_width=10;
+     ar {
+      name="ar";
+     [0]      };
+    };
+   };
+   data_flags=SAVE_ROWS|AUTO_CALC;
+   auto_load=NO_AUTO_LOAD;
+   auto_load_file=;
+   row_height=1;
+   max_col_width=50;
+   keygen 4 0=0;
+   row_indexes {
+    name=;
+   [0]    };
+   last_sort_spec {
+    name="DataSortSpec_19";
+    ops {
+     name="ops";
+     el_typ=DataSortEl;
+     el_def=0;
+    };
+   };
+   row_with_hilite=-1;
+  };
+  DataTable_Group @.gp[0] {
+   name="InputData";
+   el_typ=DataTable;
+   el_def=0;
+   save_tables=1;
+  };
+  DataTable_Group @.gp[1] {
+   name="OutputData";
+   el_typ=DataTable;
+   el_def=0;
+   save_tables=1;
+  };
+  DataTable_Group @.gp[2] {
+   name="AnalysisData";
+   el_typ=DataTable;
+   el_def=0;
+   save_tables=1;
+  };
+ };
+ programs {
+  name="Program_TopGroup_0";
+  el_typ=Program;
+  el_def=0;
+  tags=;
+  desc=;
+  debug_mode=0;
+  Program @[0] {
+   UserDataItem_List @*(.user_data_) {
+    name=;
+    el_typ=UserData_DocLink;
+    el_def=0;
+    UserData_DocLink @[0] {name="DocLink": doc=.programs[0].doc$$: };
+   };
+   name="GenerateSequence";
+   short_nm="GnrSqn";
+   tags=;
+   desc=;
+   version {
+    major=0;
+    minor=0;
+    step=0;
+   };
+   author=;
+   email=;
+   flags=NO_STOP_STEP|OBJS_UPDT_GUI;
+   stop_step_cond {
+    expr=;
+   };
+   objs {
+    name="objs";
+    el_typ=DataTable;
+    el_def=0;
+   };
+   objs_vars {
+    name="objs_vars";
+    el_typ=ProgVar;
+    el_def=0;
+   };
+   types {
+    name="types";
+    el_typ=DynEnumType;
+    el_def=0;
+   };
+   args {
+    name="args";
+    el_typ=ProgVar;
+    el_def=0;
+   };
+   vars {
+    name="vars";
+    el_typ=ProgVar;
+    el_def=0;
+    ProgVar @[0] {
+     name="project";
+     var_type=T_Object;
+     object_type=BpProject;
+     completion_type=;
+     object_val=.$$;
+     object_scope=NULL;
+     objs_ptr=0;
+     flags=CTRL_PANEL|NULL_CHECK|SAVE_VAL|USED|EDIT_VAL;
+     reference=0;
+     desc=;
+     init_from=NULL;
+    };
+   };
+   functions {
+    name="functions";
+    el_typ=Function;
+    el_def=0;
+   };
+   init_code {
+    name="init_code";
+    el_typ=ProgCode;
+    el_def=0;
+   };
+   prog_code {
+    name="prog_code";
+    el_typ=ProgCode;
+    el_def=0;
+    LocalVars @[0] {
+     name="LocalVars_LocalVars0vars";
+     desc=;
+     flags=0;
+     code_string=;
+     local_vars {
+      name="local_vars";
+      el_typ=ProgVar;
+      el_def=0;
+     };
+    };
+    UserScript @[1] {
+     name="UserScript_Readthelaborator_etVarstatusendl";
+     desc=;
+     flags=CAN_REVERT_TO_CODE;
+     code_string="// Read the laboratory controls. Bounds keep the live display legible and
+// the softmax numerically stable, and are written back to the control panel.
+BpProject* ih_project = project;
+Program* ih_cfg = ih_project->programs[\"RunCircuit\"];
+BpNetwork* ih_net = ih_project->networks[\"InductionCircuit\"];
+DataTable* ih_sequence = ih_project->data[\"Sequence\"];
+DataTable* ih_states = ih_project->data[\"CircuitState\"];
+DataTable* ih_results = ih_project->data[\"Experiments\"];
+int ih_n = ih_cfg->GetVar(\"sequence_length\");
+int ih_v = ih_cfg->GetVar(\"vocabulary_size\");
+int ih_seed = ih_cfg->GetVar(\"seed\");
+double ih_temp = ih_cfg->GetVar(\"temperature\");
+double ih_noise = ih_cfg->GetVar(\"noise\");
+int ih_cursor = ih_cfg->GetVar(\"cursor\");
+bool ih_ablate_previous = ih_cfg->GetVar(\"ablate_previous\");
+bool ih_ablate_induction = ih_cfg->GetVar(\"ablate_induction\");
+if(ih_n < 5) ih_n = 5;
+if(ih_n > 32) ih_n = 32;
+if(ih_v < 4) ih_v = 4;
+if(ih_v > 16) ih_v = 16;
+if(ih_temp < 0.02) ih_temp = 0.02;
+if(ih_temp > 5.0) ih_temp = 5.0;
+if(ih_noise < 0.0) ih_noise = 0.0;
+if(ih_noise > 1.0) ih_noise = 1.0;
+if(ih_seed < 1) ih_seed = 1;
+if(ih_seed > 1000000) ih_seed = 1000000;
+if(ih_cursor < 1) ih_cursor = 1;
+if(ih_cursor >= ih_n) ih_cursor = ih_n - 1;
+ih_cfg->SetVar(\"sequence_length\", ih_n);
+ih_cfg->SetVar(\"vocabulary_size\", ih_v);
+ih_cfg->SetVar(\"temperature\", ih_temp);
+ih_cfg->SetVar(\"noise\", ih_noise);
+ih_cfg->SetVar(\"seed\", ih_seed);
+ih_cfg->SetVar(\"cursor\", ih_cursor);
+// Park-Miller RNG using Schrage's overflow-free integer recurrence.
+// Fisher-Yates chooses a fresh vocabulary permutation for each seed.
+int_Matrix ih_permutation;
+ih_permutation.SetGeom(1, ih_v);
+int ih_rng = ih_seed;
+int ih_a;
+for(ih_a = 0; ih_a < ih_v; ih_a++) ih_permutation[ih_a] = ih_a;
+for(ih_a = ih_v - 1; ih_a > 0; ih_a--) {
+  ih_rng = 16807 * (ih_rng % 127773) - 2836 * (ih_rng / 127773);
+  if(ih_rng <= 0) ih_rng += 2147483647;
+  int ih_swap = ih_rng % (ih_a + 1);
+  int ih_tmp = ih_permutation[ih_a];
+  ih_permutation[ih_a] = ih_permutation[ih_swap];
+  ih_permutation[ih_swap] = ih_tmp;
+}
+int ih_period = ih_n / 2;
+if(ih_period > ih_v - 1) ih_period = ih_v - 1;
+ih_sequence->RemoveAllRows();
+ih_sequence->AddRows(ih_n);
+for(ih_a = 0; ih_a < ih_n; ih_a++) {
+  int ih_token = ih_permutation[ih_a % ih_period];
+  // Keep the first exemplar and final query intact. Corrupt intermediate
+  // repetitions with the held-out distractor token at the requested rate.
+  ih_rng = 16807 * (ih_rng % 127773) - 2836 * (ih_rng / 127773);
+  if(ih_rng <= 0) ih_rng += 2147483647;
+  double ih_draw = ih_rng / 2147483647.0;
+  if(ih_a >= ih_period && ih_a < ih_n - 1 && ih_draw < ih_noise)
+    ih_token = ih_permutation[ih_v - 1];
+  ih_sequence->SetVal(ih_a, \"position\", ih_a);
+  ih_sequence->SetVal(ih_token, \"token\", ih_a);
+  ih_sequence->SetVal(String(ih_token), \"label\", ih_a);
+  int ih_next_token = ih_permutation[(ih_a + 1) % ih_period];
+  ih_sequence->SetVal(ih_next_token, \"next_token\", ih_a);
+}
+ih_cursor = ih_n - 1;
+ih_cfg->SetVar(\"cursor\", ih_cursor);
+// Exact constructed two-head attention circuit. Head 1 copies the previous
+// token embedding into a separate key subspace. Head 2 compares the current
+// token query to that subspace, applies a causal softmax and copies values.
+int_Matrix ih_tokens;
+float_Matrix ih_embeddings;
+float_Matrix ih_keys;
+float_Matrix ih_attention;
+float_Matrix ih_values;
+float_Matrix ih_prediction;
+ih_tokens.SetGeom(1, ih_n);
+ih_embeddings.SetGeom(2, ih_n, ih_v);
+ih_keys.SetGeom(2, ih_n, ih_v);
+ih_attention.SetGeom(2, ih_n, ih_n);
+ih_values.SetGeom(2, ih_n, ih_v);
+ih_prediction.SetGeom(1, ih_v);
+ih_embeddings.InitVals(0.0);
+ih_keys.InitVals(0.0);
+ih_attention.InitVals(0.0);
+ih_values.InitVals(0.0);
+ih_prediction.InitVals(0.0);
+int ih_i;
+int ih_j;
+int ih_k;
+for(ih_i = 0; ih_i < ih_n; ih_i++) {
+  ih_tokens[ih_i] = ih_sequence->GetVal(\"token\", ih_i);
+  if(ih_tokens[ih_i] < 0 || ih_tokens[ih_i] >= ih_v) {
+    ih_cfg->SetVar(\"status\", \"Token outside vocabulary. Generate a new sequence.\");
+    ret_val = -1;
+    return;
+  }
+  int ih_current_token = ih_tokens[ih_i];
+  ih_embeddings[ih_i, ih_current_token] = 1.0;
+  if(ih_i > 0 && !ih_ablate_previous) {
+    int ih_previous_token = ih_tokens[ih_i - 1];
+    ih_keys[ih_i, ih_previous_token] = 1.0;
+  }
+}
+for(ih_i = 1; ih_i < ih_n; ih_i++) {
+  double ih_total = 0.0;
+  int ih_query_token = ih_tokens[ih_i];
+  // j=0 has no predecessor key. The standard causal mask permits j<=i;
+  // every future source j>i remains exactly zero.
+  for(ih_j = 1; ih_j <= ih_i; ih_j++) {
+    double ih_match = ih_keys[ih_j, ih_query_token];
+    double ih_weight = exp((ih_match - 1.0) / ih_temp);
+    ih_attention[ih_j, ih_i] = ih_weight;
+    ih_total += ih_weight;
+  }
+  for(ih_j = 1; ih_j <= ih_i; ih_j++)
+    ih_attention[ih_j, ih_i] = ih_attention[ih_j, ih_i] / ih_total;
+}
+for(ih_j = 1; ih_j <= ih_cursor; ih_j++) {
+  double ih_mass = ih_attention[ih_j, ih_cursor];
+  if(ih_ablate_induction) ih_mass = 0.0;
+  int ih_value_token = ih_tokens[ih_j];
+  ih_values[ih_j, ih_value_token] = ih_mass;
+  ih_prediction[ih_value_token] += ih_mass;
+}
+int ih_predicted = -1;
+double ih_best = 0.0;
+for(ih_k = 0; ih_k < ih_v; ih_k++) {
+  if(ih_prediction[ih_k] > ih_best) {
+    ih_best = ih_prediction[ih_k];
+    ih_predicted = ih_k;
+  }
+}
+int ih_target = ih_sequence->GetVal(\"next_token\", ih_cursor);
+ih_cfg->SetVar(\"prediction\", ih_predicted);
+ih_cfg->SetVar(\"target\", ih_target);
+ih_cfg->SetVar(\"confidence\", ih_best);
+ih_cfg->SetVar(\"status\", \"Query \" + String(ih_tokens[ih_cursor]) +
+  \" at position \" + String(ih_cursor) + \" predicts \" + String(ih_predicted) +
+  \"; repeated-pattern target \" + String(ih_target));
+
+// Keep inspectable DataTable matrices and real Network unit state in sync.
+bool ih_resize_table = ih_states->data.size != 5;
+if(!ih_resize_table) {
+  DataCol* ih_first_column = ih_states->data[0];
+  ih_resize_table = ih_first_column->cell_geom.dim(0) != ih_n ||
+                    ih_first_column->cell_geom.dim(1) != ih_v;
+}
+if(ih_resize_table) {
+  ih_states->RemoveAllCols();
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"TokenEmbeddings\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"PreviousTokenKeys\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"CausalAttention\", 2, ih_n, ih_n);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"CopiedValues\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"Prediction\", 1, ih_v);
+  ih_states->AddRows(1);
+ }
+ih_states->SetValAsMatrix(ih_embeddings, \"TokenEmbeddings\", 0);
+ih_states->SetValAsMatrix(ih_keys, \"PreviousTokenKeys\", 0);
+ih_states->SetValAsMatrix(ih_attention, \"CausalAttention\", 0);
+ih_states->SetValAsMatrix(ih_values, \"CopiedValues\", 0);
+ih_states->SetValAsMatrix(ih_prediction, \"Prediction\", 0);
+
+Layer* ih_token_layer = ih_net->layers[\"Token_Embeddings\"];
+Layer* ih_key_layer = ih_net->layers[\"Previous_Token_Keys\"];
+Layer* ih_query_layer = ih_net->layers[\"Current_Query\"];
+Layer* ih_attn_layer = ih_net->layers[\"Causal_Attention\"];
+Layer* ih_value_layer = ih_net->layers[\"Copied_Values\"];
+Layer* ih_pred_layer = ih_net->layers[\"Next_Token_Prediction\"];
+if(ih_token_layer->un_geom.x != ih_n || ih_token_layer->un_geom.y != ih_v ||
+   ih_token_layer->n_units_built == 0) {
+  ih_token_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_key_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_query_layer->SetLayerUnitGeom(1, ih_v);
+  ih_attn_layer->SetLayerUnitGeom(ih_n, ih_n);
+  ih_value_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_pred_layer->SetLayerUnitGeom(1, ih_v);
+  ih_token_layer->SetAbsPos(0, 0, 0);
+  ih_key_layer->SetAbsPos(0, ih_v + 3, 3);
+  ih_query_layer->SetAbsPos(ih_n + 4, ih_v + 3, 3);
+  ih_attn_layer->SetAbsPos(0, 2 * (ih_v + 3), 6);
+  ih_value_layer->SetAbsPos(0, 2 * (ih_v + 3) + ih_n + 4, 9);
+  ih_pred_layer->SetAbsPos(ih_n + 4, 2 * (ih_v + 3) + ih_n + 4, 12);
+  ih_net->Build();
+  ih_net->Init_Weights();
+}
+for(ih_i = 0; ih_i < 6; ih_i++) {
+  Layer* ih_label_layer = ih_net->layers[ih_i];
+  ih_label_layer->SetUnitNames(true);
+}
+for(ih_j = 0; ih_j < ih_n; ih_j++) {
+  for(ih_k = 0; ih_k < ih_v; ih_k++) {
+    ih_token_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_embeddings[ih_j, ih_k];
+    ih_key_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_keys[ih_j, ih_k];
+    ih_value_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_values[ih_j, ih_k];
+    String ih_label = String(ih_j) + \":\" + String(ih_k);
+    ih_token_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+    ih_key_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+    ih_value_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+  }
+  for(ih_i = 0; ih_i < ih_n; ih_i++) {
+    ih_attn_layer->GetUnitFlatXY(ih_j, ih_i)->act = ih_attention[ih_j, ih_i];
+    ih_attn_layer->SetUnitNameIdx(ih_i * ih_n + ih_j, String(ih_i) + \"<-\" + String(ih_j));
+  }
+}
+for(ih_k = 0; ih_k < ih_v; ih_k++) {
+  ih_query_layer->GetUnitIdx(ih_k)->act = (ih_k == ih_tokens[ih_cursor]);
+  ih_pred_layer->GetUnitIdx(ih_k)->act = ih_prediction[ih_k];
+  ih_query_layer->SetUnitNameIdx(ih_k, String(ih_k));
+  ih_pred_layer->SetUnitNameIdx(ih_k, String(ih_k));
+}
+ih_net->UpdateAllViews();
+ih_states->UpdateAllViews();
+ih_sequence->UpdateAllViews();
+if(taMisc::gui_active) {
+  NetView* ih_view = ih_net->FindMakeView();
+  ih_view->lay_layout = NetView::THREE_D;
+  ih_view->unit_disp_mode = NetView::UDM_BLOCK;
+  ih_view->unit_text_disp = NetView::UTD_NAMES;
+  ih_view->display = true;
+  ih_net->SetViewVar(\"act\");
+  ih_view->SetScaleData(false, 0.0, 1.0);
+  // These annotations connect computational stages; they are not Bp synapses.
+  ih_view->annotations.Reset();
+  ih_view->AnnoteEndArrow(true, ih_n / 2.0, ih_v + 0.5, 0,
+    0, 2.5, 3, 3.0, \"#0ea5a3\", 0.018);
+  ih_view->AnnoteEndArrow(true, ih_n / 2.0, 2 * ih_v + 3.5, 3,
+    0, 2.5, 3, 3.0, \"#7c3aed\", 0.018);
+  ih_view->AnnoteEndArrow(true, ih_n + 4, ih_v + 3, 3,
+    -4, ih_v + 3, 3, 3.0, \"#d97706\", 0.018);
+  ih_view->AnnoteEndArrow(true, ih_n / 2.0, 2 * (ih_v + 3) + ih_n + 0.5, 6,
+    0, 3.5, 3, 3.0, \"#2563eb\", 0.018);
+  ih_view->AnnoteEndArrow(true, ih_n + 0.5, 2 * (ih_v + 3) + ih_n + 4 + ih_v / 2.0, 9,
+    3.5, 0, 3, 3.0, \"#059669\", 0.018);
+  ih_view->AnnoteText(true, \"INDUCTORHEAD | PREFIX MATCH -> VALUE COPY\",
+    0, 2 * (ih_v + 3) + ih_n + ih_v + 7, 12, 0.027, T3DataViewMain::LEFT, \"#075985\");
+  ih_view->UpdateDisplay();
+}
+
+cout << \"INDUCTOR \" << ih_cfg->GetVar(\"status\") << endl;
+";
+     script {
+      expr="// Read the laboratory controls. Bounds keep the live display legible and
+// the softmax numerically stable, and are written back to the control panel.
+BpProject* ih_project = project;
+Program* ih_cfg = ih_project->programs[\"RunCircuit\"];
+BpNetwork* ih_net = ih_project->networks[\"InductionCircuit\"];
+DataTable* ih_sequence = ih_project->data[\"Sequence\"];
+DataTable* ih_states = ih_project->data[\"CircuitState\"];
+DataTable* ih_results = ih_project->data[\"Experiments\"];
+int ih_n = ih_cfg->GetVar(\"sequence_length\");
+int ih_v = ih_cfg->GetVar(\"vocabulary_size\");
+int ih_seed = ih_cfg->GetVar(\"seed\");
+double ih_temp = ih_cfg->GetVar(\"temperature\");
+double ih_noise = ih_cfg->GetVar(\"noise\");
+int ih_cursor = ih_cfg->GetVar(\"cursor\");
+bool ih_ablate_previous = ih_cfg->GetVar(\"ablate_previous\");
+bool ih_ablate_induction = ih_cfg->GetVar(\"ablate_induction\");
+if(ih_n < 5) ih_n = 5;
+if(ih_n > 32) ih_n = 32;
+if(ih_v < 4) ih_v = 4;
+if(ih_v > 16) ih_v = 16;
+if(ih_temp < 0.02) ih_temp = 0.02;
+if(ih_temp > 5.0) ih_temp = 5.0;
+if(ih_noise < 0.0) ih_noise = 0.0;
+if(ih_noise > 1.0) ih_noise = 1.0;
+if(ih_seed < 1) ih_seed = 1;
+if(ih_seed > 1000000) ih_seed = 1000000;
+if(ih_cursor < 1) ih_cursor = 1;
+if(ih_cursor >= ih_n) ih_cursor = ih_n - 1;
+ih_cfg->SetVar(\"sequence_length\", ih_n);
+ih_cfg->SetVar(\"vocabulary_size\", ih_v);
+ih_cfg->SetVar(\"temperature\", ih_temp);
+ih_cfg->SetVar(\"noise\", ih_noise);
+ih_cfg->SetVar(\"seed\", ih_seed);
+ih_cfg->SetVar(\"cursor\", ih_cursor);
+// Park-Miller RNG using Schrage's overflow-free integer recurrence.
+// Fisher-Yates chooses a fresh vocabulary permutation for each seed.
+int_Matrix ih_permutation;
+ih_permutation.SetGeom(1, ih_v);
+int ih_rng = ih_seed;
+int ih_a;
+for(ih_a = 0; ih_a < ih_v; ih_a++) ih_permutation[ih_a] = ih_a;
+for(ih_a = ih_v - 1; ih_a > 0; ih_a--) {
+  ih_rng = 16807 * (ih_rng % 127773) - 2836 * (ih_rng / 127773);
+  if(ih_rng <= 0) ih_rng += 2147483647;
+  int ih_swap = ih_rng % (ih_a + 1);
+  int ih_tmp = ih_permutation[ih_a];
+  ih_permutation[ih_a] = ih_permutation[ih_swap];
+  ih_permutation[ih_swap] = ih_tmp;
+}
+int ih_period = ih_n / 2;
+if(ih_period > ih_v - 1) ih_period = ih_v - 1;
+ih_sequence->RemoveAllRows();
+ih_sequence->AddRows(ih_n);
+for(ih_a = 0; ih_a < ih_n; ih_a++) {
+  int ih_token = ih_permutation[ih_a % ih_period];
+  // Keep the first exemplar and final query intact. Corrupt intermediate
+  // repetitions with the held-out distractor token at the requested rate.
+  ih_rng = 16807 * (ih_rng % 127773) - 2836 * (ih_rng / 127773);
+  if(ih_rng <= 0) ih_rng += 2147483647;
+  double ih_draw = ih_rng / 2147483647.0;
+  if(ih_a >= ih_period && ih_a < ih_n - 1 && ih_draw < ih_noise)
+    ih_token = ih_permutation[ih_v - 1];
+  ih_sequence->SetVal(ih_a, \"position\", ih_a);
+  ih_sequence->SetVal(ih_token, \"token\", ih_a);
+  ih_sequence->SetVal(String(ih_token), \"label\", ih_a);
+  int ih_next_token = ih_permutation[(ih_a + 1) % ih_period];
+  ih_sequence->SetVal(ih_next_token, \"next_token\", ih_a);
+}
+ih_cursor = ih_n - 1;
+ih_cfg->SetVar(\"cursor\", ih_cursor);
+// Exact constructed two-head attention circuit. Head 1 copies the previous
+// token embedding into a separate key subspace. Head 2 compares the current
+// token query to that subspace, applies a causal softmax and copies values.
+int_Matrix ih_tokens;
+float_Matrix ih_embeddings;
+float_Matrix ih_keys;
+float_Matrix ih_attention;
+float_Matrix ih_values;
+float_Matrix ih_prediction;
+ih_tokens.SetGeom(1, ih_n);
+ih_embeddings.SetGeom(2, ih_n, ih_v);
+ih_keys.SetGeom(2, ih_n, ih_v);
+ih_attention.SetGeom(2, ih_n, ih_n);
+ih_values.SetGeom(2, ih_n, ih_v);
+ih_prediction.SetGeom(1, ih_v);
+ih_embeddings.InitVals(0.0);
+ih_keys.InitVals(0.0);
+ih_attention.InitVals(0.0);
+ih_values.InitVals(0.0);
+ih_prediction.InitVals(0.0);
+int ih_i;
+int ih_j;
+int ih_k;
+for(ih_i = 0; ih_i < ih_n; ih_i++) {
+  ih_tokens[ih_i] = ih_sequence->GetVal(\"token\", ih_i);
+  if(ih_tokens[ih_i] < 0 || ih_tokens[ih_i] >= ih_v) {
+    ih_cfg->SetVar(\"status\", \"Token outside vocabulary. Generate a new sequence.\");
+    ret_val = -1;
+    return;
+  }
+  int ih_current_token = ih_tokens[ih_i];
+  ih_embeddings[ih_i, ih_current_token] = 1.0;
+  if(ih_i > 0 && !ih_ablate_previous) {
+    int ih_previous_token = ih_tokens[ih_i - 1];
+    ih_keys[ih_i, ih_previous_token] = 1.0;
+  }
+}
+for(ih_i = 1; ih_i < ih_n; ih_i++) {
+  double ih_total = 0.0;
+  int ih_query_token = ih_tokens[ih_i];
+  // j=0 has no predecessor key. The standard causal mask permits j<=i;
+  // every future source j>i remains exactly zero.
+  for(ih_j = 1; ih_j <= ih_i; ih_j++) {
+    double ih_match = ih_keys[ih_j, ih_query_token];
+    double ih_weight = exp((ih_match - 1.0) / ih_temp);
+    ih_attention[ih_j, ih_i] = ih_weight;
+    ih_total += ih_weight;
+  }
+  for(ih_j = 1; ih_j <= ih_i; ih_j++)
+    ih_attention[ih_j, ih_i] = ih_attention[ih_j, ih_i] / ih_total;
+}
+for(ih_j = 1; ih_j <= ih_cursor; ih_j++) {
+  double ih_mass = ih_attention[ih_j, ih_cursor];
+  if(ih_ablate_induction) ih_mass = 0.0;
+  int ih_value_token = ih_tokens[ih_j];
+  ih_values[ih_j, ih_value_token] = ih_mass;
+  ih_prediction[ih_value_token] += ih_mass;
+}
+int ih_predicted = -1;
+double ih_best = 0.0;
+for(ih_k = 0; ih_k < ih_v; ih_k++) {
+  if(ih_prediction[ih_k] > ih_best) {
+    ih_best = ih_prediction[ih_k];
+    ih_predicted = ih_k;
+  }
+}
+int ih_target = ih_sequence->GetVal(\"next_token\", ih_cursor);
+ih_cfg->SetVar(\"prediction\", ih_predicted);
+ih_cfg->SetVar(\"target\", ih_target);
+ih_cfg->SetVar(\"confidence\", ih_best);
+ih_cfg->SetVar(\"status\", \"Query \" + String(ih_tokens[ih_cursor]) +
+  \" at position \" + String(ih_cursor) + \" predicts \" + String(ih_predicted) +
+  \"; repeated-pattern target \" + String(ih_target));
+
+// Keep inspectable DataTable matrices and real Network unit state in sync.
+bool ih_resize_table = ih_states->data.size != 5;
+if(!ih_resize_table) {
+  DataCol* ih_first_column = ih_states->data[0];
+  ih_resize_table = ih_first_column->cell_geom.dim(0) != ih_n ||
+                    ih_first_column->cell_geom.dim(1) != ih_v;
+}
+if(ih_resize_table) {
+  ih_states->RemoveAllCols();
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"TokenEmbeddings\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"PreviousTokenKeys\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"CausalAttention\", 2, ih_n, ih_n);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"CopiedValues\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"Prediction\", 1, ih_v);
+  ih_states->AddRows(1);
+ }
+ih_states->SetValAsMatrix(ih_embeddings, \"TokenEmbeddings\", 0);
+ih_states->SetValAsMatrix(ih_keys, \"PreviousTokenKeys\", 0);
+ih_states->SetValAsMatrix(ih_attention, \"CausalAttention\", 0);
+ih_states->SetValAsMatrix(ih_values, \"CopiedValues\", 0);
+ih_states->SetValAsMatrix(ih_prediction, \"Prediction\", 0);
+
+Layer* ih_token_layer = ih_net->layers[\"Token_Embeddings\"];
+Layer* ih_key_layer = ih_net->layers[\"Previous_Token_Keys\"];
+Layer* ih_query_layer = ih_net->layers[\"Current_Query\"];
+Layer* ih_attn_layer = ih_net->layers[\"Causal_Attention\"];
+Layer* ih_value_layer = ih_net->layers[\"Copied_Values\"];
+Layer* ih_pred_layer = ih_net->layers[\"Next_Token_Prediction\"];
+if(ih_token_layer->un_geom.x != ih_n || ih_token_layer->un_geom.y != ih_v ||
+   ih_token_layer->n_units_built == 0) {
+  ih_token_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_key_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_query_layer->SetLayerUnitGeom(1, ih_v);
+  ih_attn_layer->SetLayerUnitGeom(ih_n, ih_n);
+  ih_value_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_pred_layer->SetLayerUnitGeom(1, ih_v);
+  ih_token_layer->SetAbsPos(0, 0, 0);
+  ih_key_layer->SetAbsPos(0, ih_v + 3, 3);
+  ih_query_layer->SetAbsPos(ih_n + 4, ih_v + 3, 3);
+  ih_attn_layer->SetAbsPos(0, 2 * (ih_v + 3), 6);
+  ih_value_layer->SetAbsPos(0, 2 * (ih_v + 3) + ih_n + 4, 9);
+  ih_pred_layer->SetAbsPos(ih_n + 4, 2 * (ih_v + 3) + ih_n + 4, 12);
+  ih_net->Build();
+  ih_net->Init_Weights();
+}
+for(ih_i = 0; ih_i < 6; ih_i++) {
+  Layer* ih_label_layer = ih_net->layers[ih_i];
+  ih_label_layer->SetUnitNames(true);
+}
+for(ih_j = 0; ih_j < ih_n; ih_j++) {
+  for(ih_k = 0; ih_k < ih_v; ih_k++) {
+    ih_token_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_embeddings[ih_j, ih_k];
+    ih_key_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_keys[ih_j, ih_k];
+    ih_value_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_values[ih_j, ih_k];
+    String ih_label = String(ih_j) + \":\" + String(ih_k);
+    ih_token_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+    ih_key_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+    ih_value_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+  }
+  for(ih_i = 0; ih_i < ih_n; ih_i++) {
+    ih_attn_layer->GetUnitFlatXY(ih_j, ih_i)->act = ih_attention[ih_j, ih_i];
+    ih_attn_layer->SetUnitNameIdx(ih_i * ih_n + ih_j, String(ih_i) + \"<-\" + String(ih_j));
+  }
+}
+for(ih_k = 0; ih_k < ih_v; ih_k++) {
+  ih_query_layer->GetUnitIdx(ih_k)->act = (ih_k == ih_tokens[ih_cursor]);
+  ih_pred_layer->GetUnitIdx(ih_k)->act = ih_prediction[ih_k];
+  ih_query_layer->SetUnitNameIdx(ih_k, String(ih_k));
+  ih_pred_layer->SetUnitNameIdx(ih_k, String(ih_k));
+}
+ih_net->UpdateAllViews();
+ih_states->UpdateAllViews();
+ih_sequence->UpdateAllViews();
+if(taMisc::gui_active) {
+  NetView* ih_view = ih_net->FindMakeView();
+  ih_view->lay_layout = NetView::THREE_D;
+  ih_view->unit_disp_mode = NetView::UDM_BLOCK;
+  ih_view->unit_text_disp = NetView::UTD_NAMES;
+  ih_view->display = true;
+  ih_net->SetViewVar(\"act\");
+  ih_view->SetScaleData(false, 0.0, 1.0);
+  // These annotations connect computational stages; they are not Bp synapses.
+  ih_view->annotations.Reset();
+  ih_view->AnnoteEndArrow(true, ih_n / 2.0, ih_v + 0.5, 0,
+    0, 2.5, 3, 3.0, \"#0ea5a3\", 0.018);
+  ih_view->AnnoteEndArrow(true, ih_n / 2.0, 2 * ih_v + 3.5, 3,
+    0, 2.5, 3, 3.0, \"#7c3aed\", 0.018);
+  ih_view->AnnoteEndArrow(true, ih_n + 4, ih_v + 3, 3,
+    -4, ih_v + 3, 3, 3.0, \"#d97706\", 0.018);
+  ih_view->AnnoteEndArrow(true, ih_n / 2.0, 2 * (ih_v + 3) + ih_n + 0.5, 6,
+    0, 3.5, 3, 3.0, \"#2563eb\", 0.018);
+  ih_view->AnnoteEndArrow(true, ih_n + 0.5, 2 * (ih_v + 3) + ih_n + 4 + ih_v / 2.0, 9,
+    3.5, 0, 3, 3.0, \"#059669\", 0.018);
+  ih_view->AnnoteText(true, \"INDUCTORHEAD | PREFIX MATCH -> VALUE COPY\",
+    0, 2 * (ih_v + 3) + ih_n + ih_v + 7, 12, 0.027, T3DataViewMain::LEFT, \"#075985\");
+  ih_view->UpdateDisplay();
+}
+
+cout << \"INDUCTOR \" << ih_cfg->GetVar(\"status\") << endl;
+";
+     };
+    };
+   };
+   step_prog=NULL;
+   step_n=1;
+   doc {
+    name="doc";
+    desc=;
+    web_doc=0;
+    wiki=;
+    url="local";
+    full_url="local";
+    text_size=1;
+    text="<html>
+<head></head>
+<body>
+== Enter Title Here ==
+</body>
+</html>
+";
+    html_text=;
+   };
+  };
+  Program @[1] {
+   UserDataItem_List @*(.user_data_) {
+    name=;
+    el_typ=UserData_DocLink;
+    el_def=0;
+    UserData_DocLink @[0] {name="DocLink": doc=.programs[1].doc$$: };
+   };
+   name="RunCircuit";
+   short_nm="RnCrct";
+   tags=;
+   desc=;
+   version {
+    major=0;
+    minor=0;
+    step=0;
+   };
+   author=;
+   email=;
+   flags=NO_STOP_STEP|OBJS_UPDT_GUI;
+   stop_step_cond {
+    expr=;
+   };
+   objs {
+    name="objs";
+    el_typ=DataTable;
+    el_def=0;
+   };
+   objs_vars {
+    name="objs_vars";
+    el_typ=ProgVar;
+    el_def=0;
+   };
+   types {
+    name="types";
+    el_typ=DynEnumType;
+    el_def=0;
+   };
+   args {
+    name="args";
+    el_typ=ProgVar;
+    el_def=0;
+   };
+   vars {
+    name="vars";
+    el_typ=ProgVar;
+    el_def=0;
+    ProgVar @[0] {
+     name="project";
+     var_type=T_Object;
+     object_type=BpProject;
+     completion_type=;
+     object_val=$.$;
+     object_scope=NULL;
+     objs_ptr=0;
+     flags=CTRL_PANEL|NULL_CHECK|SAVE_VAL|EDIT_VAL;
+     reference=0;
+     desc=;
+     init_from=NULL;
+    };
+    ProgVar @[1] {
+     name="sequence_length";
+     var_type=T_Int;
+     int_val=13;
+     completion_type=;
+     object_scope=NULL;
+     flags=CTRL_PANEL|NULL_CHECK|SAVE_VAL|EDIT_VAL;
+     reference=0;
+     desc="Number of token positions; Generate applies changes (5–32).";
+     init_from=NULL;
+    };
+    ProgVar @[2] {
+     name="vocabulary_size";
+     var_type=T_Int;
+     int_val=8;
+     completion_type=;
+     object_scope=NULL;
+     flags=CTRL_PANEL|NULL_CHECK|SAVE_VAL|EDIT_VAL;
+     reference=0;
+     desc="Distinct token identities (4–16).";
+     init_from=NULL;
+    };
+    ProgVar @[3] {
+     name="seed";
+     var_type=T_Int;
+     int_val=1729;
+     completion_type=;
+     object_scope=NULL;
+     flags=CTRL_PANEL|NULL_CHECK|SAVE_VAL|EDIT_VAL;
+     reference=0;
+     desc="Reproducible permutation seed; Generate applies changes.";
+     init_from=NULL;
+    };
+    ProgVar @[4] {
+     name="temperature";
+     var_type=T_Real;
+     real_val=0.1;
+     completion_type=;
+     object_scope=NULL;
+     flags=CTRL_PANEL|NULL_CHECK|SAVE_VAL|EDIT_VAL;
+     reference=0;
+     desc="Softmax temperature: low values sharpen prefix matching.";
+     init_from=NULL;
+    };
+    ProgVar @[5] {
+     name="noise";
+     var_type=T_Real;
+     real_val=0;
+     completion_type=;
+     object_scope=NULL;
+     flags=CTRL_PANEL|NULL_CHECK|SAVE_VAL|EDIT_VAL;
+     reference=0;
+     desc="Probability of a distractor in intermediate repetitions (0–1).";
+     init_from=NULL;
+    };
+    ProgVar @[6] {
+     name="cursor";
+     var_type=T_Int;
+     int_val=12;
+     completion_type=;
+     object_scope=NULL;
+     flags=CTRL_PANEL|NULL_CHECK|SAVE_VAL|EDIT_VAL;
+     reference=0;
+     desc="Current query position, counted from zero.";
+     init_from=NULL;
+    };
+    ProgVar @[7] {
+     name="ablate_previous";
+     var_type=T_Bool;
+     bool_val=0;
+     completion_type=;
+     object_scope=NULL;
+     flags=CTRL_PANEL|NULL_CHECK|SAVE_VAL|EDIT_VAL;
+     reference=0;
+     desc="Remove the previous-token head's key contribution.";
+     init_from=NULL;
+    };
+    ProgVar @[8] {
+     name="ablate_induction";
+     var_type=T_Bool;
+     bool_val=0;
+     completion_type=;
+     object_scope=NULL;
+     flags=CTRL_PANEL|NULL_CHECK|SAVE_VAL|EDIT_VAL;
+     reference=0;
+     desc="Remove the induction head's copied output.";
+     init_from=NULL;
+    };
+    ProgVar @[9] {
+     name="prediction";
+     var_type=T_Int;
+     int_val=6;
+     completion_type=;
+     object_scope=NULL;
+     flags=CTRL_PANEL|CTRL_READ_ONLY|NULL_CHECK|SAVE_VAL|EDIT_VAL;
+     reference=0;
+     desc="Predicted next token; −1 means no evidence.";
+     init_from=NULL;
+    };
+    ProgVar @[10] {
+     name="target";
+     var_type=T_Int;
+     int_val=6;
+     completion_type=;
+     object_scope=NULL;
+     flags=CTRL_PANEL|CTRL_READ_ONLY|NULL_CHECK|SAVE_VAL|EDIT_VAL;
+     reference=0;
+     desc="Next token of the uncorrupted repeated pattern.";
+     init_from=NULL;
+    };
+    ProgVar @[11] {
+     name="confidence";
+     var_type=T_Real;
+     real_val=0.9997730851173401;
+     completion_type=;
+     object_scope=NULL;
+     flags=CTRL_PANEL|CTRL_READ_ONLY|NULL_CHECK|SAVE_VAL|EDIT_VAL;
+     reference=0;
+     desc="Attention mass assigned to the predicted token.";
+     init_from=NULL;
+    };
+    ProgVar @[12] {
+     name="accuracy";
+     var_type=T_Real;
+     real_val=0;
+     completion_type=;
+     object_scope=NULL;
+     flags=CTRL_PANEL|CTRL_READ_ONLY|NULL_CHECK|SAVE_VAL|EDIT_VAL;
+     reference=0;
+     desc="Intact accuracy over the most recent 64 held-out seeds.";
+     init_from=NULL;
+    };
+    ProgVar @[13] {
+     name="status";
+     var_type=T_String;
+     string_val="Query 0 at position 12 predicts 6; repeated-pattern target 6";
+     completion_type=;
+     object_scope=NULL;
+     flags=CTRL_PANEL|CTRL_READ_ONLY|NULL_CHECK|SAVE_VAL|EDIT_VAL;
+     reference=0;
+     desc="Current circuit result.";
+     init_from=NULL;
+    };
+   };
+   functions {
+    name="functions";
+    el_typ=Function;
+    el_def=0;
+   };
+   init_code {
+    name="init_code";
+    el_typ=ProgCode;
+    el_def=0;
+   };
+   prog_code {
+    name="prog_code";
+    el_typ=ProgCode;
+    el_def=0;
+    LocalVars @[0] {
+     name=;
+     desc=;
+     flags=0;
+     code_string=;
+     local_vars {
+      name="local_vars";
+      el_typ=ProgVar;
+      el_def=0;
+     };
+    };
+    UserScript @[1] {
+     name="UserScript_Readthelaborator_etVarstatusendl";
+     desc=;
+     flags=0;
+     code_string=;
+     script {
+      expr="// Read the laboratory controls. Bounds keep the live display legible and
+// the softmax numerically stable, and are written back to the control panel.
+BpProject* ih_project = project;
+Program* ih_cfg = ih_project->programs[\"RunCircuit\"];
+BpNetwork* ih_net = ih_project->networks[\"InductionCircuit\"];
+DataTable* ih_sequence = ih_project->data[\"Sequence\"];
+DataTable* ih_states = ih_project->data[\"CircuitState\"];
+DataTable* ih_results = ih_project->data[\"Experiments\"];
+int ih_n = ih_cfg->GetVar(\"sequence_length\");
+int ih_v = ih_cfg->GetVar(\"vocabulary_size\");
+int ih_seed = ih_cfg->GetVar(\"seed\");
+double ih_temp = ih_cfg->GetVar(\"temperature\");
+double ih_noise = ih_cfg->GetVar(\"noise\");
+int ih_cursor = ih_cfg->GetVar(\"cursor\");
+bool ih_ablate_previous = ih_cfg->GetVar(\"ablate_previous\");
+bool ih_ablate_induction = ih_cfg->GetVar(\"ablate_induction\");
+if(ih_n < 5) ih_n = 5;
+if(ih_n > 32) ih_n = 32;
+if(ih_v < 4) ih_v = 4;
+if(ih_v > 16) ih_v = 16;
+if(ih_temp < 0.02) ih_temp = 0.02;
+if(ih_temp > 5.0) ih_temp = 5.0;
+if(ih_noise < 0.0) ih_noise = 0.0;
+if(ih_noise > 1.0) ih_noise = 1.0;
+if(ih_seed < 1) ih_seed = 1;
+if(ih_seed > 1000000) ih_seed = 1000000;
+if(ih_cursor < 1) ih_cursor = 1;
+if(ih_cursor >= ih_n) ih_cursor = ih_n - 1;
+ih_cfg->SetVar(\"sequence_length\", ih_n);
+ih_cfg->SetVar(\"vocabulary_size\", ih_v);
+ih_cfg->SetVar(\"temperature\", ih_temp);
+ih_cfg->SetVar(\"noise\", ih_noise);
+ih_cfg->SetVar(\"seed\", ih_seed);
+ih_cfg->SetVar(\"cursor\", ih_cursor);
+
+if(ih_sequence->rows != ih_n) {
+  ih_cfg->SetVar(\"status\", \"Sequence length changed: press Generate sequence.\");
+  ret_val = -1;
+  return;
+}
+// Exact constructed two-head attention circuit. Head 1 copies the previous
+// token embedding into a separate key subspace. Head 2 compares the current
+// token query to that subspace, applies a causal softmax and copies values.
+int_Matrix ih_tokens;
+float_Matrix ih_embeddings;
+float_Matrix ih_keys;
+float_Matrix ih_attention;
+float_Matrix ih_values;
+float_Matrix ih_prediction;
+ih_tokens.SetGeom(1, ih_n);
+ih_embeddings.SetGeom(2, ih_n, ih_v);
+ih_keys.SetGeom(2, ih_n, ih_v);
+ih_attention.SetGeom(2, ih_n, ih_n);
+ih_values.SetGeom(2, ih_n, ih_v);
+ih_prediction.SetGeom(1, ih_v);
+ih_embeddings.InitVals(0.0);
+ih_keys.InitVals(0.0);
+ih_attention.InitVals(0.0);
+ih_values.InitVals(0.0);
+ih_prediction.InitVals(0.0);
+int ih_i;
+int ih_j;
+int ih_k;
+for(ih_i = 0; ih_i < ih_n; ih_i++) {
+  ih_tokens[ih_i] = ih_sequence->GetVal(\"token\", ih_i);
+  if(ih_tokens[ih_i] < 0 || ih_tokens[ih_i] >= ih_v) {
+    ih_cfg->SetVar(\"status\", \"Token outside vocabulary. Generate a new sequence.\");
+    ret_val = -1;
+    return;
+  }
+  int ih_current_token = ih_tokens[ih_i];
+  ih_embeddings[ih_i, ih_current_token] = 1.0;
+  if(ih_i > 0 && !ih_ablate_previous) {
+    int ih_previous_token = ih_tokens[ih_i - 1];
+    ih_keys[ih_i, ih_previous_token] = 1.0;
+  }
+}
+for(ih_i = 1; ih_i < ih_n; ih_i++) {
+  double ih_total = 0.0;
+  int ih_query_token = ih_tokens[ih_i];
+  // j=0 has no predecessor key. The standard causal mask permits j<=i;
+  // every future source j>i remains exactly zero.
+  for(ih_j = 1; ih_j <= ih_i; ih_j++) {
+    double ih_match = ih_keys[ih_j, ih_query_token];
+    double ih_weight = exp((ih_match - 1.0) / ih_temp);
+    ih_attention[ih_j, ih_i] = ih_weight;
+    ih_total += ih_weight;
+  }
+  for(ih_j = 1; ih_j <= ih_i; ih_j++)
+    ih_attention[ih_j, ih_i] = ih_attention[ih_j, ih_i] / ih_total;
+}
+for(ih_j = 1; ih_j <= ih_cursor; ih_j++) {
+  double ih_mass = ih_attention[ih_j, ih_cursor];
+  if(ih_ablate_induction) ih_mass = 0.0;
+  int ih_value_token = ih_tokens[ih_j];
+  ih_values[ih_j, ih_value_token] = ih_mass;
+  ih_prediction[ih_value_token] += ih_mass;
+}
+int ih_predicted = -1;
+double ih_best = 0.0;
+for(ih_k = 0; ih_k < ih_v; ih_k++) {
+  if(ih_prediction[ih_k] > ih_best) {
+    ih_best = ih_prediction[ih_k];
+    ih_predicted = ih_k;
+  }
+}
+int ih_target = ih_sequence->GetVal(\"next_token\", ih_cursor);
+ih_cfg->SetVar(\"prediction\", ih_predicted);
+ih_cfg->SetVar(\"target\", ih_target);
+ih_cfg->SetVar(\"confidence\", ih_best);
+ih_cfg->SetVar(\"status\", \"Query \" + String(ih_tokens[ih_cursor]) +
+  \" at position \" + String(ih_cursor) + \" predicts \" + String(ih_predicted) +
+  \"; repeated-pattern target \" + String(ih_target));
+
+// Keep inspectable DataTable matrices and real Network unit state in sync.
+bool ih_resize_table = ih_states->data.size != 5;
+if(!ih_resize_table) {
+  DataCol* ih_first_column = ih_states->data[0];
+  ih_resize_table = ih_first_column->cell_geom.dim(0) != ih_n ||
+                    ih_first_column->cell_geom.dim(1) != ih_v;
+}
+if(ih_resize_table) {
+  ih_states->RemoveAllCols();
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"TokenEmbeddings\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"PreviousTokenKeys\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"CausalAttention\", 2, ih_n, ih_n);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"CopiedValues\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"Prediction\", 1, ih_v);
+  ih_states->AddRows(1);
+ }
+ih_states->SetValAsMatrix(ih_embeddings, \"TokenEmbeddings\", 0);
+ih_states->SetValAsMatrix(ih_keys, \"PreviousTokenKeys\", 0);
+ih_states->SetValAsMatrix(ih_attention, \"CausalAttention\", 0);
+ih_states->SetValAsMatrix(ih_values, \"CopiedValues\", 0);
+ih_states->SetValAsMatrix(ih_prediction, \"Prediction\", 0);
+
+Layer* ih_token_layer = ih_net->layers[\"Token_Embeddings\"];
+Layer* ih_key_layer = ih_net->layers[\"Previous_Token_Keys\"];
+Layer* ih_query_layer = ih_net->layers[\"Current_Query\"];
+Layer* ih_attn_layer = ih_net->layers[\"Causal_Attention\"];
+Layer* ih_value_layer = ih_net->layers[\"Copied_Values\"];
+Layer* ih_pred_layer = ih_net->layers[\"Next_Token_Prediction\"];
+if(ih_token_layer->un_geom.x != ih_n || ih_token_layer->un_geom.y != ih_v ||
+   ih_token_layer->n_units_built == 0) {
+  ih_token_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_key_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_query_layer->SetLayerUnitGeom(1, ih_v);
+  ih_attn_layer->SetLayerUnitGeom(ih_n, ih_n);
+  ih_value_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_pred_layer->SetLayerUnitGeom(1, ih_v);
+  ih_token_layer->SetAbsPos(0, 0, 0);
+  ih_key_layer->SetAbsPos(0, ih_v + 3, 3);
+  ih_query_layer->SetAbsPos(ih_n + 4, ih_v + 3, 3);
+  ih_attn_layer->SetAbsPos(0, 2 * (ih_v + 3), 6);
+  ih_value_layer->SetAbsPos(0, 2 * (ih_v + 3) + ih_n + 4, 9);
+  ih_pred_layer->SetAbsPos(ih_n + 4, 2 * (ih_v + 3) + ih_n + 4, 12);
+  ih_net->Build();
+  ih_net->Init_Weights();
+}
+for(ih_i = 0; ih_i < 6; ih_i++) {
+  Layer* ih_label_layer = ih_net->layers[ih_i];
+  ih_label_layer->SetUnitNames(true);
+}
+for(ih_j = 0; ih_j < ih_n; ih_j++) {
+  for(ih_k = 0; ih_k < ih_v; ih_k++) {
+    ih_token_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_embeddings[ih_j, ih_k];
+    ih_key_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_keys[ih_j, ih_k];
+    ih_value_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_values[ih_j, ih_k];
+    String ih_label = String(ih_j) + \":\" + String(ih_k);
+    ih_token_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+    ih_key_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+    ih_value_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+  }
+  for(ih_i = 0; ih_i < ih_n; ih_i++) {
+    ih_attn_layer->GetUnitFlatXY(ih_j, ih_i)->act = ih_attention[ih_j, ih_i];
+    ih_attn_layer->SetUnitNameIdx(ih_i * ih_n + ih_j, String(ih_i) + \"<-\" + String(ih_j));
+  }
+}
+for(ih_k = 0; ih_k < ih_v; ih_k++) {
+  ih_query_layer->GetUnitIdx(ih_k)->act = (ih_k == ih_tokens[ih_cursor]);
+  ih_pred_layer->GetUnitIdx(ih_k)->act = ih_prediction[ih_k];
+  ih_query_layer->SetUnitNameIdx(ih_k, String(ih_k));
+  ih_pred_layer->SetUnitNameIdx(ih_k, String(ih_k));
+}
+ih_net->UpdateAllViews();
+ih_states->UpdateAllViews();
+ih_sequence->UpdateAllViews();
+
+cout << \"INDUCTOR \" << ih_cfg->GetVar(\"status\") << endl;
+";
+     };
+    };
+   };
+   step_prog=NULL;
+   step_n=1;
+   doc {
+    name="doc";
+    desc=;
+    web_doc=0;
+    wiki=;
+    url="local";
+    full_url="local";
+    text_size=1;
+    text="<html>
+<head></head>
+<body>
+== Enter Title Here ==
+</body>
+</html>
+";
+    html_text=;
+   };
+  };
+  Program @[2] {
+   UserDataItem_List @*(.user_data_) {
+    name=;
+    el_typ=UserData_DocLink;
+    el_def=0;
+    UserData_DocLink @[0] {name="DocLink": doc=.programs[2].doc$$: };
+   };
+   name="StepToken";
+   short_nm="StpTkn";
+   tags=;
+   desc=;
+   version {
+    major=0;
+    minor=0;
+    step=0;
+   };
+   author=;
+   email=;
+   flags=NO_STOP_STEP|OBJS_UPDT_GUI;
+   stop_step_cond {
+    expr=;
+   };
+   objs {
+    name="objs";
+    el_typ=DataTable;
+    el_def=0;
+   };
+   objs_vars {
+    name="objs_vars";
+    el_typ=ProgVar;
+    el_def=0;
+   };
+   types {
+    name="types";
+    el_typ=DynEnumType;
+    el_def=0;
+   };
+   args {
+    name="args";
+    el_typ=ProgVar;
+    el_def=0;
+   };
+   vars {
+    name="vars";
+    el_typ=ProgVar;
+    el_def=0;
+    ProgVar @[0] {
+     name="project";
+     var_type=T_Object;
+     object_type=BpProject;
+     completion_type=;
+     object_val=$.$;
+     object_scope=NULL;
+     objs_ptr=0;
+     flags=CTRL_PANEL|NULL_CHECK|SAVE_VAL|EDIT_VAL;
+     reference=0;
+     desc=;
+     init_from=NULL;
+    };
+   };
+   functions {
+    name="functions";
+    el_typ=Function;
+    el_def=0;
+   };
+   init_code {
+    name="init_code";
+    el_typ=ProgCode;
+    el_def=0;
+   };
+   prog_code {
+    name="prog_code";
+    el_typ=ProgCode;
+    el_def=0;
+    LocalVars @[0] {
+     name=;
+     desc=;
+     flags=0;
+     code_string=;
+     local_vars {
+      name="local_vars";
+      el_typ=ProgVar;
+      el_def=0;
+     };
+    };
+    UserScript @[1] {
+     name="UserScript_Readthelaborator_etVarstatusendl";
+     desc=;
+     flags=0;
+     code_string=;
+     script {
+      expr="// Read the laboratory controls. Bounds keep the live display legible and
+// the softmax numerically stable, and are written back to the control panel.
+BpProject* ih_project = project;
+Program* ih_cfg = ih_project->programs[\"RunCircuit\"];
+BpNetwork* ih_net = ih_project->networks[\"InductionCircuit\"];
+DataTable* ih_sequence = ih_project->data[\"Sequence\"];
+DataTable* ih_states = ih_project->data[\"CircuitState\"];
+DataTable* ih_results = ih_project->data[\"Experiments\"];
+int ih_n = ih_cfg->GetVar(\"sequence_length\");
+int ih_v = ih_cfg->GetVar(\"vocabulary_size\");
+int ih_seed = ih_cfg->GetVar(\"seed\");
+double ih_temp = ih_cfg->GetVar(\"temperature\");
+double ih_noise = ih_cfg->GetVar(\"noise\");
+int ih_cursor = ih_cfg->GetVar(\"cursor\");
+bool ih_ablate_previous = ih_cfg->GetVar(\"ablate_previous\");
+bool ih_ablate_induction = ih_cfg->GetVar(\"ablate_induction\");
+if(ih_n < 5) ih_n = 5;
+if(ih_n > 32) ih_n = 32;
+if(ih_v < 4) ih_v = 4;
+if(ih_v > 16) ih_v = 16;
+if(ih_temp < 0.02) ih_temp = 0.02;
+if(ih_temp > 5.0) ih_temp = 5.0;
+if(ih_noise < 0.0) ih_noise = 0.0;
+if(ih_noise > 1.0) ih_noise = 1.0;
+if(ih_seed < 1) ih_seed = 1;
+if(ih_seed > 1000000) ih_seed = 1000000;
+if(ih_cursor < 1) ih_cursor = 1;
+if(ih_cursor >= ih_n) ih_cursor = ih_n - 1;
+ih_cfg->SetVar(\"sequence_length\", ih_n);
+ih_cfg->SetVar(\"vocabulary_size\", ih_v);
+ih_cfg->SetVar(\"temperature\", ih_temp);
+ih_cfg->SetVar(\"noise\", ih_noise);
+ih_cfg->SetVar(\"seed\", ih_seed);
+ih_cfg->SetVar(\"cursor\", ih_cursor);
+
+if(ih_sequence->rows != ih_n) {
+  ih_cfg->SetVar(\"status\", \"Sequence length changed: press Generate sequence.\");
+  ret_val = -1;
+  return;
+}
+
+ih_cursor++;
+if(ih_cursor >= ih_n) ih_cursor = 1;
+ih_cfg->SetVar(\"cursor\", ih_cursor);
+// Exact constructed two-head attention circuit. Head 1 copies the previous
+// token embedding into a separate key subspace. Head 2 compares the current
+// token query to that subspace, applies a causal softmax and copies values.
+int_Matrix ih_tokens;
+float_Matrix ih_embeddings;
+float_Matrix ih_keys;
+float_Matrix ih_attention;
+float_Matrix ih_values;
+float_Matrix ih_prediction;
+ih_tokens.SetGeom(1, ih_n);
+ih_embeddings.SetGeom(2, ih_n, ih_v);
+ih_keys.SetGeom(2, ih_n, ih_v);
+ih_attention.SetGeom(2, ih_n, ih_n);
+ih_values.SetGeom(2, ih_n, ih_v);
+ih_prediction.SetGeom(1, ih_v);
+ih_embeddings.InitVals(0.0);
+ih_keys.InitVals(0.0);
+ih_attention.InitVals(0.0);
+ih_values.InitVals(0.0);
+ih_prediction.InitVals(0.0);
+int ih_i;
+int ih_j;
+int ih_k;
+for(ih_i = 0; ih_i < ih_n; ih_i++) {
+  ih_tokens[ih_i] = ih_sequence->GetVal(\"token\", ih_i);
+  if(ih_tokens[ih_i] < 0 || ih_tokens[ih_i] >= ih_v) {
+    ih_cfg->SetVar(\"status\", \"Token outside vocabulary. Generate a new sequence.\");
+    ret_val = -1;
+    return;
+  }
+  int ih_current_token = ih_tokens[ih_i];
+  ih_embeddings[ih_i, ih_current_token] = 1.0;
+  if(ih_i > 0 && !ih_ablate_previous) {
+    int ih_previous_token = ih_tokens[ih_i - 1];
+    ih_keys[ih_i, ih_previous_token] = 1.0;
+  }
+}
+for(ih_i = 1; ih_i < ih_n; ih_i++) {
+  double ih_total = 0.0;
+  int ih_query_token = ih_tokens[ih_i];
+  // j=0 has no predecessor key. The standard causal mask permits j<=i;
+  // every future source j>i remains exactly zero.
+  for(ih_j = 1; ih_j <= ih_i; ih_j++) {
+    double ih_match = ih_keys[ih_j, ih_query_token];
+    double ih_weight = exp((ih_match - 1.0) / ih_temp);
+    ih_attention[ih_j, ih_i] = ih_weight;
+    ih_total += ih_weight;
+  }
+  for(ih_j = 1; ih_j <= ih_i; ih_j++)
+    ih_attention[ih_j, ih_i] = ih_attention[ih_j, ih_i] / ih_total;
+}
+for(ih_j = 1; ih_j <= ih_cursor; ih_j++) {
+  double ih_mass = ih_attention[ih_j, ih_cursor];
+  if(ih_ablate_induction) ih_mass = 0.0;
+  int ih_value_token = ih_tokens[ih_j];
+  ih_values[ih_j, ih_value_token] = ih_mass;
+  ih_prediction[ih_value_token] += ih_mass;
+}
+int ih_predicted = -1;
+double ih_best = 0.0;
+for(ih_k = 0; ih_k < ih_v; ih_k++) {
+  if(ih_prediction[ih_k] > ih_best) {
+    ih_best = ih_prediction[ih_k];
+    ih_predicted = ih_k;
+  }
+}
+int ih_target = ih_sequence->GetVal(\"next_token\", ih_cursor);
+ih_cfg->SetVar(\"prediction\", ih_predicted);
+ih_cfg->SetVar(\"target\", ih_target);
+ih_cfg->SetVar(\"confidence\", ih_best);
+ih_cfg->SetVar(\"status\", \"Query \" + String(ih_tokens[ih_cursor]) +
+  \" at position \" + String(ih_cursor) + \" predicts \" + String(ih_predicted) +
+  \"; repeated-pattern target \" + String(ih_target));
+
+// Keep inspectable DataTable matrices and real Network unit state in sync.
+bool ih_resize_table = ih_states->data.size != 5;
+if(!ih_resize_table) {
+  DataCol* ih_first_column = ih_states->data[0];
+  ih_resize_table = ih_first_column->cell_geom.dim(0) != ih_n ||
+                    ih_first_column->cell_geom.dim(1) != ih_v;
+}
+if(ih_resize_table) {
+  ih_states->RemoveAllCols();
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"TokenEmbeddings\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"PreviousTokenKeys\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"CausalAttention\", 2, ih_n, ih_n);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"CopiedValues\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"Prediction\", 1, ih_v);
+  ih_states->AddRows(1);
+ }
+ih_states->SetValAsMatrix(ih_embeddings, \"TokenEmbeddings\", 0);
+ih_states->SetValAsMatrix(ih_keys, \"PreviousTokenKeys\", 0);
+ih_states->SetValAsMatrix(ih_attention, \"CausalAttention\", 0);
+ih_states->SetValAsMatrix(ih_values, \"CopiedValues\", 0);
+ih_states->SetValAsMatrix(ih_prediction, \"Prediction\", 0);
+
+Layer* ih_token_layer = ih_net->layers[\"Token_Embeddings\"];
+Layer* ih_key_layer = ih_net->layers[\"Previous_Token_Keys\"];
+Layer* ih_query_layer = ih_net->layers[\"Current_Query\"];
+Layer* ih_attn_layer = ih_net->layers[\"Causal_Attention\"];
+Layer* ih_value_layer = ih_net->layers[\"Copied_Values\"];
+Layer* ih_pred_layer = ih_net->layers[\"Next_Token_Prediction\"];
+if(ih_token_layer->un_geom.x != ih_n || ih_token_layer->un_geom.y != ih_v ||
+   ih_token_layer->n_units_built == 0) {
+  ih_token_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_key_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_query_layer->SetLayerUnitGeom(1, ih_v);
+  ih_attn_layer->SetLayerUnitGeom(ih_n, ih_n);
+  ih_value_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_pred_layer->SetLayerUnitGeom(1, ih_v);
+  ih_token_layer->SetAbsPos(0, 0, 0);
+  ih_key_layer->SetAbsPos(0, ih_v + 3, 3);
+  ih_query_layer->SetAbsPos(ih_n + 4, ih_v + 3, 3);
+  ih_attn_layer->SetAbsPos(0, 2 * (ih_v + 3), 6);
+  ih_value_layer->SetAbsPos(0, 2 * (ih_v + 3) + ih_n + 4, 9);
+  ih_pred_layer->SetAbsPos(ih_n + 4, 2 * (ih_v + 3) + ih_n + 4, 12);
+  ih_net->Build();
+  ih_net->Init_Weights();
+}
+for(ih_i = 0; ih_i < 6; ih_i++) {
+  Layer* ih_label_layer = ih_net->layers[ih_i];
+  ih_label_layer->SetUnitNames(true);
+}
+for(ih_j = 0; ih_j < ih_n; ih_j++) {
+  for(ih_k = 0; ih_k < ih_v; ih_k++) {
+    ih_token_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_embeddings[ih_j, ih_k];
+    ih_key_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_keys[ih_j, ih_k];
+    ih_value_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_values[ih_j, ih_k];
+    String ih_label = String(ih_j) + \":\" + String(ih_k);
+    ih_token_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+    ih_key_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+    ih_value_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+  }
+  for(ih_i = 0; ih_i < ih_n; ih_i++) {
+    ih_attn_layer->GetUnitFlatXY(ih_j, ih_i)->act = ih_attention[ih_j, ih_i];
+    ih_attn_layer->SetUnitNameIdx(ih_i * ih_n + ih_j, String(ih_i) + \"<-\" + String(ih_j));
+  }
+}
+for(ih_k = 0; ih_k < ih_v; ih_k++) {
+  ih_query_layer->GetUnitIdx(ih_k)->act = (ih_k == ih_tokens[ih_cursor]);
+  ih_pred_layer->GetUnitIdx(ih_k)->act = ih_prediction[ih_k];
+  ih_query_layer->SetUnitNameIdx(ih_k, String(ih_k));
+  ih_pred_layer->SetUnitNameIdx(ih_k, String(ih_k));
+}
+ih_net->UpdateAllViews();
+ih_states->UpdateAllViews();
+ih_sequence->UpdateAllViews();
+
+cout << \"INDUCTOR \" << ih_cfg->GetVar(\"status\") << endl;
+";
+     };
+    };
+   };
+   step_prog=NULL;
+   step_n=1;
+   doc {
+    name="doc";
+    desc=;
+    web_doc=0;
+    wiki=;
+    url="local";
+    full_url="local";
+    text_size=1;
+    text="<html>
+<head></head>
+<body>
+== Enter Title Here ==
+</body>
+</html>
+";
+    html_text=;
+   };
+  };
+  Program @[3] {
+   UserDataItem_List @*(.user_data_) {
+    name=;
+    el_typ=UserData_DocLink;
+    el_def=0;
+    UserData_DocLink @[0] {name="DocLink": doc=.programs[3].doc$$: };
+   };
+   name="ShowCircuit";
+   short_nm="ShCrct";
+   tags=;
+   desc=;
+   version {
+    major=0;
+    minor=0;
+    step=0;
+   };
+   author=;
+   email=;
+   flags=NO_STOP_STEP|STARTUP_RUN|OBJS_UPDT_GUI;
+   stop_step_cond {
+    expr=;
+   };
+   objs {
+    name="objs";
+    el_typ=DataTable;
+    el_def=0;
+   };
+   objs_vars {
+    name="objs_vars";
+    el_typ=ProgVar;
+    el_def=0;
+   };
+   types {
+    name="types";
+    el_typ=DynEnumType;
+    el_def=0;
+   };
+   args {
+    name="args";
+    el_typ=ProgVar;
+    el_def=0;
+   };
+   vars {
+    name="vars";
+    el_typ=ProgVar;
+    el_def=0;
+    ProgVar @[0] {
+     name="project";
+     var_type=T_Object;
+     object_type=BpProject;
+     completion_type=;
+     object_val=$.$;
+     object_scope=NULL;
+     objs_ptr=0;
+     flags=CTRL_PANEL|NULL_CHECK|SAVE_VAL|EDIT_VAL;
+     reference=0;
+     desc=;
+     init_from=NULL;
+    };
+   };
+   functions {
+    name="functions";
+    el_typ=Function;
+    el_def=0;
+   };
+   init_code {
+    name="init_code";
+    el_typ=ProgCode;
+    el_def=0;
+   };
+   prog_code {
+    name="prog_code";
+    el_typ=ProgCode;
+    el_def=0;
+    LocalVars @[0] {
+     name=;
+     desc=;
+     flags=0;
+     code_string=;
+     local_vars {
+      name="local_vars";
+      el_typ=ProgVar;
+      el_def=0;
+     };
+    };
+    UserScript @[1] {
+     name="UserScript_Readthelaborator_etVarstatusendl";
+     desc=;
+     flags=0;
+     code_string=;
+     script {
+      expr="// Read the laboratory controls. Bounds keep the live display legible and
+// the softmax numerically stable, and are written back to the control panel.
+BpProject* ih_project = project;
+Program* ih_cfg = ih_project->programs[\"RunCircuit\"];
+BpNetwork* ih_net = ih_project->networks[\"InductionCircuit\"];
+DataTable* ih_sequence = ih_project->data[\"Sequence\"];
+DataTable* ih_states = ih_project->data[\"CircuitState\"];
+DataTable* ih_results = ih_project->data[\"Experiments\"];
+int ih_n = ih_cfg->GetVar(\"sequence_length\");
+int ih_v = ih_cfg->GetVar(\"vocabulary_size\");
+int ih_seed = ih_cfg->GetVar(\"seed\");
+double ih_temp = ih_cfg->GetVar(\"temperature\");
+double ih_noise = ih_cfg->GetVar(\"noise\");
+int ih_cursor = ih_cfg->GetVar(\"cursor\");
+bool ih_ablate_previous = ih_cfg->GetVar(\"ablate_previous\");
+bool ih_ablate_induction = ih_cfg->GetVar(\"ablate_induction\");
+if(ih_n < 5) ih_n = 5;
+if(ih_n > 32) ih_n = 32;
+if(ih_v < 4) ih_v = 4;
+if(ih_v > 16) ih_v = 16;
+if(ih_temp < 0.02) ih_temp = 0.02;
+if(ih_temp > 5.0) ih_temp = 5.0;
+if(ih_noise < 0.0) ih_noise = 0.0;
+if(ih_noise > 1.0) ih_noise = 1.0;
+if(ih_seed < 1) ih_seed = 1;
+if(ih_seed > 1000000) ih_seed = 1000000;
+if(ih_cursor < 1) ih_cursor = 1;
+if(ih_cursor >= ih_n) ih_cursor = ih_n - 1;
+ih_cfg->SetVar(\"sequence_length\", ih_n);
+ih_cfg->SetVar(\"vocabulary_size\", ih_v);
+ih_cfg->SetVar(\"temperature\", ih_temp);
+ih_cfg->SetVar(\"noise\", ih_noise);
+ih_cfg->SetVar(\"seed\", ih_seed);
+ih_cfg->SetVar(\"cursor\", ih_cursor);
+
+if(ih_sequence->rows != ih_n) {
+  ih_cfg->SetVar(\"status\", \"Sequence length changed: press Generate sequence.\");
+  ret_val = -1;
+  return;
+}
+// Exact constructed two-head attention circuit. Head 1 copies the previous
+// token embedding into a separate key subspace. Head 2 compares the current
+// token query to that subspace, applies a causal softmax and copies values.
+int_Matrix ih_tokens;
+float_Matrix ih_embeddings;
+float_Matrix ih_keys;
+float_Matrix ih_attention;
+float_Matrix ih_values;
+float_Matrix ih_prediction;
+ih_tokens.SetGeom(1, ih_n);
+ih_embeddings.SetGeom(2, ih_n, ih_v);
+ih_keys.SetGeom(2, ih_n, ih_v);
+ih_attention.SetGeom(2, ih_n, ih_n);
+ih_values.SetGeom(2, ih_n, ih_v);
+ih_prediction.SetGeom(1, ih_v);
+ih_embeddings.InitVals(0.0);
+ih_keys.InitVals(0.0);
+ih_attention.InitVals(0.0);
+ih_values.InitVals(0.0);
+ih_prediction.InitVals(0.0);
+int ih_i;
+int ih_j;
+int ih_k;
+for(ih_i = 0; ih_i < ih_n; ih_i++) {
+  ih_tokens[ih_i] = ih_sequence->GetVal(\"token\", ih_i);
+  if(ih_tokens[ih_i] < 0 || ih_tokens[ih_i] >= ih_v) {
+    ih_cfg->SetVar(\"status\", \"Token outside vocabulary. Generate a new sequence.\");
+    ret_val = -1;
+    return;
+  }
+  int ih_current_token = ih_tokens[ih_i];
+  ih_embeddings[ih_i, ih_current_token] = 1.0;
+  if(ih_i > 0 && !ih_ablate_previous) {
+    int ih_previous_token = ih_tokens[ih_i - 1];
+    ih_keys[ih_i, ih_previous_token] = 1.0;
+  }
+}
+for(ih_i = 1; ih_i < ih_n; ih_i++) {
+  double ih_total = 0.0;
+  int ih_query_token = ih_tokens[ih_i];
+  // j=0 has no predecessor key. The standard causal mask permits j<=i;
+  // every future source j>i remains exactly zero.
+  for(ih_j = 1; ih_j <= ih_i; ih_j++) {
+    double ih_match = ih_keys[ih_j, ih_query_token];
+    double ih_weight = exp((ih_match - 1.0) / ih_temp);
+    ih_attention[ih_j, ih_i] = ih_weight;
+    ih_total += ih_weight;
+  }
+  for(ih_j = 1; ih_j <= ih_i; ih_j++)
+    ih_attention[ih_j, ih_i] = ih_attention[ih_j, ih_i] / ih_total;
+}
+for(ih_j = 1; ih_j <= ih_cursor; ih_j++) {
+  double ih_mass = ih_attention[ih_j, ih_cursor];
+  if(ih_ablate_induction) ih_mass = 0.0;
+  int ih_value_token = ih_tokens[ih_j];
+  ih_values[ih_j, ih_value_token] = ih_mass;
+  ih_prediction[ih_value_token] += ih_mass;
+}
+int ih_predicted = -1;
+double ih_best = 0.0;
+for(ih_k = 0; ih_k < ih_v; ih_k++) {
+  if(ih_prediction[ih_k] > ih_best) {
+    ih_best = ih_prediction[ih_k];
+    ih_predicted = ih_k;
+  }
+}
+int ih_target = ih_sequence->GetVal(\"next_token\", ih_cursor);
+ih_cfg->SetVar(\"prediction\", ih_predicted);
+ih_cfg->SetVar(\"target\", ih_target);
+ih_cfg->SetVar(\"confidence\", ih_best);
+ih_cfg->SetVar(\"status\", \"Query \" + String(ih_tokens[ih_cursor]) +
+  \" at position \" + String(ih_cursor) + \" predicts \" + String(ih_predicted) +
+  \"; repeated-pattern target \" + String(ih_target));
+
+// Keep inspectable DataTable matrices and real Network unit state in sync.
+bool ih_resize_table = ih_states->data.size != 5;
+if(!ih_resize_table) {
+  DataCol* ih_first_column = ih_states->data[0];
+  ih_resize_table = ih_first_column->cell_geom.dim(0) != ih_n ||
+                    ih_first_column->cell_geom.dim(1) != ih_v;
+}
+if(ih_resize_table) {
+  ih_states->RemoveAllCols();
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"TokenEmbeddings\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"PreviousTokenKeys\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"CausalAttention\", 2, ih_n, ih_n);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"CopiedValues\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"Prediction\", 1, ih_v);
+  ih_states->AddRows(1);
+ }
+ih_states->SetValAsMatrix(ih_embeddings, \"TokenEmbeddings\", 0);
+ih_states->SetValAsMatrix(ih_keys, \"PreviousTokenKeys\", 0);
+ih_states->SetValAsMatrix(ih_attention, \"CausalAttention\", 0);
+ih_states->SetValAsMatrix(ih_values, \"CopiedValues\", 0);
+ih_states->SetValAsMatrix(ih_prediction, \"Prediction\", 0);
+
+Layer* ih_token_layer = ih_net->layers[\"Token_Embeddings\"];
+Layer* ih_key_layer = ih_net->layers[\"Previous_Token_Keys\"];
+Layer* ih_query_layer = ih_net->layers[\"Current_Query\"];
+Layer* ih_attn_layer = ih_net->layers[\"Causal_Attention\"];
+Layer* ih_value_layer = ih_net->layers[\"Copied_Values\"];
+Layer* ih_pred_layer = ih_net->layers[\"Next_Token_Prediction\"];
+if(ih_token_layer->un_geom.x != ih_n || ih_token_layer->un_geom.y != ih_v ||
+   ih_token_layer->n_units_built == 0) {
+  ih_token_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_key_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_query_layer->SetLayerUnitGeom(1, ih_v);
+  ih_attn_layer->SetLayerUnitGeom(ih_n, ih_n);
+  ih_value_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_pred_layer->SetLayerUnitGeom(1, ih_v);
+  ih_token_layer->SetAbsPos(0, 0, 0);
+  ih_key_layer->SetAbsPos(0, ih_v + 3, 3);
+  ih_query_layer->SetAbsPos(ih_n + 4, ih_v + 3, 3);
+  ih_attn_layer->SetAbsPos(0, 2 * (ih_v + 3), 6);
+  ih_value_layer->SetAbsPos(0, 2 * (ih_v + 3) + ih_n + 4, 9);
+  ih_pred_layer->SetAbsPos(ih_n + 4, 2 * (ih_v + 3) + ih_n + 4, 12);
+  ih_net->Build();
+  ih_net->Init_Weights();
+}
+for(ih_i = 0; ih_i < 6; ih_i++) {
+  Layer* ih_label_layer = ih_net->layers[ih_i];
+  ih_label_layer->SetUnitNames(true);
+}
+for(ih_j = 0; ih_j < ih_n; ih_j++) {
+  for(ih_k = 0; ih_k < ih_v; ih_k++) {
+    ih_token_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_embeddings[ih_j, ih_k];
+    ih_key_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_keys[ih_j, ih_k];
+    ih_value_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_values[ih_j, ih_k];
+    String ih_label = String(ih_j) + \":\" + String(ih_k);
+    ih_token_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+    ih_key_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+    ih_value_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+  }
+  for(ih_i = 0; ih_i < ih_n; ih_i++) {
+    ih_attn_layer->GetUnitFlatXY(ih_j, ih_i)->act = ih_attention[ih_j, ih_i];
+    ih_attn_layer->SetUnitNameIdx(ih_i * ih_n + ih_j, String(ih_i) + \"<-\" + String(ih_j));
+  }
+}
+for(ih_k = 0; ih_k < ih_v; ih_k++) {
+  ih_query_layer->GetUnitIdx(ih_k)->act = (ih_k == ih_tokens[ih_cursor]);
+  ih_pred_layer->GetUnitIdx(ih_k)->act = ih_prediction[ih_k];
+  ih_query_layer->SetUnitNameIdx(ih_k, String(ih_k));
+  ih_pred_layer->SetUnitNameIdx(ih_k, String(ih_k));
+}
+ih_net->UpdateAllViews();
+ih_states->UpdateAllViews();
+ih_sequence->UpdateAllViews();
+if(taMisc::gui_active) {
+  NetView* ih_view = ih_net->FindMakeView();
+  ih_view->lay_layout = NetView::THREE_D;
+  ih_view->unit_disp_mode = NetView::UDM_BLOCK;
+  ih_view->unit_text_disp = NetView::UTD_NAMES;
+  ih_view->display = true;
+  ih_net->SetViewVar(\"act\");
+  ih_view->SetScaleData(false, 0.0, 1.0);
+  // These annotations connect computational stages; they are not Bp synapses.
+  ih_view->annotations.Reset();
+  ih_view->AnnoteEndArrow(true, ih_n / 2.0, ih_v + 0.5, 0,
+    0, 2.5, 3, 3.0, \"#0ea5a3\", 0.018);
+  ih_view->AnnoteEndArrow(true, ih_n / 2.0, 2 * ih_v + 3.5, 3,
+    0, 2.5, 3, 3.0, \"#7c3aed\", 0.018);
+  ih_view->AnnoteEndArrow(true, ih_n + 4, ih_v + 3, 3,
+    -4, ih_v + 3, 3, 3.0, \"#d97706\", 0.018);
+  ih_view->AnnoteEndArrow(true, ih_n / 2.0, 2 * (ih_v + 3) + ih_n + 0.5, 6,
+    0, 3.5, 3, 3.0, \"#2563eb\", 0.018);
+  ih_view->AnnoteEndArrow(true, ih_n + 0.5, 2 * (ih_v + 3) + ih_n + 4 + ih_v / 2.0, 9,
+    3.5, 0, 3, 3.0, \"#059669\", 0.018);
+  ih_view->AnnoteText(true, \"INDUCTORHEAD | PREFIX MATCH -> VALUE COPY\",
+    0, 2 * (ih_v + 3) + ih_n + ih_v + 7, 12, 0.027, T3DataViewMain::LEFT, \"#075985\");
+  ih_view->UpdateDisplay();
+}
+
+cout << \"INDUCTOR \" << ih_cfg->GetVar(\"status\") << endl;
+";
+     };
+    };
+   };
+   step_prog=NULL;
+   step_n=1;
+   doc {
+    name="doc";
+    desc=;
+    web_doc=0;
+    wiki=;
+    url="local";
+    full_url="local";
+    text_size=1;
+    text="<html>
+<head></head>
+<body>
+== Enter Title Here ==
+</body>
+</html>
+";
+    html_text=;
+   };
+  };
+  Program @[4] {
+   UserDataItem_List @*(.user_data_) {
+    name=;
+    el_typ=UserData_DocLink;
+    el_def=0;
+    UserData_DocLink @[0] {name="DocLink": doc=.programs[4].doc$$: };
+   };
+   name="EvaluatePermutations";
+   short_nm="vlPrmt";
+   tags=;
+   desc=;
+   version {
+    major=0;
+    minor=0;
+    step=0;
+   };
+   author=;
+   email=;
+   flags=NO_STOP_STEP|OBJS_UPDT_GUI;
+   stop_step_cond {
+    expr=;
+   };
+   objs {
+    name="objs";
+    el_typ=DataTable;
+    el_def=0;
+   };
+   objs_vars {
+    name="objs_vars";
+    el_typ=ProgVar;
+    el_def=0;
+   };
+   types {
+    name="types";
+    el_typ=DynEnumType;
+    el_def=0;
+   };
+   args {
+    name="args";
+    el_typ=ProgVar;
+    el_def=0;
+   };
+   vars {
+    name="vars";
+    el_typ=ProgVar;
+    el_def=0;
+    ProgVar @[0] {
+     name="project";
+     var_type=T_Object;
+     object_type=BpProject;
+     completion_type=;
+     object_val=$.$;
+     object_scope=NULL;
+     objs_ptr=0;
+     flags=CTRL_PANEL|NULL_CHECK|SAVE_VAL|EDIT_VAL;
+     reference=0;
+     desc=;
+     init_from=NULL;
+    };
+   };
+   functions {
+    name="functions";
+    el_typ=Function;
+    el_def=0;
+   };
+   init_code {
+    name="init_code";
+    el_typ=ProgCode;
+    el_def=0;
+   };
+   prog_code {
+    name="prog_code";
+    el_typ=ProgCode;
+    el_def=0;
+    LocalVars @[0] {
+     name=;
+     desc=;
+     flags=0;
+     code_string=;
+     local_vars {
+      name="local_vars";
+      el_typ=ProgVar;
+      el_def=0;
+     };
+    };
+    UserScript @[1] {
+     name="UserScript_Readthelaborator_conditions3endl";
+     desc=;
+     flags=0;
+     code_string=;
+     script {
+      expr="// Read the laboratory controls. Bounds keep the live display legible and
+// the softmax numerically stable, and are written back to the control panel.
+BpProject* ih_project = project;
+Program* ih_cfg = ih_project->programs[\"RunCircuit\"];
+BpNetwork* ih_net = ih_project->networks[\"InductionCircuit\"];
+DataTable* ih_sequence = ih_project->data[\"Sequence\"];
+DataTable* ih_states = ih_project->data[\"CircuitState\"];
+DataTable* ih_results = ih_project->data[\"Experiments\"];
+int ih_n = ih_cfg->GetVar(\"sequence_length\");
+int ih_v = ih_cfg->GetVar(\"vocabulary_size\");
+int ih_seed = ih_cfg->GetVar(\"seed\");
+double ih_temp = ih_cfg->GetVar(\"temperature\");
+double ih_noise = ih_cfg->GetVar(\"noise\");
+int ih_cursor = ih_cfg->GetVar(\"cursor\");
+bool ih_ablate_previous = ih_cfg->GetVar(\"ablate_previous\");
+bool ih_ablate_induction = ih_cfg->GetVar(\"ablate_induction\");
+if(ih_n < 5) ih_n = 5;
+if(ih_n > 32) ih_n = 32;
+if(ih_v < 4) ih_v = 4;
+if(ih_v > 16) ih_v = 16;
+if(ih_temp < 0.02) ih_temp = 0.02;
+if(ih_temp > 5.0) ih_temp = 5.0;
+if(ih_noise < 0.0) ih_noise = 0.0;
+if(ih_noise > 1.0) ih_noise = 1.0;
+if(ih_seed < 1) ih_seed = 1;
+if(ih_seed > 1000000) ih_seed = 1000000;
+if(ih_cursor < 1) ih_cursor = 1;
+if(ih_cursor >= ih_n) ih_cursor = ih_n - 1;
+ih_cfg->SetVar(\"sequence_length\", ih_n);
+ih_cfg->SetVar(\"vocabulary_size\", ih_v);
+ih_cfg->SetVar(\"temperature\", ih_temp);
+ih_cfg->SetVar(\"noise\", ih_noise);
+ih_cfg->SetVar(\"seed\", ih_seed);
+ih_cfg->SetVar(\"cursor\", ih_cursor);
+
+int ih_original_seed = ih_seed;
+bool ih_original_previous = ih_ablate_previous;
+bool ih_original_induction = ih_ablate_induction;
+int ih_original_cursor = ih_cursor;
+int ih_correct = 0;
+ih_results->RemoveAllRows();
+int ih_trial;
+int ih_condition;
+for(ih_trial = 0; ih_trial < 64; ih_trial++) {
+  ih_seed = ih_original_seed + 7919 * (ih_trial + 1);
+  if(ih_seed > 1000000) ih_seed = 1 + (ih_seed % 1000000);
+  {
+// Park-Miller RNG using Schrage's overflow-free integer recurrence.
+// Fisher-Yates chooses a fresh vocabulary permutation for each seed.
+int_Matrix ih_permutation;
+ih_permutation.SetGeom(1, ih_v);
+int ih_rng = ih_seed;
+int ih_a;
+for(ih_a = 0; ih_a < ih_v; ih_a++) ih_permutation[ih_a] = ih_a;
+for(ih_a = ih_v - 1; ih_a > 0; ih_a--) {
+  ih_rng = 16807 * (ih_rng % 127773) - 2836 * (ih_rng / 127773);
+  if(ih_rng <= 0) ih_rng += 2147483647;
+  int ih_swap = ih_rng % (ih_a + 1);
+  int ih_tmp = ih_permutation[ih_a];
+  ih_permutation[ih_a] = ih_permutation[ih_swap];
+  ih_permutation[ih_swap] = ih_tmp;
+}
+int ih_period = ih_n / 2;
+if(ih_period > ih_v - 1) ih_period = ih_v - 1;
+ih_sequence->RemoveAllRows();
+ih_sequence->AddRows(ih_n);
+for(ih_a = 0; ih_a < ih_n; ih_a++) {
+  int ih_token = ih_permutation[ih_a % ih_period];
+  // Keep the first exemplar and final query intact. Corrupt intermediate
+  // repetitions with the held-out distractor token at the requested rate.
+  ih_rng = 16807 * (ih_rng % 127773) - 2836 * (ih_rng / 127773);
+  if(ih_rng <= 0) ih_rng += 2147483647;
+  double ih_draw = ih_rng / 2147483647.0;
+  if(ih_a >= ih_period && ih_a < ih_n - 1 && ih_draw < ih_noise)
+    ih_token = ih_permutation[ih_v - 1];
+  ih_sequence->SetVal(ih_a, \"position\", ih_a);
+  ih_sequence->SetVal(ih_token, \"token\", ih_a);
+  ih_sequence->SetVal(String(ih_token), \"label\", ih_a);
+  int ih_next_token = ih_permutation[(ih_a + 1) % ih_period];
+  ih_sequence->SetVal(ih_next_token, \"next_token\", ih_a);
+}
+ih_cursor = ih_n - 1;
+ih_cfg->SetVar(\"cursor\", ih_cursor);
+
+  }
+  for(ih_condition = 0; ih_condition < 3; ih_condition++) {
+    ih_ablate_previous = (ih_condition == 1);
+    ih_ablate_induction = (ih_condition == 2);
+    {
+// Exact constructed two-head attention circuit. Head 1 copies the previous
+// token embedding into a separate key subspace. Head 2 compares the current
+// token query to that subspace, applies a causal softmax and copies values.
+int_Matrix ih_tokens;
+float_Matrix ih_embeddings;
+float_Matrix ih_keys;
+float_Matrix ih_attention;
+float_Matrix ih_values;
+float_Matrix ih_prediction;
+ih_tokens.SetGeom(1, ih_n);
+ih_embeddings.SetGeom(2, ih_n, ih_v);
+ih_keys.SetGeom(2, ih_n, ih_v);
+ih_attention.SetGeom(2, ih_n, ih_n);
+ih_values.SetGeom(2, ih_n, ih_v);
+ih_prediction.SetGeom(1, ih_v);
+ih_embeddings.InitVals(0.0);
+ih_keys.InitVals(0.0);
+ih_attention.InitVals(0.0);
+ih_values.InitVals(0.0);
+ih_prediction.InitVals(0.0);
+int ih_i;
+int ih_j;
+int ih_k;
+for(ih_i = 0; ih_i < ih_n; ih_i++) {
+  ih_tokens[ih_i] = ih_sequence->GetVal(\"token\", ih_i);
+  if(ih_tokens[ih_i] < 0 || ih_tokens[ih_i] >= ih_v) {
+    ih_cfg->SetVar(\"status\", \"Token outside vocabulary. Generate a new sequence.\");
+    ret_val = -1;
+    return;
+  }
+  int ih_current_token = ih_tokens[ih_i];
+  ih_embeddings[ih_i, ih_current_token] = 1.0;
+  if(ih_i > 0 && !ih_ablate_previous) {
+    int ih_previous_token = ih_tokens[ih_i - 1];
+    ih_keys[ih_i, ih_previous_token] = 1.0;
+  }
+}
+for(ih_i = 1; ih_i < ih_n; ih_i++) {
+  double ih_total = 0.0;
+  int ih_query_token = ih_tokens[ih_i];
+  // j=0 has no predecessor key. The standard causal mask permits j<=i;
+  // every future source j>i remains exactly zero.
+  for(ih_j = 1; ih_j <= ih_i; ih_j++) {
+    double ih_match = ih_keys[ih_j, ih_query_token];
+    double ih_weight = exp((ih_match - 1.0) / ih_temp);
+    ih_attention[ih_j, ih_i] = ih_weight;
+    ih_total += ih_weight;
+  }
+  for(ih_j = 1; ih_j <= ih_i; ih_j++)
+    ih_attention[ih_j, ih_i] = ih_attention[ih_j, ih_i] / ih_total;
+}
+for(ih_j = 1; ih_j <= ih_cursor; ih_j++) {
+  double ih_mass = ih_attention[ih_j, ih_cursor];
+  if(ih_ablate_induction) ih_mass = 0.0;
+  int ih_value_token = ih_tokens[ih_j];
+  ih_values[ih_j, ih_value_token] = ih_mass;
+  ih_prediction[ih_value_token] += ih_mass;
+}
+int ih_predicted = -1;
+double ih_best = 0.0;
+for(ih_k = 0; ih_k < ih_v; ih_k++) {
+  if(ih_prediction[ih_k] > ih_best) {
+    ih_best = ih_prediction[ih_k];
+    ih_predicted = ih_k;
+  }
+}
+int ih_target = ih_sequence->GetVal(\"next_token\", ih_cursor);
+ih_cfg->SetVar(\"prediction\", ih_predicted);
+ih_cfg->SetVar(\"target\", ih_target);
+ih_cfg->SetVar(\"confidence\", ih_best);
+ih_cfg->SetVar(\"status\", \"Query \" + String(ih_tokens[ih_cursor]) +
+  \" at position \" + String(ih_cursor) + \" predicts \" + String(ih_predicted) +
+  \"; repeated-pattern target \" + String(ih_target));
+
+// Keep inspectable DataTable matrices and real Network unit state in sync.
+bool ih_resize_table = ih_states->data.size != 5;
+if(!ih_resize_table) {
+  DataCol* ih_first_column = ih_states->data[0];
+  ih_resize_table = ih_first_column->cell_geom.dim(0) != ih_n ||
+                    ih_first_column->cell_geom.dim(1) != ih_v;
+}
+if(ih_resize_table) {
+  ih_states->RemoveAllCols();
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"TokenEmbeddings\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"PreviousTokenKeys\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"CausalAttention\", 2, ih_n, ih_n);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"CopiedValues\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"Prediction\", 1, ih_v);
+  ih_states->AddRows(1);
+ }
+ih_states->SetValAsMatrix(ih_embeddings, \"TokenEmbeddings\", 0);
+ih_states->SetValAsMatrix(ih_keys, \"PreviousTokenKeys\", 0);
+ih_states->SetValAsMatrix(ih_attention, \"CausalAttention\", 0);
+ih_states->SetValAsMatrix(ih_values, \"CopiedValues\", 0);
+ih_states->SetValAsMatrix(ih_prediction, \"Prediction\", 0);
+
+Layer* ih_token_layer = ih_net->layers[\"Token_Embeddings\"];
+Layer* ih_key_layer = ih_net->layers[\"Previous_Token_Keys\"];
+Layer* ih_query_layer = ih_net->layers[\"Current_Query\"];
+Layer* ih_attn_layer = ih_net->layers[\"Causal_Attention\"];
+Layer* ih_value_layer = ih_net->layers[\"Copied_Values\"];
+Layer* ih_pred_layer = ih_net->layers[\"Next_Token_Prediction\"];
+if(ih_token_layer->un_geom.x != ih_n || ih_token_layer->un_geom.y != ih_v ||
+   ih_token_layer->n_units_built == 0) {
+  ih_token_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_key_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_query_layer->SetLayerUnitGeom(1, ih_v);
+  ih_attn_layer->SetLayerUnitGeom(ih_n, ih_n);
+  ih_value_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_pred_layer->SetLayerUnitGeom(1, ih_v);
+  ih_token_layer->SetAbsPos(0, 0, 0);
+  ih_key_layer->SetAbsPos(0, ih_v + 3, 3);
+  ih_query_layer->SetAbsPos(ih_n + 4, ih_v + 3, 3);
+  ih_attn_layer->SetAbsPos(0, 2 * (ih_v + 3), 6);
+  ih_value_layer->SetAbsPos(0, 2 * (ih_v + 3) + ih_n + 4, 9);
+  ih_pred_layer->SetAbsPos(ih_n + 4, 2 * (ih_v + 3) + ih_n + 4, 12);
+  ih_net->Build();
+  ih_net->Init_Weights();
+}
+for(ih_i = 0; ih_i < 6; ih_i++) {
+  Layer* ih_label_layer = ih_net->layers[ih_i];
+  ih_label_layer->SetUnitNames(true);
+}
+for(ih_j = 0; ih_j < ih_n; ih_j++) {
+  for(ih_k = 0; ih_k < ih_v; ih_k++) {
+    ih_token_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_embeddings[ih_j, ih_k];
+    ih_key_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_keys[ih_j, ih_k];
+    ih_value_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_values[ih_j, ih_k];
+    String ih_label = String(ih_j) + \":\" + String(ih_k);
+    ih_token_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+    ih_key_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+    ih_value_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+  }
+  for(ih_i = 0; ih_i < ih_n; ih_i++) {
+    ih_attn_layer->GetUnitFlatXY(ih_j, ih_i)->act = ih_attention[ih_j, ih_i];
+    ih_attn_layer->SetUnitNameIdx(ih_i * ih_n + ih_j, String(ih_i) + \"<-\" + String(ih_j));
+  }
+}
+for(ih_k = 0; ih_k < ih_v; ih_k++) {
+  ih_query_layer->GetUnitIdx(ih_k)->act = (ih_k == ih_tokens[ih_cursor]);
+  ih_pred_layer->GetUnitIdx(ih_k)->act = ih_prediction[ih_k];
+  ih_query_layer->SetUnitNameIdx(ih_k, String(ih_k));
+  ih_pred_layer->SetUnitNameIdx(ih_k, String(ih_k));
+}
+ih_net->UpdateAllViews();
+ih_states->UpdateAllViews();
+ih_sequence->UpdateAllViews();
+
+      int ih_row = ih_results->rows;
+      ih_results->AddRows(1);
+      ih_results->SetVal(ih_seed, \"seed\", ih_row);
+      ih_results->SetVal(ih_condition, \"condition\", ih_row);
+      ih_results->SetVal(ih_predicted, \"prediction\", ih_row);
+      ih_results->SetVal(ih_target, \"target\", ih_row);
+      ih_results->SetVal(ih_best, \"confidence\", ih_row);
+      ih_results->SetVal(ih_predicted == ih_target, \"correct\", ih_row);
+      if(ih_condition == 0 && ih_predicted == ih_target) ih_correct++;
+    }
+  }
+}
+ih_cfg->SetVar(\"accuracy\", ih_correct / 64.0);
+ih_seed = ih_original_seed;
+ih_ablate_previous = ih_original_previous;
+ih_ablate_induction = ih_original_induction;
+{
+// Park-Miller RNG using Schrage's overflow-free integer recurrence.
+// Fisher-Yates chooses a fresh vocabulary permutation for each seed.
+int_Matrix ih_permutation;
+ih_permutation.SetGeom(1, ih_v);
+int ih_rng = ih_seed;
+int ih_a;
+for(ih_a = 0; ih_a < ih_v; ih_a++) ih_permutation[ih_a] = ih_a;
+for(ih_a = ih_v - 1; ih_a > 0; ih_a--) {
+  ih_rng = 16807 * (ih_rng % 127773) - 2836 * (ih_rng / 127773);
+  if(ih_rng <= 0) ih_rng += 2147483647;
+  int ih_swap = ih_rng % (ih_a + 1);
+  int ih_tmp = ih_permutation[ih_a];
+  ih_permutation[ih_a] = ih_permutation[ih_swap];
+  ih_permutation[ih_swap] = ih_tmp;
+}
+int ih_period = ih_n / 2;
+if(ih_period > ih_v - 1) ih_period = ih_v - 1;
+ih_sequence->RemoveAllRows();
+ih_sequence->AddRows(ih_n);
+for(ih_a = 0; ih_a < ih_n; ih_a++) {
+  int ih_token = ih_permutation[ih_a % ih_period];
+  // Keep the first exemplar and final query intact. Corrupt intermediate
+  // repetitions with the held-out distractor token at the requested rate.
+  ih_rng = 16807 * (ih_rng % 127773) - 2836 * (ih_rng / 127773);
+  if(ih_rng <= 0) ih_rng += 2147483647;
+  double ih_draw = ih_rng / 2147483647.0;
+  if(ih_a >= ih_period && ih_a < ih_n - 1 && ih_draw < ih_noise)
+    ih_token = ih_permutation[ih_v - 1];
+  ih_sequence->SetVal(ih_a, \"position\", ih_a);
+  ih_sequence->SetVal(ih_token, \"token\", ih_a);
+  ih_sequence->SetVal(String(ih_token), \"label\", ih_a);
+  int ih_next_token = ih_permutation[(ih_a + 1) % ih_period];
+  ih_sequence->SetVal(ih_next_token, \"next_token\", ih_a);
+}
+ih_cursor = ih_n - 1;
+ih_cfg->SetVar(\"cursor\", ih_cursor);
+
+}
+ih_cursor = ih_original_cursor;
+ih_cfg->SetVar(\"cursor\", ih_cursor);
+{
+// Exact constructed two-head attention circuit. Head 1 copies the previous
+// token embedding into a separate key subspace. Head 2 compares the current
+// token query to that subspace, applies a causal softmax and copies values.
+int_Matrix ih_tokens;
+float_Matrix ih_embeddings;
+float_Matrix ih_keys;
+float_Matrix ih_attention;
+float_Matrix ih_values;
+float_Matrix ih_prediction;
+ih_tokens.SetGeom(1, ih_n);
+ih_embeddings.SetGeom(2, ih_n, ih_v);
+ih_keys.SetGeom(2, ih_n, ih_v);
+ih_attention.SetGeom(2, ih_n, ih_n);
+ih_values.SetGeom(2, ih_n, ih_v);
+ih_prediction.SetGeom(1, ih_v);
+ih_embeddings.InitVals(0.0);
+ih_keys.InitVals(0.0);
+ih_attention.InitVals(0.0);
+ih_values.InitVals(0.0);
+ih_prediction.InitVals(0.0);
+int ih_i;
+int ih_j;
+int ih_k;
+for(ih_i = 0; ih_i < ih_n; ih_i++) {
+  ih_tokens[ih_i] = ih_sequence->GetVal(\"token\", ih_i);
+  if(ih_tokens[ih_i] < 0 || ih_tokens[ih_i] >= ih_v) {
+    ih_cfg->SetVar(\"status\", \"Token outside vocabulary. Generate a new sequence.\");
+    ret_val = -1;
+    return;
+  }
+  int ih_current_token = ih_tokens[ih_i];
+  ih_embeddings[ih_i, ih_current_token] = 1.0;
+  if(ih_i > 0 && !ih_ablate_previous) {
+    int ih_previous_token = ih_tokens[ih_i - 1];
+    ih_keys[ih_i, ih_previous_token] = 1.0;
+  }
+}
+for(ih_i = 1; ih_i < ih_n; ih_i++) {
+  double ih_total = 0.0;
+  int ih_query_token = ih_tokens[ih_i];
+  // j=0 has no predecessor key. The standard causal mask permits j<=i;
+  // every future source j>i remains exactly zero.
+  for(ih_j = 1; ih_j <= ih_i; ih_j++) {
+    double ih_match = ih_keys[ih_j, ih_query_token];
+    double ih_weight = exp((ih_match - 1.0) / ih_temp);
+    ih_attention[ih_j, ih_i] = ih_weight;
+    ih_total += ih_weight;
+  }
+  for(ih_j = 1; ih_j <= ih_i; ih_j++)
+    ih_attention[ih_j, ih_i] = ih_attention[ih_j, ih_i] / ih_total;
+}
+for(ih_j = 1; ih_j <= ih_cursor; ih_j++) {
+  double ih_mass = ih_attention[ih_j, ih_cursor];
+  if(ih_ablate_induction) ih_mass = 0.0;
+  int ih_value_token = ih_tokens[ih_j];
+  ih_values[ih_j, ih_value_token] = ih_mass;
+  ih_prediction[ih_value_token] += ih_mass;
+}
+int ih_predicted = -1;
+double ih_best = 0.0;
+for(ih_k = 0; ih_k < ih_v; ih_k++) {
+  if(ih_prediction[ih_k] > ih_best) {
+    ih_best = ih_prediction[ih_k];
+    ih_predicted = ih_k;
+  }
+}
+int ih_target = ih_sequence->GetVal(\"next_token\", ih_cursor);
+ih_cfg->SetVar(\"prediction\", ih_predicted);
+ih_cfg->SetVar(\"target\", ih_target);
+ih_cfg->SetVar(\"confidence\", ih_best);
+ih_cfg->SetVar(\"status\", \"Query \" + String(ih_tokens[ih_cursor]) +
+  \" at position \" + String(ih_cursor) + \" predicts \" + String(ih_predicted) +
+  \"; repeated-pattern target \" + String(ih_target));
+
+// Keep inspectable DataTable matrices and real Network unit state in sync.
+bool ih_resize_table = ih_states->data.size != 5;
+if(!ih_resize_table) {
+  DataCol* ih_first_column = ih_states->data[0];
+  ih_resize_table = ih_first_column->cell_geom.dim(0) != ih_n ||
+                    ih_first_column->cell_geom.dim(1) != ih_v;
+}
+if(ih_resize_table) {
+  ih_states->RemoveAllCols();
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"TokenEmbeddings\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"PreviousTokenKeys\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"CausalAttention\", 2, ih_n, ih_n);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"CopiedValues\", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, \"Prediction\", 1, ih_v);
+  ih_states->AddRows(1);
+ }
+ih_states->SetValAsMatrix(ih_embeddings, \"TokenEmbeddings\", 0);
+ih_states->SetValAsMatrix(ih_keys, \"PreviousTokenKeys\", 0);
+ih_states->SetValAsMatrix(ih_attention, \"CausalAttention\", 0);
+ih_states->SetValAsMatrix(ih_values, \"CopiedValues\", 0);
+ih_states->SetValAsMatrix(ih_prediction, \"Prediction\", 0);
+
+Layer* ih_token_layer = ih_net->layers[\"Token_Embeddings\"];
+Layer* ih_key_layer = ih_net->layers[\"Previous_Token_Keys\"];
+Layer* ih_query_layer = ih_net->layers[\"Current_Query\"];
+Layer* ih_attn_layer = ih_net->layers[\"Causal_Attention\"];
+Layer* ih_value_layer = ih_net->layers[\"Copied_Values\"];
+Layer* ih_pred_layer = ih_net->layers[\"Next_Token_Prediction\"];
+if(ih_token_layer->un_geom.x != ih_n || ih_token_layer->un_geom.y != ih_v ||
+   ih_token_layer->n_units_built == 0) {
+  ih_token_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_key_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_query_layer->SetLayerUnitGeom(1, ih_v);
+  ih_attn_layer->SetLayerUnitGeom(ih_n, ih_n);
+  ih_value_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_pred_layer->SetLayerUnitGeom(1, ih_v);
+  ih_token_layer->SetAbsPos(0, 0, 0);
+  ih_key_layer->SetAbsPos(0, ih_v + 3, 3);
+  ih_query_layer->SetAbsPos(ih_n + 4, ih_v + 3, 3);
+  ih_attn_layer->SetAbsPos(0, 2 * (ih_v + 3), 6);
+  ih_value_layer->SetAbsPos(0, 2 * (ih_v + 3) + ih_n + 4, 9);
+  ih_pred_layer->SetAbsPos(ih_n + 4, 2 * (ih_v + 3) + ih_n + 4, 12);
+  ih_net->Build();
+  ih_net->Init_Weights();
+}
+for(ih_i = 0; ih_i < 6; ih_i++) {
+  Layer* ih_label_layer = ih_net->layers[ih_i];
+  ih_label_layer->SetUnitNames(true);
+}
+for(ih_j = 0; ih_j < ih_n; ih_j++) {
+  for(ih_k = 0; ih_k < ih_v; ih_k++) {
+    ih_token_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_embeddings[ih_j, ih_k];
+    ih_key_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_keys[ih_j, ih_k];
+    ih_value_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_values[ih_j, ih_k];
+    String ih_label = String(ih_j) + \":\" + String(ih_k);
+    ih_token_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+    ih_key_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+    ih_value_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+  }
+  for(ih_i = 0; ih_i < ih_n; ih_i++) {
+    ih_attn_layer->GetUnitFlatXY(ih_j, ih_i)->act = ih_attention[ih_j, ih_i];
+    ih_attn_layer->SetUnitNameIdx(ih_i * ih_n + ih_j, String(ih_i) + \"<-\" + String(ih_j));
+  }
+}
+for(ih_k = 0; ih_k < ih_v; ih_k++) {
+  ih_query_layer->GetUnitIdx(ih_k)->act = (ih_k == ih_tokens[ih_cursor]);
+  ih_pred_layer->GetUnitIdx(ih_k)->act = ih_prediction[ih_k];
+  ih_query_layer->SetUnitNameIdx(ih_k, String(ih_k));
+  ih_pred_layer->SetUnitNameIdx(ih_k, String(ih_k));
+}
+ih_net->UpdateAllViews();
+ih_states->UpdateAllViews();
+ih_sequence->UpdateAllViews();
+
+}
+ih_results->UpdateAllViews();
+cout << \"INDUCTOR_EVALUATION accuracy=\" << ih_correct / 64.0 << \" trials=64 conditions=3\" << endl;
+";
+     };
+    };
+   };
+   step_prog=NULL;
+   step_n=1;
+   doc {
+    name="doc";
+    desc=;
+    web_doc=0;
+    wiki=;
+    url="local";
+    full_url="local";
+    text_size=1;
+    text="<html>
+<head></head>
+<body>
+== Enter Title Here ==
+</body>
+</html>
+";
+    html_text=;
+   };
+  };
+ };
+ viewers {
+  name=;
+  el_typ=TopLevelViewer;
+  el_def=0;
+ };
+ save_view=1;
+ save_as_only=0;
+ auto_name=0;
+ last_change_desc=;
+ tree_state{  };
+ networks {
+  name="Network_Group_0";
+  el_typ=BpNetwork;
+  el_def=0;
+  BpNetwork @[0] {
+   name="InductionCircuit";
+   desc=;
+   flags=BUILD_INIT_WTS;
+   train_mode=TRAIN;
+   wt_update=ON_LINE;
+   small_batch_n=10;
+   stats {sse_unit_avg=0: sse_sqrt=0: cnt_err_tol=0: prerr=0: cos_err=1: };
+   n_units=498;
+   n_cons=0;
+   max_prjns=1;
+   specs {
+    name=;
+    el_typ=BpUnitSpec;
+    el_def=0;
+    BpUnitSpec @[0] {
+     name="BpUnitSpec_0";
+     is_used=1;
+     used_status=USED;
+     desc=;
+     unique{      };
+     saved{      };
+     children {
+      name=;
+      el_typ=BpUnitSpec;
+      el_def=0;
+     };
+     bias_spec {type=BpConSpec: spec=.networks[0].specs[1]$$: };
+     act_range {min=-100: max=100: range=1: scale=1: };
+     sse_tol=0.5;
+     act_fun=SIGMOID;
+     error_fun=SQUARED_ERR;
+     err_tol=0.05;
+     save_err=0;
+     nlxx1 {ramp_start=-3: ramp_max=0.1: ramp_gain=-0.03333334: };
+     gauss {mean=0: std_dev=1: std_dev_r=1: };
+     noise_type=NO_NOISE;
+     noise {name="": type=UNIFORM: mean=0: var=1: par=1: };
+    };
+    BpConSpec @[1] {
+     name="BpConSpec_0";
+     is_used=1;
+     used_status=USED;
+     desc=;
+     unique{      };
+     saved{      };
+     children {
+      name=;
+      el_typ=BpConSpec;
+      el_def=0;
+     };
+     rnd {name="": type=UNIFORM: mean=0: var=0.5: par=1: };
+     wt_limits {type=NONE: min=-1: max=1: sym=0: sym_fm_top=0: };
+     lrate=0.2;
+     cur_lrate=0.2;
+     momentum=0;
+     decay_type=NO_DECAY;
+     decay=0;
+     wt_updt=1702125925;
+     no_bp=0;
+     lrate_sched {
+      name=;
+      el_typ=SchedItem;
+      el_def=0;
+      default_val=1;
+      interpolate=0;
+     };
+    };
+   };
+   param_seqs {
+    name=;
+    el_typ=ParamSeq;
+    el_def=0;
+   };
+   monitor {
+    name="NetNetMonitor_0";
+    items {
+     name=;
+     el_typ=NetMonItem;
+     el_def=0;
+     ignore_sig=0;
+    };
+    network=.networks[0]$$;
+    data=.networks[0].mon_data$$;
+    rmv_orphan_cols=1;
+   };
+   mon_data {
+    name="DataTable_15";
+    desc=;
+    data {
+     name="data";
+     el_typ=String_Data;
+     el_def=0;
+    };
+    data_flags=AUTO_CALC;
+    auto_load=NO_AUTO_LOAD;
+    auto_load_file=;
+    row_height=1;
+    max_col_width=50;
+    keygen 4 0=0;
+    last_sort_spec {
+     name="DataSortSpec_16";
+     ops {
+      name="ops";
+      el_typ=DataSortEl;
+      el_def=0;
+     };
+    };
+    row_with_hilite=-1;
+   };
+   layers {
+    name="Layer_Group_0";
+    el_typ=BpLayer;
+    el_def=0;
+    pos {x=0: y=0: z=0: };
+    pos2d {x=0: y=0: };
+    max_disp_size {x=18: y=47: z=13: };
+    max_disp_size2d {x=13: y=19: };
+    BpLayer @[0] {
+     name="Token_Embeddings";
+     n_recv_prjns=0;
+     n_send_prjns=0;
+     un_geom_x=13;
+     un_geom_y=8;
+     un_geom_n=104;
+     gp_geom_x=1;
+     gp_geom_y=1;
+     gp_geom_n=1;
+     flat_geom_x=13;
+     flat_geom_y=8;
+     flat_geom_n=104;
+     gp_spc_x=1;
+     gp_spc_y=1;
+     flags=SAVE_UNIT_NAMES;
+     layer_type=HIDDEN;
+     desc=;
+     pos_rel {rel=ABS_POS: other=NULL: x_align=LEFT: x_off=0: y_align=FRONT: y_off=0: space=2: };
+     pos {x=0: y=0: z=0: };
+     pos_abs {x=0: y=0: z=0: };
+     pos2d {x=0: y=0: };
+     pos2d_abs {x=0: y=0: };
+     disp_scale=1;
+     un_geom {x=13: y=8: n_not_xy=0: n=104: };
+     unit_groups=0;
+     gp_geom {x=1: y=1: n_not_xy=0: n=1: };
+     gp_spc {x=1: y=1: };
+     flat_geom {x=13: y=8: n_not_xy=0: n=104: };
+     disp_geom {x=13: y=8: n_not_xy=0: n=104: };
+     scaled_disp_geom {x=13: y=8: n_not_xy=0: n=1: };
+     projections {
+      name="projections";
+      el_typ=Projection;
+      el_def=0;
+     };
+     send_prjns {
+      name="send_prjns";
+      el_typ=Projection;
+      el_def=0;
+     };
+     unit_spec {type=BpUnitSpec: spec=.networks[0].specs[0]$$: };
+     dist {fm_input=-1: fm_output=-1: };
+     units_lesioned=0;
+     gp_unit_names_4d=0;
+     unit_names {
+      name="unit_names";
+     [13 8] "0:0";"1:0";"2:0";"3:0";"4:0";"5:0";"6:0";"7:0";"8:0";"9:0";
+"10:0";"11:0";"12:0";"0:1";"1:1";"2:1";"3:1";"4:1";"5:1";"6:1";
+"7:1";"8:1";"9:1";"10:1";"11:1";"12:1";"0:2";"1:2";"2:2";"3:2";
+"4:2";"5:2";"6:2";"7:2";"8:2";"9:2";"10:2";"11:2";"12:2";"0:3";
+"1:3";"2:3";"3:3";"4:3";"5:3";"6:3";"7:3";"8:3";"9:3";"10:3";
+"11:3";"12:3";"0:4";"1:4";"2:4";"3:4";"4:4";"5:4";"6:4";"7:4";
+"8:4";"9:4";"10:4";"11:4";"12:4";"0:5";"1:5";"2:5";"3:5";"4:5";
+"5:5";"6:5";"7:5";"8:5";"9:5";"10:5";"11:5";"12:5";"0:6";"1:6";
+"2:6";"3:6";"4:6";"5:6";"6:6";"7:6";"8:6";"9:6";"10:6";"11:6";
+"12:6";"0:7";"1:7";"2:7";"3:7";"4:7";"5:7";"6:7";"7:7";"8:7";
+"9:7";"10:7";"11:7";"12:7";     };
+     brain_area=;
+     voxel_fill_pct=1;
+    };
+    BpLayer @[1] {
+     name="Previous_Token_Keys";
+     n_recv_prjns=0;
+     n_send_prjns=0;
+     un_geom_x=13;
+     un_geom_y=8;
+     un_geom_n=104;
+     gp_geom_x=1;
+     gp_geom_y=1;
+     gp_geom_n=1;
+     flat_geom_x=13;
+     flat_geom_y=8;
+     flat_geom_n=104;
+     gp_spc_x=1;
+     gp_spc_y=1;
+     flags=SAVE_UNIT_NAMES;
+     layer_type=HIDDEN;
+     desc=;
+     pos_rel {rel=ABS_POS: other=.networks[0].layers[0]$$: x_align=LEFT: x_off=0: y_align=FRONT: y_off=0: space=2: };
+     pos {x=0: y=11: z=3: };
+     pos_abs {x=0: y=11: z=3: };
+     pos2d {x=0: y=2: };
+     pos2d_abs {x=0: y=2: };
+     disp_scale=1;
+     un_geom {x=13: y=8: n_not_xy=0: n=104: };
+     unit_groups=0;
+     gp_geom {x=1: y=1: n_not_xy=0: n=1: };
+     gp_spc {x=1: y=1: };
+     flat_geom {x=13: y=8: n_not_xy=0: n=104: };
+     disp_geom {x=13: y=8: n_not_xy=0: n=104: };
+     scaled_disp_geom {x=13: y=8: n_not_xy=0: n=1: };
+     projections {
+      name="projections";
+      el_typ=Projection;
+      el_def=0;
+     };
+     send_prjns {
+      name="send_prjns";
+      el_typ=Projection;
+      el_def=0;
+     };
+     unit_spec {type=BpUnitSpec: spec=$.networks[0].specs[0]$: };
+     dist {fm_input=-1: fm_output=-1: };
+     units_lesioned=0;
+     gp_unit_names_4d=0;
+     unit_names {
+      name="unit_names";
+     [13 8] "0:0";"1:0";"2:0";"3:0";"4:0";"5:0";"6:0";"7:0";"8:0";"9:0";
+"10:0";"11:0";"12:0";"0:1";"1:1";"2:1";"3:1";"4:1";"5:1";"6:1";
+"7:1";"8:1";"9:1";"10:1";"11:1";"12:1";"0:2";"1:2";"2:2";"3:2";
+"4:2";"5:2";"6:2";"7:2";"8:2";"9:2";"10:2";"11:2";"12:2";"0:3";
+"1:3";"2:3";"3:3";"4:3";"5:3";"6:3";"7:3";"8:3";"9:3";"10:3";
+"11:3";"12:3";"0:4";"1:4";"2:4";"3:4";"4:4";"5:4";"6:4";"7:4";
+"8:4";"9:4";"10:4";"11:4";"12:4";"0:5";"1:5";"2:5";"3:5";"4:5";
+"5:5";"6:5";"7:5";"8:5";"9:5";"10:5";"11:5";"12:5";"0:6";"1:6";
+"2:6";"3:6";"4:6";"5:6";"6:6";"7:6";"8:6";"9:6";"10:6";"11:6";
+"12:6";"0:7";"1:7";"2:7";"3:7";"4:7";"5:7";"6:7";"7:7";"8:7";
+"9:7";"10:7";"11:7";"12:7";     };
+     brain_area=;
+     voxel_fill_pct=1;
+    };
+    BpLayer @[2] {
+     name="Current_Query";
+     n_recv_prjns=0;
+     n_send_prjns=0;
+     un_geom_x=1;
+     un_geom_y=8;
+     un_geom_n=8;
+     gp_geom_x=1;
+     gp_geom_y=1;
+     gp_geom_n=1;
+     flat_geom_x=1;
+     flat_geom_y=8;
+     flat_geom_n=8;
+     gp_spc_x=1;
+     gp_spc_y=1;
+     flags=SAVE_UNIT_NAMES;
+     layer_type=HIDDEN;
+     desc=;
+     pos_rel {rel=ABS_POS: other=.networks[0].layers[1]$$: x_align=LEFT: x_off=0: y_align=FRONT: y_off=0: space=2: };
+     pos {x=17: y=11: z=3: };
+     pos_abs {x=17: y=11: z=3: };
+     pos2d {x=0: y=4: };
+     pos2d_abs {x=0: y=4: };
+     disp_scale=1;
+     un_geom {x=1: y=8: n_not_xy=0: n=8: };
+     unit_groups=0;
+     gp_geom {x=1: y=1: n_not_xy=0: n=1: };
+     gp_spc {x=1: y=1: };
+     flat_geom {x=1: y=8: n_not_xy=0: n=8: };
+     disp_geom {x=1: y=8: n_not_xy=0: n=8: };
+     scaled_disp_geom {x=1: y=8: n_not_xy=0: n=1: };
+     projections {
+      name="projections";
+      el_typ=Projection;
+      el_def=0;
+     };
+     send_prjns {
+      name="send_prjns";
+      el_typ=Projection;
+      el_def=0;
+     };
+     unit_spec {type=BpUnitSpec: spec=$.networks[0].specs[0]$: };
+     dist {fm_input=-1: fm_output=-1: };
+     units_lesioned=0;
+     gp_unit_names_4d=0;
+     unit_names {
+      name="unit_names";
+     [1 8] "0";"1";"2";"3";"4";"5";"6";"7";     };
+     brain_area=;
+     voxel_fill_pct=1;
+    };
+    BpLayer @[3] {
+     name="Causal_Attention";
+     n_recv_prjns=0;
+     n_send_prjns=0;
+     un_geom_x=13;
+     un_geom_y=13;
+     un_geom_n=169;
+     gp_geom_x=1;
+     gp_geom_y=1;
+     gp_geom_n=1;
+     flat_geom_x=13;
+     flat_geom_y=13;
+     flat_geom_n=169;
+     gp_spc_x=1;
+     gp_spc_y=1;
+     flags=SAVE_UNIT_NAMES;
+     layer_type=HIDDEN;
+     desc=;
+     pos_rel {rel=ABS_POS: other=.networks[0].layers[2]$$: x_align=LEFT: x_off=0: y_align=FRONT: y_off=0: space=2: };
+     pos {x=0: y=22: z=6: };
+     pos_abs {x=0: y=22: z=6: };
+     pos2d {x=0: y=6: };
+     pos2d_abs {x=0: y=6: };
+     disp_scale=1;
+     un_geom {x=13: y=13: n_not_xy=0: n=169: };
+     unit_groups=0;
+     gp_geom {x=1: y=1: n_not_xy=0: n=1: };
+     gp_spc {x=1: y=1: };
+     flat_geom {x=13: y=13: n_not_xy=0: n=169: };
+     disp_geom {x=13: y=13: n_not_xy=0: n=169: };
+     scaled_disp_geom {x=13: y=13: n_not_xy=0: n=1: };
+     projections {
+      name="projections";
+      el_typ=Projection;
+      el_def=0;
+     };
+     send_prjns {
+      name="send_prjns";
+      el_typ=Projection;
+      el_def=0;
+     };
+     unit_spec {type=BpUnitSpec: spec=$.networks[0].specs[0]$: };
+     dist {fm_input=-1: fm_output=-1: };
+     units_lesioned=0;
+     gp_unit_names_4d=0;
+     unit_names {
+      name="unit_names";
+     [13 13] "0<-0";"0<-1";"0<-2";"0<-3";"0<-4";"0<-5";"0<-6";"0<-7";"0<-8";"0<-9";
+"0<-10";"0<-11";"0<-12";"1<-0";"1<-1";"1<-2";"1<-3";"1<-4";"1<-5";"1<-6";
+"1<-7";"1<-8";"1<-9";"1<-10";"1<-11";"1<-12";"2<-0";"2<-1";"2<-2";"2<-3";
+"2<-4";"2<-5";"2<-6";"2<-7";"2<-8";"2<-9";"2<-10";"2<-11";"2<-12";"3<-0";
+"3<-1";"3<-2";"3<-3";"3<-4";"3<-5";"3<-6";"3<-7";"3<-8";"3<-9";"3<-10";
+"3<-11";"3<-12";"4<-0";"4<-1";"4<-2";"4<-3";"4<-4";"4<-5";"4<-6";"4<-7";
+"4<-8";"4<-9";"4<-10";"4<-11";"4<-12";"5<-0";"5<-1";"5<-2";"5<-3";"5<-4";
+"5<-5";"5<-6";"5<-7";"5<-8";"5<-9";"5<-10";"5<-11";"5<-12";"6<-0";"6<-1";
+"6<-2";"6<-3";"6<-4";"6<-5";"6<-6";"6<-7";"6<-8";"6<-9";"6<-10";"6<-11";
+"6<-12";"7<-0";"7<-1";"7<-2";"7<-3";"7<-4";"7<-5";"7<-6";"7<-7";"7<-8";
+"7<-9";"7<-10";"7<-11";"7<-12";"8<-0";"8<-1";"8<-2";"8<-3";"8<-4";"8<-5";
+"8<-6";"8<-7";"8<-8";"8<-9";"8<-10";"8<-11";"8<-12";"9<-0";"9<-1";"9<-2";
+"9<-3";"9<-4";"9<-5";"9<-6";"9<-7";"9<-8";"9<-9";"9<-10";"9<-11";"9<-12";
+"10<-0";"10<-1";"10<-2";"10<-3";"10<-4";"10<-5";"10<-6";"10<-7";"10<-8";"10<-9";
+"10<-10";"10<-11";"10<-12";"11<-0";"11<-1";"11<-2";"11<-3";"11<-4";"11<-5";"11<-6";
+"11<-7";"11<-8";"11<-9";"11<-10";"11<-11";"11<-12";"12<-0";"12<-1";"12<-2";"12<-3";
+"12<-4";"12<-5";"12<-6";"12<-7";"12<-8";"12<-9";"12<-10";"12<-11";"12<-12";     };
+     brain_area=;
+     voxel_fill_pct=1;
+    };
+    BpLayer @[4] {
+     name="Copied_Values";
+     n_recv_prjns=0;
+     n_send_prjns=0;
+     un_geom_x=13;
+     un_geom_y=8;
+     un_geom_n=104;
+     gp_geom_x=1;
+     gp_geom_y=1;
+     gp_geom_n=1;
+     flat_geom_x=13;
+     flat_geom_y=8;
+     flat_geom_n=104;
+     gp_spc_x=1;
+     gp_spc_y=1;
+     flags=SAVE_UNIT_NAMES;
+     layer_type=HIDDEN;
+     desc=;
+     pos_rel {rel=ABS_POS: other=.networks[0].layers[3]$$: x_align=LEFT: x_off=0: y_align=FRONT: y_off=0: space=2: };
+     pos {x=0: y=39: z=9: };
+     pos_abs {x=0: y=39: z=9: };
+     pos2d {x=0: y=8: };
+     pos2d_abs {x=0: y=8: };
+     disp_scale=1;
+     un_geom {x=13: y=8: n_not_xy=0: n=104: };
+     unit_groups=0;
+     gp_geom {x=1: y=1: n_not_xy=0: n=1: };
+     gp_spc {x=1: y=1: };
+     flat_geom {x=13: y=8: n_not_xy=0: n=104: };
+     disp_geom {x=13: y=8: n_not_xy=0: n=104: };
+     scaled_disp_geom {x=13: y=8: n_not_xy=0: n=1: };
+     projections {
+      name="projections";
+      el_typ=Projection;
+      el_def=0;
+     };
+     send_prjns {
+      name="send_prjns";
+      el_typ=Projection;
+      el_def=0;
+     };
+     unit_spec {type=BpUnitSpec: spec=$.networks[0].specs[0]$: };
+     dist {fm_input=-1: fm_output=-1: };
+     units_lesioned=0;
+     gp_unit_names_4d=0;
+     unit_names {
+      name="unit_names";
+     [13 8] "0:0";"1:0";"2:0";"3:0";"4:0";"5:0";"6:0";"7:0";"8:0";"9:0";
+"10:0";"11:0";"12:0";"0:1";"1:1";"2:1";"3:1";"4:1";"5:1";"6:1";
+"7:1";"8:1";"9:1";"10:1";"11:1";"12:1";"0:2";"1:2";"2:2";"3:2";
+"4:2";"5:2";"6:2";"7:2";"8:2";"9:2";"10:2";"11:2";"12:2";"0:3";
+"1:3";"2:3";"3:3";"4:3";"5:3";"6:3";"7:3";"8:3";"9:3";"10:3";
+"11:3";"12:3";"0:4";"1:4";"2:4";"3:4";"4:4";"5:4";"6:4";"7:4";
+"8:4";"9:4";"10:4";"11:4";"12:4";"0:5";"1:5";"2:5";"3:5";"4:5";
+"5:5";"6:5";"7:5";"8:5";"9:5";"10:5";"11:5";"12:5";"0:6";"1:6";
+"2:6";"3:6";"4:6";"5:6";"6:6";"7:6";"8:6";"9:6";"10:6";"11:6";
+"12:6";"0:7";"1:7";"2:7";"3:7";"4:7";"5:7";"6:7";"7:7";"8:7";
+"9:7";"10:7";"11:7";"12:7";     };
+     brain_area=;
+     voxel_fill_pct=1;
+    };
+    BpLayer @[5] {
+     name="Next_Token_Prediction";
+     n_recv_prjns=0;
+     n_send_prjns=0;
+     un_geom_x=1;
+     un_geom_y=8;
+     un_geom_n=8;
+     gp_geom_x=1;
+     gp_geom_y=1;
+     gp_geom_n=1;
+     flat_geom_x=1;
+     flat_geom_y=8;
+     flat_geom_n=8;
+     gp_spc_x=1;
+     gp_spc_y=1;
+     flags=SAVE_UNIT_NAMES;
+     layer_type=HIDDEN;
+     desc=;
+     pos_rel {rel=ABS_POS: other=.networks[0].layers[4]$$: x_align=LEFT: x_off=0: y_align=FRONT: y_off=0: space=2: };
+     pos {x=17: y=39: z=12: };
+     pos_abs {x=17: y=39: z=12: };
+     pos2d {x=0: y=10: };
+     pos2d_abs {x=0: y=10: };
+     disp_scale=1;
+     un_geom {x=1: y=8: n_not_xy=0: n=8: };
+     unit_groups=0;
+     gp_geom {x=1: y=1: n_not_xy=0: n=1: };
+     gp_spc {x=1: y=1: };
+     flat_geom {x=1: y=8: n_not_xy=0: n=8: };
+     disp_geom {x=1: y=8: n_not_xy=0: n=8: };
+     scaled_disp_geom {x=1: y=8: n_not_xy=0: n=1: };
+     projections {
+      name="projections";
+      el_typ=Projection;
+      el_def=0;
+     };
+     send_prjns {
+      name="send_prjns";
+      el_typ=Projection;
+      el_def=0;
+     };
+     unit_spec {type=BpUnitSpec: spec=$.networks[0].specs[0]$: };
+     dist {fm_input=-1: fm_output=-1: };
+     units_lesioned=0;
+     gp_unit_names_4d=0;
+     unit_names {
+      name="unit_names";
+     [1 8] "0";"1";"2";"3";"4";"5";"6";"7";     };
+     brain_area=;
+     voxel_fill_pct=1;
+    };
+   };
+   weights {
+    name=;
+    el_typ=Weights;
+    el_def=0;
+   };
+   auto_build=AUTO_BUILD;
+   auto_load_wts=NO_AUTO_LOAD;
+   auto_load_file=;
+   brain_atlas_name=;
+   cuda {sync_units=0: sync_cons=0: min_threads=32: max_threads=1024: cons_per_thread=2: timers_on=0: n_threads=32: };
+   wt_save_fmt=TEXT;
+   max_disp_size {x=18: y=47: z=13: };
+   max_disp_size2d {x=13: y=19: };
+   bp_to_inputs=0;
+  };
+ };
+};

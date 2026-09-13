@@ -29,7 +29,7 @@ void Function_List::Destroy() {
   Reset();
 }
 
-void Function_List::Copy_(const Function_List& cp) {
+void Function_List::Copy_(const Function_List& cp) { (void)cp;
 }
 
 void Function_List::GenCss(Program* prog) {

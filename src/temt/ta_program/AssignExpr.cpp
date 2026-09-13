@@ -53,7 +53,7 @@ String AssignExpr::GetDisplayName() const {
   return rval;
 }
 
-bool AssignExpr::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool AssignExpr::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   // note: AssignExpr is specifically excluded if multiple matches, so no need to exclude
   // all the other things that might have an = in them -- it is just a fallback default
   if(code.endsWith(';')) return false; // don't pick up css exprs

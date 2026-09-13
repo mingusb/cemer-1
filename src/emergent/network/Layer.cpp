@@ -989,8 +989,8 @@ void Layer::ApplyInputData(taMatrix* data, ExtFlags ext_flags,
   if(layer_type == HIDDEN) return;
   
   // check correct geom of data
-  if(TestError((data->dims() != 2) && (data->dims() != 4), "ApplyInputData",
-               "data->dims must be 2 (2-d) or 4 (4-d)")) {
+  if(TestError((data->dims() != 1) && (data->dims() != 2) && (data->dims() != 4), "ApplyInputData",
+               "data->dims must be 1, 2 (2-d), or 4 (4-d)")) {
     return;
   }
   taVector2i offs(0,0);
@@ -1039,20 +1039,18 @@ void Layer::ApplyInputData_1d(NETWORK_STATE* net, taMatrix* data, ExtFlags ext_f
 
 void Layer::ApplyInputData_2d(NETWORK_STATE* net, taMatrix* data, ExtFlags ext_flags,
                               Random* ran, const taVector2i& offs, bool na_by_range) {
-  int max_x = MIN(data->dim(0)-offs.x, flat_geom.x);
-  int max_y = MIN(data->dim(1)-offs.y, flat_geom.y);
-  bool do_rand = (ran && (ran->type != Random::NONE));
+  const bool do_rand = (ran && (ran->type != Random::NONE));
   UNIT_SPEC_CPP* us = GetUnitSpec(net);
-  for(int d_y = 0; d_y < max_y; d_y++) {
-    int u_y = offs.y + d_y;
-    for(int d_x = 0; d_x < max_x; d_x++) {
-      int u_x = offs.x + d_x;
-      UNIT_STATE* u = GetUnitStateFlatXY(net, d_x, d_y);
+  for(int d_y = 0; d_y < data->dim(1); d_y++) {
+    const int u_y = offs.y + d_y;
+    if(u_y < 0 || u_y >= flat_geom.y) continue;
+    for(int d_x = 0; d_x < data->dim(0); d_x++) {
+      const int u_x = offs.x + d_x;
+      if(u_x < 0 || u_x >= flat_geom.x) continue;
+      UNIT_STATE* u = GetUnitStateFlatXY(net, u_x, u_y);
       if(!u || u->lesioned()) continue;
       float val = data->SafeElAsVar(d_x, d_y).toFloat();
-      if(do_rand) {
-        val += ran->Gen();
-      }
+      if(do_rand) val += ran->Gen();
       us->ApplyInputData(u, net, val, (UnitState_cpp::ExtFlags)ext_flags, na_by_range);
     }
   }
@@ -1060,26 +1058,21 @@ void Layer::ApplyInputData_2d(NETWORK_STATE* net, taMatrix* data, ExtFlags ext_f
 
 void Layer::ApplyInputData_Flat4d(NETWORK_STATE* net, taMatrix* data, ExtFlags ext_flags,
                                   Random* ran, const taVector2i& offs, bool na_by_range) {
-  // outer-loop is data-group (groups of x-y data items)
-  int max_x = MIN(data->dim(0), un_geom.x);
-  int max_y = MIN(data->dim(1), un_geom.y);
-  int max_gx = MIN(data->dim(2), gp_geom.x);
-  int max_gy = MIN(data->dim(3), gp_geom.y);
-  bool do_rand = (ran && (ran->type != Random::NONE));
+  // Flatten every data group into its own rectangle in the target layer.
+  const bool do_rand = (ran && (ran->type != Random::NONE));
   UNIT_SPEC_CPP* us = GetUnitSpec(net);
-  for(int dg_y = 0; dg_y < max_gy; dg_y++) {
-    for(int dg_x = 0; dg_x < max_gx; dg_x++) {
-
+  for(int dg_y = 0; dg_y < data->dim(3); dg_y++) {
+    for(int dg_x = 0; dg_x < data->dim(2); dg_x++) {
       for(int d_y = 0; d_y < data->dim(1); d_y++) {
-        int u_y = offs.y + dg_y * data->dim(1) + d_y; // multiply out data indicies
+        const int u_y = offs.y + dg_y * data->dim(1) + d_y;
+        if(u_y < 0 || u_y >= flat_geom.y) continue;
         for(int d_x = 0; d_x < data->dim(0); d_x++) {
-          int u_x = offs.x + dg_x * data->dim(0) + d_x; // multiply out data indicies
-          UNIT_STATE* u = GetUnitStateFlatXY(net, d_x, d_y);
+          const int u_x = offs.x + dg_x * data->dim(0) + d_x;
+          if(u_x < 0 || u_x >= flat_geom.x) continue;
+          UNIT_STATE* u = GetUnitStateFlatXY(net, u_x, u_y);
           if(!u || u->lesioned()) continue;
           float val = data->SafeElAsVar(d_x, d_y, dg_x, dg_y).toFloat();
-          if(do_rand) {
-            val += ran->Gen();
-          }
+          if(do_rand) val += ran->Gen();
           us->ApplyInputData(u, net, val, (UnitState_cpp::ExtFlags)ext_flags, na_by_range);
         }
       }
@@ -1114,7 +1107,7 @@ void Layer::ApplyInputData_Gp4d(NETWORK_STATE* net, taMatrix* data, ExtFlags ext
   }
 }
 
-void Layer::ApplyLayerFlags(NETWORK_STATE* net, ExtFlags act_ext_flags) {
+void Layer::ApplyLayerFlags(NETWORK_STATE* net, ExtFlags act_ext_flags) { (void)net;
   SetExtFlag(act_ext_flags);
 }
 
@@ -1940,7 +1933,7 @@ bool Layer::LoadWeights(const String& fname, bool quiet) {
   return rval;
 }
 
-String Layer::GetArgForCompletion(const String& method, const String& arg) {
+String Layer::GetArgForCompletion(const String& method, const String& arg) { (void)arg;
   if (method == "MonitorVar") {
     return "layer";
   }
@@ -1948,7 +1941,7 @@ String Layer::GetArgForCompletion(const String& method, const String& arg) {
 }
 
 void Layer::GetArgCompletionList(const String& method, const String& arg, const String_Array& arg_values, taBase* arg_obj,
-                                   const String& cur_txt, Completions& completions) {
+                                   const String& cur_txt, Completions& completions) { (void)arg_obj; (void)arg_values; (void)cur_txt;
   if (method == "MonitorVar" && arg == "variable") {
     MemberSpace mbr_space = GetTypeDef()->members;
     for (int i = 0; i < mbr_space.size; ++i) {

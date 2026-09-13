@@ -340,11 +340,15 @@ bool iMainWindowViewer::AlignCssConsole() {
   taProject* prj = curProject();
   if(!prj) return false;
   if(!taMisc::console_win) return false;
-  QRect r = frameGeometry();
-  int nw_top = r.bottom() + 1;
-  int nw_ht = taiM->scrn_s.h - nw_top - 64; // leave a fixed amount of space at bottom.
-  if(nw_ht < 40) nw_ht = 40;
-  taMisc::console_win->LockedNewGeom(r.left(), nw_top, r.width(), nw_ht);
+  if(!screen()) return false;
+  const QRect available = screen()->availableGeometry();
+  const QRect r = frameGeometry();
+  cssConsoleWindow* console = taMisc::console_win;
+  const int frame_height = console->frameGeometry().height() - console->height();
+  const int frame_width = console->frameGeometry().width() - console->width();
+  const int nw_top = r.bottom() + 1;
+  const int nw_ht = qMax(40, available.bottom() - nw_top + 1 - frame_height);
+  console->LockedNewGeom(r.left(), nw_top, qMax(1, r.width() - frame_width), nw_ht);
   return true;
 }
 
@@ -686,7 +690,7 @@ void iMainWindowViewer::Constr_EditMenu()
     connect (selectionActions[i], SIGNAL(triggered()), signalMapperForSelection, SLOT(map())) ;
     signalMapperForSelection->setMapping(selectionActions[i], method_key_bindings[i].name.chars());
   }
-  connect (signalMapperForSelection, SIGNAL(mapped(QString)), this, SLOT(editCallMethod(QString))) ;
+  connect (signalMapperForSelection, SIGNAL(mappedString(QString)), this, SLOT(editCallMethod(QString))) ;
 
   editLinkAction = AddAction(new iAction(iClipData::EA_LINK, "&Link", QKeySequence(), "editLinkAction"));
   editLinkIntoAction = AddAction(new iAction(iClipData::EA_LINK, "&Link Into", QKeySequence(), "editLinkIntoAction"));
@@ -867,7 +871,7 @@ void iMainWindowViewer::Constr_ViewMenu()
   connect(viewScreenInfoAction, SIGNAL(Action()), this, SLOT(viewScreenInfo()));
   connect(viewRestoreWinGeomAction, SIGNAL(Action()), this, SLOT(viewRestoreWinGeom()));
   connect(viewConsoleFrontAction, SIGNAL(Action()), this, SLOT(ConsoleToFront()));
-  connect(signalMapperForViews, SIGNAL(mapped(int)), this, SLOT(ShowHideFrames(int))) ;
+  connect(signalMapperForViews, SIGNAL(mappedInt(int)), this, SLOT(ShowHideFrames(int))) ;
 }
 
 void iMainWindowViewer::Constr_WindowMenu()
@@ -1023,7 +1027,6 @@ void iMainWindowViewer::Constr_DataMenu() {
       continue;
     bool show = true;
     if (mdef->HasOption("MENU_BUTTON")) {
-      TypeSpace* args = &mdef->arg_types;
       // if there were methods we didn't want to show (perhaps they require a spec) put that logic here
       if (show) {
         String label = mdef->name + "..."; taMisc::SpaceLabel(label);
@@ -1181,9 +1184,9 @@ void iMainWindowViewer::Constr_DataMenu() {
   }
 
   
-  connect (signalMapperForDataProc, SIGNAL(mapped(QString)), this, SLOT(DataProcLauncher(QString))) ;
-  connect (signalMapperForDataAnal, SIGNAL(mapped(QString)), this, SLOT(DataAnalLauncher(QString))) ;
-  connect (signalMapperForDataGen, SIGNAL(mapped(QString)), this, SLOT(DataGenLauncher(QString))) ;
+  connect (signalMapperForDataProc, SIGNAL(mappedString(QString)), this, SLOT(DataProcLauncher(QString))) ;
+  connect (signalMapperForDataAnal, SIGNAL(mappedString(QString)), this, SLOT(DataAnalLauncher(QString))) ;
+  connect (signalMapperForDataGen, SIGNAL(mappedString(QString)), this, SLOT(DataGenLauncher(QString))) ;
 }
 
 void iMainWindowViewer::Constr_ToolsMenu()
@@ -1401,12 +1404,10 @@ void iMainWindowViewer::FindNonInteractive(taiSigLink* root, const String& find_
 }
 
 void iMainWindowViewer::Replace(taiSigLink* root, ISelectable_PtrList& sel_items,
-    const String& srch, const String& repl) {
+    const String& srch, const String& repl) { (void)root;
 
   taGuiDialog Dlg1;
   String curow;
-
-  bool rval = false;
 
   static String sr_val;
   if(srch.nonempty()) sr_val = srch;
@@ -2435,7 +2436,6 @@ void iMainWindowViewer::editCut() {
 }
 
 void iMainWindowViewer::editCopy() {
-  QWidget* widg = focusWidget();
   
   QLineEdit* lineEdit = dynamic_cast<QLineEdit*>(focusWidget());
   if (lineEdit) // if text
@@ -3115,11 +3115,6 @@ void iMainWindowViewer::UpdateUi() {
     editDupeAction->setEnabled(ea & iClipData::EA_DUPE);
     editDeleteAction->setEnabled(ea & iClipData::EA_DELETE);
     
-    int paste_cnt = 0;
-    if (ea & iClipData::EA_PASTE) ++paste_cnt;
-    if (ea & iClipData::EA_PASTE_INTO) ++paste_cnt;
-    if (ea & iClipData::EA_PASTE_ASSIGN) ++paste_cnt;
-    if (ea & iClipData::EA_PASTE_APPEND) ++paste_cnt;
     
     editPasteAction->setEnabled(ea & iClipData::EA_PASTE);
 

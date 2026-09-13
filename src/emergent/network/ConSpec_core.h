@@ -18,7 +18,7 @@
   INLINE float&         C_ApplyLimits(float& wt)
   { wt_limits.ApplyLimits(wt); return wt; }
   // #IGNORE #CAT_Learning apply weight limits to single connection
-  INLINE virtual void   ApplyLimits(CON_STATE* cg, NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void   ApplyLimits(CON_STATE* cg, NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     float* wts = cg->OwnCnVar(WT);
     if(wt_limits.type != STATE_CLASS(WeightLimits)::NONE) {
       CON_STATE_LOOP(cg, C_ApplyLimits(wts[i]));
@@ -50,11 +50,11 @@
   { dwt = 0.0f; }
   // #CAT_Learning initialize weight-change variable to 0
 
-  INLINE virtual void   SetConScale(float scale, CON_STATE* cg, int cidx, NETWORK_STATE* net, int thr_no) { }
+  INLINE virtual void   SetConScale(float scale, CON_STATE* cg, int cidx, NETWORK_STATE* net, int thr_no) { (void)cg; (void)cidx; (void)net; (void)scale; (void)thr_no; }
   // #CAT_Learning set the connection scale parameter, for given connection index, for algorithms that support connection scale parameters (Leabra)
   
   INLINE void           Init_Weights_symflag(NETWORK_STATE* net, int thr_no)
-  { if(wt_limits.sym) net->needs_wt_sym = true; }
+  { (void)thr_no; if(wt_limits.sym) net->needs_wt_sym = true; }
   // #IGNORE must be called during Init_Weights to update net flag for weight symmetrizing
 
   INLINE virtual void   Init_Weights(CON_STATE* cg, NETWORK_STATE* net, int thr_no) {
@@ -142,7 +142,7 @@
   // #CAT_State apply symmetry after weight init, sender based
 
   INLINE virtual void   Init_Weights_scale(CON_STATE* cg, NETWORK_STATE* net, int thr_no,
-                                           float init_wt_val = 1.0f) { };
+                                           float init_wt_val = 1.0f) { (void)cg; (void)init_wt_val; (void)net; (void)thr_no; };
   // #CAT_Learning only for Leabra: initialize connection weights by setting scale multiplier values to random values, and setting adaptive weights to given constant initial value (weights end up as product of scale * weight)
 
   // INLINE virtual void   Init_Weights_sym_r(CON_STATE* cg, NETWORK_STATE* net, int thr_no);
@@ -151,17 +151,17 @@
   // // #CAT_State apply symmetry after weight init, sender based
 
   INLINE virtual void   Init_Weights_post(CON_STATE* cg, NETWORK_STATE* net, int thr_no)
-  { };
+  { (void)cg; (void)net; (void)thr_no; };
   // // #CAT_State post-initialize state variables (ie. for scaling symmetrical weights, other wt state keyed off of weights, etc)
 
-  INLINE virtual void   Init_dWt(CON_STATE* cg, NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void   Init_dWt(CON_STATE* cg, NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     float* dwts = cg->OwnCnVar(DWT);
     CON_STATE_LOOP(cg, C_Init_dWt(dwts[i]));
   }
   // #CAT_Learning initialize weight-change variables for all cons
 
   INLINE virtual void   RenormWeights(CON_STATE* cg, NETWORK_STATE* net, int thr_no,
-                                      bool mult_norm, float avg_wt) {
+                                      bool mult_norm, float avg_wt) { (void)thr_no;
     const int sz = cg->size;
     if(sz < 2) return;
     float avg = 0.0f;
@@ -185,13 +185,13 @@
   // #CAT_State renormalize the weight values using either multiplicative (for positive-only weight values such as Leabra) or subtractive normalization (for pos/neg weight values, such as backprop) to hit the given average weight value -- only affects wt value -- need to call Init_Weights_post afterward at appropriate level! -- receiver based but uses generic, slow interace so can be called either way
 
   INLINE virtual void   RenormScales(CON_STATE* cg, NETWORK_STATE* net, int thr_no,
-                                     bool mult_norm, float avg_wt)  { };
+                                     bool mult_norm, float avg_wt)  { (void)avg_wt; (void)cg; (void)mult_norm; (void)net; (void)thr_no; };
   // #CAT_State renormalize the connection scale values using either multiplicative (for positive-only weight values such as Leabra) or subtractive normalization (for pos/neg weight values, such as backprop) to hit the given average weight value -- only affects scale value -- only for algorithms that support scale (Leabra) -- need to call Init_Weights_post afterward at appropriate level! -- receiver based but uses generic, slow interace so can be called either way
 
   INLINE float          C_Compute_Netin(const float wt, const float su_act)
   { return wt * su_act; }
   // #IGNORE 
-  INLINE virtual float  Compute_Netin(CON_STATE* cg, NETWORK_STATE* net, int thr_no) {
+  INLINE virtual float  Compute_Netin(CON_STATE* cg, NETWORK_STATE* net, int thr_no) { (void)thr_no;
     float rval=0.0f;
     float* wts = cg->OwnCnVar(WT);
     CON_STATE_LOOP(cg, rval += C_Compute_Netin(wts[i], cg->UnState(i,net)->act));
@@ -226,7 +226,7 @@
   { const float tmp = su_act - wt; return tmp * tmp; }
   // #IGNORE
   
-  INLINE virtual float  Compute_Dist(CON_STATE* cg, NETWORK_STATE* net, int thr_no) {
+  INLINE virtual float  Compute_Dist(CON_STATE* cg, NETWORK_STATE* net, int thr_no) { (void)thr_no;
     float rval=0.0f;
     float* wts = cg->OwnCnVar(WT);
     CON_STATE_LOOP(cg, rval += C_Compute_Dist(wts[i], cg->UnState(i,net)->act));
@@ -238,7 +238,7 @@
   
   INLINE void           C_Compute_dWt(float& wt, float& dwt, const float ru_act,
                                       const float su_act)
-  { dwt += ru_act * su_act; }
+  { (void)wt; dwt += ru_act * su_act; }
   // #IGNORE define in subclass to take proper args -- this is just for demo -- best to take all the vals as direct floats
   INLINE virtual void   Compute_dWt(CON_STATE* cg, NETWORK_STATE* net, int thr_no) {
     UNIT_STATE* ru = cg->ThrOwnUnState(net, thr_no);
@@ -273,18 +273,18 @@
   }
   // #CAT_Learning bias weight: initialize weight state variables (ie. at beginning of training)
   
-  INLINE virtual void   B_Init_dWt(UNIT_STATE* uv, NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void   B_Init_dWt(UNIT_STATE* uv, NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     C_Init_dWt(uv->bias_dwt);
   }
   // #CAT_Learning bias weight: initialize weight-change variables for all cons
   INLINE virtual void   B_Init_Weights_post(UNIT_STATE* uv, NETWORK_STATE* net, int thr_no)
-  { };
+  { (void)net; (void)thr_no; (void)uv; };
   // #CAT_Learning bias weight: post-weight init
-  INLINE virtual void   B_Compute_dWt(UNIT_STATE* uv, NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void   B_Compute_dWt(UNIT_STATE* uv, NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no; (void)uv;
     // todo: learning rule here..
   }
   // #CAT_Learning bias weight: compute the delta-weight change -- recv owns cons version
-  INLINE virtual void   B_Compute_Weights(UNIT_STATE* uv, NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void   B_Compute_Weights(UNIT_STATE* uv, NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     C_Compute_Weights(uv->bias_wt, uv->bias_dwt);
   }
   // #CAT_Learning bias weight: update weights (ie. add delta-wt to wt, zero delta-wt)
@@ -295,7 +295,7 @@
   //    without relying on TypeAccess, so we do it manually..
 
   INLINE virtual bool   SaveVar(CON_STATE* cg, NETWORK_STATE* net, int var_no) const
-  { return (var_no == WT); }
+  { (void)cg; (void)net; return (var_no == WT); }
   // #CAT_File should given variable be saved?
 
   INLINE virtual const char* ConVarName(int var_no) const {

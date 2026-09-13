@@ -106,7 +106,7 @@ taiArgType* cssTA::GetBestArgType(int aidx, TypeDef* argt, const MethodDef* md, 
   return hi_arg->ArgTypeInst(aidx, argt, const_cast<MethodDef*>(md), td);
 }
 
-void cssTA::SetCssObjArgElFromString(const String& val, const MethodDef* md,
+void cssTA::SetCssObjArgElFromString(const String& val, const MethodDef* /*md*/,
                                      cssEl* el, taiArgType* art) {
   if (art->arg_typ->DerivesFrom(&TA_ios))
     return;                     // no can do..
@@ -247,7 +247,7 @@ String& cssTA::PrintInherit(String& fh) const {
 }
 
 #ifdef TA_GUI
-int cssTA::Edit(bool wait) {
+int cssTA::Edit(bool /*wait*/) {
   //WARNING: does not respect wait
   void* pt = GetVoidPtr();
   if(!pt || !type_def)

@@ -38,7 +38,7 @@ public:
 protected:
   T3Color               m_hcolor; // hilight color (saved for rebuilds)
 
-  virtual void          DoHighlightColor(bool apply) {}
+  virtual void          DoHighlightColor(bool apply) { (void)apply;}
 
 private:
   void Copy_(const nvhDataView& cp);

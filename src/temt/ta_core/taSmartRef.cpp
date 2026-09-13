@@ -21,7 +21,7 @@ void taSmartRef::SigLinkRecv(taSigLink*, int sls, void* op1, void* op2) {
     m_own->SmartRef_SigEmit(this, m_ptr, sls, op1, op2);
   }
 }
-void taSmartRef::SigLinkDestroying(taSigLink* dl) {
+void taSmartRef::SigLinkDestroying(taSigLink* dl) { (void)dl;
   if (m_own) {
     taBase* tmp_ptr = m_ptr;
     m_ptr = NULL;

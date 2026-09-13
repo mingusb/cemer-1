@@ -38,7 +38,7 @@ void DeepCtxtConSpec::Initialize() {
 void DeepCtxtConSpec::Defaults_init() {
 }
 
-void DeepCtxtConSpec::GetPrjnName(Projection& prjn, String& nm) {
+void DeepCtxtConSpec::GetPrjnName(Projection& prjn, String& nm) { (void)prjn;
   nm = "Ctxt_" + nm;
 }
 
@@ -80,7 +80,7 @@ void SendDeepRawConSpec::Initialize() {
 void SendDeepRawConSpec::Defaults_init() {
 }
 
-void SendDeepRawConSpec::GetPrjnName(Projection& prjn, String& nm) {
+void SendDeepRawConSpec::GetPrjnName(Projection& prjn, String& nm) { (void)prjn;
   nm = "Deep_Raw_" + nm;
 }
 
@@ -103,7 +103,7 @@ void SendDeepModConSpec::Defaults_init() {
   wt_limits.sym = false;
 }
 
-void SendDeepModConSpec::GetPrjnName(Projection& prjn, String& nm) {
+void SendDeepModConSpec::GetPrjnName(Projection& prjn, String& nm) { (void)prjn;
   nm = "Deep_Mod_" + nm;
 }
 
@@ -133,7 +133,7 @@ void MarkerConSpec::Defaults_init() {
   learn = false;
 }
 
-void MarkerConSpec::GetPrjnName(Projection& prjn, String& nm) {
+void MarkerConSpec::GetPrjnName(Projection& prjn, String& nm) { (void)prjn;
   nm = "Marker_" + nm;
 }
 

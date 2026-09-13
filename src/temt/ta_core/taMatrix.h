@@ -556,7 +556,7 @@ public:
   // #CAT_Access return a slice, of n_frames frames starting at st_frame -- this is not technically const as we maintain a list of sub-items, but it is 'logically' const so we allow that
 
   virtual bool          StrValIsValid(const String& str, String* err_msg = NULL) const
-  { return true; }
+  { (void)err_msg; (void)str;  return true; }
   // #IGNORE validates a proposed string-version of a value, ex. float_Matrix can verify valid floating rep of string
 
   virtual bool          BinaryFile_Supported() { return false; }
@@ -765,7 +765,7 @@ protected:
   virtual void          SetArray_(void* nw) = 0;
   virtual void*         FastRealloc_(int i) = 0;
   // #IGNORE reallocate existing array, only valid for fastAlloc() objects
-  virtual void          ReclaimOrphans_(int from, int to) {}
+  virtual void          ReclaimOrphans_(int from, int to) { (void)from; (void)to; }
   // called when elements can be reclaimed, ex. for strings
   virtual void          Clear_impl(int fm, int to);
 
@@ -811,9 +811,9 @@ protected:
   virtual int           Dump_Load_Item(std::istream& strm, int idx);
   // load the ;-term'ed value ; generic is fine for numbers, override for strings, variants, etc.; ret is last char read, usually ;
 
-  virtual void          BinarySave_Item(std::ostream& strm, int idx) { };
+  virtual void          BinarySave_Item(std::ostream& strm, int idx) { (void)idx; (void)strm;  };
   // binary dump the value -- just straight binary output -- must overload in specific classes
-  virtual void          BinaryLoad_Item(std::istream& strm, int idx) { };
+  virtual void          BinaryLoad_Item(std::istream& strm, int idx) { (void)idx; (void)strm;  };
   // binary load the value -- just straight binary format -- must overload in specific classes
 #endif
 

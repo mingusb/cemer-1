@@ -150,7 +150,7 @@ bool DataVarProg::GenCss_OneVar(Program* prog, ProgVar* var, const String& idnm,
   return true;
 }
 
-  bool DataVarProg::GenCss_OneVarMat(Program* prog, ProgVar* var, const String& idnm, int var_no) {
+  bool DataVarProg::GenCss_OneVarMat(Program* prog, ProgVar* var, const String& idnm, int var_no) { (void)var_no;
   DataCol* da = NULL;
   DataTable* dt = GetData();
   String string_cvt = "";
@@ -185,7 +185,7 @@ bool DataVarProg::GenCss_OneVar(Program* prog, ProgVar* var, const String& idnm,
   return true;
 }
 
-  bool DataVarProg::GenCss_OneVarMatEnum(Program* prog, ProgVar* var, const String& idnm, int var_no) {
+  bool DataVarProg::GenCss_OneVarMatEnum(Program* prog, ProgVar* var, const String& idnm, int var_no) { (void)var_no;
   DataCol* da = NULL;
   DataTable* dt = GetData();
   String string_cvt = "";
@@ -259,7 +259,7 @@ bool DataVarProg::GenCssBody_impl(Program* prog) {
   return true;
 }
 
-bool DataVarProg::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool DataVarProg::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if (CvtFmCodeCheckNames(code))
     return true;
   

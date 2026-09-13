@@ -179,20 +179,6 @@ const String             taMisc::build_str;
 # endif
 #endif
 
-// compiler info
-
-#if TA_VEC_USE
-#define STRINGIFY(s) XSTRINGIFY(s)
-#define XSTRINGIFY(s) #s
-#pragma message ("INSTRSET: " STRINGIFY(INSTRSET))
-#pragma message ("TA_VEC_SIZE: " STRINGIFY(TA_VEC_SIZE))
-#endif
-
-#ifdef DEBUG
-#pragma message ("DEBUG: ON")
-#endif
-
-
 String taMisc::compile_info;
 
 taThreadDefaults::taThreadDefaults() {
@@ -675,7 +661,7 @@ bool taMisc::ErrorCancelCheck() {
   if(taMisc::err_cancel) {
     QDateTime tm = QDateTime::currentDateTime();
     QDateTime st;
-    st.setTime_t(err_cancel_time);
+    st.setSecsSinceEpoch(err_cancel_time);
     if(st.secsTo(tm) < err_cancel_time_thr) {
       taMisc::ConsoleOutputChars("+", true, false);
       err_waitproc_cnt = 0;     // reset counter and start counting again
@@ -683,7 +669,7 @@ bool taMisc::ErrorCancelCheck() {
     else {
       taMisc::ConsoleOutputChars(".", true, false);
     }
-    err_cancel_time = tm.toTime_t();
+    err_cancel_time = tm.toSecsSinceEpoch();
   }
 #endif
   return taMisc::err_cancel;
@@ -694,7 +680,7 @@ bool taMisc::ErrorCancelSet(bool on) {
     taMisc::err_cancel = true;
 #ifndef NO_TA_BASE
     QDateTime tm = QDateTime::currentDateTime();
-    err_cancel_time = tm.toTime_t();
+    err_cancel_time = tm.toSecsSinceEpoch();
 #endif
     taMisc::Info("Cancelling remaining error messages in this batch");
   }
@@ -1049,8 +1035,7 @@ void taMisc::Confirm(const String& a, const String& b, const String& c,
 
 bool taMisc::StringPrompt(String& str_val, const String& prompt,
      const String& ok_txt, const String cancel_txt)
-{
-  int m=-1;
+{ (void)cancel_txt; (void)ok_txt;
 #if !defined(NO_TA_BASE) && defined(DMEM_COMPILE)
   if(taMisc::dmem_proc > 0) return -1;
 #endif
@@ -1098,17 +1083,16 @@ int taMisc::Choice(const String& text, const String& a, const String& b, const S
   if(taMisc::dmem_proc > 0) return -1;
   if (taMisc::gui_active) {
     String delimiter = iDialogChoice::delimiter;
-    int   chn = 0;
     String chstr = delimiter;
-    if(a.nonempty()) { chstr += String(a) + delimiter; chn++; }
-    if(b.nonempty()) { chstr += String(b) + delimiter; chn++; }
-    if(c.nonempty()) { chstr += String(c) + delimiter; chn++; }
-    if(d.nonempty()) { chstr += String(d) + delimiter; chn++; }
-    if(e.nonempty()) { chstr += String(e) + delimiter; chn++; }
-    if(f.nonempty()) { chstr += String(f) + delimiter; chn++; }
-    if(g.nonempty()) { chstr += String(g) + delimiter; chn++; }
-    if(h.nonempty()) { chstr += String(h) + delimiter; chn++; }
-    if(i.nonempty()) { chstr += String(i) + delimiter; chn++; }
+    if(a.nonempty()) { chstr += String(a) + delimiter; }
+    if(b.nonempty()) { chstr += String(b) + delimiter; }
+    if(c.nonempty()) { chstr += String(c) + delimiter; }
+    if(d.nonempty()) { chstr += String(d) + delimiter; }
+    if(e.nonempty()) { chstr += String(e) + delimiter; }
+    if(f.nonempty()) { chstr += String(f) + delimiter; }
+    if(g.nonempty()) { chstr += String(g) + delimiter; }
+    if(h.nonempty()) { chstr += String(h) + delimiter; }
+    if(i.nonempty()) { chstr += String(i) + delimiter; }
     m = iDialogChoice::ChoiceDialog(NULL, text, chstr);
   }
   else {
@@ -1376,7 +1360,7 @@ void taMisc::FlushConsole() {
 }
 
 // internal: output one line
-static bool ConsoleOutputLine(const String& oneln, bool err, bool& pager, int& pageln) {
+static bool ConsoleOutputLine(const String& oneln, bool err, bool& pager, int& pageln) { (void)pageln; (void)pager;
 #ifndef NO_TA_BASE
   const char* prompt = "---Press Any Key to Continue, Except q = Quit, c = Continue without Paging ---";
 
@@ -1537,7 +1521,7 @@ void taMisc::ClearConsoleHold() {
   console_hold = "";
 }
 
-int taMisc::ProcessEvents(bool waitproc_after) {
+int taMisc::ProcessEvents(bool waitproc_after) { (void)waitproc_after;
 #ifndef NO_TA_BASE
   // taMisc::Info("e");
   int rval = taiMiscCore::ProcessEvents();
@@ -1551,7 +1535,7 @@ int taMisc::ProcessEvents(bool waitproc_after) {
 #endif
 }
 
-int taMisc::RunPending(bool waitproc_after) {
+int taMisc::RunPending(bool waitproc_after) { (void)waitproc_after;
 #ifndef NO_TA_BASE
   // taMisc::Info("p");
   int rval = taiMiscCore::RunPending();
@@ -1566,7 +1550,7 @@ int taMisc::RunPending(bool waitproc_after) {
 }
 
 
-void taMisc::Busy(bool busy) {
+void taMisc::Busy(bool busy) { (void)busy;
 #ifndef NO_TA_BASE
   if (taiMC_) taiMC_->Busy_(busy);
 #endif
@@ -1589,7 +1573,7 @@ void taMisc::CheckConfigStart(bool confirm_success, bool quiet) {
   ++taMisc::is_checking;
 }
 
-void taMisc::CheckConfigEnd(bool ok) {
+void taMisc::CheckConfigEnd(bool ok) { (void)ok;
 #ifndef NO_TA_BASE
   // failure always cumulative for all nestings
   if (!ok) check_ok = false;
@@ -2291,7 +2275,7 @@ void taMisc::AddDeferredUserDataSchema() {
   deferred_schema_items = NULL;
 }
 
-void taMisc::Init_DMem(int& argc, const char* argv[]) {
+void taMisc::Init_DMem(int& argc, const char* argv[]) { (void)argc; (void)argv;
 #if !defined(NO_TA_BASE) && defined(DMEM_COMPILE)
   MPI_Init(&argc, (char***)&argv); // note mpi's extra level of indirection
   MPI_Comm_size(MPI_COMM_WORLD, &dmem_nprocs);
@@ -2437,6 +2421,14 @@ bool taMisc::CheckArgByName(const String& nm) {
   int idx = args.FindName(nm);
   if(idx < 0) return false;
   args_used.SafeEl(idx)++;
+  // UpdateArgs retains a flag's separate value as argv[index+1]. Consuming
+  // the flag consumes that alias too, so ReportUnusedArgs does not reject
+  // legitimate --user_dir PATH or -s SCRIPT command lines.
+  if(idx + 1 < args.size && args_raw.SafeEl(idx).startsWith("-") &&
+     args.SafeEl(idx + 1).name == "argv[" + String(idx + 1) + "]" &&
+     !args.SafeEl(idx).value.isNull()) {
+    args_used.SafeEl(idx + 1)++;
+  }
   return true;
 }
 
@@ -2448,7 +2440,17 @@ String taMisc::FindArgByName(const String& nm) {
 }
 
 bool taMisc::GetAllArgsNamed(const String& nm, String_PArray& vals) {
-  return taMisc::args.GetAllVals(nm, vals);
+  const bool found = taMisc::args.GetAllVals(nm, vals);
+  for(int idx = 0; idx < args.size; ++idx) {
+    if(args.SafeEl(idx).name != nm) continue;
+    args_used.SafeEl(idx)++;
+    if(idx + 1 < args.size && args_raw.SafeEl(idx).startsWith("-") &&
+       args.SafeEl(idx + 1).name == "argv[" + String(idx + 1) + "]" &&
+       !args.SafeEl(idx).value.isNull()) {
+      args_used.SafeEl(idx + 1)++;
+    }
+  }
+  return found;
 }
 
 bool taMisc::CheckArgValContains(const String& vl) {
@@ -2915,7 +2917,6 @@ String& taMisc::FancyPrintTwoCol(String& strm, const String_PArray& col1_strs,
 
   int max_wd_sp = max_wd + taMisc::indent_spc;  // include spacing per item
 
-  int isp = taMisc::indent_spc*indent;
   for(int i=0; i<col1_strs.size; i++) {
     taMisc::IndentString(strm, indent); // start indented
     String& it = col1_strs[i];
@@ -3049,8 +3050,8 @@ String taMisc::GetTemporaryPath() {
   return QDir::tempPath();
 #else
 
-  static char tmpbuf[1024];
 #ifdef TA_OS_WIN
+  static char tmpbuf[1024];
   String rval;
   DWORD retVal = GetTempPath(1024, tmpbuf);
   if (retVal != 0)
@@ -3147,7 +3148,7 @@ bool taMisc::SetFilePermissions(const String& fname, bool user, bool group,
                                    bool other, bool readable, bool writable,
                                    bool executable) {
   QFile fi(fname);
-  QFile::Permissions perm = 0;
+  QFile::Permissions perm;
   if(user && readable) perm |= QFile::ReadUser;
   if(user && writable) perm |= QFile::WriteUser;
   if(user && executable) perm |= QFile::ExeUser;
@@ -3193,7 +3194,7 @@ bool taMisc::MakePath(const String& fn) {
   return d.mkpath(fn);
 }
 
-bool taMisc::MakeSymLink(const String& file_name, const String& link_name, bool directory) {
+bool taMisc::MakeSymLink(const String& file_name, const String& link_name, bool directory) { (void)directory;
   String fnm = taMisc::ExpandFilePath(file_name);
 #ifdef TA_OS_WIN
   DWORD rval;
@@ -3391,7 +3392,7 @@ int taMisc::GetUniqueFileNumber(int st_no, const String& prefix, const String& s
   return i;
 }
 
-bool taMisc::OpenURL(const String& url, bool internal_browser) {
+bool taMisc::OpenURL(const String& url, bool internal_browser) { (void)internal_browser; (void)url;
 #ifndef NO_TA_BASE
   if(!internal_browser) {
     QDesktopServices::unsetUrlHandler("http");
@@ -3998,11 +3999,10 @@ int taMisc::skip_past_err(istream& strm, bool peek) {
   bool in_quote = false;
   int prev_c = '\0';
   if(taMisc::verbose_load >= taMisc::SOURCE) {
-    int cur_pos = 0;
     ConsoleOutputChars("<<err_skp ->>", true);
     while (((c = strm.peek()) != EOF) && !(((c == '}') || (c == ';')) &&
                                            (depth <= 0 && !in_quote))) {
-      ConsoleOutputChars((char)c, true); cur_pos++;
+      ConsoleOutputChars((char)c, true);
       if(c == '{')      depth++;
       if(c == '}')      depth--;
       if(c == '"' && prev_c != '\\') in_quote = !in_quote;

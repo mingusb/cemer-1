@@ -40,7 +40,7 @@ taiTreeNodeTaBase::taiTreeNodeTaBase(taSigLinkTaBase* link_, MemberDef* md_, iTr
   init(link_, dn_flags_);
 }
 
-void taiTreeNodeTaBase::init(taSigLinkTaBase* link_, int dn_flags_) {
+void taiTreeNodeTaBase::init(taSigLinkTaBase* link_, int dn_flags_) { (void)dn_flags_; (void)link_;
   taBase* tab = tadata();
   if(tab && tab->BrowserEditEnable()) {
     setFlags(flags() | Qt::ItemIsEditable);
@@ -53,15 +53,6 @@ taiTreeNodeTaBase::~taiTreeNodeTaBase()
 
 void taiTreeNodeTaBase::SigEmit_impl(int sls, void* op1_, void* op2_) {
   inherited::SigEmit_impl(sls, op1_, op2_);
-  bool do_updt = false;
-  taBase* tab = tadata();
-  if(tab) {
-    TypeDef* base_typ = tab->GetTypeDef();
-    if(base_typ->HasOption("HAS_CONDTREE")) {
-      if(sls == SLS_ITEM_UPDATED)
-        do_updt = true;
-    }
-  }
 }
 
 void taiTreeNodeTaBase::itemEdited(int column, int move_after) {
@@ -71,7 +62,7 @@ void taiTreeNodeTaBase::itemEdited(int column, int move_after) {
   tab->BrowserEditSet(new_val, move_after);
 }
 
-void taiTreeNodeTaBase::lookupKeyPressed(iLineEdit* le, int column) {
+void taiTreeNodeTaBase::lookupKeyPressed(iLineEdit* le, int column) { (void)column;
   taBase* tab = tadata();
   if(!tab) return;
   
@@ -137,7 +128,7 @@ void taiTreeNodeTaBase::lookupKeyPressed(iLineEdit* le, int column) {
   }
 }
 
-void taiTreeNodeTaBase::characterEntered(iLineEdit* le, int column) {
+void taiTreeNodeTaBase::characterEntered(iLineEdit* le, int column) { (void)column;
   taBase* tab = tadata();
   if(!tab) return;
   

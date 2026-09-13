@@ -49,8 +49,8 @@ public://
     // in general, custom guys are hidden on UserData page, unless they override
 
   virtual const Variant valueAsVariant() const {return _nilVariant;}
-  virtual bool          setValueAsVariant(const Variant& value) {return false;}
-  virtual bool          SetDesc(const String& desc) {return false;}
+  virtual bool          setValueAsVariant(const Variant& value) { (void)value; return false;}
+  virtual bool          SetDesc(const String& desc) { (void)desc; return false;}
 
   TA_BASEFUNS(UserDataItemBase)
 protected:

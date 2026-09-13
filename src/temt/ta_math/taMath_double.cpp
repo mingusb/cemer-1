@@ -709,7 +709,7 @@ bool taMath_double::vec_check_type_nonempty(const double_Matrix* a) {
 }
   
 bool taMath_double::vec_check_same_size(const double_Matrix* a, const double_Matrix* b,
-                                        bool quiet, bool flex) {
+                                        bool quiet, bool flex) { (void)quiet;
   if(!vec_check_type(a) || !vec_check_type(b)) return false;
   return a->ElemWiseOpTest(*b, flex, "math");
 }
@@ -2917,7 +2917,7 @@ bool taMath_double::mat_mult(double_Matrix* c, const double_Matrix* a, const dou
   c->SetGeom(2, b->dim(0), a->dim(1));
   gsl_matrix g_c;  if(!mat_get_gsl_fm_ta(&g_c, c)) return false;
   int rval = gsl_blas_dgemm(CblasNoTrans, CblasNoTrans, 1.0, &g_a, &g_b, 0.0, &g_c);
-  return true;			// todo: decode rvals
+  return rval == GSL_SUCCESS;
 }
 
 double taMath_double::mat_det(const double_Matrix* a) {

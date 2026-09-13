@@ -20,6 +20,8 @@
 #include <taRootBase>
 #include <taThreadMgr>
 #include <QTimer>
+#include <QAbstractEventDispatcher>
+#include <QEventLoop>
 #include <dumpMisc>
 #include <taiTypeBase>
 #include <ClusterRun>
@@ -98,11 +100,11 @@ int taiMiscCore::ProcessEvents() {
 
 int taiMiscCore::RunPending() {
   if (taMisc::in_event_loop && !taMisc::in_waitproc) {
-    if(QCoreApplication::hasPendingEvents()) {
+    if(QAbstractEventDispatcher* dispatcher = QAbstractEventDispatcher::instance()) {
       taMisc::in_eventproc++;     // todo: should we prevent recursive??
-      QCoreApplication::processEvents();
+      const bool processed = dispatcher->processEvents(QEventLoop::AllEvents);
       taMisc::in_eventproc--;
-      return true;
+      return processed;
     }
   }
   return false;
@@ -149,12 +151,12 @@ void taiMiscCore::app_aboutToQuit() {
 void taiMiscCore::CheckConfigResult_(bool ok) {
 //note: only called if !quiet, and if !ok only if confirm_success
   if (ok) {
-    taMisc::Warning("No configuration errors were found.");
+    taMisc::Info("No configuration errors were found.");
   }
   else {
-    taMisc::ConsoleOutput("/n/n", true, false); // helps group this block together
+    taMisc::ConsoleOutput("\n\n", true, false); // helps group this block together
     taMisc::Warning("Configuration errors were found:\n");
-    taMisc::ConsoleOutput("taMisc::last_check_msg", true, false);
+    taMisc::ConsoleOutput(taMisc::last_check_msg, true, false);
     // helps group this block together
   }
 }
@@ -232,6 +234,7 @@ void taiMiscCore::PostUpdateAfter() {
 }
 
 void taiMiscCore::Quit_impl(CancelOp cancel_op) {
+  (void)cancel_op;
   // only for nogui
   QCoreApplication::instance()->quit();
   // doesn't fix problem with web engine quit, and may cause Jenkins issues?

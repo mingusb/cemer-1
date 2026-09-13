@@ -299,7 +299,6 @@ void V1KwtaSpec::Compute_Act_Extra(float_Matrix& inputs, float_Matrix& outputs,
         for(int gx=0; gx < gxs; gx++) {
           float raw = inputs.FastEl4d(gx, gy, ix, iy);
           float ge = g_bar_e * raw;
-          float ei =  extra_inh.FastEl4d(gx, gy, ix, iy);
           float eig = gi * FFInhib(extra_inh.FastEl4d(gx, gy, ix, iy));
           float gi_eff = MAX(gig, eig);
           float act = Compute_ActFmIn(ge, gi_eff);

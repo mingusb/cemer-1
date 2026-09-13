@@ -122,7 +122,7 @@ void iAction::emitActions() {
   emit VarParamAction(ths->usr_data);
 }
 
-void iAction::this_triggered_toggled(bool checked) {
+void iAction::this_triggered_toggled(bool checked) { (void)checked;
   if (m_changing > 0) return;
   ++m_changing;
   emitActions(); // will also cause curSel update, and datachanged

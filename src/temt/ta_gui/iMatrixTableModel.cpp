@@ -62,8 +62,8 @@ void iMatrixTableModel::setDataCol(DataCol* dc) {
   m_mat_col = dc;
 }
 
-int iMatrixTableModel::columnCount(const QModelIndex& parent) const {
-  if (!m_mat) return 0;
+int iMatrixTableModel::columnCount(const QModelIndex& parent) const { (void)parent;
+  if (!m_mat) return {};
   return m_mat->geom.colCount(pat4D());
 }
 
@@ -99,7 +99,7 @@ QVariant iMatrixTableModel::data(const QModelIndex& index, int role) const {
       }
       break;
     }
-      /*Qt::TextColorRole
+      /*Qt::ForegroundRole
        QColor: color of text
        Qt::CheckStateRole*/
     default: break;
@@ -107,13 +107,13 @@ QVariant iMatrixTableModel::data(const QModelIndex& index, int role) const {
   return QVariant();
 }
 
-void iMatrixTableModel::SigLinkDestroying(taSigLink* dl) {
+void iMatrixTableModel::SigLinkDestroying(taSigLink* dl) { (void)dl;
   m_mat = NULL;
 }
 
 void iMatrixTableModel::SigLinkRecv(taSigLink* dl, int sls,
   void* op1, void* op2)
-{
+{ (void)dl; (void)op1; (void)op2;
   if (notifying) return;
   if ((sls <= SLS_ITEM_UPDATED_ND) || // data itself updated
     (sls == SLS_STRUCT_UPDATE_END) ||  // for col insert/deletes
@@ -148,9 +148,9 @@ void iMatrixTableModel::emit_layoutChanged() {
 }
 
 Qt::ItemFlags iMatrixTableModel::flags(const QModelIndex& index) const {
-  if (!m_mat) return 0;
+  if (!m_mat) return {};
   //TODO: maybe need to qualify!, plus drag-drop handling, etc.
-  Qt::ItemFlags rval = 0;
+  Qt::ItemFlags rval;
   
   if (ValidateIndex(index)) {
     rval = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
@@ -282,7 +282,7 @@ QStringList iMatrixTableModel::mimeTypes () const {
   return types;
 }
 
-int iMatrixTableModel::rowCount(const QModelIndex& parent) const {
+int iMatrixTableModel::rowCount(const QModelIndex& parent) const { (void)parent;
   return (m_mat) ? m_mat->rowCount(pat4D()) : 0;
   //note: for visual stuff, there is always at least one row
 }
@@ -318,7 +318,7 @@ void iMatrixTableModel::setPat4D(bool val, bool notify) {
     emit_layoutChanged();
 }
 
-bool iMatrixTableModel::ValidateIndex(const QModelIndex& index) const {
+bool iMatrixTableModel::ValidateIndex(const QModelIndex& index) const { (void)index;
   // TODO: maybe need to check bounds???
   return (m_mat);
 }
@@ -350,5 +350,4 @@ void iMatrixTableModel::ResetColorScale() {
   }
   color_scale->SetMinMax(min, max);
 }
-
 

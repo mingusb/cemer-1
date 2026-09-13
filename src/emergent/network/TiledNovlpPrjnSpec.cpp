@@ -43,7 +43,7 @@ void STATE_CLASS(TiledNovlpPrjnSpec)::Connect_impl
   LAYER_STATE* send_lay = prjn->GetSendLayer(net);
 
   int ru_nunits = recv_lay->un_geom_n;
-  int su_nunits = send_lay->un_geom_n;
+
 
   TAVECTOR2I ruc;
   int rgpidx = 0;
@@ -85,7 +85,7 @@ void STATE_CLASS(TiledNovlpPrjnSpec)::Connect_Reciprocal
   LAYER_STATE* send_lay = prjn->GetRecvLayer(net); // recip
 
   int ru_nunits = recv_lay->un_geom_n;
-  int su_nunits = send_lay->un_geom_n;
+
 
   TAVECTOR2I su_geo;
   su_geo.SetXY(send_lay->flat_geom_x, send_lay->flat_geom_y); // not su_act_geom due to recip

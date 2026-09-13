@@ -30,7 +30,6 @@
 #include <QTreeWidgetItem>
 #include <MemberDef>
 
-const int NAME_COL_DEFAULT_WIDTH = 32;  // chars
 
 taiWidgetTokenChooser::taiWidgetTokenChooser(TypeDef* typ_, IWidgetHost* host,
                                      taiWidget* par, QWidget* gui_parent_, int flags_,
@@ -121,7 +120,7 @@ int taiWidgetTokenChooser::setInitialSel(void* cur_sel) {
   int cnt = 0;
   void* last_itm = NULL;
   void* first_itm = NULL;
-  bool has_two_or_more = countTokensToN(cnt, targ_typ, 2, last_itm, first_itm);
+  countTokensToN(cnt, targ_typ, 2, last_itm, first_itm);
   if(HasFlag(flgNullOk)) {
     if(cnt == 0) {              // no items, just null
       m_sel = NULL;             // only option
@@ -347,5 +346,4 @@ const String taiWidgetTokenChooser::viewText(int index) const {
   default: return _nilString;
   }
 }
-
 

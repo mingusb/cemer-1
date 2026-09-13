@@ -64,7 +64,7 @@ void iDataTableSearch::Constr() {
   QHBoxLayout* lay = new QHBoxLayout(this);
   srch_bar = new QToolBar(this);
   lay->addWidget(srch_bar);
-  lay->setMargin(0);
+  lay->setContentsMargins(0, 0, 0, 0);
   lay->setSpacing(0);
   
   srch_mode_button = new iActionMenuButton();
@@ -115,7 +115,7 @@ void iDataTableSearch::TextEntered() {
   Search(search_mode);
 }
 
-void iDataTableSearch::Search(iDataTableSearch::SearchMode mode) {
+void iDataTableSearch::Search(iDataTableSearch::SearchMode mode) { (void)mode;
   if (!table_view) {
     return;
   }
@@ -205,7 +205,7 @@ void iDataTableSearch::SelectNext() {
       
       if (column->isMatrix()) {
         if (editor) {
-          taMatrix* cell = column->GetValAsMatrix(row);  // row here is the tables row
+          column->GetValAsMatrix(row);  // row here is the tables row
           iMatrixTableView* mtv = editor->tvCell->tv;
           taVector2i cell_pair;
           GetCellForMatrixView(column, cur_row_col_pair->x, cell_pair);  // gets row and column of this matrix cell
@@ -230,7 +230,7 @@ void iDataTableSearch::SelectPrevious() {
     }
     if (column->isMatrix()) {
       if (editor) {
-        taMatrix* cell = column->GetValAsMatrix(row);
+        column->GetValAsMatrix(row);
         iMatrixTableView* mtv = editor->tvCell->tv;
         taVector2i cell_pair;
         GetCellForMatrixView(column, cur_row_col_pair->x, cell_pair);
@@ -260,7 +260,7 @@ void iDataTableSearch::MatchesSelected() {
   search_mode = MATCHES;
 }
 
-int iDataTableSearch::GetRowNumForDataTableView(DataCol *col, const taVector2i *row_col_pair) const {
+int iDataTableSearch::GetRowNumForDataTableView(DataCol *col, const taVector2i *row_col_pair) const { (void)row_col_pair;
   int row;
   if (col->isMatrix()) {
     row = cur_row_col_pair->x / col->cell_size();

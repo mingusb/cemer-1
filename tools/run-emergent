@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+app_prefix=${EMERGENT_PREFIX_DIR:-"$repo_dir/install"}
+qt_prefix=${EMERGENT_QT_DIR:-"$HOME/toolchains/Qt"}
+
+if [[ ! -x "$app_prefix/bin/emergent" ]]; then
+  echo "Emergent is not installed at $app_prefix. Build and run cmake --install first." >&2
+  exit 1
+fi
+if [[ ! -d "$qt_prefix/lib" ]]; then
+  echo "Qt SDK not found at $qt_prefix. Set EMERGENT_QT_DIR to its installation directory." >&2
+  exit 1
+fi
+
+export EMERGENT_PREFIX_DIR="$app_prefix"
+export PATH="$app_prefix/bin:$qt_prefix/bin:$PATH"
+export LD_LIBRARY_PATH="$app_prefix/lib:$qt_prefix/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+exec "$app_prefix/bin/emergent" "$@"

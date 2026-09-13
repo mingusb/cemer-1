@@ -132,7 +132,7 @@ void ObjLibrary::AddFromFiles(LibLocs lib_loc) {
     String fl = files[i];
     if(!fl.contains(file_ext))
       continue;
-    ObjLibEl* pe = NewLibRec(lib_loc, fl, ""); // gets name from filename
+    NewLibRec(lib_loc, fl, "");
   }
 }
 
@@ -146,7 +146,7 @@ void ObjLibrary::AddFromWiki(LibLocs lib_loc) {
   obj_list.OwnTempObj(); // this is ESSENTIAL for temp data tables -- otherwise cols can't access their parent table b/c owner is not set!
   taMediaWiki::QueryPagesByCategory(&obj_list, wiki_name, wiki_category);
   DataCol* pt_col = obj_list.FindColName("PageTitle");
-  DataCol* pid_col = obj_list.FindColName("PageId");
+  obj_list.FindColName("PageId");
 
   QFileInfo qfi(loc_path);
   if(!qfi.isDir()) {
@@ -166,7 +166,7 @@ void ObjLibrary::AddFromWiki(LibLocs lib_loc) {
       // but download if you actually want to use it!
       taMediaWiki::DownloadFile(wiki_name, obj_name, path);
     }
-    ObjLibEl* pe = NewLibRec(lib_loc, obj_file, obj_name);
+    NewLibRec(lib_loc, obj_file, obj_name);
   }
 }
 
@@ -243,7 +243,7 @@ bool ObjLibrary::SaveToFile(LibLocs lib_loc, taBase* obj) {
   taMisc::Info("Saved:", objnm, "to:", fpath);
   int cur_el_idx = FindNameInLocNmIdx(lib_loc, objnm);
   if(cur_el_idx < 0) {
-    ObjLibEl* pe = NewLibRec(lib_loc, fname, objnm);
+    NewLibRec(lib_loc, fname, objnm);
   }
   return true;
 }
@@ -295,7 +295,7 @@ bool ObjLibrary::SaveToWiki(LibLocs lib_loc, taBase* obj) {
 
   int cur_el_idx = FindNameInLocNmIdx(lib_loc, objnm);
   if(cur_el_idx < 0) {
-    ObjLibEl* pe = NewLibRec(lib_loc, fname, objnm);
+    NewLibRec(lib_loc, fname, objnm);
   }
   return true;
 }

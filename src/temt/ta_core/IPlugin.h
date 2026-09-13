@@ -39,9 +39,9 @@ public:
   virtual const char*   uniqueId() {return "pluginname.dept.organization.org";}
   virtual const char*   url() {return "put a full url here, but put this in the .cpp file because of the maketa double slash bug";}
   
-  virtual int           NotifyTacssVersion(const taVersion& tav, bool& is_ok) {return 0;}
+  virtual int           NotifyTacssVersion(const taVersion& tav, bool& is_ok) { (void)is_ok; (void)tav; return 0;}
     // we pass ta/css version; set is_ok false if this version is no good for plugin
-  virtual int           GetVersion(taVersion& tav) {return -1;}
+  virtual int           GetVersion(taVersion& tav) { (void)tav; return -1;}
     // major.minor.step.build -- the plugin version
 
 // the following routines are only used if the plugin is actually loaded into tacss

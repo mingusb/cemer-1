@@ -87,7 +87,6 @@ void cssiEditDialog::GetName(int idx, cssEl* md, String& name, String& desc) {
 void cssiEditDialog::Constr_Widget_Labels() {
   String name;
   String desc;
-  int index = 0;
   for (int i = 0; i < obj->members->size; ++i) {
     cssEl* md = obj->members->FastEl(i);
     if ((obj->type_def != NULL) && !obj->type_def->MbrHasOption(i, "SHOW") &&
@@ -104,13 +103,11 @@ void cssiEditDialog::Constr_Widget_Labels() {
     // get the widget representation of the data
     taiWidget* mb_dat = cit->GetWidgetRep(this, NULL, body);
     widget_el(0).Add(mb_dat);
-    //AddWidget(index, mb_dat->GetRep());
     
     // now get label
     GetName(i, md, name, desc);
     AddNameWidget(-1, name, desc, mb_dat->GetRep(), mb_dat);
     
-    ++index;
   }
 }
 

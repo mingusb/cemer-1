@@ -327,9 +327,6 @@ INLINE void IntArraySeqPermute(int* array, int size, int thr_no=-1) {
 
 INLINE void IntArraySort(int* array, int size, bool descending=false) {
   if(size <= 1) return;
-  int lt_compval = -1;          // comparison return value for less-than
-  if(descending)
-    lt_compval = 1;
   // lets do a heap sort since it requires no secondary storage
   int n = size;
   int l,j,ir,i;

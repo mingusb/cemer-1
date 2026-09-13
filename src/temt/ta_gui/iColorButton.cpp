@@ -54,11 +54,10 @@ void iColorButton::setColor(const QColor& val) {
 
 void iColorButton::this_clicked() {
   if (useAlpha()) {
-    QRgb rgb = m_col.rgba();
-    bool ok = false;
-    rgb = QColorDialog::getRgba(rgb, &ok);
-    if (!ok) return;
-    m_col.setRgba(rgb);
+    const QColor color = QColorDialog::getColor(m_col, this, QString(),
+                                                 QColorDialog::ShowAlphaChannel);
+    if (!color.isValid()) return;
+    m_col = color;
   } else {
     QColor col(m_col);
     col = QColorDialog::getColor(col);
@@ -70,4 +69,3 @@ void iColorButton::this_clicked() {
   update();
   emit colorChanged();
 }
-

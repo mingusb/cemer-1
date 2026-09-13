@@ -226,7 +226,7 @@ struct SubversionClient::Glue
     void *baton,
     const svn_wc_notify_t *notify,
     apr_pool_t *pool)
-  {
+  { (void)pool;
     if (SubversionClient *sub = reinterpret_cast<SubversionClient *>(baton)) {
       sub->notify(notify);
     }
@@ -239,7 +239,7 @@ struct SubversionClient::Glue
     apr_off_t total,
     void *baton,
     apr_pool_t *pool)
-  {
+  { (void)pool;
     if (SubversionClient *sub = reinterpret_cast<SubversionClient *>(baton)) {
       // progress is the number of bytes already transferred, total is
       // the total number of bytes to transfer or -1 if it's not known.
@@ -252,13 +252,13 @@ struct SubversionClient::Glue
   replaceLineEndingsWithLF(const String&msg)
   {
     String lfMsg;
-    for (unsigned i = 0; i < msg.length(); ++i) {
+    for (int i = 0; i < msg.length(); ++i) {
       if (msg[i] == '\r') { // CR
-        if (i + 1 < msg.length() && msg[i] == '\n') { // LF
+        if (i + 1 < msg.length() && msg[i + 1] == '\n') { // LF
           // Skip the CR, next char is LF.
         }
         else {
-          lfMsg += '\r'; // Replace CR with LF.
+          lfMsg += '\n'; // Replace CR with LF.
         }
       }
       else {
@@ -353,7 +353,7 @@ struct SubversionClient::Glue
     void *baton,
     apr_pool_t *result_pool,
     apr_pool_t *scratch_pool)
-  {
+  { (void)baton; (void)description; (void)scratch_pool;
     // TODO: basically unimplemented.
     *result = svn_wc_create_conflict_result(
       svn_wc_conflict_choose_postpone, 0, result_pool);
@@ -366,9 +366,9 @@ struct SubversionClient::Glue
   svn_info_receiver(
     void *baton,
     const char *path,
-    const svn_info_t *info,
+    const svn_client_info2_t *info,
     apr_pool_t *pool)
-  {
+  { (void)path; (void)pool;
     if (SubversionClient *sub = reinterpret_cast<SubversionClient *>(baton)) {
       sub->m_last_changed_revision = -1;
       if (info) {
@@ -506,6 +506,7 @@ SubversionClient::~SubversionClient()
 
   // Clean up the pool and APR context.
   svn_pool_destroy(m_pool_perm);
+  delete svn_operation;
 }
 
 void
@@ -663,7 +664,7 @@ SubversionClient::createContext()
 {
   // Allocate a new context object from the pool.
   svn_client_ctx_t *ctx = 0;
-  if (svn_error_t *error = svn_client_create_context(&ctx, m_pool_perm)) {
+  if (svn_error_t *error = svn_client_create_context2(&ctx, nullptr, m_pool_perm)) {
     // The documentation says this call won't error in current implementation,
     // but in case a future implementation does error, we should handle it.
     // Don't want calling code to have an uninitialized SubversionClient
@@ -898,7 +899,9 @@ public:
 static svn_error_t* mysvn_list_callback(void *baton, const char *path,
                                         const svn_dirent_t *dirent,
                                         const svn_lock_t *lock, const char *abs_path,
-                                        apr_pool_t *pool) {
+                                        const char * /*external_parent_url*/,
+                                        const char * /*external_target*/,
+                                        apr_pool_t *pool) { (void)lock; (void)pool;
   if(dirent == NULL)
     return NULL;
   SvnFileInfoPtrs* fi = (SvnFileInfoPtrs*)baton;
@@ -954,13 +957,15 @@ SubversionClient::List(String_PArray& file_names, String_PArray& file_paths,
   svn_fi_baton.file_kinds = &file_kinds;
   svn_fi_baton.file_authors = &file_authors;
 
-  if (svn_error_t *error = svn_client_list2
+  if (svn_error_t *error = svn_client_list4
       (url,
        &peg_revision,
        &revision,
+       nullptr,                 // all names
        depth,
        SVN_DIRENT_ALL,
        false,                   // don't fetch locks
+       false,                   // don't follow externals
        mysvn_list_callback,
        (void*)&svn_fi_baton,
        m_ctx,
@@ -970,6 +975,23 @@ SubversionClient::List(String_PArray& file_names, String_PArray& file_paths,
       throw Exception("Subversion list error", error);
     }
   svn_pool_destroy(m_pool);
+}
+
+namespace {
+  svn_error_t *canonicalSvnTarget(const char **canonical, const char *target,
+                                 apr_pool_t *pool) {
+    if (svn_path_is_url(target)) {
+      *canonical = svn_uri_canonicalize(target, pool);
+      return SVN_NO_ERROR;
+    }
+    return svn_dirent_get_absolute(canonical, target, pool);
+  }
+
+  svn_error_t *recordCommitRevision(const svn_commit_info_t *info, void *baton,
+                                   apr_pool_t *) {
+    *static_cast<svn_revnum_t *>(baton) = info->revision;
+    return SVN_NO_ERROR;
+  }
 }
 
 class SvnGetInfoPtrs {
@@ -984,8 +1006,8 @@ public:
 };
 
 static svn_error_t* mysvn_info_callback(void *baton, const char *path,
-                                        const svn_info_t *info,
-                                        apr_pool_t *pool) {
+                                        const svn_client_info2_t *info,
+                                        apr_pool_t *pool) { (void)path; (void)pool;
   if(info == NULL)
     return NULL;
   SvnGetInfoPtrs* fi = (SvnGetInfoPtrs*)baton;
@@ -1007,14 +1029,14 @@ SubversionClient::GetInfo(const String& file_or_dir_or_url, int& rev, int& kind,
   QMutexLocker qml(svn_operation);
 
   String path_in = file_or_dir_or_url;
-  bool is_url = false;
-  if(path_in.contains("http"))
-    is_url = true;
-#if (SVN_VER_MAJOR == 1 && SVN_VER_MINOR >= 7)
-  if(is_url) {
-    path_in = svn_uri_canonicalize(path_in, m_pool);
+  const bool is_url = svn_path_is_url(path_in);
+  const char *canonical_target;
+  if (svn_error_t *error = canonicalSvnTarget(&canonical_target, path_in, m_pool)) {
+    svn_error_clear(error);
+    svn_pool_destroy(m_pool);
+    return false;
   }
-#endif
+  path_in = canonical_target;
   
   // We don't want to use peg revisions, so set to unspecified.
   svn_opt_revision_t peg_revision;
@@ -1040,17 +1062,21 @@ SubversionClient::GetInfo(const String& file_or_dir_or_url, int& rev, int& kind,
   svn_fi_baton.last_changed_author = &last_changed_author;
   svn_fi_baton.size = &size;
 
-  if (svn_error_t *error = svn_client_info2
+  if (svn_error_t *error = svn_client_info4
       (path_in,
        &peg_revision,
        &revision,
+       depth,
+       false,                   // fetch_excluded
+       true,                    // fetch_actual_only: preserve info2 behavior
+       false,                   // include_externals
+       nullptr,                 // changelists
        mysvn_info_callback,
        (void*)&svn_fi_baton,
-       depth,
-       NULL,
        m_ctx,
        m_pool))
     {
+      svn_error_clear(error);
       svn_pool_destroy(m_pool);
       return false;
     }
@@ -1119,21 +1145,24 @@ SubversionClient::GetFile(const String& from_url, String& to_str, int rev) {
     peg_revision.value.number = rev;
   }
 
-  apr_pool_t* strpool = svn_pool_create(0);
+  apr_pool_t* strpool = svn_pool_create(m_pool);
 
   svn_stringbuf_t* stringbuf = svn_stringbuf_create_ensure(1024, strpool);
   svn_stream_t *out_strm = svn_stream_from_stringbuf(stringbuf, strpool);
 
-  if (svn_error_t *error = svn_client_cat2
-      (out_strm,
+  if (svn_error_t *error = svn_client_cat3
+      (nullptr,
+       out_strm,
        from_url_canonical,
        &peg_revision,
        &revision,
+       true,                    // expand_keywords
        m_ctx,
+       m_pool,
        m_pool))
     {
       svn_pool_destroy(m_pool);
-      throw Exception("Subversion SaveFile cat2 error", error);
+      throw Exception("Subversion file content error", error);
     }
 
   svn_stream_close(out_strm);
@@ -1188,16 +1217,19 @@ SubversionClient::SaveFile(const String& from_url, const String& to_path, int re
       throw Exception("Subversion SaveFile error -- couldn't write file", error);
     }
 
-  if (svn_error_t *error = svn_client_cat2
-      (out_strm,
+  if (svn_error_t *error = svn_client_cat3
+      (nullptr,
+       out_strm,
        from_url_canonical,
        &peg_revision,
        &revision,
+       true,                    // expand_keywords
        m_ctx,
+       m_pool,
        m_pool))
     {
       svn_pool_destroy(m_pool);
-      throw Exception("Subversion SaveFile cat2 error", error);
+      throw Exception("Subversion file content error", error);
     }
 
   svn_stream_close(out_strm);
@@ -1257,7 +1289,7 @@ SubversionClient::GetDiffToPrev(const String& from_url, String& to_str, int rev)
 
   svn_depth_t depth = svn_depth_infinity;
 
-  if(svn_error_t *error = svn_client_diff4
+  if(svn_error_t *error = svn_client_diff7
      (NULL, // const apr_array_header_t *diff_options,
       from_url_canonical,                 // const char *	path1,
       &prv_revision,
@@ -1265,18 +1297,24 @@ SubversionClient::GetDiffToPrev(const String& from_url, String& to_str, int rev)
       &revision,
       NULL,
       depth,
-      true, // svn_boolean_t 	ignore_ancestry,
-      true, // svn_boolean_t 	no_diff_deleted,
-      false, // svn_boolean_t 	ignore_content_type,
-      APR_LOCALE_CHARSET, // const char * header_encoding,
-      outfile,
-      errfile,
+      true,  // ignore_ancestry
+      false, // no_diff_added
+      true,  // no_diff_deleted
+      false, // show_copies_as_adds
+      false, // ignore_content_type
+      false, // ignore_properties
+      false, // properties_only
+      false, // use_git_diff_format
+      true,  // pretty_print_mergeinfo
+      APR_LOCALE_CHARSET,
+      svn_stream_from_aprfile2(outfile, true, m_pool),
+      svn_stream_from_aprfile2(errfile, true, m_pool),
       NULL, // const apr_array_header_t * changelists,
       m_ctx,
       m_pool))
     {
       svn_pool_destroy(m_pool);
-      throw Exception("Subversion SaveFile diff4 fm prev error", error);
+      throw Exception("Subversion file diff fm prev error", error);
     }
 
   apr_file_close(outfile);
@@ -1327,7 +1365,7 @@ SubversionClient::GetDiffWc(const String& from_url, String& to_str) {
 
   svn_depth_t depth = svn_depth_infinity;
 
-  if(svn_error_t *error = svn_client_diff4
+  if(svn_error_t *error = svn_client_diff7
      (NULL, // const apr_array_header_t *diff_options,
       from_url_canonical,                 // const char *	path1,
       &prv_revision,
@@ -1335,18 +1373,24 @@ SubversionClient::GetDiffWc(const String& from_url, String& to_str) {
       &revision,
       NULL,
       depth,
-      true, // svn_boolean_t 	ignore_ancestry,
-      true, // svn_boolean_t 	no_diff_deleted,
-      false, // svn_boolean_t 	ignore_content_type,
-      APR_LOCALE_CHARSET, // const char * header_encoding,
-      outfile,
-      errfile,
+      true,  // ignore_ancestry
+      false, // no_diff_added
+      true,  // no_diff_deleted
+      false, // show_copies_as_adds
+      false, // ignore_content_type
+      false, // ignore_properties
+      false, // properties_only
+      false, // use_git_diff_format
+      true,  // pretty_print_mergeinfo
+      APR_LOCALE_CHARSET,
+      svn_stream_from_aprfile2(outfile, true, m_pool),
+      svn_stream_from_aprfile2(errfile, true, m_pool),
       NULL, // const apr_array_header_t * changelists,
       m_ctx,
       m_pool))
     {
       svn_pool_destroy(m_pool);
-      throw Exception("Subversion SaveFile diff4 wc error", error);
+      throw Exception("Subversion file diff wc error", error);
     }
 
   apr_file_close(outfile);
@@ -1706,10 +1750,13 @@ SubversionClient::RevertFiles(const String_PArray& files) {
   // Get all files.
   svn_depth_t depth = svn_depth_infinity;
 
-  if (svn_error_t *error = svn_client_revert2(
+  if (svn_error_t *error = svn_client_revert4(
         paths,
         depth,
-        NULL,                   // changelists.. nope
+        nullptr,                // changelists
+        false,                  // clear_changelists
+        false,                  // metadata_only
+        true,                   // keep newly added files on disk
         m_ctx,
         m_pool))
   {
@@ -1744,11 +1791,12 @@ SubversionClient::Add(const String& f_or_d, bool recurse, bool add_parents)
   // don not add files or dirs that match ignore patterns
   svn_boolean_t no_ignore = false;
 
-  if (svn_error_t *error = svn_client_add4(
+  if (svn_error_t *error = svn_client_add5(
         file_or_dir,
         depth,
         force,
         no_ignore,
+        false,        // no_autoprops
         add_parents,  // whether or not to create non-versioned parent directories
         m_ctx,
         m_pool))
@@ -1777,25 +1825,21 @@ SubversionClient::Delete(const String_PArray& files, bool force, bool keep_local
 #endif
   }
 
-  svn_commit_info_t *commit_info_p = svn_create_commit_info(m_pool);
 
   svn_boolean_t svn_force = force;
   svn_boolean_t svn_keep_local = keep_local;
 
-  // don not add files or dirs that match ignore patterns
-  svn_boolean_t no_ignore = false;
-
   // We don't need to set any custom revision properties, so null.
   const apr_hash_t *revprop_table = 0;
 
-  // Not implementing the 1.7 API -- see rationale in Checkin().
-  if (svn_error_t *error = svn_client_delete3
+  if (svn_error_t *error = svn_client_delete4
       (
-       &commit_info_p,
        paths,
        svn_force,
        svn_keep_local,
        revprop_table,
+       nullptr,                 // commit callback
+       nullptr,
        m_ctx,
        m_pool))
   {
@@ -1807,7 +1851,7 @@ SubversionClient::Delete(const String_PArray& files, bool force, bool keep_local
 
 
 void
-SubversionClient::MoveFile(const String_PArray& from_nms, String& to_nm, bool force) {
+SubversionClient::MoveFile(const String_PArray& from_nms, String& to_nm, bool /*force*/) {
   m_cancelled = false;
   QMutexLocker qml(svn_operation);
 
@@ -1830,26 +1874,25 @@ SubversionClient::MoveFile(const String_PArray& from_nms, String& to_nm, bool fo
   const char* to_can = svn_dirent_canonicalize(to_nm, m_pool);
 #endif
 
-  svn_commit_info_t *commit_info_p = svn_create_commit_info(m_pool);
 
 
-  svn_boolean_t svn_force = force;
   svn_boolean_t svn_move_as_child = (from_nms.size > 1);
   svn_boolean_t svn_make_parents = true;
 
   // We don't need to set any custom revision properties, so null.
   const apr_hash_t *revprop_table = 0;
 
-  // Not implementing the 1.7 API -- see rationale in Checkin().
-  if (svn_error_t *error = svn_client_move5
+  if (svn_error_t *error = svn_client_move7
       (
-       &commit_info_p,
        paths,
        to_can,
-       svn_force,
        svn_move_as_child,
        svn_make_parents,
+       true,                    // allow mixed revisions, as move5 did
+       false,                   // metadata_only
        revprop_table,
+       nullptr,                 // commit callback
+       nullptr,
        m_ctx,
        m_pool))
   {
@@ -1862,73 +1905,44 @@ SubversionClient::MoveFile(const String_PArray& from_nms, String& to_nm, bool fo
 void
 SubversionClient::CopyFile(const String_PArray& from_nms, String& to_nm) {
   m_cancelled = false;
-
-  taMisc::Confirm("Sorry, as of now there is an intractible bug in our use of svn_client_copy in subversion -- we're trying to fix it -- please use the command line in the meantime.");
-  return;
-  
+  if (from_nms.size == 0) return;
+  QMutexLocker qml(svn_operation);
   apr_pool_t* m_pool = svn_pool_create(0);
 
-  // create an array containing a single path to be created
-  apr_array_header_t *paths = apr_array_make(m_pool, from_nms.size, sizeof(const char *));
-  for(int i=0; i< from_nms.size; i++) {
-#if (SVN_VER_MAJOR == 1 && SVN_VER_MINOR < 7)
-    APR_ARRAY_PUSH(paths, const char *) = svn_path_canonicalize(from_nms[i], m_pool);
-#else
-    APR_ARRAY_PUSH(paths, const char *) = svn_dirent_canonicalize(from_nms[i], m_pool);
-#endif
-  }
-
-  // canonicalize the path
-#if (SVN_VER_MAJOR == 1 && SVN_VER_MINOR < 7)
-  const char* to_can = svn_path_canonicalize(to_nm, m_pool);
-#else
-  const char* to_can = svn_dirent_canonicalize(to_nm, m_pool);
-#endif
-
-  svn_commit_info_t *commit_info_p = svn_create_commit_info(m_pool);
-
-  svn_boolean_t svn_copy_as_child = (from_nms.size > 1);
-  svn_boolean_t svn_make_parents = true;
-  svn_boolean_t svn_ignore_externals = true;
-
-  // We don't need to set any custom revision properties, so null.
-  const apr_hash_t *revprop_table = 0;
-
-  // Not implementing the 1.7 API -- see rationale in Checkin().
-  if (svn_error_t *error = svn_client_copy5
-      (
-       &commit_info_p,
-       paths,
-       to_can,
-       svn_copy_as_child,
-       svn_make_parents,
-       svn_ignore_externals,
-       revprop_table,
-       m_ctx,
-       m_pool))
-    {
+  apr_array_header_t *sources = apr_array_make(
+    m_pool, from_nms.size, sizeof(svn_client_copy_source_t *));
+  for (int i = 0; i < from_nms.size; ++i) {
+    auto *source = static_cast<svn_client_copy_source_t *>(
+      apr_pcalloc(m_pool, sizeof(svn_client_copy_source_t)));
+    auto *revision = static_cast<svn_opt_revision_t *>(
+      apr_pcalloc(m_pool, sizeof(svn_opt_revision_t)));
+    revision->kind = svn_path_is_url(from_nms[i])
+      ? svn_opt_revision_head : svn_opt_revision_working;
+    source->revision = revision;
+    source->peg_revision = revision;
+    if (svn_error_t *error = canonicalSvnTarget(&source->path, from_nms[i], m_pool)) {
       svn_pool_destroy(m_pool);
-      throw Exception("Subversion error copying files", error);
+      throw Exception("Subversion error resolving copy source", error);
     }
-
-  // get the exact same crash here:
-  // if (svn_error_t *error = svn_client_copy6
-  //     (
-  //      paths,
-  //      to_can,
-  //      svn_copy_as_child,
-  //      svn_make_parents,
-  //      svn_ignore_externals,
-  //      revprop_table,
-  //      NULL,                    // no commit callback
-  //      NULL,                    // no commit baton
-  //      m_ctx,
-  //      m_pool))
-  // {
-  //   svn_pool_destroy(m_pool);
-  //   throw Exception("Subversion error copying files", error);
-  // }
-
+    APR_ARRAY_PUSH(sources, svn_client_copy_source_t *) = source;
+  }
+  const char *destination;
+  if (svn_error_t *error = canonicalSvnTarget(&destination, to_nm, m_pool)) {
+    svn_pool_destroy(m_pool);
+    throw Exception("Subversion error resolving copy destination", error);
+  }
+  if (svn_error_t *error = svn_client_copy7(
+        sources, destination, from_nms.size > 1,
+        true,                   // make_parents
+        true,                   // ignore_externals
+        false,                  // metadata_only
+        false,                  // pin_externals
+        nullptr, nullptr,       // externals_to_pin, revision properties
+        nullptr, nullptr,       // commit callback and baton
+        m_ctx, m_pool)) {
+    svn_pool_destroy(m_pool);
+    throw Exception("Subversion error copying files", error);
+  }
   svn_pool_destroy(m_pool);
 }
 
@@ -1940,8 +1954,6 @@ SubversionClient::MakeDir(const String& new_dir, bool make_parents)
   apr_pool_t* m_pool = svn_pool_create(0);
   QMutexLocker qml(svn_operation);
 
-  // won't be used unless we make an immediate commit after adding files (by setting revprop_table)
-  svn_commit_info_t *commit_info_p = svn_create_commit_info(m_pool);
 
   // create an array containing a single path to be created
   apr_array_header_t *paths = apr_array_make(m_pool, 1, sizeof(const char *));
@@ -1950,12 +1962,11 @@ SubversionClient::MakeDir(const String& new_dir, bool make_parents)
   // We don't need to set any custom revision properties, so null.
   const apr_hash_t *revprop_table = 0;
 
-  // Not implementing the 1.7 API -- see rationale in Checkin().
-  if (svn_error_t *error = svn_client_mkdir3(
-        &commit_info_p,
+  if (svn_error_t *error = svn_client_mkdir4(
         paths,
         make_parents, // whether or not to create non-versioned parent directories
         revprop_table,
+        nullptr, nullptr,       // commit callback and baton
         m_ctx,
         m_pool))
   {
@@ -2030,20 +2041,19 @@ SubversionClient::Checkin(const String& comment) {
   // We don't need to set any custom revision properties, so null.
   const apr_hash_t *revprop_table = 0;
 
-  // Subversion 1.7 has a function svn_client_commit5(), but for now the
-  // 1.6 API svn_client_commit4() works just fine for us.  Implementing
-  // in terms of the 1.7 API would mean duplicating the logic in the 1.7
-  // version of svn_client_commit4(), which is just a wrapper around the
-  // new svn_client_commit5().
-  svn_commit_info_t *commit_info_p = 0; // out param.
-  if (svn_error_t *error = svn_client_commit4(
-        &commit_info_p,
+  svn_revnum_t commit_revision = SVN_INVALID_REVNUM;
+  if (svn_error_t *error = svn_client_commit6(
         paths,
         depth,
         keep_locks,
         keep_changelists,
+        false,                  // commit_as_operations: preserve commit4 behavior
+        false,                  // include_file_externals
+        false,                  // include_dir_externals
         changelists,
         revprop_table,
+        recordCommitRevision,
+        &commit_revision,
         m_ctx,
         m_pool))
   {
@@ -2051,7 +2061,7 @@ SubversionClient::Checkin(const String& comment) {
     throw Exception("Subversion error committing files", error);
   }
 
-  int rval = commit_info_p ? commit_info_p->revision : SVN_INVALID_REVNUM;
+  int rval = commit_revision;
   svn_pool_destroy(m_pool);
   return rval;
 }
@@ -2091,20 +2101,19 @@ SubversionClient::CheckinFiles(const String_PArray& files, const String& comment
   // We don't need to set any custom revision properties, so null.
   const apr_hash_t *revprop_table = 0;
 
-  // Subversion 1.7 has a function svn_client_commit5(), but for now the
-  // 1.6 API svn_client_commit4() works just fine for us.  Implementing
-  // in terms of the 1.7 API would mean duplicating the logic in the 1.7
-  // version of svn_client_commit4(), which is just a wrapper around the
-  // new svn_client_commit5().
-  svn_commit_info_t *commit_info_p = 0; // out param.
-  if (svn_error_t *error = svn_client_commit4(
-        &commit_info_p,
+  svn_revnum_t commit_revision = SVN_INVALID_REVNUM;
+  if (svn_error_t *error = svn_client_commit6(
         paths,
         depth,
         keep_locks,
         keep_changelists,
+        false,                  // commit_as_operations: preserve commit4 behavior
+        false,                  // include_file_externals
+        false,                  // include_dir_externals
         changelists,
         revprop_table,
+        recordCommitRevision,
+        &commit_revision,
         m_ctx,
         m_pool))
   {
@@ -2112,7 +2121,7 @@ SubversionClient::CheckinFiles(const String_PArray& files, const String& comment
     throw Exception("Subversion error committing files", error);
   }
 
-  int rval = commit_info_p ? commit_info_p->revision : SVN_INVALID_REVNUM;
+  int rval = commit_revision;
   svn_pool_destroy(m_pool);
   return rval;
 }
@@ -2126,16 +2135,20 @@ SubversionClient::GetLastChangedRevision(const String& path)
 
   apr_pool_t* m_pool = svn_pool_create(0);
 
-  // This call makes a callback to svn_info_receiver(), which
-  // sets our m_last_changed_revision member variable.
-  if (svn_error_t *error = svn_client_info2(
-        path,
-        0, // Set peg_revision and revision to
-        0, //   null to pull from working copy.
+  const char *target;
+  if (svn_error_t *error = canonicalSvnTarget(&target, path, m_pool)) {
+    svn_pool_destroy(m_pool);
+    throw Exception("Subversion error resolving info target", error);
+  }
+  // The receiver updates m_last_changed_revision from working-copy metadata.
+  if (svn_error_t *error = svn_client_info4(
+        target,
+        nullptr, nullptr,       // working-copy peg and operative revisions
+        svn_depth_empty,
+        false, true, false,     // excluded, actual-only, externals
+        nullptr,                // no changelist filtering
         Glue::svn_info_receiver,
         this,
-        svn_depth_empty, // Just want info on 'path'.
-        0, // No changelists filtering.
         m_ctx,
         m_pool))
   {
@@ -2179,10 +2192,17 @@ SubversionClient::GetRootUrlFromPath(String& url, const String& path) {
   const char* url_str;
   apr_pool_t* m_pool = svn_pool_create(0);
 
-  if(svn_error_t *error = svn_client_root_url_from_path
+  const char *target;
+  if (svn_error_t *error = canonicalSvnTarget(&target, path, m_pool)) {
+    svn_pool_destroy(m_pool);
+    throw Exception("Subversion error resolving repository target", error);
+  }
+  if(svn_error_t *error = svn_client_get_repos_root
     (&url_str,
-     path,
+     nullptr,                   // repository UUID not requested
+     target,
      m_ctx,
+     m_pool,
      m_pool))
   {
     svn_pool_destroy(m_pool);
@@ -2206,19 +2226,27 @@ SubversionClient::Cleanup()
   QMutexLocker qml(svn_operation);
 
   apr_pool_t* m_pool = svn_pool_create(0);
-  String m_wc_path_tmp = m_wc_path;
+  const char *absolute_path;
+  if (svn_error_t *error = svn_dirent_get_absolute(&absolute_path, m_wc_path, m_pool)) {
+    svn_pool_destroy(m_pool);
+    throw Exception("Subversion error resolving cleanup path", error);
+  }
+  String m_wc_path_tmp = absolute_path;
   bool tryagain = true;
   while (tryagain) {
-    if (svn_error_t *error = svn_client_cleanup(
-                                                m_wc_path_tmp,
-                                                m_ctx,
-                                                m_pool))
+    if (svn_error_t *error = svn_client_cleanup2(
+          m_wc_path_tmp,
+          true, true, true, true, // break locks, timestamps, DAV cache, pristines
+          false,                  // do not recurse into externals
+          m_ctx,
+          m_pool))
     {
       //Path is not an SVN directory root, and cleanup can only be run on a root
       //Repeatedly shave off a directory until we reach the repository root
       if (error->apr_err == 155007) {
         if (m_wc_path_tmp.length() > 1) {
           m_wc_path_tmp = QFileInfo(m_wc_path_tmp).dir().absolutePath();
+          svn_error_clear(error);
           continue;
         }
       }
@@ -2237,7 +2265,7 @@ SubversionClient::Cleanup()
 
 void
 SubversionClient::notify(const svn_wc_notify_t *notify)
-{
+{ (void)notify;
   // TODO.
 }
 
@@ -2249,7 +2277,7 @@ SubversionClient::isCancelled()
 
 void
 SubversionClient::notifyProgress(apr_off_t progress, apr_off_t total)
-{
+{ (void)progress; (void)total;
   // TODO.
 }
 

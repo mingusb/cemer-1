@@ -338,7 +338,7 @@ const iColor	iColor::black_;
 
 bool iColor::find (const char* name, float& r, float& g, float& b) {
   int rgb;
-  bool qthas = QColor::isValidColor(name);
+  bool qthas = QColor::isValidColorName(name);
   if(qthas) {
     QColor qc(name);
     r = qc.redF(); g = qc.greenF(); b = qc.blueF();

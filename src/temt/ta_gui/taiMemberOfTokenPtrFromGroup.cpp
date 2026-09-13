@@ -76,12 +76,10 @@ taiWidget* taiMemberOfTokenPtrFromGroup::GetWidgetRep_impl(IWidgetHost* host_, t
 }
 
 void taiMemberOfTokenPtrFromGroup::GetImage_impl(taiWidget* dat, const void* base) {
-  bool is_group = false;
   String mb_path;
   String fga = mbr->OptionAfter("FROM_GROUP_");
   if(fga.nonempty()) {
     mb_path = fga;
-    is_group = true;
   }
   else {
     mb_path = mbr->OptionAfter("FROM_LIST_");

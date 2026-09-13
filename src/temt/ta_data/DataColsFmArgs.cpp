@@ -128,7 +128,7 @@ void DataColsFmArgs::GenRegArgs(Program* prog) {
   }
 }
 
-bool DataColsFmArgs::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool DataColsFmArgs::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if (CvtFmCodeCheckNames(code))
     return true;
   

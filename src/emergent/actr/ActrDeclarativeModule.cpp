@@ -171,7 +171,7 @@ void ActrDeclarativeModule::RetrievalRequest(ActrEvent& event) {
                      retrieved);
 }
 
-void ActrDeclarativeModule::RetrievedChunk(ActrEvent& event) {
+void ActrDeclarativeModule::RetrievedChunk(ActrEvent& event) { (void)event;
   ActrModel* mod = Model();
   retrieved->SetChunkFlag(ActrChunk::RETRIEVED);
   retrieved->ChunkActivated();      // increment use
@@ -185,7 +185,7 @@ void ActrDeclarativeModule::RetrievedChunk(ActrEvent& event) {
   buffer->ClearReq();
 }
 
-void ActrDeclarativeModule::RetrievalFailure(ActrEvent& event) {
+void ActrDeclarativeModule::RetrievalFailure(ActrEvent& event) { (void)event;
   ClearModuleFlag(BUSY);
   SetModuleFlag(ERROR);
   buffer->ClearReq();
@@ -225,8 +225,7 @@ void ActrDeclarativeModule::ComputePartialAct() {
 }
 
 void ActrDeclarativeModule::ComputeTotalAct() {
-  ActrModel* mod = Model();
-  const float cur_t = mod->cur_time;
+
   for(int i=0; i<active.size; i++) {
     ActrChunk* oc = active.FastEl(i);
     float instn = act.inst_noise * taMath_double::gauss_dev();
@@ -338,7 +337,6 @@ void ActrDeclarativeModule::ChooseFromEligible() {
 
 bool ActrDeclarativeModule::FindMatchingBasic(ActrChunk* ck, ActrChunk_List& lst,
                                               ActrChunk_List& matches) {
-  ActrModel* mod = Model();
   matches.Reset();
   for(int i=0; i<lst.size; i++) {
     ActrChunk* oc = lst.FastEl(i);
@@ -376,7 +374,7 @@ bool ActrDeclarativeModule::AddChunk(ActrChunk* ck, bool merge) {
   return true;
 }
 
-bool ActrDeclarativeModule::SetParam(const String& param_nm, Variant par1, Variant par2) {
+bool ActrDeclarativeModule::SetParam(const String& param_nm, Variant par1, Variant par2) { (void)par2;
   bool got = false;
   if(param_nm == "retrieval_activation" && buffer) {
     buffer->act_total = par1.toFloat();

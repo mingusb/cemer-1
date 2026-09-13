@@ -11,18 +11,17 @@
 #
 # ccmake ./ to edit custom options
 #
-# Important notes:
-# 1. do qmake -v -- if it does not say "Using Qt version 4.x.x.." (i.e., it says 3.x.x)
-#    then you must find the qmake that is for Qt version 4 and set your path so it is
-#    found first!
-#
+# Source the same Clang/Qt 6 environment used to build emergent.
+# Set EMERGENT_PREFIX_DIR when emergent is installed in a custom prefix.
 
 # To configure this file for a new plugin as a plugin programmer, skip to Step 3
 
 ################################################################
 # Step 0: ensure we have the right version of cmake -- this
 # has to go here at the top of this file otherwise cmake complains
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6.2 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.22...4.1)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 ################################################################
 # Step 1: Find the emergent share (application) directory
@@ -124,7 +123,7 @@ set(plugin_HEADS_MAKETA
 # any headers that declare any Qt/QObject-derived classes go here --
 # Emergent's taBase-derived classes (the bulk of Emergent) don't need this --
 # if you are unsure, you can usually put any header here and Qt/moc will
-# just ignore it with a warning that "no QObject classes were found"
+# require the Q_OBJECT macro in every header listed here
 set(plugin_HEADS_MOC
   template_pl.h
 # if you create Qt or Inventor classes, put them in template_qtso.*

@@ -1705,7 +1705,6 @@ void LEABRA_NETWORK_STATE::Compute_TrialCosDiff_Thr(int thr_no) {
   for(int li = 0; li < nlay; li++) {
     LEABRA_LAYER_STATE* lay = GetLayerState(li);
     if(lay->lesioned()) continue;
-    LEABRA_LAYER_SPEC_CPP* ls = lay->GetLayerSpec(this);
     LEABRA_UNGP_STATE* lgpd = lay->GetLayUnGpState(this);
 
     const float avg_p = lgpd->acts_p.avg;
@@ -1762,7 +1761,6 @@ void LEABRA_NETWORK_STATE::Compute_ActMargin_Thr(int thr_no) {
   for(int li = 0; li < nlay; li++) {
     LEABRA_LAYER_STATE* lay = GetLayerState(li);
     if(lay->lesioned()) continue;
-    LEABRA_LAYER_SPEC_CPP* ls = lay->GetLayerSpec(this);
     // LEABRA_UNGP_STATE* lgpd = lay->GetLayUnGpState(this);
 
     const float low_thr = lay->margin.low_thr;

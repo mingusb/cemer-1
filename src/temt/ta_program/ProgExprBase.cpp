@@ -14,6 +14,7 @@
 //   Lesser General Public License for more details.
 
 #include "ProgExprBase.h"
+#include <QRegExp>
 
 #include <ProgEl>
 #include <ProgVar>
@@ -218,7 +219,7 @@ void ProgExprBase::SmartRef_SigDestroying(taSmartRef* ref, taBase* obj) {
 
 void ProgExprBase::SmartRef_SigEmit(taSmartRef* ref, taBase* obj,
                                     int sls, void* op1_, void* op2_)
-{
+{ (void)op1_; (void)op2_; (void)ref;
   if(sls != SLS_ITEM_UPDATED || !obj || !obj->InheritsFrom(&TA_ProgVar)) {
     return;
   }
@@ -562,7 +563,7 @@ bool ProgExprBase::FindPathSeparator(const String& path, int& separator_start, i
   }
 }
 
-ProgExprBase::LookUpType ProgExprBase::ParseForLookup(const String& cur_txt, int cur_pos, String& prepend_txt, String& path_prepend_txt, String& append_txt, String& prog_el_txt, String& base_path, String& lookup_seed, String& path_var, String& path_rest, bool path_base_not_null, ExpressionStart& expr_start, bool& lookup_group_default) {
+ProgExprBase::LookUpType ProgExprBase::ParseForLookup(const String& cur_txt, int cur_pos, String& prepend_txt, String& path_prepend_txt, String& append_txt, String& prog_el_txt, String& base_path, String& lookup_seed, String& path_var, String& path_rest, bool path_base_not_null, ExpressionStart& expr_start, bool& lookup_group_default) { (void)path_base_not_null;
   
   String txt = cur_txt.before(cur_pos);
   String extra_txt = cur_txt.from(cur_pos);
@@ -1023,7 +1024,7 @@ Completions* ProgExprBase::ExprLookupCompleter(const String& cur_txt, int cur_po
                                           taBase*& path_own_obj, TypeDef*& path_own_typ,
                                           MemberDef*& path_md, ProgEl* own_pel,
                                           Program* own_prg, Function* own_fun,
-                                          taBase* path_base, TypeDef* path_base_typ) {
+                                          taBase* path_base, TypeDef* path_base_typ) { (void)new_pos;
   
   String txt = cur_txt.before(cur_pos);
   String append_txt;
@@ -1114,7 +1115,6 @@ Completions* ProgExprBase::ExprLookupCompleter(const String& cur_txt, int cur_po
           String class_name = lhs.before("::");
           TypeDef* own_td = taMisc::FindTypeName(class_name);
           if (own_td) {
-            int net_base_off = 0;
             String member_name = lhs.after("::");
             MemberDef* md = own_td->static_members.FindName(member_name);
             if (md) {
@@ -1600,7 +1600,7 @@ Completions* ProgExprBase::ExprLookupCompleter(const String& cur_txt, int cur_po
 }
 
 Completions* ProgExprBase::StringFieldLookupForCompleter(const String& cur_txt, int cur_pos,
-                                          const String& mbr_name, int& new_pos) {
+                                          const String& mbr_name, int& new_pos) { (void)mbr_name;
   ProgEl* own_pel = GET_MY_OWNER(ProgEl);
   
   Program* own_prg;
@@ -1653,7 +1653,7 @@ bool ProgExprBase::ExprIsType(const String& txt) {
 ProgExprBase::LookUpType ProgExprBase::Test_ParseForLookup(const String test_name, const String input_text, const int cursor_pos,
                                       String& lookup_seed, String& prepend_txt, String& append_txt,
                                       String& prog_el_txt, String& path_var, String& path_prepend_txt,
-                                      String& path_rest, String& base_path, bool& lookup_group_default) {
+                                      String& path_rest, String& base_path, bool& lookup_group_default) { (void)test_name;
   ProgExprBase::LookUpType      lookup_type;
   bool                          path_base_not_null = false;
   ExpressionStart               expr_start = LINE_START;
@@ -1727,7 +1727,7 @@ void ProgExprBase::GetGroupItems(taGroup_impl* list, taBase_List* tokens, bool t
   
 }
 
-void ProgExprBase::GetLocalVars(taBase_List* tokens, ProgEl* prog_el, taBase* scope, TypeDef* scope_type, ProgVar::VarType var_type) {
+void ProgExprBase::GetLocalVars(taBase_List* tokens, ProgEl* prog_el, taBase* scope, TypeDef* scope_type, ProgVar::VarType var_type) { (void)var_type;
   if (tokens == NULL || prog_el == NULL) return;
   
   ProgEl_List* prog_el_owner_list = (ProgEl_List*)prog_el->GetOwner(&TA_ProgEl_List);
@@ -1769,7 +1769,7 @@ void ProgExprBase::GetLocalVars(taBase_List* tokens, ProgEl* prog_el, taBase* sc
   tokens->Sort();
 }
 
-void ProgExprBase::GetGlobalVars(taBase_List* tokens, taBase* scope, TypeDef* scope_type, ProgVar::VarType var_type) {
+void ProgExprBase::GetGlobalVars(taBase_List* tokens, taBase* scope, TypeDef* scope_type, ProgVar::VarType var_type) { (void)var_type;
   if (tokens == NULL) return;
   
   TypeDef* td = &TA_ProgVar;
@@ -1952,7 +1952,7 @@ bool ProgExprBase::ExpressionTakesArgs(String expression) {
   return false;
 }
 
-TypeDef* ProgExprBase::GetSpecialCaseType(taBase* arg_obj, const String& text) {
+TypeDef* ProgExprBase::GetSpecialCaseType(taBase* arg_obj, const String& text) { (void)arg_obj;
   TypeDef* td = NULL;
     
   // crazy!! could not get Qt's reg ex to work with \[[0-9]] or the like

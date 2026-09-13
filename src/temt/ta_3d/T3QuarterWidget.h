@@ -45,11 +45,11 @@ class TA_API T3QuarterWidget : public QuarterWidget {
 public:
 
 #ifndef __MAKETA__
-  explicit T3QuarterWidget(QWidget * parent = 0, const QT_GL_WIDGET * sharewidget = 0, Qt::WindowFlags f = 0);
+  explicit T3QuarterWidget(QWidget * parent = 0, const QT_GL_WIDGET * sharewidget = 0, Qt::WindowFlags f = {});
 
 #ifndef QT_OPEN_GL_WIDGET  
-  explicit T3QuarterWidget(QGLContext * context, QWidget * parent = 0, const QT_GL_WIDGET * sharewidget = 0, Qt::WindowFlags f = 0);
-  explicit T3QuarterWidget(const QGLFormat & format, QWidget * parent = 0, const QT_GL_WIDGET * shareWidget = 0, Qt::WindowFlags f = 0);
+  explicit T3QuarterWidget(QGLContext * context, QWidget * parent = 0, const QT_GL_WIDGET * sharewidget = 0, Qt::WindowFlags f = {});
+  explicit T3QuarterWidget(const QGLFormat & format, QWidget * parent = 0, const QT_GL_WIDGET * shareWidget = 0, Qt::WindowFlags f = {});
 #endif
 #endif
   

@@ -36,7 +36,7 @@
   }
   // #CAT_Access connection spec (state version)
 
-  INLINE bool IsActive(NETWORK_STATE* net) const { return (!off && !lesioned); }
+  INLINE bool IsActive(NETWORK_STATE* net) const { (void)net; return (!off && !lesioned); }
   // #CAT_Access is this projection active and valid?
 
   INLINE bool NotActive(NETWORK_STATE* net) const { return !IsActive(net); }

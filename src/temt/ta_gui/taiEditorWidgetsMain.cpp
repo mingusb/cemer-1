@@ -110,7 +110,7 @@ int taiEditorWidgetsMain::AddSectionLabel(int row, QWidget* wid, const String& d
   }
 
   QPalette pal = wid->palette();
-  pal.setColor(QPalette::Background, colorOfRow(row));
+  pal.setColor(QPalette::Window, colorOfRow(row));
   wid->setPalette(pal); 
 
   if (!desc.empty()) {
@@ -143,7 +143,7 @@ int taiEditorWidgetsMain::AddSectionLabel(int row, QWidget* wid, const String& d
 
 int taiEditorWidgetsMain::AddNameWidget(int row, const String& name, const String& desc,
    QWidget* data, taiWidget* buddy, MemberDef* md, bool fill_hor)
-{
+{ (void)md;
   if (row < 0)
     row = layBody->rowCount();
   //LABEL
@@ -154,7 +154,7 @@ int taiEditorWidgetsMain::AddNameWidget(int row, const String& name, const Strin
   // note1: margins not automatically baked in to max height
   // note2: if guy goes invisible, we'll set its row height to 0 in GetImage
   QHBoxLayout* lay_dat = new QHBoxLayout();
-  lay_dat->setMargin(0);
+  lay_dat->setContentsMargins(0, 0, 0, 0);
   lay_dat->addWidget(data, 0, Qt::AlignVCenter/*, (Qt::AlignLeft | Qt::AlignVCenter)*/);
   if (!fill_hor) lay_dat->addStretch();
 
@@ -181,7 +181,7 @@ int taiEditorWidgetsMain::AddWidget(int row, QWidget* data, bool fill_hor)
   // note1: margins not automatically baked in to max height
   // note2: if guy goes invisible, we'll set its row height to 0 in GetImage
   QHBoxLayout* hbl = new QHBoxLayout();
-  hbl->setMargin(0);
+  hbl->setContentsMargins(0, 0, 0, 0);
   hbl->addWidget(data, 0, Qt::AlignVCenter);
   if (!fill_hor) hbl->addStretch();
 
@@ -203,7 +203,7 @@ void taiEditorWidgetsMain::AddMultiRowName(iEditGrid* multi_body, int row, const
   label->setFont(taiM->nameFont(ctrl_size));
   label->setFixedHeight(taiM->label_height(ctrl_size));
   QPalette pal = label->palette();
-  pal.setColor(QPalette::Background, colorOfRow(row));
+  pal.setColor(QPalette::Window, colorOfRow(row));
   label->setPalette(pal); 
   if(desc.nonempty()) {
     label->setToolTip(taiMisc::ToolTipPreProcess(desc));
@@ -228,7 +228,7 @@ void taiEditorWidgetsMain::AddMultiWidget(iEditGrid* multi_body, int row, int co
 //  SetMultiSize(row - 1, col - 1);
   SetMultiSize(row + 1, col + 1);
   QHBoxLayout* hbl = new QHBoxLayout();
-  hbl->setMargin(0);
+  hbl->setContentsMargins(0, 0, 0, 0);
   hbl->addWidget(data, 0,  (Qt::AlignLeft | Qt::AlignVCenter));
   hbl->addStretch();
   multi_body->setDataLayout(row, col, hbl);
@@ -241,16 +241,16 @@ void taiEditorWidgetsMain::Constr_Box() {
   QWidget* scr_par = (splBody == NULL) ? widget() : splBody;
   scrBody = new iScrollArea(scr_par);
   QPalette pal = scrBody->viewport()->palette();
-  pal.setColor(QPalette::Background, bg_color_dark);
+  pal.setColor(QPalette::Window, bg_color_dark);
   scrBody->viewport()->setPalette(pal); 
   scrBody->setWidgetResizable(true);
   body = new iStripeWidget();
   body_vlay = new QVBoxLayout(body);
-  body_vlay->setMargin(0);
+  body_vlay->setContentsMargins(0, 0, 0, 0);
 
   scrBody->setWidget(body);
   pal = body->palette();
-  pal.setColor(QPalette::Background, bg_color);
+  pal.setColor(QPalette::Window, bg_color);
   body->setPalette(pal); 
   ((iStripeWidget*)body)->setHiLightColor(bg_color_dark);
   ((iStripeWidget*)body)->setStripeHeight(row_height + (2 * taMisc::font_sizes.spacing));
@@ -280,7 +280,7 @@ void taiEditorWidgetsMain::ClearBody_impl() {
     delete body->layout();      // nuke our vboxlayout guy
     taiMisc::DeleteWidgetsLater(body);
     body_vlay = new QVBoxLayout(body);
-    body_vlay->setMargin(0);
+    body_vlay->setContentsMargins(0, 0, 0, 0);
   }
 }
 

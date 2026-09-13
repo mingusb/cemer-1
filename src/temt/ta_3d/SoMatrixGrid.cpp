@@ -359,7 +359,6 @@ void SoMatrixGrid::render() {
           }
           iColor fl;  iColor tx;
           scale->GetColor(val,sc_val,&fl,&tx);
-          float zp = sc_val * blk_ht;
           float alpha = 1.0f - ((1.0f - fabsf(sc_val)) * trans_max);
           fl.a = iColor::fc2ic(alpha);
 
@@ -404,7 +403,6 @@ void SoMatrixGrid::render() {
               val = matptr->FastElAsFloat(pos.x, pos.y, z);
             iColor fl;  iColor tx;
             scale->GetColor(val,sc_val,&fl,&tx);
-            float zp = sc_val * blk_ht;
             float alpha = 1.0f - ((1.0f - fabsf(sc_val)) * trans_max);
             fl.a = iColor::fc2ic(alpha);
 
@@ -452,7 +450,6 @@ void SoMatrixGrid::render() {
                 val = matptr->FastElAsFloat(pos.x, pos.y, opos.x, opos.y);
               iColor fl;  iColor tx;
               scale->GetColor(val,sc_val,&fl,&tx);
-              float zp = sc_val * blk_ht;
               float alpha = 1.0f - ((1.0f - fabsf(sc_val)) * trans_max);
               fl.a = iColor::fc2ic(alpha);
 

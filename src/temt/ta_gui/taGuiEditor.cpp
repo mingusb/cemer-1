@@ -40,7 +40,7 @@ void taGuiEditor::Constr_Body() {
   }
 }
 
-void taGuiEditor::GetImage(bool force) {
+void taGuiEditor::GetImage(bool force) { (void)force;
   ++updating;                   // prevents spurious changed flags from coming in
   gui_owner->GetImage();
   --updating;

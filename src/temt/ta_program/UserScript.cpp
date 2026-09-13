@@ -76,11 +76,11 @@ void UserScript::ExportToFileName(const String& fnm) {
   strm.close();
 }
 
-bool UserScript::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool UserScript::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)code; (void)scope_el;
   return true;
 }
 
-bool UserScript::CvtFmCode(const String& code) {
+bool UserScript::CvtFmCode(const String& code) { (void)code;
   return true;
 }
 

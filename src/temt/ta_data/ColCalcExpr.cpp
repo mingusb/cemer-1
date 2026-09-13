@@ -73,10 +73,9 @@ String ColCalcExpr::GetFullExpr() const {
 }
 
 Completions* ColCalcExpr::StringFieldLookupForCompleter(const String& cur_txt, int cur_pos,
-                                                        const String& mbr_name, int& new_pos) {
+                                                        const String& mbr_name, int& new_pos) { (void)mbr_name; (void)new_pos;
   completions.Reset();
   
-  bool space = false;  // true if there is a space before the cursor and after any '.'
   bool dot = false;    // true if there is a '.' before the cursor and after any spas
   
   int space_pos;  // -1 if not found
@@ -89,7 +88,6 @@ Completions* ColCalcExpr::StringFieldLookupForCompleter(const String& cur_txt, i
   
   String expression = pre_cursor_text;  // assume until we check if space
   if (space_pos > dot_pos) {
-    space = true;
     expression = pre_cursor_text.after(space_pos);
   }
   else if (dot_pos > space_pos) {

@@ -15,7 +15,7 @@
   { wt = PrecLimitVal(wt); }
   // #IGNORE
 
-  INLINE void Compute_LimPrecWts(CON_STATE* cg, NETWORK_STATE* net, int thr_no) {
+  INLINE void Compute_LimPrecWts(CON_STATE* cg, NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     float* wts = cg->OwnCnVar(WT);
     CON_STATE_LOOP(cg, C_Compute_LimPrecWts(wts[i]));
   }

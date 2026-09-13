@@ -133,18 +133,18 @@ public:
   // optionally called by child in its DUAE routine; must be added manually
   virtual void          ChildAdding(taDataView* child);
   // #IGNORE called from list;
-  virtual void          ChildRemoving(taDataView* child) {}
+  virtual void          ChildRemoving(taDataView* child) { (void)child; }
   // #IGNORE called from list;
-  virtual void          ChildClearing(taDataView* child) {}
+  virtual void          ChildClearing(taDataView* child) { (void)child; }
   // override to implement par's portion of clear
-  virtual void          ChildRendered(taDataView* child) {}
+  virtual void          ChildRendered(taDataView* child) { (void)child; }
   // override to implement par's portion of render
-  virtual void          CloseChild(taDataView* child) {}
+  virtual void          CloseChild(taDataView* child) { (void)child; }
   virtual void          SetVisible(bool showing);
   // called recursively when a view ctrl shows or hides
   virtual void          Render() {DoActions(RENDER_ACTS);}
   // renders the visible contents (usually override the _impls) -- MUST BE DEFINED IN SUB
-  virtual void          Clear(taDataView* par = NULL) {DoActions(CLEAR_ACTS);}
+  virtual void          Clear(taDataView* par = NULL) { (void)par;DoActions(CLEAR_ACTS);}
   // clears the view (but doesn't delete any components) (usually override _impl) -- for 3D views this removes the 3D objects from the view, but preserves the viewer-side of the hierarchy
   virtual void          Reset() {DoActions(RESET_ACTS);}
   // clears, and deletes any components (usually override _impls)
@@ -155,7 +155,7 @@ public:
   virtual void          DoActions(DataViewAction acts);
   // do the indicated action(s) if safe in this context (ex loading, whether gui exists, etc.)
 
-  virtual void          ItemRemoving(taDataView* item) {} // items call this on the root item -- usually used by a viewer to insure item removed from things like sel lists
+  virtual void          ItemRemoving(taDataView* item) { (void)item; } // items call this on the root item -- usually used by a viewer to insure item removed from things like sel lists
   virtual void          SigDestroying() {} // called when data is destroying (m_data will already be NULL)
 
   // special clip op queries, including Child_xx that gets forwarded from owned lists -- most view objs are managed by an owner, exception is very top-level objs; so defaults of following basically disallow things like Cut, Paste, and Delete (Copy and Paste Assign are allowed by default) -- all in ta_qtclipdata.cpp
@@ -195,17 +195,17 @@ public: // ISigLinkCLient
 
 protected:
   void                  UpdateAfterEdit_impl() override;
-  virtual void          SigLinkRecv_impl(int sls, void* op1, void* op2) {}
+  virtual void          SigLinkRecv_impl(int sls, void* op1, void* op2) { (void)op1; (void)op2; (void)sls; }
   // called when the data item has changed, esp. ex lists and groups, *except* UAE -- we also forward the last end of a batch update
   virtual void          SigRecvUpdateAfterEdit_impl() {} // called by data for an UAE, i.e., after editing etc.
-  virtual void          SigRecvUpdateAfterEdit_Child_impl(taDataView* chld) {}
+  virtual void          SigRecvUpdateAfterEdit_Child_impl(taDataView* chld) { (void)chld; }
   virtual void          SigRecvUpdateView_impl();
   // called for Update All Views, and at end of a DataUpdate batch
   virtual void          SigRecvRebuildView_impl() {} // called for Rebuild All Views, clients usually do beg/end both
   virtual void          SigRecvStructUpdateEnd_impl() {} // called ONLY at end of a struct update -- derived classes usually do some kind of rebuild or render
-  virtual void          SigEmit_Child(taBase* child, int sls, void* op1, void* op2) {}
+  virtual void          SigEmit_Child(taBase* child, int sls, void* op1, void* op2) { (void)child; (void)op1; (void)op2; (void)sls; }
   // typically from an owned list
-  virtual void          DoActionChildren_impl(DataViewAction acts) {} // only one action called at a time, if CONSTR do children in order, if DESTR do in reverse order; call child.DoActions(act)
+  virtual void          DoActionChildren_impl(DataViewAction acts) { (void)acts; } // only one action called at a time, if CONSTR do children in order, if DESTR do in reverse order; call child.DoActions(act)
   virtual void          SetVisible_impl(DataViewAction act);
   // called when a viewer hides/shows (act is one of SHOWING or HIDING)
   virtual bool          DoClearOnHide() { return false; }

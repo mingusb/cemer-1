@@ -6,7 +6,6 @@ void STATE_CLASS(DecodeTwoDValLayerSpec)::ReadValue_ugp
   (LEABRA_LAYER_STATE* lay, LEABRA_NETWORK_STATE* net, int gpidx) {
   
   LEABRA_UNGP_STATE* ug = lay->GetUnGpState(net, gpidx);
-  LEABRA_UNIT_SPEC_CPP* us = lay->GetUnitSpec(net);
   const int nunits = ug->n_units;
   for(int i=0;i<nunits;i++) {
     LEABRA_UNIT_STATE* u = ug->GetUnitState(net, i);

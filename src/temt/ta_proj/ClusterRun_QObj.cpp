@@ -17,11 +17,11 @@
 #include <ClusterRun>
 #include <taMisc>
 
-void ClusterRun_QObj::UpdateEnabling(int panel_id) {
+void ClusterRun_QObj::UpdateEnabling(int panel_id) { (void)panel_id;
   master->UpdateUI();
 }
 
-void ClusterRun_QObj::SelectionChanged(const QModelIndex &index) {
+void ClusterRun_QObj::SelectionChanged(const QModelIndex &index) { (void)index;
   master->UpdateUI();
 }
 

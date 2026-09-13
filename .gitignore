@@ -3,7 +3,14 @@
 /taconfig.h
 /temt_version.h
 /artifacts/
+/core-audit/
+/maketa-audit/
+/plugin-audit/
 /CMakeUserPresets.json
 /*.log
 /tools/toolchain/Qt/
 /tools/toolchain/downloads/*.7z
+__pycache__/
+
+/css-diagnostics/
+/regression-css-preflight/

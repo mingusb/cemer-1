@@ -2,7 +2,7 @@
 // {
 
 void STATE_CLASS(TDRewIntegUnitSpec)::Compute_TDRewInteg
-  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   float rew_pred_val = 0.0f;
   float ext_rew_val = 0.0f;
 

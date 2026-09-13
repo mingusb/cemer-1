@@ -67,7 +67,7 @@ void iDialogKeyBindings::Constr() {
   QGroupBox* body_box = new QGroupBox("");
   
   layOuter = new QVBoxLayout(this);
-  layOuter->setMargin(taiM->vsep_c);
+  layOuter->setContentsMargins(taiM->vsep_c, taiM->vsep_c, taiM->vsep_c, taiM->vsep_c);
   layOuter->setSpacing(taiM->vspc_c);
   
   layOuter->setSizeConstraint(QLayout::SetDefaultConstraint);

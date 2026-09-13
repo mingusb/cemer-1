@@ -132,7 +132,7 @@ void MethodCall::Help() {
   else return inherited::statusTip(ks);
 }*/
 
-bool MethodCall::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool MethodCall::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   // fmt: [result = ]obj[.|->]method(args...
   // don't reject if user triggers parse with display name unedited
   if (CvtFmCodeCheckNames(code))

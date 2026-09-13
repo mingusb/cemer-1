@@ -82,7 +82,7 @@ int iPanelOfDataTable::GetEditActions() {
   return rval;
 }
 
-void iPanelOfDataTable::GetSelectedItems(ISelectable_PtrList& lst) {
+void iPanelOfDataTable::GetSelectedItems(ISelectable_PtrList& lst) { (void)lst;
 //note: not applicable
 }
 

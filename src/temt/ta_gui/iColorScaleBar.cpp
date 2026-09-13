@@ -62,7 +62,7 @@ void iColorScaleBar::Init(bool hor_, bool adj, bool ed){
     layOuter = new QHBoxLayout(this);
   else
     layOuter = new QVBoxLayout(this);
-  layOuter->setMargin(0);
+  layOuter->setContentsMargins(0, 0, 0, 0);
   layOuter->setSpacing(0);
 
   min_frep = new iLineEdit(this);
@@ -114,7 +114,7 @@ void iColorScaleBar::InitLayout() {
       enlarger->setFixedHeight(arrow_sz);
       shrinker->setFixedWidth(arrow_sz);
       shrinker->setFixedHeight(arrow_sz);
-      layBut->setMargin(0); //spacing=2
+      layBut->setContentsMargins(0, 0, 0, 0); //spacing=2
       layBut->setSpacing(0); //abut
       layBut->addWidget(enlarger);
       layBut->addWidget(shrinker);
@@ -129,7 +129,7 @@ void iColorScaleBar::InitLayout() {
   else { // vert
     if (enlarger) { //note: both or none
       QBoxLayout* layBut = new QHBoxLayout; layOuter->addLayout(layBut);
-      layBut->setMargin(0); //spacing=2
+      layBut->setContentsMargins(0, 0, 0, 0); //spacing=2
       layBut->addWidget(enlarger);
       layBut->addWidget(shrinker);
     }

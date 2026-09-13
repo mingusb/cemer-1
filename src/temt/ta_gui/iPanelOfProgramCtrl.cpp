@@ -67,7 +67,7 @@ void iPanelOfProgramCtrl::UpdatePanel_impl() {
   if (pc) pc->ReShow_Async();
 }
 
-void iPanelOfProgramCtrl::ResolveChanges_impl(CancelOp& cancel_op) {
+void iPanelOfProgramCtrl::ResolveChanges_impl(CancelOp& cancel_op) { (void)cancel_op;
  // per semantics elsewhere, we just blindly apply changes
   if (pc && pc->HasChanged()) {
     pc->Apply();

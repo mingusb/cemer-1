@@ -25,6 +25,10 @@
 
 // parent includes:
 #include <MemberDefBase>
+#ifndef __MAKETA__
+#include <cstdint>
+#include <cstring>
+#endif
 
 // member includes:
 
@@ -81,7 +85,17 @@ public:
   }
   // get offset of member relative to overall class base pointer
   inline int   GetRelOff() const {
-    return ((char*)&((ta_memb_ptr_class*)((char*)0+base_off)->*off)) - (char*)0;
+    // Reflection stores an ABI data-member offset in ta_memb_ptr. Read that
+    // representation directly rather than forming a member through a null base.
+#ifdef _MSC_VER
+    int member_offset = 0;
+#else
+    intptr_t member_offset = 0;
+#endif
+    static_assert(sizeof(member_offset) == sizeof(off),
+                  "Unsupported data-member pointer representation");
+    std::memcpy(&member_offset, &off, sizeof(off));
+    return static_cast<int>(member_offset) + base_off;
   }
   // get relative byte offset of member relative to overall class base pointer -- only for non-statics
   const String GetPathName() const override;

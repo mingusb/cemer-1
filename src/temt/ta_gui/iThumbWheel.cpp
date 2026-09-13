@@ -91,7 +91,7 @@ public:
         mustGenerateBackground = false;
         wrapsAround = false;
         limitedDrag = true;
-        q->setAttribute(Qt::WA_NoBackground, true);
+        q->setAttribute(Qt::WA_NoSystemBackground, true);
         cogs = 17;
         mousePressed = false;
         pressedAt = -1;
@@ -398,7 +398,7 @@ void iThumbWheel::wheelEvent(QWheelEvent *e)
   if(QApplication::keyboardModifiers() & Qt::ShiftModifier)
     ctrl_pressed = true;
   int step = (ctrl_pressed) ? singleStep() : pageStep();
-  setValue(value() - (e->delta()*step/ 120));
+  setValue(value() - (e->angleDelta().y()*step/ 120));
   e->accept();
 }
 
@@ -435,7 +435,7 @@ void iThumbWheelPrivate::generateBackground()
     QRect cr = q->contentsRect();
 
     int h, s, v;
-    q->palette().background().color().getHsv(&h, &s, &v);
+    q->palette().window().color().getHsv(&h, &s, &v);
 
     QColor cblack;
     cblack.setHsv(h, s, 0);
@@ -537,7 +537,7 @@ void iThumbWheel::paintEvent(QPaintEvent *)
         d->generateBackground();
     }
 
-    QBrush brush = palette().background();
+    QBrush brush = palette().window();
 
     QPainter pt(&d->pix);
     pt.drawPixmap(QPoint(0, 0), d->background);
@@ -550,7 +550,7 @@ void iThumbWheel::paintEvent(QPaintEvent *)
     alpha = fmod(alpha, delta);
 
     int h, s, v;
-    palette().background().color().getHsv(&h, &s, &v);
+    palette().window().color().getHsv(&h, &s, &v);
 
     if (orientation() == Qt::Horizontal) {
 	double r = 0.5 * double(cr.width());

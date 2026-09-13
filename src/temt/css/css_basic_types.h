@@ -184,25 +184,25 @@ public:
 
   cssCloneFuns(cssConstInt, 0);
 
-  void operator=(Real cp) override              { NopErr("const ="); }
-  void operator=(Int cp) override               { NopErr("const ="); }
-  void operator=(const String& cp) override     { NopErr("const ="); }
+  void operator=(Real cp) override              { (void)cp; NopErr("const ="); }
+  void operator=(Int cp) override               { (void)cp; NopErr("const ="); }
+  void operator=(const String& cp) override     { (void)cp; NopErr("const ="); }
 
   using cssEl::operator=;
 
   // operators
-  void operator=(const cssEl& s) override { NopErr("const ="); }
+  void operator=(const cssEl& s) override { (void)s; NopErr("const ="); }
 
-  void operator+=(cssEl& t) override    { NopErr("const +="); }
-  void operator-=(cssEl& t) override    { NopErr("const -="); }
-  void operator*=(cssEl& t) override    { NopErr("const *="); }
-  void operator/=(cssEl& t) override    { NopErr("const /="); }
-  void operator%=(cssEl& t) override    { NopErr("const %="); }
-  void operator<<=(cssEl& t) override   { NopErr("const <<="); }
-  void operator>>=(cssEl& t) override   { NopErr("const >>="); }
-  void operator&=(cssEl& t) override    { NopErr("const &="); }
-  void operator^=(cssEl& t) override    { NopErr("const ^="); }
-  void operator|=(cssEl& t) override    { NopErr("const |="); }
+  void operator+=(cssEl& t) override    { (void)t; NopErr("const +="); }
+  void operator-=(cssEl& t) override    { (void)t; NopErr("const -="); }
+  void operator*=(cssEl& t) override    { (void)t; NopErr("const *="); }
+  void operator/=(cssEl& t) override    { (void)t; NopErr("const /="); }
+  void operator%=(cssEl& t) override    { (void)t; NopErr("const %="); }
+  void operator<<=(cssEl& t) override   { (void)t; NopErr("const <<="); }
+  void operator>>=(cssEl& t) override   { (void)t; NopErr("const >>="); }
+  void operator&=(cssEl& t) override    { (void)t; NopErr("const &="); }
+  void operator^=(cssEl& t) override    { (void)t; NopErr("const ^="); }
+  void operator|=(cssEl& t) override    { (void)t; NopErr("const |="); }
 };
 
 #define cssConstInt_inst(l,n,x)          l .Push(new cssConstInt((int) n,(const char *) #x))
@@ -452,25 +452,25 @@ public:
 
   cssCloneFuns(cssConstReal, 0.0);
 
-  void operator=(Real cp) override              { NopErr("const ="); }
-  void operator=(Int cp) override               { NopErr("const ="); }
-  void operator=(const String& cp) override     { NopErr("const ="); }
+  void operator=(Real cp) override              { (void)cp; NopErr("const ="); }
+  void operator=(Int cp) override               { (void)cp; NopErr("const ="); }
+  void operator=(const String& cp) override     { (void)cp; NopErr("const ="); }
 
   using cssEl::operator=;
 
   // operators
-  void operator=(const cssEl& s) override { NopErr("const ="); }
+  void operator=(const cssEl& s) override { (void)s; NopErr("const ="); }
 
-  void operator+=(cssEl& t) override    { NopErr("const +="); }
-  void operator-=(cssEl& t) override    { NopErr("const -="); }
-  void operator*=(cssEl& t) override    { NopErr("const *="); }
-  void operator/=(cssEl& t) override    { NopErr("const /="); }
-  void operator%=(cssEl& t) override    { NopErr("const %="); }
-  void operator<<=(cssEl& t) override   { NopErr("const <<="); }
-  void operator>>=(cssEl& t) override   { NopErr("const >>="); }
-  void operator&=(cssEl& t) override    { NopErr("const &="); }
-  void operator^=(cssEl& t) override    { NopErr("const ^="); }
-  void operator|=(cssEl& t) override    { NopErr("const |="); }
+  void operator+=(cssEl& t) override    { (void)t; NopErr("const +="); }
+  void operator-=(cssEl& t) override    { (void)t; NopErr("const -="); }
+  void operator*=(cssEl& t) override    { (void)t; NopErr("const *="); }
+  void operator/=(cssEl& t) override    { (void)t; NopErr("const /="); }
+  void operator%=(cssEl& t) override    { (void)t; NopErr("const %="); }
+  void operator<<=(cssEl& t) override   { (void)t; NopErr("const <<="); }
+  void operator>>=(cssEl& t) override   { (void)t; NopErr("const >>="); }
+  void operator&=(cssEl& t) override    { (void)t; NopErr("const &="); }
+  void operator^=(cssEl& t) override    { (void)t; NopErr("const ^="); }
+  void operator|=(cssEl& t) override    { (void)t; NopErr("const |="); }
 };
 
 #define cssConstReal_inst(l,n,x) l .Push(new cssConstReal(n, #x))
@@ -583,18 +583,18 @@ public:
 
   cssCloneFuns(cssConstBool, false);
 
-  void operator=(Real cp) override              { NopErr("const ="); }
-  void operator=(Int cp) override               { NopErr("const ="); }
-  void operator=(const String& cp) override     { NopErr("const ="); }
+  void operator=(Real cp) override              { (void)cp; NopErr("const ="); }
+  void operator=(Int cp) override               { (void)cp; NopErr("const ="); }
+  void operator=(const String& cp) override     { (void)cp; NopErr("const ="); }
 
   using cssEl::operator=;
 
   // operators
-  void operator=(const cssEl& s) override { NopErr("const ="); }
+  void operator=(const cssEl& s) override { (void)s; NopErr("const ="); }
 
-  void operator&=(cssEl& t) override    { NopErr("const &="); }
-  void operator^=(cssEl& t) override    { NopErr("const ^="); }
-  void operator|=(cssEl& t) override    { NopErr("const |="); }
+  void operator&=(cssEl& t) override    { (void)t; NopErr("const &="); }
+  void operator^=(cssEl& t) override    { (void)t; NopErr("const ^="); }
+  void operator|=(cssEl& t) override    { (void)t; NopErr("const |="); }
 };
 
 class CSS_API cssVariant: public cssEl {
@@ -682,10 +682,10 @@ public:
   // these delegate to the string, base or variant
   cssEl* operator[](const Variant& idx) const override; // only valid for Matrixes, gets flat el
   bool   MembersDynamic() override      { return true; }
-  int    GetMemberNo(const String& memb) const override { return -1; } // don't do any advance lookup: always dynamic
+  int    GetMemberNo(const String& memb) const override { (void)memb; return -1; } // don't do any advance lookup: always dynamic
   cssEl* GetMemberFmNo(int memb) const override;
   cssEl* GetMemberFmName(const String& memb) const override;
-  int    GetMethodNo(const String& meth) const override { return -1; } // keep it dynamic
+  int    GetMethodNo(const String& meth) const override { (void)meth; return -1; } // keep it dynamic
   cssEl* GetMethodFmNo(int meth) const override;
   cssEl* GetMethodFmName(const String& meth) const override;
   cssEl* GetScoped(const String& nm) const override;
@@ -925,7 +925,7 @@ public:
   cssEl* operator*(cssEl&) override      { NopErr("*"); return &cssMisc::Void; }
   cssEl* operator*()       override      { NopErr("*"); return &cssMisc::Void; }
   cssEl* operator[](const Variant& idx) const override
-  { NopErr("[]"); return &cssMisc::Void; }
+  { (void)idx; NopErr("[]"); return &cssMisc::Void; }
   void operator+=(cssEl&)  override     { NopErr("+="); }
   void operator-=(cssEl&)  override     { NopErr("-="); }
   cssEl* operator< (cssEl&) override       { NopErr("<"); return &cssMisc::Void; }

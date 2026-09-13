@@ -10,7 +10,7 @@ const taVersion TemplatePlugin::version(
   PLUGIN_VERSION_PATCH,
   0);
 
-TemplatePlugin::TemplatePlugin(QObject*){}
+TemplatePlugin::TemplatePlugin(QObject* parent) : QObject(parent) {}
 
 int TemplatePlugin::InitializeTypes() {
   taMisc::Init_Types(); // loads all the type information for this plugin
@@ -39,8 +39,3 @@ const char* TemplatePlugin::uniqueId() {
 const char* TemplatePlugin::url() {
   return "@EMERGENT_PLUGIN_URL@";
 }
- 
-#if (QT_VERSION >= 0x050000)
-#else
-Q_EXPORT_PLUGIN2(template, TemplatePlugin)
-#endif

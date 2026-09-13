@@ -15,6 +15,6 @@
 
 #include "BrainAtlasFileComposer.h"
 
-BrainAtlasFileComposer::BrainAtlasFileComposer(const QString& filename) {}
+BrainAtlasFileComposer::BrainAtlasFileComposer(const QString& filename) { (void)filename;}
 BrainAtlasFileComposer::~BrainAtlasFileComposer() {}
 

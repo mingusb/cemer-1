@@ -1,16 +1,21 @@
 # emergent
 
-This is the C++ version of emergent.  Main documentation is here: https://grey.colorado.edu/emergent -- basic install and build information is on the [Github Wiki](https://github.com/emer/cemer/wiki)
+This fork modernizes the original C++ Emergent neural network simulator for
+Clang 24 nightly, Qt 6.12 Beta 4, and C++17. It retains the CSS (C Super Script)
+interpreter, reflected object system, and Coin/Quarter 3D interface.
 
-We are no longer developing this software.  We are now developing a new framework based on the `Go` language, with a `Python` interface: https://github.com/emer/emergent
+See [modern stack setup and verification](tools/toolchain/README.md) for the
+pinned SDK, build instructions, and test commands. C++ builds require
+`-Wall -Wextra -Werror -Woverloaded-virtual`, with no warning suppression flags.
 
-The current release built from github sources (source code only) is: https://github.com/emer/cemer/releases/tag/v8.6.1
+The original [emer/cemer](https://github.com/emer/cemer) history, authorship,
+and licenses are preserved. Its upstream team moved development to the
+[Go implementation](https://github.com/emer/emergent). Historical C++
+documentation is on the [upstream wiki](https://github.com/emer/cemer/wiki).
 
-The latest release with built packages is: https://github.com/emer/cemer/releases/tag/v8.5.2, released Feb, 2018.
-
-The main dependency files for current releases are found in: https://github.com/emer/cemer/releases/tag/v8.5.1
-
-This github repository was converted from the svn original, and has captured the full history of git tags (including historical dates!) in: https://github.com/emer/cemer/tags
+Historical releases include [8.6.1 sources](https://github.com/emer/cemer/releases/tag/v8.6.1),
+[8.5.2 packages](https://github.com/emer/cemer/releases/tag/v8.5.2), and
+[8.5.1 dependencies](https://github.com/emer/cemer/releases/tag/v8.5.1).
 
 # About
 

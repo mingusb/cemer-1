@@ -54,7 +54,7 @@ public:
   void          SetIndex(int val) override {task_id = val;}
   TA_BASEFUNS(taTask);
 private:
-  void  Copy_(const taTask& cp) {}
+  void  Copy_(const taTask& cp) { (void)cp; }
   void  Initialize();
   void  Destroy() {}
 };

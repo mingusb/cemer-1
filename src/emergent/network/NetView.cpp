@@ -744,7 +744,7 @@ void NetView::SigRecvUpdateAfterEdit_impl() {
   // UpdateDisplay();
 }
 
-void NetView::SigRecvUpdateAfterEdit_Child_impl(taDataView* chld) {
+void NetView::SigRecvUpdateAfterEdit_Child_impl(taDataView* chld) { (void)chld;
   // called when lays/specs are updated; typically just update spec view
   UpdatePanel();
 }
@@ -768,8 +768,8 @@ taBase::DumpQueryResult NetView::Dump_QuerySaveMember(MemberDef* md) {
   }
 }
 
-UnitView* NetView::FindUnitView(UnitState_cpp* unit) {
-  UnitView* uv = NULL;
+UnitView* NetView::FindUnitView(UnitState_cpp* unit) { (void)unit;
+
   // todo: we can't do this!?
   // taSigLink* dl = unit->sig_link();
   // if (!dl) return NULL;
@@ -899,7 +899,11 @@ void NetView::InitCtrHist(bool force) {
   }
   n_counters = net_state_text.state_items.size;
   
-  MatrixGeom nwgm(2, n_counters, hist_max);
+  // A newly created view can have no selected counters yet. Matrix dimensions
+  // before the final dimension must be positive; use a true empty vector until
+  // the counter selection has been initialized.
+  MatrixGeom nwgm = n_counters == 0 ? MatrixGeom(1, 0)
+                                  : MatrixGeom(2, n_counters, hist_max);
   bool init_idx = force;
   if(ctr_hist.geom != nwgm) {
     ctr_hist.SetGeomN(nwgm); // just set here -- likely to be same..
@@ -997,7 +1001,7 @@ void NetView::InitScaleRange(ScaleRange& sr) {
   sr.max =  1.0f;
 }
 
-void NetView::Layer_DataUAE(LayerView* lv) {
+void NetView::Layer_DataUAE(LayerView* lv) { (void)lv;
   // simplest solution is just to call DataUAE on all prns...
   for (int i = 0; i < prjns.size; ++i) {
     PrjnView* pv = (PrjnView*)prjns.FastEl(i);
@@ -1498,7 +1502,6 @@ void NetView::Render_wt_lines() {
   vtx_prop->materialBinding.setValue(SoMaterialBinding::PER_PART_INDEXED); // part = line segment = same as FACE but likely to be faster to compute line segs?
 
   // count the number of lines etc
-  int n_prjns = 0;
   int n_vtx = 0;
   int n_coord = 0;
   int n_mat = 0;
@@ -1513,7 +1516,6 @@ void NetView::Render_wt_lines() {
       if(!prjn || !prjn->MainIsActive()) continue;
       if(prjn->from->Iconified()) continue;
 
-      n_prjns++;
       int n_con = 0;
       for(int i=0;i< cg->size; i++) {
         float wt = cg->Cn(i,ConState_cpp::WT,nt->net_state);
@@ -1892,6 +1894,7 @@ void NetView::UpdateUnitValues() { // *actually* only does unit value updating
 }
 
 void NetView::SaveCtrHist() {
+  if(n_counters == 0) return;
   TypeDef* td = net()->GetTypeDef();
   
   // bump up the frame circ idx..
@@ -2004,18 +2007,18 @@ void NetView::GetUnitMonitorVar(const String& variable) {
 
 void NetView::MonitorUnit(Layer* layer, int unit, const String& var) {
   if (net() && layer && unit != -1 && var.nonempty()) {
-    NetMonItem* mon_item = net()->monitor.AddUnit(layer, unit, var);
+    net()->monitor.AddUnit(layer, unit, var);
   }
 }
 
-String NetView::GetArgForCompletion(const String& method, const String& arg) {
+String NetView::GetArgForCompletion(const String& method, const String& arg) { (void)arg;
   if (method == "GetUnitMonitorVar") {
     return "layer";
   }
   return "";
 }
 
-void NetView::GetArgCompletionList(const String& method, const String& arg, const String_Array& arg_values, taBase* arg_obj, const String& cur_txt, Completions& completions) {
+void NetView::GetArgCompletionList(const String& method, const String& arg, const String_Array& arg_values, taBase* arg_obj, const String& cur_txt, Completions& completions) { (void)arg; (void)arg_obj; (void)arg_values; (void)cur_txt;
   if (method == "GetUnitMonitorVar") {
     TypeDef* td = taMisc::FindTypeName("UnitState_cpp");
     if (!td) {

@@ -64,11 +64,11 @@ iViewPanelOfNetwork::iViewPanelOfNetwork(NetView* dv_)
   widg = new QWidget();
   layTopCtrls = new QVBoxLayout(widg); //layWidg->addLayout(layTopCtrls);
   layTopCtrls->setSpacing(2);
-  layTopCtrls->setMargin(2);
+  layTopCtrls->setContentsMargins(2, 2, 2, 2);
 
   layViewParams = new QVBoxLayout(); layTopCtrls->addLayout(layViewParams);
   layViewParams->setSpacing(2);
-  layViewParams->setMargin(0);
+  layViewParams->setContentsMargins(0, 0, 0, 0);
 
   ////////////////////////////////////////////////////////////////////////////
   layDispCheck = new QHBoxLayout();  layViewParams->addLayout(layDispCheck);
@@ -209,7 +209,7 @@ B_F: Back = sender, Front = receiver, all arrows in the middle of the layer");
   ////////////////////////////////////////////////////////////////////////////
   layDisplayValues = new QVBoxLayout();  layTopCtrls->addLayout(layDisplayValues); //gbDisplayValues);
   layDisplayValues->setSpacing(2);
-  layDisplayValues->setMargin(0);
+  layDisplayValues->setContentsMargins(0, 0, 0, 0);
 
   layColorScaleCtrls = new QHBoxLayout();  layDisplayValues->addLayout(layColorScaleCtrls);
 
@@ -572,7 +572,6 @@ void iViewPanelOfNetwork::UpdatePanel_impl() {
   fldMovieH->GetImage((String)nv->movie_size.y);
   
   // update var selection
-  int i = 0;
   QTreeWidgetItemIterator it(lvDisplayValues);
   QTreeWidgetItem* item = NULL;
   while (*it) {
@@ -581,7 +580,6 @@ void iViewPanelOfNetwork::UpdatePanel_impl() {
     item->setSelected(is_selected);
     // if list is size 1 make sure that there is a scale_range entry for this one
     ++it;
-    ++i;
   }
   
   // update state items
@@ -854,7 +852,7 @@ void iViewPanelOfNetwork::GetNetVars() {
 }
 
 void iViewPanelOfNetwork::InitPanel() {
-  if (NetView *nv = getNetView()) {
+  if (getNetView()) {
     ++updating;
     // fill monitor values
     GetUnitVars();

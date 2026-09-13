@@ -288,7 +288,7 @@ public:
   void                  transformCaption(const SbRotation& rotate, const iVec3f& translate); // #IGNORE
   void                  resizeCaption(float sz);
   virtual bool          expanded() {return true;} // many nodes have an expanded and compact rep
-  virtual void          setExpanded(bool value) {}
+  virtual void          setExpanded(bool value) { (void)value;}
 
   virtual void          addRemoveChildNode(SoNode* node, bool adding); // #IGNORE called by pdpDataView (default prints console error)
 

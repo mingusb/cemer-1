@@ -255,7 +255,7 @@ void iTextEdit::keyPressEvent(QKeyEvent* key_event) {
 void iTextEdit::contextMenuEvent(QContextMenuEvent *event) {
   QMenu* menu = createStandardContextMenu();
   menu->addSeparator();
-  menu->addAction("&Find..", this, SLOT(findPrompt()), QKeySequence("Ctrl+S"));
+  menu->addAction("&Find..", QKeySequence("Ctrl+S"), this, SLOT(findPrompt()));
   taMisc::in_eventproc++;       // this is an event proc!
   menu->exec(event->globalPos());
   taMisc::in_eventproc--;
@@ -319,7 +319,6 @@ void iTextEdit::DoCompletion(bool extend) {
 }
 
 void iTextEdit::CompletionDone() {
-  QModelIndex index = GetCompleter()->currentIndex();
   emit completed(GetCompleter()->currentIndex());
 }
 
@@ -350,7 +349,6 @@ void iTextEdit::InsertCompletion(const QString& new_text)
 bool iTextEdit::eventFilter(QObject* obj, QEvent* event) {
   if (event->type() == QEvent::ShortcutOverride && GetCompleter()) {
     QKeyEvent* key_event = static_cast<QKeyEvent*>(event);
-    QCoreApplication* app = QCoreApplication::instance();
     
     if (taiMisc::KeyEventCtrlPressed(key_event)) {
       switch (static_cast<QKeyEvent*>(event)->key()) {

@@ -90,7 +90,7 @@
   }
   // compute activation from netinput
 
-  INLINE float ActDeriv(float netin, float act, int thr_no) {
+  INLINE float ActDeriv(float netin, float act, int thr_no) { (void)thr_no;
     switch(act_fun) {
     case SIGMOID:
       return SigmoidDeriv(act);
@@ -155,7 +155,7 @@
     }
   }
   
-  INLINE void Compute_Act(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override {
+  INLINE void Compute_Act(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { (void)net;
     if(noise_type == NETIN_NOISE) {
       u->net += noise.Gen(thr_no);
     }
@@ -200,7 +200,7 @@
   }
 
 
-  INLINE virtual void   Compute_Error(BP_UNIT_STATE* u, BP_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void   Compute_Error(BP_UNIT_STATE* u, BP_NETWORK_STATE* net, int thr_no) { (void)thr_no;
     if(!u->HasExtFlag(UNIT_STATE::TARG)) return;
     if(u->HasExtFlag(UNIT_STATE::UN_FLAG_1)) return; // dropout flag
 

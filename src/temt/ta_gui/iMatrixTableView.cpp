@@ -63,7 +63,7 @@ void iMatrixTableView::EditAction(int ea) {
   }
 }
 
-void iMatrixTableView::ViewAction(int ea) {
+void iMatrixTableView::ViewAction(int ea) { (void)ea;
   taMatrix* mat = this->mat(); // may not have a model/mat!
   if (!mat) return;
   CellRange sel;
@@ -79,7 +79,7 @@ void iMatrixTableView::ViewAction(int ea) {
   taMisc::Confirm("contents of cell(s):\n", str);
 }
 
-void iMatrixTableView::ResetColorScaleAction(int ea) {
+void iMatrixTableView::ResetColorScaleAction(int ea) { (void)ea;
   taMatrix* mat = this->mat(); // may not have a model/mat!
   if (!mat) return;
   iMatrixTableModel* mod = qobject_cast<iMatrixTableModel*>(model());
@@ -158,18 +158,17 @@ void iMatrixTableView::hor_customContextMenuRequested(const QPoint& pos) {
 }
 
 void iMatrixTableView::FillContextMenu_impl(ContextArea ca, taiWidgetMenu* menu, const CellRange& sel)
-{
+{ (void)sel;
   // inherited::FillContextMenu_impl(ca, menu, sel);  // would be okay if we want some other generic items
   
-  iAction* act = NULL;  
   
   // generic col guys
   if (ca == CA_COL_HDR) {
-    act = menu->AddItem("Set Fixed Column Width...", taiWidgetMenu::normal,
+    menu->AddItem("Set Fixed Column Width...", taiWidgetMenu::normal,
                         iAction::int_act,
                         this, SLOT(RowColOp(int)), (OP_COL | OP_SET_WIDTH) );
   }
-  act = menu->AddItem("&Reset Colors", taiWidgetMenu::normal,
+  menu->AddItem("&Reset Colors", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(ResetColorScaleAction(int)), 1);
   
 }

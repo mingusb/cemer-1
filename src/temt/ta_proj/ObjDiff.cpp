@@ -495,20 +495,20 @@ int ObjDiff::DiffMatrix(ObjDiffRec* par_rec, taMatrix* a_mat, taMatrix* b_mat) {
     
     if(df.delete_a == df.insert_b) {
       for(int l=0; l<df.delete_a; l++) {
-        ObjDiffRec* rec = NewMatrixDiff(par_rec, ObjDiffRec::A_B_DIFF, a_mat, df.start_a+l,
+        NewMatrixDiff(par_rec, ObjDiffRec::A_B_DIFF, a_mat, df.start_a+l,
                                         b_mat, df.start_b+l);
       }
     }
     else {
       if(df.delete_a > 0) {     // a records exist, b do not..
         for(int l=0; l<df.delete_a; l++) {
-          ObjDiffRec* rec = NewMatrixDiff(par_rec, ObjDiffRec::A_NOT_B, a_mat, df.start_a + l,
+          NewMatrixDiff(par_rec, ObjDiffRec::A_NOT_B, a_mat, df.start_a + l,
                                         b_mat, df.start_b);
         }
       }
       if(df.insert_b > 0) {     // b records exist, a do not..
         for(int l=0; l<df.insert_b; l++) {
-          ObjDiffRec* rec = NewMatrixDiff(par_rec, ObjDiffRec::B_NOT_A, a_mat, df.start_a,
+          NewMatrixDiff(par_rec, ObjDiffRec::B_NOT_A, a_mat, df.start_a,
                                           b_mat, df.start_b + l);
         }
       }
@@ -601,20 +601,20 @@ int ObjDiff::DiffArray(ObjDiffRec* par_rec, taArray_base* a_mat, taArray_base* b
     
     if(df.delete_a == df.insert_b) {
       for(int l=0; l<df.delete_a; l++) {
-        ObjDiffRec* rec = NewArrayDiff(par_rec, ObjDiffRec::A_B_DIFF, a_mat, df.start_a+l,
+        NewArrayDiff(par_rec, ObjDiffRec::A_B_DIFF, a_mat, df.start_a+l,
                                         b_mat, df.start_b+l);
       }
     }
     else {
       if(df.delete_a > 0) {     // a records exist, b do not..
         for(int l=0; l<df.delete_a; l++) {
-          ObjDiffRec* rec = NewArrayDiff(par_rec, ObjDiffRec::A_NOT_B, a_mat, df.start_a + l,
+          NewArrayDiff(par_rec, ObjDiffRec::A_NOT_B, a_mat, df.start_a + l,
                                         b_mat, df.start_b);
         }
       }
       if(df.insert_b > 0) {     // b records exist, a do not..
         for(int l=0; l<df.insert_b; l++) {
-          ObjDiffRec* rec = NewArrayDiff(par_rec, ObjDiffRec::B_NOT_A, a_mat, df.start_a,
+          NewArrayDiff(par_rec, ObjDiffRec::B_NOT_A, a_mat, df.start_a,
                                           b_mat, df.start_b + l);
         }
       }

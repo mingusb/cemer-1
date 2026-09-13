@@ -48,7 +48,7 @@ ClusterManager_UpdtThr::ClusterManager_UpdtThr ( ClusterManager * cm, ClusterRun
   String_Array users;
   users.Split(m_cm->m_cluster_run.users, " ");
 
-  int noRepos = clusts.size * users.size;
+
   credentialsAvailable.clear();
 
   QObject::connect(this, SIGNAL(UpdatedSVN()), qt_object_helper,
@@ -73,7 +73,7 @@ void ClusterManager_UpdtThr::EnsureSVNCredentialsAvailable() {
   users.Split(m_cm->m_cluster_run.users, " ");
   String clust_nm = m_cm->GetClusterName();
   String username = m_cm->GetUsername();
-  int i = 0;
+
   for(int cl = 0; cl < clusts.size; cl++) {
     String clust = clusts[cl];
     for(int us = 0; us < users.size; us++) {
@@ -142,7 +142,7 @@ ClusterManager_UpdtThr::UpdateWorkingCopy() {
       else {
         try{
           m_svn_other->SetWorkingCopyPath(wcp);
-          int rev = UpdateWorkingCopy_impl(m_svn_other, wcp, user, clust, projname,
+          UpdateWorkingCopy_impl(m_svn_other, wcp, user, clust, projname,
                                            main_svn);
         } catch (const SubversionClient::Exception &ex) {
           if (ex.GetSvnErrorCode() == 155004) { //SVN repository is locked, need to cleanup first

@@ -131,7 +131,7 @@ QMap_qstr_qvar iTreeView::colDataKeys(int col) const {
   QMap_qstr_qvar map;
   if ((col >= 0) || (col < columnCount())) {
     QVariant vmap = headerItem()->data(col, ColDataRole);
-    if (vmap.canConvert(QVariant::Map)) {
+    if (vmap.canConvert<QVariantMap>()) {
       map = vmap.toMap();
     }
   }
@@ -144,7 +144,7 @@ void iTreeView::AddColDataKey(int col, const KeyString& key, int role) {
   QMap_qstr_qvar map;
   // fetch existing map, if any
   QVariant vmap = headerItem()->data(col, ColDataRole);
-  if (vmap.canConvert(QVariant::Map)) {
+  if (vmap.canConvert<QVariantMap>()) {
     map = vmap.toMap();
   }
   // note: ok to call multiple times; only sets once
@@ -152,12 +152,12 @@ void iTreeView::AddColDataKey(int col, const KeyString& key, int role) {
   headerItem()->setData(col, ColDataRole, map);
 }
 
-bool iTreeView::RemoveColDataKey(int col, const KeyString& key, int role) {
+bool iTreeView::RemoveColDataKey(int col, const KeyString& key, int role) { (void)key;
   if ((col < 0) || (col >= columnCount())) return false;
   // fetch existing map, if any
   QVariant vmap = headerItem()->data(col, ColDataRole);
   // if no map at all, then the key itself is definitely not set
-  if (!vmap.canConvert(QVariant::Map)) return false;
+  if (!vmap.canConvert<QVariantMap>()) return false;
 
   QMap_qstr_qvar map(vmap.toMap());
   bool rval = (map.remove(QString::number(role)) > 0);
@@ -170,7 +170,7 @@ void iTreeView::ClearColDataKeys(int col) {
   if ((col < 0) || (col >= columnCount())) return;
   // fetch existing map, if any
   QVariant vmap = headerItem()->data(col, ColDataRole);
-  if (!vmap.canConvert(QVariant::Map)) return;
+  if (!vmap.canConvert<QVariantMap>()) return;
 
   headerItem()->setData(col, ColDataRole, QVariant());
 }
@@ -212,7 +212,6 @@ iTreeViewItem* iTreeView::AssertItem(taiSigLink* link, bool super) {
   // then try making sure owner's children asserted
   if (own_el) { // && own_el->lazyChildren()) {
     own_el->CreateChildren();
-    TypeDef* td = link->taData()->GetTypeDef();
 //    if (!td->HasOption("NO_EXPAND_ON_PANEL_VIEW")) {
     if (!link->taData()->InheritsFrom(&TA_taDataView)) {
       own_el->setExpanded(true);
@@ -393,7 +392,7 @@ const KeyString iTreeView::colKey(int col) const {
 
 void iTreeView::CollapseItem_impl(iTreeViewItem* item) {
   if(!item) return;
-  if (isItemExpanded(item)) {
+  if (item->isExpanded()) {
     item->setExpanded(false);
   }
 }
@@ -429,7 +428,7 @@ void iTreeView::ExpandDefault_impl() {
 void iTreeView::ExpandDefaultUnder(iTreeViewItem* item) {
   if (!item) return;
   // taMisc::Busy(true);
-  if (!isItemExpanded(item)) {
+  if (!item->isExpanded()) {
     item->setExpanded(true);  // should trigger CreateChildren for lazy
   }
   // and expand item's children -- lazy children should be created by now
@@ -450,7 +449,7 @@ void iTreeView::ExpandDefaultUnderInt(void* item) {
 
 void iTreeView::ExpandDefaultItem_impl(iTreeViewItem* item) {
   if (!item) return;
-  if(isItemHidden(item)) {
+  if(item->isHidden()) {
     CollapseItem_impl(item);
     return;
   }
@@ -522,7 +521,7 @@ void iTreeView::ExpandDefaultItem_impl(iTreeViewItem* item) {
   
   if (expand) {
     // first expand the guy...
-    if (!isItemExpanded(item)) { // ok, eligible...
+    if (!item->isExpanded()) { // ok, eligible...
       item->setExpanded(true);  // should trigger CreateChildren for lazy
     }
     // and expand item's children -- lazy children should be created by now
@@ -559,7 +558,7 @@ void iTreeView::ExpandAll_impl() {
 void iTreeView::ExpandAllUnder(iTreeViewItem* item) {
   if (!item) return;
   // taMisc::Busy(true);
-  if (!isItemExpanded(item)) { // ok, eligible...
+  if (!item->isExpanded()) { // ok, eligible...
     item->setExpanded(true);  // should trigger CreateChildren for lazy
   }
   // and expand item's children -- lazy children should be created by now
@@ -579,7 +578,7 @@ void iTreeView::ExpandAllUnderInt(void* item) {
 
 void iTreeView::ExpandAllItem_impl(iTreeViewItem* item) {
   if (!item) return;
-  if(isItemHidden(item)) {
+  if(item->isHidden()) {
     CollapseItem_impl(item);
     return;
   }
@@ -597,7 +596,7 @@ void iTreeView::ExpandAllItem_impl(iTreeViewItem* item) {
     return;
   }
   
-  if (!isItemExpanded(item)) { // ok, eligible...
+  if (!item->isExpanded()) { // ok, eligible...
     item->setExpanded(true);  // should trigger CreateChildren for lazy
   }
   for (int i = 0; i < item->childCount(); ++i) {
@@ -675,7 +674,6 @@ void iTreeView::RestoreTreeState(String_Array& tree_state) {
   }
   // we only restore the entire tree - so start with the root item
   iTreeViewItem* node = dynamic_cast<iTreeViewItem*>(topLevelItem(0));
-  int counter = 0;
   RestoreTreeState_impl(node, tree_state);
 }
 
@@ -770,7 +768,7 @@ void iTreeView::SelectNextLogicalItem(iTreeViewItem* item) {
   }
 }
 
-QMimeData* iTreeView::mimeData(const QList<QTreeWidgetItem*> items) const {
+QMimeData* iTreeView::mimeData(const QList<QTreeWidgetItem*>& items) const {
   //NOTE: in Qt4, we no longer know if we are starting a drag operation
   if (items.count() == 0) return NULL; // according to Qt spec
   else if (items.count() == 1) {
@@ -1135,8 +1133,7 @@ void iTreeView::Highlighted(const QModelIndex& index) {
   }
 }
 
-void iTreeView::Completed(const QModelIndex& index) {
-  iCodeCompleter* completer = line_edit->GetCompleter();
+void iTreeView::Completed(const QModelIndex& index) { (void)index;
   iTreeWidgetItem* item = dynamic_cast<iTreeWidgetItem*>(currentItem());
   if(item) {
 //    String full_expr = item->PostCompletionEdit(completer);  // don't call appending in iCodeCompleterModel
@@ -1162,7 +1159,7 @@ void iTreeView::Refresh_impl() {
     iTreeViewItem* item = dynamic_cast<iTreeViewItem*>(item_);
     if (item) {
       bool hide_it = !ShowNode(item);
-      bool is_hid = isItemHidden(item);
+      bool is_hid = item->isHidden();
       if (hide_it != is_hid) {
         item->setHidden(hide_it);
       }
@@ -1187,7 +1184,7 @@ void iTreeView::Show_impl() {
     iTreeViewItem* item = dynamic_cast<iTreeViewItem*>(item_);
     if (item) {
       bool hide_it = !ShowNode(item);
-      bool is_hid = isItemHidden(item);
+      bool is_hid = item->isHidden();
       if (hide_it != is_hid) {
         item->setHidden(hide_it);
         // if we are making shown a hidden item, we also refresh it for safety
@@ -1254,7 +1251,7 @@ void iTreeView::FillContextMenu_pre(ISelectable_PtrList& sel_items, taiWidgetAct
 }
 
 void iTreeView::this_contextMenuRequested(QTreeWidgetItem* item, const QPoint & pos,
-                                          int col ) {
+                                          int col ) { (void)col; (void)item;
   taiWidgetMenu* menu = new taiWidgetMenu(this, taiWidgetMenu::normal, taiMisc::fonSmall);
   // note: we must force the sel_item to be the item, otherwise we frequently
   // are refering to the wrong item (not what user right clicked on)
@@ -1288,7 +1285,7 @@ void iTreeView::FillContextMenu_post(ISelectable_PtrList& sel_items, taiWidgetAc
 
 //NOTE: this is a widget-level guy that just forwards to our signal --
 // it presumably is ALSO emitted in addition to itemSelectionChanged
-void iTreeView::this_currentItemChanged(QTreeWidgetItem* curr, QTreeWidgetItem* prev) {
+void iTreeView::this_currentItemChanged(QTreeWidgetItem* curr, QTreeWidgetItem* prev) { (void)prev;
   iTreeViewItem* it = dynamic_cast<iTreeViewItem*>(curr); //note: we want null if curr is not itvi
   //NOTE: the default QAbstractItemView guy doesn't seem to handle the statustip
   // very well == it barely gets activated, only if you click an item then drag a bit --
@@ -1328,7 +1325,7 @@ void iTreeView::UpdateSelectedItems_impl() {
       if (lst_idx >= 0) {
         sel_items.RemoveIdx(lst_idx);
       }
-      else setItemSelected(item, false); // hope this is ok while iterating!!!!
+      else item->setSelected(false); // hope this is ok while iterating!!!!
     }
     ++it;
   }
@@ -1337,7 +1334,7 @@ void iTreeView::UpdateSelectedItems_impl() {
     ISelectable* si = sel_items.FastEl(lst_idx);
     if (si->GetTypeDef()->InheritsFrom(TA_iTreeViewItem)) { // should
       if (QTreeWidgetItem *item = (iTreeViewItem*) (si->This())) {
-        setItemSelected(item, true);
+        item->setSelected(true);
       }
     }
   }
@@ -1364,8 +1361,7 @@ void iTreeView::dragMoveEvent(QDragMoveEvent* ev) {
 #if (QT_VERSION >= 0x040700)
   iTreeWidgetItem* foo;
   if (taMisc::tree_spring_loaded.enabled) {
-    int item_idx = -1;
-    QModelIndex index = indexAt(ev->pos());
+    QModelIndex index = indexAt(ev->position().toPoint());
     iTreeWidgetItem* item = dynamic_cast<iTreeWidgetItem*>(itemFromIndex(index));
     if (item) {
       if (item != possibleDropTargetItem) { // if true we are over a different item

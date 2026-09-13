@@ -121,13 +121,13 @@ String Else::GetDisplayName() const {
   return "else";
 }
 
-bool Else::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const {
+bool Else::CanCvtFmCode(const String& code_str, ProgEl* scope_el) const { (void)scope_el;
   String code = code_str; code.downcase();
   if(code.startsWith("else") && !code.contains("if")) return true;
   return false;
 }
 
-bool Else::CvtFmCode(const String& code) {
+bool Else::CvtFmCode(const String& code) { (void)code;
   return true;
 }
 

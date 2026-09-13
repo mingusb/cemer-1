@@ -24,8 +24,8 @@
 
 taiEditorOfTypeItem::taiEditorOfTypeItem(TypeItem* ti_, TypeItem::TypeInfoKinds tik_, 
   bool read_only_, bool modal_, QObject* parent)
-:inherited(NULL, NULL, read_only, modal_, parent)
-{
+:inherited(NULL, NULL, read_only_, modal_, parent)
+{ (void)read_only_;
   ti = ti_;
   tik = tik_;
 }
@@ -175,4 +175,3 @@ void taiEditorOfTypeItem::Constr_Widget_Labels() {
   default: break; // compiler food
   }
 }
-

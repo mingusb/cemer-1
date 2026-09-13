@@ -35,7 +35,7 @@ int taiMemberOfProgVarIntVal::BidForMember(MemberDef* md, TypeDef* td){
 }
 
 taiWidget* taiMemberOfProgVarIntVal::GetWidgetRep_impl(IWidgetHost* host_, taiWidget* par,
-  QWidget* gui_parent_, int flags_, MemberDef* mbr_) {
+  QWidget* gui_parent_, int flags_, MemberDef* mbr_) { (void)mbr_;
   taiWidgetDeck* rval = new taiWidgetDeck(NULL, host_, par, gui_parent_, flags_);
   rval->InitLayout();
   gui_parent_ = rval->GetRep();
@@ -94,7 +94,6 @@ void taiMemberOfProgVarIntVal::GetMbrValue_impl(taiWidget* dat, void* base) {
       bit_rep->GetValue(val);
     }
     else {
-      int itm_no = -1;
       taiWidgetComboBox* enum_rep = dynamic_cast<taiWidgetComboBox*>(rval->widget_el.SafeEl(1));
       if (!enum_rep) return; // shouldn't happen
       enum_rep->GetEnumValue(val);

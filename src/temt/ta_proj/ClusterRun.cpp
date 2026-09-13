@@ -35,7 +35,8 @@
 #include <taMisc>
 #include <taiMisc>
 
-#include <QRegExp>
+#include <QRegularExpression>
+#include <QTimeZone>
 #include <QDir>
 #include <QApplication>
 
@@ -202,7 +203,7 @@ void ClusterRun::Run_impl(bool prompt_user, bool autoupdate, bool block_till_sub
     String wc_proj = m_cm->GetWcProjFilename();
     String wc_submit = m_cm->GetWcSubmitFilename();
     if (!wc_proj.empty() && !wc_submit.empty()) {
-      int model_rev = m_cm->GetLastChangedRevision(wc_proj);
+      m_cm->GetLastChangedRevision(wc_proj);
       int submit_rev = m_cm->GetLastChangedRevision(wc_submit);
 
       // Put those revisions into the datatable just committed.
@@ -275,7 +276,7 @@ bool ClusterRun::Update_impl(bool do_svn_update) {
   bool has_updates = m_cm->UpdateTables(do_svn_update);
   cur_svn_rev = m_cm->GetCurSvnRev();
   QDateTime clusterrun_backend_script_timestamp = QDateTime::fromString(clusterscript_timestamp.GetDataByName("timestamp").toQString(), Qt::ISODate);
-  clusterrun_backend_script_timestamp.setTimeSpec(Qt::UTC);
+  clusterrun_backend_script_timestamp.setTimeZone(QTimeZone::utc());
   last_backend_checkin = clusterrun_backend_script_timestamp.toLocalTime().toString();
   CheckBackendRunning();
   SortClusterInfoTable();
@@ -692,7 +693,7 @@ void ClusterRun::CheckBackendRunning() {
   QDateTime clusterrun_backend_script_timestamp =
     QDateTime::fromString(clusterscript_timestamp.GetDataByName("timestamp").toQString(),
                           Qt::ISODate);
-  clusterrun_backend_script_timestamp.setTimeSpec(Qt::UTC);
+  clusterrun_backend_script_timestamp.setTimeZone(QTimeZone::utc());
   if (clusterrun_backend_script_timestamp.secsTo(QDateTime().currentDateTime()) >
       60*60) {
     taMisc::Confirm("The last update from the cluster (", cluster, ") was at ", last_backend_checkin, " which is more than an hour ago. Please check that your script is actually running on the cluster");
@@ -734,7 +735,7 @@ void ClusterRun::ComputeStats() {
   stat_data->ResetData();
 
   DataCol* dc;
-  int idx;
+
   dc = stat_data->FindMakeCol("cluster", VT_STRING);
   dc->desc = "name of cluster to run job on";
   dc = stat_data->FindMakeCol("tag", VT_STRING);
@@ -944,7 +945,7 @@ void ClusterRun::GetFileInfo(const String& path, DataTable& table, int row, Stri
 
   QFileInfo fli(flpath);
   
-  QDateTime dc = fli.created();
+  QDateTime dc = fli.birthTime();
   QDateTime dm = fli.lastModified();
   int64_t sz = fli.size();
 
@@ -1201,7 +1202,7 @@ void ClusterRun::ListOtherSvn(int rev, bool recurse) {
     file_list.SetVal(file_paths[i], "file_path",  row);
     String szstr = taMisc::GetSizeString(file_sizes[i], 3, true); // 3 prec, power of 2
     file_list.SetVal(szstr, "size",  row);
-    QDateTime dm = QDateTime::fromTime_t(file_times[i]);
+    QDateTime dm = QDateTime::fromSecsSinceEpoch(file_times[i]);
     String dmstr = dm.toString(timestamp_fmt);
     file_list.SetVal(dmstr, "date_modified",  row);
     file_list.SetVal(String("svn_other:") + file_authors[i], "tag", row);
@@ -2060,8 +2061,7 @@ String ClusterRun::ReplaceVars(const String& str) {
 
 void
 ClusterRun::AddJobRow_impl(const String& cmd, const String& params, int cmd_id) {
-  int csi = taMisc::clusters.FindName(cluster);
-  ClusterSpecs& cs = taMisc::clusters[csi];
+
 
   notes = notes.repl("\n", " "); // no Returns
   notes.trim();
@@ -2121,7 +2121,7 @@ ClusterRun::AddJobRow(const String& cmd, const String& params, int& cmd_id) {
     taMisc::Error("Can't find cluster named:", cluster); // shouldn't happen
     return;
   }
-  ClusterSpecs& cs = taMisc::clusters[csi];
+
 
   if(parallel_batch && pb_batches > 0) {
     // we stream off the jobs ourselves
@@ -2323,7 +2323,7 @@ int
 ClusterRun::CountJobs(const DataTable &table, const String &status_regexp)
 {
   int count = 0;
-  QRegExp re(status_regexp.toQString());
+  QRegularExpression re(status_regexp.toQString());
   for (int row = 0; row < table.rows; ++row) {
     QString status = table.GetValAsString("status", row).toQString();
     if (status.contains(re)) ++count;
@@ -2578,7 +2578,6 @@ void ClusterRun::FillInElapsedTime(DataTable* table) {
           start_time.fromString(start_time_str, timestamp_fmt);
           taDateTime cur_time;
           cur_time.currentDateTime();
-          uint cur_secs = cur_time.toTime_t();
           int secs = start_time.secsTo(cur_time);
           running_time_col->SetVal(taDateTime::SecondsToDHM(secs), i);
         }

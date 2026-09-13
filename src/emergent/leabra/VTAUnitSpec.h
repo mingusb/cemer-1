@@ -36,7 +36,7 @@
   // get the recv layers to VTAn (DA_N case)
 
   INLINE void   Compute_NetinInteg(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net,
-                                   int thr_no) override { };
+                                   int thr_no) override { (void)net; (void)thr_no; (void)u; };
   INIMPL void   Compute_Act_Rate(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net,
                                  int thr_no) override;
   INLINE void   Compute_Act_Spike(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net,
@@ -50,8 +50,8 @@
     Send_Da(u, net, thr_no);      // note: can only send modulators during post!!
   }
 
-  INLINE void   Compute_dWt(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { };
-  INLINE void   Compute_Weights(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { };
+  INLINE void   Compute_dWt(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no; (void)u; };
+  INLINE void   Compute_Weights(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no; (void)u; };
 
   INLINE void Initialize_core() {
     da_val = DA_P;    deep_raw_qtr = Q4;

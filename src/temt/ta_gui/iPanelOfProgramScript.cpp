@@ -63,7 +63,7 @@ bool iPanelOfProgramScript::ignoreSigEmit() const {
 //  return !isVisible();
 }
 
-void iPanelOfProgramScript::SigEmit_impl(int sls, void* op1_, void* op2_) {
+void iPanelOfProgramScript::SigEmit_impl(int sls, void* op1_, void* op2_) { (void)op1_; (void)op2_; (void)sls;
   if(vs && vs->isVisible())
     UpdatePanel_impl();
 //   if (sls <= SLS_ITEM_UPDATED_ND) {
@@ -145,7 +145,7 @@ void iPanelOfProgramScript::mouseHover(const QPoint &pos, int lineno, const QStr
     QToolTip::showText(pos, rval);
 }
 
-void iPanelOfProgramScript::ResolveChanges_impl(CancelOp& cancel_op) {
+void iPanelOfProgramScript::ResolveChanges_impl(CancelOp& cancel_op) { (void)cancel_op;
 }
 
 void iPanelOfProgramScript::showEvent(QShowEvent* ev) {

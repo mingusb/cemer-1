@@ -236,7 +236,7 @@ bool WtBasedRF::ComputeHigherLayerRF(Network* net, DataTable* dt_trg, DataTable*
 //  QElapsedTimer timer;
 //  timer.start();
   
-  int units_per_group = trg_layer->un_geom.x * trg_layer->un_geom.y;
+
 
   // for every unit in the target layer
   // (each row in table is a matrix of weights for the connections to a unit in target layer)

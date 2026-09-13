@@ -118,7 +118,7 @@ void taiViewTypeOftaOBase::CreateDataPanel_impl(taiSigLink* dl_)
   }
 }
 
-taiSigLink* taiViewTypeOftaOBase::GetSigLink(void* data_, TypeDef* el_typ) {
+taiSigLink* taiViewTypeOftaOBase::GetSigLink(void* data_, TypeDef* el_typ) { (void)el_typ;
   taOBase* data = (taOBase*)data_;
   taSigLink* dl = *(data->addr_sig_link());
   if (dl) return (taiSigLink*)dl;

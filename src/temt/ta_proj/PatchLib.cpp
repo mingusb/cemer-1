@@ -56,16 +56,15 @@ bool PatchLib::UpdatePatch(Patch* pat, ObjLibEl* lib_el) {
   return true;
 }
 
-void PatchLib::SetWikiInfoToObj(taBase* obj, const String& wiki_name) {
-  Patch* pat = (Patch*)obj;
+void PatchLib::SetWikiInfoToObj(taBase* /*obj*/, const String& wiki_name) { (void)wiki_name;
   // pat->doc.wiki = wiki_name;
   // pat->doc.url = pat->name;
 }
 
 void PatchLib::GetWikiInfoFromObj
 (taBase* obj, String*& tags, String*& desc, taProjVersion*& version, String*& author,
- String*& email, String*& pub_cite) {
-  Patch* pat = (Patch*)obj;
+ String*& email, String*& pub_cite) { (void)pub_cite; (void)version;
+  Patch* pat = static_cast<Patch*>(obj);
   tags = &pat->tags;
   desc = &pat->desc;
   //  version = &pat->version;

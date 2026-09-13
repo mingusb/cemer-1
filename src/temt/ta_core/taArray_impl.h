@@ -36,7 +36,7 @@ public:
   taArray_impl()                        { alloc_size = 0; size = 0; }
   virtual ~taArray_impl()               { alloc_size = 0; size = 0; }
 
-  virtual void          SigEmit(int sls, void* op1 = NULL, void* op2 = NULL) {}
+  virtual void          SigEmit(int sls, void* op1 = NULL, void* op2 = NULL) { (void)op1; (void)op2; (void)sls; }
   // #IGNORE only called when size changes
   inline int            Index(int idx) const { if(idx < 0) idx += size; return idx; }
   // #EXPERT #CAT_Access get actual index from index value that can also be negative, meaning access from end of array
@@ -137,9 +137,9 @@ protected:
   bool                  AddUniqueOnly_(const void* it); // don't notify
   void                  RemoveIdxOnly(int i); //  don't notify, no checks
   virtual void          Reset_impl() {SetSize(0);} // don't notify
-  virtual void*         MakeArray_(int i) const { return NULL; } // #IGNORE make a new array of item type
-  virtual void          SetArray_(void* nw) {}
-  virtual void          ReclaimOrphans_(int start, int end) {}// #IGNORE called when array is shortened, leaving orphaned values; note 'size' may already be trimmed: NOT called when el[] is replaced
+  virtual void*         MakeArray_(int i) const { (void)i;  return NULL; } // #IGNORE make a new array of item type
+  virtual void          SetArray_(void* nw) { (void)nw; }
+  virtual void          ReclaimOrphans_(int start, int end) { (void)end; (void)start; }// #IGNORE called when array is shortened, leaving orphaned values; note 'size' may already be trimmed: NOT called when el[] is replaced
   void                  Copy_(const taArray_impl& cp);
   // replace our array with the source items -- note: added in 4.0 for new uses, ex. in Matrix_Array
 };

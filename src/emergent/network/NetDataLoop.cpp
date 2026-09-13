@@ -30,7 +30,7 @@ void NetDataLoop::Initialize() {
   group_order = PERMUTED;
 }
 
-void NetDataLoop::DMem_Initialize(Network* net) {
+void NetDataLoop::DMem_Initialize(Network* net) { (void)net;
 #ifdef DMEM_COMPILE
   dmem_nprocs = net->dmem_trl_comm.nprocs;
   dmem_this_proc = net->dmem_trl_comm.this_proc;
@@ -294,7 +294,7 @@ String NetDataLoop::GetDisplayName() const {
     }
 }
 
-bool NetDataLoop::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool NetDataLoop::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if (CvtFmCodeCheckNames(code))
     return true;
   

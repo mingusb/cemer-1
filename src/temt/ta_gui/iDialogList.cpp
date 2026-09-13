@@ -53,7 +53,7 @@ void iDialogList::init() {
 
 void iDialogList::Constr() {
   layOuter = new QVBoxLayout(this);
-  layOuter->setMargin(taiM->vsep_c);
+  layOuter->setContentsMargins(taiM->vsep_c, taiM->vsep_c, taiM->vsep_c, taiM->vsep_c);
   layOuter->setSpacing(taiM->vspc_c);
    
   results = new iTextBrowser(this);
@@ -108,7 +108,7 @@ void iDialogList::SetList(taBase_PtrList& base_list, String title,
 }
 
 void iDialogList::results_setSourceRequest(iTextBrowser* itb_src, const QUrl& url, bool& cancel)
-{
+{ (void)itb_src;
   QDesktopServices::openUrl(url);
   cancel = true;
   //NOTE: we never let results call its own setSource because we don't want

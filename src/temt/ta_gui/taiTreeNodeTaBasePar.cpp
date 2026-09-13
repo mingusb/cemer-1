@@ -36,7 +36,7 @@ taiTreeNodeTaBasePar::taiTreeNodeTaBasePar(taSigLinkTaOBase* link_, MemberDef* m
   init(link_, dn_flags_);
 }
 
-void taiTreeNodeTaBasePar::init(taSigLinkTaOBase* link_, int dn_flags_) {
+void taiTreeNodeTaBasePar::init(taSigLinkTaOBase* link_, int dn_flags_) { (void)dn_flags_; (void)link_;
   save_exp_state = false;
   last_list_items_node = NULL;
 }

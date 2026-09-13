@@ -785,7 +785,7 @@ public:
   // these use the TA info to perform actions
   cssEl* operator[](const Variant& idx) const override;
   bool   MembersDynamic() override      { return true; }
-  int    GetMemberNo(const String& memb) const override { return -1; } // never do static lookup!
+  int    GetMemberNo(const String& memb) const override { (void)memb; return -1; } // never do static lookup!
   cssEl* GetMemberFmNo(int memb) const override;
   cssEl* GetMemberFmName(const String& memb) const override;
   int    GetMethodNo(const String&) const override { return -1; }

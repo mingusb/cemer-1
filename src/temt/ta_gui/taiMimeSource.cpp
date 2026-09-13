@@ -280,7 +280,7 @@ void taBase::QueryEditActionsS_impl(int& allowed, int& forbidden)
 }
 
 void taBase::QueryEditActionsD_impl(taiMimeSource* ms, int& allowed, int& forbidden)
-{
+{ (void)forbidden;
   // determine if we can assign to
   // note: only works inprocess, 
   // TODO: maybe we could just stream in the stuff for ext???
@@ -414,7 +414,7 @@ void taBase::ChildQueryEditActions(const MemberDef* md, const taBase* child,
 
 void taBase::ChildQueryEditActions_impl(const MemberDef* md, const taBase* child,
   const taiMimeSource* ms, int& allowed, int& forbidden)
-{
+{ (void)md;
   // SRC
   // duplicate: note, don't test for parent-only query (child=NULL)
   if (child && ChildCanDuplicate(child))
@@ -495,7 +495,7 @@ int taBase::ChildEditAction(const MemberDef* md, taBase* child,
 
 int taBase::ChildEditAction_impl(const MemberDef* md, taBase* child,
   taiMimeSource* ms, int ea) 
-{
+{ (void)md; (void)ms;
     // op implementation (non-list/grp)
   if (ea & iClipData::EA_DUPE) {
     taProject* proj = (taProject*)GetOwner(&TA_taProject);
@@ -649,7 +649,7 @@ int taOBase::ChildEditAction_impl(const MemberDef* md, taBase* child,
 }
 
 
-int taOBase::ChildEditActionLS_impl(const MemberDef* md, taBase* lst_itm, int ea) {
+int taOBase::ChildEditActionLS_impl(const MemberDef* md, taBase* lst_itm, int ea) { (void)md;
 //only called if list valid and enabled
   taList_impl* list = children_();
   if (!list) return iClipData::ER_IGNORED;
@@ -681,7 +681,7 @@ int taOBase::ChildEditActionLS_impl(const MemberDef* md, taBase* lst_itm, int ea
 
 int taOBase::ChildEditActionLD_impl_inproc(const MemberDef* md,
                                            taBase* lst_itm, taiMimeSource* ms, int ea)
-{
+{ (void)md;
   taList_impl* list = children_();
   if (!list) return iClipData::ER_IGNORED;
   if (list->HasOption("FIXED_SIZE")) return iClipData::ER_IGNORED;
@@ -791,7 +791,7 @@ int taOBase::ChildEditActionLD_impl_inproc(const MemberDef* md,
 
 int taOBase::ChildEditActionLD_impl_ext(const MemberDef* md,
   taBase* lst_itm, taiMimeSource* ms, int ea) 
-{
+{ (void)md;
   taList_impl* list = children_();
   if (!list) return iClipData::ER_IGNORED;
   if (list->HasOption("FIXED_SIZE")) return iClipData::ER_IGNORED;
@@ -852,7 +852,7 @@ void taGroup_impl::ChildQueryEditActions_impl(const MemberDef* md, const taBase*
 
 void taGroup_impl::ChildQueryEditActionsG_impl(const MemberDef* md,
   taGroup_impl* subgrp, const taiMimeSource* ms, int& allowed, int& forbidden)
-{
+{ (void)md;
   // SRC ops
   if (subgrp) {
     // Delete only allowed if we are the owner
@@ -947,7 +947,7 @@ int taGroup_impl::ChildEditAction_impl(const MemberDef* md, taBase* child,
 }
 
 int taGroup_impl::ChildEditActionGS_impl(const MemberDef* md, taGroup_impl* subgrp, int ea)
-{
+{ (void)md;
   int subgrp_idx = gp.FindEl(subgrp);
   // if the child is a group, we handle it, otherwise we let base class handle it
   switch (ea & iClipData::EA_OP_MASK) {
@@ -972,7 +972,7 @@ int taGroup_impl::ChildEditActionGS_impl(const MemberDef* md, taGroup_impl* subg
 
 int taGroup_impl::ChildEditActionGD_impl_inproc(const MemberDef* md, taGroup_impl* subgrp,
   taiMimeSource* ms, int ea)
-{
+{ (void)md;
   int subgrp_idx = gp.FindEl(subgrp);
   // if src is not even a taBase, we just stop
   if (!ms->isBase()) return iClipData::ER_IGNORED;
@@ -1064,7 +1064,7 @@ int taGroup_impl::ChildEditActionGD_impl_inproc(const MemberDef* md, taGroup_imp
 }
 
 int taGroup_impl::ChildEditActionGD_impl_ext(const MemberDef* md, taGroup_impl* subgrp, taiMimeSource* ms, int ea)
-{
+{ (void)md;
   // if src is not even a taBase, we just stop
   if (!ms->isBase()) return iClipData::ER_IGNORED;
 
@@ -1110,7 +1110,7 @@ int taGroup_impl::ChildEditActionGD_impl_ext(const MemberDef* md, taGroup_impl* 
 //      taDataView
 
 void taDataView::DV_QueryEditActionsS(int& allowed, int& forbidden)
-{
+{ (void)allowed;
   if (!isTopLevelView()) {
     forbidden |= (iClipData::EA_CUT | 
       iClipData::EA_DUPE | iClipData::EA_DELETE | 
@@ -1120,14 +1120,14 @@ void taDataView::DV_QueryEditActionsS(int& allowed, int& forbidden)
  
 void taDataView::DV_QueryEditActionsD(taiMimeSource* ms,
     int& allowed, int& forbidden)
-{
+{ (void)allowed; (void)forbidden; (void)ms;
   // note: don't need to forbid anything at item level, most controlled by owner
 }
 
 void taDataView::DV_ChildQueryEditActions(const MemberDef* md,
     const taBase* child, const taiMimeSource* ms,
     int& allowed, int& forbidden)
-{
+{ (void)allowed; (void)child; (void)forbidden; (void)md; (void)ms;
   // nothing special in default
 }
 
@@ -1156,7 +1156,7 @@ void taDataView::ChildQueryEditActions_impl(const MemberDef* md,
 void DataView_List::DV_ChildQueryEditActionsL_impl(const MemberDef* md,
   const taBase* lst_itm, const taiMimeSource* ms,
   int& allowed, int& forbidden) 
-{
+{ (void)allowed; (void)md; (void)ms;
   bool is_root_level_view = (data_view && data_view->isRootLevelView());
   // unless we are ourself a root, then pretty much deny everything writish
   // into us

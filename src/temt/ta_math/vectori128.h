@@ -3595,10 +3595,6 @@ static inline Vec16c permute16c(Vec16c const & a) {
         shortcut = 3;
     }
 
-    #if defined (_MSC_VER) && ! defined(__INTEL_COMPILER)
-    #pragma warning(disable: 4307)  // disable MS warning C4307: '+' : integral constant overflow
-    #endif
-
     // check if we can use byte shift right
     else if (i0 > 0 && ((me ^ (uint32_t(I0)*0x11111111u + 0xECA86420u)) & se) == 0 && 
     ((mo ^ (uint32_t(I0)*0x11111111u + 0xFDB97531u)) & so) == 0) {
@@ -4111,10 +4107,7 @@ static inline Vec4i blend4i(Vec4i const & a, Vec4i const & b) {
     bool zeroing_pending = false;
 
     // partially finished result
-    __m128i temp;
-#ifdef _MSC_VER
-    temp = a;  // avoid spurious warning message for temp unused
-#endif
+    __m128i temp = _mm_setzero_si128();
 
     // special case: no elements from b
     if ((m1 & 0x04040404 & mz) == 0) {

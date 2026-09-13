@@ -177,21 +177,21 @@ signals:
 
 protected:
   virtual void          SetRep(QWidget* val);
-  virtual void          ChildAdd(taiWidget* child) {}
-  virtual void          ChildRemove(taiWidget* child) {}
-  virtual void          SigEmit_impl(taiWidget* chld) {} // only called if isConstructed
-  virtual void          GetImage_impl(const void* base) {}
-  virtual void          GetValue_impl(void* base) const {}
-  virtual void          GetImageVar_impl(const Variant& val) {}
-  virtual void          GetValueVar_impl(Variant& val) const {}
+  virtual void          ChildAdd(taiWidget* child) { (void)child; }
+  virtual void          ChildRemove(taiWidget* child) { (void)child; }
+  virtual void          SigEmit_impl(taiWidget* chld) { (void)chld; } // only called if isConstructed
+  virtual void          GetImage_impl(const void* base) { (void)base; }
+  virtual void          GetValue_impl(void* base) const { (void)base; }
+  virtual void          GetImageVar_impl(const Variant& val) { (void)val; }
+  virtual void          GetValueVar_impl(Variant& val) const { (void)val; }
 
 protected slots:
   void                  repChanged(); //signal from rep that data has changed
   virtual void          applyNow(); // calling this will force the host to apply editing data -- same action as if user pressed Apply button
 
   // handler controls do nothing in base class, and in most subclasses
-  virtual void          this_GetEditActionsEnabled(int& ea) {} // for when control is clipboard handler
-  virtual void          this_EditAction(int param) {} // for when control is clipboard handler
+  virtual void          this_GetEditActionsEnabled(int& ea) { (void)ea; } // for when control is clipboard handler
+  virtual void          this_EditAction(int param) { (void)param; } // for when control is clipboard handler
   virtual void          this_SetActionsEnabled() {} // for when control is clipboard handler
 private:
   void                  Destroy();

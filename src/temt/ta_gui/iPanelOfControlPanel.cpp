@@ -67,7 +67,7 @@ void iPanelOfControlPanel::UpdatePanel_impl() {
   if (se) se->ReShow_Async();
 }
 
-void iPanelOfControlPanel::ResolveChanges_impl(CancelOp& cancel_op) {
+void iPanelOfControlPanel::ResolveChanges_impl(CancelOp& cancel_op) { (void)cancel_op;
  // per semantics elsewhere, we just blindly apply changes
   if (se && se->HasChanged()) {
     se->Apply();

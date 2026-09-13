@@ -133,7 +133,7 @@ String MemberMethodCall::GetDisplayName() const {
   return rval;
 }
 
-bool MemberMethodCall::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool MemberMethodCall::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if (code == GetDisplayName())
     return true;
   if(!code.endsWith(')'))

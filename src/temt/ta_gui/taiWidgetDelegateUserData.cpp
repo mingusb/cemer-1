@@ -50,7 +50,7 @@ QWidget* taiWidgetDelegateUserData::createEditor(QWidget* parent,
       dat->SetMemberDef(md);
       rep = dat->GetRep(); // note: rep may get replaced by rep_par
       QHBoxLayout* hbl = new QHBoxLayout(rep_par);
-      hbl->setMargin(0);
+      hbl->setContentsMargins(0, 0, 0, 0);
       hbl->setSpacing(0);
       hbl->addWidget(rep);
       // some controls do better without stretch
@@ -61,7 +61,7 @@ QWidget* taiWidgetDelegateUserData::createEditor(QWidget* parent,
     else { // an inline taBase -- always wrap so we can stretch for longer guys
       QWidget* rep_par = new QWidget(parent);
       QHBoxLayout* hbl = new QHBoxLayout(rep_par);
-      hbl->setMargin(0);
+      hbl->setContentsMargins(0, 0, 0, 0);
       hbl->setSpacing(0);
       dat = taiWidgetPoly::New(true, base->GetTypeDef(), edh, NULL,
         rep_par);

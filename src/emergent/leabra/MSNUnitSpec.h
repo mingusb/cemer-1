@@ -42,7 +42,7 @@
   }
   // note: called in compute_act -- applies ach inhibition of output
 
-  INLINE virtual void  Compute_PatchShunt(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void  Compute_PatchShunt(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     // note: recv this in prior Act_Post from  patch unit spec, apply in Act
     if(u->shunt > 0.0f) {         // todo: could be more quantitative here..
       u->da_p *= matrix.patch_shunt;
@@ -53,7 +53,7 @@
   }
   // compute patch shunting of da and ach from shunt variable received in prior cycle Act_Post stage -- updated in compute_act prior to new acts
   
-  INLINE virtual void  SaveGatingThal(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void  SaveGatingThal(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     if(u->thal_gate > 0.0f) {
       u->thal_cnt = u->thal;
       u->act_g = GetRecAct(u);       // todo: experiment with learning based on this!
@@ -61,7 +61,7 @@
   }
   // save gating value into thal_cnt and gated activation into act_g when thal_gate indicates gating -- note 1 trial delayed from actual gating -- updated in compute_act *prior* to computing new act, so it reflects actual gating cycle activation
 
-  INLINE void  SaveGatingAct(LEABRA_UNIT_STATE* uv, LEABRA_NETWORK_STATE* net, int thr_no) override { };
+  INLINE void  SaveGatingAct(LEABRA_UNIT_STATE* uv, LEABRA_NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no; (void)uv; };
   
   INLINE void  Compute_Act_Rate(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) override {
     // note: critical for this to come BEFORE updating new act!

@@ -348,7 +348,7 @@ public:
   
   virtual void          ImportData(const String& fname="", bool headers = true,
       LoadDelimiters delim = LD_AUTO, LoadQuotes quote_str = LQ_AUTO)
-  { LoadAnyData(fname, headers, LD_AUTO, LQ_AUTO, -1, true); }
+  { (void)delim; (void)quote_str; LoadAnyData(fname, headers, LD_AUTO, LQ_AUTO, -1, true); }
   // #CAT_File #MENU #MENU_ON_Data #EXT_csv,tsv,txt,log #FILE_DIALOG_LOAD imports externally-generated data in delimited text file format -- if headers is selected, then first row is treated as column headers -- auto defaults are typically fine (see also Load Any Data or Load Any Data Append -- same functionality with all AUTO defaults)
   virtual void          ImportDataJSON(const String& fname);
   // #CAT_File #MENU #MENU_ON_Data #FILE_DIALOG_LOAD #EXT_json load JSON format data (ONLY)

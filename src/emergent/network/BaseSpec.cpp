@@ -354,11 +354,11 @@ bool BaseSpec::CheckObjectType_impl(taBase* obj) {
   return true;
 }
 
-void BaseSpec::SpecSet(taBase* obj) {
+void BaseSpec::SpecSet(taBase* obj) { (void)obj;
   UpdtIsUsed();
 }
 
-void BaseSpec::SpecUnSet(taBase* obj) {
+void BaseSpec::SpecUnSet(taBase* obj) { (void)obj;
   UpdtIsUsed();
 }
 
@@ -372,7 +372,7 @@ void BaseSpec::WhereUsed() {
   taMisc::DisplayList(spec_user_list, title, &spec_name_list, "Spec Name");
 }
 
-void BaseSpec::WhereUsed_impl(taBase_PtrList& spec_user_list, String_Array& spec_name_list, bool child) {
+void BaseSpec::WhereUsed_impl(taBase_PtrList& spec_user_list, String_Array& spec_name_list, bool child) { (void)child;
   UpdtIsUsed();
   taSigLink* dl = sig_link();
   if(!dl) return;
@@ -497,7 +497,7 @@ bool BaseSpec::IsMemberEditable(const String& memb_name) const {
   return true;
 }
 
-taBase* BaseSpec::ChooseNew(taBase* origin, const String& choice_text) {
+taBase* BaseSpec::ChooseNew(taBase* origin, const String& choice_text) { (void)choice_text;
   BaseSpec* newSpec = NULL;
 
   if (origin->GetTypeDef()->DerivesFrom(&TA_SpecPtr_impl)) {

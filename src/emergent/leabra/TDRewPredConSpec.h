@@ -39,7 +39,7 @@
   }
   // #IGNORE compute weights -- linear, no bounds
 
-  INLINE void Compute_Weights(CON_STATE* scg, NETWORK_STATE* snet, int thr_no) override {
+  INLINE void Compute_Weights(CON_STATE* scg, NETWORK_STATE* snet, int thr_no) override { (void)snet; (void)thr_no;
     if(!learn) return;
     LEABRA_CON_STATE* cg = (LEABRA_CON_STATE*)scg;
 

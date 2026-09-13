@@ -21,7 +21,7 @@ void taiTreeNodeDefChild_ElRef::SigLinkRecv(taSigLink*, int sls, void* op1, void
   if (m_own) m_own->DefChild_SigEmit(sls, op1, op2);
 }
 
-void taiTreeNodeDefChild_ElRef::SigLinkDestroying(taSigLink* dl) {
+void taiTreeNodeDefChild_ElRef::SigLinkDestroying(taSigLink* dl) { (void)dl;
 //note: don't need to do anything, since everything is explicitly owned/nested
 }
 

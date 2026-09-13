@@ -61,7 +61,7 @@ public:
 
 public: // TAI_xxx instance interface -- used for dynamic creation
   virtual taiMimeItem*  Extract(taiMimeSource* ms, 
-    const String& mimetype = _nilString) {return NULL;}
+    const String& mimetype = _nilString) { (void)mimetype; (void)ms; return NULL;}
     // if this type can be made from the given md and using the optionally specified specific mimetype (otherwise its default mimetype, or set of possible types is used); NULL result means no, otherwise the newly created and constructed instance is supplied
 
 protected:
@@ -72,7 +72,7 @@ protected:
   inline bool           isDecoded() const {return (m_flags & MIF_DECODED);}
   
   void                  AssertData(); // insures data is fetched/decoded
-  virtual bool          Constr_impl(const String& subky) {return true;}
+  virtual bool          Constr_impl(const String& subky) { (void)subky; return true;}
     // returns true if constr went ok
   virtual void          DecodeData_impl() {}
 private:

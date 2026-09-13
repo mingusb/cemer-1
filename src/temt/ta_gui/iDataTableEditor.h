@@ -37,7 +37,11 @@ class QObject; //
 class iMainWindowViewer; //  
 class taProject; // 
 class ISelectable_PtrList; // 
-class QWidget; //  
+#ifndef __MAKETA__
+#include <QWidget>
+#else
+class QWidget; //
+#endif
 class TypeDef; // 
 class taiSigLink; // 
 class taSigLink; // 

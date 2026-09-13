@@ -118,7 +118,7 @@ void taDataView::SetVisible_impl(DataViewAction act) {
 }
 
 
-void taDataView::IgnoredSigEmit(taSigLink*, int sls, void* op1_, void* op2_) {
+void taDataView::IgnoredSigEmit(taSigLink*, int sls, void* op1_, void* op2_) { (void)op1_; (void)op2_;
   // note: should not need to track anything during loading
   if (taMisc::is_loading) return;
 

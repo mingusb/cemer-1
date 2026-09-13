@@ -224,11 +224,10 @@ void VocalTractCtrl::Initialize() {
 }
 
 void VocalTractCtrl::ComputeDeltas(const VocalTractCtrl& cur, const VocalTractCtrl& prv,
-                                   const VocalTractCtrl& del_max, float ctrl_freq) {
+                                   const VocalTractCtrl& del_max, float ctrl_freq) { (void)del_max;
   for(int i=0; i< N_PARAMS; i++) {
     float cval = cur.ParamVal(i);
     float pval = prv.ParamVal(i);
-    float dmax = del_max.ParamVal(i);
     float& nval = ParamVal(i);
     nval = (cval - pval) * ctrl_freq;
     // if(nval > dmax) nval = dmax;
@@ -289,7 +288,7 @@ float VocalTractCtrl::Normalize(float val, ParamIndex param) {
   TypeDef* td = GetTypeDef();
   int stidx = td->members.FindNameIdx("glot_pitch");
   MemberDef* md = td->members[stidx + param];
-  float* par = (float*)md->GetOff(this);
+
   float min = md->OptionAfter("MIN_").toFloat();
   float max = md->OptionAfter("MAX_").toFloat();
   return (val - min) / (max - min);
@@ -299,7 +298,7 @@ float VocalTractCtrl::UnNormalize(float val, ParamIndex param) {
   TypeDef* td = GetTypeDef();
   int stidx = td->members.FindNameIdx("glot_pitch");
   MemberDef* md = td->members[stidx + param];
-  float* par = (float*)md->GetOff(this);
+
   float min = md->OptionAfter("MIN_").toFloat();
   float max = md->OptionAfter("MAX_").toFloat();
   return min + val * (max - min);
@@ -372,7 +371,10 @@ void VocalTract::SynthFromDataTable(const DataTable& table, const Variant& col, 
 
 bool VocalTract::LoadEnglishPhones() {
   QFile qrc_file(":/VocalTractEnglishPhones.dtbl");
-  qrc_file.open(QIODevice::ReadOnly);
+  if (!qrc_file.open(QIODevice::ReadOnly)) {
+    taMisc::Error("Unable to load vocal tract resource: ", qrc_file.errorString());
+    return false;
+  }
   QByteArray dat = qrc_file.readAll();
   String str(dat);
   phone_table.Load_String(str);
@@ -382,7 +384,10 @@ bool VocalTract::LoadEnglishPhones() {
 
 bool VocalTract::LoadEnglishDict() {
   QFile qrc_file(":/VocalTractEnglishDict.dtbl");
-  qrc_file.open(QIODevice::ReadOnly);
+  if (!qrc_file.open(QIODevice::ReadOnly)) {
+    taMisc::Error("Unable to load vocal tract resource: ", qrc_file.errorString());
+    return false;
+  }
   QByteArray dat = qrc_file.readAll();
   String str(dat);
   dict_table.Load_String(str);
@@ -391,7 +396,7 @@ bool VocalTract::LoadEnglishDict() {
 }
 
 bool VocalTract::SynthPhone(const String& phon, bool stress, bool double_stress,
-                            bool syllable, bool reset) {
+                            bool syllable, bool reset) { (void)double_stress; (void)syllable;
   if(phone_table.rows == 0)
     LoadEnglishPhones();
   String act = phon;
@@ -679,7 +684,7 @@ VocalTract::Synthesize(bool reset_first)
   }
   float scale = calculateMonoScale();
 #if (QT_VERSION >= 0x050000)
-  void* buf = q_buf.data();
+  void* buf = q_buf.data<char>();
   for(int i=0; i < n_frm; i++) {
     WriteFloatAtIdx(outputData_[i] * scale, buf, i, stype, samp_size);
   }

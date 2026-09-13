@@ -348,7 +348,7 @@ int Program::CallFunction(Program* caller, const String& fun_name) {
   // does all the checks.  this is the standard paradigm for such things --
   // init does checks. run assumes things are ok & thus can be fast.
   script->SetDebug((int)HasProgFlag(TRACE));
-  cssEl* cssrval = script->RunFun(fun_name);
+  script->RunFun(fun_name);
   // note: shared var state likely changed, so update gui
   script_compiled = true; // override any run-generated changes!!
   int rval = ret_val;
@@ -380,7 +380,7 @@ int Program::CallInit(Program* caller) {
   return CallInit_impl(caller);
 }
 
-int Program::CallInit_impl(Program* caller) {
+int Program::CallInit_impl(Program* caller) { (void)caller;
   run_state = INIT;    // this is redundant if called from an existing INIT but otherwise needed
   Run_impl();
   CheckConfig(false);   // check after running!  see below
@@ -518,7 +518,7 @@ void Program::Init() {
   
   // record new timestamp for this init session -- CallInit will check and not re-run
   QDateTime tm = QDateTime::currentDateTime();
-  global_init_timestamp = tm.toTime_t();
+  global_init_timestamp = tm.toSecsSinceEpoch();
   
   SigEmit(SLS_ITEM_UPDATED_ND); // update button state
   // first run the Init code, THEN do the check.  this prevents a catch-22
@@ -850,7 +850,7 @@ void Program::RunNoArgFunction(Function* fun) {
     objs.StructUpdateEls(true);
     did_struct_updt = true;
   }
-  cssEl* cssrval = script->RunFun(fun->name);
+  script->RunFun(fun->name);
   // note: shared var state likely changed, so update gui
   script_compiled = true; // override any run-generated changes!!
   if(did_struct_updt)
@@ -1075,7 +1075,7 @@ void Program::UpdateCallerArgs() {
   ListCallers();
 }
 
-void Program::CssError(int src_ln_no, bool running, const String& err_msg) {
+void Program::CssError(int src_ln_no, bool running, const String& err_msg) { (void)running;
   global_trace = RenderGlobalTrace(taMisc::gui_active); // gotta grab it while its hot
   ProgLine* pl = script_list.SafeEl(src_ln_no);
   if(!pl) return;
@@ -1087,7 +1087,7 @@ void Program::CssError(int src_ln_no, bool running, const String& err_msg) {
   }
 }
 
-void Program::CssWarning(int src_ln_no, bool running, const String& err_msg) {
+void Program::CssWarning(int src_ln_no, bool running, const String& err_msg) { (void)err_msg; (void)running;
   ProgLine* pl = script_list.SafeEl(src_ln_no);
   if(!pl) return;
   pl->SetWarning();
@@ -1117,7 +1117,7 @@ void Program::CssBreakpoint(int src_ln_no, int bpno, int pc, const String& progn
   }
 }
 
-void Program::taError(int src_ln_no, bool running, const String& err_msg) {
+void Program::taError(int src_ln_no, bool running, const String& err_msg) { (void)err_msg; (void)running;
   global_trace = RenderGlobalTrace(taMisc::gui_active); // gotta grab it while its hot
   if(!HasProgFlag(OBJS_UPDT_GUI)) { // undo the struct update that was done at start!
     objs.StructUpdateEls(false);
@@ -1127,7 +1127,7 @@ void Program::taError(int src_ln_no, bool running, const String& err_msg) {
   pl->SetError();
 }
 
-void Program::taWarning(int src_ln_no, bool running, const String& err_msg) {
+void Program::taWarning(int src_ln_no, bool running, const String& err_msg) { (void)err_msg; (void)running;
   ProgLine* pl = script_list.SafeEl(src_ln_no);
   if(!pl) return;
   pl->SetWarning();
@@ -1502,7 +1502,7 @@ void Program::AddDescString(taBase* prog_el, const String& dsc) {
   }
 }
 
-String Program::GetProgCodeInfo(int line_no, const String& code_str) {
+String Program::GetProgCodeInfo(int line_no, const String& code_str) { (void)line_no;
   //   return String("info on line: ") + String(line_no) + " str: " + code_str;
   ProgVar* pv = FindVarName(code_str);
   if(pv && !pv->IsLocal()) {
@@ -1544,7 +1544,6 @@ void Program::SetAllBreakpoints() {
   
   if(!taMisc::gui_active) return;
   
-  int nbp = 0;
   script->DelAllBreaks();       // start with clean slate
   ProgEl* last_pel_set = NULL;
   ProgBrkPt_List* bpl = GetBrkPts();
@@ -1565,7 +1564,6 @@ void Program::SetAllBreakpoints() {
       last_pel_set = pel;                     // don't repeat
       pl->SetPLineFlag(ProgLine::BREAKPOINT); // make sure
       script->SetBreak(i);    // set it
-      nbp++;
     }
   }
 }
@@ -1602,7 +1600,6 @@ void Program::EnableBreakpoint(ProgEl* pel) {
   int start_ln, end_ln;
   if(!ScriptLinesEl(pel, start_ln, end_ln))
     return;
-  ProgLine* pl = script_list.FastEl(start_ln);
   CmdShell();                 // should be using cmd shell if setting breakpoints
   script->SetBreak(start_ln);
   ProgBrkPt_List* bpl = GetBrkPts();
@@ -1639,7 +1636,7 @@ void Program::SetBreakpoint_impl(ProgEl* pel) {
   
   ProgBrkPt_List* bpl = GetBrkPts();
   if(bpl) {
-    ProgBrkPt* bp = bpl->AddBrkPt(pel, pl);
+    bpl->AddBrkPt(pel, pl);
     // add a brk_pt object to the list of breakpoints - used for display/enable/disable gui
   }
   EnableBreakpoint(pel);
@@ -2138,7 +2135,7 @@ String Program::DecodeStopReason(StopReason sr) {
 }
   
 
-String Program::RenderLocalTrace(bool html) {
+String Program::RenderLocalTrace(bool html) { (void)html;
   String rval;
   if(script) {
     script->BackTrace(rval);
@@ -2275,7 +2272,6 @@ bool Program::AddCtrlFunsToControlPanel(ControlPanel* ctrl_panel, const String& 
     if(TestError(!proj, "AddCtrlFunsToControlPanel", "cannot find project")) return false;
     ctrl_panel = (ControlPanel*)proj->ctrl_panels.New(1);
   }
-  TypeDef* td = GetTypeDef();
   bool rval = true;
   rval = ctrl_panel->AddMethodNm(this, "Init", extra_label, "", sub_gp_nm);
   rval = ctrl_panel->AddMethodNm(this, "Run_Gui", extra_label, "", sub_gp_nm);
@@ -2618,7 +2614,7 @@ void Program::Help() {
 }
 
 ProgVar* Program::FindMakeProgVarInNewScope
-(const ProgVar* prog_var, const taBase* old_scope, taBase* new_scope) {
+(const ProgVar* prog_var, const taBase* /*old_scope*/, taBase* new_scope) {
   if(!prog_var) return NULL;
 
   bool made_new = false;
@@ -2628,8 +2624,6 @@ ProgVar* Program::FindMakeProgVarInNewScope
   Function* var_fun = GET_OWNER(prog_var, Function);
   bool var_local = prog_var->IsLocal();
     
-  Program* old_prg = GET_OWNER(old_scope, Program);
-  Function* old_fun = GET_OWNER(old_scope, Function);
 
   Program* new_prg = GET_OWNER(new_scope, Program);
   Function* new_fun = GET_OWNER(new_scope, Function);

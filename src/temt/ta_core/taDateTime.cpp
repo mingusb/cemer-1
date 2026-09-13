@@ -35,7 +35,6 @@ void taDateTime::fromString(const String &s, const String &format) {
 String taDateTime::SecondsToDHM(uint64_t duration)  // duration is in seconds
 {
   String rval;
-  int seconds = (int) (duration % 60);
   duration /= 60;
   int minutes = (int) (duration % 60);
   duration /= 60;

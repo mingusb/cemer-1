@@ -103,7 +103,7 @@ bool iSvnRevLogModel::refresh() {
   return true;
 }
 
-int iSvnRevLogModel::columnCount(const QModelIndex& parent) const {
+int iSvnRevLogModel::columnCount(const QModelIndex& parent) const { (void)parent;
   return SVN_N_COLS;
 }
 
@@ -131,7 +131,7 @@ QVariant iSvnRevLogModel::data(const QModelIndex& index, int role) const {
     }
     case 1: {
       if(idx < 0) return QVariant();
-      QDateTime dm = QDateTime::fromTime_t(times[idx]);
+      QDateTime dm = QDateTime::fromSecsSinceEpoch(times[idx]);
       QString dmstr = dm.toString("yyyy MM/dd hh:mm:ss");
       return dmstr;
       break;
@@ -174,7 +174,7 @@ QVariant iSvnRevLogModel::data(const QModelIndex& index, int role) const {
     }
     //-- QColor
   }
-/*Qt::TextColorRole
+/*Qt::ForegroundRole
   QColor: color of text
 Qt::CheckStateRole*/
   default: break;
@@ -183,7 +183,7 @@ Qt::CheckStateRole*/
 }
 
 Qt::ItemFlags iSvnRevLogModel::flags(const QModelIndex& index) const {
-  Qt::ItemFlags rval = 0;
+  Qt::ItemFlags rval;
   if (validateIndex(index)) {
     rval = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
   }
@@ -217,23 +217,23 @@ QVariant iSvnRevLogModel::headerData(int section,
   return QAbstractItemModel::headerData(section, orientation, role);
 }
 
-int iSvnRevLogModel::rowCount(const QModelIndex& parent) const {
+int iSvnRevLogModel::rowCount(const QModelIndex& parent) const { (void)parent;
   if(!svn_client) return 0;
   return revs.size;
 }
 
-bool iSvnRevLogModel::setData(const QModelIndex& index, const QVariant & value, int role) {
+bool iSvnRevLogModel::setData(const QModelIndex& index, const QVariant & value, int role) { (void)index; (void)role; (void)value;
   return false;
 }
 
-QModelIndex iSvnRevLogModel::index(int row, int column, const QModelIndex &parent) const {
+QModelIndex iSvnRevLogModel::index(int row, int column, const QModelIndex &parent) const { (void)parent;
   if(!svn_client) return QModelIndex();
   if (column < 0 || column >= SVN_N_COLS || row < 0 || row >= revs.size)
     return QModelIndex();
   return createIndex(row, column);
 }
 
-QModelIndex iSvnRevLogModel::parent(const QModelIndex &child) const {
+QModelIndex iSvnRevLogModel::parent(const QModelIndex &child) const { (void)child;
   return QModelIndex();
 }
 

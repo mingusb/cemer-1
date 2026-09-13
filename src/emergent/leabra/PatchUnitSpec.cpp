@@ -1,7 +1,7 @@
 // this is included directly in LeabraExtraUnitSpecs_cpp / _cuda
 // {
 
-void STATE_CLASS(PatchUnitSpec)::Send_DAShunt(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+void STATE_CLASS(PatchUnitSpec)::Send_DAShunt(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   float snd_val = u->act_eq;
   if(u->act_eq < opt_thresh.send) {
     snd_val = 0.0f;

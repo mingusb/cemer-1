@@ -45,7 +45,7 @@ void iPanelOfText::SigEmit_impl(int sls, void* op1_, void* op2_) {
   //get updated text
 }
 
-int iPanelOfText::EditAction(int ea) {
+int iPanelOfText::EditAction(int ea) { (void)ea;
   int rval = 0;
 //todo
   return rval;

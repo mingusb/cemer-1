@@ -27,7 +27,7 @@ void iColorMatrixGrid::Init() {
   m_cellSize = 3;
 }
 
-void iColorMatrixGrid::paintEvent(QPaintEvent* event) {
+void iColorMatrixGrid::paintEvent(QPaintEvent* event) { (void)event;
   QPainter painter(this);
 //TEMP
   painter.setPen(Qt::blue);

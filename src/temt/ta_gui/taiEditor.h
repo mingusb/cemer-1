@@ -139,9 +139,9 @@ public:
   // for dialogs -- creates iDialogEditor
   virtual void          Unchanged();    // call when data has been saved or reverted
   virtual void          Refresh(); // does a GetImage or defered Reshow
-  virtual bool          ReShow(bool force = false) { return false; } // rebuild the body; if changes and force=false then prompts user first; ret true if reshown
+  virtual bool          ReShow(bool force = false) { (void)force; return false; } // rebuild the body; if changes and force=false then prompts user first; ret true if reshown
   virtual void          ReConstr_Body() { }; // called when show has changed and body should be reconstructed -- this is a deferred call
-  virtual void          ResolveChanges(CancelOp& cancel_op, bool* discarded = NULL) {}
+  virtual void          ResolveChanges(CancelOp& cancel_op, bool* discarded = NULL) { (void)cancel_op; (void)discarded; }
   virtual void          WidgetDeleting(); // lets us null the gui fields, and set state
 
   virtual QWidget*      firstTabFocusWidget() { return NULL; } // first widget that accepts tab focus -- to set link between tab and contents of edit
@@ -162,7 +162,7 @@ public: // ISigLinkClient i/f -- note: only registered though for taiEDH and lat
 
 // virtuals for IWidgetHost i/f -- call back to these from taiEditorWidgetsMain
   virtual void          GetImage() {} // IDH brings this in too, we override in EDH
-  virtual void          GetImage(bool force) {} // ugly hack
+  virtual void          GetImage(bool force) { (void)force; } // ugly hack
   virtual void          GetValue() {} // IDH brings this in too, we override in EDH
 public slots:
   virtual void          Apply();
@@ -221,7 +221,7 @@ protected:
 
   virtual void          Cancel_impl();
   virtual void          Ok_impl(); // for dialogs
-  virtual void          Refresh_impl(bool reshow) {}
+  virtual void          Refresh_impl(bool reshow) { (void)reshow; }
 
   virtual void          DoConstr_Dialog(iDialogEditor*& dlg); // common sub-code for constructing a dialog instance
   void                  DoDestr_Dialog(iDialogEditor*& dlg); // common sub-code for destructing a dialog instance

@@ -220,7 +220,7 @@ String taMarkUp::TableCell(Format fmt, const String& cell, int& col_no) {
   return _nilString;
 }
 
-String taMarkUp::TableRowEnd(Format fmt, int col_no) {
+String taMarkUp::TableRowEnd(Format fmt, int col_no) { (void)col_no;
   switch(fmt) {
   case HTML:
     return "</tr>\n";

@@ -1,7 +1,7 @@
 // this is included directly in LeabraExtraUnitSpecs_cpp / _cuda
 // {
 
-void STATE_CLASS(GPiInvUnitSpec)::Compute_NetinRaw(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+void STATE_CLASS(GPiInvUnitSpec)::Compute_NetinRaw(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   int nt = net->n_thrs_built;
   int flat_idx = u->flat_idx;
 
@@ -68,7 +68,7 @@ void STATE_CLASS(GPiInvUnitSpec)::Compute_NetinRaw(LEABRA_UNIT_STATE* u, LEABRA_
   u->net_raw = gpi_net;
 }
 
-void STATE_CLASS(GPiInvUnitSpec)::Send_Thal(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+void STATE_CLASS(GPiInvUnitSpec)::Send_Thal(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   bool gate_now = Quarter_GateNow(net->quarter);
   int qtr_cyc = net->QuarterCycle();
 

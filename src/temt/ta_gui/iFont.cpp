@@ -20,6 +20,8 @@
 
 #ifdef TA_GUI
 #include <QFont>
+#include <QFontInfo>
+#include <QStringList>
 #endif
 
 #ifdef TA_QT3D
@@ -122,7 +124,7 @@ void iFont::copyFrom(const QFont& src) {
   setItalic(src.italic());
   setUnderline(src.underline());
   stretch = src.stretch();
-  pointSize = src.pointSizeF();
+  pointSize = src.pointSizeF() > 0 ? src.pointSizeF() : QFontInfo(src).pointSizeF();
 }
 
 void iFont::copyTo(QFont& dst) const {
@@ -135,9 +137,27 @@ void iFont::copyTo(QFont& dst) const {
 }
 
 void iFont::setRawName(const char* raw_name) {
-  //TODO: this concept needs to be tested -- may not be fully Iv/X compatible
   QFont font;
-  font.setRawName(QString(raw_name));
+  const QString name = QString::fromLatin1(raw_name);
+  // Older projects store X Logical Font Descriptions. Qt 6 resolves fonts by
+  // family and attributes, so retain those fields when loading legacy projects.
+  const QStringList fields = name.split('-');
+  if(name.startsWith('-') && fields.size() >= 15) {
+    if(fields[2] != "*") font.setFamily(fields[2]);
+    font.setBold(fields[3].contains("bold", Qt::CaseInsensitive) ||
+                 fields[3].contains("demi", Qt::CaseInsensitive));
+    font.setItalic(fields[4] == "i" || fields[4] == "o");
+    if(fields[5].contains("condensed", Qt::CaseInsensitive))
+      font.setStretch(QFont::Condensed);
+    const int decipoints = fields[8].toInt();
+    const int pixels = fields[7].toInt();
+    if(decipoints > 0) font.setPointSizeF(decipoints / 10.0);
+    else if(pixels > 0) font.setPixelSize(pixels);
+    if(fields[11] == "m" || fields[11] == "c") font.setFixedPitch(true);
+  }
+  else if(!name.contains(',') || !font.fromString(name)) {
+    font.setFamily(name);
+  }
   this->copyFrom(font);
 }
 

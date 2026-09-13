@@ -159,7 +159,7 @@ void T3Node::initCommon() { // shared code, can only be called in a subclass con
   shapeSeparator()->addChild(material_);
 }
 
-void T3Node::addRemoveChildNode(SoNode* node, bool adding) {
+void T3Node::addRemoveChildNode(SoNode* node, bool adding) { (void)adding; (void)node;
   SoDebugError::post("T3Node[subclass]::addRemoveChildNode",
                 "operation not supported for this class");
 }

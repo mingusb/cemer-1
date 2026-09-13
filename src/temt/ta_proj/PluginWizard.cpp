@@ -118,7 +118,7 @@ void PluginWizard::AddCopyFiles(bool upgrade_only) {
 }
 void PluginWizard::TemplatizeFile(const String& src_file,
   const String& src, String& dst, bool& ok)
-{
+{ (void)ok;
   dst = src;
   dst.makeUnique();
   dst.gsub("template", plugin_name);
@@ -133,7 +133,7 @@ void PluginWizard::TemplatizeFile(const String& src_file,
   if (src_file.contains("template_pl.")) {
     dst.gsub("@EMERGENT_PLUGIN_DESC@", desc);
     dst.gsub("@EMERGENT_PLUGIN_UNIQUEID@", uniqueId);
-    dst.gsub("@EMERGENT_PLUGIN_URL@", desc);
+    dst.gsub("@EMERGENT_PLUGIN_URL@", url);
     dst.gsub("@PLUGIN_VERSION_MAJOR@", version.major);
     dst.gsub("@PLUGIN_VERSION_MINOR@", version.minor);
     dst.gsub("@PLUGIN_VERSION_PATCH@", version.step);

@@ -1,7 +1,7 @@
 // this is included directly in LeabraExtraUnitSpecs_cpp / _cuda
 // {
 
-void STATE_CLASS(BFCSUnitSpec)::Compute_ACh(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+void STATE_CLASS(BFCSUnitSpec)::Compute_ACh(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   float sum_delta = 0.0f;
   int sum_n = 0;
   const int nrg = u->NRecvConGps(net);
@@ -51,7 +51,7 @@ void STATE_CLASS(BFCSUnitSpec)::Compute_ACh(LEABRA_UNIT_STATE* u, LEABRA_NETWORK
   // }
 }
 
-void STATE_CLASS(BFCSUnitSpec)::Send_ACh(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+void STATE_CLASS(BFCSUnitSpec)::Send_ACh(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   float snd_val = u->misc_1;
   const int nsg = u->NSendConGps(net); 
   for(int g=0; g<nsg; g++) {

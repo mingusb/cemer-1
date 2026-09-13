@@ -38,12 +38,12 @@ public:
   void Initialize()     {err = 0; };
   void Destroy()        { }; //
   //note: Register() is not necessary for arrays, so we omit in these convenience constructors
-  int_Array(int num, int i0) {Initialize(); SetSize(1); el[0] = i0;}
-  int_Array(int num, int i0, int i1) {Initialize(); SetSize(2); el[0] = i0; el[1] = i1;}
+  int_Array(int num, int i0) { (void)num; Initialize(); SetSize(1); el[0] = i0;}
+  int_Array(int num, int i0, int i1) { (void)num; Initialize(); SetSize(2); el[0] = i0; el[1] = i1;}
   int_Array(int num, int i0, int i1, int i2)
-    {Initialize(); SetSize(3); el[0] = i0; el[1] = i1; el[2] = i2;}
+    { (void)num; Initialize(); SetSize(3); el[0] = i0; el[1] = i1; el[2] = i2;}
   int_Array(int num, int i0, int i1, int i2, int i3)
-    {Initialize(); SetSize(4); el[0] = i0; el[1] = i1; el[2] = i2; el[3] = i3;}
+    { (void)num; Initialize(); SetSize(4); el[0] = i0; el[1] = i1; el[2] = i2; el[3] = i3;}
   TA_BASEFUNS(int_Array);
   TA_ARRAY_FUNS(int_Array, int)
 protected:

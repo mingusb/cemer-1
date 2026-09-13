@@ -184,7 +184,7 @@ void LEABRA_UNIT_SPEC::Init_UnitState(UNIT_STATE* uv, NETWORK_STATE* net, int th
 }
 
 
-void LEABRA_UNIT_SPEC::DecayState(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no, float decay) {
+void LEABRA_UNIT_SPEC::DecayState(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no, float decay) { (void)net; (void)thr_no;
   if(decay > 0.0f) {            // no need to reset netin if not decaying at all
     u->act -= decay * (u->act - init.act);
     u->net -= decay * (u->net - init.netin);
@@ -250,7 +250,7 @@ void LEABRA_UNIT_SPEC::Trial_DecayState(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STA
 
 void LEABRA_UNIT_SPEC::Compute_NetinScale(LEABRA_LAYER_STATE* lay, LEABRA_NETWORK_STATE* net) {
   // this is all receiver-based and done only at beginning of each quarter
-  bool plus_phase = (net->phase == LEABRA_NETWORK_STATE::PLUS_PHASE);
+
   float net_scale = 0.0f;
   float inhib_net_scale = 0.0f;
   float deep_raw_scale = 0.0f;
@@ -573,7 +573,7 @@ float LEABRA_UNIT_SPEC::Compute_NetinExtras
 }
 
 void LEABRA_UNIT_SPEC::Compute_NetinInteg_Spike_e(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net,
-                                                int thr_no) {
+                                                int thr_no) { (void)net; (void)thr_no;
   // netin gets added at the end of the spike_buf -- 0 time is the end
   STATE_CLASS(CircBufferIndex)::CircAddShift_float
     (u->net, u->spike_e_buf, u->spike_e_st, u->spike_e_len, spike.window);
@@ -602,7 +602,7 @@ void LEABRA_UNIT_SPEC::Compute_NetinInteg_Spike_e(LEABRA_UNIT_STATE* u, LEABRA_N
 }
 
 void LEABRA_UNIT_SPEC::Compute_NetinInteg_Spike_i(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net,
-                                                int thr_no) {
+                                                int thr_no) { (void)net; (void)thr_no;
   // netin gets added at the end of the spike_i_buf -- 0 time is the end
   STATE_CLASS(CircBufferIndex)::CircAddShift_float
     (u->gi_raw, u->spike_i_buf, u->spike_i_st, u->spike_i_len, spike.window);
@@ -631,7 +631,7 @@ void LEABRA_UNIT_SPEC::Compute_NetinInteg_Spike_i(LEABRA_UNIT_STATE* u, LEABRA_N
 
 
 void LEABRA_UNIT_SPEC::Compute_ApplyInhib
-  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no, LEABRA_LAYER_STATE* lay, float ival) {
+  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no, LEABRA_LAYER_STATE* lay, float ival) { (void)thr_no;
   LEABRA_LAYER_SPEC_CPP* ls = lay->GetLayerSpec(net);
   Compute_SelfInhib_impl(u, ls->inhib_misc.self_fb, ls->inhib_misc.self_dt);
   float gi_ex = 0.0f;
@@ -642,7 +642,7 @@ void LEABRA_UNIT_SPEC::Compute_ApplyInhib
 }
 
 
-void LEABRA_UNIT_SPEC::Compute_Vm(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+void LEABRA_UNIT_SPEC::Compute_Vm(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   if(act_fun == SIGMOID) {
     return;
   }
@@ -745,7 +745,7 @@ void LEABRA_UNIT_SPEC::Send_DeepRawNetin(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_ST
 }
 
 
-void LEABRA_UNIT_SPEC::Compute_ActFun_Sigmoid(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+void LEABRA_UNIT_SPEC::Compute_ActFun_Sigmoid(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   float new_act = 1.0f / (1.0f + expf(-act.gain * u->net));
 
   u->da = new_act - u->act;

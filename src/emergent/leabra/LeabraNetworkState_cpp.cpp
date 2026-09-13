@@ -272,7 +272,7 @@ void LeabraNetworkState_cpp::BuildLeabraThreadMem() {
 
 
 int LeabraNetworkState_cpp::LayerLoadWeights_LayerVars
-(istream& strm, LayerState_cpp* play, WtSaveFormat fmt, bool quiet) {
+(istream& strm, LayerState_cpp* play, WtSaveFormat fmt, bool quiet) { (void)fmt; (void)quiet;
 
   LEABRA_LAYER_STATE* lay = (LEABRA_LAYER_STATE*)play;
   
@@ -335,7 +335,7 @@ int LeabraNetworkState_cpp::LayerLoadWeights_LayerVars
 }
 
 void LeabraNetworkState_cpp::LayerSaveWeights_LayerVars
-(ostream& strm, LayerState_cpp* play, WtSaveFormat fmt) {
+(ostream& strm, LayerState_cpp* play, WtSaveFormat fmt) { (void)fmt;
 
   LEABRA_LAYER_STATE* lay = (LEABRA_LAYER_STATE*)play;
   // these vars actually live on the unit group

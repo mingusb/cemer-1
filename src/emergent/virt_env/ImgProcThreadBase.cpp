@@ -69,15 +69,6 @@ void ImgProcCallThreadMgr::Run(ThreadImgProcCall& meth_call) {
 /////////////////////////////////
 //              Base
 
-static void split_geom_half(const int geom, const int thr, int& st, int& ed) {
-  const int hlf = geom / 2;
-  st = thr * hlf;
-  if(thr == 0)
-    ed = hlf;
-  else
-    ed = geom;
-}
-
 
 bool ImgProcThreadBase::GetThread2DGeom(int thr_no, const taVector2i& geom,
                                         taVector2i& start, taVector2i& end) {

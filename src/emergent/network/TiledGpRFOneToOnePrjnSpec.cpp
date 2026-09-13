@@ -10,7 +10,7 @@ void STATE_CLASS(TiledGpRFOneToOnePrjnSpec)::Initialize_core() {
 
 void STATE_CLASS(TiledGpRFOneToOnePrjnSpec)::Connect_Gps
   (PRJN_STATE* prjn, NETWORK_STATE* net, int rgpidx, int sgpidx, float p_con, bool sym_same_lay,
-   int make_cons, bool share_con, bool recip) {
+   int make_cons, bool share_con, bool recip) { (void)p_con; (void)sym_same_lay;
   LAYER_STATE* recv_lay = prjn->GetRecvLayer(net);
   LAYER_STATE* send_lay = prjn->GetSendLayer(net);
   if(recip) {

@@ -40,7 +40,7 @@ void iDimEdit::init() {
   m_readOnly = false;
   m_dimsReadOnly = false;
   lay = new QHBoxLayout(this);
-  lay->setMargin(0);
+  lay->setContentsMargins(0, 0, 0, 0);
   lay->addSpacing(2);
   lblDims = new QLabel("dims:", this);
   lay->addWidget(lblDims);
@@ -52,7 +52,7 @@ void iDimEdit::init() {
   lay->addSpacing(2);
   wdgDimEdits = new QWidget(this);
   layDimEdits = new QHBoxLayout(wdgDimEdits);
-  layDimEdits->setMargin(0);
+  layDimEdits->setContentsMargins(0, 0, 0, 0);
   layDimEdits->setSpacing(2);
   lay->addWidget(wdgDimEdits);
   lay->addStretch();
@@ -75,7 +75,7 @@ int iDimEdit::dims() const {
   return dimEdits.count();
 }
 
-void iDimEdit::dim_valueChanged(int value) {
+void iDimEdit::dim_valueChanged(int value) { (void)value;
   if (m_changing > 0) return;
   emit changed(this);
 }

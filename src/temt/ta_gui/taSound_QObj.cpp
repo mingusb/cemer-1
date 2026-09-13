@@ -20,8 +20,10 @@
 #include <taSound>
 #include <QAudioDecoder>
 #include <QAudioFormat>
-#include <QAudioOutput>
-#include <QAudioDeviceInfo>
+#include <QAudioSink>
+#include <QAudioDevice>
+#include <QMediaDevices>
+#include <QUrl>
 #include <QBuffer>
 #include <QByteArray>
 
@@ -50,11 +52,22 @@ bool taSound_QObj::LoadSound(const QString& fname) {
     delete decoder;
   }
   decoder = new QAudioDecoder(this);
-  decoder->setSourceFilename(fname);
+  sound->q_buf = QAudioBuffer();
+  decoded_data.clear();
+  decoded_format = QAudioFormat();
+  decoder->setSource(QUrl::fromLocalFile(fname));
+  connect(decoder, &QAudioDecoder::bufferReady, this, [this]() {
+    const QAudioBuffer buffer = decoder->read();
+    if(buffer.isValid()) {
+      decoded_format = buffer.format();
+      decoded_data.append(buffer.constData<char>(), buffer.byteCount());
+    }
+  });
 
-  connect(decoder, SIGNAL(finished()), this, SLOT(LoadFinished()));
+  connect(decoder, &QAudioDecoder::finished, this, &taSound_QObj::LoadFinished);
 
-  connect(decoder, SIGNAL(error(QAudioDecoder::Error)), this, SLOT(LoadError()));
+  connect(decoder, qOverload<QAudioDecoder::Error>(&QAudioDecoder::error),
+          this, &taSound_QObj::LoadError);
 
   done_loading = false;
   
@@ -67,21 +80,23 @@ bool taSound_QObj::LoadSound(const QString& fname) {
 }
 
 void taSound_QObj::LoadFinished() {
-  if(!decoder->bufferAvailable()) {
+  if(decoded_data.isEmpty()) {
     LoadError();
     return;
   }
-  sound->q_buf = decoder->read();
-  delete decoder;
+  sound->q_buf = QAudioBuffer(decoded_data, decoded_format);
+  decoder->disconnect(this);
+  decoder->deleteLater();
   decoder = NULL;
   done_loading = true;
 }
 
 void taSound_QObj::LoadError() {
   taMisc::Error("Sound file not loadable for sound:", sound->name,
-                "file:", decoder->sourceFilename().toLatin1(), "err msg:",
+                "file:", decoder->source().toLocalFile().toLatin1(), "err msg:",
                 decoder->errorString().toLatin1());
-  delete decoder;
+  decoder->disconnect(this);
+  decoder->deleteLater();
   decoder = NULL;
   done_loading = true;
 }
@@ -92,54 +107,51 @@ bool taSound_QObj::PlaySound(const QString& device_name) {
     return false;
   }
   if(device_name.isEmpty()) {
-    output = new QAudioOutput(sound->q_buf.format(), this);
+    output = new QAudioSink(sound->q_buf.format(), this);
   }
   else {
-    QList<QAudioDeviceInfo> devs = QAudioDeviceInfo::availableDevices(QAudio::AudioOutput);
-    QAudioDeviceInfo ad;
+    QList<QAudioDevice> devs = QMediaDevices::audioOutputs();
+    QAudioDevice ad;
     for(int i=0; i<devs.count(); i++) {
-      ad = devs[i];
-      if(ad.deviceName() == device_name)
+      if(devs[i].description() == device_name) {
+        ad = devs[i];
         break;
+      }
     }
-    output = new QAudioOutput(ad, sound->q_buf.format(), this);
+    if(ad.isNull()) {
+      taMisc::Error("Audio output device not found:", device_name);
+      return false;
+    }
+    output = new QAudioSink(ad, sound->q_buf.format(), this);
   }
-  out_bary = QByteArray::fromRawData((const char*)sound->q_buf.constData(),
-                                            sound->q_buf.byteCount());
+  // Keep playback data alive even if the sound is replaced while the sink runs.
+  out_bary = QByteArray(sound->q_buf.constData<char>(), sound->q_buf.byteCount());
   out_buff = new QBuffer(&out_bary, output);
   out_buff->open(QIODevice::ReadOnly);
 
-  connect(output, SIGNAL(stateChanged(QAudio::State)), this,
-          SLOT(PlayStateChanged(QAudio::State)));
+  connect(output, &QAudioSink::stateChanged, this, &taSound_QObj::PlayStateChanged);
   output->start(out_buff);
   return true;
 }
 
 void taSound_QObj::PlayStateChanged(QAudio::State newState) {
-  switch (newState) {
-  case QAudio::IdleState:
-    // Finished playing (no more data)
-    if(output->processedUSecs() < sound->q_buf.duration())
-      return;
-    output->stop();
-    out_buff->close();
-    delete output;
-    output = NULL;
-    // taMisc::Info("sound done");
-    break;
-
-  case QAudio::StoppedState:
-    // Stopped for other reasons
-    if (output->error() != QAudio::NoError) {
-      taMisc::Error("Error playing sound:", sound->name, "Code:",
-                    String(output->error()));
-    }
-    break;
-
-  default:
-    // ... other cases as appropriate
-    break;
-  }
+  if(!output) return;
+  if(newState != QAudio::IdleState && newState != QAudio::StoppedState)
+    return;
+  if(newState == QAudio::IdleState && !out_buff->atEnd())
+    return;
+  // Detach first: stop() can synchronously emit another stateChanged signal.
+  QAudioSink* finishedOutput = output;
+  QBuffer* finishedBuffer = out_buff;
+  const QAudio::Error error = finishedOutput->error();
+  output = NULL;
+  out_buff = NULL;
+  finishedOutput->disconnect(this);
+  finishedOutput->stop();
+  finishedBuffer->close();
+  finishedOutput->deleteLater();
+  if(error != QAudio::NoError)
+    taMisc::Error("Error playing sound:", sound->name, "Code:", String(error));
 }
 
 #else  // (QT_VERSION >= 0x050000)

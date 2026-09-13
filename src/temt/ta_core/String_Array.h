@@ -23,7 +23,11 @@
 // member includes:
 
 // declare all other types mentioned but not required to include:
-class QStringList; //
+#ifndef __MAKETA__
+#include <QStringList>
+#else
+class QStringList;
+#endif //
 
 
 taTypeDef_Of(String_Array);

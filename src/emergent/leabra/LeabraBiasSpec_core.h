@@ -15,7 +15,7 @@
     }
   }
 
-  INLINE void B_Compute_dWt(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override {
+  INLINE void B_Compute_dWt(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no;
     if(!learn) return;
     LEABRA_UNIT_STATE* uv = (LEABRA_UNIT_STATE*)u;
     // only err is useful contributor to this learning

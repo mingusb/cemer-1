@@ -64,7 +64,7 @@ void TemtServer::CloseServer(bool notify) {
   if (notify) SigEmitUpdated();
 }
 
-void TemtServer::InitServer_impl(bool& ok) {
+void TemtServer::InitServer_impl(bool& ok) { (void)ok;
   // nothing
 }
 

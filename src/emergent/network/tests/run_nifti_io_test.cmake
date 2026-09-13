@@ -1,0 +1,10 @@
+string(RANDOM LENGTH 12 ALPHABET 0123456789abcdef test_id)
+set(test_directory "${TEST_WORK_ROOT}/nifti-io-${test_id}")
+file(MAKE_DIRECTORY "${test_directory}")
+execute_process(COMMAND "${TEST_EXECUTABLE}" "${test_directory}"
+  RESULT_VARIABLE result OUTPUT_VARIABLE output ERROR_VARIABLE error)
+if(NOT result EQUAL 0)
+  message(FATAL_ERROR "NIfTI I/O test failed (${result}):\n${output}${error}\nFiles retained at ${test_directory}")
+endif()
+file(REMOVE_RECURSE "${test_directory}")
+message(STATUS "${output}")

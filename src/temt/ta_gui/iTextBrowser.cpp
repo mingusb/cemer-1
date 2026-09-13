@@ -28,9 +28,9 @@ iTextBrowser::~iTextBrowser()
 void iTextBrowser::init() {
 }
 
-void iTextBrowser::setSource(const QUrl& name) {
+void iTextBrowser::doSetSource(const QUrl& name, QTextDocument::ResourceType type) {
   bool cancel = false;
   emit setSourceRequest(this, name, cancel);
   if (cancel) return;
-  inherited::setSource(name);
+  inherited::doSetSource(name, type);
 }

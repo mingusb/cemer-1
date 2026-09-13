@@ -1420,14 +1420,14 @@ anycmd:   CSS_COMMAND
 
 matrixarray: startmatrix matexprlist ']'  { $$ = $2; Code1(cssBI::make_matrix);
 	    int act_args = $2;
-	    cssMisc::parsing_matrix = false;
+	    cssMisc::parsing_matrix = $1;
 	    if(act_args > cssElFun::ArgMax) {
 	      cssMisc::Warning(cssMisc::cur_top->Prog(), "Too many initializer values for matrix, should have at most:", String(cssElFun::ArgMax), "got:",String(act_args)); }
 	  }
         ;
 
 
-startmatrix: '['			{ $$ = Code1(cssMisc::VoidElPtr); /* an arg stop */
+startmatrix: '['			{ $$ = cssMisc::parsing_matrix; Code1(cssMisc::VoidElPtr); /* an arg stop */
 	    cssMisc::parsing_matrix = true; }
         ;
 

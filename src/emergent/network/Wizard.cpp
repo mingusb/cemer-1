@@ -278,7 +278,7 @@ bool Wizard::StdProgs() {
   return false;
 }
 
-bool Wizard::TestProgs(Program* call_test_from, bool call_in_loop, int call_modulus) {
+bool Wizard::TestProgs(Program* call_test_from, bool call_in_loop, int call_modulus) { (void)call_in_loop; (void)call_modulus; (void)call_test_from;
   TestError(true, "TestProgs", "This must be redefined in algorithm-specific project!",
              "Just call StdProgs_impl with name of std program from prog lib");
   return false;

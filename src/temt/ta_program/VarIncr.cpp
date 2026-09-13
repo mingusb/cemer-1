@@ -53,7 +53,7 @@ String VarIncr::GetDisplayName() const {
   return rval;
 }
 
-bool VarIncr::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool VarIncr::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if(code.freq("+=") == 1 || code.freq("-=") == 1) return true;
   return false;
 }

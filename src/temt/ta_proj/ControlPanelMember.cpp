@@ -93,9 +93,9 @@ void ControlPanelMemberData::SetCtrlType() {
  * We need to use a list of pointers as the objects aren't immutable.
  */
 bool ControlPanelMemberData::ParseRange() {
-  int idx, idx2;
+  int idx;
   int start_pos = 0;
-  int start_pos2 = 0;
+
 
   srch_vals.Reset();
 

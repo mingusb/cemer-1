@@ -62,7 +62,7 @@ void taiWidgetVariantBase::Constr(QWidget* gui_parent_) {
   SetRep(rep_);
   if (host != NULL) {
     QPalette pal = rep_->palette();
-    pal.setColor(QPalette::Background, host->colorOfCurRow());
+    pal.setColor(QPalette::Window, host->colorOfCurRow());
     rep_->setPalette(pal); 
   }
   InitLayout();
@@ -70,7 +70,7 @@ void taiWidgetVariantBase::Constr(QWidget* gui_parent_) {
   EndLayout();
 }
 
-void taiWidgetVariantBase::Constr_impl(QWidget* gui_parent_, bool read_only_) {
+void taiWidgetVariantBase::Constr_impl(QWidget* gui_parent_, bool read_only_) { (void)gui_parent_;
   // type stuff
   QWidget* rep_ =  GetRep();
   QLabel* lbl = NULL;
@@ -139,7 +139,7 @@ void taiWidgetVariantBase::Constr_impl(QWidget* gui_parent_, bool read_only_) {
   stack->addWidget(tiVal);
 }
 
-void taiWidgetVariantBase::cmbVarType_itemChanged(int itm) {
+void taiWidgetVariantBase::cmbVarType_itemChanged(int itm) { (void)itm;
   if (m_updating != 0) return;
   ++m_updating;
   int vt; //Variant::VarType

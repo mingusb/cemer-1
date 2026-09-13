@@ -144,7 +144,7 @@ bool SetUnitsVar::GenCssBody_impl(Program* prog) {
   return true;
 }
 
-bool SetUnitsVar::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool SetUnitsVar::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   String dc = code;  dc.downcase();
   String tbn = GetToolbarName(); tbn.downcase(); tbn.gsub("\n", " ");
   String tn = GetTypeDef()->name; tn.downcase();

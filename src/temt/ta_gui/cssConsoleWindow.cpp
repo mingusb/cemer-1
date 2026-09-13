@@ -53,13 +53,13 @@ cssConsoleWindow::cssConsoleWindow(QWidget* parent) : inherited(parent) {
   QWidget* central_widget = new QWidget(this);
   setCentralWidget(central_widget);
   QVBoxLayout* outer_layout = new QVBoxLayout(central_widget); // overall layout is vertical
-  outer_layout->setMargin(0);
+  outer_layout->setContentsMargins(0, 0, 0, 0);
   outer_layout->setSpacing(0);
 
   // add a toolbar widget to the central widget
   outer_layout->addWidget(&toolbar_widget);
   
-  toolbar_layout.setMargin(0);
+  toolbar_layout.setContentsMargins(0, 0, 0, 0);
   toolbar_layout.setSpacing(0);
   toolbar_widget.setLayout(&toolbar_layout);
   
@@ -283,7 +283,6 @@ void cssConsoleWindow::LockedNewGeom(int left, int top, int width, int height) {
   if(!lock_to_proj) return;
   resize(width, height);
   move(left, top);
-  css_con->gotoEnd();
 }
 
 void cssConsoleWindow::resizeEvent(QResizeEvent* e) {
@@ -381,12 +380,13 @@ void cssConsoleWindow::changeEvent(QEvent* ev) {
 }
 
 void cssConsoleWindow::UpdateUi() {
-  css_con->displayPrompt(true);
+  css_con->displayPrompt();
 }
 
 void cssConsoleWindow::showEvent(QShowEvent* e) {
   inherited::showEvent(e);
-  QTimer::singleShot(150, css_con, SLOT(clear()));
+  css_con->displayPrompt();
+  css_con->setFocus(Qt::OtherFocusReason);
 }
 
 void cssConsoleWindow::ShowSearchBar() {

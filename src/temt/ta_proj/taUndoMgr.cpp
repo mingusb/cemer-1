@@ -104,7 +104,6 @@ bool taUndoMgr::SaveUndo(taBase* mod_obj, const String& action, taBase* save_top
   tabMisc::cur_undo_mod_obj = NULL;
   tabMisc::cur_undo_save_owner = NULL;
 
-  bool cur_is_new_src = false;
   
   // now encode diff for big saves!
   if(save_top == owner) {
@@ -140,7 +139,6 @@ bool taUndoMgr::SaveUndo(taBase* mod_obj, const String& action, taBase* save_top
       undo_srcs.CircAddLimit(cur_src, undo_depth); // large depth
       cur_src->InitFmRec(urec);                    // init
       taMisc::LogInfo("Undo: New source added!");
-      cur_is_new_src = true;
     }
     else {
       int size_diff = ABS(cur_src->save_data.length() - urec->save_data.length());
@@ -157,11 +155,10 @@ bool taUndoMgr::SaveUndo(taBase* mod_obj, const String& action, taBase* save_top
         undo_srcs.CircAddLimit(cur_src, undo_depth); // large depth
         cur_src->InitFmRec(urec);                    // init
         taMisc::LogInfo("Undo: New source added!");
-        cur_is_new_src = true;
       }
     }
     // note: ALWAYS need to encode the new undo rec -- the above undo_src's just determine
-    // what it is computed against (in case of cur_is_new_src, the diff is 0, but still
+    // what it is computed against (in case of a new source, the diff is 0, but still
     // needs to be encoded -- otherwise you store it 2x)
 #if (QT_VERSION >= 0x050000)
     int cur_running = diff_threads.n_running.loadAcquire();

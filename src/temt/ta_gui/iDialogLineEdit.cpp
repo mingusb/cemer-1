@@ -16,7 +16,7 @@
 #include "iDialogLineEdit.h"
 
 #include <QApplication>
-#include <QDesktopWidget>
+#include <QScreen>
 #include <QLayout>
 #include <QPushButton>
 #include <QSizePolicy>
@@ -32,7 +32,7 @@ iDialogLineEdit::iDialogLineEdit(QWidget* parent)
 }
 
 void iDialogLineEdit::init() {
-  QRect rect(QApplication::desktop()->screenGeometry(0));
+  QRect rect(screen()->availableGeometry());
   int wd = (rect.width() * 1) / 4;
   int ht = (rect.height() * 1) / 6;
   if(wd > 640) wd = 640;        // don't make it too wide..
@@ -45,7 +45,7 @@ void iDialogLineEdit::init() {
   lnEdit = new iLineEdit(this);
   layOuter->addWidget(lnEdit);
   QHBoxLayout* layButtons = new QHBoxLayout();
-  layButtons->setMargin(2);
+  layButtons->setContentsMargins(2, 2, 2, 2);
   layButtons->setSpacing(4);
   layOuter->addLayout(layButtons);
   layButtons->addStretch();

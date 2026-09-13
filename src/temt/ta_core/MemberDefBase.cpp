@@ -123,7 +123,6 @@ void MemberDefBase::InitOptsFlags() {
   if(HasOptFlag(OPTS_SET)) return;
   SetOptFlag(OPTS_SET);
   
-  TypeDef* own_typ = GetOwnerType();
   
   if(HasOption("HIDDEN"))
     SetOptFlag(HIDDEN);
@@ -170,7 +169,7 @@ void MemberDefBase::InitOptsFlags() {
   }
 #ifndef NO_TA_BASE
   if(type->IsActualTaBase() && type->InheritsFrom(&TA_taList_impl)) {
-    String def_child = own_typ->OptionAfter("DEF_CHILD_");
+    String def_child = GetOwnerType()->OptionAfter("DEF_CHILD_");
     if(def_child == name) {
       is_def_child = true;
       SetOptFlag(IS_DEF_CHILD);

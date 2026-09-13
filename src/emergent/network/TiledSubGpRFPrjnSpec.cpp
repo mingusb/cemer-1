@@ -40,8 +40,8 @@ void STATE_CLASS(TiledSubGpRFPrjnSpec)::Connect_impl(PRJN_STATE* prjn, NETWORK_S
   ru_geo.SetXY(recv_lay->gp_geom_x, recv_lay->gp_geom_y);
   TAVECTOR2I su_geo;
   su_geo.SetXY(send_lay->gp_geom_x, send_lay->gp_geom_y);
-  int ru_nunits = recv_lay->un_geom_n;
-  int su_nunits = send_lay->un_geom_n;
+
+
 
   if((ru_geo.x % recv_subgp_size.x != 0) || (ru_geo.y % recv_subgp_size.y != 0)) {
     net->StateError("TiledSubGpRFPrjnSpec::Connect_impl recv layer group geometry must be an even multiple of recv_subgp_size");
@@ -54,10 +54,8 @@ void STATE_CLASS(TiledSubGpRFPrjnSpec)::Connect_impl(PRJN_STATE* prjn, NETWORK_S
 
   // topographic receptive field geometry -- rf suffix means in receptive field coords
   TAVECTOR2I ru_geo_rf = ru_geo / recv_subgp_size;
-  TAVECTOR2I su_geo_rf = su_geo / send_subgp_size;
 
-  int sg_sz_tot = send_gp_size.Product();
-  int alloc_no = sg_sz_tot * su_nunits; // todo what happens with != subgp sizes??
+
 
   TAVECTOR2I ruc_rf;            // first loop over outer receptive field coords
   for(ruc_rf.y = 0; ruc_rf.y < ru_geo_rf.y; ruc_rf.y++) {

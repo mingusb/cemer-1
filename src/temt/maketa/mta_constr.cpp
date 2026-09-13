@@ -167,7 +167,7 @@ void MTA::TypeSpace_Gen(TypeSpace* ths, ostream& strm) {
 //////////////////////////////////////////
 // 	Includes
 
-void MTA::TypeSpace_Includes(TypeSpace* ths, ostream& strm, bool instances) {
+void MTA::TypeSpace_Includes(TypeSpace* ths, ostream& strm, bool instances) { (void)ths;
   strm << "#define __TA_COMPILE__\n";
   strm << "#include <TypeDef>\n";
   if(!instances) {
@@ -220,7 +220,11 @@ void MTA::TypeSpace_Includes(TypeSpace* ths, ostream& strm, bool instances) {
     strm << "\n";
   }
 
-  strm << "using namespace std;\n";
+  strm << "using std::istream; using std::ostream; using std::iostream;\n";
+  strm << "using std::ifstream; using std::ofstream; using std::fstream;\n";
+  strm << "using std::istringstream; using std::ostringstream; using std::stringstream;\n";
+  strm << "using std::streambuf; using std::ios; using std::streampos;\n";
+  strm << "using std::streamsize; using std::streamoff;\n";
   strm << "\n\n";
 }
 
@@ -1034,7 +1038,7 @@ void MTA::EnumSpace_Gen_Data(EnumSpace* ths, ostream& strm) {
     strm << "  {\"" << enm->name << "\",\"" << enm->desc << "\",\""
          << str_opts << "\"," << enm->enum_no << "},\n";
   }
-  strm << "  {NULL}};\n";
+  strm << "  {}};\n";
 }
 
 
@@ -1100,7 +1104,7 @@ void MTA::MemberSpace_Gen_Data(MemberSpace* ths, TypeDef* ownr, ostream& strm) {
     MemberDef* md = ths->FastEl(i);
     if(!MemberSpace_Filter_Member(ths, md))
       continue;
-    if(!md->is_static)
+    if(!md->is_static && !md->HasOption("COMMENT_UPDATE_ONLY"))
       n_non_statics++;
   }
 
@@ -1142,7 +1146,7 @@ void MTA::MemberSpace_Gen_Data(MemberSpace* ths, TypeDef* ownr, ostream& strm) {
     else                strm << ",0";
     strm << "},\n";
   }
-  strm << "  {NULL}};\n";
+  strm << "  {}};\n";
 }
 
 void MTA::TypeDef_Init_MemberData(TypeDef* ths, ostream& strm) {
@@ -1231,7 +1235,7 @@ void MTA::MethodDef_Gen_ArgData(MethodDef* ths, TypeDef* ownr, ostream& strm) {
     strm << "  {" << tpfld << ",\"" << ths->arg_names[i] << "\",\""
          << ths->arg_defs[i] << "\"},\n";
   }
-  strm << "  {NULL}};\n";
+  strm << "  {}};\n";
 }
 
 
@@ -1282,7 +1286,7 @@ void MTA::MethodSpace_Gen_Data(MethodSpace* ths, TypeDef* ownr, ostream& strm) {
 
     strm << "},\n";
   }
-  strm << "  {NULL}};\n";
+  strm << "  {}};\n";
 }
 
 
@@ -1336,15 +1340,6 @@ bool MTA::PropertySpace_Filter_Property(PropertySpace* ths, PropertyDef* md) {
 void MTA::PropertySpace_Gen_Data(PropertySpace* ths, TypeDef* ownr, ostream& strm) {
   String mbr_off_nm;
 
-  int n_non_statics = 0;
-  for(int i=0; i<ths->size; i++) {
-    PropertyDef* md = dynamic_cast<PropertyDef*>(ths->FastEl(i));
-    if(!PropertySpace_Filter_Property(ths, md))
-      continue;
-    if(!md->is_static)
-      n_non_statics++;
-  }
-
   strm << "\nstatic PropertyDef_data TA_" << ownr->GetUniqueName() << "_PropertyDef[]={\n";
 
   for(int i=0; i<ths->size; i++) {
@@ -1379,7 +1374,7 @@ void MTA::PropertySpace_Gen_Data(PropertySpace* ths, TypeDef* ownr, ostream& str
     }
     strm << "},\n";
   }
-  strm << "  {NULL}};\n";
+  strm << "  {}};\n";
 }
 
 void MTA::TypeDef_Init_PropertyData(TypeDef* ths, ostream& strm) {
@@ -1415,7 +1410,7 @@ void MTA::TypeSpace_Gen_TypeInit(TypeSpace* ths, ostream& strm) {
     strm << win_dll_str << " ";
 #endif
   strm << "void ta_TypeInit_" << trg_basename << "() {\n";
-  strm << "  TypeDef* sbt = NULL;\n\n";
+
 
   for(int i=0; i<ths->size; i++) {
     TypeDef_Gen_TypeInit(ths->FastEl(i), strm);
@@ -1462,7 +1457,7 @@ void MTA::SubTypeSpace_Gen_Init(TypeSpace* ths, TypeDef* ownr, ostream& strm) {
     String str_inh_opts = taMisc::StrArrayToChar(sbt->inh_opts);
     String str_lists = taMisc::StrArrayToChar(sbt->lists);
 
-    strm << "  sbt = new TypeDef(\"" << sbt->name << "\", \"" << sbt->desc << "\", ";
+    strm << "  { auto* sbt = new TypeDef(\"" << sbt->name << "\", \"" << sbt->desc << "\", ";
     strm << "\n\t\"" << str_inh_opts << "\", \"" << str_opts << "\", \"";
     strm << str_lists << "\", ";
     strm << "\"" << sbt->source_file << "\", " << String(sbt->source_start)
@@ -1473,7 +1468,7 @@ void MTA::SubTypeSpace_Gen_Init(TypeSpace* ths, TypeDef* ownr, ostream& strm) {
     String sbt_ref = "sbt->";
     TypeDef_Gen_AddAllParents(sbt, sbt_ref, strm);
 
-    strm << "  TA_" << ownr->GetUniqueName() << ".sub_types.Add(sbt);\n";
+    strm << "  TA_" << ownr->GetUniqueName() << ".sub_types.Add(sbt); }\n";
   }
 }
 
@@ -1656,4 +1651,3 @@ void MTA::TypeDef_Gen_InstInit(TypeDef* ths, ostream& strm) {
     }
   }
 }
-

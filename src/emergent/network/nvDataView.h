@@ -35,7 +35,7 @@ public:
   NetView*              getNetView();
 
   virtual void          setDefaultColor() {} // restore to its default color
-  virtual void          setHighlightColor(const T3Color& color) {}
+  virtual void          setHighlightColor(const T3Color& color) { (void)color;}
   // used for highlighting in gui, esp lay/prjn
 
   void         CutLinks() override;
@@ -43,7 +43,7 @@ public:
   TA_BASEFUNS(nvDataView)
 
 private:
-  void Copy_(const nvDataView& cp) {m_nv = NULL;}
+  void Copy_(const nvDataView& cp) { (void)cp;m_nv = NULL;}
   void                  Initialize();
   void                  Destroy() {}
 

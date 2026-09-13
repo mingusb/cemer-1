@@ -167,7 +167,7 @@ String DataLoop::GetDisplayName() const {
   return rval;
 }
 
-bool DataLoop::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool DataLoop::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if (CvtFmCodeCheckNames(code))
     return true;
   

@@ -40,7 +40,7 @@ QObject* ISelectable::clipHandlerObj() const {
   return (host_) ? host_->clipHandlerObj() : NULL;
 }
 
-taiSigLink* ISelectable::clipParLink(GuiContext sh_typ) const {
+taiSigLink* ISelectable::clipParLink(GuiContext sh_typ) const { (void)sh_typ;
   return par_link();
 }
 

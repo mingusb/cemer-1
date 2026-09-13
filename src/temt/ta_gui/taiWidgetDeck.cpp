@@ -27,7 +27,7 @@ taiWidgetDeck::taiWidgetDeck(TypeDef* typ_, IWidgetHost* host_, taiWidget* par, 
   SetRep(MakeLayoutWidget(gui_parent_));
   if (host != NULL) {
     QPalette pal = rep()->palette();
-    pal.setColor(QPalette::Background, host->colorOfCurRow());
+    pal.setColor(QPalette::Window, host->colorOfCurRow());
     rep()->setPalette(pal); 
   }
 }

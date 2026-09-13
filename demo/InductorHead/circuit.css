@@ -1,0 +1,147 @@
+// Exact constructed two-head attention circuit. Head 1 copies the previous
+// token embedding into a separate key subspace. Head 2 compares the current
+// token query to that subspace, applies a causal softmax and copies values.
+int_Matrix ih_tokens;
+float_Matrix ih_embeddings;
+float_Matrix ih_keys;
+float_Matrix ih_attention;
+float_Matrix ih_values;
+float_Matrix ih_prediction;
+ih_tokens.SetGeom(1, ih_n);
+ih_embeddings.SetGeom(2, ih_n, ih_v);
+ih_keys.SetGeom(2, ih_n, ih_v);
+ih_attention.SetGeom(2, ih_n, ih_n);
+ih_values.SetGeom(2, ih_n, ih_v);
+ih_prediction.SetGeom(1, ih_v);
+ih_embeddings.InitVals(0.0);
+ih_keys.InitVals(0.0);
+ih_attention.InitVals(0.0);
+ih_values.InitVals(0.0);
+ih_prediction.InitVals(0.0);
+int ih_i;
+int ih_j;
+int ih_k;
+for(ih_i = 0; ih_i < ih_n; ih_i++) {
+  ih_tokens[ih_i] = ih_sequence->GetVal("token", ih_i);
+  if(ih_tokens[ih_i] < 0 || ih_tokens[ih_i] >= ih_v) {
+    ih_cfg->SetVar("status", "Token outside vocabulary. Generate a new sequence.");
+    ret_val = -1;
+    return;
+  }
+  int ih_current_token = ih_tokens[ih_i];
+  ih_embeddings[ih_i, ih_current_token] = 1.0;
+  if(ih_i > 0 && !ih_ablate_previous) {
+    int ih_previous_token = ih_tokens[ih_i - 1];
+    ih_keys[ih_i, ih_previous_token] = 1.0;
+  }
+}
+for(ih_i = 1; ih_i < ih_n; ih_i++) {
+  double ih_total = 0.0;
+  int ih_query_token = ih_tokens[ih_i];
+  // j=0 has no predecessor key. The standard causal mask permits j<=i;
+  // every future source j>i remains exactly zero.
+  for(ih_j = 1; ih_j <= ih_i; ih_j++) {
+    double ih_match = ih_keys[ih_j, ih_query_token];
+    double ih_weight = exp((ih_match - 1.0) / ih_temp);
+    ih_attention[ih_j, ih_i] = ih_weight;
+    ih_total += ih_weight;
+  }
+  for(ih_j = 1; ih_j <= ih_i; ih_j++)
+    ih_attention[ih_j, ih_i] = ih_attention[ih_j, ih_i] / ih_total;
+}
+for(ih_j = 1; ih_j <= ih_cursor; ih_j++) {
+  double ih_mass = ih_attention[ih_j, ih_cursor];
+  if(ih_ablate_induction) ih_mass = 0.0;
+  int ih_value_token = ih_tokens[ih_j];
+  ih_values[ih_j, ih_value_token] = ih_mass;
+  ih_prediction[ih_value_token] += ih_mass;
+}
+int ih_predicted = -1;
+double ih_best = 0.0;
+for(ih_k = 0; ih_k < ih_v; ih_k++) {
+  if(ih_prediction[ih_k] > ih_best) {
+    ih_best = ih_prediction[ih_k];
+    ih_predicted = ih_k;
+  }
+}
+int ih_target = ih_sequence->GetVal("next_token", ih_cursor);
+ih_cfg->SetVar("prediction", ih_predicted);
+ih_cfg->SetVar("target", ih_target);
+ih_cfg->SetVar("confidence", ih_best);
+ih_cfg->SetVar("status", "Query " + String(ih_tokens[ih_cursor]) +
+  " at position " + String(ih_cursor) + " predicts " + String(ih_predicted) +
+  "; repeated-pattern target " + String(ih_target));
+
+// Keep inspectable DataTable matrices and real Network unit state in sync.
+bool ih_resize_table = ih_states->data.size != 5;
+if(!ih_resize_table) {
+  DataCol* ih_first_column = ih_states->data[0];
+  ih_resize_table = ih_first_column->cell_geom.dim(0) != ih_n ||
+                    ih_first_column->cell_geom.dim(1) != ih_v;
+}
+if(ih_resize_table) {
+  ih_states->RemoveAllCols();
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, "TokenEmbeddings", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, "PreviousTokenKeys", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, "CausalAttention", 2, ih_n, ih_n);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, "CopiedValues", 2, ih_n, ih_v);
+  ih_states->NewColMatrix(DataCol::VT_FLOAT, "Prediction", 1, ih_v);
+  ih_states->AddRows(1);
+ }
+ih_states->SetValAsMatrix(ih_embeddings, "TokenEmbeddings", 0);
+ih_states->SetValAsMatrix(ih_keys, "PreviousTokenKeys", 0);
+ih_states->SetValAsMatrix(ih_attention, "CausalAttention", 0);
+ih_states->SetValAsMatrix(ih_values, "CopiedValues", 0);
+ih_states->SetValAsMatrix(ih_prediction, "Prediction", 0);
+
+Layer* ih_token_layer = ih_net->layers["Token_Embeddings"];
+Layer* ih_key_layer = ih_net->layers["Previous_Token_Keys"];
+Layer* ih_query_layer = ih_net->layers["Current_Query"];
+Layer* ih_attn_layer = ih_net->layers["Causal_Attention"];
+Layer* ih_value_layer = ih_net->layers["Copied_Values"];
+Layer* ih_pred_layer = ih_net->layers["Next_Token_Prediction"];
+if(ih_token_layer->un_geom.x != ih_n || ih_token_layer->un_geom.y != ih_v ||
+   ih_token_layer->n_units_built == 0) {
+  ih_token_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_key_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_query_layer->SetLayerUnitGeom(1, ih_v);
+  ih_attn_layer->SetLayerUnitGeom(ih_n, ih_n);
+  ih_value_layer->SetLayerUnitGeom(ih_n, ih_v);
+  ih_pred_layer->SetLayerUnitGeom(1, ih_v);
+  ih_token_layer->SetAbsPos(0, 0, 0);
+  ih_key_layer->SetAbsPos(0, ih_v + 3, 3);
+  ih_query_layer->SetAbsPos(ih_n + 4, ih_v + 3, 3);
+  ih_attn_layer->SetAbsPos(0, 2 * (ih_v + 3), 6);
+  ih_value_layer->SetAbsPos(0, 2 * (ih_v + 3) + ih_n + 4, 9);
+  ih_pred_layer->SetAbsPos(ih_n + 4, 2 * (ih_v + 3) + ih_n + 4, 12);
+  ih_net->Build();
+  ih_net->Init_Weights();
+}
+for(ih_i = 0; ih_i < 6; ih_i++) {
+  Layer* ih_label_layer = ih_net->layers[ih_i];
+  ih_label_layer->SetUnitNames(true);
+}
+for(ih_j = 0; ih_j < ih_n; ih_j++) {
+  for(ih_k = 0; ih_k < ih_v; ih_k++) {
+    ih_token_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_embeddings[ih_j, ih_k];
+    ih_key_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_keys[ih_j, ih_k];
+    ih_value_layer->GetUnitFlatXY(ih_j, ih_k)->act = ih_values[ih_j, ih_k];
+    String ih_label = String(ih_j) + ":" + String(ih_k);
+    ih_token_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+    ih_key_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+    ih_value_layer->SetUnitNameIdx(ih_k * ih_n + ih_j, ih_label);
+  }
+  for(ih_i = 0; ih_i < ih_n; ih_i++) {
+    ih_attn_layer->GetUnitFlatXY(ih_j, ih_i)->act = ih_attention[ih_j, ih_i];
+    ih_attn_layer->SetUnitNameIdx(ih_i * ih_n + ih_j, String(ih_i) + "<-" + String(ih_j));
+  }
+}
+for(ih_k = 0; ih_k < ih_v; ih_k++) {
+  ih_query_layer->GetUnitIdx(ih_k)->act = (ih_k == ih_tokens[ih_cursor]);
+  ih_pred_layer->GetUnitIdx(ih_k)->act = ih_prediction[ih_k];
+  ih_query_layer->SetUnitNameIdx(ih_k, String(ih_k));
+  ih_pred_layer->SetUnitNameIdx(ih_k, String(ih_k));
+}
+ih_net->UpdateAllViews();
+ih_states->UpdateAllViews();
+ih_sequence->UpdateAllViews();

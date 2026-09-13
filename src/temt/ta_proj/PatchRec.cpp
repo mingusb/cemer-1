@@ -68,7 +68,7 @@ int PatchRec::GetSpecialState() const {
   return 0;
 }
 
-taBase* PatchRec::CheckObjType(taProject* proj, taBase* obj, const String& path_used) {
+taBase* PatchRec::CheckObjType(taProject* proj, taBase* obj, const String& path_used) { (void)proj;
   if(!obj) return obj;
   if(!obj->InheritsFromName(obj_type)) {
     // todo: maybe prompt user for finding something else instead?
@@ -363,7 +363,7 @@ bool PatchRec::ApplyPatch_Insert(taProject* proj) {
 // new
 
 
-bool PatchRec::NewRec_impl(ObjDiff* diff, bool a_or_b, taBase* obj, const String& val) {
+bool PatchRec::NewRec_impl(ObjDiff* diff, bool a_or_b, taBase* obj, const String& val) { (void)a_or_b; (void)diff;
   if(obj) {
     obj_path_names = obj->GetPathFromProj();
     obj_path_idx = obj->GetPath(obj->GetThisOrOwner(&TA_taProject));
@@ -538,7 +538,7 @@ int PatchRec::FlagDuplicate(PatchRec* other, const String& info) {
 }
 
 int PatchRec::ConflictOrDupeCheck(PatchRec* other) {
-  int rval = 0;                 // nothing
+
   String info;
   if(obj_path_names != other->obj_path_names)
     return 0;                   // nothing

@@ -25,7 +25,7 @@ class iPanelOfDocView;
 #include <QWebEngineView>
 #include <QWebEnginePage>
 class QWebEngineProfile;
-class QWebEngineDownloadItem;
+class QWebEngineDownloadRequest;
 class QAuthenticator;
 #elif USE_QT_WEBVIEW
 #include <QWebView>
@@ -49,7 +49,7 @@ public:
   iWebPage(QWebEngineProfile *profile, QObject *parent = Q_NULLPTR);
     
 protected:
-  bool acceptNavigationRequest(const QUrl &url, NavigationType type, bool isMainFrame);
+  bool acceptNavigationRequest(const QUrl &url, NavigationType type, bool isMainFrame) override;
 };
 
 
@@ -73,7 +73,7 @@ public:
   iWebView(QWidget* parent = 0, iPanelOfDocView* docview = 0);
 
 public slots:
-  void  downloadRequested(QWebEngineDownloadItem*);
+  void  downloadRequested(QWebEngineDownloadRequest*);
   void  authenticationRequired(const QUrl& url, QAuthenticator* auth);
   void  proxyAuthenticationRequired(const QUrl& url, QAuthenticator* auth, const QString& );
   
@@ -132,9 +132,9 @@ public:
   // owning doc view
 
   QUrl url() { QUrl url; return url; }
-  void load(const QUrl& url) { };
+  void load(const QUrl& url) { (void)url; };
 
-  void setHtml(const QString& text, const QUrl& url) { inherited::setHtml(text); }
+  void setHtml(const QString& text, const QUrl& url) { (void)url; inherited::setHtml(text); }
   using inherited::setHtml;
 
   QString selectedText() { return ""; }

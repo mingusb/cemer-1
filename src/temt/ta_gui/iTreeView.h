@@ -257,7 +257,7 @@ protected:
   virtual void          RestoreTreeState_impl(iTreeViewItem* node, String_Array& tree_state);
 
 #ifndef __MAKETA__
-  QMimeData*   mimeData(const QList<QTreeWidgetItem*> items) const override;
+  QMimeData*   mimeData(const QList<QTreeWidgetItem*>& items) const override;
     // we replace this and provide the ta custom mime data (not the treewidget data)
   QStringList  mimeTypes () const override; // for dnd to work, we just permit almost anything via "text/plain", then decide on the drop whether to accept
 #endif

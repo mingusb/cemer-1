@@ -47,7 +47,7 @@ void ProgLine_List::FullListingHTML(String& script_code) {
   for(int i=1; i<size; i++) {
     ProgLine* pl = FastEl(i);
     String ci = "<p style=\"text-indent:" + String(pl->indent*10) + "px";
-    if(pl->prog_el) {
+    if(pl->prog_el && taMisc::view_colors) {
       String dec_key = pl->prog_el->GetTypeDecoKey(); // nil if none
       ViewColor* vc = taMisc::view_colors->FindName(dec_key);
       if(vc) {

@@ -55,8 +55,8 @@ void STATE_CLASS(GpTesselPrjnSpec)::Connect_impl
     return;
   }
 
-  int ru_nunits = recv_lay->un_geom_n;
-  int su_nunits = send_lay->un_geom_n;
+
+
 
   TAVECTOR2I ru_geo;
   ru_geo.SetXY(recv_lay->gp_geom_x, recv_lay->gp_geom_y);
@@ -98,10 +98,9 @@ void STATE_CLASS(GpTesselPrjnSpec)::GetCtrFmRecv(TAVECTOR2I& sctr, TAVECTOR2I ru
 void STATE_CLASS(GpTesselPrjnSpec)::Connect_RecvGp
   (PRJN_STATE* prjn, NETWORK_STATE* net, int rgpidx, const TAVECTOR2I& ruc, int make_cons) {
 
-  LAYER_STATE* recv_lay = prjn->GetRecvLayer(net);
   LAYER_STATE* send_lay = prjn->GetSendLayer(net);
-  int ru_nunits = recv_lay->un_geom_n;
-  int su_nunits = send_lay->un_geom_n;
+
+
 
   TAVECTOR2I su_geo;
   su_geo.SetXY(send_lay->gp_geom_x, send_lay->gp_geom_y);

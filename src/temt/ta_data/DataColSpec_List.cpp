@@ -22,7 +22,7 @@ TA_BASEFUNS_CTORS_DEFN(DataColSpec_List);
 
 const KeyString DataColSpec_List::GetListColKey(int col) const 
 {
-  return (KeyString)col;
+  return QString::number(col);
 }
 
 String DataColSpec_List::GetColHeading(const KeyString& key) const {

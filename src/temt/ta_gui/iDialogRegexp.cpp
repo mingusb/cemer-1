@@ -35,6 +35,7 @@
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
 #include <QKeyEvent>
+#include <QRegularExpression>
 
 
 const QString iDialogRegexp::DOT_STAR(".*");
@@ -249,7 +250,7 @@ void iDialogRegexp::LayoutTableView(
 #if (QT_VERSION >= 0x050000)
   header->setSectionResizeMode(INDEX_COL, QHeaderView::ResizeToContents);
 #else
-  header->setResizeMode(INDEX_COL, QHeaderView::ResizeToContents);
+  header->setSectionResizeMode(INDEX_COL, QHeaderView::ResizeToContents);
 #endif
 
   // Resize other columns to take up all available space equally.
@@ -258,7 +259,7 @@ void iDialogRegexp::LayoutTableView(
 #if (QT_VERSION >= 0x050000)
     header->setSectionResizeMode(col, QHeaderView::Stretch);
 #else
-    header->setResizeMode(col, QHeaderView::Stretch);
+    header->setSectionResizeMode(col, QHeaderView::Stretch);
 #endif
   }
 
@@ -638,7 +639,7 @@ void iDialogRegexp::BuildCombos(QString regexp)
     foreach (QString choice, choices) {
       // Set the choice as DisplayRole and the regular-expression-escaped
       // choice as UserRole.
-      combo->addItem(choice, QRegExp::escape(choice));
+      combo->addItem(choice, QRegularExpression::escape(choice));
     }
   }
 }
@@ -655,8 +656,7 @@ QStringList iDialogRegexp::GetComboChoices(QString regexp, int part)
     regexp = JoinRegexp(regexp_parts);
   }
 
-  // Make a QRegExp object based on the resulting string.
-  const QRegExp temp_regexp(regexp);
+  const QRegularExpression temp_regexp(regexp);
 
   // Check each label for a match.  Build up a set of choices for this
   // combo box based on matching labels.
@@ -677,7 +677,7 @@ QStringList iDialogRegexp::GetComboChoices(QString regexp, int part)
   }
 
   // Sort the choices for this combo-box.
-  QStringList strings = part_choices.toList();
+  QStringList strings = part_choices.values();
   strings.sort();
   return strings;
 }
@@ -727,8 +727,8 @@ void iDialogRegexp::EnableEditBoxes(QString regexp)
 void iDialogRegexp::ApplyFilters(QList<QListWidgetItem *> selected_items)
 {
   // Build the regexp and apply it to the proxy model.
-  const QRegExp regexp(JoinRegexpAlternatives(selected_items));
-  m_proxy_model->setFilterRegExp(regexp);
+  const QRegularExpression regexp(JoinRegexpAlternatives(selected_items));
+  m_proxy_model->setFilterRegularExpression(regexp);
 }
 
 QStringList iDialogRegexp::SplitRegexpAlternatives(QString regexp)
@@ -740,7 +740,7 @@ QStringList iDialogRegexp::SplitRegexpAlternatives(QString regexp)
     regexp.chop(1);
     regexp.remove(0,1);
   }
-  return regexp.split("|", QString::SkipEmptyParts);
+  return regexp.split("|", Qt::SkipEmptyParts);
 }
 
 QString iDialogRegexp::JoinRegexpAlternatives(QList<QListWidgetItem *> items)
@@ -779,7 +779,7 @@ QString iDialogRegexp::JoinRegexp(const QStringList &regexp_parts)
 QString iDialogRegexp::GetEscapedSeparator()
 {
   QString separator = m_populator->getSeparator();
-  return QRegExp::escape(separator);
+  return QRegularExpression::escape(separator);
 }
 
 void iDialogRegexp::setApplyEnabled(bool enabled)
@@ -788,4 +788,3 @@ void iDialogRegexp::setApplyEnabled(bool enabled)
   btnApply->setEnabled(enabled);
   btnReset->setEnabled(enabled);
 }
-

@@ -44,14 +44,14 @@ iEditGrid::iEditGrid (bool header_, int hmargin_, int vmargin_, QWidget* parent)
   init(header_, hmargin_, vmargin_, 1, 1);
 }
 
-iEditGrid::iEditGrid (bool header_, int hmargin_, int vmargin_, int rows_, 
+iEditGrid::iEditGrid (bool header_, int hmargin_, int vmargin_, int rows_,
   int cols_, QWidget* parent)
 : QWidget(parent)
 {
   init(header_, hmargin_, vmargin_, rows_, cols_);
 }
 
-iEditGrid::iEditGrid (bool names_, bool header_, int hmargin_, int vmargin_, int rows_, 
+iEditGrid::iEditGrid (bool names_, bool header_, int hmargin_, int vmargin_, int rows_,
   int cols_, QWidget* parent)
 : QWidget(parent)
 {
@@ -59,7 +59,7 @@ iEditGrid::iEditGrid (bool names_, bool header_, int hmargin_, int vmargin_, int
 }
 
 void iEditGrid::init(bool header_, int hmargin_, int vmargin_,
-  int rows_, int cols_, bool names_) 
+  int rows_, int cols_, bool names_)
 {
   mnames = names_;
   mhead = (header_) ? 1 : 0;
@@ -84,7 +84,7 @@ void iEditGrid::init(bool header_, int hmargin_, int vmargin_,
 void iEditGrid::adjustMinHeight() {
   int min_rows = MAX(mmin_vis_rows, mrows);
   /*obs provide room for scrollbar
-  int new_body_ht = ((min_rows + mhead) * (mrow_height + (2 * mvmargin))) + 
+  int new_body_ht = ((min_rows + mhead) * (mrow_height + (2 * mvmargin))) +
     (((mrow_height + (2 * mvmargin)) * 2) / 3);*/
   //note: we use iScrollbar which always provides room for sb area
   int new_body_ht = ((min_rows + mhead) * (mrow_height + (2 * mvmargin)));
@@ -96,7 +96,7 @@ void iEditGrid::adjustMinHeight() {
 void iEditGrid::createContent() {
 
   layOuter = new QHBoxLayout(this);
-  layOuter->setMargin(0);
+  layOuter->setContentsMargins(0, 0, 0, 0);
   layOuter->setSpacing(0);
 //  layNamesOuter = new QVBoxLayout();
 //  layOuter->addLayout(layNamesOuter);
@@ -104,21 +104,21 @@ void iEditGrid::createContent() {
   if (mnames) {
     bodyNames = new iStripeWidget(this);
     vbl = new QVBoxLayout(bodyNames);
-    vbl->setMargin(0); // shift for scrollarea frame size
-    if (mhead > 0) 
+    vbl->setContentsMargins(0, 0, 0, 0); // shift for scrollarea frame size
+    if (mhead > 0)
       vbl->addSpacing(mrow_height + GROUP_FRAME_SIZE); // also added to stripe widget's top height
     else
       vbl->addSpacing(GROUP_FRAME_SIZE); // also added to stripe widget's top height
-    layNames = new QGridLayout(); 
+    layNames = new QGridLayout();
     layNames->setSpacing(0);
-    layNames->setMargin(0);
+    layNames->setContentsMargins(0, 0, 0, 0);
     vbl->addLayout(layNames);
     vbl->addStretch();
     layOuter->addWidget(bodyNames);
   }
 //nn  layOuter->addSpacing(mhmargin);
   scrBody = new iScrollArea(this);
-//  scrBody->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);  
+//  scrBody->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   scrBody->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // use outer container for scrolling, to keep names in sync
   scrBody->setWidgetResizable(true);
   body = new iStripeWidget();		// parent for the data items
@@ -126,13 +126,13 @@ void iEditGrid::createContent() {
   scrBody->setWidget(body);
 
   vbl = new QVBoxLayout(body);
-  vbl->setMargin(0);
+  vbl->setContentsMargins(0, 0, 0, 0);
   layBody = new QGridLayout(); //note: vmargin passed for "spacing", applies to both dims
   layBody->setSpacing(0);
-  layBody->setMargin(0);
+  layBody->setContentsMargins(0, 0, 0, 0);
   vbl->addLayout(layBody);
   vbl->addStretch();
-  layOuter->addWidget(scrBody); 
+  layOuter->addWidget(scrBody);
   setRowHeight(mrow_height, true); // force it
   resizeRows_impl();
 }
@@ -247,13 +247,13 @@ void iEditGrid::setRowHeight(int value, bool force) {
 
 void iEditGrid::setPaletteBackgroundColor3 (const QColor& c) {
   QPalette pal(palette());
-  pal.setColor(QPalette::Background,c); 
+  pal.setColor(QPalette::Window,c);
   setPalette(pal);
   pal = body->palette();
-  pal.setColor(QPalette::Background,c); 
+  pal.setColor(QPalette::Window,c);
   body->setPalette(pal); //note: may not be necessary
   pal = scrBody->viewport()->palette();
-  pal.setColor(QPalette::Background,c); 
+  pal.setColor(QPalette::Window,c);
   scrBody->viewport()->setPalette(pal);
 }
 
@@ -262,8 +262,8 @@ void iEditGrid::setRowNameWidget(int row, QWidget* name) {
   //NOTE: there is no heading row in the body widget, so row=row (no mhead adjust)
   checkSetParent(name, (QWidget*)bodyNames);
   layNames->setRowMinimumHeight(row,  mrow_height + (2 * mvmargin));
-  layNames->addItem(new QSpacerItem(mhmargin, mrow_height + (2 * mvmargin), 
-    QSizePolicy::Fixed, QSizePolicy::Fixed), row, 0); 
+  layNames->addItem(new QSpacerItem(mhmargin, mrow_height + (2 * mvmargin),
+    QSizePolicy::Fixed, QSizePolicy::Fixed), row, 0);
 
   layNames->addWidget(name, row, 0, (Qt::AlignLeft | Qt::AlignVCenter));
   layNames->addItem(new QSpacerItem(mhmargin, mrow_height + (2 * mvmargin),
@@ -284,11 +284,11 @@ void iEditGrid::updateDimensions(int row, int col) {
     if (mnames) {
       layNames->addItem(
         new QSpacerItem(0, strut, QSizePolicy::Fixed, QSizePolicy::Minimum),
-        row + mhead + 1, 0); 
+        row + mhead + 1, 0);
     }
     layBody->addItem(
         new QSpacerItem(0, strut, QSizePolicy::Fixed, QSizePolicy::Minimum),
-        row + mhead + 1, 0); 
+        row + mhead + 1, 0);
   */
 //TODO: when added, then all the rows get squished , when not, then no room for the scrollbar!
 /*    layNames->setRowMinimumHeight(row + mhead + 1,  mrow_height + (2 * mvmargin));

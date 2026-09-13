@@ -2,7 +2,7 @@
 // {
 
 
-void STATE_CLASS(DRNUnitSpec)::Compute_Se(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+void STATE_CLASS(DRNUnitSpec)::Compute_Se(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   float pospv = 0.0f;
   int   pospv_n  = 0;
   float negpv = 0.0f;
@@ -80,7 +80,7 @@ void STATE_CLASS(DRNUnitSpec)::Compute_Se(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_S
   u->da = 0.0f;
 }
 
-void STATE_CLASS(DRNUnitSpec)::Send_Se(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+void STATE_CLASS(DRNUnitSpec)::Send_Se(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   const float snd_val = se.se_out_gain * u->sev;
   const int nsg = u->NSendConGps(net); 
   for(int g=0; g<nsg; g++) {

@@ -28,12 +28,14 @@ class taSound;
 
 // member includes:
 #include <QAudio>
+#include <QAudioFormat>
+#include <QByteArray>
 
 // declare all other types mentioned but not required to include:
 class QAudioDecoder;
 class QAudioFormat;
 class QString;
-class QAudioOutput;
+class QAudioSink;
 class QBuffer;
 class QByteArray;
 
@@ -57,7 +59,9 @@ public slots:
 protected:
   taSound*      sound;
   QAudioDecoder* decoder;
-  QAudioOutput*  output;
+  QAudioSink*  output;
+  QByteArray    decoded_data;
+  QAudioFormat  decoded_format;
   QByteArray    out_bary;
   QBuffer*      out_buff;
   bool          done_loading;

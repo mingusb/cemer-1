@@ -25,7 +25,7 @@ void RandomCall::Initialize() {
   object_type = &TA_Random;
 }
 
-bool RandomCall::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool RandomCall::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if(!code.contains("::")) return false;
   if(!code.contains('(')) return false;
   String lhs = code.before('(');

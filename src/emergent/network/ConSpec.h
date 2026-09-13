@@ -66,7 +66,7 @@ public:
   ////////////////////////////////////////////////////////////////////////////////
   //    The following are misc functionality not required for primary computing
 
-  virtual void          GetPrjnName(Projection& prjn, String& nm) { };
+  virtual void          GetPrjnName(Projection& prjn, String& nm) { (void)nm; (void)prjn; };
   // add anything special for this type of connection to the projection name -- default name (FM_from) is provided as a nm value, which this function can modify in any way
 
   virtual bool          CheckConfig_RecvCons(Projection* prjn, bool quiet=false);

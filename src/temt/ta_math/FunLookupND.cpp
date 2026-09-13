@@ -299,18 +299,16 @@ void FunLookupND::ShiftNorm(float desired_mean) {
   // end test code
 }
 
-void FunLookupND::MulNorm(float desired_mean) {
+void FunLookupND::MulNorm(float desired_mean) { (void)desired_mean;
   double pos_mag = 0;
   double neg_mag = 0;
 
-  double orig_mean = 0;
   for (int i = 0; i < mesh_pts.size; i++) {
     if (mesh_pts[i] > 0) {
       pos_mag += mesh_pts[i];
     } else {
       neg_mag -= mesh_pts[i];
     }
-    orig_mean += mesh_pts[i];
   }
   // debug code
   taMisc::DebugInfo("pos mag: ", String(pos_mag));

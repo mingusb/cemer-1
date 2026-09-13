@@ -54,7 +54,7 @@ String CssExpr::GetDisplayName() const {
   return expr.GetFullExpr();
 }
 
-bool CssExpr::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool CssExpr::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if(code.endsWith(';')) return true;
   // if(code.contains("=")) {
   //   String lhs = code.before("=");

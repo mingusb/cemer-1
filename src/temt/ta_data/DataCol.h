@@ -465,19 +465,19 @@ protected:
     // -ve row is from end (-1=last); note: returns -ve value if out of range, so must use with SafeEl_Flat
   virtual const Variant GetValAsVar_impl(int row, int cell) const;
   virtual const String  GetValAsString_impl(int row, int cell) const;
-  virtual double        GetValAsDouble_impl(int row, int cell) const { return 0.0; }
-  virtual float         GetValAsFloat_impl(int row, int cell) const { return 0.0f; }
-  virtual int           GetValAsInt_impl(int row, int cell) const { return 0; }
-  virtual bool          GetValAsBool_impl(int row, int cell) const { return false; }
+  virtual double        GetValAsDouble_impl(int row, int cell) const { (void)cell; (void)row; return 0.0; }
+  virtual float         GetValAsFloat_impl(int row, int cell) const { (void)cell; (void)row; return 0.0f; }
+  virtual int           GetValAsInt_impl(int row, int cell) const { (void)cell; (void)row; return 0; }
+  virtual bool          GetValAsBool_impl(int row, int cell) const { (void)cell; (void)row; return false; }
   virtual byte          GetValAsByte_impl(int row, int cell) const
   { return (byte)GetValAsInt_impl(row, cell); }
 
   // these all return true if value is successfully set
   virtual bool   SetValAsVar_impl(const Variant& val, int row, int cell);
   virtual bool   SetValAsString_impl(const String& val, int row, int cell);
-  virtual bool   SetValAsDouble_impl(double val, int row, int cell) {return false;}
-  virtual bool   SetValAsFloat_impl(float val, int row, int cell) { return false; }
-  virtual bool   SetValAsInt_impl(int val, int row, int cell)  { return false; }
+  virtual bool   SetValAsDouble_impl(double val, int row, int cell) { (void)cell; (void)row; (void)val;return false;}
+  virtual bool   SetValAsFloat_impl(float val, int row, int cell) { (void)cell; (void)row; (void)val; return false; }
+  virtual bool   SetValAsInt_impl(int val, int row, int cell)  { (void)cell; (void)row; (void)val; return false; }
   virtual bool   SetValAsBool_impl(bool val, int row, int cell);
   virtual bool   SetValAsByte_impl(byte val, int row, int cell)
   { return SetValAsInt_impl((int)val, row, cell); }

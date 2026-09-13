@@ -253,7 +253,7 @@ bool TypeItem::GetCondOpt(const String condkey, const TypeDef* base_td, const vo
 bool TypeItem::GetCondOptTest(const String condkey, const TypeDef* base_td, const void* base) const {
   bool is_on = false;   // defaults here make it return true if no opt spec'd at all
   bool val_is_eq = false;
-  bool rval = GetCondOpt(condkey, base_td, base, is_on, val_is_eq);
+  GetCondOpt(condkey, base_td, base, is_on, val_is_eq);
   return ((is_on && val_is_eq) || (!is_on && !val_is_eq));
 }
 

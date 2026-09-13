@@ -203,11 +203,11 @@ void BrainVolumeView::UpdateUnitViewBases(UnitState_cpp* src_u)
 }
 
 void BrainVolumeView::UpdateUnitViewBase_Con_impl(int midx, bool is_send, String nm, UnitState_cpp* src_u)
-{
+{ (void)is_send; (void)midx; (void)nm; (void)src_u;
 }
 
 void BrainVolumeView::UpdateUnitViewBase_Sub_impl(int midx, MemberDef* disp_md)
-{
+{ (void)disp_md; (void)midx;
 }
 
 void BrainVolumeView::UpdateUnitViewBase_Unit_impl(int midx, MemberDef* disp_md)
@@ -220,7 +220,7 @@ void BrainVolumeView::UpdateUnitViewBase_Unit_impl(int midx, MemberDef* disp_md)
 }
 
 void BrainVolumeView::UpdateAutoScale(bool& updated)
-{
+{ (void)updated;
 }
 
 bool BrainVolumeView::ColorBrain()
@@ -497,24 +497,21 @@ void BrainVolumeView::SliceAsTexture(BrainView::AnatomicalPlane p, int index, un
 void BrainVolumeView::SliceAsColorTexture(BrainView::AnatomicalPlane p, int index, unsigned char* data, NiftiReader* brain_data, NiftiReader* atlas_data)
 {
   taVector3i size(brain_data->XyzDimensions());
-  int plane_size(0), width(0), height(0), depth(0);
+  int plane_size(0), width(0), height(0);
   if (p == BrainView::AXIAL) {
     plane_size = size.x*size.y;
     width=size.x;
     height=size.y;
-    depth = size.z;
   }
   else if (p == BrainView::CORONAL) {
     plane_size = size.x*size.z;
     width=size.x;
     height=size.z;
-    depth = size.y;
   }
   else { //BrainView::SAGITTAL
     plane_size = size.y*size.z;
     width=size.y;
     height=size.z;
-    depth = size.x;
   }
   unsigned short* s = new unsigned short[plane_size];
   brain_data->Slice(static_cast<NiftiReader::AnatomicalPlane>(p), index, s);
@@ -814,7 +811,7 @@ void BrainVolumeView::CreateFaceSets()
   m_uvd_bases_map.clear();
 
   // create the maps
-  int i=0;
+
   FOREACH_ELEM_IN_GROUP_NESTED(Layer, lay, net->layers) {
     if (lay->lesioned() || lay->Iconified() || lay->brain_area.empty()) continue;
     // todo:
@@ -971,7 +968,7 @@ void BrainVolumeView::CreateFaceSets()
     int nidx = 0;
     int midx = 0;
     int uidx = 0;
-    foreach (Voxel* v, voxels) {
+    for (qsizetype voxel_index = 0; voxel_index < voxels.size(); ++voxel_index) {
       int c00_0 = uidx * n_per_vtx;
       int c10_0 = c00_0 + 1;
       int c01_0 = c00_0 + 2;
@@ -1295,7 +1292,7 @@ void BrainVolumeView::UpdateUnitValues_blocks() {
 }
 
 void BrainVolumeView::UpdateAtlasFaceValues(float alpha)
-{
+{ (void)alpha;
   // this method will control the transparency of the atlas face sets...and
   // should be called with a transparency value sepaarte and unique from that
   // which controls the brain itself...

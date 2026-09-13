@@ -24,7 +24,7 @@
 
 // member includes:
 #ifndef __MAKETA__
-#include <QTime>
+#include <QElapsedTimer>
 #endif
 #include <DataTable>
 
@@ -93,7 +93,7 @@ public:
   QAbstractButton*      btnStop;
   iTextBrowser*         results;      // list of result items
   QStatusBar*           status_bar;
-  QTime                 proc_events_timer;
+  QElapsedTimer                 proc_events_timer;
   
   bool                  interactive; // if false no editable UI elements
 
@@ -132,7 +132,7 @@ public: // ISigLinkClient interface
   void*        This() override {return (void*)this;}
   TypeDef*     GetTypeDef() const override {return &TA_iDialogSearch;}
   bool         ignoreSigEmit() const override {return true;}
-  void         SigLinkRecv(taSigLink*, int sls, void* op1, void* op2) override {}
+  void         SigLinkRecv(taSigLink*, int sls, void* op1, void* op2) override { (void)op1; (void)op2; (void)sls; }
   void         SigLinkDestroying(taSigLink* dl) override;
 
 

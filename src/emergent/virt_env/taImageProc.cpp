@@ -875,8 +875,6 @@ bool taImageProc::SampleImageWindow_float
   if(edge == BORDER) taImageProc::RenderBorder_float(in_img);
 
   rotate *= 2.0f * taMath_float::pi; // convert to radians
-  float rot_sin = sin(rotate);
-  float rot_cos = cos(rotate);
 
   if(nclrs > 1) { // rgb
     out_img.SetGeom(3, win_size.x, win_size.y, nclrs);

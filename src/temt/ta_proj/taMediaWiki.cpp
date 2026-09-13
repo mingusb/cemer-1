@@ -316,7 +316,7 @@ bool taMediaWiki::Logout(const String &wiki_name)
 //              FILE OPERATIONS
 
 bool taMediaWiki::UploadFile(const String& wiki_name, const String& local_file_name, bool new_revision, const String& wiki_file_name, const String& comment)
-{
+{ (void)new_revision;
   // Make sure wiki name is valid before doing anything else.
   String wikiUrl = GetApiURL(wiki_name);
   if (wikiUrl.empty()) { return false; }
@@ -429,7 +429,7 @@ bool taMediaWiki::DownloadFile(const String& wiki_name, const String& wiki_file_
               else { taMisc::Error("File download request returned a bad response or null file"); }
             }
 #if (QT_VERSION	> 0x040800)
-            else { taMisc::Error("File download request failed with error:", qPrintable(downReply->error())); }
+            else { taMisc::Error("File download request failed with error:", qPrintable(downReply->errorString())); }
 #else
             else { taMisc::Error("File download request failed with an error"); }
 #endif
@@ -835,7 +835,7 @@ bool taMediaWiki::QueryFiles(DataTable* results, const String& wiki_name,
 bool taMediaWiki::SearchPages(DataTable* results, const String& wiki_name,
                               const String& search_str, bool title_only,
                               const String& name_space, int max_results)
-{
+{ (void)name_space;
   // Make sure we have a valid data table to write to.
   if (!results) {
     taMisc::Warning("taMediaWiki::SearchPages -- results data table is NULL -- must supply a valid data table!");

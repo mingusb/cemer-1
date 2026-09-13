@@ -16,7 +16,7 @@
    LEABRA_LAYER_STATE*& vsmatrix_neg_D1_lay,   LEABRA_LAYER_STATE*& vsmatrix_neg_D2_lay);
   // get the recv layers..
   
-  INLINE void  Compute_NetinInteg(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) override { };
+  INLINE void  Compute_NetinInteg(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no; (void)u; };
   INLINE void  Compute_Act_Rate(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) override {
     if(Quarter_DeepRawNow(net->quarter)) {
       Compute_Lhb(u, net, thr_no);
@@ -30,8 +30,8 @@
     Compute_Act_Rate(u, net, thr_no);
   }
 
-  INLINE void   Compute_dWt(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { };
-  INLINE void   Compute_Weights(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { };
+  INLINE void   Compute_dWt(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no; (void)u; };
+  INLINE void   Compute_Weights(UNIT_STATE* u, NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no; (void)u; };
 
   INLINE void Initialize_core() {
     deep_raw_qtr = Q4;

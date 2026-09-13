@@ -1203,7 +1203,7 @@ void NetMonItem::SmartRef_SigDestroying(taSmartRef* ref, taBase* obj) {
 
 void NetMonItem::SmartRef_SigEmit(taSmartRef* ref, taBase* obj,
     int sls, void* op1_, void* op2_)
-{
+{ (void)obj; (void)op1_; (void)op2_; (void)ref; (void)sls;
 //NOTE: we get these here when script running and any member vars are updated --
 // don't update objects -- instead, we may want to use a RefList for the objects,
 // and thus detect deletion there.
@@ -1397,7 +1397,7 @@ void NetMonItem::ToggleOffFlag() {
   SigEmitUpdated();
 }
 
-void NetMonItem::GetMemberCompletionList(const MemberDef* md, const String& cur_txt, Completions& completions) {
+void NetMonItem::GetMemberCompletionList(const MemberDef* md, const String& cur_txt, Completions& completions) { (void)md;
   if (object_type) {
     MemberSpace mbr_space;
     TypeDef* special_td = ProgExprBase::GetSpecialCaseType(NULL, cur_txt);

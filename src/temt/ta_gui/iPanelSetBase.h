@@ -70,7 +70,7 @@ public: // ISigLinkClient interface
   TypeDef*     GetTypeDef() const override {return &TA_iPanelSetBase;}
 
 protected:
-  virtual void  setCurrentPanelId_impl(int id) {}
+  virtual void  setCurrentPanelId_impl(int id) { (void)id; }
   void          removeChild(QObject* obj);
   void          OnWindowBind_impl(iPanelViewer* itv) override;
 };

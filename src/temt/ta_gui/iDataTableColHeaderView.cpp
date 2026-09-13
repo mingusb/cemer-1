@@ -47,7 +47,7 @@ iDataTableColHeaderView::~iDataTableColHeaderView() {
 }
 
 void iDataTableColHeaderView::movedSection(int logicalIdx, int oldVisualIdx, int newVisualIdx)
-{
+{ (void)logicalIdx;
   if (m_section_move_complete == false) {
     m_section_move_complete = true;
     this->moveSection(newVisualIdx, oldVisualIdx);
@@ -67,7 +67,7 @@ void iDataTableColHeaderView::movedSection(int logicalIdx, int oldVisualIdx, int
 }
 
 void iDataTableColHeaderView::resizedSection(int columnIdx, int oldWidth, int newWidth)
-{
+{ (void)oldWidth;
   DataTable* dt = dynamic_cast<iDataTableView*>(parent())->dataTable();
   if (!dt)
     return;

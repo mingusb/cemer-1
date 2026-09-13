@@ -116,6 +116,9 @@ public:
   virtual bool          AddToolBar(ToolBar* tb); // add a new toolbar; true if added (won't add a duplicate)
   virtual ToolBar*      AddToolBarByType(TypeDef* typ, const String& tb_name); // add a new toolbar by type; return inst if added (won't add a duplicate)
 
+  virtual bool          ShowConsole(int minimum_height = 150);
+  // #CAT_Display show the CSS console below this project window, reserving at least this many logical pixels for its content
+
   virtual bool          SelectPanelTabNo(int tab_no);
   // select PanelViewer (middle edit panel) tab by number
   virtual bool          SelectPanelTabName(const String& tab_name);

@@ -58,12 +58,11 @@ void ActBasedRF::ConfigDataTable(DataTable* dt, Network* net) {
   FOREACH_ELEM_IN_GROUP(Layer, lay, net->layers) {
     if(lay->lesioned() || lay->Iconified()) continue; // iconified also excludes!
     if(excl.FindEl(lay->name) >= 0) continue; // exclude
-    DataCol* da;
     if(lay->unit_groups)
-      da = dt->FindMakeColName(lay->name, idx, VT_FLOAT, 4, lay->un_geom.x,
+      dt->FindMakeColName(lay->name, idx, VT_FLOAT, 4, lay->un_geom.x,
                           lay->un_geom.y, lay->gp_geom.x, lay->gp_geom.y);
     else
-      da = dt->FindMakeColName(lay->name, idx, VT_FLOAT, 2, lay->un_geom.x,
+      dt->FindMakeColName(lay->name, idx, VT_FLOAT, 2, lay->un_geom.x,
                           lay->un_geom.y);
   }
   dt->EnforceRows(rows);

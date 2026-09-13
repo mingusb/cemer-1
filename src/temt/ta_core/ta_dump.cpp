@@ -105,7 +105,7 @@ bool MemberDef::DumpMember(void* par) {
 }
 
 
-int MemberDef::Dump_Save(ostream& strm, void* base, void* par, int indent) {
+int MemberDef::Dump_Save(ostream& strm, void* base, void* par, int indent) { (void)par;
   //note: confusing, but base is actually the parent
   if(!DumpMember(base))
     return false;
@@ -183,7 +183,7 @@ int MemberDef::Dump_Save(ostream& strm, void* base, void* par, int indent) {
 }
 
 
-int MemberDef::Dump_SaveR(ostream& strm, void* base, void* par, int indent) {
+int MemberDef::Dump_SaveR(ostream& strm, void* base, void* par, int indent) { (void)par;
   //note: confusing, but base is actually the parent
   if(!DumpMember(base))
     return false;

@@ -36,7 +36,7 @@ taiTreeNode::taiTreeNode(taiSigLink* link_, MemberDef* md_, iTreeView* parent_,
   init(link_, dn_flags_);
 }
 
-void taiTreeNode::init(taiSigLink* link_, int dn_flags_) {
+void taiTreeNode::init(taiSigLink* link_, int dn_flags_) { (void)dn_flags_; (void)link_;
   last_child_node = NULL;
   last_member_node = NULL;
 }

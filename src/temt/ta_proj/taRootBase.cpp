@@ -61,7 +61,9 @@ taTypeDef_Of(StartupWizard);
 #include <QPixmap>
 #include <QIcon>
 #include <QTimer>
+#if QT_VERSION < QT_VERSION_CHECK(5, 6, 0)
 #include <QGLFormat>
+#endif
 #include <QBrush>
 #include <QLocale>
 #include <QFile>
@@ -237,7 +239,7 @@ void taRootBase::UpdateAfterEdit_impl() {
 #endif
 }
 
-void taRootBase::MonControl(bool on) {
+void taRootBase::MonControl(bool on) { (void)on;
 #ifdef GPROF                    // turn on for profiling
   taMisc::Info("Turning gprof profiler monitoring:", String(on));
   moncontrol(on);
@@ -412,7 +414,7 @@ int taRootBase::Save() {
       rootview_pos.SetXY(lft, top);
       rootview_size.SetXY(wd, ht);
       rootview_splits = vwr->GetUserDataAsString("view_splitter_state");
-      iMainWindowViewer* imwv = vwr->widget();
+      vwr->widget();
     }
   }
 
@@ -686,7 +688,7 @@ void taRootBase::MakeWizards_impl() {
 //      startup code
 
 
-bool taRootBase::Startup_InitDMem(int& argc, const char* argv[]) {
+bool taRootBase::Startup_InitDMem(int& argc, const char* argv[]) { (void)argc; (void)argv;
 #ifdef DMEM_COMPILE
   taMisc::Init_DMem(argc, argv);
   milestone |= SM_MPI_INIT;
@@ -941,7 +943,7 @@ bool taRootBase::Startup_InitArgs(int& argc, const char* argv[]) {
   return true;
 }
 
-bool taRootBase::Startup_ProcessGuiArg(int argc, const char* argv[]) {
+bool taRootBase::Startup_ProcessGuiArg(int argc, const char* argv[]) { (void)argc; (void)argv;
 #ifdef TA_GUI
   taMisc::use_gui = true;
 #else
@@ -1039,17 +1041,25 @@ bool taRootBase::Startup_InitApp(int& argc, const char* argv[]) {
 
 #ifdef TA_GUI
   if(taMisc::use_gui) {
-    // When QNetworkAccessManager is instantiated it regularly starts polling 
-    // all network interfaces to see if anything changes and if so, what. This 
-    // creates a latency spike every 10 seconds on Mac OS 10.12+ and Windows 7 >=
-    // when on a wifi connection. 
-    // So here we disable it for lack of better measure.
-    // This will also cause this message: QObject::startTimer: Timers cannot 
-    // have negative intervals
-    // For more info see:
-    // - https://bugreports.qt.io/browse/QTBUG-40332
-    // - https://bugreports.qt.io/browse/QTBUG-46015
-    qputenv("QT_BEARER_POLL_TIMEOUT", QByteArray::number(-1));
+#ifdef QT_OPEN_GL_WIDGET
+    // Qt creates shared contexts during QApplication construction (including
+    // WebEngine's context), so every window must agree on the format first.
+    QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+    QSurfaceFormat fmt = QSurfaceFormat::defaultFormat();
+    if(taMisc::antialiasing_level > 1) {
+      fmt.setSamples(taMisc::antialiasing_level);
+    }
+#ifndef TA_QT3D
+    // Coin requires desktop fixed-function OpenGL. A 2.1 context exposes that
+    // API on Linux, Windows and macOS; profiles only apply to OpenGL 3.2+.
+    fmt.setRenderableType(QSurfaceFormat::OpenGL);
+    fmt.setVersion(2, 1);
+    fmt.setProfile(QSurfaceFormat::NoProfile);
+    fmt.setDepthBufferSize(24);
+    fmt.setStencilBufferSize(8);
+#endif
+    QSurfaceFormat::setDefaultFormat(fmt);
+#endif
 
 #if defined(__APPLE__) 
     TemtMacDefaultSettings();
@@ -1062,37 +1072,6 @@ bool taRootBase::Startup_InitApp(int& argc, const char* argv[]) {
     milestone |= (SM_QAPP_OBJ | SM_SOQT_INIT);
 #endif // TA_QT3D
 
-#ifdef QT_OPEN_GL_WIDGET
-    // this is synonymous with QT_VERSION >= 0x050600
-    QSurfaceFormat fmt = QSurfaceFormat::defaultFormat();
-    if(taMisc::antialiasing_level > 1) {
-      fmt.setSamples(taMisc::antialiasing_level);
-    }
-#ifdef TA_QT3D
-#else
-    // set a default format that is quarter compatible
-    // fmt.setAlphaBufferSize(8); // this makes network transparent to screen below!
-    fmt.setProfile(QSurfaceFormat::CompatibilityProfile); // quarter requires it
-#endif // TA_QT3D
-    // note: setting this default format here fixes the overly-washed-out extra transparency
-    // on mac!  hmm.
-    QSurfaceFormat::setDefaultFormat(fmt);
-    if(fmt.majorVersion() < 2 || fmt.profile() == QSurfaceFormat::NoProfile) {
-      cerr << "This display likely does NOT have a proper level of OpenGL support (version < 2)\n"
-           << "OpenGL is required for 3D displays!\n"
-           << "Please read the emergent manual for required 3D graphics driver information.\n"
-           << "If you open a project with a 3D display, or create one, the program will likely crash!"
-           << endl;
-    }
-    // test for various GL compatibilities now, before we get bitten later!
-#else // QT_OPEN_GL_WIDGET
-    if(!QGLFormat::hasOpenGL()) {
-      cerr << "This display does NOT have OpenGL support, which is required for 3d displays!\n"
-           << "Please read the emergent manual for required 3D graphics driver information.\n"
-           << "If you open a project with a 3D display, or create one, the program will likely crash!"
-           << endl;
-    }
-#endif
     
 #ifndef TA_QT3D
 # if COIN_MAJOR_VERSION >= 3
@@ -1193,7 +1172,7 @@ namespace { // anon
            << "and detecting if we're running the develoment executable won't work.\n";
     }
     else {
-      taMisc::exe_mod_time_int = fi.lastModified().toTime_t();
+      taMisc::exe_mod_time_int = fi.lastModified().toSecsSinceEpoch();
       taMisc::exe_mod_time = fi.lastModified().toString();
 
       taMisc::exe_path = fi.absolutePath();
@@ -1319,7 +1298,7 @@ namespace { // anon
       search_prefixes.end(), DEF_PREFIXES, DEF_PREFIXES + DEF_PREFIX_N);
 
     // Search the directories.
-    for (int i = 0; i < search_prefixes.size(); ++i) {
+    for (size_t i = 0; i < search_prefixes.size(); ++i) {
       prefix_dir = search_prefixes[i];
       app_dir = prefix_dir + "/share/" + taMisc::default_app_install_folder_name;
       if (IsAppDir(app_dir)) {
@@ -1385,7 +1364,7 @@ namespace { // anon
       search_prefixes.end(), DEF_PREFIXES, DEF_PREFIXES + DEF_PREFIX_N);
 
     // Search the directories.
-    for (int i = 0; i < search_prefixes.size(); ++i) {
+    for (size_t i = 0; i < search_prefixes.size(); ++i) {
       app_plugin_dir = search_prefixes[i] + "/lib/" +
         taMisc::default_app_install_folder_name + "/" + taMisc::GetSysPluginDir();
       if (IsPluginDir(app_plugin_dir)) {
@@ -1440,8 +1419,8 @@ bool taRootBase::Startup_InitTA_AppFolders() {
   // Determine which directory to use as the plugin directory.
   found = GetAppPluginDir(app_plugin_dir, prefix_dir);
 
-  // If no plugin directory found, warn the user.
-  if (!found || !IsPluginDir(app_plugin_dir)) {
+  // Disabled plugins do not require an application plugin directory.
+  if (taMisc::use_plugins && (!found || !IsPluginDir(app_plugin_dir))) {
     taMisc::Error("Expected application plugin folder",
       app_plugin_dir, "does not exist! You should check your installation "
       "and/or create this folder, otherwise runtime errors may occur.");
@@ -1495,10 +1474,11 @@ bool taRootBase::Startup_InitTA() {
     taMisc::user_dir = taMisc::GetHomePath();
   }
 
-  // Application folder
-  // env var overrides default
+  // Explicit command-line location takes precedence over environment/default.
   String user_app_dir_env_var = upcase(taMisc::app_prefs_key) + "_USER_APP_DIR";
-  String user_app_dir = getenv(user_app_dir_env_var);
+  String user_app_dir = taMisc::FindArgByName("UserAppDir");
+  if (user_app_dir.empty())
+    user_app_dir = getenv(user_app_dir_env_var);
   if (user_app_dir.empty()) {
     user_app_dir = taMisc::GetAppDocPath(taMisc::app_prefs_key);
   }
@@ -1512,8 +1492,11 @@ bool taRootBase::Startup_InitTA() {
   // ugh: reload because legacy options file will load its value
   taMisc::user_app_dir = user_app_dir;
 
-  taMisc::user_plugin_dir = taMisc::user_app_dir + PATH_SEP +
-    taMisc::GetUserPluginDir();
+  taMisc::user_plugin_dir = taMisc::FindArgByName("UserPluginDir");
+  if (taMisc::user_plugin_dir.empty()) {
+    taMisc::user_plugin_dir = taMisc::user_app_dir + PATH_SEP +
+      taMisc::GetUserPluginDir();
+  }
   taMisc::user_log_dir = taMisc::user_app_dir + PATH_SEP + "log";
 
   // System (Share) Folder, System Plugins
@@ -1854,7 +1837,7 @@ void taRootBase::WindowShowHook() {
       vwr->widget()->setFocus();
     }
 
-    qApp->setActiveWindow(vwr->widget());
+    vwr->widget()->activateWindow();
 
 #ifdef TA_OS_MAC
     // select this window, even if run from command line
@@ -1902,7 +1885,7 @@ bool taRootBase::Startup_Console() {
         taMisc::ProcessEvents();
         MainWindowViewer* db = (MainWindowViewer*)tabMisc::root->viewers[0];
         db->ViewWindow();               // make sure root guy is on top
-        qApp->setActiveWindow(db->widget());
+        db->widget()->activateWindow();
       }
     }
     
@@ -1938,7 +1921,7 @@ bool taRootBase::Startup_Console() {
   return true;
 }
 
-void taRootBase::ConsoleNewStdin(int n_lines) {
+void taRootBase::ConsoleNewStdin(int n_lines) { (void)n_lines;
   if(!taMisc::gui_active) return;
   if(taMisc::console_win) {
     QApplication::alert(taMisc::console_win);
@@ -2144,7 +2127,7 @@ bool taRootBase::Startup_ProcessArgs() {
     proj_ld = taMisc::FindArgValContains(".proj");
   
   if(!proj_ld.empty()) {
-    bool file_exists = false;
+
     QFileInfo checkFile(proj_ld);
     // check if file exists and if yes: Is it really a file and not a directory?
     if (checkFile.exists() && checkFile.isFile()) {

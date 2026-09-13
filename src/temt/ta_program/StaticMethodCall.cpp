@@ -102,7 +102,7 @@ String StaticMethodCall::GetDisplayName() const {
   return rval;
 }
 
-bool StaticMethodCall::CanCvtFmCode(const String& code, ProgEl* scope_el) const {
+bool StaticMethodCall::CanCvtFmCode(const String& code, ProgEl* scope_el) const { (void)scope_el;
   if(!code.contains("::")) return false;
   if(!code.contains('(')) return false;
   String lhs = code.before('(');
@@ -161,7 +161,6 @@ bool StaticMethodCall::ChooseMe() {
   if (this->GetTypeDef() == &TA_StaticMethodCall) return true;
   
   // go ahead - must be specific type like Random or taMath
-  bool keep_choosing = false;
   taiWidgetMethodDefChooser* chooser =  new taiWidgetMethodDefChooser(this->object_type, NULL, NULL, NULL, 0, "");
   chooser->SetTitleText("Choose the method to cal");
   chooser->GetImage((MethodDef*)NULL, this->object_type);

@@ -27,9 +27,9 @@
 
   // don't send regular net inputs..
   INLINE void Send_NetinDelta(LEABRA_CON_STATE* cg, LEABRA_NETWORK_STATE* net, int thr_no, 
-                              const float su_act_delta) override { };
+                              const float su_act_delta) override { (void)cg; (void)net; (void)su_act_delta; (void)thr_no; };
   INLINE float Compute_Netin(CON_STATE* cg, NETWORK_STATE* net, int thr_no) override
-  { return 0.0f; }
+  { (void)cg; (void)net; (void)thr_no; return 0.0f; }
 
   INLINE void   Init_Weights_sym_s(CON_STATE* cg, NETWORK_STATE* net, int thr_no) override {
     if(!wt_limits.sym) return;

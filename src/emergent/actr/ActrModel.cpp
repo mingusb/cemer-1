@@ -426,7 +426,7 @@ ActrChunk* ActrModel::DefineChunkSys(const String& chunk_name,
   return ck;
 }
 
-void ActrModel::SaveActrFile(const String& fname) {
+void ActrModel::SaveActrFile(const String& fname) { (void)fname;
   
 }
 

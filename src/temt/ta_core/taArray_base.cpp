@@ -160,7 +160,7 @@ void taArray_base::SigEmit(int sls, void* op1, void* op2) {
 }
 
 String taArray_base::GetValStr(void* par, MemberDef* memb_def, TypeDef::StrContext sc,
-                              bool force_inline) const {
+                              bool force_inline) const { (void)memb_def; (void)par; (void)sc;
   if(force_inline) {
     return GetValStr();         // this is the taArray_impl version that actually lists items
   }
@@ -173,13 +173,13 @@ String taArray_base::GetValStr(void* par, MemberDef* memb_def, TypeDef::StrConte
 }
 
 bool taArray_base::SetValStr(const String& val, void* par, MemberDef* memb_def,
-                            TypeDef::StrContext sc, bool force_inline) {
+                            TypeDef::StrContext sc, bool force_inline) { (void)force_inline; (void)memb_def; (void)par; (void)sc;
   InitFromString(val);
   return true;
 }
 
 int taArray_base::ReplaceValStr(const String& srch, const String& repl, const String& mbr_filt,
-                void* par, TypeDef* par_typ, MemberDef* memb_def, TypeDef::StrContext sc, bool replace_deep) {
+                void* par, TypeDef* par_typ, MemberDef* memb_def, TypeDef::StrContext sc, bool replace_deep) { (void)mbr_filt; (void)memb_def; (void)par; (void)par_typ; (void)replace_deep; (void)sc;
   int rval = 0;
   String mypath = DisplayPath();
   for(int i=0; i<size; i++) {

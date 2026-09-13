@@ -40,7 +40,7 @@ iDialogObjChooser* iDialogObjChooser::createInstance(TypeDef* tpdf, const char* 
   return new iDialogObjChooser(tpdf, captn, scope_ref_, par_window_);
 }
 
-void iDialogObjChooser::init(const char* captn, bool selonly, QWidget* par_window_) {
+void iDialogObjChooser::init(const char* captn, bool selonly, QWidget* par_window_) { (void)par_window_;
   lst_par_obj = NULL;
   reg_par_obj = NULL;
   typ_par_obj = NULL;
@@ -67,7 +67,7 @@ iDialogObjChooser::iDialogObjChooser(taBase* parob, const char* captn, bool selo
 
 iDialogObjChooser::iDialogObjChooser(TypeDef* td, const char* captn, taBase* scope_ref_, QWidget* par_window_)
 : iDialog(par_window_)
-{
+{ (void)scope_ref_;
   setModal(true);
   init(captn, true, par_window_); //select_only = true always true for typedef!
 
@@ -115,7 +115,7 @@ void iDialogObjChooser::ReRead() {
 void iDialogObjChooser::Build() {
 //Qt3  layOuter = new QGridLayout(this, 3, 1, taiM->vsep_c, taiM->vspc_c); // rows, cols, margin, space
   layOuter = new QGridLayout(this);
-  layOuter->setMargin(taiM->vsep_c);
+  layOuter->setContentsMargins(taiM->vsep_c, taiM->vsep_c, taiM->vsep_c, taiM->vsep_c);
   layOuter->setSpacing(taiM->vspc_c);
   browser = new QListWidget(this);
   layOuter->addWidget(browser, 1, 0);
@@ -284,7 +284,7 @@ void iDialogObjChooser::accept() {
     iDialog::accept();
 }
 
-void iDialogObjChooser::browser_itemDoubleClicked(QListWidgetItem* itm) {
+void iDialogObjChooser::browser_itemDoubleClicked(QListWidgetItem* itm) { (void)itm;
   if (select_only)
     accept();
   else

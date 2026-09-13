@@ -80,7 +80,7 @@ bool DataVarSimple::GenCss_OneVar(Program* prog, ProgVar* pvar, const String& id
   return true;
 }
 
-bool DataVarSimple::GenCss_OneVarMat(Program* prog, ProgVar* pvar, const String& idnm, int var_no) {
+bool DataVarSimple::GenCss_OneVarMat(Program* prog, ProgVar* pvar, const String& idnm, int var_no) { (void)pvar; (void)var_no;
   DataCol* da = NULL;
   DataTable* dt = GetData();
   String string_cvt = "";
@@ -115,7 +115,7 @@ bool DataVarSimple::GenCss_OneVarMat(Program* prog, ProgVar* pvar, const String&
   return true;
 }
 
-bool DataVarSimple::GenCss_OneVarMatEnum(Program* prog, ProgVar* pvar, const String& idnm, int var_no) {
+bool DataVarSimple::GenCss_OneVarMatEnum(Program* prog, ProgVar* pvar, const String& idnm, int var_no) { (void)pvar; (void)var_no;
   DataCol* da = NULL;
   DataTable* dt = GetData();
   String string_cvt = "";
@@ -201,7 +201,7 @@ bool DataVarSimple::CvtFmCode(const String& code) {
   return true;
 }
 
-void DataVarSimple::GetMemberCompletionList(const MemberDef* md, const String& cur_txt, Completions& completions) {
+void DataVarSimple::GetMemberCompletionList(const MemberDef* md, const String& cur_txt, Completions& completions) { (void)cur_txt; (void)md;
   if (GetData()) {
     FOREACH_ELEM_IN_LIST(DataCol, col, GetData()->data) {
       completions.object_completions.Link(col);

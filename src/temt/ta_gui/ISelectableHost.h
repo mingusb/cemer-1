@@ -112,11 +112,11 @@ protected:
   ISelectable*          ctxt_item; // during drop, holds the item dropped on; for context, holds the item
 
   virtual void          FillContextMenu_pre(ISelectable_PtrList& selitems,
-    taiWidgetActions* menu) {} // hook
+    taiWidgetActions* menu) { (void)menu; (void)selitems; } // hook
   void                  FillContextMenu_int(ISelectable_PtrList& selitems,
     taiWidgetActions* menu, int dyn_list, ISelectable::GuiContext sh_typ);
   virtual void          FillContextMenu_post(ISelectable_PtrList& selitems,
-    taiWidgetActions* menu) {} // hook
+    taiWidgetActions* menu) { (void)menu; (void)selitems; } // hook
 
   virtual void          EditAction_Delete(ISelectable::GuiContext gc_typ); // actually does the Edit/Delete
   virtual void          UpdateSelectedItems_impl() = 0;

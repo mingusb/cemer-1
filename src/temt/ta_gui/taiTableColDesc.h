@@ -35,9 +35,9 @@ public:
 
 public: // ops to keep the Array templ happy
   friend bool   operator>(const taiTableColDesc& a, const taiTableColDesc& b)
-    {return false;}
+    { (void)a; (void)b; return false;}
   friend bool   operator==(const taiTableColDesc& a, const taiTableColDesc& b)
-    {return false;}
+    { (void)a; (void)b; return false;}
 };
 
 #endif // taiTableColDesc_h

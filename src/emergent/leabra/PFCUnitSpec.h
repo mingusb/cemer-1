@@ -39,7 +39,7 @@
     }
   }
     
-  INLINE void  SaveGatingAct(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) override { };
+  INLINE void  SaveGatingAct(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) override { (void)net; (void)thr_no; (void)u; };
 
   INLINE void  Compute_Act_Rate(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) override {
     inherited::Compute_Act_Rate(u, net, thr_no);

@@ -112,7 +112,7 @@ Q_DECLARE_METATYPE(ObjDiffRec*);
 
 void iDialogObjDiffBrowser::Constr() {
   layOuter = new QVBoxLayout(this);
-  layOuter->setMargin(taiM->vsep_c);
+  layOuter->setContentsMargins(taiM->vsep_c, taiM->vsep_c, taiM->vsep_c, taiM->vsep_c);
   layOuter->setSpacing(taiM->vspc_c);
 
   String a_path = odl->a_top->GetPathNames();
@@ -266,7 +266,7 @@ void iDialogObjDiffBrowser::AddItems() {
 
     rec->widget = witm;
 
-    QVariant qval = qVariantFromValue(rec);
+    QVariant qval = QVariant::fromValue(rec);
     witm->setData(0, Qt::UserRole+1, qval);
 
     witm->setText(COL_NEST, String(rec->nest_level));
@@ -289,8 +289,8 @@ void iDialogObjDiffBrowser::AddItems() {
           clr = vc->fg_color.color();
         else if(vc->use_bg)
           clr = vc->bg_color.color();
-        witm->setTextColor(COL_A_NM, clr);
-        witm->setTextColor(COL_A_VAL, clr);
+        witm->setForeground(COL_A_NM, QBrush(clr));
+        witm->setForeground(COL_A_VAL, QBrush(clr));
       }
 
       if(rec->IsIndepObj() && rec->IsAValid()) {
@@ -319,8 +319,8 @@ void iDialogObjDiffBrowser::AddItems() {
           clr = vc->fg_color.color();
         else if(vc->use_bg)
           clr = vc->bg_color.color();
-        witm->setTextColor(COL_B_NM, clr);
-        witm->setTextColor(COL_B_VAL, clr);
+        witm->setForeground(COL_B_NM, QBrush(clr));
+        witm->setForeground(COL_B_VAL, QBrush(clr));
       }
 
       if(rec->IsIndepObj() && rec->IsBValid()) {

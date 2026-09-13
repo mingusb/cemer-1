@@ -300,7 +300,7 @@ void LeabraUnitSpec::GraphVmFun(DataTable* graph_data, float g_i, float min, flo
 }
 
 void LeabraUnitSpec::GraphActFmNetFun(DataTable* graph_data, float g_i, float min, float max,
-                                      float incr, float g_e_thr, float lin_gain) {
+                                      float incr, float g_e_thr, float lin_gain) { (void)g_i;
   taProject* proj = GetMyProj();
   if(!graph_data) {
     graph_data = proj->GetNewAnalysisDataTable(name + "_ActFmNetFun", true);

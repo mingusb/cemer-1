@@ -1250,7 +1250,7 @@ void TypeDef::SetTemplType(TypeDef* templ_par, const TypeSpace& inst_pars) {
 
 MemberDef* TypeDef::FindMemberPathStatic
 (TypeDef*& own_td, int& net_base_off, const String& path, bool warn) {
-  void* cur_base_off = NULL;
+  intptr_t cur_base_off = 0;
   net_base_off = 0;
   if(!own_td || path.empty()) {
     return NULL;                // no warning..
@@ -1269,7 +1269,8 @@ MemberDef* TypeDef::FindMemberPathStatic
     }
     else {
       own_td = md->type;
-      cur_base_off = md->GetOff(cur_base_off);
+      cur_base_off = md->is_static ? reinterpret_cast<intptr_t>(md->addr)
+                                   : cur_base_off + md->GetRelOff();
     }
   }
   MemberDef* md = NULL;
@@ -1288,7 +1289,7 @@ MemberDef* TypeDef::FindMemberPathStatic
     }
     return NULL;
   }
-  net_base_off = (char*)cur_base_off - (char*)0;
+  net_base_off = static_cast<int>(cur_base_off);
   return md;
 }
 
@@ -1543,7 +1544,7 @@ void TypeDef::unRegisterFinal(void* tok) {
 
 String TypeDef::GetValStr_enum(const void* base, void* par, MemberDef* memb_def,
                                StrContext sc, bool force_inline) const
-{
+{ (void)force_inline; (void)memb_def; (void)par;
   int enval = *static_cast<const int *>(base);
   bool show_scope = false;
   return Get_C_EnumString(enval, show_scope, sc);
@@ -1551,7 +1552,7 @@ String TypeDef::GetValStr_enum(const void* base, void* par, MemberDef* memb_def,
 
 String TypeDef::GetValStr_class_inline(const void* base_, void* par, MemberDef* memb_def,
                                        StrContext sc, bool force_inline) const
-{
+{ (void)memb_def; (void)par;
   void* base = (void*)base_; // hack to avoid having to go through entire code below and fix
   String rval;
   if (sc != SC_DISPLAY) rval = "{";
@@ -1901,7 +1902,7 @@ void TypeDef::SetValStr_enum(const String& val, void* base, void* par, MemberDef
 }
 
 void TypeDef::SetValStr_class_inline(const String& val, void* base, void* par,
-                                     MemberDef* memb_def, StrContext sc, bool force_inline) {
+                                     MemberDef* memb_def, StrContext sc, bool force_inline) { (void)force_inline; (void)memb_def; (void)par;
   String rval = val;
   rval = rval.after('{');
   while(rval.contains(':')) {
@@ -2182,7 +2183,7 @@ void TypeDef::SetValStr(const String& val, void* base, void* par, MemberDef* mem
 int TypeDef::ReplaceValStr_class(const String& srch, const String& repl, const String& mbr_filt,
                                  void* base, void* par, TypeDef* par_typ, MemberDef* memb_def,
                                  StrContext sc, bool replace_deep)
-{
+{ (void)memb_def; (void)par; (void)par_typ;
   int rval = 0;
   for(int i=0; i<members.size; i++) {
     MemberDef* md = members.FastEl(i);
@@ -2817,7 +2818,7 @@ void TypeDef::CopyFromSameType(void* trg_base, void* src_base,
 
 void TypeDef::CopyFromDiffTypes(void* trg_base, TypeDef* src_td, void* src_base,
                                 int start_idx, bool update_after,
-                                MemberDef* trg_md, MemberDef* src_md) {
+                                MemberDef* trg_md, MemberDef* src_md) { (void)src_md;
   if(this == src_td || name == src_td->name) { // latter allows for enum types in diff classes with same name
     CopyFromSameType(trg_base, src_base, trg_md);
   }
@@ -3017,7 +3018,7 @@ String TypeDef::GetHTMLLink(bool gendoc) const {
   return rval;
 }
 
-String TypeDef::GetHTMLSubType(bool gendoc, bool short_fmt) const {
+String TypeDef::GetHTMLSubType(bool gendoc, bool short_fmt) const { (void)gendoc;
   STRING_BUF(rval, (short_fmt ? 100 : 300)); // extends if needed
   String own_typ;
   TypeDef* ot = GetOwnerType();

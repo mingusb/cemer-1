@@ -62,7 +62,7 @@ void iPluginEditor::init() {
 
   main_widg = new QWidget();
   main_vbox = new QVBoxLayout(main_widg);
-  main_vbox->setMargin(0);
+  main_vbox->setContentsMargins(0, 0, 0, 0);
 
   tool_box = new QHBoxLayout();
   main_vbox->addLayout(tool_box);
@@ -91,8 +91,8 @@ void iPluginEditor::init() {
 
   hfile_view->textEdit()->setLineWrapMode(QTextEdit::WidgetWidth);
   cfile_view->textEdit()->setLineWrapMode(QTextEdit::WidgetWidth);
-  hfile_view->textEdit()->setTabStopWidth(40);
-  cfile_view->textEdit()->setTabStopWidth(40);
+  hfile_view->textEdit()->setTabStopDistance(40);
+  cfile_view->textEdit()->setTabStopDistance(40);
 
   split->addWidget(hfile_view);
   split->addWidget(cfile_view);

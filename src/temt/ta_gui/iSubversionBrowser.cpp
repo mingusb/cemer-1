@@ -63,8 +63,7 @@ iSubversionBrowser* iSubversionBrowser::OpenBrowser(const String& url,
 
 iSubversionBrowser::iSubversionBrowser(QWidget* parent)
 :inherited(taiMisc::main_window)
-{
-  int font_spec = taiMisc::fonMedium;
+{ (void)parent;
   this->setWindowTitle("Subversion Browser");
 
   log_subdir = false;
@@ -78,7 +77,7 @@ iSubversionBrowser::iSubversionBrowser(QWidget* parent)
   setCentralWidget(body);
   
   QVBoxLayout* lay_bd = new QVBoxLayout(body);
-  lay_bd->setMargin(0);
+  lay_bd->setContentsMargins(0, 0, 0, 0);
 
   ////////////////////////////////////////////////////////////////////////
   // top-level toolbar
@@ -165,10 +164,10 @@ iSubversionBrowser::iSubversionBrowser(QWidget* parent)
   lbrow->setFrameStyle(QFrame::Panel); //  | QFrame::Sunken);
 
   QVBoxLayout* lay_lb = new QVBoxLayout(lbrow);
-  lay_lb->setMargin(0); lay_lb->setSpacing(2);
+  lay_lb->setContentsMargins(0, 0, 0, 0); lay_lb->setSpacing(2);
 
   hb = new QHBoxLayout;
-  hb->setMargin(0);
+  hb->setContentsMargins(0, 0, 0, 0);
   lbl = new QLabel("<b>Svn Revision Log</b>");
   lbl->setToolTip(taiMisc::ToolTipPreProcess("shows the log of revisions for files for current repository url (shown in middle panel) -- double click on a revision to view it in the repository file viewer"));
   hb->addStretch();
@@ -228,17 +227,17 @@ iSubversionBrowser::iSubversionBrowser(QWidget* parent)
     }
 #else
     if(i == 2) {
-      header->setResizeMode(i, QHeaderView::Interactive);
+      header->setSectionResizeMode(i, QHeaderView::Interactive);
     }
     else {
-      header->setResizeMode(i, QHeaderView::ResizeToContents);
+      header->setSectionResizeMode(i, QHeaderView::ResizeToContents);
     }
 #endif
   }
 #if (QT_VERSION >= 0x050000)
   log_table->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 #else
-  log_table->verticalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+  log_table->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 #endif
   log_table->setSortingEnabled(true);
   log_table->setWordWrap(true);
@@ -263,10 +262,10 @@ iSubversionBrowser::iSubversionBrowser(QWidget* parent)
   fbrow->setFrameStyle(QFrame::Panel); //  | QFrame::Sunken);
 
   QVBoxLayout* lay_fb = new QVBoxLayout(fbrow);
-  lay_fb->setMargin(0);  lay_fb->setSpacing(2);
+  lay_fb->setContentsMargins(0, 0, 0, 0);  lay_fb->setSpacing(2);
 
   hb = new QHBoxLayout;
-  hb->setMargin(0);
+  hb->setContentsMargins(0, 0, 0, 0);
   lbl = new QLabel("<b>Svn Repository Files</b>");
   lbl->setToolTip(taiMisc::ToolTipPreProcess("shows the files checked into the repository at current url, and subdirectory -- double click on a file to view the file or diff if 'only' flag is set (so only given revision is being shown), or a directory to open it up -- keeps working copy and url coordinated"));
   hb->addStretch();
@@ -331,7 +330,7 @@ iSubversionBrowser::iSubversionBrowser(QWidget* parent)
 #if (QT_VERSION >= 0x050000)
     header->setSectionResizeMode(i, QHeaderView::ResizeToContents);
 #else
-    header->setResizeMode(i, QHeaderView::ResizeToContents);
+    header->setSectionResizeMode(i, QHeaderView::ResizeToContents);
 #endif
   }
   file_table->setSortingEnabled(true);
@@ -356,10 +355,10 @@ iSubversionBrowser::iSubversionBrowser(QWidget* parent)
   wbrow->setFrameStyle(QFrame::Panel); //  | QFrame::Sunken);
 
   QVBoxLayout* lay_wb = new QVBoxLayout(wbrow);
-  lay_wb->setMargin(0);  lay_wb->setSpacing(2);
+  lay_wb->setContentsMargins(0, 0, 0, 0);  lay_wb->setSpacing(2);
 
   hb = new QHBoxLayout;
-  hb->setMargin(0);
+  hb->setContentsMargins(0, 0, 0, 0);
   lbl = new QLabel("<b>Working Copy Files</b>");
   lbl->setToolTip(taiMisc::ToolTipPreProcess("shows the files in the currently checked-out working copy, and subdirectory -- double click on a file to view the file, or a directory to open it up -- keeps working copy and url coordinated"));
   hb->addStretch();
@@ -470,12 +469,11 @@ void iSubversionBrowser::updateView() {
   if(filt_rev) {
     int rev = rev_box->value();
     svn_file_sort->setFilterKeyColumn(2);    
-    svn_file_sort->setFilterRegExp(QRegExp(QString::number(rev), Qt::CaseInsensitive,
-                                            QRegExp::FixedString));
+    svn_file_sort->setFilterFixedString(QString::number(rev));
   }
   else {
     svn_file_sort->setFilterKeyColumn(2);    
-    svn_file_sort->setFilterRegExp(QRegExp());
+    svn_file_sort->setFilterFixedString(QString());
   }
 
   log_table->resizeRowsToContents();
@@ -702,13 +700,13 @@ void iSubversionBrowser::wBrowResizeCols() {
 #if (QT_VERSION >= 0x050000)
     header->setSectionResizeMode(i, QHeaderView::ResizeToContents);
 #else
-    header->setResizeMode(i, QHeaderView::ResizeToContents);
+    header->setSectionResizeMode(i, QHeaderView::ResizeToContents);
 #endif
   }
 }
 
 void iSubversionBrowser::logCellDoubleClicked(const QModelIndex& index) {
-  QModelIndex rw0 = index.child(index.row(), 0);
+  QModelIndex rw0 = index.siblingAtColumn(0);
   QVariant qrev = svn_log_sort->data(rw0);
   int rev = qrev.toInt();
   rev_only->setChecked(true);   // filter
@@ -816,22 +814,21 @@ void iSubversionBrowser::wcCellDoubleClicked(const QModelIndex& index) {
 
 void iSubversionBrowser::file_table_customContextMenuRequested(const QPoint& pos) {
   taiWidgetMenu* menu = new taiWidgetMenu(this, taiWidgetMenu::normal, taiMisc::fonSmall);
-  iAction* act = NULL;
-  act = menu->AddItem("&Log of File", taiWidgetMenu::normal,
+  menu->AddItem("&Log of File", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_log_file_do()), 1);
-  act = menu->AddItem("View &File", taiWidgetMenu::normal,
+  menu->AddItem("View &File", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_view_file_do()), 1);
-  act = menu->AddItem("View &Diffs", taiWidgetMenu::normal,
+  menu->AddItem("View &Diffs", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_view_diff_do()), 1);
-  act = menu->AddItem("&Save File", taiWidgetMenu::normal,
+  menu->AddItem("&Save File", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_save_file_do()), 1);
-  act = menu->AddItem("&Del File", taiWidgetMenu::normal,
+  menu->AddItem("&Del File", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_rm_file_do()), 1);
-  act = menu->AddItem("&Copy File", taiWidgetMenu::normal,
+  menu->AddItem("&Copy File", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_cp_file_do()), 1);
-  act = menu->AddItem("&Rename File", taiWidgetMenu::normal,
+  menu->AddItem("&Rename File", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_mv_file_do()), 1);
-  act = menu->AddItem("DiffCompare Project", taiWidgetMenu::normal,
+  menu->AddItem("DiffCompare Project", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_diffcmp_do()), 1);
 
   menu->exec(file_table->mapToGlobal(pos));
@@ -840,35 +837,34 @@ void iSubversionBrowser::file_table_customContextMenuRequested(const QPoint& pos
 
 void iSubversionBrowser::wc_table_customContextMenuRequested(const QPoint& pos) {
   taiWidgetMenu* menu = new taiWidgetMenu(this, taiWidgetMenu::normal, taiMisc::fonSmall);
-  iAction* act = NULL;
-  act = menu->AddItem("&Log of File", taiWidgetMenu::normal,
+  menu->AddItem("&Log of File", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_log_file_wc_do()), 1);
-  act = menu->AddItem("View &File", taiWidgetMenu::normal,
+  menu->AddItem("View &File", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_view_file_wc_do()), 1);
-  act = menu->AddItem("&Edit File", taiWidgetMenu::normal,
+  menu->AddItem("&Edit File", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_edit_file_wc_do()), 1);
-  act = menu->AddItem("View D&iffs", taiWidgetMenu::normal,
+  menu->AddItem("View D&iffs", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_view_diff_wc_do()), 1);
   menu->insertSeparator();
-  act = menu->AddItem("Svn &Add File", taiWidgetMenu::normal,
+  menu->AddItem("Svn &Add File", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_add_file_wc_do()), 1);
-  act = menu->AddItem("Svn &Delete File", taiWidgetMenu::normal,
+  menu->AddItem("Svn &Delete File", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_rm_file_wc_do()), 1);
-  act = menu->AddItem("Svn &Revert File", taiWidgetMenu::normal,
+  menu->AddItem("Svn &Revert File", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_rev_file_wc_do()), 1);
-  act = menu->AddItem("Svn &Copy File", taiWidgetMenu::normal,
+  menu->AddItem("Svn &Copy File", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_cp_file_wc_do()), 1);
-  act = menu->AddItem("&Svn Rename File", taiWidgetMenu::normal,
+  menu->AddItem("&Svn Rename File", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_mv_file_wc_do()), 1);
-  act = menu->AddItem("Svn Re&name File (force)", taiWidgetMenu::normal,
+  menu->AddItem("Svn Re&name File (force)", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_mv_file_wc_force_do()), 1);
   
   menu->insertSeparator();
-  act = menu->AddItem("Local Delete File", taiWidgetMenu::normal,
+  menu->AddItem("Local Delete File", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_rm_file_loc_do()), 1);
-  act = menu->AddItem("Local Copy File", taiWidgetMenu::normal,
+  menu->AddItem("Local Copy File", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_cp_file_loc_do()), 1);
-  act = menu->AddItem("Local Rename File", taiWidgetMenu::normal,
+  menu->AddItem("Local Rename File", taiWidgetMenu::normal,
                       iAction::int_act, this, SLOT(a_mv_file_loc_do()), 1);
 
   menu->exec(wc_table->mapToGlobal(pos));
@@ -1226,4 +1222,3 @@ void iSubversionBrowser::a_diffcmp_do() {
     proj->CallFun("DiffCompare");
   }
 }
-

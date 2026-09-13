@@ -98,7 +98,7 @@ void taThreadMgr::InitThreads() {
   RemoveThreads();
   for(int i = 0; i < n_to_make; ++i) {
     taManagedThread* tt = new taManagedThread(this);
-    tt->setObjectName(thnm + (String)(i+1));
+    tt->setObjectName(QString(thnm + (String)(i+1)));
     threads.Add(tt);
   }
   n_active = 0;			// reset now for sure

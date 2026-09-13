@@ -81,7 +81,7 @@ bool LeabraLayerSpec::CheckConfig_Layer(Layer* ly, bool quiet) {
   LeabraLayer* lay = (LeabraLayer*)ly;
   bool rval = true;
 
-  LeabraNetwork* net = (LeabraNetwork*)lay->own_net;
+
 
   if(lay->CheckError(!lay->projections.el_base->InheritsFrom(&TA_LeabraPrjn), quiet, rval,
                 "does not have LeabraPrjn projection base type!",
@@ -187,8 +187,7 @@ void LeabraLayerSpec::Compute_OutputName_ugp(LeabraLayer* lay, LeabraNetwork* ne
 }
 
 void LeabraLayerSpec::Compute_OutputName(LeabraLayer* lay, LeabraNetwork* net) {
-  NetworkState_cpp* net_state = net->net_state;
-  LeabraLayerState_cpp* lst = (LeabraLayerState_cpp*)net_state->GetLayerState(lay->layer_idx);
+
   if(lay->unit_groups) {
     lay->output_name = "";
     for(int gpidx=0; gpidx < lay->n_ungps; gpidx++) {

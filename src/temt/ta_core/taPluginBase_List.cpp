@@ -30,14 +30,14 @@ taPluginBase* taPluginBase_List::FindUniqueId(const String& value) {
 
 void taPluginBase_List::QueryEditActions_impl(const taiMimeSource* ms,
   int& allowed, int& forbidden)
-{
+{ (void)ms;
   allowed = iClipData::EA_COPY;
   forbidden = ~iClipData::EA_COPY;
 }
 
 void taPluginBase_List::ChildQueryEditActions_impl(const MemberDef* md, const taBase* child,
     const taiMimeSource* ms, int& allowed, int& forbidden)
-{
+{ (void)child; (void)md; (void)ms;
   allowed = iClipData::EA_COPY;
   forbidden = ~iClipData::EA_COPY;
 }

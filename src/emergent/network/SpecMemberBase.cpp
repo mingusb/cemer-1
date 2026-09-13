@@ -38,7 +38,7 @@ void SpecMemberBase::DefaultsMembers() {
   }
 }
 
-void SpecMemberBase::MemberUpdateAfterEdit(MemberDef* md, bool edit_dialog) {
+void SpecMemberBase::MemberUpdateAfterEdit(MemberDef* md, bool edit_dialog) { (void)md;
   if(edit_dialog) return;
   if(!owner || !owner->InheritsFrom(&TA_BaseSpec)) return;
   BaseSpec* spown = (BaseSpec*)owner;

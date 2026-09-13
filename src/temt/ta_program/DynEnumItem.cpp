@@ -51,7 +51,7 @@ String DynEnumItem::GetDisplayName() const {
   return rval;
 }
 
-bool DynEnumItem::BrowserEditSet(const String& code, int move_after) {
+bool DynEnumItem::BrowserEditSet(const String& code, int move_after) { (void)move_after;
   String cd = ProgEl::CodeGetDesc(code, desc);
   String nm = cd;
   String vl;

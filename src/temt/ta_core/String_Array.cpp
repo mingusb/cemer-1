@@ -120,7 +120,6 @@ String String_Array::MostFrequent() {
   }
 
   int maxv = 0;
-  int maxi = 0;
   int sum = 0;
   for (int i = 0; i < counts.size; ++i) {
     if (counts[i] == 0) {
@@ -128,7 +127,6 @@ String String_Array::MostFrequent() {
     }
     if (counts[i] > maxv) {
       maxv = counts[i];
-      maxi = i;
       winning_string = FastEl(sum);  // most frequent string
     }
     sum += counts[i];

@@ -207,7 +207,7 @@ void taSigLink::SigLinkEmit(int sls, void* op1_, void* op2_) {
     DoNotify(SLS_ITEM_UPDATED, NULL, NULL);
 }
 
-String taSigLink::GetDisplayName(bool desc_ok) const {
+String taSigLink::GetDisplayName(bool desc_ok) const { (void)desc_ok;
   MemberDef* md = GetDataMemberDef();
   if (md) return md->name;
   else    return GetName();

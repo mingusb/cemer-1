@@ -46,7 +46,7 @@ iBrowseViewer::~iBrowseViewer()
 void iBrowseViewer::Init() {
   mnuBrowseNodeDrop_param = -1;
   QVBoxLayout* lay = new QVBoxLayout(this);
-  lay->setMargin(0);  lay->setSpacing(0);
+  lay->setContentsMargins(0, 0, 0, 0);  lay->setSpacing(0);
   lvwDataTree = new iTreeView(this, iTreeView::TV_AUTO_EXPAND);
   lay->addWidget(lvwDataTree);
 
@@ -116,12 +116,12 @@ void iBrowseViewer::ApplyRoot() {
   // always show the first items under the root
   node->CreateChildren();
   lvwDataTree->setCurrentItem(node);//setCurItem(node);
-  lvwDataTree->setItemExpanded(node, true); // always open root node
+  node->setExpanded(true); // always open root node
 }
 
 void iBrowseViewer::lvwDataTree_FillContextMenuHookPost(ISelectable_PtrList& /*sel_items*/,
    taiWidgetActions* menu)
-{
+{ (void)menu;
 //note: nothing
 }
 

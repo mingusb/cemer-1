@@ -67,7 +67,7 @@ Program* ProgramCall::GetTarget_Compile() {
   return target.ptr();
 }
 
-void ProgramCall::PreGenMe_impl(int item_id) {
+void ProgramCall::PreGenMe_impl(int item_id) { (void)item_id;
   if(HasProgFlag(OFF)) return;  // this should already have been caught earlier
   // register as a subproc
   Program* prog = program();
@@ -97,7 +97,7 @@ void ProgramCall::SetTarget(Program* target_) {
   target = target_;
 }
 
-bool ProgramCall::WillGenCompileScript(Program* prg) {
+bool ProgramCall::WillGenCompileScript(Program* prg) { (void)prg;
   return (bool)target;
 }
 

@@ -38,7 +38,7 @@ public:
 
   virtual const QString prompt(); // note: QStrings used for threadsafety
   virtual void          setPrompt(const QString& value);
-  virtual void          setTitle(const QString& value) {} // ex. for windows console
+  virtual void          setTitle(const QString& value) { (void)value;} // ex. for windows console
   
   virtual void          Start(); // call when prompt set, and ready to receive input
   

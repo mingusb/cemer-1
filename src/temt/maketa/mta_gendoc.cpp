@@ -27,7 +27,7 @@
 // 	     GenDoc		//
 //////////////////////////////////
 
-String_PArray* MTA::TypeDef_Get_Parents(TypeDef* td, String_PArray* bp) {
+String_PArray* MTA::TypeDef_Get_Parents(TypeDef* td, String_PArray* bp) { (void)td;
   // TypeSpace* pp = &td->parents; // Potential parents
   // for(int i=0;i<pp->size;i++) {
   //   TypeDef* this_par = pp->FastEl(i);
@@ -39,7 +39,7 @@ String_PArray* MTA::TypeDef_Get_Parents(TypeDef* td, String_PArray* bp) {
   return bp;
 }
 
-bool MTA::TypeDef_Filter_Type(TypeDef* td, TypeSpace* ts) {
+bool MTA::TypeDef_Filter_Type(TypeDef* td, TypeSpace* ts) { (void)td; (void)ts;
   /////////////////////////////////////////////////////////////
   // 	Filters! Returns true if you should filter this TypeDef
 
@@ -84,7 +84,7 @@ bool MTA::TypeDef_Filter_Type(TypeDef* td, TypeSpace* ts) {
   return false;
 }
 
-void MTA::GenDoc(TypeSpace* ths, fstream& strm) {
+void MTA::GenDoc(TypeSpace* ths, fstream& strm) { (void)strm; (void)ths;
 
   //////////////////////
   //     TypeSpace    //

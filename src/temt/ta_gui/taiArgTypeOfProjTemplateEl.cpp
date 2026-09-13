@@ -27,7 +27,7 @@ int taiArgTypeOfProjTemplateEl::BidForArgType(int aidx, const TypeDef* argt, con
 
 taiWidget* taiArgTypeOfProjTemplateEl::GetWidgetRep_impl(IWidgetHost* host_, taiWidget* par,
   QWidget* gui_parent_, int flags_, MemberDef* mbr_)
-{
+{ (void)mbr_;
   int new_flags = flags_;
   if (GetHasOption("NULL_OK"))
     new_flags |= taiWidget::flgNullOk;

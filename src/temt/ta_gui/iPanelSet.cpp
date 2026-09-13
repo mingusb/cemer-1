@@ -36,7 +36,7 @@ iPanelSet::iPanelSet(taiSigLink* link_)
   frmButtons->setFrameShape(QFrame::Box);
   frmButtons->setFrameShadow(QFrame::Sunken);
   layButtons = new QHBoxLayout(frmButtons);
-  layButtons->setMargin(2);
+  layButtons->setContentsMargins(2, 2, 2, 2);
   layButtons->setSpacing(taiM->hspc_c);
   // note: because we can add btns dynamically, we insert them, so put final
   // spacing here
@@ -50,7 +50,7 @@ iPanelSet::iPanelSet(taiSigLink* link_)
 
   method_box_mgr = NULL;
 
-  connect(buttons, SIGNAL(buttonClicked(int)), this, SLOT(setCurrentPanelId(int)));
+  connect(buttons, SIGNAL(idClicked(int)), this, SLOT(setCurrentPanelId(int)));
 }
 
 iPanelSet::~iPanelSet() {
@@ -190,7 +190,7 @@ void iPanelSet::setCurrentPanelId_impl(int id) {
   //TODO: maybe something to change tab color
 }
 
-void iPanelSet::setPanelAvailable(iPanelBase* pn) {
+void iPanelSet::setPanelAvailable(iPanelBase* pn) { (void)pn;
 }
 
 QWidget* iPanelSet::firstTabFocusWidget() {

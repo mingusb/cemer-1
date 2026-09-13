@@ -67,7 +67,7 @@ String DumpPathTokenList::GetPath(taBase* obj) {
 
   String path;
   path = dumpMisc::GetDumpPath(obj);
-  DumpPathToken* tok = AddObjPath(obj, path);
+  AddObjPath(obj, path);
   path += "$$";	// this marks this as a new token to be stored..
   // if obj is outside of root path, provide extra info about the object
   // that can be used during loading for finding object of correct type/name

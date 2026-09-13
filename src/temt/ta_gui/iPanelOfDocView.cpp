@@ -40,6 +40,7 @@
 #include <QWebEnginePage>
 #include <QWebEngineProfile>
 #include <QWebEngineSettings>
+#include <QPointer>
 
 #elif defined(USE_QT_WEBVIEW)
 
@@ -60,7 +61,7 @@ iPanelOfDocView::iPanelOfDocView()
 
   wb_widg = new QWidget();
   wb_box = new QVBoxLayout(wb_widg);
-  wb_box->setMargin(0); wb_box->setSpacing(2);
+  wb_box->setContentsMargins(0, 0, 0, 0); wb_box->setSpacing(2);
 
   int font_spec = taiMisc::fonMedium;
 
@@ -183,7 +184,7 @@ QWidget* iPanelOfDocView::firstTabFocusWidget() {
 
 #ifdef USE_QT_WEBENGINE
 
-void iPanelOfDocView::doc_createWindow(QWebEnginePage::WebWindowType type, QWebEngineView*& window) {
+void iPanelOfDocView::doc_createWindow(QWebEnginePage::WebWindowType type, QWebEngineView*& window) { (void)type;
   // fork to browser -- always!
   // if (type == QWebEnginePage::WebBrowserWindow) {
     iHelpBrowser* hbrow = iHelpBrowser::instance();
@@ -228,6 +229,13 @@ void iPanelOfDocView::doc_loadFinished(bool ok) {
   if(!doc_) return;
   if(!webview) return;
 #ifdef USE_QT_WEBENGINE
+  const QPointer<iPanelOfDocView> panel(this);
+  const QUrl loadedUrl = webview->url();
+  webview->page()->toHtml([panel, doc_, loadedUrl](const QString& html) {
+    if(panel && panel->doc() == doc_ && panel->webview &&
+       panel->webview->url() == loadedUrl)
+      doc_->html_text = html;
+  });
 #elif defined(USE_QT_WEBVIEW)
   QWebFrame* mnfrm = webview->page()->mainFrame();
   if(!mnfrm) return;
@@ -331,7 +339,7 @@ bool iPanelOfDocView::ignoreSigEmit() const {
   //  return !isVisible(); -- this doesn't seem to be giving accurate results!!!
 }
 
-void iPanelOfDocView::SigLinkDestroying(taSigLink* dl) {
+void iPanelOfDocView::SigLinkDestroying(taSigLink* dl) { (void)dl;
   setDoc(NULL);
 }
 
@@ -346,7 +354,9 @@ void iPanelOfDocView::UpdatePanel_impl() {
   wiki_edit->setText(doc_->wiki);
   url_edit->setText(doc_->url);
 
+#ifdef USE_QT_WEBVIEW
   float trg_font_sz = 12.0f;
+#endif
   
   int brow_fs = taMisc::GetCurrentFontSize("browser");
 
@@ -494,4 +504,3 @@ bool iPanelOfDocView::eventFilter(QObject* obj, QEvent* event) {
  /*void iPanelOfDocView::br_copyAvailable (bool) {
    viewerWindow()->UpdateUi();
    }*/
-

@@ -51,7 +51,7 @@ iTableView::iTableView(QWidget* parent)
 #if (QT_VERSION >= 0x050000)
   vhead->sectionResizeMode(QHeaderView::Fixed);
 #else
-  vhead->setResizeMode(QHeaderView::Fixed);
+  vhead->setSectionResizeMode(QHeaderView::Fixed);
 #endif
   horizontalHeader()->setDefaultSectionSize(ConvertCharsToPixels(default_chars_per_line));
 #if (QT_VERSION >= 0x050200)
@@ -451,11 +451,11 @@ void iTableView::wheelEvent(QWheelEvent *e)
     int h_scroll_pos = horizontalScrollBar()->value();
     int v_scroll_pos = verticalScrollBar()->value();
     
-    int delta_x = e->pos().x() - last_x;
-    int delta_y = e->pos().y() - last_y;
+    int delta_x = e->position().toPoint().x() - last_x;
+    int delta_y = e->position().toPoint().y() - last_y;
 
-    last_x = e->pos().x();
-    last_y = e->pos().y();
+    last_x = e->position().toPoint().x();
+    last_y = e->position().toPoint().y();
     
     if (delta_y > 2*delta_x) {
       horizontalScrollBar()->setValue(h_scroll_pos);
@@ -505,12 +505,12 @@ void iTableView::SetColumnWidth(int column, int n_chars) {
   cur_font.setPointSize(taMisc::GetCurrentFontSize("table"));
   QFontMetrics metrics(cur_font);
   if (n_chars < 1) n_chars = 1;
-  int eff_width = n_chars * metrics.width('m');
+  int eff_width = n_chars * metrics.horizontalAdvance('m');
   this->setColumnWidth(column, eff_width);
 #if (QT_VERSION >= 0x050200)
   horizontalHeader()->setSectionResizeMode(column, QHeaderView::Interactive);
 #else
-  horizontalHeader()->setResizeMode(column, QHeaderView::Interactive);
+  horizontalHeader()->setSectionResizeMode(column, QHeaderView::Interactive);
 #endif
 }
 
@@ -518,15 +518,14 @@ int iTableView::ConvertPixelsToChars(int n_pixels) {
   QFont cur_font = this->font();
   cur_font.setPointSize(taMisc::GetCurrentFontSize("table"));
   QFontMetrics metrics(cur_font);
-  return n_pixels / metrics.width('m');
+  return n_pixels / metrics.horizontalAdvance('m');
 }
 
 int iTableView::ConvertCharsToPixels(int chars) {
   QFont cur_font = this->font();
   cur_font.setPointSize(taMisc::GetCurrentFontSize("table"));
   QFontMetrics metrics(cur_font);
-  int foo =  metrics.width('m') * chars;
-  return metrics.width('m') * chars;
+  return metrics.horizontalAdvance('m') * chars;
 }
 
 ////////////////////////////////////////////////

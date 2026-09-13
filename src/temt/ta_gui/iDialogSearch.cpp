@@ -87,7 +87,7 @@ void iDialogSearch::init() {
 
 void iDialogSearch::Constr() {
   layOuter = new QVBoxLayout(this);
-  layOuter->setMargin(taiM->vsep_c);
+  layOuter->setContentsMargins(taiM->vsep_c, taiM->vsep_c, taiM->vsep_c, taiM->vsep_c);
   layOuter->setSpacing(taiM->vspc_c);
 
   TypeDef* typ = TA_iDialogSearch.sub_types.FindName("SearchOptions");
@@ -96,7 +96,7 @@ void iDialogSearch::Constr() {
   layOuter->addWidget(bbOptions->GetRep());
 
   QHBoxLayout* lay = new QHBoxLayout();
-  lay->setMargin(0);
+  lay->setContentsMargins(0, 0, 0, 0);
   lay->setSpacing(0);
   search = new iLineEdit(this);
   search->setToolTip(taiMisc::ToolTipPreProcess("Enter text to search for in item names, descriptions, and contents."));
@@ -125,13 +125,8 @@ void iDialogSearch::Constr() {
   connect(btnStop, SIGNAL(clicked()), this, SLOT(stop_clicked()) );
   connect(results, SIGNAL(setSourceRequest(iTextBrowser*, const QUrl&, bool&)),
     this, SLOT(results_setSourceRequest(iTextBrowser*, const QUrl&, bool&)) );
-#if (QT_VERSION >= 0x050000)
-  connect(results, SIGNAL(highlighted(const QString&)),
-    status_bar, SLOT(showMessage(const QString&)) );
-#else
-  connect(results, SIGNAL(highlighted(const QString&)),
-    status_bar, SLOT(message(const QString&)) );
-#endif
+  connect(results, &QTextBrowser::highlighted, status_bar,
+          [this](const QUrl& url) { status_bar->showMessage(url.toString()); });
   search->setFocus();
 }
 
@@ -166,7 +161,7 @@ void iDialogSearch::SetInteractive(bool editable) {
 }
 
 
-void iDialogSearch::SigLinkDestroying(taSigLink* dl) {
+void iDialogSearch::SigLinkDestroying(taSigLink* dl) { (void)dl;
   Reset();
   RootSet(NULL);
 }
@@ -185,7 +180,7 @@ void iDialogSearch::go_clicked() {
 
 void iDialogSearch::results_setSourceRequest(iTextBrowser* bsrc,
   const QUrl& url, bool& cancel)
-{
+{ (void)bsrc;
   if ((url.scheme() == "sort")) {
     int col = url.path().toInt();
     setFirstSort(col);
@@ -382,7 +377,7 @@ void iDialogSearch::RenderItem(int level, const String& headline,
 }
 
 void iDialogSearch::StartSection(const String& sec_name)
-{
+{ (void)sec_name;
 }
 
 bool iDialogSearch::setFirstSort(int col) {

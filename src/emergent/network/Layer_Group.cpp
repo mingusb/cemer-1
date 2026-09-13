@@ -336,7 +336,7 @@ void Layer_Group::LayerPos_GridLayout_Gps_3d(int x_space, int y_space, int z_siz
   }
   int li = 0;
   for(int z=0; z<z_size; z++) {
-    int last_max_y = 0;
+
     for(int y=0; y<grid.y; y++) {
       for(int x=0; x<grid.x; x++, li++) {
         if(li >= gp.size) break;

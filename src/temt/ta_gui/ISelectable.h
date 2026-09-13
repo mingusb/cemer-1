@@ -102,13 +102,13 @@ public: // Interface Properties and Methods
     bool for_drag, GuiContext sh_typ = GC_DEFAULT) const = 0;
   // #IGNORE 
   virtual iClipData*  GetClipDataMulti(const ISelectable_PtrList& sel_items,
-    int src_edit_action, bool for_drag, GuiContext sh_typ = GC_DEFAULT) const {return NULL;}// #IGNORE only needed if multi is handled
+    int src_edit_action, bool for_drag, GuiContext sh_typ = GC_DEFAULT) const { (void)for_drag; (void)sel_items; (void)sh_typ; (void)src_edit_action; return NULL;}// #IGNORE only needed if multi is handled
   virtual int           QueryEditActions_(taiMimeSource* ms,
     GuiContext sh_typ = GC_DEFAULT) const; // typically called on single item for canAcceptDrop
   int                   QueryEditActions_(const ISelectable_PtrList& sel_items,
     GuiContext sh_typ = GC_DEFAULT) const;
     // called to get edit items available on clipboard for the sel_items
-  virtual int           RefUnref(bool ref) {return 1;} // ref'ed/unrefed in select lists etc.; optional, and can be used for lifetime mgt; returns count after operation
+  virtual int           RefUnref(bool ref) { (void)ref; return 1;} // ref'ed/unrefed in select lists etc.; optional, and can be used for lifetime mgt; returns count after operation
 
   ~ISelectable();
 protected:
@@ -124,7 +124,7 @@ protected:
   virtual void          FillContextMenu_EditItems_impl(taiWidgetActions* menu,
     int allowed, GuiContext sh_typ); // might be extended
   virtual void          FillContextMenu_impl(taiWidgetActions* menu,
-    GuiContext sh_typ) {} // link handles most, called in FCM
+    GuiContext sh_typ) { (void)menu; (void)sh_typ; } // link handles most, called in FCM
   virtual void          GetContextCaptions(String& view_cap, String& obj_cap);
   virtual void          QueryEditActionsD_impl_(taiMimeSource* ms,
    int& allowed, int& forbidden, GuiContext sh_typ) const = 0;

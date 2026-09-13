@@ -96,13 +96,13 @@ public:
   virtual bool          isViewPanelFrame() const {return false;} // we group the vpf's to the right, all others to the left
 
   virtual void          AddedToPanelSet() {} // called when fully added to DataPanelSet
-  virtual void          Closing(CancelOp& cancel_op) {} // called to notify panel is(forced==true)/wants(forced=false) to close -- set cancel 'true' (if not forced) to prevent
+  virtual void          Closing(CancelOp& cancel_op) { (void)cancel_op; } // called to notify panel is(forced==true)/wants(forced=false) to close -- set cancel 'true' (if not forced) to prevent
   virtual void          ClosePanel() = 0; // anyone can call this to get the panel to close (ex. edit panel contents are deleted externally)
   //NOTE: due to various versioning/compatibility reasons, the following 2 routines get replaced sometimes in subclasses, to implement more elaborate rules before dispatching their worker bee impls
   virtual void          InitPanel() {InitPanel_impl();} // called when creating ViewPanels
   virtual void          UpdatePanel(); // called when reshowing a panel, to insure latest data
   virtual const iColor  GetTabColor(bool selected, bool& ok) const
-    {ok = false; return iColor();} // special color for tab; NULL means use default
+    { (void)selected;ok = false; return iColor();} // special color for tab; NULL means use default
   virtual void          FrameShowing(bool showing, bool focus = false); // called esp by t3 frames when show/hide; lets us show hide the tabs
 
   virtual bool          HasChanged() {return HasChanged_impl();} // 'true' if user has unsaved changes -- used to autosave when browsing away etc.
@@ -153,7 +153,7 @@ public: // ISigLinkClient interface
   bool         ignoreSigEmit() const override {return (!isVisible());}
   void         SigLinkRecv(taSigLink*, int sls, void* op1, void* op2) override
     {SigEmit_impl(sls, op1, op2);} // called when the data item has changed, esp. ex lists and groups
-  void         SigLinkDestroying(taSigLink* dl) override {} // called by SigLink when it is destroying --
+  void         SigLinkDestroying(taSigLink* dl) override { (void)dl; } // called by SigLink when it is destroying --
 
 protected:
   bool                  m_pinned;
@@ -169,9 +169,9 @@ protected:
   void         hideEvent(QHideEvent* ev) override; // auto-apply
   void         showEvent(QShowEvent* ev) override;
   virtual void          SigEmit_impl(int sls, void* op1, void* op2); // tab name may have changed
-  virtual void          OnWindowBind_impl(iPanelViewer* itv) {}
+  virtual void          OnWindowBind_impl(iPanelViewer* itv) { (void)itv; }
   virtual void          Render_impl() {} // only called once, when content needs to be created
-  virtual void          ResolveChanges_impl(CancelOp& cancel_op) {}
+  virtual void          ResolveChanges_impl(CancelOp& cancel_op) { (void)cancel_op; }
 
   virtual void          InitPanel_impl() {}
   virtual void          UpdatePanel_impl();

@@ -113,7 +113,7 @@ void taiWidgetMemberMethodDefChooser::BuildChooser_0(iDialogItemChooser* ic) {
     cat = mbr->OptionAfter("CAT_");
     if(cat == "IGNORE") continue;
     cat = "member: " + cat;
-    QTreeWidgetItem* item = ic->AddItem(cat, mbr->name + " (member)", NULL, (void*)mbr,
+    ic->AddItem(cat, mbr->name + " (member)", NULL, (void*)mbr,
                                         mbr->desc);
   }
 
@@ -167,7 +167,7 @@ void taiWidgetMemberMethodDefChooser::BuildChooser_3(iDialogItemChooser* ic) {
     cat = mbr->OptionAfter("CAT_");
     if(cat == "IGNORE") continue;
     cat = "member: " + cat;
-    QTreeWidgetItem* item = ic->AddItem(cat, mbr->name + " (member)", NULL, (void*)mbr,
+    ic->AddItem(cat, mbr->name + " (member)", NULL, (void*)mbr,
                                         mbr->desc);
   }
 
@@ -184,7 +184,7 @@ void taiWidgetMemberMethodDefChooser::BuildChooser_3(iDialogItemChooser* ic) {
   }
 }
 
-int taiWidgetMemberMethodDefChooser::columnCount(int view) const {
+int taiWidgetMemberMethodDefChooser::columnCount(int view) const { (void)view;
   return 2;                     // always 2
 }
 

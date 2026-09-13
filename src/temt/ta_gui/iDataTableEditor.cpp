@@ -42,7 +42,7 @@ iDataTableEditor::iDataTableEditor(iDataTableView* table_view, QWidget* parent)
 {
   m_cell_par = NULL;
   layOuter = new QVBoxLayout(this);
-  layOuter->setMargin(0); layOuter->setSpacing(0);
+  layOuter->setContentsMargins(0, 0, 0, 0); layOuter->setSpacing(0);
   splMain = new iSplitter(this);
   splMain->setOrientation(Qt::Vertical);
   layOuter->addWidget(splMain);
@@ -98,7 +98,7 @@ void iDataTableEditor::SigLinkDestroying(taSigLink* dl) {
   }
 }
 
-void iDataTableEditor::SigLinkRecv(taSigLink* dl, int sls, void* op1, void* op2) {
+void iDataTableEditor::SigLinkRecv(taSigLink* dl, int sls, void* op1, void* op2) { (void)dl; (void)op1; (void)op2; (void)sls;
 //   taMisc::Info("idte:ddc", String(sls));
 }
 

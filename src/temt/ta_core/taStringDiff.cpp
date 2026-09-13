@@ -178,7 +178,6 @@ bool taStringDiff::DiffFiles(const String& fname_a, const String& fname_b,
                              bool trimSpace, bool ignoreSpace, bool ignoreCase) {
   bool rval = false;
   fstream istrm;
-  int err;
   istrm.open(fname_a.chars(), ios::in);
   if(!istrm.is_open()) goto exit;
   if(!str_a.Load_str(istrm)) goto exit;
@@ -404,7 +403,7 @@ void taStringDiff::LCS(int lower_a, int upper_a, int lower_b, int upper_b) {
 // Scan the tables of which lines are inserted and deleted,
 // producing an edit script in forward order.
 
-void taStringDiff::CreateDiffs(const String& str_a, const String& str_b) {
+void taStringDiff::CreateDiffs(const String& str_a, const String& str_b) { (void)str_a;
   diffs.Reset();
 
   int start_a, start_b;
@@ -504,7 +503,7 @@ String taStringDiff::GetDiffStr_normal(const String& str_a, const String& str_b)
   return rval;
 }
 
-String taStringDiff::GetDiffStr_context(const String& str_a, const String& str_b) {
+String taStringDiff::GetDiffStr_context(const String& str_a, const String& str_b) { (void)str_a; (void)str_b;
   return "Context format not currently supported -- please use NORMAL\n";
 }
 

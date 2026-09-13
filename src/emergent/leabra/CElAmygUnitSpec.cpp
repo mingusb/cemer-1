@@ -33,7 +33,7 @@ void STATE_CLASS(CElAmygUnitSpec)::Init_UnitState
 }
 
 void STATE_CLASS(CElAmygUnitSpec)::Compute_DeepMod
-  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
   
   LEABRA_LAYER_STATE* lay = u->GetOwnLayer(net);
   LEABRA_UNGP_STATE* lgpd = lay->GetLayUnGpState(net);
@@ -64,7 +64,7 @@ void STATE_CLASS(CElAmygUnitSpec)::Compute_DeepMod
 }
 
 float STATE_CLASS(CElAmygUnitSpec)::Compute_DaModNetin
-  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no, float& net_syn) {
+  (LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no, float& net_syn) { (void)thr_no;
   
   float da_val = u->da_p;
   if(da_val > 0.0f) {

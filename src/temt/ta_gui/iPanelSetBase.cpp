@@ -27,7 +27,7 @@ iPanelSetBase::iPanelSetBase(taiSigLink* link_)
   widg = new QWidget();
   layDetail = new QVBoxLayout(widg);
   // don't introduce any new margin
-  layDetail->setMargin(0);
+  layDetail->setContentsMargins(0, 0, 0, 0);
   layDetail->setSpacing(0);
   wsSubPanels = new QStackedWidget(widg); // add to lay by desc
 
@@ -60,7 +60,7 @@ void iPanelSetBase::ClosePanel() {
   deleteLater();
 }
 
-void iPanelSetBase::SigLinkDestroying(taSigLink* dl) {
+void iPanelSetBase::SigLinkDestroying(taSigLink* dl) { (void)dl;
   ClosePanel();
 } // nothing for us; subpanels handle
 

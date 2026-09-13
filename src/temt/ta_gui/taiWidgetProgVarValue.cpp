@@ -84,7 +84,7 @@ void taiWidgetProgVarValue::GetSubWidget(ProgVar* pv) {
                    this, SIGNAL(settingLighten(bool)) );
 
   QHBoxLayout* lay = new QHBoxLayout(m_rep);
-  lay->setMargin(0); lay->setSpacing(0);
+  lay->setContentsMargins(0, 0, 0, 0); lay->setSpacing(0);
   lay->addWidget(sub_widget->GetRep());
 }
 

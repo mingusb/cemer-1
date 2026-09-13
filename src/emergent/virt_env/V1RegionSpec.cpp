@@ -177,7 +177,7 @@ void V1MotionSpec::UpdateAfterEdit_impl() {
 void V1MotionSpec::RenderFilters(float_Matrix& fltrs) {
   fltrs.SetGeom(3, size, size, n_angles);
 
-  float ctr = (float)(size-1) / 2.0f;
+
   float ang_inc = .5f * taMath_float::pi / (float)(n_angles + 1);
 
   float circ_radius = (float)(size); // / 2.0f;
@@ -454,7 +454,7 @@ static void geom_get_angles(float angf, float& cosx, float& siny,
 }
 
 void V1RegionSpec::UpdateGeom() {
-  static bool redo = false;
+
   inherited::UpdateGeom();
 
 
@@ -755,7 +755,7 @@ bool V1RegionSpec::InitFilters_V1Complex() {
         taMath_float::rint((float)lpt * v1s_ang_slopes.FastEl3d(Y, LINE, ang));
     }
     int ang_gp = ang / ang4_mult;
-    int ang_eq = ang_gp * ang4_mult; // 0-1 = 0, 2-3=2, etc
+
     float ls_off = (float)v1c_specs.len_sum_len;
     // center of length sum guy, "left" direction
     v1es_stencils.FastEl(X, 0, ON, LEFT, ang) =
@@ -1219,8 +1219,9 @@ void V1RegionSpec::V1SimpleFilter_Static_thread(int thr_no) {
   else
     flt_wd = (flt_wdf-1) / 2;
 
-  int flt_vecw = flt_wdf / 4;
-  flt_vecw *= 4;
+  #ifdef TA_VEC_USE
+  const int flt_vecw = (flt_wdf / 4) * 4;
+  #endif
 
   taVector2i in_off = input_size.border - flt_wd;
   
@@ -1343,7 +1344,6 @@ void V1RegionSpec::V1SimpleFilter_Static_neighinhib_thread(int thr_no) {
     for(oc.x = st.x; oc.x < ed.x; oc.x++) {
       for(int polclr = 0; polclr < n_polclr; polclr++) { // polclr features
         for(int ang = 0; ang < v1s_specs.n_angles; ang++) { // angles
-          float raw = cur_out->FastEl4d(ang, polclr, oc.x, oc.y);
           float feat_inhib_max = 0.0f;
           for(int lpdx=0; lpdx < v1s_neigh_inhib.tot_ni_len; lpdx++) { // go out to neighs
             if(lpdx == v1s_neigh_inhib.inhib_d) continue;              // skip self
@@ -1520,14 +1520,6 @@ void V1RegionSpec::V1SimpleFilter_Motion_thread(int thr_no) {
   int max_t = MIN(hist_len, v1s_motion.size); // max time (y axis of gabor)
   
   int flt_wdf = v1s_motion.size; // full-width
-  int flt_wd;                    // half-width
-  if(flt_wdf % 2 == 0)
-    flt_wd = flt_wdf / 2;
-  else
-    flt_wd = (flt_wdf-1) / 2;
-
-  int flt_vecw = flt_wdf / 4;
-  flt_vecw *= 4;
 
   taVector2i oc;         // current coord -- output space
   taVector2i ic;         // input coord
@@ -2209,7 +2201,7 @@ bool V1RegionSpec::V1SOutputToTable(DataTable* dtab, bool fmt_only) {
 }
 
 bool V1RegionSpec::V1SOutputToTable_impl(DataTable* dtab, float_Matrix* out,
-                                         const String& col_sufx, bool fmt_only) {
+                                         const String& col_sufx, bool fmt_only) { (void)dtab;
   taVector2i sc;         // simple coords
   DataCol* col;
   int idx;
@@ -2266,7 +2258,7 @@ bool V1RegionSpec::V1SOutputToTable_impl(DataTable* dtab, float_Matrix* out,
 
 bool V1RegionSpec::V1MOutputToTable_impl
 (DataTable* dtab, float_Matrix* out, float_Matrix* maxout, float_Matrix* hist,
- CircMatrix* circ, const String& col_sufx, bool fmt_only) {
+ CircMatrix* circ, const String& col_sufx, bool fmt_only) { (void)dtab;
   DataCol* col;
   int idx;
 
@@ -2344,7 +2336,7 @@ bool V1RegionSpec::V1COutputToTable(DataTable* dtab, bool fmt_only) {
 }
 
 bool V1RegionSpec::V1COutputToTable_impl(DataTable* dtab, float_Matrix* v1c_out,  
-                                         const String& col_sufx, bool fmt_only) {
+                                         const String& col_sufx, bool fmt_only) { (void)dtab;
   DataCol* col;
   taVector2i cc;         // complex coords
   int idx;
@@ -2424,7 +2416,7 @@ bool V1RegionSpec::SIOutputToTable(DataTable* dtab, bool fmt_only) {
 
 
 
-bool V1RegionSpec::OptOutputToTable(DataTable* dtab, bool fmt_only) {
+bool V1RegionSpec::OptOutputToTable(DataTable* dtab, bool fmt_only) { (void)dtab;
   DataCol* col;
   int idx;
 
@@ -2639,7 +2631,7 @@ void V1RegionSpec::PlotSpacing(DataTable* graph_data, bool reset) {
   int idx;
   DataCol* nmda = graph_data->FindMakeColName("Name", idx, VT_STRING);
   nmda->SetUserData("WIDTH", 8);
-  DataCol* matda = graph_data->FindMakeColName("Spacing", idx, VT_FLOAT, 2,
+  graph_data->FindMakeColName("Spacing", idx, VT_FLOAT, 2,
                                               input_size.retina_size.x, input_size.retina_size.y);
   graph_data->SetUserData("N_ROWS", 1);
   graph_data->SetUserData("BLOCK_HEIGHT", 0.0f);

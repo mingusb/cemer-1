@@ -1149,7 +1149,7 @@ float taDataGen::LastMinMaxDist(DataCol* da, int row, float& max_dist,
 bool taDataGen::WriteFmSubMatricies(DataTable* dest, const String& dest_col_nm,
                                     DataTable* sub_mtx_src, SubMatrixOpSpec* spec,
                                     taMatrix::RenderOp render_op,
-                                    bool reset_first) {
+                                    bool reset_first) { (void)reset_first;
   if(!dest) { taMisc::Error("taDataGen::WriteFmSubMatricies: dest is NULL"); return false; }
   if(!sub_mtx_src) { taMisc::Error("taDataGen::WriteFmSubMatricies: sub_mtx_src is NULL"); return false; }
   if(!spec) { taMisc::Error("taDataGen::WriteFmSubMatricies: spec is NULL"); return false; }
@@ -1177,7 +1177,7 @@ bool taDataGen::WriteFmSubMatricies(DataTable* dest, const String& dest_col_nm,
 bool taDataGen::ReadToSubMatricies(DataTable* src, const String& src_col_nm,
                                    DataTable* sub_mtx_dest, SubMatrixOpSpec* spec,
                                    taMatrix::RenderOp render_op,
-                                   bool reset_first) {
+                                   bool reset_first) { (void)reset_first;
   if(!src) { taMisc::Error("taDataGen::ReadToSubMatricies: src is NULL"); return false; }
   if(!sub_mtx_dest) { taMisc::Error("taDataGen::ReadToSubMatricies: sub_mtx_dest is NULL"); return false; }
   if(!spec) { taMisc::Error("taDataGen::ReadToSubMatricies: spec is NULL"); return false; }

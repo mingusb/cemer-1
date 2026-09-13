@@ -62,7 +62,7 @@
     u->ext_orig = 0.0f;
   }
 
-  INLINE virtual void Init_Netins(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void Init_Netins(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
     u->act_sent = 0.0f;
     u->net_raw = 0.0f;
     u->gi_raw = 0.0f;
@@ -84,7 +84,7 @@
   
   INIMPL void  Init_UnitState(UNIT_STATE* uv, NETWORK_STATE* net, int thr_no) override;
 
-  INLINE virtual void Init_ActAvg(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void Init_ActAvg(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     if(act_misc.avg_trace) {
       u->act_avg = 0.0f;
     }
@@ -108,7 +108,7 @@
     Init_ActAvg(u, (LEABRA_NETWORK_STATE*)net, thr_no);
   }
 
-  INLINE void LoadBiasWtVal(float bwt, UNIT_STATE* uv, NETWORK_STATE* net) override {
+  INLINE void LoadBiasWtVal(float bwt, UNIT_STATE* uv, NETWORK_STATE* net) override { (void)net;
     LEABRA_UNIT_STATE* u = (LEABRA_UNIT_STATE*)uv;
     u->bias_wt = bwt;
     u->bias_fwt = bwt;
@@ -119,7 +119,7 @@
   INIMPL virtual void DecayState(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no, float decay);
   // #CAT_Activation decay activation states towards initial values by given amount (0 = no decay, 1 = full decay)
   
-  INLINE virtual void ResetSynTR(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void ResetSynTR(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     u->syn_tr = 1.0;
     u->syn_kre = 0.0;
   }
@@ -154,13 +154,13 @@
     Trial_NoiseInit(u, net, thr_no);
   }
   
-  INLINE virtual void Trial_Init_PrvVals(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void Trial_Init_PrvVals(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     u->net_prv_trl = u->net; 
     u->act_q0 = u->act_q4;
   }
   // #CAT_Learning save previous trial values at start of new trial -- allow values at end of trial to be valid for visualization..
   
-  INLINE virtual void Trial_Init_SRAvg(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void Trial_Init_SRAvg(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
     LEABRA_LAYER_STATE* lay = u->GetOwnLayer(net);
     LEABRA_UNGP_STATE* lgpd = lay->GetLayUnGpState(net);
     if(lgpd->acts_p_avg >= avg_l.lay_act_thr) {
@@ -173,7 +173,7 @@
   INIMPL virtual void Trial_DecayState(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no);
   // #CAT_Activation decay activation states towards initial values: at trial-level boundary
 
-  INLINE virtual void Trial_NoiseInit(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void Trial_NoiseInit(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)net;
     if(noise_type.type != STATE_CLASS(LeabraNoiseSpec)::NO_NOISE && noise_type.trial_fixed &&
        (noise.type != STATE_CLASS(Random)::NONE)) {
       u->noise = noise.Gen(thr_no);
@@ -181,7 +181,7 @@
   }
   // #CAT_Activation init trial-level noise -- ONLY called if noise_type.trial_fixed is set
 
-  INLINE virtual void Trial_STP_TrialBinary_Updt(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void Trial_STP_TrialBinary_Updt(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)net;
     if(!stp.on || stp.algorithm != STATE_CLASS(ShortPlastSpec)::TRIAL_BINARY) return;
 
     if (u->syn_tr > 0.0f) { // if the unit isn't currently depressed
@@ -212,14 +212,14 @@
   }
   // #CAT_Activation apply input data value according to ext flags
 
-  INLINE virtual void ApplyInputData_post(LEABRA_UNIT_STATE* u, NETWORK_STATE* net) {
+  INLINE virtual void ApplyInputData_post(LEABRA_UNIT_STATE* u, NETWORK_STATE* net) { (void)net;
     if(!u->HasExtFlag(UNIT_STATE::EXT))
       return;
     u->ext_orig = u->ext;
   }
   // #CAT_Activation post-apply input data -- cache the ext value b/c it might get overwritten in transforms of the input data, as in ScalarValLayerSpec
 
-  INLINE virtual void ExtToComp(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no)  {
+  INLINE virtual void ExtToComp(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no)  { (void)net; (void)thr_no;
     if(!u->HasExtFlag(UNIT_STATE::EXT))
       return;
     u->ClearExtFlag(UNIT_STATE::EXT);
@@ -229,7 +229,7 @@
   }
   // #CAT_Activation change external inputs to comparisons (remove input)
   
-  INLINE virtual void TargExtToComp(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void TargExtToComp(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     if(!u->HasExtFlag(UNIT_STATE::TARG_EXT))
       return;
     if(u->HasExtFlag(UNIT_STATE::EXT))
@@ -261,7 +261,7 @@
   }
   // #CAT_Activation quarter unit-level initialization functions: Init_TargFlags, Init_PrvNet, NetinScale
 
-  INLINE virtual void Quarter_Init_TargFlags(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void Quarter_Init_TargFlags(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
     if(!u->HasExtFlag(UNIT_STATE::TARG))
       return;
 
@@ -278,7 +278,7 @@
   }
   // #CAT_Activation initialize external input flags based on phase
 
-  INLINE virtual void Quarter_Init_PrvVals(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void Quarter_Init_PrvVals(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
     if(deep.on && (deep_raw_qtr & Q2)) {
       // if using beta rhythm, this happens at that interval
       if(Quarter_DeepRawPrevQtr(net->quarter)) {
@@ -347,7 +347,7 @@
   }
   // #IGNORE force units to external values provided by environment
 
-  INLINE virtual void Compute_HardClamp(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void Compute_HardClamp(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
     if(!u->HasExtFlag(UNIT_STATE::EXT))
       return;
     LEABRA_LAYER_STATE* lay = u->GetOwnLayer(net);
@@ -362,7 +362,7 @@
   }
   // #CAT_Activation force units to external values provided by environment
 
-  INLINE virtual void Compute_HardClampNoClip(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void Compute_HardClampNoClip(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
     if(!u->HasExtFlag(UNIT_STATE::EXT))
       return;
     LEABRA_LAYER_STATE* lay = u->GetOwnLayer(net);
@@ -379,10 +379,10 @@
   // #CAT_Activation hard-clamp units without clipping values to clamp_range (use for freezing activation states for example, e.g., in second plus phase)
   
   
-  virtual void Quarter_Init_Deep(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { };
+  virtual void Quarter_Init_Deep(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no; (void)u; };
   // #CAT_Deep first entry point into quarter init deep for deep -- needed in subclasses (PFCUnitSpec) for updates prior to sending DeepCtxtNetin
 
-  INLINE virtual void Compute_DeepStateUpdt(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no)  {
+  INLINE virtual void Compute_DeepStateUpdt(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no)  { (void)thr_no;
     if(!deep.on || !Quarter_DeepRawPrevQtr(net->quarter)) return;
     u->deep_raw_prv = u->deep_raw; // keep track of what we sent here, for context learning
   }
@@ -391,7 +391,7 @@
   INIMPL virtual void Send_DeepCtxtNetin(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no);
   // #CAT_Deep send deep_raw to deep_ctxt netinput, using deepraw netin temp buffer -- not delta based
   
-  INLINE virtual void Compute_DeepCtxt(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void Compute_DeepCtxt(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
     if(!deep.on || !Quarter_DeepRawPrevQtr(net->quarter)) return;
     // note: this is OK to only integrate selectively b/c not using delta-based netin
 
@@ -430,7 +430,7 @@
   INIMPL virtual void Compute_NetinInteg(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no);
   // #CAT_Activation integrate newly-computed netinput delta values into a resulting complete netinput value for the network (does both excitatory and inhibitory)
 
-  INLINE virtual void DeepModNetin_Integ(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void DeepModNetin_Integ(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
     int flat_idx = u->flat_idx;
     int nt = net->n_thrs_built;
     float net_delta = 0.0f;
@@ -444,7 +444,7 @@
 
   
   INLINE virtual float Compute_DaModNetin(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net,
-                                          int thr_no, float& net_syn) {
+                                          int thr_no, float& net_syn) { (void)thr_no;
     if(net->phase == LEABRA_NETWORK_STATE::PLUS_PHASE) {
       return da_mod.plus * u->da_p * net_syn;
     }
@@ -514,14 +514,14 @@
   }
 
   
-  INLINE virtual void SaveGatingAct(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void SaveGatingAct(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
     if(net->cycle == net->times.thal_gate_cycle+1) { // happened last trial
       u->act_g = GetRecAct(u);
     }
   }
   // #CAT_Activation save act_eq to act_g based on network.times.thal_gate_cycle
 
-  INLINE virtual void Compute_DeepMod(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void Compute_DeepMod(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
     LEABRA_LAYER_STATE* lay = u->GetOwnLayer(net);
     LEABRA_UNGP_STATE* lgpd = lay->GetLayUnGpState(net);
     if(deep.SendDeepMod()) {
@@ -623,7 +623,7 @@
   ///////////////////////////////////////////////////////////////////////
   //        Spiking
 
-  INLINE virtual void Compute_RateCodeSpike(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void Compute_RateCodeSpike(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
     // use act_nd here so it isn't a self-fulfilling function!
     // note: this is only used for clamped layers -- dynamic layers use SPIKE-based mechanisms
     u->spike = 0.0f;
@@ -645,7 +645,7 @@
   }    
   // #CAT_Activation compute spiking activation (u->spike) based off of rate-code activation value
 
-  INLINE void Compute_ActFun_Spiked(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE void Compute_ActFun_Spiked(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
     u->spike = 1.0f;
     u->v_m = spike_misc.vm_r;
     u->I_net = 0.0f;
@@ -657,7 +657,7 @@
   }
   // #IGNORE what to do when a spike has been triggered -- common between rate and spike
 
-  INLINE void Compute_ActFun_NotSpiked(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE void Compute_ActFun_NotSpiked(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
     u->spike = 0.0f;
     if(u->spk_t > 0 && u->spike_isi > 0.0f) {
       float cur_int = net->tot_cycle - u->spk_t;
@@ -765,7 +765,7 @@
   // #IGNORE compute the equilibrium (asymptotic) membrante potential from input conductances (assuming they remain fixed as they are)
 
   INLINE float Compute_INet_impl(LEABRA_UNIT_STATE* u, const float v_m_eff, const float net_eff,
-                                 const float gc_i, const float gc_k) {
+                                 const float gc_i, const float gc_k) { (void)u;
     return net_eff * (e_rev.e - v_m_eff) + g_bar.l * (e_rev.l - v_m_eff) +
       gc_k * (e_rev.k - v_m_eff) + gc_i * (e_rev.i - v_m_eff);
   }
@@ -786,7 +786,7 @@
   ////////////////////////////////////////////////////////////////////
   //              Self reg / adapt / depress
 
-  INLINE virtual void Compute_ActAdapt_Cycle(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void Compute_ActAdapt_Cycle(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     if(!kna_adapt.on) return;
     if(kna_misc.no_targ && (deep.IsTRC() || u->HasExtFlag(LEABRA_UNIT_STATE::TARG)))
       return;
@@ -799,7 +799,7 @@
   }
   // #CAT_Activation compute the activation-based adaptation value based on spiking and membrane potential
   
-  INLINE virtual void Compute_ShortPlast_Cycle(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void Compute_ShortPlast_Cycle(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     if(!stp.on) {
       if(u->syn_tr != 1.0f) {
         u->syn_tr = 1.0f;
@@ -833,7 +833,7 @@
   ///////////////////////////////////////////////////////////////////////
   //        Post Activation Step
 
-  INLINE virtual void Compute_SRAvg(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void Compute_SRAvg(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     float ru_act;
     if(act_misc.avg_nd) {
       ru_act = u->act_nd;
@@ -846,7 +846,7 @@
   }
   // #CAT_Learning compute sending-receiving running activation averages (avg_ss, avg_s, avg_m) -- only for this unit (SR name is a hold-over from connection-level averaging that is no longer used) -- unit level only, used for XCAL -- called by Compute_Act_Post
   
-  INLINE virtual void Compute_Margin(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void Compute_Margin(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
     LEABRA_LAYER_STATE* lay = u->GetOwnLayer(net);
     const float v_m_eq = u->v_m_eq;
     if(v_m_eq >= lay->margin.low_thr) {
@@ -880,7 +880,7 @@
   ///////////////////////////////////////////////////////////////////////
   //        Deep Leabra Computations -- after superifical acts updated
 
-  INLINE virtual void Compute_DeepRaw(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void Compute_DeepRaw(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
     if(!deep.on || !Quarter_DeepRawNow(net->quarter)) return;
     LEABRA_LAYER_STATE* lay = u->GetOwnLayer(net);
     LEABRA_UNGP_STATE* lgpd = lay->GetLayUnGpState(net);
@@ -906,7 +906,7 @@
   INIMPL virtual void Send_DeepRawNetin(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no);
   // #CAT_Deep send deep5b netinputs through SendDeepRawConSpec connections
   
-  INLINE virtual void DeepRawNetin_Integ(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void DeepRawNetin_Integ(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)thr_no;
     // note: no tests here -- ALWAYS run this (network already filters on general need)
     // so that delta can always be tracked!
     int flat_idx = u->flat_idx;
@@ -920,7 +920,7 @@
   }
   // #CAT_Deep send context netinputs through SendDeepRawConSpec connections -- post processing rollup -- checks deeptest
 
-  INLINE virtual void ClearDeepActs(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void ClearDeepActs(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     u->deep_raw = 0.0f;    u->deep_raw_prv = 0.0f;    u->deep_ctxt = 0.0f;
     u->deep_mod = 1.0f;    u->deep_lrn = 1.0f;        u->deep_raw_net = 0.0f;
     u->deep_mod_net = 0.0f;    u->deep_raw_sent = 0.0f;
@@ -936,7 +936,7 @@
   }
   // #IGNORE get activation to record
   
-  INLINE virtual void Compute_ActTimeAvg(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE virtual void Compute_ActTimeAvg(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     if(act_misc.avg_trace) {
       u->act_avg = act_misc.lambda * u->act_avg + u->act_q0; // using prior act to be compatible with std td learning mechanism
     }
@@ -988,7 +988,7 @@
   ///////////////////////////////////////////////////////////////////////
   //        Stats
 
-  INLINE float Compute_SSE(UNIT_STATE* uv, NETWORK_STATE* net, int thr_no, bool& has_targ) override {
+  INLINE float Compute_SSE(UNIT_STATE* uv, NETWORK_STATE* net, int thr_no, bool& has_targ) override { (void)net; (void)thr_no;
     LEABRA_UNIT_STATE* u = (LEABRA_UNIT_STATE*)uv;
     float sse = 0.0f;
     has_targ = false;
@@ -1003,7 +1003,7 @@
   
   INLINE bool  Compute_PRerr
     (UNIT_STATE* uv, NETWORK_STATE* net, int thr_no, float& true_pos, float& false_pos,
-     float& false_neg, float& true_neg) override {
+     float& false_neg, float& true_neg) override { (void)net; (void)thr_no;
     LEABRA_UNIT_STATE* u = (LEABRA_UNIT_STATE*)uv;
     true_pos = 0.0f; false_pos = 0.0f; false_neg = 0.0f; true_neg = 0.0f;
     bool has_targ = false;
@@ -1024,7 +1024,7 @@
   }
   
   INLINE virtual float  Compute_NormErr(LEABRA_UNIT_STATE* u, LEABRA_NETWORK_STATE* net, int thr_no,
-                                 bool& targ_active)  {
+                                 bool& targ_active)  { (void)thr_no;
     targ_active = false;
     if(!u->HasExtFlag(UNIT_STATE::COMP_TARG)) return 0.0f;
 

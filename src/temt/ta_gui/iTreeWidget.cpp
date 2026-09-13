@@ -153,7 +153,7 @@ void iTreeWidget::dragMoveEvent(QDragMoveEvent* ev) {
         //      ev->ignore(); // puts up the stop sign icon
         break;
       case OnItem: {
-        QModelIndex index = indexAt(ev->pos());
+        QModelIndex index = indexAt(ev->position().toPoint());
         iTreeWidgetItem* item = dynamic_cast<iTreeWidgetItem*>(itemFromIndex(index));
         if (!item || !item->canAcceptDrop(ev->mimeData())) {
           ev->setDropAction(Qt::IgnoreAction);
@@ -190,19 +190,19 @@ void iTreeWidget::drawRow(QPainter* painter,
 
 void iTreeWidget::dropEvent(QDropEvent* e) {
   ext_select_on = false;
-  drop_pos = e->pos();
-  key_mods = e->keyboardModifiers();
+  drop_pos = e->position().toPoint();
+  key_mods = e->modifiers();
   // we have to skip QTreeWidget because it does the evil gui move, esp. on Mac
   //  QTreeView::dropEvent(e);
   //TEMP MAC
-  QDropEvent et(e->pos(), Qt::CopyAction, e->mimeData(), e->mouseButtons(),
-                e->keyboardModifiers(), e->type());
+  QDropEvent et(e->position(), Qt::CopyAction, e->mimeData(), e->buttons(),
+                e->modifiers(), e->type());
   QTreeView::dropEvent(&et);
 }
 
 bool iTreeWidget::dropMimeData(QTreeWidgetItem* parent, int index,
                                const QMimeData* data, Qt::DropAction action)
-{
+{ (void)action;
   iTreeWidgetItem* item = dynamic_cast<iTreeWidgetItem*>(parent);
   
   iTreeWidgetItem::WhereIndicator where = iTreeWidgetItem::WI_ON; // default
@@ -314,7 +314,7 @@ void iTreeWidget::keyboardSearch(const QString& search) {
 
 void iTreeWidget::setHighlightColor(int idx, const QColor& base)
 {
-  QColor h = base.dark(150); // returns color 100/150 (2/3) as bright
+  QColor h = base.darker(150); // returns color 100/150 (2/3) as bright
   setHighlightColor(idx, base, h);
 }
 
@@ -440,19 +440,16 @@ void iTreeWidget::keyPressEvent(QKeyEvent* e) {
   QPersistentModelIndex newCurrent = currentIndex();
 
   bool no_inherited = false;
-  bool accepted = false;
   
   switch (action) {
     case taiMisc::TREE_FORWARD:
     case taiMisc::TREE_FORWARD_II:
       e->accept();
-      accepted = true;
       QCoreApplication::postEvent(this, new QKeyEvent(QEvent::KeyPress, Qt::Key_Right, Qt::NoModifier));
       return;
     case taiMisc::TREE_BACKWARD:
     case taiMisc::TREE_BACKWARD_II:
       e->accept();
-      accepted = true;
       QCoreApplication::postEvent(this, new QKeyEvent(QEvent::KeyPress, Qt::Key_Left, Qt::NoModifier));
       return;
     case taiMisc::TREE_START_EXTENDED_SELECTION:
@@ -468,37 +465,31 @@ void iTreeWidget::keyPressEvent(QKeyEvent* e) {
       ext_select_on = true;
       // }
       e->accept();
-      accepted = true;
       return;			// don't continue
     case taiMisc::TREE_CLEAR_SELECTION:
     case taiMisc::TREE_CLEAR_SELECTION_II:
       clearExtSelection();
       e->accept();
-      accepted = true;
       break;
     case taiMisc::TREE_MOVE_SELECTION_UP:
     case taiMisc::TREE_MOVE_SELECTION_UP_II:
       newCurrent = moveCursor(MoveUp, QApplication::keyboardModifiers());
       e->accept();
-      accepted = true;
       break;
     case taiMisc::TREE_MOVE_SELECTION_DOWN:
     case taiMisc::TREE_MOVE_SELECTION_DOWN_II:
       newCurrent = moveCursor(MoveDown, QApplication::keyboardModifiers());
       e->accept();
-      accepted = true;
       break;
     case taiMisc::TREE_PAGE_UP:
     case taiMisc::TREE_PAGE_UP_II:
       newCurrent = moveCursor(MovePageUp, QApplication::keyboardModifiers());
       e->accept();
-      accepted = true;
       break;
     case taiMisc::TREE_PAGE_DOWN:
     case taiMisc::TREE_PAGE_DOWN_II:
       newCurrent = moveCursor(MovePageDown, QApplication::keyboardModifiers());
       e->accept();
-      accepted = true;
       break;
     case taiMisc::TREE_EDIT_HOME:
     case taiMisc::TREE_EDIT_HOME_II:
@@ -507,7 +498,6 @@ void iTreeWidget::keyPressEvent(QKeyEvent* e) {
         edit_start_kill = false;
         editItem(cur_item);     // todo: get column
         e->accept();
-        accepted = true;
 #if !defined(TA_OS_MAC)
 #ifndef TA_OS_WIN
         // stuff a ctrl-b -- this will prevent a subsequent ctrl-d from deleting object
@@ -527,7 +517,6 @@ void iTreeWidget::keyPressEvent(QKeyEvent* e) {
         edit_start_kill = false;
         editItem(cur_item);     // todo: get column
         e->accept();
-        accepted = true;
       }
       break;  // DO NOT CHANGE THIS TO A RETURN!  causes issues with ctrl-d see ticket 2992
     case taiMisc::TREE_EDIT_DELETE_TO_END:
@@ -537,7 +526,6 @@ void iTreeWidget::keyPressEvent(QKeyEvent* e) {
         edit_start_kill = true;
         editItem(cur_item);     // todo: get column
         e->accept();
-        accepted = true;
       }
       break; // DO NOT CHANGE THIS TO A RETURN!  causes issues with ctrl-d see ticket 2992
     default:
@@ -651,10 +639,10 @@ void iTreeWidget::itemWasEdited(const QModelIndex& index) const {
   emit itemEdited(index, move_after_edit);
 }
 
-void iTreeWidget::lookupKeyPressed(iLineEdit* le) const {
+void iTreeWidget::lookupKeyPressed(iLineEdit* le) const { (void)le;
 }
 
-void iTreeWidget::characterEntered(iLineEdit* le) const {
+void iTreeWidget::characterEntered(iLineEdit* le) const { (void)le;
 }
 
 ////////////////////////////////////////////////
@@ -721,7 +709,6 @@ bool iTreeWidgetDefaultDelegate::eventFilter(QObject *object, QEvent *event) {
   }
   if (event->type() == QEvent::KeyPress) {
     QKeyEvent* ke = static_cast<QKeyEvent *>(event);
-    bool ctrl_pressed = taiMisc::KeyEventCtrlPressed(ke);
     switch (ke->key()) {
       case Qt::Key_Backtab:
         if(own_tree_widg) {
@@ -773,4 +760,3 @@ bool iTreeWidgetDefaultDelegate::eventFilter(QObject *object, QEvent *event) {
   }
   return false;
 }
-

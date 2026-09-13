@@ -101,7 +101,7 @@
   INLINE void C_Compute_dWt_Trace_Thal
     (float& dwt, float& ntr, float& tr, const float da_p,
      const float ach, const bool d2r, const float ru_thal, const float ru_act,
-     const float su_act, const float lrate_eff, const float ru_deep_raw_net) {
+     const float su_act, const float lrate_eff, const float ru_deep_raw_net) { (void)ru_deep_raw_net;
 
     const float da = GetDa(da_p, d2r);
     const bool pos_da = (da_p > 0.0f); // raw da
@@ -167,7 +167,7 @@
   }
   // #IGNORE
 
-  INLINE void ClearMSNTrace(LEABRA_CON_STATE* scg, LEABRA_NETWORK_STATE* net, int thr_no) {
+  INLINE void ClearMSNTrace(LEABRA_CON_STATE* scg, LEABRA_NETWORK_STATE* net, int thr_no) { (void)net; (void)thr_no;
     float* trs = scg->OwnCnVar(TR);
     const int sz = scg->size;
     for(int i=0; i<sz; i++) {
