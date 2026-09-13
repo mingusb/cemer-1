@@ -96,7 +96,6 @@ void taiEditorOfControlPanelBase::Constr_Methods_impl() {
       //NOTE: for seledit functions, we never place them on the last menu or button, because that may
       // make no sense -- the label specifies the place, or Actions if no label
       String mth_cap = item->caption();
-      mth_cap.gsub("_", " "); // labels remain identifiers; captions are readable text
       String statustip = item->desc;
       taiWidgetMethod* mth_rep = NULL;
       switch (group_type) {

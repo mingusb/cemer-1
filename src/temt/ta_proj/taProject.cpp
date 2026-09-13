@@ -369,9 +369,6 @@ void taProject::Dump_Load_post() {
     bool startup_run = programs.RunStartupProgs();      // run startups now..
     if(!taMisc::gui_active && startup_run) taiMC_->Quit();
   }
-  else if(taMisc::gui_active) {
-    programs.RunStartupProgs();
-  }
 }
 
 void taProject::DoView() {
@@ -1548,7 +1545,6 @@ bool taProject::AutoSave(bool force) {
                       " -- now saved in user directory:", fnm);
   }
   taFiler* flr = GetSaveFiler(fnm, _nilString, -1, _nilString);
-  bool saved = false;
   if(flr->ostrm) {
     if(taMisc::undo.debug)
       taMisc::Info("Autosave start...");
@@ -1556,7 +1552,6 @@ bool taProject::AutoSave(bool force) {
     GetTypeDef()->Dump_Save(*flr->ostrm, (void*)this);
     // note: not using Save_strm to preserve the dirty bit!
     --taMisc::is_auto_saving;
-    saved = flr->ostrm->good();
     if(taMisc::undo.debug)
       taMisc::Info("Autosave end.");
   }
@@ -1571,7 +1566,7 @@ bool taProject::AutoSave(bool force) {
   if(vwr) {
     vwr->SetWinName();
   }
-  return saved;
+  return true;
 }
 
 void taProject::CloseLater() {

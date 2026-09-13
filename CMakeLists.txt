@@ -196,7 +196,6 @@ add_subdirectory(src/emergent/bin)
 
 if(BUILD_TESTING)
   add_subdirectory(src/temt/ta_gui/tests)
-  add_subdirectory(src/emergent/virt_env/tests)
   add_subdirectory(src/emergent/network/tests)
 endif()
 

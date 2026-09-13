@@ -6,7 +6,7 @@ Configure the main Emergent build first so `taconfig.h` exists, then run:
 
 ```sh
 cmake -S src/temt/quarter/tests -B build-quarter-test -G Ninja \
-  -DCMAKE_PREFIX_PATH=/path/to/Qt -DCMAKE_CXX_COMPILER=clang++
+  -DCMAKE_PREFIX_PATH="/path/to/deps;/path/to/Qt" -DCMAKE_CXX_COMPILER=clang++
 cmake --build build-quarter-test
 QT_XCB_GL_INTEGRATION=xcb_glx LIBGL_ALWAYS_SOFTWARE=1 \
   xvfb-run -a ctest --test-dir build-quarter-test --output-on-failure

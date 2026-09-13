@@ -34,8 +34,6 @@
 
 #include <iSplitter>
 #include <QApplication>
-#include <QScreen>
-#include <cssConsoleWindow>
 
 TA_BASEFUNS_CTORS_DEFN(MainWindowViewer);
 
@@ -315,40 +313,6 @@ bool MainWindowViewer::SetWinState() {
       }
     }
   }
-  return true;
-}
-
-bool MainWindowViewer::ShowConsole(int minimum_height) {
-  iMainWindowViewer* view = widget();
-  cssConsoleWindow* console = taMisc::console_win;
-  if(!view || !console || !view->screen()) return false;
-
-  const QRect available = view->screen()->availableGeometry();
-  QRect frame = view->frameGeometry();
-  if(view->isMaximized() || view->isFullScreen()) view->showNormal();
-  console->showNormal();
-
-  const int view_frame_height = view->frameGeometry().height() - view->height();
-  const int view_frame_width = view->frameGeometry().width() - view->width();
-  const int console_frame_height = console->frameGeometry().height() - console->height();
-  const int console_height = qMin(qMax(120, minimum_height), available.height() / 2);
-  const int max_view_height = available.height() - console_height - console_frame_height;
-  frame.setHeight(qMin(frame.height(), max_view_height));
-  frame.setWidth(qMin(frame.width(), available.width()));
-  frame.moveLeft(qBound(available.left(), frame.left(), available.right() - frame.width() + 1));
-  frame.moveTop(qBound(available.top(), frame.top(), available.top() + max_view_height - frame.height()));
-  view->resize(frame.width() - view_frame_width, frame.height() - view_frame_height);
-  view->move(frame.topLeft());
-  view->AlignCssConsole();
-
-  // Explicitly showing the console also positions it when the user has unpinned it.
-  if(!console->lock_to_proj) {
-    const QRect shown_frame = view->frameGeometry();
-    const int console_frame_width = console->frameGeometry().width() - console->width();
-    console->resize(shown_frame.width() - console_frame_width, console_height);
-    console->move(shown_frame.left(), shown_frame.bottom() + 1);
-  }
-  view->ConsoleToFront();
   return true;
 }
 

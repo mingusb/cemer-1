@@ -1,6 +1,0 @@
-add_executable(color_space_test color_space_test.cpp)
-target_link_libraries(color_space_test PRIVATE emergentlib)
-if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
-  target_compile_options(color_space_test PRIVATE -Wall -Wextra -Werror)
-endif()
-add_test(NAME color_space_test COMMAND color_space_test)

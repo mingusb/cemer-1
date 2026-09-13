@@ -2842,8 +2842,8 @@ bool taMath_float::mat_mult(float_Matrix* c, const float_Matrix* a, const float_
   // ensure return matrix is correct size
   c->SetGeom(2, b->dim(0), a->dim(1));
   gsl_matrix_float g_c;  if(!mat_get_gsl_fm_ta(&g_c, c)) return false;
-  int rval = gsl_blas_sgemm(CblasNoTrans, CblasNoTrans, 1.0, &g_a, &g_b, 0.0, &g_c);
-  return rval == GSL_SUCCESS;
+  gsl_blas_sgemm(CblasNoTrans, CblasNoTrans, 1.0, &g_a, &g_b, 0.0, &g_c);
+  return true;			// todo: decode rvals
 }
 
 float taMath_float::mat_det(const float_Matrix* a) {

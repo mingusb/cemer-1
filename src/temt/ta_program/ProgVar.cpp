@@ -232,10 +232,7 @@ void ProgVar::UpdateAfterEdit_impl() {
       String var_nm;
       ProgElChoiceDlg dlg;
       taBase::Ref(dlg);
-      int choice = 1;  // global
-      if (HasVarFlag(LOCAL_VAR)) {
-        choice = 0;
-      }
+      int choice = 0;  // Preserve the legacy local-variable default.
       ProgVar::VarType vt = ProgVar::T_UnDef;
       int result = dlg.GetLocalGlobalChoice(var_nm, choice, vt);  // get the name and the type
       if (result == 1) {

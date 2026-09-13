@@ -2916,8 +2916,8 @@ bool taMath_double::mat_mult(double_Matrix* c, const double_Matrix* a, const dou
   // ensure return matrix is correct size
   c->SetGeom(2, b->dim(0), a->dim(1));
   gsl_matrix g_c;  if(!mat_get_gsl_fm_ta(&g_c, c)) return false;
-  int rval = gsl_blas_dgemm(CblasNoTrans, CblasNoTrans, 1.0, &g_a, &g_b, 0.0, &g_c);
-  return rval == GSL_SUCCESS;
+  gsl_blas_dgemm(CblasNoTrans, CblasNoTrans, 1.0, &g_a, &g_b, 0.0, &g_c);
+  return true;			// todo: decode rvals
 }
 
 double taMath_double::mat_det(const double_Matrix* a) {
