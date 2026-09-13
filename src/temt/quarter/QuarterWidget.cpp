@@ -27,14 +27,12 @@
   provides a widget for Coin rendering. It provides scenegraph
   management and event handling.
 
-  If you want to modify the GL format for an existing QuarterWidget, you can
-  set up a new GL context for the widget, e.g.:
+  Set the surface format before showing the widget to request multisampling:
 
   \code
-  QGLContext * context = new QGLContext(QGLFormat(QGL::SampleBuffers), viewer);
-  if (context->create()) {
-    viewer->setContext(context);
-  }
+  QSurfaceFormat format = viewer->format();
+  format.setSamples(4);
+  viewer->setFormat(format);
   \endcode
 */
 
@@ -74,6 +72,8 @@
 
 #ifdef QT_OPEN_GL_WIDGET
 #include <QWindow>
+#include <QOpenGLContext>
+#include <QSurfaceFormat>
 #include <QGuiApplication>
 #endif
 
@@ -115,13 +115,13 @@ using namespace SIM::Coin3D::Quarter;
 
 #define PRIVATE(obj) obj->pimpl
 
-#ifndef QT_OPEN_GL_WIDGET
-
 /*! constructor */
 QuarterWidget::QuarterWidget()
-: inherited()
+: QuarterWidget(nullptr)
 {
 }
+
+#ifndef QT_OPEN_GL_WIDGET
 
 /*! constructor */
 QuarterWidget::QuarterWidget(const QGLFormat & format, QWidget * parent, const QT_GL_WIDGET * sharewidget, Qt::WindowFlags f)
@@ -153,6 +153,18 @@ QuarterWidget::QuarterWidget(QWidget * parent, const QT_GL_WIDGET * sharewidget,
 void
 QuarterWidget::constructor(const QT_GL_WIDGET * sharewidget)
 {
+#ifdef QT_OPEN_GL_WIDGET
+  // Coin renders with fixed-function OpenGL; a core or ES context cannot
+  // display its scene graph. Keep Qt's framebuffer composition while
+  // requesting the desktop compatibility API and real depth/stencil buffers.
+  QSurfaceFormat surfaceformat = this->format();
+  surfaceformat.setRenderableType(QSurfaceFormat::OpenGL);
+  surfaceformat.setVersion(2, 1);
+  surfaceformat.setProfile(QSurfaceFormat::NoProfile);
+  surfaceformat.setDepthBufferSize(24);
+  surfaceformat.setStencilBufferSize(8);
+  this->setFormat(surfaceformat);
+#endif
   PRIVATE(this) = new QuarterWidgetP(this, sharewidget);
 
   PRIVATE(this)->sorendermanager = new SoRenderManager;
@@ -196,6 +208,13 @@ QuarterWidget::constructor(const QT_GL_WIDGET * sharewidget)
 /*! destructor */
 QuarterWidget::~QuarterWidget()
 {
+#ifdef QT_OPEN_GL_WIDGET
+  if (this->context()) {
+    // The base QOpenGLWidget destroys its context after this private data.
+    QObject::disconnect(this->context(), nullptr, this, nullptr);
+  }
+#endif
+  if (this->isValid()) this->makeCurrent();
   if (PRIVATE(this)->currentStateMachine) {
     this->removeStateMachine(PRIVATE(this)->currentStateMachine);
     delete PRIVATE(this)->currentStateMachine;
@@ -670,32 +689,42 @@ QuarterWidget::seek(void)
   This function will be called whenever the GLContext changes, 
   for instance when the widget is reparented. 
   
-  Overridden from QGLWidget to enable OpenGL depth buffer 
+  Overridden from the OpenGL widget to enable OpenGL depth buffer
   and reinitialize the SoRenderManager.
  */
 void
 QuarterWidget::initializeGL(void)
 {
+#ifdef QT_OPEN_GL_WIDGET
+  QObject::connect(this->context(), &QOpenGLContext::aboutToBeDestroyed,
+                   this, &QuarterWidget::cleanupGL,
+                   Qt::DirectConnection);
+#endif
+  PRIVATE(this)->contextinitialized = true;
   glEnable(GL_DEPTH_TEST);
   this->getSoRenderManager()->reinitialize();
 }
 
 
+#ifdef QT_OPEN_GL_WIDGET
+void
+QuarterWidget::cleanupGL()
+{
+  if (!PRIVATE(this)->contextinitialized) return;
+  // Reparenting a QOpenGLWidget can replace its context. Release Coin's
+  // cached GL objects while the old context is current and use a fresh ID
+  // when initializeGL is called again.
+  PRIVATE(this)->resetCacheContext();
+  PRIVATE(this)->contextinitialized = false;
+  PRIVATE(this)->sorendermanager->getGLRenderAction()->setCacheContext(
+    this->getCacheContextId());
+}
+#endif
+
 bool
 QuarterWidget::updateDevicePixelRatio(void) {
 #ifdef QT_OPEN_GL_WIDGET
-  qreal dev_pix_ratio = 1.0;
-  QWidget* winwidg = window();
-  QWindow* win = NULL;
-  if(winwidg) {
-    win = winwidg->windowHandle();
-  }
-  if(win) {
-    dev_pix_ratio = win->devicePixelRatio();
-  }
-  else {
-    dev_pix_ratio = ((QGuiApplication*)QGuiApplication::instance())->devicePixelRatio();
-  }
+  const qreal dev_pix_ratio = this->devicePixelRatioF();
   if(PRIVATE(this)->device_pixel_ratio != dev_pix_ratio) {
     PRIVATE(this)->device_pixel_ratio = dev_pix_ratio;
     emit devicePixelRatioChanged(dev_pix_ratio);
@@ -706,7 +735,7 @@ QuarterWidget::updateDevicePixelRatio(void) {
 }
 
 /*!
-  Overridden from QGLWidget to resize the Coin scenegraph
+  Overridden from the OpenGL widget to resize the Coin scenegraph
  */
 void
 QuarterWidget::resizeGL(int width, int height)
@@ -714,8 +743,8 @@ QuarterWidget::resizeGL(int width, int height)
 #ifdef QT_OPEN_GL_WIDGET
   updateDevicePixelRatio();
   qreal dev_pix_ratio = devicePixelRatio();
-  width = (int)(dev_pix_ratio * width);
-  height = (int)(dev_pix_ratio * height);
+  width = qRound(dev_pix_ratio * width);
+  height = qRound(dev_pix_ratio * height);
 #endif
 
   SbViewportRegion vp(width, height);
@@ -724,7 +753,7 @@ QuarterWidget::resizeGL(int width, int height)
 }
 
 /*!
-  Overridden from QGLWidget to render the scenegraph
+  Overridden from the OpenGL widget to render the scenegraph
 */
 void
 QuarterWidget::paintGL(void)
@@ -732,8 +761,8 @@ QuarterWidget::paintGL(void)
 #ifdef QT_OPEN_GL_WIDGET
   if(updateDevicePixelRatio()) {
     qreal dev_pix_ratio = devicePixelRatio();
-    int width = (int)(dev_pix_ratio * this->width());
-    int height = (int)(dev_pix_ratio * this->height());
+    int width = qRound(dev_pix_ratio * this->width());
+    int height = qRound(dev_pix_ratio * this->height());
     SbViewportRegion vp(width, height);
     PRIVATE(this)->sorendermanager->setViewportRegion(vp);
     PRIVATE(this)->soeventmanager->setViewportRegion(vp);
@@ -794,7 +823,7 @@ QuarterWidget::redraw(void)
 }
 
 /*!
-  Overridden from QGLWidget to render the scenegraph
+  Overridden from the OpenGL widget to render the scenegraph
  */
 void
 QuarterWidget::actualRedraw(void)

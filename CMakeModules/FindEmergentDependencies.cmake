@@ -7,125 +7,51 @@
 
 set(IMPORTED_CONFIGURATIONS "Debug" "Release")
 
-if (QT_USE_5)
-  set(CMAKE_PREFIX_PATH ${QTDIR}/lib/cmake)
-  message(STATUS "Using Qt5, QTDIR = ${QTDIR}")
-  message(STATUS "(if QTDIR = <blank> above, then you probably need to set it in your .bashrc or .cshrc etc -- should be /usr/local/Qt5.x.y for standard install)")
-
-  find_package(Qt5Core)
-  find_package(Qt5Gui)
-  find_package(Qt5Widgets)
-  find_package(Qt5OpenGL)
-  find_package(Qt5Xml)
-  find_package(Qt5Network)
-  find_package(Qt5PrintSupport)
-  find_package(Qt5Multimedia)
-  find_package(Qt5Svg)
-
-  # subvers
-  string(SUBSTRING "${Qt5Gui_VERSION}" 2 1 QT5_MINOR_VERS)
-  if (USE_QT_NOWEB)
-    message(STATUS "not using any web browser")
-  elseif (USE_QT_WEBKIT)
-    message(STATUS "requesting WebKit instead of WebEngine")
-  else ()
-    string(COMPARE GREATER "${QT5_MINOR_VERS}" "5" USE_QT_WEBENGINE)
-    if(NOT USE_QT_WEBENGINE)
-      set (USE_QT_WEBKIT ON)
-    endif ()
-  endif ()
-
-  message(STATUS "Qt5 version: ${Qt5Gui_VERSION} minor version is ${QT5_MINOR_VERS}, USE_QT_WEBKIT: ${USE_QT_WEBKIT}, USE_QT_WEBENGINE: ${USE_QT_WEBENGINE}")
-
-  #  qt5_use_modules(Emergent Widgets Network WebKit OpenGL Xml)
-  #  set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
-  # Add compiler flags for building executables (-fPIE)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
-
-  include_directories(${Qt5Core_INCLUDE_DIRS} ${Qt5Gui_INCLUDE_DIRS}
-    ${Qt5OpenGL_INCLUDE_DIRS}
-    ${Qt5Xml_INCLUDE_DIRS} ${Qt5Network_INCLUDE_DIRS} ${Qt5PrintSupport_INCLUDE_DIRS}
-    ${Qt5Multimedia_INCLUDE_DIRS} ${Qt5Svg_INCLUDE_DIRS})
-  
-  add_definitions(${Qt5Widgets_DEFINITIONS})
-
-  set(QT_LIBRARIES ${Qt5Core_LIBRARIES} ${Qt5Gui_LIBRARIES}
-    ${Qt5Widgets_LIBRARIES} ${Qt5OpenGL_LIBRARIES} ${Qt5Xml_LIBRARIES}
-    ${Qt5Network_LIBRARIES} ${Qt5PrintSupport_LIBRARIES} ${Qt5Multimedia_LIBRARIES}
-    ${Qt5Svg_LIBRARIES})
-
-  if (USE_QT_WEBENGINE)
-    find_package(Qt5WebEngineCore)
-    find_package(Qt5WebEngine)
-    find_package(Qt5WebEngineWidgets)
-
-    add_definitions(-DUSE_QT_WEBENGINE)
-
-    include_directories(${Qt5WebEngineCore_INCLUDE_DIRS}
-      ${Qt5WebEngine_INCLUDE_DIRS} ${Qt5WebEngineWidgets_INCLUDE_DIRS})
-
-    set(QT_LIBRARIES ${QT_LIBRARIES} ${Qt5WebEngineCore_LIBRARIES} ${Qt5WebEngine_LIBRARIES}
-      ${Qt5WebEngineWidgets_LIBRARIES})
-  elseif (USE_QT_WEBKIT)
-
-    find_package(Qt5WebKit)
-    find_package(Qt5WebKitWidgets)
-     
-    add_definitions(-DUSE_QT_WEBVIEW)
-
-    include_directories(${Qt5WebKit_INCLUDE_DIRS} ${Qt5WebKitWidgets_INCLUDE_DIRS})
-    set(QT_LIBRARIES ${QT_LIBRARIES} ${Qt5WebKit_LIBRARIES} ${Qt5WebKitWidgets_LIBRARIES})
-
-  endif (USE_QT_WEBENGINE)
-
-  if (QT_USE_3D)
-    find_package(Qt53DCore)
-    find_package(Qt53DRender)
-    find_package(Qt53DInput)
-    find_package(Qt53DExtras)
-
-    add_definitions(-DTA_QT3D)
-
-    include_directories(${Qt53DCore_INCLUDE_DIRS} ${Qt53DRenderer_INCLUDE_DIRS}
-      ${Qt53DInput_INCLUDE_DIRS} ${Qt53DExtras_INCLUDE_DIRS})
-
-    set(QT_LIBRARIES ${QT_LIBRARIES} ${Qt53DCore_LIBRARIES} ${Qt53DRenderer_LIBRARIES}
-      ${Qt53DInput_LIBRARIES} ${Qt53DExtras_LIBRARIES})
-  else (QT_USE_3D)
-    find_package(Coin REQUIRED)
-#    find_package(Quarter REQUIRED)
-    find_package(OpenGL REQUIRED)
-
-  endif (QT_USE_3D)
-
-  # from http://cebmtpchat.googlecode.com/svn/trunk/CMakeModules/QtSupport.cmake
-  SET(QT_BINARY_DIR "${_qt5Core_install_prefix}/bin")
-  SET(QT_LIBRARY_DIR "${_qt5Core_install_prefix}/lib")
-  SET(QT_PLUGINS_DIR "${_qt5Core_install_prefix}/plugins")
-  SET(QT_TRANSLATIONS_DIR "${_qt5Core_install_prefix}/translations")
-  SET(QT_RESOURCES_DIR "${_qt5Core_install_prefix}/resources")
-
-  # Instruct CMake to run moc automatically when needed.
-#  set(CMAKE_AUTOMOC ON)
-else (QT_USE_5)
-  find_package(Qt4 REQUIRED QtCore QtGui QtOpenGL QtXml QtNetwork QtWebKit QtSvg)
+# Qt 6 is required. Keep explicit module include directories for the legacy
+# maketa preprocessor, which runs outside CMake's target compilation rules.
+if(QTDIR)
+  list(PREPEND CMAKE_PREFIX_PATH "${QTDIR}")
+elseif(DEFINED ENV{QTDIR})
+  list(PREPEND CMAKE_PREFIX_PATH "$ENV{QTDIR}")
+endif()
+option(USE_QT_NOWEB "Build without the embedded web browser" OFF)
+option(QT_USE_3D "Use the experimental Qt3D scene backend instead of Coin" OFF)
+set(_emergent_qt_modules Core Gui Widgets OpenGL OpenGLWidgets Xml Network
+    PrintSupport Multimedia Svg Core5Compat)
+if(NOT USE_QT_NOWEB)
+  set(USE_QT_WEBENGINE ON)
+  add_definitions(-DUSE_QT_WEBENGINE)
+endif()
+if(QT_USE_3D)
+  list(APPEND _emergent_qt_modules 3DCore 3DRender 3DInput 3DExtras)
+  add_definitions(-DTA_QT3D)
+else()
   find_package(Coin REQUIRED)
-#  find_package(Quarter REQUIRED)
   find_package(OpenGL REQUIRED)
-
-  # setup QT_LIBRARIES, defines, etc through options, and the QT_USE_FILE thing does automagic
-  set(QT_USE_QT3SUPPORT 0)
-  set(QT_USE_QTOPENGL 1)
-  set(QT_USE_QTXML 1)
-  set(QT_USE_QTNETWORK 1)
-  set(QT_USE_QTWEBKIT 1)
-  set(QT_USE_QTSVG 1)
-  include(${QT_USE_FILE})
-
-  include_directories(${QT_INCLUDES})
-
-endif (QT_USE_5)
+endif()
+find_package(Qt6 6.8.0 REQUIRED COMPONENTS ${_emergent_qt_modules})
+if(NOT USE_QT_NOWEB)
+  # WebEngine has its own version series as of Qt 6.12 (6.140 for Chromium
+  # 140). Let its package validate the matching Qt dependencies itself.
+  find_package(Qt6WebEngineCore REQUIRED)
+  find_package(Qt6WebEngineWidgets REQUIRED)
+  find_package(Qt6WebChannel REQUIRED)
+  list(APPEND _emergent_qt_modules WebEngineCore WebEngineWidgets WebChannel)
+endif()
+set(QT_LIBRARIES)
+foreach(_module IN LISTS _emergent_qt_modules)
+  list(APPEND QT_LIBRARIES Qt6::${_module})
+  include_directories(${Qt6${_module}_INCLUDE_DIRS})
+endforeach()
+message(STATUS "Using Qt ${Qt6_VERSION}")
+get_target_property(_qt_qmake Qt6::qmake IMPORTED_LOCATION)
+execute_process(COMMAND "${_qt_qmake}" -query QT_INSTALL_PREFIX
+                OUTPUT_VARIABLE _qt_prefix OUTPUT_STRIP_TRAILING_WHITESPACE)
+set(QT_BINARY_DIR "${_qt_prefix}/bin")
+set(QT_LIBRARY_DIR "${_qt_prefix}/lib")
+set(QT_PLUGINS_DIR "${_qt_prefix}/plugins")
+set(QT_TRANSLATIONS_DIR "${_qt_prefix}/translations")
+set(QT_RESOURCES_DIR "${_qt_prefix}/resources")
 
 # subversion
 if (WIN32)
@@ -165,7 +91,7 @@ if(CCD_FOUND)
 endif (CCD_FOUND)
 
 if(GSL_FOUND)
-  set(EMERGENT_MISC_LIBS ${EMERGENT_MISC_LIBS} ${GSL_LIBRARY})
+  set(EMERGENT_MISC_LIBS ${EMERGENT_MISC_LIBS} ${GSL_LIBRARIES})
   include_directories(${GSL_INCLUDE_DIR})
 endif (GSL_FOUND)
 

@@ -108,29 +108,19 @@ MAKETA_WRAP_H_MI(temt_ta_proj_SRCS_MAKETA_MI "${temt_ta_proj_HEADS_MAKETA_MI}" "
 MAKETA_WRAP_H_MI(temt_ta_gui_SRCS_MAKETA_MI "${temt_ta_gui_HEADS_MAKETA_MI}" "${temt_ta_gui_HEADS_MAKETA_MI_DEPS}")
 MAKETA_WRAP_H_MI(temt_ta_3d_SRCS_MAKETA_MI "${temt_ta_3d_HEADS_MAKETA_MI}" "${temt_ta_3d_HEADS_MAKETA_MI_DEPS}")
 
-if (QT_USE_5)
-  qt5_wrap_ui(temt_ta_gui_SRCS_UIC ${temt_ta_gui_SRCS_UI})
-  qt5_wrap_cpp(temt_quarter_SRCS_MOC ${temt_quarter_HEADS_MOC})
-  qt5_wrap_cpp(temt_ta_core_SRCS_MOC ${temt_ta_core_HEADS_MOC})
+  qt6_wrap_ui(temt_ta_gui_SRCS_UIC ${temt_ta_gui_SRCS_UI})
+  qt6_wrap_cpp(temt_quarter_SRCS_MOC ${temt_quarter_HEADS_MOC})
+  qt6_wrap_cpp(temt_ta_core_SRCS_MOC ${temt_ta_core_HEADS_MOC})
   # math, program, data don't have MOC files
-  qt5_wrap_cpp(temt_ta_proj_SRCS_MOC ${temt_ta_proj_HEADS_MOC})
-  qt5_wrap_cpp(temt_ta_gui_SRCS_MOC ${temt_ta_gui_HEADS_MOC})
-  qt5_wrap_cpp(temt_ta_3d_SRCS_MOC ${temt_ta_3d_HEADS_MOC})
-  qt5_wrap_cpp(temt_css_SRCS_MOC ${temt_css_HEADS_MOC})
+  qt6_wrap_cpp(temt_ta_proj_SRCS_MOC ${temt_ta_proj_HEADS_MOC})
+  qt6_wrap_cpp(temt_ta_gui_SRCS_MOC ${temt_ta_gui_HEADS_MOC})
+  qt6_wrap_cpp(temt_ta_3d_SRCS_MOC ${temt_ta_3d_HEADS_MOC})
+  qt6_wrap_cpp(temt_css_SRCS_MOC ${temt_css_HEADS_MOC})
 
-  qt5_add_resources(temt_ta_gui_SRCS_QRC ${temt_ta_gui_QRC})
-  qt5_add_resources(temt_ta_3d_SRCS_QRC ${temt_ta_3d_QRC})
+  qt6_add_resources(temt_ta_gui_SRCS_QRC ${temt_ta_gui_QRC})
+  qt6_add_resources(temt_ta_3d_SRCS_QRC ${temt_ta_3d_QRC})
   
-else (QT_USE_5)
-  QT4_WRAP_UI(temt_ta_gui_SRCS_UIC ${temt_ta_gui_SRCS_UI})
-  # math, program, data don't have MOC files
-  QT4_WRAP_CPP(temt_quarter_SRCS_MOC ${temt_quarter_HEADS_MOC})
-  QT4_WRAP_CPP(temt_ta_core_SRCS_MOC ${temt_ta_core_HEADS_MOC})
-  QT4_WRAP_CPP(temt_ta_proj_SRCS_MOC ${temt_ta_proj_HEADS_MOC})
-  QT4_WRAP_CPP(temt_ta_gui_SRCS_MOC ${temt_ta_gui_HEADS_MOC})
-  QT4_WRAP_CPP(temt_ta_3d_SRCS_MOC ${temt_ta_3d_HEADS_MOC})
-  QT4_WRAP_CPP(temt_css_SRCS_MOC ${temt_css_HEADS_MOC})
-endif (QT_USE_5)
+
 
 
 # just list whole set of files here -- and also include the headers for IDE's

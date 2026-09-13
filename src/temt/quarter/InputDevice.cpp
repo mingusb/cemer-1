@@ -39,6 +39,7 @@ InputDevice::InputDevice(QuarterWidget* quart) :
   quarter(quart)
 {
   this->mousepos = SbVec2s(0, 0);
+  this->windowsize = SbVec2s(quart->width(), quart->height());
 }
 
 /*!

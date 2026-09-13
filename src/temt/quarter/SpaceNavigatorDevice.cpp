@@ -97,7 +97,7 @@ SpaceNavigatorDevice::~SpaceNavigatorDevice()
 
 
 const SoEvent *
-SpaceNavigatorDevice::translateEvent(QEvent * event)
+SpaceNavigatorDevice::translateEvent([[maybe_unused]] QEvent * event)
 {
   SoEvent * ret = NULL;
 

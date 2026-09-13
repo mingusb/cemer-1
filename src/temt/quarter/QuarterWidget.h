@@ -23,6 +23,7 @@
  *
 \**************************************************************************/
 
+#include <QtGlobal>
 #include <Inventor/SbBasic.h>
 #include <Inventor/SoRenderManager.h>
 #include <Inventor/actions/SoGLRenderAction.h>
@@ -76,17 +77,14 @@ class TA_API QuarterWidget : public QT_GL_WIDGET {
   Q_PROPERTY(StereoMode stereoMode READ stereoMode WRITE setStereoMode)
   Q_PROPERTY(qreal devicePixelRatio READ devicePixelRatio NOTIFY devicePixelRatioChanged)
 
-  Q_ENUMS(TransparencyType)
-  Q_ENUMS(RenderMode)
-  Q_ENUMS(StereoMode)
 
 
 public:
   explicit QuarterWidget();
-  explicit QuarterWidget(QWidget * parent, const QT_GL_WIDGET * sharewidget = 0, Qt::WindowFlags f = 0);
+  explicit QuarterWidget(QWidget * parent, const QT_GL_WIDGET * sharewidget = 0, Qt::WindowFlags f = {});
 #ifndef QT_OPEN_GL_WIDGET  
-  explicit QuarterWidget(QGLContext * context, QWidget * parent = 0, const QT_GL_WIDGET * sharewidget = 0, Qt::WindowFlags f = 0);
-  explicit QuarterWidget(const QGLFormat & format, QWidget * parent = 0, const QT_GL_WIDGET * shareWidget = 0, Qt::WindowFlags f = 0);
+  explicit QuarterWidget(QGLContext * context, QWidget * parent = 0, const QT_GL_WIDGET * sharewidget = 0, Qt::WindowFlags f = {});
+  explicit QuarterWidget(const QGLFormat & format, QWidget * parent = 0, const QT_GL_WIDGET * shareWidget = 0, Qt::WindowFlags f = {});
 #endif  
   
   virtual ~QuarterWidget();
@@ -105,6 +103,8 @@ public:
     SORTED_LAYERS_BLEND = SoGLRenderAction::SORTED_LAYERS_BLEND
   };
 
+  Q_ENUM(TransparencyType)
+
   enum RenderMode {
     AS_IS = SoRenderManager::AS_IS,
     WIREFRAME = SoRenderManager::WIREFRAME,
@@ -114,6 +114,8 @@ public:
     BOUNDING_BOX = SoRenderManager::BOUNDING_BOX
   };
 
+  Q_ENUM(RenderMode)
+
   enum StereoMode {
     MONO = SoRenderManager::MONO,
     ANAGLYPH = SoRenderManager::ANAGLYPH,
@@ -121,6 +123,8 @@ public:
     INTERLEAVED_ROWS = SoRenderManager::INTERLEAVED_ROWS,
     INTERLEAVED_COLUMNS = SoRenderManager::INTERLEAVED_COLUMNS
   };
+
+  Q_ENUM(StereoMode)
 
   TransparencyType transparencyType(void) const;
   RenderMode renderMode(void) const;
@@ -203,6 +207,9 @@ protected:
 
 private:
   void constructor(const QT_GL_WIDGET * sharewidget);
+#ifdef QT_OPEN_GL_WIDGET
+  void cleanupGL();
+#endif
   friend class QuarterWidgetP;
   class QuarterWidgetP * pimpl;
 };

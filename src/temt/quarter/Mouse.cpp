@@ -48,6 +48,7 @@ class MouseP {
 public:
   MouseP(Mouse * publ) {
     this->publ = publ;
+    this->windowsize = publ->windowsize;
     this->location2 = new SoLocation2Event;
     this->mousebutton = new SoMouseButtonEvent;
   }
@@ -126,9 +127,10 @@ MouseP::mouseMoveEvent(QMouseEvent * event)
   PUBLIC(this)->setModifiers(this->location2, event);
 
   assert(this->windowsize[1] != -1);
-  SbVec2s pos(event->pos().x(), this->windowsize[1] - event->pos().y() - 1);
-  // the following corrects for high-dpi displays (e.g., mac retina)
-  pos *= publ->quarter->devicePixelRatio();
+  const QPointF point = event->position();
+  const qreal ratio = publ->quarter->devicePixelRatioF();
+  SbVec2s pos(qRound(point.x() * ratio),
+              qRound((PUBLIC(this)->windowsize[1] - point.y() - 1) * ratio));
   this->location2->setPosition(pos);
   this->mousebutton->setPosition(pos);
   return this->location2;
@@ -138,18 +140,19 @@ const SoEvent *
 MouseP::mouseWheelEvent(QWheelEvent * event)
 {
   PUBLIC(this)->setModifiers(this->mousebutton, event);
-  SbVec2s pos(event->pos().x(), PUBLIC(this)->windowsize[1] - event->pos().y() - 1);
-  // the following corrects for high-dpi displays (e.g., mac retina)
-  pos *= publ->quarter->devicePixelRatio();
+  const QPointF point = event->position();
+  const qreal ratio = publ->quarter->devicePixelRatioF();
+  SbVec2s pos(qRound(point.x() * ratio),
+              qRound((PUBLIC(this)->windowsize[1] - point.y() - 1) * ratio));
   this->location2->setPosition(pos);
   this->mousebutton->setPosition(pos);
 
-  // QWheelEvent::delta() returns the distance that the wheel is
-  // rotated, in eights of a degree. A positive value indicates that
-  // the wheel was rotated forwards away from the user; a negative
-  // value indicates that the wheel was rotated backwards toward the
-  // user.
-  (event->delta() > 0) ?
+  // Qt 6 exposes wheel motion through angleDelta/pixelDelta. Touchpads
+  // also send zero-delta begin/end events; those must not zoom the camera.
+  const int delta = event->angleDelta().y() != 0
+    ? event->angleDelta().y() : event->pixelDelta().y();
+  if (delta == 0) return nullptr;
+  (delta > 0) ?
     this->mousebutton->setButton(SoMouseButtonEvent::BUTTON4) :
     this->mousebutton->setButton(SoMouseButtonEvent::BUTTON5);
 
@@ -161,9 +164,10 @@ const SoEvent *
 MouseP::mouseButtonEvent(QMouseEvent * event)
 {
   PUBLIC(this)->setModifiers(this->mousebutton, event);
-  SbVec2s pos(event->pos().x(), PUBLIC(this)->windowsize[1] - event->pos().y() - 1);
-  // the following corrects for high-dpi displays (e.g., mac retina)
-  pos *= publ->quarter->devicePixelRatio();
+  const QPointF point = event->position();
+  const qreal ratio = publ->quarter->devicePixelRatioF();
+  SbVec2s pos(qRound(point.x() * ratio),
+              qRound((PUBLIC(this)->windowsize[1] - point.y() - 1) * ratio));
   this->location2->setPosition(pos);
   this->mousebutton->setPosition(pos);
 
@@ -179,7 +183,7 @@ MouseP::mouseButtonEvent(QMouseEvent * event)
   case Qt::RightButton:
     this->mousebutton->setButton(SoMouseButtonEvent::BUTTON2);
     break;
-  case Qt::MidButton:
+  case Qt::MiddleButton:
     this->mousebutton->setButton(SoMouseButtonEvent::BUTTON3);
     break;
   default:

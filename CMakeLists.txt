@@ -18,7 +18,13 @@
 # Step 0: ensure we have the right version of cmake -- this
 # has to go directly here in this file otherwise cmake complains
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6.2 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.22...4.1)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
@@ -56,8 +62,6 @@ if (WIN32)
   endif ()
 
 else (WIN32)
-  find_program(CMAKE_C_COMPILER NAMES $ENV{CC} gcc PATHS ENV PATH NO_DEFAULT_PATH)
-  find_program(CMAKE_CXX_COMPILER NAMES $ENV{CXX} g++ PATHS ENV PATH NO_DEFAULT_PATH)
   PROJECT(emergent)
 endif (WIN32)
 
@@ -376,4 +380,3 @@ ADD_CUSTOM_TARGET(svn_commit
   WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
   COMMAND svn commit
   )
-

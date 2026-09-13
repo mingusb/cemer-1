@@ -1,0 +1,9 @@
+/build*/
+/install/
+/taconfig.h
+/temt_version.h
+/artifacts/
+/CMakeUserPresets.json
+/*.log
+/tools/toolchain/Qt/
+/tools/toolchain/downloads/*.7z

@@ -65,6 +65,7 @@ public:
 
   SoCamera * searchForCamera(SoNode * root);
   uint32_t getCacheContextId(void) const;
+  void resetCacheContext();
   QMenu * contextMenu(void);
 
   QList<QAction *> transparencyTypeActions(void) const;
@@ -81,6 +82,7 @@ public:
   bool initialsoeventmanager;
   SoDirectionalLight * headlight;
   QuarterWidgetP_cachecontext * cachecontext;
+  bool contextinitialized;
   bool contextmenuenabled;
   bool autoredrawenabled;
   bool interactionmodeenabled;

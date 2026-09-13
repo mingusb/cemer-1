@@ -63,11 +63,12 @@ public:
   void trackPointerPosition(QMouseEvent * event)
   {
     assert(this->windowsize[1] != -1);
-    this->globalmousepos = event->globalPos();
+    this->globalmousepos = event->globalPosition().toPoint();
 
-    SbVec2s mousepos(event->pos().x(), this->windowsize[1] - event->pos().y() - 1);
-    // the following corrects for high-dpi displays (e.g., mac retina)
-    mousepos *= quarterwidget->devicePixelRatio();
+    const QPointF point = event->position();
+    const qreal ratio = quarterwidget->devicePixelRatioF();
+    SbVec2s mousepos(qRound(point.x() * ratio),
+                    qRound((this->windowsize[1] - point.y() - 1) * ratio));
     foreach(InputDevice * device, this->devices) {
       device->setMousePosition(mousepos);
     }
@@ -136,7 +137,7 @@ EventFilter::unregisterInputDevice(InputDevice * device)
   returns false.
  */
 bool
-EventFilter::eventFilter(QObject * obj, QEvent * qevent)
+EventFilter::eventFilter(QObject *, QEvent * qevent)
 {
   // make sure every device has updated screen size and mouse position
   // before translating events

@@ -28,6 +28,8 @@
 #include <QCursor>
 #include <QMenu>
 #include <QMap>
+#include <QAction>
+#include <QActionGroup>
 
 #include <Inventor/nodes/SoCamera.h>
 #include <Inventor/nodes/SoNode.h>
@@ -66,14 +68,20 @@ QuarterWidgetP::QuarterWidgetP(QuarterWidget * masterptr, const QT_GL_WIDGET * s
   initialsoeventmanager(false),
   headlight(NULL),
   cachecontext(NULL),
-  contextmenu(NULL),
+  contextinitialized(false),
   contextmenuenabled(true),
   autoredrawenabled(true),
   interactionmodeenabled(false),
   clearzbuffer(true),
   clearwindow(true),
+  addactions(true),
+  processdelayqueue(true),
+  currentStateMachine(nullptr),
   device_pixel_ratio(1.0),
-  addactions(true)
+  transparencytypegroup(nullptr),
+  stereomodegroup(nullptr),
+  rendermodegroup(nullptr),
+  contextmenu(NULL)
 {
   this->cachecontext = findCacheContext(masterptr, sharewidget);
 
@@ -118,12 +126,16 @@ QuarterWidgetP::getCacheContextId(void) const
 }
 
 QuarterWidgetP_cachecontext *
-QuarterWidgetP::findCacheContext(QuarterWidget * widget, const QT_GL_WIDGET * sharewidget)
+QuarterWidgetP::findCacheContext(QuarterWidget * widget, [[maybe_unused]] const QT_GL_WIDGET * sharewidget)
 {
   if (cachecontext_list == NULL) {
     // FIXME: static memory leak
     cachecontext_list = new SbList <QuarterWidgetP_cachecontext*>;
   }
+#ifndef QT_OPEN_GL_WIDGET
+  // QGLWidget accepted an explicit sharing widget. QOpenGLWidget manages
+  // sharing internally, so that legacy hint cannot guarantee shared GL
+  // objects (especially after reparenting between top-level windows).
   for (int i = 0; i < cachecontext_list->getLength(); i++) {
     QuarterWidgetP_cachecontext * cachecontext = (*cachecontext_list)[i];
 
@@ -134,12 +146,20 @@ QuarterWidgetP::findCacheContext(QuarterWidget * widget, const QT_GL_WIDGET * sh
       }
     }
   }
+#endif
   QuarterWidgetP_cachecontext * cachecontext = new QuarterWidgetP_cachecontext;
   cachecontext->id = SoGLCacheContextElement::getUniqueCacheContext();
   cachecontext->widgetlist.append((const QT_GL_WIDGET*) widget);
   cachecontext_list->append(cachecontext);
 
   return cachecontext;
+}
+
+void
+QuarterWidgetP::resetCacheContext()
+{
+  removeFromCacheContext(this->cachecontext, this->master);
+  this->cachecontext = findCacheContext(this->master, nullptr);
 }
 
 void
@@ -153,14 +173,15 @@ QuarterWidgetP::removeFromCacheContext(QuarterWidgetP_cachecontext * context, co
     for (int i = 0; i < cachecontext_list->getLength(); i++) {
       if ((*cachecontext_list)[i] == context) {
         // set the context while calling destructingContext() (might trigger OpenGL calls)
-        const_cast<QT_GL_WIDGET*> (widget)->makeCurrent();
+        const bool valid = widget->isValid();
+        if (valid) const_cast<QT_GL_WIDGET*> (widget)->makeCurrent();
         // fetch the cc_glglue context instance as a workaround for a bug fixed in Coin r12818
 #if (QT_VERSION < 0x050600)
         (void) cc_glglue_instance(context->id);
 #endif        
         cachecontext_list->removeFast(i);
         SoContextHandler::destructingContext(context->id);
-        const_cast<QT_GL_WIDGET*> (widget)->doneCurrent();
+        if (valid) const_cast<QT_GL_WIDGET*> (widget)->doneCurrent();
         delete context;
         return;
       }
@@ -182,7 +203,7 @@ QuarterWidgetP::rendercb(void * userdata, SoRenderManager *)
 }
 
 void
-QuarterWidgetP::prerendercb(void * userdata, SoRenderManager * manager)
+QuarterWidgetP::prerendercb(void * userdata, SoRenderManager *)
 {
   QuarterWidgetP * thisp = static_cast<QuarterWidgetP *>(userdata);
   SoEventManager * evman = thisp->soeventmanager;
@@ -194,7 +215,7 @@ QuarterWidgetP::prerendercb(void * userdata, SoRenderManager * manager)
 }
 
 void
-QuarterWidgetP::postrendercb(void * userdata, SoRenderManager * manager)
+QuarterWidgetP::postrendercb(void * userdata, SoRenderManager *)
 {
   QuarterWidgetP * thisp = static_cast<QuarterWidgetP *>(userdata);
   SoEventManager * evman = thisp->soeventmanager;
@@ -206,7 +227,7 @@ QuarterWidgetP::postrendercb(void * userdata, SoRenderManager * manager)
 }
 
 void
-QuarterWidgetP::statechangecb(void * userdata, ScXMLStateMachine * statemachine, const char * stateid, SbBool enter, SbBool)
+QuarterWidgetP::statechangecb(void * userdata, ScXMLStateMachine *, const char * stateid, SbBool enter, SbBool)
 {
   static const SbName contextmenurequest("contextmenurequest");
   QuarterWidgetP * thisp = static_cast<QuarterWidgetP *>(userdata);
@@ -297,7 +318,7 @@ QuarterWidgetP::contextMenu(void)
 
 
 bool 
-QuarterWidgetP::nativeEventFilter(void * message, long * result)
+QuarterWidgetP::nativeEventFilter([[maybe_unused]] void * message, long *)
 {
 #ifdef HAVE_SPACENAV_LIB
   XEvent * event = (XEvent *) message;

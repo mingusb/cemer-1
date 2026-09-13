@@ -24,6 +24,8 @@
 #include "ContextMenu.h"
 
 #include <QMenu>
+#include <QAction>
+#include <QActionGroup>
 
 #include <Inventor/SoEventManager.h>
 #include <Inventor/scxml/SoScXMLStateMachine.h>

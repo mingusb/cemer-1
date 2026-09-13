@@ -99,16 +99,12 @@ MAKETA_WRAP_H(emergent_virt_env_SRCS_MAKETA ${emergent_virt_env_HEADS_MAKETA} OP
 
 ADD_PATH_TO_FILES(emergent_virt_env_QRC ${mypath}/virt_env "${virt_env_QRC}")
 
-if (QT_USE_5)
-  qt5_wrap_cpp(emergent_network_SRCS_MOC ${emergent_network_HEADS_MOC})
-  qt5_wrap_cpp(emergent_virt_env_SRCS_MOC ${emergent_virt_env_HEADS_MOC})
+  qt6_wrap_cpp(emergent_network_SRCS_MOC ${emergent_network_HEADS_MOC})
+  qt6_wrap_cpp(emergent_virt_env_SRCS_MOC ${emergent_virt_env_HEADS_MOC})
 
-  qt5_add_resources(emergent_virt_env_SRCS_QRC ${emergent_virt_env_QRC})
+  qt6_add_resources(emergent_virt_env_SRCS_QRC ${emergent_virt_env_QRC})
   
-else (QT_USE_5)
-  QT4_WRAP_CPP(emergent_network_SRCS_MOC ${emergent_network_HEADS_MOC})
-  QT4_WRAP_CPP(emergent_virt_env_SRCS_MOC ${emergent_virt_env_HEADS_MOC})
-endif (QT_USE_5)
+
 
 # just list whole set of files here -- including headers for IDE's
 set(emergentlib_SRCS
@@ -151,15 +147,7 @@ endif (WIN32)
 # set_target_properties( libsvml PROPERTIES IMPORTED_LOCATION /usr/local/lib/libsvml.dylib )
 # TARGET_LINK_LIBRARIES(emergentlib libsvml)
 
-if (WIN32)
-  # Don't warn so much on 3rd party C files.
-  set_source_files_properties(
-    ${PROJECT_SOURCE_DIR}/src/emergent/network/nifti1_io.c
-    ${PROJECT_SOURCE_DIR}/src/emergent/network/znzlib.c
-    PROPERTIES
-    COMPILE_FLAGS "/D_CRT_SECURE_NO_WARNINGS /wd4101 /wd4244 /wd4267"
-  )
-endif (WIN32)
+
 
 # 2nd arg is extra libs to link to
 EMERGENT_LINK_LIBRARIES(emergentlib temt)

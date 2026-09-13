@@ -120,7 +120,7 @@ InteractionMode::keyReleaseEvent(QKeyEvent * event)
   if we lose focus while alt is down, send an alt-release event
  */
 bool
-InteractionMode::focusOutEvent(QFocusEvent * event)
+InteractionMode::focusOutEvent(QFocusEvent *)
 {
   if (this->altkeydown) {
     QKeyEvent keyevent(QEvent::KeyRelease, Qt::Key_Alt, Qt::NoModifier);

@@ -28,7 +28,6 @@
 
 class QEvent;
 class SoEvent;
-class QuarterWidget;
 
 namespace SIM { namespace Coin3D { namespace Quarter {
 
