@@ -1,10 +1,10 @@
 == InductorHead: a pattern-completion laboratory ==
 
-'''Start here.''' Open the '''Laboratory''' control panel. Press '''Generate sequence''', then '''Show circuit'''. Drag the 3D network to rotate it and use the wheel to zoom. Press '''Step token''' to move the current query through the sequence. The CSS console reports each prediction; the '''CircuitState''' data table exposes every matrix numerically.
+'''Start here.''' Open the '''Laboratory''' panel and press '''Show''' to initialize the 3D circuit. Use the existing '''View → Console''' command if the CSS console is hidden. The supplied launcher performs this first step through an ordinary startup CSS script. Change a control and press '''Generate''' to create a new task. '''Show''' restores the initial camera and view. Drag the 3D network to rotate it and use the wheel to zoom. Press '''Step''' to move the current query through the sequence. The CSS (C Super Script) console reports each prediction. At its emergent&gt; prompt, enter <code>cout &lt;&lt; 6*7 &lt;&lt; endl;</code> to evaluate 42. The '''CircuitState''' data table exposes every matrix numerically.
 
 == The experiment ==
 
-An earlier token pair tells the circuit how to continue a later occurrence: '''[A] [B] ... [A] → [B]'''. A new seed permutes the token vocabulary. The circuit does not contain a table saying that A must be followed by B: it obtains B from the current context. The '''Sequence''' table is editable, so you can construct your own repeated-token tasks. After editing it, press '''Run circuit'''.
+An earlier token pair tells the circuit how to continue a later occurrence: '''[A] [B] ... [A] → [B]'''. A new seed permutes the token vocabulary. The circuit does not contain a table saying that A must be followed by B: it obtains B from the current context. The '''Sequence''' table is editable, so you can construct your own repeated-token tasks. After editing it, press '''Run'''.
 
 == Two heads in two attention layers ==
 
@@ -23,7 +23,7 @@ The construction uses k[j] = onehot(token[j−1]), q[i] = onehot(token[i]), and 
 * '''Copied Values''': the selected query's attention mass, routed to the attended token identities.
 * '''Next Token Prediction''': the sum of the copied values. The highest component is the prediction.
 
-Unit labels are position:token, or query←source for attention. Activation colors and 3D block heights show the live numeric values. The actual attention calculations are embedded CSS Programs; the BpNetwork is their native Emergent state display. Its Bp synapses are not being trained to create these activations.
+Underlying unit names encode position:token, or query←source for attention. Per-unit text is initially hidden to keep the circuit readable. Activation colors and 3D block heights show the live numeric values. The actual attention calculations are embedded CSS Programs; the BpNetwork is their native Emergent state display. Its Bp synapses are not being trained to create these activations.
 
 == Controls and tasks ==
 
@@ -31,10 +31,10 @@ Unit labels are position:token, or query←source for attention. Activation colo
 * '''Seed''' selects a reproducible random vocabulary permutation.
 * '''Temperature''' controls attention sharpness. Higher values spread probability over nonmatching positions.
 * '''Noise''' replaces intermediate repeated tokens with a held-out distractor; the first exemplar and final query remain intact.
-* '''Cursor''' selects the query position. Run recomputes that position; Step advances it cyclically.
+* '''Cursor''' selects the query position. Run recomputes that position; Step advances it cyclically. Early positions without a matching earlier prefix can predict incorrectly: the causal mask cannot see the future target.
 * '''Ablate previous head''' removes the copied keys. Compare its near-uniform attention with the intact prefix match.
 * '''Ablate induction head''' removes the copying output. Prediction becomes −1 because the circuit provides no evidence for any token.
-* '''Evaluate permutations''' tests 64 new seeds, with intact, previous-head-ablated and induction-head-ablated conditions. Results and confidence are saved in Experiments. It restores the original controls afterward.
+* '''Evaluate''' tests 64 new seeds, with intact, previous-head-ablated and induction-head-ablated conditions. Results and confidence are saved in Experiments. It restores the original controls afterward.
 
 == Suggested investigations ==
 

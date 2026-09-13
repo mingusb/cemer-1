@@ -49,7 +49,7 @@ for(ih_i = 0; ih_i < 5; ih_i++) {
     ih_sum += ih_value;
   }
   if(ih_i == 0 && ih_sum != 0.0) ih_normalized = false;
-  if(ih_i > 0 && abs(ih_sum - 1.0) > 0.00001) ih_normalized = false;
+  if(ih_i > 0 && !(abs(ih_sum - 1.0) <= 0.00001)) ih_normalized = false;
 }
 ih_check(ih_causal, "all_future_sources_masked");
 ih_check(ih_normalized, "all_attention_rows_normalized");
@@ -63,6 +63,25 @@ ih_run->Run();
 ih_check(ih_run->ret_val == 0 && ih_run->GetVar("prediction") != 1 &&
          abs(ih_run->GetVar("confidence") - 0.25) < 0.00001,
          "previous_head_ablation_removes_prefix_match");
+// At the smallest accepted temperature, an ablated row has only nonmatching
+// logits. It must still normalize rather than underflow to NaN.
+ih_run->SetVar("temperature", 0.0);
+ih_run->SetVar("sequence_length", -1);
+ih_run->SetVar("vocabulary_size", -1);
+ih_run->SetVar("noise", -1.0);
+ih_run->SetVar("seed", -1);
+ih_run->SetVar("cursor", 999);
+ih_run->Run();
+ih_check(ih_run->ret_val == 0 &&
+         ih_run->GetVar("temperature") == 0.02 &&
+         ih_run->GetVar("sequence_length") == 5 &&
+         ih_run->GetVar("vocabulary_size") == 4 &&
+         ih_run->GetVar("noise") == 0.0 &&
+         ih_run->GetVar("seed") == 1 &&
+         ih_run->GetVar("cursor") == 4 &&
+         abs(ih_run->GetVar("confidence") - 0.25) <= 0.00001,
+         "parameter_bounds_and_low_temperature_normalization");
+ih_run->SetVar("temperature", 0.1);
 ih_run->SetVar("ablate_previous", false);
 ih_run->SetVar("ablate_induction", true);
 ih_run->Run();
@@ -100,7 +119,8 @@ def main():
         markers = ["circuit_run", "known_A_B_C_D_A_predicts_B", "confident_prefix_match",
                    "all_future_sources_masked", "all_attention_rows_normalized",
                    "live_native_network_states", "previous_head_ablation_removes_prefix_match",
-                   "induction_head_ablation_removes_copying", "embedded_tutorial_and_tasks"]
+                   "induction_head_ablation_removes_copying", "embedded_tutorial_and_tasks",
+                   "parameter_bounds_and_low_temperature_normalization"]
         case.css(script, markers, name="circuit")
         require(save.is_file(), "project was not saved")
         case.css(CHECK_CIRCUIT, markers, name="reload", project=save)

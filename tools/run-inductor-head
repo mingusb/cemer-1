@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+repo_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+project_dir="$repo_dir/demo/InductorHead"
+exec "$repo_dir/tools/run-emergent" --gui -i \
+  -p "$project_dir/InductorHead.proj" -s "$project_dir/open.css" "$@"

@@ -48,14 +48,12 @@ BpProject .projects[0] {
     ControlPanelMember @[12] { };
    };
 
-   ControlPanelMethod_Group @.mths = [0] {
-    ControlPanelMethod_Group @.gp[0] = [5] { 
-     ControlPanelMethod @[0] { };
-     ControlPanelMethod @[1] { };
-     ControlPanelMethod @[2] { };
-     ControlPanelMethod @[3] { };
-     ControlPanelMethod @[4] { };
-    };
+   ControlPanelMethod_Group @.mths = [5] {
+    ControlPanelMethod @[0] { };
+    ControlPanelMethod @[1] { };
+    ControlPanelMethod @[2] { };
+    ControlPanelMethod @[3] { };
+    ControlPanelMethod @[4] { };
    };
   };
  };
@@ -451,11 +449,11 @@ BpProject .projects[0] {
    text_size=1;
    text="== InductorHead: a pattern-completion laboratory ==
 
-'''Start here.''' Open the '''Laboratory''' control panel. Press '''Generate sequence''', then '''Show circuit'''. Drag the 3D network to rotate it and use the wheel to zoom. Press '''Step token''' to move the current query through the sequence. The CSS console reports each prediction; the '''CircuitState''' data table exposes every matrix numerically.
+'''Start here.''' Open the '''Laboratory''' panel and press '''Show''' to initialize the 3D circuit. Use the existing '''View → Console''' command if the CSS console is hidden. The supplied launcher performs this first step through an ordinary startup CSS script. Change a control and press '''Generate''' to create a new task. '''Show''' restores the initial camera and view. Drag the 3D network to rotate it and use the wheel to zoom. Press '''Step''' to move the current query through the sequence. The CSS (C Super Script) console reports each prediction. At its emergent&gt; prompt, enter <code>cout &lt;&lt; 6*7 &lt;&lt; endl;</code> to evaluate 42. The '''CircuitState''' data table exposes every matrix numerically.
 
 == The experiment ==
 
-An earlier token pair tells the circuit how to continue a later occurrence: '''[A] [B] ... [A] → [B]'''. A new seed permutes the token vocabulary. The circuit does not contain a table saying that A must be followed by B: it obtains B from the current context. The '''Sequence''' table is editable, so you can construct your own repeated-token tasks. After editing it, press '''Run circuit'''.
+An earlier token pair tells the circuit how to continue a later occurrence: '''[A] [B] ... [A] → [B]'''. A new seed permutes the token vocabulary. The circuit does not contain a table saying that A must be followed by B: it obtains B from the current context. The '''Sequence''' table is editable, so you can construct your own repeated-token tasks. After editing it, press '''Run'''.
 
 == Two heads in two attention layers ==
 
@@ -474,7 +472,7 @@ The construction uses k[j] = onehot(token[j−1]), q[i] = onehot(token[i]), and 
 * '''Copied Values''': the selected query's attention mass, routed to the attended token identities.
 * '''Next Token Prediction''': the sum of the copied values. The highest component is the prediction.
 
-Unit labels are position:token, or query←source for attention. Activation colors and 3D block heights show the live numeric values. The actual attention calculations are embedded CSS Programs; the BpNetwork is their native Emergent state display. Its Bp synapses are not being trained to create these activations.
+Underlying unit names encode position:token, or query←source for attention. Per-unit text is initially hidden to keep the circuit readable. Activation colors and 3D block heights show the live numeric values. The actual attention calculations are embedded CSS Programs; the BpNetwork is their native Emergent state display. Its Bp synapses are not being trained to create these activations.
 
 == Controls and tasks ==
 
@@ -482,10 +480,10 @@ Unit labels are position:token, or query←source for attention. Activation colo
 * '''Seed''' selects a reproducible random vocabulary permutation.
 * '''Temperature''' controls attention sharpness. Higher values spread probability over nonmatching positions.
 * '''Noise''' replaces intermediate repeated tokens with a held-out distractor; the first exemplar and final query remain intact.
-* '''Cursor''' selects the query position. Run recomputes that position; Step advances it cyclically.
+* '''Cursor''' selects the query position. Run recomputes that position; Step advances it cyclically. Early positions without a matching earlier prefix can predict incorrectly: the causal mask cannot see the future target.
 * '''Ablate previous head''' removes the copied keys. Compare its near-uniform attention with the intact prefix match.
 * '''Ablate induction head''' removes the copying output. Prediction becomes −1 because the circuit provides no evidence for any token.
-* '''Evaluate permutations''' tests 64 new seeds, with intact, previous-head-ablated and induction-head-ablated conditions. Results and confidence are saved in Experiments. It restores the original controls afterward.
+* '''Evaluate''' tests 64 new seeds, with intact, previous-head-ablated and induction-head-ablated conditions. Results and confidence are saved in Experiments. It restores the original controls afterward.
 
 == Suggested investigations ==
 
@@ -506,11 +504,11 @@ This is a deliberately constructed, mechanistic two-head circuit. It demonstrate
 ";
    html_text="<h2> InductorHead: a pattern-completion laboratory </h2>
 <P>
- <b>Start here.</b>  Open the  <b>Laboratory</b>  control panel. Press  <b>Generate sequence</b> , then  <b>Show circuit</b> . Drag the 3D network to rotate it and use the wheel to zoom. Press  <b>Step token</b>  to move the current query through the sequence. The CSS console reports each prediction; the  <b>CircuitState</b>  data table exposes every matrix numerically.
+ <b>Start here.</b>  Open the  <b>Laboratory</b>  panel and press  <b>Show</b>  to initialize the 3D circuit. Use the existing  <b>View → Console</b>  command if the CSS console is hidden. The supplied launcher performs this first step through an ordinary startup CSS script. Change a control and press  <b>Generate</b>  to create a new task.  <b>Show</b>  restores the initial camera and view. Drag the 3D network to rotate it and use the wheel to zoom. Press  <b>Step</b>  to move the current query through the sequence. The CSS (C Super Script) console reports each prediction. At its emergent&gt; prompt, enter <code>cout &lt;&lt; 6*7 &lt;&lt; endl;</code> to evaluate 42. The  <b>CircuitState</b>  data table exposes every matrix numerically.
 <P>
 <h2> The experiment </h2>
 <P>
-An earlier token pair tells the circuit how to continue a later occurrence:  <b>[A] [B] ... [A] → [B]</b> . A new seed permutes the token vocabulary. The circuit does not contain a table saying that A must be followed by B: it obtains B from the current context. The  <b>Sequence</b>  table is editable, so you can construct your own repeated-token tasks. After editing it, press  <b>Run circuit</b> .
+An earlier token pair tells the circuit how to continue a later occurrence:  <b>[A] [B] ... [A] → [B]</b> . A new seed permutes the token vocabulary. The circuit does not contain a table saying that A must be followed by B: it obtains B from the current context. The  <b>Sequence</b>  table is editable, so you can construct your own repeated-token tasks. After editing it, press  <b>Run</b> .
 <P>
 <h2> Two heads in two attention layers </h2>
 <P>
@@ -529,7 +527,7 @@ The construction uses k[j] = onehot(token[j−1]), q[i] = onehot(token[i]), and 
 <li>  <b>Copied Values</b> : the selected query's attention mass, routed to the attended token identities.
 <li>  <b>Next Token Prediction</b> : the sum of the copied values. The highest component is the prediction.
 </ul>
-Unit labels are position:token, or query←source for attention. Activation colors and 3D block heights show the live numeric values. The actual attention calculations are embedded CSS Programs; the BpNetwork is their native Emergent state display. Its Bp synapses are not being trained to create these activations.
+Underlying unit names encode position:token, or query←source for attention. Per-unit text is initially hidden to keep the circuit readable. Activation colors and 3D block heights show the live numeric values. The actual attention calculations are embedded CSS Programs; the BpNetwork is their native Emergent state display. Its Bp synapses are not being trained to create these activations.
 <P>
 <h2> Controls and tasks </h2>
 <P>
@@ -537,10 +535,10 @@ Unit labels are position:token, or query←source for attention. Activation colo
 <li>  <b>Seed</b>  selects a reproducible random vocabulary permutation.
 <li>  <b>Temperature</b>  controls attention sharpness. Higher values spread probability over nonmatching positions.
 <li>  <b>Noise</b>  replaces intermediate repeated tokens with a held-out distractor; the first exemplar and final query remain intact.
-<li>  <b>Cursor</b>  selects the query position. Run recomputes that position; Step advances it cyclically.
+<li>  <b>Cursor</b>  selects the query position. Run recomputes that position; Step advances it cyclically. Early positions without a matching earlier prefix can predict incorrectly: the causal mask cannot see the future target.
 <li>  <b>Ablate previous head</b>  removes the copied keys. Compare its near-uniform attention with the intact prefix match.
 <li>  <b>Ablate induction head</b>  removes the copying output. Prediction becomes −1 because the circuit provides no evidence for any token.
-<li>  <b>Evaluate permutations</b>  tests 64 new seeds, with intact, previous-head-ablated and induction-head-ablated conditions. Results and confidence are saved in Experiments. It restores the original controls afterward.
+<li>  <b>Evaluate</b>  tests 64 new seeds, with intact, previous-head-ablated and induction-head-ablated conditions. Results and confidence are saved in Experiments. It restores the original controls afterward.
 </ul>
 <h2> Suggested investigations </h2>
 <P>
@@ -785,56 +783,50 @@ This is a deliberately constructed, mechanistic two-head circuit. It demonstrate
     el_typ=ControlPanelMethod;
     el_def=0;
     group_type=GT_BUTTONS;
-    ControlPanelMethod_Group @.gp[0] {
-     name="Tasks";
-     el_typ=ControlPanelMethod;
-     el_def=0;
-     group_type=GT_MENU_BUTTON;
-     ControlPanelMethod @[0] {
-      label="Generate sequence";
-      short_label=1;
-      cust_label=1;
-      desc="Run this laboratory task";
-      cust_desc=1;
-      base=.programs[0]$$;
-      mth=Program::Run_Gui;
-     };
-     ControlPanelMethod @[1] {
-      label="Show circuit";
-      short_label=1;
-      cust_label=1;
-      desc="Run this laboratory task";
-      cust_desc=1;
-      base=.programs[3]$$;
-      mth=Program::Run_Gui;
-     };
-     ControlPanelMethod @[2] {
-      label="Run circuit";
-      short_label=1;
-      cust_label=1;
-      desc="Run this laboratory task";
-      cust_desc=1;
-      base=.programs[1]$$;
-      mth=Program::Run_Gui;
-     };
-     ControlPanelMethod @[3] {
-      label="Step token";
-      short_label=1;
-      cust_label=1;
-      desc="Run this laboratory task";
-      cust_desc=1;
-      base=.programs[2]$$;
-      mth=Program::Run_Gui;
-     };
-     ControlPanelMethod @[4] {
-      label="Evaluate permutations";
-      short_label=1;
-      cust_label=1;
-      desc="Run this laboratory task";
-      cust_desc=1;
-      base=.programs[4]$$;
-      mth=Program::Run_Gui;
-     };
+    ControlPanelMethod @[0] {
+     label="Generate";
+     short_label=1;
+     cust_label=1;
+     desc="Run this laboratory task";
+     cust_desc=1;
+     base=.programs[0]$$;
+     mth=Program::Run_Gui;
+    };
+    ControlPanelMethod @[1] {
+     label="Show";
+     short_label=1;
+     cust_label=1;
+     desc="Run this laboratory task";
+     cust_desc=1;
+     base=.programs[3]$$;
+     mth=Program::Run_Gui;
+    };
+    ControlPanelMethod @[2] {
+     label="Run";
+     short_label=1;
+     cust_label=1;
+     desc="Run this laboratory task";
+     cust_desc=1;
+     base=.programs[1]$$;
+     mth=Program::Run_Gui;
+    };
+    ControlPanelMethod @[3] {
+     label="Step";
+     short_label=1;
+     cust_label=1;
+     desc="Run this laboratory task";
+     cust_desc=1;
+     base=.programs[2]$$;
+     mth=Program::Run_Gui;
+    };
+    ControlPanelMethod @[4] {
+     label="Evaluate";
+     short_label=1;
+     cust_label=1;
+     desc="Run this laboratory task";
+     cust_desc=1;
+     base=.programs[4]$$;
+     mth=Program::Run_Gui;
     };
    };
   };
@@ -1663,25 +1655,78 @@ if(taMisc::gui_active) {
   NetView* ih_view = ih_net->FindMakeView();
   ih_view->lay_layout = NetView::THREE_D;
   ih_view->unit_disp_mode = NetView::UDM_BLOCK;
-  ih_view->unit_text_disp = NetView::UTD_NAMES;
+  ih_view->unit_text_disp = NetView::UTD_NONE;
   ih_view->display = true;
+  ih_view->font_sizes.layer = 0.0;
+  ih_view->font_sizes.layer_min = 0.0;
+  ih_view->font_sizes.net_name = 0.0;
+  T3Panel* ih_frame = ih_view->GetFrame();
+  ih_frame->SetColorScheme(T3Panel::WHITE_ON_BLACK);
+  ih_frame->bg_color.Set(0.035, 0.055, 0.11);
+  ih_frame->text_color.Set(0.86, 0.93, 1.0);
+  ih_frame->UpdateAfterEdit();
   ih_net->SetViewVar(\"act\");
   ih_view->SetScaleData(false, 0.0, 1.0);
   // These annotations connect computational stages; they are not Bp synapses.
   ih_view->annotations.Reset();
   ih_view->AnnoteEndArrow(true, ih_n / 2.0, ih_v + 0.5, 0,
-    0, 2.5, 3, 3.0, \"#0ea5a3\", 0.018);
+    0, 2.5, 3, 3.0, \"#22d3ee\", 0.018);
   ih_view->AnnoteEndArrow(true, ih_n / 2.0, 2 * ih_v + 3.5, 3,
-    0, 2.5, 3, 3.0, \"#7c3aed\", 0.018);
+    0, 2.5, 3, 3.0, \"#a78bfa\", 0.018);
   ih_view->AnnoteEndArrow(true, ih_n + 4, ih_v + 3, 3,
-    -4, ih_v + 3, 3, 3.0, \"#d97706\", 0.018);
+    -4, ih_v + 3, 3, 3.0, \"#fbbf24\", 0.018);
   ih_view->AnnoteEndArrow(true, ih_n / 2.0, 2 * (ih_v + 3) + ih_n + 0.5, 6,
-    0, 3.5, 3, 3.0, \"#2563eb\", 0.018);
+    0, 3.5, 3, 3.0, \"#60a5fa\", 0.018);
   ih_view->AnnoteEndArrow(true, ih_n + 0.5, 2 * (ih_v + 3) + ih_n + 4 + ih_v / 2.0, 9,
-    3.5, 0, 3, 3.0, \"#059669\", 0.018);
-  ih_view->AnnoteText(true, \"INDUCTORHEAD | PREFIX MATCH -> VALUE COPY\",
-    0, 2 * (ih_v + 3) + ih_n + ih_v + 7, 12, 0.027, T3DataViewMain::LEFT, \"#075985\");
+    3.5, 0, 3, 3.0, \"#34d399\", 0.018);
+  // Existing annotation rotations keep stage labels facing the saved camera.
+  T3Annotation* ih_label_0 = ih_view->AnnoteText(true, \"01  Token embeddings\",
+    0, -4, 0, 0.055, T3DataViewMain::LEFT, \"#cffafe\");
+  ih_label_0->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_0->UpdateAfterEdit();
+  T3Annotation* ih_label_1 = ih_view->AnnoteText(true, \"02  Previous-token keys\",
+    0, ih_v - 1, 3, 0.055, T3DataViewMain::LEFT, \"#ddd6fe\");
+  ih_label_1->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_1->UpdateAfterEdit();
+  T3Annotation* ih_label_2 = ih_view->AnnoteText(true, \"03  Query\",
+    ih_n + 3, ih_v - 1, 3, 0.045, T3DataViewMain::LEFT, \"#fde68a\");
+  ih_label_2->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_2->UpdateAfterEdit();
+  T3Annotation* ih_label_3 = ih_view->AnnoteText(true, \"04  Causal attention\",
+    0, 2 * (ih_v + 3) - 4, 6, 0.055, T3DataViewMain::LEFT, \"#bfdbfe\");
+  ih_label_3->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_3->UpdateAfterEdit();
+  T3Annotation* ih_label_4 = ih_view->AnnoteText(true, \"05  Copied values\",
+    0, 2 * (ih_v + 3) + ih_n, 9, 0.055, T3DataViewMain::LEFT, \"#a7f3d0\");
+  ih_label_4->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_4->UpdateAfterEdit();
+  T3Annotation* ih_label_5 = ih_view->AnnoteText(true, \"06  Prediction\",
+    ih_n + 2, 2 * (ih_v + 3) + ih_n, 12, 0.045, T3DataViewMain::LEFT, \"#a7f3d0\");
+  ih_label_5->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_5->UpdateAfterEdit();
+  T3Annotation* ih_label_6 = ih_view->AnnoteText(true, \"INDUCTORHEAD | MATCH -> COPY\",
+    0, 2 * (ih_v + 3) + ih_n + ih_v + 7, 12, 0.05, T3DataViewMain::LEFT, \"#67e8f9\");
+  ih_label_6->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_6->UpdateAfterEdit();
   ih_view->UpdateDisplay();
+  // Tilt the camera toward the token grids and frame all six stages.
+  ih_frame->SaveCurView(0);
+  ih_frame->SetCameraOrient(0, 1, 0, 0, -0.62);
+  ih_frame->SetCameraPos(0, 0.55, 1.828, 1.241);
+  ih_frame->SetCameraFocDist(0, 2.2);
+  ih_frame->GoToSavedView(0);
+  ih_frame->SaveCurView(0);
+  ih_project->ctrl_panels[\"Laboratory\"]->EditPanel(true, true);
+  MainWindowViewer* ih_browser = ih_project->GetDefaultProjectViewer();
+  if(ih_browser != NULL) {
+    // Existing saved-window geometry leaves room for the existing CSS console.
+    ih_browser->SetUserData(\"view_win_lft\", 0.01);
+    ih_browser->SetUserData(\"view_win_top\", 0.01);
+    ih_browser->SetUserData(\"view_win_wd\", 0.98);
+    ih_browser->SetUserData(\"view_win_ht\", 0.78);
+    ih_browser->SetWinState();
+    ih_browser->ViewWindow();
+  }
 }
 
 cout << \"INDUCTOR \" << ih_cfg->GetVar(\"status\") << endl;
@@ -1908,25 +1953,78 @@ if(taMisc::gui_active) {
   NetView* ih_view = ih_net->FindMakeView();
   ih_view->lay_layout = NetView::THREE_D;
   ih_view->unit_disp_mode = NetView::UDM_BLOCK;
-  ih_view->unit_text_disp = NetView::UTD_NAMES;
+  ih_view->unit_text_disp = NetView::UTD_NONE;
   ih_view->display = true;
+  ih_view->font_sizes.layer = 0.0;
+  ih_view->font_sizes.layer_min = 0.0;
+  ih_view->font_sizes.net_name = 0.0;
+  T3Panel* ih_frame = ih_view->GetFrame();
+  ih_frame->SetColorScheme(T3Panel::WHITE_ON_BLACK);
+  ih_frame->bg_color.Set(0.035, 0.055, 0.11);
+  ih_frame->text_color.Set(0.86, 0.93, 1.0);
+  ih_frame->UpdateAfterEdit();
   ih_net->SetViewVar(\"act\");
   ih_view->SetScaleData(false, 0.0, 1.0);
   // These annotations connect computational stages; they are not Bp synapses.
   ih_view->annotations.Reset();
   ih_view->AnnoteEndArrow(true, ih_n / 2.0, ih_v + 0.5, 0,
-    0, 2.5, 3, 3.0, \"#0ea5a3\", 0.018);
+    0, 2.5, 3, 3.0, \"#22d3ee\", 0.018);
   ih_view->AnnoteEndArrow(true, ih_n / 2.0, 2 * ih_v + 3.5, 3,
-    0, 2.5, 3, 3.0, \"#7c3aed\", 0.018);
+    0, 2.5, 3, 3.0, \"#a78bfa\", 0.018);
   ih_view->AnnoteEndArrow(true, ih_n + 4, ih_v + 3, 3,
-    -4, ih_v + 3, 3, 3.0, \"#d97706\", 0.018);
+    -4, ih_v + 3, 3, 3.0, \"#fbbf24\", 0.018);
   ih_view->AnnoteEndArrow(true, ih_n / 2.0, 2 * (ih_v + 3) + ih_n + 0.5, 6,
-    0, 3.5, 3, 3.0, \"#2563eb\", 0.018);
+    0, 3.5, 3, 3.0, \"#60a5fa\", 0.018);
   ih_view->AnnoteEndArrow(true, ih_n + 0.5, 2 * (ih_v + 3) + ih_n + 4 + ih_v / 2.0, 9,
-    3.5, 0, 3, 3.0, \"#059669\", 0.018);
-  ih_view->AnnoteText(true, \"INDUCTORHEAD | PREFIX MATCH -> VALUE COPY\",
-    0, 2 * (ih_v + 3) + ih_n + ih_v + 7, 12, 0.027, T3DataViewMain::LEFT, \"#075985\");
+    3.5, 0, 3, 3.0, \"#34d399\", 0.018);
+  // Existing annotation rotations keep stage labels facing the saved camera.
+  T3Annotation* ih_label_0 = ih_view->AnnoteText(true, \"01  Token embeddings\",
+    0, -4, 0, 0.055, T3DataViewMain::LEFT, \"#cffafe\");
+  ih_label_0->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_0->UpdateAfterEdit();
+  T3Annotation* ih_label_1 = ih_view->AnnoteText(true, \"02  Previous-token keys\",
+    0, ih_v - 1, 3, 0.055, T3DataViewMain::LEFT, \"#ddd6fe\");
+  ih_label_1->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_1->UpdateAfterEdit();
+  T3Annotation* ih_label_2 = ih_view->AnnoteText(true, \"03  Query\",
+    ih_n + 3, ih_v - 1, 3, 0.045, T3DataViewMain::LEFT, \"#fde68a\");
+  ih_label_2->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_2->UpdateAfterEdit();
+  T3Annotation* ih_label_3 = ih_view->AnnoteText(true, \"04  Causal attention\",
+    0, 2 * (ih_v + 3) - 4, 6, 0.055, T3DataViewMain::LEFT, \"#bfdbfe\");
+  ih_label_3->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_3->UpdateAfterEdit();
+  T3Annotation* ih_label_4 = ih_view->AnnoteText(true, \"05  Copied values\",
+    0, 2 * (ih_v + 3) + ih_n, 9, 0.055, T3DataViewMain::LEFT, \"#a7f3d0\");
+  ih_label_4->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_4->UpdateAfterEdit();
+  T3Annotation* ih_label_5 = ih_view->AnnoteText(true, \"06  Prediction\",
+    ih_n + 2, 2 * (ih_v + 3) + ih_n, 12, 0.045, T3DataViewMain::LEFT, \"#a7f3d0\");
+  ih_label_5->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_5->UpdateAfterEdit();
+  T3Annotation* ih_label_6 = ih_view->AnnoteText(true, \"INDUCTORHEAD | MATCH -> COPY\",
+    0, 2 * (ih_v + 3) + ih_n + ih_v + 7, 12, 0.05, T3DataViewMain::LEFT, \"#67e8f9\");
+  ih_label_6->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_6->UpdateAfterEdit();
   ih_view->UpdateDisplay();
+  // Tilt the camera toward the token grids and frame all six stages.
+  ih_frame->SaveCurView(0);
+  ih_frame->SetCameraOrient(0, 1, 0, 0, -0.62);
+  ih_frame->SetCameraPos(0, 0.55, 1.828, 1.241);
+  ih_frame->SetCameraFocDist(0, 2.2);
+  ih_frame->GoToSavedView(0);
+  ih_frame->SaveCurView(0);
+  ih_project->ctrl_panels[\"Laboratory\"]->EditPanel(true, true);
+  MainWindowViewer* ih_browser = ih_project->GetDefaultProjectViewer();
+  if(ih_browser != NULL) {
+    // Existing saved-window geometry leaves room for the existing CSS console.
+    ih_browser->SetUserData(\"view_win_lft\", 0.01);
+    ih_browser->SetUserData(\"view_win_top\", 0.01);
+    ih_browser->SetUserData(\"view_win_wd\", 0.98);
+    ih_browser->SetUserData(\"view_win_ht\", 0.78);
+    ih_browser->SetWinState();
+    ih_browser->ViewWindow();
+  }
 }
 
 cout << \"INDUCTOR \" << ih_cfg->GetVar(\"status\") << endl;
@@ -2727,7 +2825,7 @@ cout << \"INDUCTOR \" << ih_cfg->GetVar(\"status\") << endl;
    };
    author=;
    email=;
-   flags=NO_STOP_STEP|STARTUP_RUN|OBJS_UPDT_GUI;
+   flags=NO_STOP_STEP|OBJS_UPDT_GUI;
    stop_step_cond {
     expr=;
    };
@@ -2991,25 +3089,78 @@ if(taMisc::gui_active) {
   NetView* ih_view = ih_net->FindMakeView();
   ih_view->lay_layout = NetView::THREE_D;
   ih_view->unit_disp_mode = NetView::UDM_BLOCK;
-  ih_view->unit_text_disp = NetView::UTD_NAMES;
+  ih_view->unit_text_disp = NetView::UTD_NONE;
   ih_view->display = true;
+  ih_view->font_sizes.layer = 0.0;
+  ih_view->font_sizes.layer_min = 0.0;
+  ih_view->font_sizes.net_name = 0.0;
+  T3Panel* ih_frame = ih_view->GetFrame();
+  ih_frame->SetColorScheme(T3Panel::WHITE_ON_BLACK);
+  ih_frame->bg_color.Set(0.035, 0.055, 0.11);
+  ih_frame->text_color.Set(0.86, 0.93, 1.0);
+  ih_frame->UpdateAfterEdit();
   ih_net->SetViewVar(\"act\");
   ih_view->SetScaleData(false, 0.0, 1.0);
   // These annotations connect computational stages; they are not Bp synapses.
   ih_view->annotations.Reset();
   ih_view->AnnoteEndArrow(true, ih_n / 2.0, ih_v + 0.5, 0,
-    0, 2.5, 3, 3.0, \"#0ea5a3\", 0.018);
+    0, 2.5, 3, 3.0, \"#22d3ee\", 0.018);
   ih_view->AnnoteEndArrow(true, ih_n / 2.0, 2 * ih_v + 3.5, 3,
-    0, 2.5, 3, 3.0, \"#7c3aed\", 0.018);
+    0, 2.5, 3, 3.0, \"#a78bfa\", 0.018);
   ih_view->AnnoteEndArrow(true, ih_n + 4, ih_v + 3, 3,
-    -4, ih_v + 3, 3, 3.0, \"#d97706\", 0.018);
+    -4, ih_v + 3, 3, 3.0, \"#fbbf24\", 0.018);
   ih_view->AnnoteEndArrow(true, ih_n / 2.0, 2 * (ih_v + 3) + ih_n + 0.5, 6,
-    0, 3.5, 3, 3.0, \"#2563eb\", 0.018);
+    0, 3.5, 3, 3.0, \"#60a5fa\", 0.018);
   ih_view->AnnoteEndArrow(true, ih_n + 0.5, 2 * (ih_v + 3) + ih_n + 4 + ih_v / 2.0, 9,
-    3.5, 0, 3, 3.0, \"#059669\", 0.018);
-  ih_view->AnnoteText(true, \"INDUCTORHEAD | PREFIX MATCH -> VALUE COPY\",
-    0, 2 * (ih_v + 3) + ih_n + ih_v + 7, 12, 0.027, T3DataViewMain::LEFT, \"#075985\");
+    3.5, 0, 3, 3.0, \"#34d399\", 0.018);
+  // Existing annotation rotations keep stage labels facing the saved camera.
+  T3Annotation* ih_label_0 = ih_view->AnnoteText(true, \"01  Token embeddings\",
+    0, -4, 0, 0.055, T3DataViewMain::LEFT, \"#cffafe\");
+  ih_label_0->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_0->UpdateAfterEdit();
+  T3Annotation* ih_label_1 = ih_view->AnnoteText(true, \"02  Previous-token keys\",
+    0, ih_v - 1, 3, 0.055, T3DataViewMain::LEFT, \"#ddd6fe\");
+  ih_label_1->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_1->UpdateAfterEdit();
+  T3Annotation* ih_label_2 = ih_view->AnnoteText(true, \"03  Query\",
+    ih_n + 3, ih_v - 1, 3, 0.045, T3DataViewMain::LEFT, \"#fde68a\");
+  ih_label_2->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_2->UpdateAfterEdit();
+  T3Annotation* ih_label_3 = ih_view->AnnoteText(true, \"04  Causal attention\",
+    0, 2 * (ih_v + 3) - 4, 6, 0.055, T3DataViewMain::LEFT, \"#bfdbfe\");
+  ih_label_3->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_3->UpdateAfterEdit();
+  T3Annotation* ih_label_4 = ih_view->AnnoteText(true, \"05  Copied values\",
+    0, 2 * (ih_v + 3) + ih_n, 9, 0.055, T3DataViewMain::LEFT, \"#a7f3d0\");
+  ih_label_4->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_4->UpdateAfterEdit();
+  T3Annotation* ih_label_5 = ih_view->AnnoteText(true, \"06  Prediction\",
+    ih_n + 2, 2 * (ih_v + 3) + ih_n, 12, 0.045, T3DataViewMain::LEFT, \"#a7f3d0\");
+  ih_label_5->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_5->UpdateAfterEdit();
+  T3Annotation* ih_label_6 = ih_view->AnnoteText(true, \"INDUCTORHEAD | MATCH -> COPY\",
+    0, 2 * (ih_v + 3) + ih_n + ih_v + 7, 12, 0.05, T3DataViewMain::LEFT, \"#67e8f9\");
+  ih_label_6->rot.SetXYZR(1, 0, 0, -0.62);
+  ih_label_6->UpdateAfterEdit();
   ih_view->UpdateDisplay();
+  // Tilt the camera toward the token grids and frame all six stages.
+  ih_frame->SaveCurView(0);
+  ih_frame->SetCameraOrient(0, 1, 0, 0, -0.62);
+  ih_frame->SetCameraPos(0, 0.55, 1.828, 1.241);
+  ih_frame->SetCameraFocDist(0, 2.2);
+  ih_frame->GoToSavedView(0);
+  ih_frame->SaveCurView(0);
+  ih_project->ctrl_panels[\"Laboratory\"]->EditPanel(true, true);
+  MainWindowViewer* ih_browser = ih_project->GetDefaultProjectViewer();
+  if(ih_browser != NULL) {
+    // Existing saved-window geometry leaves room for the existing CSS console.
+    ih_browser->SetUserData(\"view_win_lft\", 0.01);
+    ih_browser->SetUserData(\"view_win_top\", 0.01);
+    ih_browser->SetUserData(\"view_win_wd\", 0.98);
+    ih_browser->SetUserData(\"view_win_ht\", 0.78);
+    ih_browser->SetWinState();
+    ih_browser->ViewWindow();
+  }
 }
 
 cout << \"INDUCTOR \" << ih_cfg->GetVar(\"status\") << endl;
@@ -3671,7 +3822,7 @@ cout << \"INDUCTOR_EVALUATION accuracy=\" << ih_correct / 64.0 << \" trials=64 c
      momentum=0;
      decay_type=NO_DECAY;
      decay=0;
-     wt_updt=1702125925;
+     wt_updt=1970151544;
      no_bp=0;
      lrate_sched {
       name=;
@@ -4089,7 +4240,7 @@ cout << \"INDUCTOR_EVALUATION accuracy=\" << ih_correct / 64.0 << \" trials=64 c
     el_typ=Weights;
     el_def=0;
    };
-   auto_build=AUTO_BUILD;
+   auto_build=NO_BUILD;
    auto_load_wts=NO_AUTO_LOAD;
    auto_load_file=;
    brain_atlas_name=;

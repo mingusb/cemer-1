@@ -1,0 +1,4 @@
+// Optional launcher startup: use the project's existing native Program.
+// Opening the project through File > Open leaves startup behavior unchanged.
+BpProject* inductor_project = .projects["InductorHead"];
+inductor_project->programs["ShowCircuit"]->Run();

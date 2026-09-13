@@ -124,6 +124,7 @@ def generate_css(output):
         'ih_project->author = "Emergent contributors";',
         'BpNetwork* ih_network = ih_project->networks.New(1, taMisc::FindTypeName("BpNetwork"), "InductionCircuit");',
         'ih_network->n_threads = 1;',
+        'ih_network->auto_build = Network::NO_BUILD;',
     ]
     layers = [
         ("Token_Embeddings", 0, 0, 0, 13, 8),
@@ -180,9 +181,9 @@ def generate_css(output):
             f'ih_{name}->UpdateAfterEdit();',
         ]
     labels = {
-        "GenerateSequence": "Generate_sequence", "ShowCircuit": "Show_circuit",
-        "RunCircuit": "Run_circuit", "StepToken": "Step_token",
-        "EvaluatePermutations": "Evaluate_permutations",
+        "GenerateSequence": "Generate", "ShowCircuit": "Show",
+        "RunCircuit": "Run", "StepToken": "Step",
+        "EvaluatePermutations": "Evaluate",
     }
     for index, (name, label) in enumerate(labels.items()):
         lines.append(f'ih_panel->AddMethodNm(ih_{name}, "Run", {quote(label)}, "Run this laboratory task", "");')
@@ -194,7 +195,6 @@ def generate_css(output):
         f'ih_doc->text = {quote(source("Tutorial.wiki"))};',
         'ih_doc->UpdateText();',
         'ih_doc->SetUserData("user_pinned", true);',
-        'ih_ShowCircuit->SetProgFlag(Program::STARTUP_RUN_GUI);',
         'ih_GenerateSequence->Run();',
         'if(ih_GenerateSequence->ret_val != 0) { cout << "INDUCTOR_GENERATION_FAILED" << endl; }',
         'else {',
