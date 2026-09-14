@@ -1,0 +1,655 @@
+// bvPVLVEnv
+// objs_vars: global variables for accessing objs objects
+env_epoch_params_group = EnvEpochParams_Group (DataTable_Group)
+epoch_trial_gp_list = EpochTrialGpList (DataTable)
+sum_table = SumTable (DataTable)
+
+// types: new types defined for this program
+TrialGpTimeSteps (enum: 5 items)
+PosPV (enum: 5 items)
+NegPV (enum: 5 items)
+Stim_In (enum: 14 items)
+USTime_In (enum: 321 items)
+Context_In (enum: 60 items)
+ContextModel (enum: 3 items)
+SC (enum: 2 items)
+
+// args: global script parameters (arguments)
+// network to operate on -- updates batch counter on network and passes it to train program
+network = bvPVLVNet (LeabraNetwork)
+
+// vars: global (non-parameter) variables
+input_data = StdInputData (DataTable)
+context_model_used = ELEMENTAL (ContextModel)
+use_trial_gp = true (bool)
+trial_gps_per_epoch = 8 (int)
+trials_per_epoch = 10 (int)
+permute_trial_gps = false (bool)
+env_params_table = Unblocking_Train_US (String)
+fixed_prob = false (bool)
+mixed_US = false (bool)
+env_params_table_ptr = Unblocking_Train_US (DataTable)
+data_loop_index = 3 (int)
+data_loop_order = SEQUENTIAL (Order)
+// fm env_params_table
+alph_ticks_per_trial_gp = 0 (int)
+// true, if there is a 2nd CS, e.g., the 'X' in AX trials
+n_stims = 1 (int)
+stim_in = NoStim (Stim_In)
+stim_in2 = NoStim (Stim_In)
+stim_in_base = B (Stim_In)
+stim_in2_base = NoStim (Stim_In)
+CS = B (String)
+CS1 = NoStim (String)
+// if needed, holds value of a second CS, e.g., the 'X' in AX trials
+CS2 = NoStim (String)
+// time point at which first stimulus comes on
+CS_time_start = t1 (String)
+// time point at which first stimulus goes off
+CS_time_end = t3 (String)
+// time point at which first reward occurs
+US_time_start = t3 (String)
+// time point at which first reward occurs
+US_time_end = t3 (String)
+cs_start = 1 (int)
+cs_end = 3 (int)
+us_start = 3 (int)
+us_end = 3 (int)
+us = 1 (int)
+USFlag = 1 (int)
+US_flag = 1 (int)
+US_type = Food (String)
+US_magnitude = 1 (real)
+US_prob = 1 (real)
+pos_PV = No_PosPV (PosPV)
+neg_PV = No_NegPV (NegPV)
+// is the eco_trial context about receiving POS reward (or not) versus receiving NEG punishment (or not)
+ValenceContext = POS (String)
+valence_context = POS (String)
+context_in = B (Context_In)
+context_in2 = NoContext (Context_In)
+context_in3 = NoContext (Context_In)
+Context = B (String)
+// if true, clamp Context_In units as 1/n_context_units - reflecting mutual competition
+norm_context_total_act = false (bool)
+// if true, clamp Context_In units as 1/n_context_units - reflecting mutual competition
+norm_stim_total_act = false (bool)
+// if true, clamp Context_In units as 1/n_context_units - reflecting mutual competition
+norm_ustime_total_act = false (bool)
+// if true, clamp Context_In units as 1/n_context_units - reflecting mutual competition
+pct_norm_total_act_stim = 0 (real)
+// if true, clamp Context_In units as 1/n_context_units - reflecting mutual competition
+pct_norm_total_act_ctxt = 0 (real)
+// if true, clamp Context_In units as 1/n_context_units - reflecting mutual competition
+pct_norm_total_act_ustime = 0 (real)
+// used with norm_context_total_act == true
+n_contexts = 1 (int)
+// used with norm_context_total_act == true
+n_ustimes = 1 (int)
+sc = R (SC)
+sc_start = 0 (int)
+sc_end = 2 (int)
+sc_left_trials = 19 (int)
+sc_left = 0 (real)
+sc_right_trials = 21 (int)
+sc_right = 0.4 (real)
+ustime_in = PosUS1_t0 (USTime_In)
+ustime_in_wrong = No_USTime_In (USTime_In)
+not_ustime_in = No_USTime_In (USTime_In)
+TrialGpName = B_Rf_POS (String)
+TestFlag = 0 (int)
+alph_trial_name =  (String)
+trial_gp_name = B_Rf (String)
+trial_gp_timestep = t4 (TrialGpTimeSteps)
+trial_gp_timestep_int = 0 (int)
+ustime_in_str =  (String)
+ustime_in_wrong_str =  (String)
+not_ustime_in_str =  (String)
+col_sum = 1 (real)
+base_number = 0.333333 (real)
+norm_prob = 0.333333 (real)
+percent_of_total = 0.333333 (real)
+exact_omit_proportion = false (bool)
+load_exp = false (bool)  --  init from: TrainStart
+n_omit_count = 0 (int)
+exact_n_omits = 0 (int)
+test_flag = 0 (int)
+
+// functions: functions defined for this program
+// NOTE: keys off of network counters
+IsEpochStart() returns: bool
+  LocalVars (0 vars)
+  if (use_trial_gp)
+    // must be both start of epoch AND start of trial_gp
+    if (network.group <= 0 && network.tick <= 0)
+      return true
+    else
+      return false
+  // not using eco trials (and thus network.group) - uses the more conventional network.trial and trials_per_epoch
+   instead
+  else
+    // CAUTION: watch to get indexing correct!!!! 
+    if (network.trial <= 0 || network.trial >= trials_per_epoch)
+      // just a precaution in case didn't get reset for some reason
+      network.trial = 0
+      return true
+    else
+      return false
+   
+IsTestTrial_fm_trial_gp() returns: bool
+  LocalVars (2 vars)
+    e_trl_nm =  (String)
+    tst_flg = 0 (int)
+  e_trl_nm = epoch_trial_gp_list->GetData("TrialGpName")
+  tst_flg = epoch_trial_gp_list->GetData("TestFlag")
+  // testing both is an extra safety measure for congruence
+  if (e_trl_nm.contains("_test") && tst_flg == 1)
+    return true
+  else if (e_trl_nm.contains("_test") || tst_flg == 1)
+    Print "ERROR: trial_gp_name and test_flag seem to be incongruent!"
+    return false
+  else
+    return false
+SetScVal(int ntrials) returns: double
+  LocalVars (2 vars)
+    sc_val = 0 (real)
+    increment = 0.1 (real)
+  sc_val = 0
+  sc_val = 1 - increment * (ntrials -1)
+  if (sc_val < 0.4)
+    sc_val = 0.4
+  return sc_val
+SetRow_CurEpoch() returns: int
+  LocalVars (2 vars)
+    rf_flg_temp = 0 (int)
+    prob_US_omit = 0 (real)
+  epoch_trial_gp_list->AddBlankRow()
+  // nonreinforced (NR) trials NEVER get reinforcement
+  if (!TrialGpName.contains("NR"))
+    // actual Rf can be different each eco_trial
+    rf_flg_temp = 1
+    if (!exact_omit_proportion)
+      prob_US_omit = Random::ZeroOne()
+      if (prob_US_omit < 1-US_prob)
+        rf_flg_temp = 0
+    else
+      if (n_omit_count <  exact_n_omits)
+        rf_flg_temp = 0
+        n_omit_count += 1
+      else
+        rf_flg_temp = 1
+    // could be repeat of eco trial type - but with different Rf flag
+    if (TrialGpName.contains_ci("omit"))
+      // start clean when generating multiple repeats of one eco_trial type
+      TrialGpName = TrialGpName.before("_omit")
+    // append "_omit"
+    if (rf_flg_temp == 0)
+      TrialGpName += "_omit"
+    // don't
+    else
+      TrialGpName += ""
+    US_flag = rf_flg_temp
+  else
+    // nonreinforced (NRf) trials NEVER get reinforcement
+    US_flag = 0
+  // could be repeat of eco trial type - but with different test flag
+  if (TrialGpName.contains_ci("test"))
+    // start clean when generating multiple repeats of one eco_trial type
+    TrialGpName = TrialGpName.before("_test")
+  // append "_test"
+  if (env_params_table.contains_ci("Test"))
+    TrialGpName += "_test"
+    // just in case - should be redundant 
+    test_flag = 1
+  // don't
+  else
+    TrialGpName += ""
+    // just in case - should be redundant 
+    test_flag = 0
+  epoch_trial_gp_list->SetData(TrialGpName, "TrialGpName")
+  epoch_trial_gp_list->SetData(valence_context, "ValenceContext")
+  epoch_trial_gp_list->SetData(test_flag, "TestFlag")
+  epoch_trial_gp_list->SetData(US_flag, "USFlag")
+  epoch_trial_gp_list->SetData(US_prob, "US_prob")
+  epoch_trial_gp_list->SetData(US_magnitude, "US_magnitude")
+  epoch_trial_gp_list->SetData(US_type, "US_type")
+  epoch_trial_gp_list->SetData(alph_ticks_per_trial_gp, "alph_ticks_per_trial_gp")
+  epoch_trial_gp_list->SetData(CS, "CS")
+  epoch_trial_gp_list->SetData(CS_time_start, "CS_time_start")
+  epoch_trial_gp_list->SetData(US_time_start, "US_time_start")
+  epoch_trial_gp_list->SetData(CS_time_end, "CS_time_end")
+  epoch_trial_gp_list->SetData(US_time_end, "US_time_end")
+  epoch_trial_gp_list->SetData(Context, "Context")
+  // assume increments write.idx +1
+  epoch_trial_gp_list->WriteClose()
+   
+SetTable_EpochTrialGpList_fm_defn_table() returns: int
+  LocalVars (3 vars)
+    n_repeats_f = 0 (real)
+    n_repeats = 0 (int)
+    i = 0 (int)
+  if (! load_exp)
+    // start with a blank slate
+    epoch_trial_gp_list->ResetData()
+  Data Loop (SEQUENTIAL):  table=env_params_table_ptr  index=data_loop_index  order_var=data_loop_order 
+    Data From:  table=env_params_table_ptr  row_spec=cur_row  set=from  all_matches=true 
+    TrialGpName = trial_gp_name
+    TrialGpName += "_" + valence_context
+    // using number of eco_trials_per epoch (in lieu of trials_per_epoch
+    if (use_trial_gp)
+      n_repeats_f = percent_of_total *  trial_gps_per_epoch
+      // fixes rounding error from int arithmetic
+      n_repeats = n_repeats_f + 0.001
+    else
+      n_repeats_f = percent_of_total *  trials_per_epoch
+      n_repeats = n_repeats_f + 0.001
+    if (n_repeats < 1 && !(percent_of_total <= 0.0))
+      // should do each at least once (unless user intended 0.0f)
+      n_repeats = 1
+    if (fixed_prob || env_params_table.contains("AutoTstEnv"))
+      if (US_prob != 0.0f && US_prob != 1.0f)
+        exact_omit_proportion = true
+        exact_n_omits = trial_gps_per_epoch *  percent_of_total *   (1- US_prob)
+        n_omit_count = 0
+      else
+        exact_omit_proportion = false
+    else
+      exact_omit_proportion = false
+    for (i=0; i<n_repeats; i++)
+      // TODO:Should prevent making too many rows, but could still make (one?) too few due to rounding errors
+      if (epoch_trial_gp_list.rows <  trial_gps_per_epoch)
+        SetRow_CurEpoch()
+   
+SetEpochTrialGpList() returns: int
+  LocalVars (0 vars)
+  // just a precautioin - initialize  tick = 0 (alph-in-trial_gp idx)
+  if (network.trial <=0)
+    // just in case - don't know how tick is handled by the source code
+    network.tick = 0
+  if (! load_exp)
+    epoch_trial_gp_list->ResetData()
+  env_params_table_ptr = env_epoch_params_group.FindLeafName(env_params_table)
+  Group from:  src table = env_params_table_ptr dest table = sum_table
+  From table:  table=sum_table  column=percent_of_total  row_spec=cur_row  var=col_sum 
+  Data Loop (SEQUENTIAL):  table=env_params_table_ptr  index=data_loop_index  order_var=data_loop_order 
+    From table:  table=env_params_table_ptr  column=percent_of_total  row_spec=cur_row  var=base_number 
+    norm_prob = base_number / col_sum
+    To table:  table=env_params_table_ptr  column=percent_of_total  row_spec=cur_row  var=norm_prob 
+  SetTable_EpochTrialGpList_fm_defn_table()
+  if (permute_trial_gps)
+    epoch_trial_gp_list->PermuteRows()
+  epoch_trial_gp_list->ReadFirst()
+   
+// Make trials for all CS Types with associated Time & Stim inputs
+SetRow_StdInputData_alph_trial(int stim_num) returns: int
+  LocalVars (8 vars)
+    cur_timestep_str =  (String)
+    cur_timestep_int = 0 (int)
+    Stimulus =  (String)
+    cur_stim_int = 0 (int)
+    stim_denom = 0 (real)
+    ctxt_denom = 0 (real)
+    ustime_denom = 0 (real)
+    ustime_in_str =  (String)
+  cur_timestep_str = (String)trial_gp_timestep
+  cur_timestep_str = cur_timestep_str.after("t")
+  cur_timestep_int = (int)cur_timestep_str
+  cur_stim_int = (int) stim_in
+  if (stim_num == 0)
+    input_data->AddBlankRow()
+  if (n_stims == 1)
+    Stimulus = CS
+  // i.e., there is a 2nd stimulus, e.g., 'AX', 'BY'
+  else
+    Stimulus = CS1 + CS2
+  // TEMP NOTE: shouldn't need...
+  context_in = (Context_In) Context
+  input_data->SetData(alph_trial_name, "AlphTrialName")
+  // TODO: seeing if I can cast the int version for this purpose
+  input_data->SetData((String)cur_timestep_int, "Time")
+  input_data->SetData(Stimulus, "Stimulus")
+  input_data->SetData(Context, "Context")
+  if (Context != "NoContext" && (cur_timestep_int >= cs_start && cur_timestep_int <= cs_end))
+    // ORIGINAL
+    input_data->SetMatrixFlatVal(1, "Context_In", cur_timestep_int, (int)context_in)
+  if ((cur_timestep_int >= cs_start && cur_timestep_int <= cs_end))
+    // ORIGINAL
+    input_data->SetMatrixFlatVal(1, "Context_In", cur_timestep_int, (int)context_in)
+  if (cur_timestep_int >= cs_start && cur_timestep_int <= cs_end)
+    stim_denom = 1
+    stim_denom = 1 + pct_norm_total_act_stim * (n_stims -1)
+    // if true, weaken the clamped act values
+    if (norm_stim_total_act)
+      stim_denom = (float)n_stims
+    if (stim_in != NoStim)
+      // ORIGINAL
+      input_data->SetMatrixFlatVal(1/stim_denom, "Stim_In", cur_timestep_int, (int)stim_in)
+    if (stim_in2 != NoStim)
+      // ORIGINAL
+      input_data->SetMatrixFlatVal(1/stim_denom, "Stim_In", cur_timestep_int, (int)stim_in2)
+    ctxt_denom = 1 + pct_norm_total_act_ctxt * (n_contexts -1)
+    ctxt_denom = 1
+    // if true, weaken the clamped act values
+    if (norm_context_total_act)
+      ctxt_denom = (float)n_contexts
+    if (context_in != NoContext)
+      // ORIGINAL
+      input_data->SetMatrixFlatVal(1/ctxt_denom, "Context_In", cur_timestep_int, (int)context_in)
+    if (context_in2 != NoContext)
+      // ORIGINAL
+      input_data->SetMatrixFlatVal(1/ctxt_denom, "Context_In", cur_timestep_int, (int)context_in2)
+    if (context_in3 != NoContext)
+      // ORIGINAL
+      input_data->SetMatrixFlatVal(1/ctxt_denom, "Context_In", cur_timestep_int, (int)context_in3)
+   
+  if (env_params_table == "PosOrienting")
+    // //set SC values
+    if (cur_timestep_int >= sc_start && cur_timestep_int <= sc_end)
+      if (sc == "L")
+        input_data->SetMatrixFlatVal(sc_left, "SC", cur_timestep_int, (int) sc)
+    else if (sc == "R")
+      input_data->SetMatrixFlatVal(sc_right, "SC", cur_timestep_int, (int) sc)
+  if (cur_timestep_int >= us_start && cur_timestep_int <= us_end && USFlag != 0)
+    // TODO: redo to avoid the conjunctive condition - nested if()'s
+    if (USFlag == 1 && ValenceContext == "POS")
+      if (pos_PV!= No_PosPV)
+        // ORIGINAL
+        input_data->SetMatrixFlatVal(US_magnitude, "PosPV", cur_timestep_int, pos_PV.NameToNumber(pos_PV))
+    else if (USFlag == 1 && ValenceContext == "NEG")
+      if (neg_PV!= No_NegPV)
+        // ORIGINAL
+        input_data->SetMatrixFlatVal(US_magnitude, "NegPV", cur_timestep_int, (int)neg_PV)
+  ustime_denom = 1 + pct_norm_total_act_ustime * (n_ustimes -1)
+  ustime_denom = 1
+  // if true, weaken the clamped act values
+  if (norm_ustime_total_act)
+    ustime_denom = (float)n_ustimes
+  if (ustime_in != No_USTime_In)
+    // ORIGINAL
+    input_data->SetMatrixFlatVal(1/ustime_denom, "USTime_In", cur_timestep_int, ustime_in.NameToNumber(ustime_in))
+  if (ustime_in_wrong != No_USTime_In)
+    // ORIGINAL
+    input_data->SetMatrixFlatVal(1/ustime_denom, "USTime_In", cur_timestep_int,
+   ustime_in_wrong.NameToNumber(ustime_in_wrong))
+  if (not_ustime_in != No_USTime_In)
+    // ORIGINAL
+    input_data->SetMatrixFlatVal(1/ustime_denom, "USTime_In", cur_timestep_int, (int)not_ustime_in)
+  input_data->WriteClose()
+   
+SetStdInputData() returns: int
+  LocalVars (4 vars)
+    i = 0 (int)
+    j = 0 (int)
+    prefix_ustime_in =  (String)
+    orig_CS =  (String)
+  // how much to decrease clamped input activity values when multiple stimuli present (due to presumed mutual
+   competition), e.g., for AX trials: 0 = not at all; 1 = full activity
+   normalization
+  pct_norm_total_act_stim = 0.0
+  pct_norm_total_act_ctxt = 0.0
+  pct_norm_total_act_ustime = 0.0
+  norm_stim_total_act = false
+  norm_context_total_act = false
+  norm_ustime_total_act = false
+  epoch_trial_gp_list->ReadNext()
+  // need to generate new EcoTrialsList, then ReadFirst()
+  if (IsEpochStart() || !(epoch_trial_gp_list->ReadIndex() >=0 && epoch_trial_gp_list->ReadIndex() <
+   epoch_trial_gp_list->rows))
+    if (! load_exp)
+      epoch_trial_gp_list->ResetData()
+    input_data->ResetData()
+    SetEpochTrialGpList()
+    epoch_trial_gp_list->ReadFirst()
+  // in range...
+  if (epoch_trial_gp_list->ReadIndex() >=0 && epoch_trial_gp_list->ReadIndex() < epoch_trial_gp_list->rows)
+    // everything I need should be on the EcoTrialsList now...
+    Data From:  table=epoch_trial_gp_list  row_spec=cur_row  set=from  all_matches=true 
+    cs_start = (int)CS_time_start.after("t")
+    cs_end = (int)CS_time_end.after("t")
+    us_start = (int)US_time_start.after("t")
+    us_end = (int)US_time_end.after("t")
+     
+    // CAUTION! below string-pruning requires particular convention for naming EcoTrials in terms of CSs used; e.g.,
+   "AX_*", etc.
+    // CAUTION! below string-pruning requires particular convention for naming EcoTrials in terms of CSs used; e.g.,
+   "AX_*", etc.
+    // CAUTION! For either multiple CSs (e.g., AX) or mixed_US case (e.g., sometimes reward, sometimes punishment)
+   only two (2) simultaneous representations currently supported; AND, multiple CSs and mixed_US cases can only be
+   used separately, not together; code will need re-write if more complicated cases are desired (e.g., more than two
+   (2) representations or using multiple CSs/mixed_US together
+  ).
+    // CAUTION! For either multiple CSs (e.g., AX) or mixed_US case (e.g., sometimes reward, sometimes punishment)
+   only two (2) simultaneous representations currently supported; AND, multiple CSs and mixed_US cases can only be
+   used separately, not together; code will need re-write if more complicated cases are desired (e.g., more than two
+   (2) representations or using multiple CSs/mixed_US together
+  ).
+    // trim back the string
+    CS = TrialGpName[0:2]
+    // trim again if needed...
+    if (CS.contains("_"))
+      CS = CS.before("_")
+      CS1 = "NoStim"
+      CS2 = "NoStim"
+      n_stims = 1
+      // generally, keep same as n_stims
+      n_ustimes = 1
+      stim_in_base = CS
+      stim_in2_base = NoStim
+    else
+      CS1 = CS[0:1]
+      CS2 = CS[1:2]
+      n_stims = 2
+      // generally, keep same as n_stims
+      n_ustimes = 2
+      stim_in_base = CS1
+      stim_in2_base = CS2
+     
+    // Set up Context_In reps
+    // Set up Context_In reps
+    // initialize to use the basic context_in var to rep the basic case in which CS and Context are isomorphic
+    context_in = (Context_In)Context
+    // initialize
+    context_in2 = NoContext
+    // initialize
+    context_in3 = NoContext
+    norm_context_total_act = true
+    n_contexts = Context->length()
+    // only gets complicated if more than one CS...
+    if (Context->length() >1)
+      switch(context_model_used)
+        case: ELEMENTAL
+          context_in = NoContext
+          // first element, e.g., A
+          context_in2 = (Context_In)Context[0:1]
+          // second element, e.g., X
+          context_in3 = (Context_In)Context.at(1,1)
+          // redundant to initialization
+          n_contexts = Context->length()
+        // redundant to basic initiaization
+        case: CONJUNCTIVE
+          context_in = (Context_In)Context
+          context_in2 = NoContext
+          context_in3 = NoContext
+          n_contexts = 1
+        case: BOTH
+          // basic case, e.g., AX
+          context_in = (Context_In)Context
+          // first element, e.g., A
+          context_in2 = (Context_In)Context->at(0)
+          // second element, e.g., X
+          context_in3 = (Context_In)Context.at(1,1)
+          n_contexts = Context->length() +1
+     
+    if (env_params_table == "PosOrienting")
+      if (CS == "A")
+        sc = "L"
+        sc_left_trials = sc_left_trials + 1
+        sc_left = SetScVal(sc_left_trials)
+      else if (CS == "B")
+        sc = "R"
+        sc_right_trials = sc_right_trials + 1
+        sc_right = SetScVal(sc_right_trials)
+    ResetDataRows:  table = input_data 
+    // // once for one CS, twice for two CSes
+    for (j = 0; j < n_stims; j++)
+      if (j == 0)
+        CS = stim_in_base
+      else
+        CS = stim_in2_base
+      // configure and write all the leab trials for one eco trial
+      for (i = 0; i < alph_ticks_per_trial_gp; i++)
+        alph_trial_name = TrialGpName + "_t" + (String)i
+        trial_gp_timestep = (TrialGpTimeSteps)("t" + (String)i)
+        trial_gp_timestep_int = i
+        orig_CS = CS
+        prefix_ustime_in = CS + "_"
+        // restore original
+        CS = orig_CS
+        if (i >= cs_start && i <= cs_end)
+          stim_in = stim_in_base
+          stim_in2 = stim_in2_base
+          // TODO: Theoretically, USTime reps shouldn't come on at CS-onset until BAacq and/or
+          // TODO: Theoretically, USTime reps shouldn't come on at CS-onset until BAacq and/or
+          //  BAext get active first - for time being, using a priori inputs as a temporary proof-of-concept
+          //  BAext get active first - for time being, using a priori inputs as a temporary proof-of-concept
+        // tag
+        else
+          stim_in = NoStim
+          stim_in2 = NoStim
+        if (i > cs_start && (!(i > us_start) || (USFlag == 0)))
+          if ((ValenceContext == "POS"))
+            us = pos_PV.NameToNumber(US_type)
+            // set to US_type in ecolist
+            pos_PV = US_type
+            ustime_in_str = prefix_ustime_in + "PosUS" + us + "_t" + (String)(i - cs_start -1)
+            // enum version
+            ustime_in = ustime_in_str
+            ustime_in_wrong_str = "No_USTime_In"
+            // enum version
+            ustime_in_wrong = ustime_in_wrong_str
+            if (mixed_US)
+              ustime_in_wrong_str = prefix_ustime_in + "NegUS" + us + "_t" + (String)(i - cs_start -1)
+              // enum version
+              ustime_in_wrong = ustime_in_wrong_str
+              neg_PV = No_NegPV
+          else if (ValenceContext == "NEG")
+            us = neg_PV.NameToNumber(US_type)
+            neg_PV = US_type
+            ustime_in_str = prefix_ustime_in + "NegUS" + us + "_t" + (String)(i - cs_start -1)
+            // enum version
+            ustime_in = ustime_in_str
+            ustime_in_wrong_str = "No_USTime_In"
+            // enum version
+            ustime_in_wrong = ustime_in_wrong_str
+            if (mixed_US)
+              ustime_in_wrong_str = prefix_ustime_in + "PosUS" + us + "_t" + (String)(i - cs_start -1)
+              // enum version
+              ustime_in_wrong = ustime_in_wrong_str
+              pos_PV = No_PosPV
+          // TODO: Theoretically, USTime reps shouldn't come on at CS-onset until BAacq and/or
+          // TODO: Theoretically, USTime reps shouldn't come on at CS-onset until BAacq and/or
+          // BAext get active first - for time being, using a priori inputs as a temporary proof-of-concept
+          // BAext get active first - for time being, using a priori inputs as a temporary proof-of-concept
+        // tag
+        else
+          // enum version
+          ustime_in = No_USTime_In
+          // enum version
+          not_ustime_in = No_USTime_In
+          ustime_in_str = "No_USTime_In"
+          // enum version
+          ustime_in = ustime_in_str
+        if ((i >=us_start) && (i <= us_end) && (USFlag != 0))
+          // NOTE the goofiness here - with the if condition evaluated twice (the first to no avail)
+          // NOTE the goofiness here - with the if condition evaluated twice (the first to no avail)
+          // IMPORTANT - if actually getting a reward this timestep need to re-start the USTime_In clocks and,
+   CRITICALLY, overwrite any existing CS-driven predictions with the new US-driven time reps (to be done
+   next)
+          // IMPORTANT - if actually getting a reward this timestep need to re-start the USTime_In clocks and,
+   CRITICALLY, overwrite any existing CS-driven predictions with the new US-driven time reps (to be done
+   next)
+          //   and, CRITICALLY, overwrite any existing CS-driven predictions with new US-driven ones - 
+          //   and, CRITICALLY, overwrite any existing CS-driven predictions with new US-driven ones - 
+          //   this is what enables premature rewards to NOT produce dips at the normal time of reward
+          //   this is what enables premature rewards to NOT produce dips at the normal time of reward
+        else
+          // no Rf this time step
+          // no Rf this time step
+          pos_PV = No_PosPV
+          neg_PV = No_NegPV
+          // still need to track USTIme_In after occurrence of US whatever timestep that is
+          // still need to track USTIme_In after occurrence of US whatever timestep that is
+          // ...but not past the usual duration of the trial, else get spurious prediction from the US resetting of
+   USTime_In
+          // ...but not past the usual duration of the trial, else get spurious prediction from the US resetting of
+   USTime_In
+          if ((i >= us_start) && (i <= cs_end))
+            if (ValenceContext == POS)
+              ustime_in_str = "PosUS0_t" + (String)(i - us_start)
+              // enum version
+              ustime_in = ustime_in_str
+              not_ustime_in_str = "notPosUS0_t" + (String)(i - us_start)
+              // enum version
+              not_ustime_in = not_ustime_in_str
+            else if (ValenceContext == NEG)
+              ustime_in_str = "NegUS0_t" + (String)(i - us_start)
+              // enum version
+              ustime_in = ustime_in_str
+              not_ustime_in_str = "notNegUS0_t" + (String)(i - us_start)
+              // enum version
+              not_ustime_in = not_ustime_in_str
+          if (i > us_end)
+            ustime_in = No_USTime_In
+            not_ustime_in = No_USTime_In
+        if ((i > us_start) && (USFlag != 0))
+          // IMPORTANT - if actually getting a reward this timestep need to re-start the USTime_In clocks and,
+   CRITICALLY, overwrite any existing CS-driven predictions with the new US-driven time reps (to be done
+   next)
+          // IMPORTANT - if actually getting a reward this timestep need to re-start the USTime_In clocks and,
+   CRITICALLY, overwrite any existing CS-driven predictions with the new US-driven time reps (to be done
+   next)
+          //   and, CRITICALLY, overwrite any existing CS-driven predictions with new US-driven ones - 
+          //   and, CRITICALLY, overwrite any existing CS-driven predictions with new US-driven ones - 
+          //   this is what enables premature rewards to NOT produce dips at the normal time of reward
+          //   this is what enables premature rewards to NOT produce dips at the normal time of reward
+          if (ValenceContext == "POS")
+            us = pos_PV.NameToNumber(US_type)
+            ustime_in_str = "PosUS" + us + "_t" + (String)(i - us_start -1)
+            // enum version
+            ustime_in = ustime_in_str
+            ustime_in_wrong_str = "No_USTime_In"
+            // enum version
+            ustime_in_wrong = ustime_in_wrong_str
+          else if (ValenceContext == "NEG")
+            us = neg_PV.NameToNumber(US_type)
+            ustime_in_str = "NegUS" + us + "_t" + (String)(i - us_start -1)
+            // enum version
+            ustime_in = ustime_in_str
+            ustime_in_wrong_str = "No_USTime_In"
+            // enum version
+            ustime_in_wrong = ustime_in_wrong_str
+        SetRow_StdInputData_alph_trial(j)
+     
+    // reset for read out
+    input_data->ReadFirst()
+    // TEMP COMMENT: shouldn't need
+    context_in = context_in.NameToNumber(Context)
+   
+// prepares everything required for the alpha trial to be run now; if a new TrialGp is needed it does that; if a new
+   Epoch's worth of TrialGps are needed it does that too - all from the "inside
+   out"
+PrepCurAlphTrial() returns: int
+  LocalVars (0 vars)
+  input_data->ReadNext()
+  // not in range - need to generate new eco trial
+  if (IsEpochStart() || !(input_data->read_idx >=0 && input_data->read_idx < input_data->rows))
+    SetStdInputData()
+    // read_idx should now be 0, i.e., in range; redundant since SetStdInputData() does also
+    input_data->ReadFirst()
+    // seems weird to do this here - but also seems most efficient
+    network->ClearMSNTrace()
+   
+
+// prog_code: main code to run program
+LocalVars (0 vars)
+PrepCurAlphTrial()

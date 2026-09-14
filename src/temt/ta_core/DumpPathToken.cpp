@@ -25,9 +25,14 @@
 
 
 DumpPathToken::DumpPathToken(taBase* obj, const String& pat, const String& tok_id) {
-  object = obj;
+  SetObject(obj);
   path = pat;
   token_id = tok_id;
+}
+
+void DumpPathToken::SetObject(taBase* obj) {
+  path_only = obj && !obj->GetSigLink();
+  object = path_only ? NULL : obj;
 }
 
 void DumpPathTokenList::Reset() {
@@ -46,7 +51,13 @@ void DumpPathTokenList::ReInit(int obj_hash_size) {
 }
 
 int DumpPathTokenList::FindObj(taBase* obj) {
-  return obj_hash_table.FindHashValPtr(obj);
+  int idx = obj_hash_table.FindHashValPtr(obj);
+  if(idx >= 0 && FastEl(idx)->object.ptr() != obj) {
+    // A new object may reuse the address of a destroyed cached object.
+    obj_hash_table.RemoveHashPtr(obj);
+    return -1;
+  }
+  return idx;
 }
 
 DumpPathToken* DumpPathTokenList::AddObjPath(taBase* obj, const String& pat) {
@@ -55,7 +66,7 @@ DumpPathToken* DumpPathTokenList::AddObjPath(taBase* obj, const String& pat) {
   int idx = size;
   DumpPathToken* tok = new DumpPathToken(obj, pat, tok_id);
   Add(tok);
-  if(obj)			// don't add for nulls!
+  if(tok->object && FindObj(obj) < 0)
     obj_hash_table.AddHashPtr(obj, idx);
   return tok;
 }
@@ -114,7 +125,11 @@ taBase* DumpPathTokenList::FindFromPath(String& pat, TypeDef* td, void* base,
 	taMisc::Warning("Path Token Not Created Yet:", pat_act);
 	return NULL;
       }
-      if((tok->object == NULL) && (base != NULL)) {
+      if(tok->path_only) {
+        String resolved_path = tok->path;
+        return FindFromPath(resolved_path, td, base, par, memb_def);
+      }
+      if(!tok->object && (base != NULL)) {
 	dumpMisc::vpus.AddVPU(base, (taBase*)par, pat_act, memb_def); // saving actual path here
 	return NULL;
       }
@@ -123,6 +138,10 @@ taBase* DumpPathTokenList::FindFromPath(String& pat, TypeDef* td, void* base,
     else {
       tok = FindName(pat_act);	// using hash coded name lookup on raw path itself!
       if(tok) {
+        if(tok->path_only) {
+          String resolved_path = tok->path;
+          return FindFromPath(resolved_path, td, base, par, memb_def);
+        }
 	if(tok->object)
 	  return tok->object;
 	else {
@@ -172,10 +191,10 @@ taBase* DumpPathTokenList::FindFromPath(String& pat, TypeDef* td, void* base,
     return NULL;
   }
   if(tok) {
-    if(!(tok->object) && rval) { // we're going to set this guy -- add to hash table!
-      obj_hash_table.AddHashPtr(rval, tok_idx); // only case for this is last guy
+    tok->SetObject(rval);
+    if(tok->object && FindObj(rval) < 0) {
+      obj_hash_table.AddHashPtr(rval, tok_idx);
     }
-    tok->object = rval;
   }
   return rval;
 }

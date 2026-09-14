@@ -416,15 +416,18 @@ class Server:
 
     def console(self, code, marker):
         """Send real CSS console input and require an executed output marker."""
+        log_path = self.case.directory / "emergent.log"
+        output_start = log_path.stat().st_size
         self.transcript.write(json.dumps({"console_input": code}) + "\n")
         self.transcript.flush()
         self.process.stdin.write((code + "\n").encode())
         self.process.stdin.flush()
         deadline = time.monotonic() + self.case.args.timeout
         while time.monotonic() < deadline:
-            text = (self.case.directory / "emergent.log").read_text(errors="replace")
-            if re.search(r"(?:^|\n)" + re.escape(marker) + r"\r?(?:\n|$)", text):
-                return text
+            data = log_path.read_bytes()
+            new_text = data[output_start:].decode(errors="replace")
+            if re.search(r"(?:^|\n)" + re.escape(marker) + r"\r?(?:\n|$)", new_text):
+                return data.decode(errors="replace")
             require(self.process.poll() is None, "process exited while evaluating CSS console input")
             time.sleep(0.05)
         raise TimeoutError(f"CSS console did not emit {marker!r}; see emergent.log")

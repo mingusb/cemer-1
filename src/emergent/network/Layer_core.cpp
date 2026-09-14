@@ -62,7 +62,7 @@ void LAYER_STATE::LayoutUnits(NETWORK_STATE* net) {
     int eff_un_sz_y = un_geom_y + gp_spc_y;
     int gi = 0;
     for(int gp_y=0; gp_y < gp_geom_y; gp_y++) {
-      for(int gp_x=0; gp_x < gp_geom_x; gp_x++, gi++) {
+      for(int gp_x=0; gp_x < gp_geom_x && gi < n_ungps; gp_x++, gi++) {
         UNGP_STATE* ug = GetUnGpStateXY(net, gp_x, gp_y);
         ug->pos_x = gp_x * un_geom_x;
         ug->pos_y = gp_y * un_geom_y;
@@ -71,7 +71,7 @@ void LAYER_STATE::LayoutUnits(NETWORK_STATE* net) {
         
         int ui = 0;
         for(int un_y=0; un_y < un_geom_y; un_y++) {
-          for(int un_x=0; un_x < un_geom_x; un_x++, li++, ui++) {
+          for(int un_x=0; un_x < un_geom_x && ui < un_geom_n; un_x++, li++, ui++) {
             UNIT_STATE* un = GetUnitState(net, li);
             if(!un) continue;
             // the following should already have been set, but we confirm here..
@@ -91,7 +91,7 @@ void LAYER_STATE::LayoutUnits(NETWORK_STATE* net) {
   }
   else {
     for(int un_y=0; un_y < un_geom_y; un_y++) {
-      for(int un_x=0; un_x < un_geom_x; un_x++, li++) {
+      for(int un_x=0; un_x < un_geom_x && li < n_units; un_x++, li++) {
         UNIT_STATE* un = GetUnitState(net, li);
         if(!un) continue;
         un->lay_un_idx = li;

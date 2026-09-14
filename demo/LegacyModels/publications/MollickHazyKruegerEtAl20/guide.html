@@ -1,0 +1,379 @@
+<!doctype html><html><head><meta charset="utf-8"><title>PVLV model laboratory</title><style>
+body{font:16px sans-serif;line-height:1.48;color:#17212b;background:#fff;padding:16px;max-width:1000px;margin:auto}h1{font-size:1.65em}h2{font-size:1.25em}a{color:#1758a2}.laboratory{background:#edf4fa;border-left:4px solid #286ca6;padding:16px}.code-figure{background:#f4f6f8;border:1px solid #c7d0da;padding:10px;margin:12px 0}.notice{font-size:0.9em;color:#49596b}pre{font:13px monospace;white-space:pre-wrap;overflow-wrap:anywhere}summary{font-weight:bold;cursor:pointer}.thumbcaption{font-size:0.9em}.magnify{display:none}table{border-collapse:collapse}td,th{border:1px solid #b6c5d5;padding:7px;text-align:left}
+</style></head><body><div class="laboratory"><h1>PVLV phasic dopamine laboratory</h1><p>Mollick, Hazy, Krueger, Nair, Mackie, Herd and O’Reilly (2020). <a href="https://doi.org/10.1037/rev0000199">A Systems-Neuroscience Model of Phasic Dopamine</a>.</p><p>The original model contains 36 layers and 46 native programs. This offline guide changes documentation only; the author’s network, parameters, training tasks and criteria remain intact.</p><h2>Native control flow</h2><table><tr><th>Program</th><th>What it does</th></tr><tr><td>bvPVLVInit</td><td>Configure the network, initialize weights and start the selected environment.</td></tr><tr><td>bvPVLVRun</td><td>Execute one alpha trial: 75 minus-phase cycles and 25 plus-phase cycles.</td></tr><tr><td>bvPVLVTask → bvPVLVEnv</td><td>Fetch or generate the next input row, present cues and outcomes, and update learning and monitors.</td></tr><tr><td>MasterTrain</td><td>Repeat alpha trials until the selected training schedule ends.</td></tr><tr><td>MasterTrainSeq</td><td>Run the selected ordered sequence of acquisition, extinction or testing steps.</td></tr><tr><td>AutomatedTestProg</td><td>Train the authored configurations and evaluate its 206 TestSpec measurements. The full suite is a lengthy learning run.</td></tr></table><p>For an initial appetitive episode, activate the <code>pos_acq_b100</code> run parameter set, run <code>bvPVLVInit</code>, then step <code>bvPVLVRun</code> five times. The sequence is baseline, cue, cue, reward and offset. <code>TrialOutputData</code> records dopamine activity; the untrained positive response peaks at reward.</p><p class="notice">The tutorial below is the cached author article. Its missing code illustrations are explicitly replaced with exact current program text exports. This guide does not claim that every published scientific result has been independently replicated.</p></div><h2>Author’s introduction</h2><p>bvPVLV.proj (bivalent, Primary Value, Learned Value) is a biologically informed and constrained model of the phasic dopamine signaling system.  Relative to earlier versions (\cite{OReillyFrankHazyEtAl07,HazyFrankOReilly10}) the biggest change has been the incorporation of primary aversive outcomes into the framework (e.g., tail shocks, etc).  In addition, both the LV and PV learning systems have been considerably expanded, the former as a more detailed model of the amygdala that includes the basolateral amygdalar complex (BLA), and the latter by incorporating the lateral habenula (LHb) as a final common pathway for generating phasic pauses (negative dopamine signals).  Also, the terms "LV" and "PV" have been de-emphasized, replaced by the basic distinction between an amygdala-anchored subsystem for handling the generation of positive phasic dopamine signals (i.e., "bursting"), and a ventral striatum-lateral habenula subsystem for handling the generation of negative phasic dopamine signals ("pausing", "dipping").  
+</p><p>This project is currently restricted to the learning of <i>Pavlovian</i> contingencies (CS-US pairings) and enables the exploration of several iconic empirical phenomena associated with Pavlovian (classical) conditioning including: appetitive conditioning (positive acquisition; pos_acq); extinction (pos_ext); conditioned inhibition (pos_cond_inhib); and, blocking (pos_blocking). Aversive versions of all of these phenomena are also available (neg_acq, and so on).  In addition, the project as been designed to be extendable so that users can develop their own simulations using a table-based specification that leverages a pre-defined input-coding scheme for potential CSs (e.g., A, B, C, ...) and USs (water, food, US3, US4, ...).  Basic instructions for creating a new simulation based on copying and modifying an existing parameter table will be provided as a final section to this introduction.
+</p><p>Finally, this project does not encompass learning about <i>instrumental</i> contingencies (action-outcome pairings).  Users desirous of exploring the latter would typically start with a variant of a PBWM-based model, or similar, and use the Emergent wizard to add a PVLV module (or replace an older version). Basic instructions for using the <b>LeabraWizard</b> for adding or updating a PBWM/PVLV module to a model are available here:  [<a rel="nofollow" class="external autonumber" href="https://grey.colorado.edu/emergent/index.php/AXTut_PfcBg">[1]</a>]     
+</p><p><br>
+</p>
+<h1><span class="mw-headline" id="Using_bvPVLV.proj">Using bvPVLV.proj</span></h1>
+<p>bvPVLV.proj follows the <b>LeabraFlex</b> design which utilizes an ``inside-out?? and ``real-time?? frame of reference that keeps the processing of the current time step (i.e., an <b>AlphaTrial</b>, formerly <b>LeabraTrial</b>) in the foreground at all times, relegating the high-level organization of the environment to be presented to the network to a ``just-in-time?? mode of processing.  In a nutshell, it  builds upcoming AlphaTrials as needed instead of creating an entire training run's block of trials in the beginning as had been the case with the earlier top-down <b>LeabraTrain, LeabraEpoch, LeabraTrial, LeabraSettle, LeabraCycle</b> mode of organization. While it can be hard to get used to this ``inside-out?? organization at first, once one does it becomes intuitive and, ultimately, provides greater flexibility to the modeler. 
+</p><p>Two project-specific programs provide most of the specific implementation of bvPVLV: 1) <b>bvPVLVTask()</b>, which iterates over sequential AlphaTrials, managing the ongoing presentation of inputs to the network and the network?s response to that, under the control of a while-loop until some predefined end point is reached; and, 2) <b>bvPVLVEnv()</b>, which is called by bvPVLVTask() early in each iteration. bvPVLVEnv() sets up the next set of environmental inputs, handling all of the contextualization involved in organizing the various types of trials and the order in which they are presented to the network.  We will walk through each of these two key programs below.  Most of the other programs in the project can be thought of as a kind of basic infrastructure provided by the general LeabraFlex framework for handling all of the stuff that is not specific to this particular project.
+</p>
+<h1><span class="mw-headline" id="Understanding_the_bvPVLVTask_program">Understanding the bvPVLVTask program</span></h1>
+<div class="thumb tright"><div class="thumbinner"><details class="code-figure" open><summary>bvPVLVTask — current native program listing</summary><p class="notice">The historical screenshot is unavailable. This is an exact text export from the pinned model’s native program, not the original image.</p><pre>LocalVars (1 vars)
+  input_idx = 3 (int)
+ 
+// === Start Alpha-Level Trial
+// === Start Alpha-Level Trial
+// what is this BasicTrainTime is used for?
+basic_train_time-&gt;StartTimer(false)
+TrialStart(network)
+// prepare next/current alpha-level trial to run
+bvPVLVEnv(network)
+// set network.train_mode
+if (IsTestTrial_fm_trial_gp())
+  network.train_mode = &quot;TEST&quot;
+else
+  network.train_mode = &quot;TRAIN&quot;
+ 
+// === Run Minus Phase
+// === Run Minus Phase
+// apply CS inputs - but NOT USs (i.e., PVs)
+ApplyInputs(network)
+// settle for minus phase, using ct_time.minus as fixed number of cycles to run
+SettleMinus(network)
+// NEED THIS GUY??? compute stats appropriate for given phase
+network-&gt;Compute_PhaseStats()
+// update network views, if update_net_view == true
+Net Update View
+Stop_Step Point
+ 
+// === Run Plus Phase
+// === Run Plus Phase
+// re-apply CS inputs - but NOT USs (i.e., PVs)
+ApplyInputs(network)
+ApplyPVInputs(network, input_idx)
+// settle for designated plus phase number of cycles
+SettlePlus(network)
+// NEED THIS GUY??? compute stats appropriate for given phase
+network-&gt;Compute_PhaseStats()
+// update network views, if update_net_view == true
+Net Update View
+// standard end of trial stuff
+TrialEnd(network)
+// what the hell does this do?? And, and where does it belong relative to trial, group, epoch, trng_run?
+basic_train_time-&gt;EndTimer()
+TrialMonitor()
+// === End Alpha-Level Trial
+// === End Alpha-Level Trial
+</pre></details>  <div class="thumbcaption"><div class="magnify"><a href="https://grey.colorado.edu/CompCogNeuro/index.php/File:fig_bvPVLVTask_code1.png" class="internal" title="Enlarge"></a></div><i>Figure 1</i>: Program code for the <b>bvPVLVTask</b> program. See text for a line-by-line walk-through.</div></div></div>
+<p>The bvPVLVTask program is basically running all the time iterating from the time it is initially called by a <b>bvPVLVRun()</b> program that is itself iteratively called within a while-loop in the <b>MasterTrain()</b> program managing a full training run. Once called for each iteration, bvPVLVTask() processes each line sequentially from top to bottom.  <i>Figure 1</i> at the right lists the complete program code for the bvPVLVTask program. Some readers may prefer to open the program and follow along that way. 
+</p><p>Starting with the green comment line `'// === Start Alpha-Level Trial<i>: </i>
+</p>
+<ul><li> The first two commands perform some basic housekeeping on the network</li></ul>
+<ul><li> bvPVLVTask() calls the bvPVLVEnv program to set up the environment for the upcoming AlphaTrial.  bvPVLVEnv() handles everything necessary to set up the next set of inputs to the network (but does not actually present them)</li></ul>
+<ul><li> Then, if the next AlphaTrial is designated as a TEST trial a flag on the network is set accordingly; else, the flag is kept/set to the default case TRAIN</li></ul>
+<ul><li> The next active command (after <i>// === Run Minus Phase</i>) then applies (clamps) any and all inputs as designated by the current row in the <b>StdInputData</b> table to the corresponding layers in the network</li></ul>
+<ul><li> <b>SettleMinus()</b> then runs the entire network under the influence of the clamped inputs for 75 cycles (3 quarters X 25 cycles each)  </li></ul>
+<ul><li> Minus-phase appropriate stats are then computed and recorded</li></ul>
+<ul><li> The appropriate inputs are again applied, this time including any primary rewards/punishments (USs) if those are available on this AlphaTrial</li></ul>
+<ul><li> <b>SettlePlus()</b> runs the network again until the plus-phase endpoint (25 more cycles in this case; 100 cycles total for each AlphaTrial). NOTE: 25 cycles is plenty of time to allow for full settling of the network.</li></ul>
+<ul><li> Plus-phase and trial end stats are then computed and recorded and trial-end housekeeping is performed on the network in preparation for the next iteration through the bvPVLVTask program. NOTE: An additional program for bvPVLV project-specific stats, <b>bvPVLVMiscMonitor()</b>, is called periodically by the bvPVLVRun() program after certain AlphaTrials.</li></ul>
+<p><br>
+As those familiar with basic computer programming will hopefully agree, the bvPVLVTask program is relatively straightforward and fairly human-readable.  With just a little practice we hope it to be reasonably user-friendly.  As a result, much of the complexity involved in the bvPVLV project as a whole has been incorporated into the bvPVLVEnv program.
+</p><p><br>
+</p>
+<h1><span class="mw-headline" id="Understanding_the_bvPVLVEnv_program">Understanding the bvPVLVEnv program</span></h1>
+<div class="thumb tright"><div class="thumbinner"><details class="code-figure" open><summary>bvPVLVEnv — current function list and main code</summary><p class="notice">The historical screenshot is unavailable. This is an exact text export from the pinned model’s native program, not the original image.</p><pre>IsEpochStart() returns: bool
+IsTestTrial_fm_trial_gp() returns: bool
+SetScVal(int ntrials) returns: double
+SetRow_CurEpoch() returns: int
+SetTable_EpochTrialGpList_fm_defn_table() returns: int
+SetEpochTrialGpList() returns: int
+SetRow_StdInputData_alph_trial(int stim_num) returns: int
+SetStdInputData() returns: int
+PrepCurAlphTrial() returns: int
+
+LocalVars (0 vars)
+PrepCurAlphTrial()
+</pre></details>  <div class="thumbcaption"><div class="magnify"><a href="https://grey.colorado.edu/CompCogNeuro/index.php/File:fig_bvPVLVEnv_code1.png" class="internal" title="Enlarge"></a></div><i>Figure 2</i>: Starkly simple program code for the bvPVLVEnv program, with its nine (9) functions listed and which are used roughly in the order of bottom to top.</div></div></div>
+<p><br>
+In keeping with the inside-out organization of the LeabraFlex framework, the bvPVLVEnv program ``fetches'? the next AlphaTrial for the calling bvPVLVTask program on an as needed basis. Thus, bvPVLVEnv() starts from the assumption that there is a next trial ready to be fetched and goes and looks for it.  Only if it finds that no such trial is available does it then proceed to set up a new sequence of logically-related AlphaTrials, created according to criteria defined in a table containing the defining parameters for the paradigm being explored. This is best illustrated by considering what happens the first time the bvPVLVEnv program is called by bvPVLVTask(), i.e., on the very first AlphaTrial. When called by bvPVLVTask(), executes its master function, <b>PrepCurAlphTrial()</b>. <i>Figure 2</i> at the right shows bvPVLVEnv()'s starkly simple program code, along with a listing of the nine (9) functions it uses to do its job.  Roughly speaking, the functions are used from the bottom-up and are, collectively, a partially nested hierarchy.  <i>Figure 3</i> lists the code for the PrepCurAlphTrial() function itself, which we will walk through next. 
+</p>
+<div class="thumb tright"><div class="thumbinner"><details class="code-figure" open><summary>PrepCurAlphTrial — current native function</summary><p class="notice">The historical screenshot is unavailable. This is an exact text export from the pinned model’s native program, not the original image.</p><pre>PrepCurAlphTrial() returns: int
+  LocalVars (0 vars)
+  input_data-&gt;ReadNext()
+  // not in range - need to generate new eco trial
+  if (IsEpochStart() || !(input_data-&gt;read_idx &gt;=0 &amp;&amp; input_data-&gt;read_idx &lt; input_data-&gt;rows))
+    SetStdInputData()
+    // read_idx should now be 0, i.e., in range; redundant since SetStdInputData() does also
+    input_data-&gt;ReadFirst()
+    // seems weird to do this here - but also seems most efficient
+    network-&gt;ClearMSNTrace()</pre></details>  <div class="thumbcaption"><div class="magnify"><a href="https://grey.colorado.edu/CompCogNeuro/index.php/File:fig_PrepCurAlphTrial_code1.png" class="internal" title="Enlarge"></a></div><i>Figure 3</i>: Program code for the PrepCurAlphaTrial() function. See text for line-by-line walkthrough.</div></div></div>
+<ul><li> PrepCurAlphTrial() first goes to the StdInputData table (<b>input_data</b>) and increments the <b>read_idx</b> in the table pointing to the next row to be used. </li></ul>
+<ul><li> The if-else block that follows starting with the next line tests whether that incremented read_idx is still in-range and, if it is returns control to bvPVLVTask() in the else() statement since the StdInputData table is all ready to be read out. </li></ul>
+<ul><li> However, as we're considering the very first AlphaTrial (i.e., <b>IsEpochStart()</b> evaluates as true) StdInputData is empty and has to be populated, which is done by calling another function <b>SetStdInputData()</b>.</li></ul>
+<ul><li>  SetStdInputData() creates a new sequence to AlphaTrials, in this case the very first such sequence, after which the read_idx is pointed to the first row and control returned to bvPVLVTask()</li></ul>
+<p><br>
+</p>
+<div class="thumb tright"><div class="thumbinner"><details class="code-figure"><summary>SetStdInputData — current native function</summary><p class="notice">The original article already had a broken illustration link. Expand this exact current native function export to inspect its content.</p><pre>SetStdInputData() returns: int
+  LocalVars (4 vars)
+    i = 0 (int)
+    j = 0 (int)
+    prefix_ustime_in =  (String)
+    orig_CS =  (String)
+  // how much to decrease clamped input activity values when multiple stimuli present (due to presumed mutual
+   competition), e.g., for AX trials: 0 = not at all; 1 = full activity
+   normalization
+  pct_norm_total_act_stim = 0.0
+  pct_norm_total_act_ctxt = 0.0
+  pct_norm_total_act_ustime = 0.0
+  norm_stim_total_act = false
+  norm_context_total_act = false
+  norm_ustime_total_act = false
+  epoch_trial_gp_list-&gt;ReadNext()
+  // need to generate new EcoTrialsList, then ReadFirst()
+  if (IsEpochStart() || !(epoch_trial_gp_list-&gt;ReadIndex() &gt;=0 &amp;&amp; epoch_trial_gp_list-&gt;ReadIndex() &lt;
+   epoch_trial_gp_list-&gt;rows))
+    if (! load_exp)
+      epoch_trial_gp_list-&gt;ResetData()
+    input_data-&gt;ResetData()
+    SetEpochTrialGpList()
+    epoch_trial_gp_list-&gt;ReadFirst()
+  // in range...
+  if (epoch_trial_gp_list-&gt;ReadIndex() &gt;=0 &amp;&amp; epoch_trial_gp_list-&gt;ReadIndex() &lt; epoch_trial_gp_list-&gt;rows)
+    // everything I need should be on the EcoTrialsList now...
+    Data From:  table=epoch_trial_gp_list  row_spec=cur_row  set=from  all_matches=true 
+    cs_start = (int)CS_time_start.after(&quot;t&quot;)
+    cs_end = (int)CS_time_end.after(&quot;t&quot;)
+    us_start = (int)US_time_start.after(&quot;t&quot;)
+    us_end = (int)US_time_end.after(&quot;t&quot;)
+     
+    // CAUTION! below string-pruning requires particular convention for naming EcoTrials in terms of CSs used; e.g.,
+   &quot;AX_*&quot;, etc.
+    // CAUTION! below string-pruning requires particular convention for naming EcoTrials in terms of CSs used; e.g.,
+   &quot;AX_*&quot;, etc.
+    // CAUTION! For either multiple CSs (e.g., AX) or mixed_US case (e.g., sometimes reward, sometimes punishment)
+   only two (2) simultaneous representations currently supported; AND, multiple CSs and mixed_US cases can only be
+   used separately, not together; code will need re-write if more complicated cases are desired (e.g., more than two
+   (2) representations or using multiple CSs/mixed_US together
+  ).
+    // CAUTION! For either multiple CSs (e.g., AX) or mixed_US case (e.g., sometimes reward, sometimes punishment)
+   only two (2) simultaneous representations currently supported; AND, multiple CSs and mixed_US cases can only be
+   used separately, not together; code will need re-write if more complicated cases are desired (e.g., more than two
+   (2) representations or using multiple CSs/mixed_US together
+  ).
+    // trim back the string
+    CS = TrialGpName[0:2]
+    // trim again if needed...
+    if (CS.contains(&quot;_&quot;))
+      CS = CS.before(&quot;_&quot;)
+      CS1 = &quot;NoStim&quot;
+      CS2 = &quot;NoStim&quot;
+      n_stims = 1
+      // generally, keep same as n_stims
+      n_ustimes = 1
+      stim_in_base = CS
+      stim_in2_base = NoStim
+    else
+      CS1 = CS[0:1]
+      CS2 = CS[1:2]
+      n_stims = 2
+      // generally, keep same as n_stims
+      n_ustimes = 2
+      stim_in_base = CS1
+      stim_in2_base = CS2
+     
+    // Set up Context_In reps
+    // Set up Context_In reps
+    // initialize to use the basic context_in var to rep the basic case in which CS and Context are isomorphic
+    context_in = (Context_In)Context
+    // initialize
+    context_in2 = NoContext
+    // initialize
+    context_in3 = NoContext
+    norm_context_total_act = true
+    n_contexts = Context-&gt;length()
+    // only gets complicated if more than one CS...
+    if (Context-&gt;length() &gt;1)
+      switch(context_model_used)
+        case: ELEMENTAL
+          context_in = NoContext
+          // first element, e.g., A
+          context_in2 = (Context_In)Context[0:1]
+          // second element, e.g., X
+          context_in3 = (Context_In)Context.at(1,1)
+          // redundant to initialization
+          n_contexts = Context-&gt;length()
+        // redundant to basic initiaization
+        case: CONJUNCTIVE
+          context_in = (Context_In)Context
+          context_in2 = NoContext
+          context_in3 = NoContext
+          n_contexts = 1
+        case: BOTH
+          // basic case, e.g., AX
+          context_in = (Context_In)Context
+          // first element, e.g., A
+          context_in2 = (Context_In)Context-&gt;at(0)
+          // second element, e.g., X
+          context_in3 = (Context_In)Context.at(1,1)
+          n_contexts = Context-&gt;length() +1
+     
+    if (env_params_table == &quot;PosOrienting&quot;)
+      if (CS == &quot;A&quot;)
+        sc = &quot;L&quot;
+        sc_left_trials = sc_left_trials + 1
+        sc_left = SetScVal(sc_left_trials)
+      else if (CS == &quot;B&quot;)
+        sc = &quot;R&quot;
+        sc_right_trials = sc_right_trials + 1
+        sc_right = SetScVal(sc_right_trials)
+    ResetDataRows:  table = input_data 
+    // // once for one CS, twice for two CSes
+    for (j = 0; j &lt; n_stims; j++)
+      if (j == 0)
+        CS = stim_in_base
+      else
+        CS = stim_in2_base
+      // configure and write all the leab trials for one eco trial
+      for (i = 0; i &lt; alph_ticks_per_trial_gp; i++)
+        alph_trial_name = TrialGpName + &quot;_t&quot; + (String)i
+        trial_gp_timestep = (TrialGpTimeSteps)(&quot;t&quot; + (String)i)
+        trial_gp_timestep_int = i
+        orig_CS = CS
+        prefix_ustime_in = CS + &quot;_&quot;
+        // restore original
+        CS = orig_CS
+        if (i &gt;= cs_start &amp;&amp; i &lt;= cs_end)
+          stim_in = stim_in_base
+          stim_in2 = stim_in2_base
+          // TODO: Theoretically, USTime reps shouldn&#x27;t come on at CS-onset until BAacq and/or
+          // TODO: Theoretically, USTime reps shouldn&#x27;t come on at CS-onset until BAacq and/or
+          //  BAext get active first - for time being, using a priori inputs as a temporary proof-of-concept
+          //  BAext get active first - for time being, using a priori inputs as a temporary proof-of-concept
+        // tag
+        else
+          stim_in = NoStim
+          stim_in2 = NoStim
+        if (i &gt; cs_start &amp;&amp; (!(i &gt; us_start) || (USFlag == 0)))
+          if ((ValenceContext == &quot;POS&quot;))
+            us = pos_PV.NameToNumber(US_type)
+            // set to US_type in ecolist
+            pos_PV = US_type
+            ustime_in_str = prefix_ustime_in + &quot;PosUS&quot; + us + &quot;_t&quot; + (String)(i - cs_start -1)
+            // enum version
+            ustime_in = ustime_in_str
+            ustime_in_wrong_str = &quot;No_USTime_In&quot;
+            // enum version
+            ustime_in_wrong = ustime_in_wrong_str
+            if (mixed_US)
+              ustime_in_wrong_str = prefix_ustime_in + &quot;NegUS&quot; + us + &quot;_t&quot; + (String)(i - cs_start -1)
+              // enum version
+              ustime_in_wrong = ustime_in_wrong_str
+              neg_PV = No_NegPV
+          else if (ValenceContext == &quot;NEG&quot;)
+            us = neg_PV.NameToNumber(US_type)
+            neg_PV = US_type
+            ustime_in_str = prefix_ustime_in + &quot;NegUS&quot; + us + &quot;_t&quot; + (String)(i - cs_start -1)
+            // enum version
+            ustime_in = ustime_in_str
+            ustime_in_wrong_str = &quot;No_USTime_In&quot;
+            // enum version
+            ustime_in_wrong = ustime_in_wrong_str
+            if (mixed_US)
+              ustime_in_wrong_str = prefix_ustime_in + &quot;PosUS&quot; + us + &quot;_t&quot; + (String)(i - cs_start -1)
+              // enum version
+              ustime_in_wrong = ustime_in_wrong_str
+              pos_PV = No_PosPV
+          // TODO: Theoretically, USTime reps shouldn&#x27;t come on at CS-onset until BAacq and/or
+          // TODO: Theoretically, USTime reps shouldn&#x27;t come on at CS-onset until BAacq and/or
+          // BAext get active first - for time being, using a priori inputs as a temporary proof-of-concept
+          // BAext get active first - for time being, using a priori inputs as a temporary proof-of-concept
+        // tag
+        else
+          // enum version
+          ustime_in = No_USTime_In
+          // enum version
+          not_ustime_in = No_USTime_In
+          ustime_in_str = &quot;No_USTime_In&quot;
+          // enum version
+          ustime_in = ustime_in_str
+        if ((i &gt;=us_start) &amp;&amp; (i &lt;= us_end) &amp;&amp; (USFlag != 0))
+          // NOTE the goofiness here - with the if condition evaluated twice (the first to no avail)
+          // NOTE the goofiness here - with the if condition evaluated twice (the first to no avail)
+          // IMPORTANT - if actually getting a reward this timestep need to re-start the USTime_In clocks and,
+   CRITICALLY, overwrite any existing CS-driven predictions with the new US-driven time reps (to be done
+   next)
+          // IMPORTANT - if actually getting a reward this timestep need to re-start the USTime_In clocks and,
+   CRITICALLY, overwrite any existing CS-driven predictions with the new US-driven time reps (to be done
+   next)
+          //   and, CRITICALLY, overwrite any existing CS-driven predictions with new US-driven ones - 
+          //   and, CRITICALLY, overwrite any existing CS-driven predictions with new US-driven ones - 
+          //   this is what enables premature rewards to NOT produce dips at the normal time of reward
+          //   this is what enables premature rewards to NOT produce dips at the normal time of reward
+        else
+          // no Rf this time step
+          // no Rf this time step
+          pos_PV = No_PosPV
+          neg_PV = No_NegPV
+          // still need to track USTIme_In after occurrence of US whatever timestep that is
+          // still need to track USTIme_In after occurrence of US whatever timestep that is
+          // ...but not past the usual duration of the trial, else get spurious prediction from the US resetting of
+   USTime_In
+          // ...but not past the usual duration of the trial, else get spurious prediction from the US resetting of
+   USTime_In
+          if ((i &gt;= us_start) &amp;&amp; (i &lt;= cs_end))
+            if (ValenceContext == POS)
+              ustime_in_str = &quot;PosUS0_t&quot; + (String)(i - us_start)
+              // enum version
+              ustime_in = ustime_in_str
+              not_ustime_in_str = &quot;notPosUS0_t&quot; + (String)(i - us_start)
+              // enum version
+              not_ustime_in = not_ustime_in_str
+            else if (ValenceContext == NEG)
+              ustime_in_str = &quot;NegUS0_t&quot; + (String)(i - us_start)
+              // enum version
+              ustime_in = ustime_in_str
+              not_ustime_in_str = &quot;notNegUS0_t&quot; + (String)(i - us_start)
+              // enum version
+              not_ustime_in = not_ustime_in_str
+          if (i &gt; us_end)
+            ustime_in = No_USTime_In
+            not_ustime_in = No_USTime_In
+        if ((i &gt; us_start) &amp;&amp; (USFlag != 0))
+          // IMPORTANT - if actually getting a reward this timestep need to re-start the USTime_In clocks and,
+   CRITICALLY, overwrite any existing CS-driven predictions with the new US-driven time reps (to be done
+   next)
+          // IMPORTANT - if actually getting a reward this timestep need to re-start the USTime_In clocks and,
+   CRITICALLY, overwrite any existing CS-driven predictions with the new US-driven time reps (to be done
+   next)
+          //   and, CRITICALLY, overwrite any existing CS-driven predictions with new US-driven ones - 
+          //   and, CRITICALLY, overwrite any existing CS-driven predictions with new US-driven ones - 
+          //   this is what enables premature rewards to NOT produce dips at the normal time of reward
+          //   this is what enables premature rewards to NOT produce dips at the normal time of reward
+          if (ValenceContext == &quot;POS&quot;)
+            us = pos_PV.NameToNumber(US_type)
+            ustime_in_str = &quot;PosUS&quot; + us + &quot;_t&quot; + (String)(i - us_start -1)
+            // enum version
+            ustime_in = ustime_in_str
+            ustime_in_wrong_str = &quot;No_USTime_In&quot;
+            // enum version
+            ustime_in_wrong = ustime_in_wrong_str
+          else if (ValenceContext == &quot;NEG&quot;)
+            us = neg_PV.NameToNumber(US_type)
+            ustime_in_str = &quot;NegUS&quot; + us + &quot;_t&quot; + (String)(i - us_start -1)
+            // enum version
+            ustime_in = ustime_in_str
+            ustime_in_wrong_str = &quot;No_USTime_In&quot;
+            // enum version
+            ustime_in_wrong = ustime_in_wrong_str
+        SetRow_StdInputData_alph_trial(j)
+     
+    // reset for read out
+    input_data-&gt;ReadFirst()
+    // TEMP COMMENT: shouldn&#x27;t need
+    context_in = context_in.NameToNumber(Context)
+   
+// prepares everything required for the alpha trial to be run now; if a new TrialGp is needed it does that; if a new
+   Epoch&#x27;s worth of TrialGps are needed it does that too - all from the &quot;inside
+   out&quot;</pre></details>  <div class="thumbcaption"><i>Figure 4</i>: Program code for the <b>SetStdInputData()</b> function. See text for explanation.</div></div></div>
+<p>So, that's all PrepCurAlphTrial() really does.  The important action next falls to the SetStdInputData() function when a new sequence of AlphaTrials need to be created. We will look at that next.
+</p><p><i>Figure 4</i> shows the SetStdInputData() function's code, which is pretty complicated.
+</p>
+
+
+
+
+
+<hr><p>Original article: <a href="https://grey.colorado.edu/CompCogNeuro/index.php/bvPVLV_proj_intro">Computational Cognitive Neuroscience Wiki, bvPVLV proj intro</a>, CCNLab / Regents of the University of Colorado, cached revision 5755. Article and this offline formatting adaptation: <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported</a>. Program transcriptions and accompanying model: GPLv2, as declared in the pinned author project. The journal PDF is not redistributed.</p></body></html>

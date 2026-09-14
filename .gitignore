@@ -1,5 +1,6 @@
 /build*/
 /install/
+/install-legacy-checkpoint/
 /taconfig.h
 /temt_version.h
 /artifacts/

@@ -1,0 +1,10 @@
+// Display an offline adaptation of the cached author documentation in memory.
+// The original .proj bytes, model parameters and native programs remain intact.
+String pvlv_guide;
+pvlv_guide.LoadFromFile(.projects[0].GetDir() + "/guide.html");
+taDoc* pvlv_doc = .projects[0].docs[0];
+pvlv_doc.wiki = "";
+pvlv_doc.url = "local";
+pvlv_doc.text = pvlv_guide;
+pvlv_doc.UpdateAfterEdit();
+tabMisc::DelayedFunCall_gui(pvlv_doc, "BrowserEditMe");

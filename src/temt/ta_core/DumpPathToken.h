@@ -21,6 +21,7 @@
 
 // member includes:
 #include <taString>
+#include <taSmartRef>
 
 // declare all other types mentioned but not required to include:
 class taBase; //
@@ -29,11 +30,13 @@ class taBase; //
 class TA_API DumpPathToken {
   // ##NO_TOKENS ##NO_CSS ##NO_MEMBERS Path tokens for quicker loading
 public:
-  taBase*       object;
+  taSmartRef    object; // non-owning: cleared when the referenced object is destroyed
+  bool          path_only; // objects without destruction signals must be resolved by path
   String        path;
   String        token_id;
 
   DumpPathToken(taBase* obj, const String& pat, const String& tok_id);
+  void SetObject(taBase* obj);
 };
 
 #endif // DumpPathToken_h

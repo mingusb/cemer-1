@@ -1,0 +1,270 @@
+<html><head><meta charset="utf-8"><style>body{font:16px sans-serif;line-height:1.45;padding:14px;color:#17212b;background:#fff}table{max-width:100%}a{color:#1659a0}.equation{font-size:1.2em} .provenance{background:#edf4fa;padding:10px}</style></head><body><div class="provenance"><b>Neuron laboratory</b><br>Open <b>ControlPanel</b>, click <b>Defaults</b>, then <b>Init</b> and <b>Run</b>. <b>CycleOutputData</b> shows spikes and membrane voltage. <b>Step Cycle</b> advances one cycle; <b>Stop</b> pauses. This author-maintained version uses sodium-activated potassium-channel adaptation.<br>The author tutorial below is available offline. <a href="https://grey.colorado.edu/CompCogNeuro/index.php/CCNBook/Sims/Neuron/Neuron">Original article</a>.</div><table style="width: 35em; font-size: 90%; border: 1px solid #aaaaaa; background-color: #f9f9f9; color: black; margin-bottom: 0.5em; margin-left: 1em; padding: 0.2em; float: right; clear: right; text-align:left;">
+<tbody><tr>
+<th style="text-align: center; background-color:#ccccff;" colspan="2"><big>CCNBook/Sims/Neuron/Neuron</big>
+</th></tr>
+<tr>
+<th> Project Name
+</th>
+<td> neuron
+</td></tr>
+<tr>
+<th> Filename
+</th>
+<td> <a href="https://grey.colorado.edu/CompCogNeuro/index.php/File:neuron.proj" title="File:neuron.proj">File:neuron.proj</a> <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.OpenProjectFromWeb(neuron.proj,https://grey.colorado.edu/CompCogNeuro/index.php/MainPage)&amp;action=edit&amp;redlink=1" class="new" title=".OpenProjectFromWeb(neuron.proj,https://grey.colorado.edu/CompCogNeuro/index.php/MainPage) (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Open Project in emergent</span></a>
+</td></tr>
+<tr>
+<th> Author
+</th>
+<td>  Randall C. O'Reilly
+</td></tr>
+<tr>
+<th> Email
+</th>
+<td> emergent-users@grey.colorado.edu
+</td></tr>
+<tr>
+<th> Publication
+</th>
+<td> <a href="https://grey.colorado.edu/CompCogNeuro/index.php/OReillyMunakataFrankEtAl12" title="OReillyMunakataFrankEtAl12">(O'Reilly, Munakata, Frank, Hazy, &amp; Contributors, 2012)</a>
+</td></tr>
+<tr>
+<th> First Published
+</th>
+<td> Jul 26 2016
+</td></tr>
+<tr>
+<th> Tags
+</th>
+<td>  Neuron, Spiking, Rate Code, Membrane Potential, Ions
+</td></tr>
+<tr>
+<th> Description
+</th>
+<td>  single neuron activation dynamics in response to a simple pulse inputs -- spiking or rate code.
+</td></tr>
+<tr>
+<th> Updated
+</th>
+<td> 28 July 2016,  17 August 2016,  1 September 2016,  7 September 2016,  11 January 2017,  13 January 2017,  14 March 2017,  8 January 2018
+</td></tr>
+<tr>
+<th> Versions
+</th>
+<td> 8.0.0,  8.0.2,  8.0.3,  8.0.4,  8.0.6,  8.0.8,  8.0.9,  8.0.10,  8.0.12,  8.0.11,  8.0.13
+</td></tr>
+<tr>
+<th> Emergent Versions
+</th>
+<td> 8.0.0,  8.0.4,  8.0.6,  8.5.0
+</td></tr>
+<tr>
+<th> Other Files
+</th>
+<td>
+</td></tr></tbody></table>
+<p><br>
+Back to <a href="https://grey.colorado.edu/CompCogNeuro/index.php/CCNBook/Sims/All" title="CCNBook/Sims/All">CCNBook/Sims/All</a> or <a href="https://grey.colorado.edu/CompCogNeuro/index.php/CCNBook/Neuron" title="CCNBook/Neuron">Neuron Chapter</a>.
+</p>
+<div id="toc" class="toc"><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Introduction"><span class="tocnumber">1</span> <span class="toctext">Introduction</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Orientation_to_the_Software_.28ControlPanel_and_Views.29"><span class="tocnumber">2</span> <span class="toctext">Orientation to the Software (ControlPanel and Views)</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#The_Graph_View"><span class="tocnumber">3</span> <span class="toctext">The Graph View</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#Spiking_Behavior"><span class="tocnumber">4</span> <span class="toctext">Spiking Behavior</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="#Manipulating_Parameters"><span class="tocnumber">5</span> <span class="toctext">Manipulating Parameters</span></a>
+<ul>
+<li class="toclevel-2 tocsection-6"><a href="#Excitatory"><span class="tocnumber">5.1</span> <span class="toctext">Excitatory</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Leak"><span class="tocnumber">5.2</span> <span class="toctext">Leak</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Driving_.2F_Reversal_Potentials"><span class="tocnumber">5.3</span> <span class="toctext">Driving / Reversal Potentials</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-9"><a href="#Rate_Coded_Activations"><span class="tocnumber">6</span> <span class="toctext">Rate Coded Activations</span></a></li>
+<li class="toclevel-1 tocsection-10"><a href="#Noise"><span class="tocnumber">7</span> <span class="toctext">Noise</span></a></li>
+<li class="toclevel-1 tocsection-11"><a href="#Adaptation"><span class="tocnumber">8</span> <span class="toctext">Adaptation</span></a></li>
+</ul>
+</div>
+
+<h1><span class="mw-headline" id="Introduction">Introduction</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=CCNBook/Sims/Neuron/Neuron&amp;action=edit&amp;section=1" title="Edit section: Introduction">edit</a><span class="mw-editsection-bracket">]</span></span></h1>
+<p>This simulation illustrates the basic properties of neural spiking and rate-code activation, reflecting a balance of excitatory and inhibitory influences (including leak and synaptic inhibition).
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> It is recommended that you <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.docs.ProjectDocs.OpenInWindow()&amp;action=edit&amp;redlink=1" class="new" title=".docs.ProjectDocs.OpenInWindow() (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">click here to undock</span></a> this document from the main project window. Use the Window menu to find this window if you lose it, and you can always return to this document by browsing to this document from the <span style="background:#FFFFD0"><tt><b>docs</b></tt></span> section in the left browser panel of the project's main window. <br>
+</td></tr>
+</tbody></table>
+<h1><span class="mw-headline" id="Orientation_to_the_Software_.28ControlPanel_and_Views.29">Orientation to the Software (ControlPanel and Views)</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=CCNBook/Sims/Neuron/Neuron&amp;action=edit&amp;section=2" title="Edit section: Orientation to the Software (ControlPanel and Views)">edit</a><span class="mw-editsection-bracket">]</span></span></h1>
+<p>As this is the first simulation project in the textbook, we begin with some introductory orientation (see the <a href="https://grey.colorado.edu/CompCogNeuro/index.php/Emergent" title="Emergent" class="mw-redirect">Emergent</a> documentation for more complete information).  All of the major controls and parameters for the simulation are contained within the <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.ctrl_panels.ControlPanel&amp;action=edit&amp;redlink=1" class="new" title=".ctrl panels.ControlPanel (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">ControlPanel</span></a> (NOTE: these links work when viewing this documentation within the emergent simulator, and not otherwise) object located in the middle of the 3 panels visible in the main project window (you can access it from the tab at the top of the middle panel).  The right panel contains various 3D graphical displays of simulation data, including the network (NetView or Network View) and various graphs and grid-like displays (Graph view, Grid view).
+</p><p>In this simulation, there are two different ways to view the results, selectable by the tabs at the top of the right side of the window:
+</p>
+<ul><li> The <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.T3Tab.Network&amp;action=edit&amp;redlink=1" class="new" title=".T3Tab.Network (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Network</span></a> tab shows the (very simple) network that is being simulated, with a single sending (input) neuron (at the bottom) that sends activation to the receiving neuron (at the top).  We are primarily concerned with how the receiving neuron responds to the activation input from the sending neuron.</li>
+<li> The <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.T3Tab.CycleOutputData&amp;action=edit&amp;redlink=1" class="new" title=".T3Tab.CycleOutputData (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">CycleOutputData</span></a> tab shows a graph of the receiving unit's main variables (see below for details) over time, in response to the sending activation.</li></ul>
+<p>We will see this single input being turned on and then off again, and observe the response of the receiving neuron.  To see this, we can run the simulation.
+</p><p>At the bottom of the <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.ctrl_panels.ControlPanel&amp;action=edit&amp;redlink=1" class="new" title=".ctrl panels.ControlPanel (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">ControlPanel</span></a> are 4 buttons: <span style="background:#E0E0E0;border:1px solid black;"><tt>Init, Run, Step, Stop</tt></span>:
+</p>
+<ol><li> <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.programs.LeabraSettle.Init()&amp;action=edit&amp;redlink=1" class="new" title=".programs.LeabraSettle.Init() (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Init</span></a> -- initializes the graph display and starts the simulation over from wherever it might have left off.</li>
+<li> <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.programs.LeabraSettle.Run()&amp;action=edit&amp;redlink=1" class="new" title=".programs.LeabraSettle.Run() (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Run</span></a> -- runs the full set of cycles of activation updating (updating of the equations that govern the behavior of the neural unit), displaying the results in the Network and CycleOutputData frames on the right hand side of the window.</li>
+<li> <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.programs.LeabraSettle.Step(.programs.LeabraCycle)&amp;action=edit&amp;redlink=1" class="new" title=".programs.LeabraSettle.Step(.programs.LeabraCycle) (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Step Cycle</span></a> -- runs one single cycle of activation updating (in more complex models, multiple levels of stepping will be available)</li>
+<li> <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.programs.LeabraSettle.Stop()&amp;action=edit&amp;redlink=1" class="new" title=".programs.LeabraSettle.Stop() (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Stop</span></a> -- if running, this will stop running.</li></ol>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> Text like this indicates specific actions that you need to perform in the simulator.  In this case, hit <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.programs.LeabraSettle.Init()&amp;action=edit&amp;redlink=1" class="new" title=".programs.LeabraSettle.Init() (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Init</span></a> and <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.programs.LeabraSettle.Run()&amp;action=edit&amp;redlink=1" class="new" title=".programs.LeabraSettle.Run() (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Run</span></a>, and look at the <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.T3Tab.Network&amp;action=edit&amp;redlink=1" class="new" title=".T3Tab.Network (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Network</span></a> display. <br>
+</td></tr>
+</tbody></table>
+<p>You should see that very shortly after the input neuron comes on (indicated by the yellow color), the receiving neuron is activated by this input, firing a sequence of discrete action potentials or <i>spikes</i>.  To get a better idea of the precise trajectory of this activation, it is much more convenient to use the <b>Graph View</b>, which displays the information graphically over time, allows multiple variables to be viewed at the same time, and even allows multiple runs (e.g., with different parameters) to be compared with each other.
+</p>
+<h1><span class="mw-headline" id="The_Graph_View">The Graph View</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=CCNBook/Sims/Neuron/Neuron&amp;action=edit&amp;section=3" title="Edit section: The Graph View">edit</a><span class="mw-editsection-bracket">]</span></span></h1>
+<ul><li> Press the <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.T3Tab.CycleOutputData&amp;action=edit&amp;redlink=1" class="new" title=".T3Tab.CycleOutputData (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">CycleOutputData</span></a> tab in the right panel to display the graph view display.</li></ul>
+<p>Only the excitatory and leak currents are operating here, with their conductances (<span style="background:#FFFFD0"><tt><b>g_bar.e, g_bar.l</b></tt></span>) and reversal potentials (<span style="background:#FFFFD0"><tt><b>e_rev.e, e_rev.l</b></tt></span>) as shown in the control panel.
+</p>
+<ul><li> Press the <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.programs.LeabraSettle.Init()&amp;action=edit&amp;redlink=1" class="new" title=".programs.LeabraSettle.Init() (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Init</span></a> button and then the <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.programs.LeabraSettle.Run()&amp;action=edit&amp;redlink=1" class="new" title=".programs.LeabraSettle.Run() (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Run</span></a> button on the control panel to display a new graph.</li></ul>
+<p>This produces a plot using the current (default) parameters.  You should see various lines plotted over 200 time steps (<i>cycles</i>) on the X axis.
+</p><p>Here is a quick overview of each of the variables -- we'll go through them individually next (see <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.docs.GraphHelp&amp;action=edit&amp;redlink=1" class="new" title=".docs.GraphHelp (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">GraphHelp</span></a> for more details on how to determine what is being graphed, and how to configure it):
+</p>
+<ul><li> <span style="background:#FFFFD0"><tt><b>net</b></tt></span> (black line) = net input, which is the total excitatory input to the neuron (net = g_e(t) * g_bar_e).  g_e(t) is the proportion of excitatory ion channels open, and it goes from 0 prior to cycle 10, to 1 from 10-160, and back to 0 thereafter.  Because g_bar_e = .3 (by default), the net value goes up to .3 from cycle 10-160.  The timing of the input is controlled by the parameters <span style="background:#FFFFD0"><tt><b>on_cycle</b></tt></span> and <span style="background:#FFFFD0"><tt><b>off_cycle</b></tt></span> (the total number of cycles is controlled by <span style="background:#FFFFD0"><tt><b>n_cycles</b></tt></span>).</li>
+<li> <span style="background:#FFFFD0"><tt><b>I_net</b></tt></span> (red line) = net current (sum of individual excitation and leak currents), which is excitatory (upward) when the excitatory input comes on, and then oscillates as the action potential spikes fire.  In general this reflects the net balance between the excitatory net input and the constant leak current (plus inhibition, which is not present in this simulation).</li>
+<li> <span style="background:#FFFFD0"><tt><b>v_m</b></tt></span> (blue line) = membrane potential, which represents integration of all inputs into neuron.  This starts out at the resting potential of .3 (= -70mV in biological units), and then increases with the excitatory input. As you can see, the net current (I_net) shows the <i>rate of change</i> of the membrane potential. When v_m gets above about .5, a spike is fired, and v_m is then reset back to .3, starting the cycle over again.</li>
+<li> <span style="background:#FFFFD0"><tt><b>act</b></tt></span> (green line) = activation.  This shows the amount of activation sent to other units -- by default in this model it is set to discrete SPIKE mode, so it is 0 except on the cycle when v_m gets over threshold.  When act_fun is set to the rate-code NOISY_XX1 function, it reflects the expected rate of spiking as a number between 0-1. Note - the green line is often hidden by the act_eq line- to see it, click on the CycleOutputData graph, then open the CycleOutputData tab in the ControlPanel then uncheck all the other lines that may be hiding it. </li>
+<li> <span style="background:#FFFFD0"><tt><b>act_eq</b></tt></span> (purple line) = rate-code equivalent activation -- computes a running average of spikes per cycle in SPIKE mode, providing a measure of the rate-code value corresponding to the current spiking behavior.  If a rate code like NOISY_XX1 is being used, then it is the same as act, and is hidden by that value (all you see is the green line).</li>
+<li> <span style="background:#FFFFD0"><tt><b>adapt</b></tt></span> (orange line) = adaptation variable -- increases during spikes, and decays somewhat in between, building up over time to cause the rate of spiking to adapt or slow down over time.</li></ul>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> <b>Software Tip:</b> You can click on any line in the graph log display using the red-arrow tool (click on the red arrow button in the upper-right corner of the 3D view window to see the exact values at the point where you clicked (as displayed in the graph caption at the bottom).  You can also click on the light green outer frame, and then do the context menu (right mouse button or Ctrl + left mouse on mac) and select DataTable/Edit Dialog to obtain a spreadsheet view of all the data being plotted in the graph.  You can then scroll through this data to find any value you might want to find. <br>
+</td></tr>
+</tbody></table>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> Use the graph click on the black <span style="background:#FFFFD0"><tt><b>net</b></tt></span> line to verify that it goes to a value of .3 when the input goes on. <br>
+</td></tr>
+</tbody></table>
+<h1><span class="mw-headline" id="Spiking_Behavior">Spiking Behavior</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=CCNBook/Sims/Neuron/Neuron&amp;action=edit&amp;section=4" title="Edit section: Spiking Behavior">edit</a><span class="mw-editsection-bracket">]</span></span></h1>
+<p>The default parameters that you just ran show the spiking behavior of a neuron.  This is implementing a modified version of the <a href="https://grey.colorado.edu/CompCogNeuro/index.php/CCNBook/Neuron/AdEx" title="CCNBook/Neuron/AdEx">Adaptive Exponential</a> or AdEx model, which has been shown to provide a very good reproduction of the firing behavior of real cortical pyramidal neurons.  As such, this is a good representation of what real neurons do.  We have turned off the exponential aspect of the AdEx model here to make parameter manipulations more reliable -- a spike is triggered when the membrane potential Vm = crosses a simple threshold of .5.  (In contrast, when exponential is activated (with the <span style="background:#FFFFD0"><tt><b>spike_misc.ex</b></tt></span> flag), the triggering of a spike is more of a dynamic exponential process around this .5 threshold level, reflecting the strong nonlinearity of the sodium channels that drive spiking.)
+</p><p>At the broadest level, you can see the periodic green <span style="background:#FFFFD0"><tt><b>act</b></tt></span> spikes that fire as the membrane potential <span style="background:#FFFFD0"><tt><b>v_m</b></tt></span> gets over the firing threshold, and it is then reset back to the rest level, from which it then climbs back up again, to repeat the process again and again.  Looking at the overall rate of spiking as indexed by the spacing between spikes, you can see that it decreases over time -- this is due to the <b>adaptation</b> property of the AdEx model -- the spike rate adapts over time.
+</p><p>From the tug-of-war model, you should expect that increasing the amount of excitation coming into the neuron will increase the rate of firing, by enabling the membrane potential to reach threshold faster, and conversely decreasing it will decrease the rate of firing.  Furthermore, increasing the leak or inhibitory conductance will tug more strongly against a given level of excitation, causing it to reach threshold more slowly, and thus decreasing the rate of firing.
+</p><p>This intuitive behavior is the essence of what you need to understand about how the neuron operates -- now let's see it in action.
+</p>
+<h1><span class="mw-headline" id="Manipulating_Parameters">Manipulating Parameters</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=CCNBook/Sims/Neuron/Neuron&amp;action=edit&amp;section=5" title="Edit section: Manipulating Parameters">edit</a><span class="mw-editsection-bracket">]</span></span></h1>
+<p>Now we will use some of the parameters in the control panel to explore the properties of the point neuron activation function.  
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> Click on the <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.PanelTab.ControlPanel&amp;action=edit&amp;redlink=1" class="new" title=".PanelTab.ControlPanel (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">ControlPanel</span></a> and take a moment to familiarize yourself with the parameters (you can hover the mouse over the label for each parameter to view a brief description of what it is). <br>
+</td></tr>
+</tbody></table>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> <b>Software Tip:</b> All <i>edit dialogs</i> like the control panel have at least two buttons across the bottom: <span style="background:#E0E0E0;border:1px solid black;"><tt>Apply</tt></span> (which applies any changes you have made to actually set the parameters) and <span style="background:#E0E0E0;border:1px solid black;"><tt>Revert</tt></span> (which reverts to the previously applied values, which is useful if you have accidentally typed in a value that you didn't want).  See the wiki <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.Wiki.Edit_dialog&amp;action=edit&amp;redlink=1" class="new" title=".Wiki.Edit dialog (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Edit dialog</span></a> for more information. <br>
+</td></tr>
+</tbody></table>
+<h2><span class="mw-headline" id="Excitatory">Excitatory</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=CCNBook/Sims/Neuron/Neuron&amp;action=edit&amp;section=6" title="Edit section: Excitatory">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>First, we will focus on <span style="background:#FFFFD0"><tt><b>g_bar.e</b></tt></span>, which controls the amount of excitatory conductance.  In general, we are interested in seeing how the unit membrane potential reflects a balance of the different inputs coming into it (here just excitation and leak), and how the spiking rate responds to the resulting membrane potential.
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> Increase g_bar.e from .3 to .4 (and press the Apply and Run buttons to see the effects).  Then observe the effects of decreasing g_bar.e to .2 and all the way down to .1. <br>
+</td></tr>
+</tbody></table>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> <b>Software tip:</b> It is often useful to overlay different Runs on top of each other in the graph log, which will happen naturally.  When you want to clear the log, press the <span style="background:#E0E0E0;border:1px solid black;"><tt>Init</tt></span> button in the <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.PanelTab.ControlPanel&amp;action=edit&amp;redlink=1" class="new" title=".PanelTab.ControlPanel (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">ControlPanel</span></a>.  <br>
+</td></tr>
+</tbody></table>
+<hr>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#90FF90;font-size:small"><b>Question 2.1:</b> Describe the effects on the rate of neural spiking of increasing <span style="background:#FFFFD0"><tt><b>g_bar.e</b></tt></span> to .4, and of decreasing it to .2, compared to the initial value of .3 (this is should have a simple answer).<br>
+</td></tr>
+</tbody></table>
+<hr>
+<hr>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#90FF90;font-size:small"><b>Question 2.2:</b> Is there a qualitative difference in the neural spiking when <span style="background:#FFFFD0"><tt><b>g_bar.e</b></tt></span> is decreased to .1, compared to the higher values -- what important aspect of the neuron's behavior does this reveal?<br>
+</td></tr>
+</tbody></table>
+<hr>
+<p>By systematically searching the parameter range for g_bar.e between .1 and .2, you should be able to locate the point at which the membrane potential just reaches threshold.
+</p>
+<hr>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#90FF90;font-size:small"><b>Question 2.3:</b> To 2 decimal places (e.g., 0.15), what value of <span style="background:#FFFFD0"><tt><b>g_bar.e</b></tt></span> puts the neuron just over threshold, such that it spikes at this value, but not at the next value below it?<br>
+</td></tr>
+</tbody></table>
+<hr>
+<hr>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#90FF90;font-size:small"><b>Question 2.4 (advanced):</b> Using the equation for the equilibrium membrane potential from the Neuron chapter, compute the exact value of excitatory input required to just reach threshold, showing your math (note that: g_l is a constant .3; g_e is 1 when the input is on; inhibition is not present here and can be ignored) -- this should agree with your empirically determined value -- also be sure that you have turned off the <span style="background:#FFFFD0"><tt><b>ex</b></tt></span> flag so that the threshold is simple and deterministic at Vm of .5.<br>
+</td></tr>
+</tbody></table>
+<hr>
+<h2><span class="mw-headline" id="Leak">Leak</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=CCNBook/Sims/Neuron/Neuron&amp;action=edit&amp;section=7" title="Edit section: Leak">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>You can also manipulate the value of the leak conductance, <span style="background:#FFFFD0"><tt><b>g_bar.l</b></tt></span>, which controls the size of the leak current -- recall that this pulls the opposite direction as the excitatory conductance in the neural tug-of-war.
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> Press the <span style="background:#E0E0E0;border:1px solid black;"><tt>Defaults</tt></span> button on the control panel to restore the default parameters, then manipulate the <span style="background:#FFFFD0"><tt><b>g_bar.l</b></tt></span> parameter in .1 increments (.4, .5, .2 etc) and observe the effects on neural spiking. <br>
+</td></tr>
+</tbody></table>
+<hr>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#90FF90;font-size:small"><b>Question 2.5:</b> What value of <span style="background:#FFFFD0"><tt><b>g_bar.l</b></tt></span> just prevents the neuron from being able to spike (in .1 increments) -- explain this result in terms of the tug-of-war model relative to the g_bar.e excitatory conductance.<br>
+</td></tr>
+</tbody></table>
+<hr>
+<hr>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#90FF90;font-size:small"><b>Question 2.6 (advanced):</b> Use the same technique as in question 2.4 to directly solve for the value of <span style="background:#FFFFD0"><tt><b>g_bar.l</b></tt></span> that should put the neuron right at it's spiking threshold -- show your math.<br>
+</td></tr>
+</tbody></table>
+<hr>
+<h2><span class="mw-headline" id="Driving_.2F_Reversal_Potentials">Driving / Reversal Potentials</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=CCNBook/Sims/Neuron/Neuron&amp;action=edit&amp;section=8" title="Edit section: Driving / Reversal Potentials">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> Press <span style="background:#E0E0E0;border:1px solid black;"><tt>Defaults</tt></span> to restore the default parameters.  Then manipulate the <span style="background:#FFFFD0"><tt><b>e_rev.e</b></tt></span> and <span style="background:#FFFFD0"><tt><b>e_rev.l</b></tt></span> parameters and observe their effects on the spiking rate. <br>
+</td></tr>
+</tbody></table>
+<p>You should see that decreasing <span style="background:#FFFFD0"><tt><b>e_rev.e</b></tt></span> reduces the spiking rate, because it makes the excitatory input pull less strongly up on the membrane potential.  Increasing <span style="background:#FFFFD0"><tt><b>e_rev.l</b></tt></span> produces greater spiking by making leak pull less strongly down.
+</p>
+<h1><span class="mw-headline" id="Rate_Coded_Activations">Rate Coded Activations</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=CCNBook/Sims/Neuron/Neuron&amp;action=edit&amp;section=9" title="Edit section: Rate Coded Activations">edit</a><span class="mw-editsection-bracket">]</span></span></h1>
+<p>Next, we'll see how the discrete spiking behavior of the neuron can be approximated by a continuous rate-coded value.  The blue <span style="background:#FFFFD0"><tt><b>act_eq</b></tt></span> line in the graphs has been tracking the actual rate of spiking to this point -- it goes up when a spike occurs and then decreases slowly in the interim, with the aggregate value over time becoming a closer reflection of the actual spiking rate.  But the NOISY_XX1 activation function can directly compute a rate-code value for the neuron, instead of just measuring the observed rate of spiking.  As explained in the Neuron chapter, this rate code activation has several advantages (and a few disadvantages) for use in neural simulations, and is what we typically use.
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> Press <span style="background:#E0E0E0;border:1px solid black;"><tt>Defaults</tt></span> to start out with default parameters, then set the <span style="background:#FFFFD0"><tt><b>act_fun</b></tt></span> parameter to <span style="background:#FFFFD0"><tt><b>NOISY_XX1</b></tt></span> instead of SPIKE, and <span style="background:#E0E0E0;border:1px solid black;"><tt>Run</tt></span> with the various parameter manipulations that you explored above. <br>
+</td></tr>
+</tbody></table>
+<p>You should see that the green <span style="background:#FFFFD0"><tt><b>act</b></tt></span> line in the graph now rises up and then decreases slowly due to accommodation, without the discrete spiking values observed before. Similarly, the blue <span style="background:#FFFFD0"><tt><b>v_m</b></tt></span> membrane potential value rises up and decreases slowly as well, instead of being reset after spiking.
+</p>
+<hr>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#90FF90;font-size:small"><b>Question 2.7:</b> Compare the spike rates with rate coded activations by reporting the <span style="background:#FFFFD0"><tt><b>act</b></tt></span> values just before cycle 160 (e.g., cycle 155) for <span style="background:#FFFFD0"><tt><b>g_bar.e</b></tt></span> = .2, .3, .4 with <span style="background:#FFFFD0"><tt><b>act_fun = NOISY_XX1</b></tt></span>, and the corresponding values of <span style="background:#FFFFD0"><tt><b>act_eq</b></tt></span> in the <span style="background:#FFFFD0"><tt><b>act_fun = SPIKE</b></tt></span> mode for the same <span style="background:#FFFFD0"><tt><b>g_bar.e</b></tt></span> values.  Use the red arrow click mode to find values in the graph by clicking on the green act line at the corresponding cycle (155).<br>
+</td></tr>
+</tbody></table>
+<hr>
+<p>You should have observed that the <span style="background:#FFFFD0"><tt><b>act</b></tt></span> value tracks the actual <span style="background:#FFFFD0"><tt><b>act_eq</b></tt></span> spiking rate reasonably well, indicating that NOISY_XX1 is a resonable approximation to the actual neural spiking rate.
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> To more systematically compare SPIKE and NOISY_XX1, do <span style="background:#E0E0E0;border:1px solid black;"><tt>Defaults</tt></span> then hit the <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.programs.SpikeVsRate.Run()&amp;action=edit&amp;redlink=1" class="new" title=".programs.SpikeVsRate.Run() (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">SpikeVsRate Run</span></a> button in the control panel -- this will alternate between these two functions for a range of <span style="background:#FFFFD0"><tt><b>g_bar.e</b></tt></span> values, and plot the results in the <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.T3Tab.SpikeVsRate&amp;action=edit&amp;redlink=1" class="new" title=".T3Tab.SpikeVsRate (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">SpikeVsRate</span></a> graph (click to that graph to speed processing instead of watching each run in the CycleOutputData graph view). <br>
+</td></tr>
+</tbody></table>
+<p>The resulting graph shows the <span style="background:#FFFFD0"><tt><b>g_bar.e</b></tt></span> values on the X axis plotted against the NOISY_XX1 rate-code activation (<span style="background:#FFFFD0"><tt><b>rate</b></tt></span> line) and actual SPIKE rate (<span style="background:#FFFFD0"><tt><b>spike</b></tt></span>) on the Y axis.  This indicates that the rate code function is a reasonable approximation of the spiking rate function, at least in capturing the actual spike rate.  In terms of information processing dynamics in the network itself, discrete spiking is inevitably different from the rate code model in many ways, so one should never assume that the two are identical.  Nevertheless, the practical benefits of using the rate-code approximation are substantial and thus we often accept the risk to make initial progress on understanding more complex cognitive functions using this approximation.
+</p>
+<h1><span class="mw-headline" id="Noise">Noise</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=CCNBook/Sims/Neuron/Neuron&amp;action=edit&amp;section=10" title="Edit section: Noise">edit</a><span class="mw-editsection-bracket">]</span></span></h1>
+<p>An important aspect of spiking in real neurons is that the timing and intervals between spikes can be quite random, although the overall rate of firing remains predictable.  This is obviously not evident with the single constant input used so far, which results in regular firing.  However, if we introduce noise by adding randomly generated values to the net input, then we can see a more realistic level of variability in neural firing.  Note that this additional noise plays a similar role as the convolution of noise with the XX1 function in the noisy XX1 function, but in the case of the noisy XX1 we have a deterministic function that incorporates the averaged effects of noise, while here we are actually adding in the random values themselves, making the behavior stochastic.
+</p>
+<ul><li> Change the variance of the noise generator (<span style="background:#FFFFD0"><tt><b>noise_var</b></tt></span> in the control panel) from 0 to .2, and press <span style="background:#E0E0E0;border:1px solid black;"><tt>Apply</tt></span> and then <span style="background:#E0E0E0;border:1px solid black;"><tt>Run</tt></span>.  You should see the red <span style="background:#FFFFD0"><tt><b>net</b></tt></span> line is now perturbed significantly with the noise.</li></ul>
+<p>It can be difficult to tell from a single run whether the spike timing is random -- the unit still fires with some regularity.
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> Do many <span style="background:#E0E0E0;border:1px solid black;"><tt>Run</tt></span>s on top of each other in the graph view. <br>
+</td></tr>
+</tbody></table>
+<p>Even with this relatively high level of noise, the spike timing is not completely uniform -- the spikes still form clusters at relatively regulalry-spaced intervals.  If you increase <span style="background:#FFFFD0"><tt><b>noise_var</b></tt></span> all the way to .5, the spikes will be more uniformly distributed.  However, note that even with the high levels of variability in the specific spike timing, the overall <span style="background:#FFFFD0"><tt><b>act_eq</b></tt></span> rate of spiking recorded at the end of the input does not change that much.  Thus, the rate code is a highly robust reflection of the overall net input.
+</p><p>In the brain (or large networks of simulated spiking neurons), there are high levels of variability in the net input due to variability in the spike firing of the different inputs coming into a given neuron.  As measured in the brain, the statistics of spike firing are captured well by a <i>Poisson</i> distribution, which has variability equal to the mean rate of spiking, and reflects essentially the maximum level of noise for a given rate of spiking.  Neurons are noisy.
+</p>
+<h1><span class="mw-headline" id="Adaptation">Adaptation</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=CCNBook/Sims/Neuron/Neuron&amp;action=edit&amp;section=11" title="Edit section: Adaptation">edit</a><span class="mw-editsection-bracket">]</span></span></h1>
+<p>Cortical pyramidal neurons exhibit the property of spike rate adaptation.  We are now using a more advanced form of adaptation than the form from the original AdEx model, based on sodium-gated potassium channels (K_na), as determined by the <span style="background:#FFFFD0"><tt><b>kna_adapt</b></tt></span> parameters shown in the control panel. You can explore the basic effect of adaptation by turning this on and off.
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> Hit <span style="background:#E0E0E0;border:1px solid black;"><tt>Defaults</tt></span> and then turn the <span style="background:#FFFFD0"><tt><b>adapt.on</b></tt></span> button off and <span style="background:#E0E0E0;border:1px solid black;"><tt>Run</tt></span> -- compare with it turned on. <br>
+</td></tr>
+</tbody></table>
+<p>You should observe that spiking is perfectly regular throughout the entire period of activity without adaptation, whereas with adaptation the rate decreases significantly over time.  One benefit of adaptation is to make the system overall more sensitive to changes in the input -- the biggest signal strength is present at the onset of a new input, and then it "habituates" to any constant input.  This is also more efficient, by not continuing to communicate spikes at a high rate for a constant input signal that presumably has already been processed after some point.
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> You may now close the project (use the window manager close button on the project window or <span style="background:#E0E0E0;border:1px solid black;"><tt>File/Close Project</tt></span> menu item) and then open a new one, or just quit emergent entirely by doing <span style="background:#E0E0E0;border:1px solid black;"><tt>Quit emergent</tt></span> menu option or clicking the close button on the root window. <br>
+</td></tr>
+</tbody></table>
+
+
+
+
+
+
+<hr><p>Computational Cognitive Neuroscience Wiki / CCNLab, Regents of the University of Colorado. Article licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported</a>. This offline formatting adaptation retains that license. The accompanying project declares GPLv2; see the project license metadata.</p></body></html>

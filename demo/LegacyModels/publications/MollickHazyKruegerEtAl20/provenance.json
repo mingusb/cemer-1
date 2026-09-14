@@ -1,0 +1,23 @@
+{
+  "repository": "https://github.com/ccnlab/MollickHazyKruegerEtAl20",
+  "commit": "f17bd30e9dd7b6ad2f48e0c0a0b7f3028389fbb6",
+  "source_path": "cemer/bvPVLV_cel.proj",
+  "url": "https://raw.githubusercontent.com/ccnlab/MollickHazyKruegerEtAl20/f17bd30e9dd7b6ad2f48e0c0a0b7f3028389fbb6/cemer/bvPVLV_cel.proj",
+  "bytes": 4866091,
+  "sha256": "2ab3e344aa9e6770336e24b46184868dcdfc639c38654b246914488a9fa6209d",
+  "header": "// ta_Dump File v3.0 -- code v8.5.6.0 rev11476",
+  "license_block": "license {\n  license=GPLv2;\n  owner_name=;\n  org=\"CCNLab at the University of Colorado Boulder\";\n  year=\"2016\";\n  custom=;\n }",
+  "paper": "https://doi.org/10.1037/rev0000199",
+  "cemer_repository_assets": [
+    "README.md",
+    "bvPVLV_cel.proj"
+  ],
+  "source_preserved": true,
+  "project_license": "GPL-2.0-only, embedded author declaration",
+  "documentation_license": "Cached original wiki article and offline guide adaptation: CC BY-SA 3.0. Native code transcriptions: GPLv2. See documentation-provenance.json.",
+  "model_modifications": "None. Project bytes are identical to the author repository pin.",
+  "required_simulation_assets": "All network specifications, native programs, input/environment tables and parameter sets are embedded in the project. Author cemer directory has no separate runtime assets. load_weights=false and load_exp=false on the short acquisition path.",
+  "paper_redistributed": false,
+  "verification_scope": "38 focused checks pass for explicit pos_acq_b100 initialization, five alpha trials, serialization/reopen and normal exit. Full unmodified authored suite remains under investigation: first configuration has two mandatory early-cue failures; later acquisition and omission criteria pass.",
+  "offline_guide": "open.css loads guide.html into the in-memory ProjectDoc only. No serialized model bytes changed."
+}

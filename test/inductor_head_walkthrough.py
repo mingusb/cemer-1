@@ -48,6 +48,18 @@ class Walkthrough(GuiServer):
     def apply(self):
         self.click('Apply', 745, 718 if self.interactive else 743)
 
+    def checkbox(self, name, y, value):
+        self.click(name, 488, y)
+        self.apply()
+        deadline = time.monotonic() + self.case.args.timeout
+        while time.monotonic() < deadline:
+            actual = self.variable('RunCircuit', name)
+            if actual == value:
+                self.case.equal(name + '_applied', actual, value)
+                return
+            time.sleep(0.05)
+        raise TimeoutError(name + ' checkbox edit did not apply')
+
     def task(self, name):
         self.call('CollectConsoleOutput', enable=True)
         self.call('ClearConsoleOutput')
@@ -131,21 +143,17 @@ def main():
                 server.edit('noise', 4, 0.0)
                 server.apply()
                 server.task('Generate')
-                server.click('ablate previous', 488, 391)
-                server.apply()
+                server.checkbox('ablate_previous', 391, True)
                 server.task('Run')
-                case.equal('previous_ablation_selected', server.variable('RunCircuit', 'ablate_previous'), True)
                 require(server.variable('RunCircuit', 'confidence') < 0.5, 'previous-head ablation retained a sharp attention match')
                 server.screenshot('04-previous-ablation')
-                server.click('restore previous', 488, 391)
-                server.click('ablate induction', 488, 414)
-                server.apply()
+                server.checkbox('ablate_previous', 391, False)
+                server.checkbox('ablate_induction', 414, True)
                 server.task('Run')
                 case.equal('induction_ablation_prediction', server.variable('RunCircuit', 'prediction'), -1)
                 case.equal('induction_ablation_confidence', server.variable('RunCircuit', 'confidence'), 0.0)
                 server.screenshot('05-induction-ablation')
-                server.click('restore induction', 488, 414)
-                server.apply()
+                server.checkbox('ablate_induction', 414, False)
                 server.task('Evaluate')
                 case.equal('held_out_intact_accuracy', server.variable('RunCircuit', 'accuracy'), 1.0)
                 server.console('taMisc::ConsoleOutput("GUI_EVALUATION_ROWS " + String(.projects[0].data["Experiments"].rows));', 'GUI_EVALUATION_ROWS 192')

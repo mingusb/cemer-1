@@ -1,0 +1,38 @@
+{
+  "models": [
+    {
+      "name": "neuron",
+      "source_url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_2/neuron.proj",
+      "source_sha256": "58f4983ceee6ea48af4082df69d926320f8e7e1c9eaa9c22326add7d7b52f9f5",
+      "source_format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11361",
+      "project_sha256": "cd756d4b52e766b8e62228c700d222c29f0e5050e35415863a9e70e06290e263",
+      "project_file": "neuron.proj",
+      "offline_html": "neuron.html",
+      "offline_html_sha256": "f1a7a88eda3fd408409e53b80770c3812b87c848577b37a787a843a2d38c0f42",
+      "cached_original_html_sha256": "9c2cc0aa605eab23d26cc9c57c4c8cae05a6ee86d9753c782022c483d4a2a53b",
+      "license": "GPLv2 project; CC BY-SA 3.0 wiki article",
+      "migration": "Ordinary Load/SaveCopy; documentation converted to local cached article; network, parameters, data and native programs unchanged.",
+      "native_listing_preserved": true,
+      "diagnostics": [],
+      "reopen_diagnostics": [],
+      "evidence": "/home/b/cemer/artifacts/corpus-ch2/published-migration-final/neuron"
+    },
+    {
+      "name": "detector",
+      "source_url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_2/detector.proj",
+      "source_sha256": "f79b4c995effeffe1cd6278ae2fb0c5b89411d8afeca099f71ca4bb39cd52e7c",
+      "source_format": "// ta_Dump File v3.0 -- code v8.5.0.0 rev11328",
+      "project_sha256": "394b7b56d0a7cf7d4c944a2a12c84172223354eb94ac1651bbbeffe2d02c45a8",
+      "project_file": "detector.proj",
+      "offline_html": "detector.html",
+      "offline_html_sha256": "be512892b35c52bcff5df4d475623d5207f0ca92839d19887182ed6435a4bf2d",
+      "cached_original_html_sha256": "8634248579ddc2261fb86ad66788ae3d5f6cc2136d04e061bef0c074ddb78518",
+      "license": "GPLv2 project; CC BY-SA 3.0 wiki article",
+      "migration": "Ordinary Load/SaveCopy; documentation converted to local cached article; network, parameters, data and native programs unchanged.",
+      "native_listing_preserved": true,
+      "diagnostics": [],
+      "reopen_diagnostics": [],
+      "evidence": "/home/b/cemer/artifacts/corpus-ch2/published-migration-final/detector"
+    }
+  ]
+}

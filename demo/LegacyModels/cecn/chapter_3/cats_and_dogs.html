@@ -1,0 +1,293 @@
+<html><head><meta charset="utf-8"><style>body{font:16px sans-serif;line-height:1.45;padding:14px;color:#17212b;background:white}table{max-width:100%}a{color:#1659a0}.provenance{background:#edf4fa;padding:10px}</style></head><body>
+<div class="provenance"><b>Cats and Dogs — associative memory and constraint satisfaction</b><p>Use the native ControlPanel to Init and Run. The default input is Morris. In StdInputData, select the red arrow and click input units to change the cue. Turn off the old cue before selecting a new name or species. Step Cycle shows settling; CycleHarmonyData plots how well the constraints agree.</p><p>This is the author-maintained Emergent 8.5 tutorial. Its network, fixed weights and native programs are unchanged. The cached author article below is available offline.</p></div><table style="width: 35em; font-size: 90%; border: 1px solid #aaaaaa; background-color: #f9f9f9; color: black; margin-bottom: 0.5em; margin-left: 1em; padding: 0.2em; float: right; clear: right; text-align:left;">
+<tbody><tr>
+<th style="text-align: center; background-color:#ccccff;" colspan="2"><big>CCNBook/Sims/Networks/Cats and Dogs</big>
+</th></tr>
+<tr>
+<th> Project Name
+</th>
+<td> cats_and_dogs
+</td></tr>
+<tr>
+<th> Filename
+</th>
+<td> <a href="https://grey.colorado.edu/CompCogNeuro/index.php/File:cats_and_dogs.proj" title="File:cats and dogs.proj">File:cats and dogs.proj</a> <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.OpenProjectFromWeb(cats_and_dogs.proj,https://grey.colorado.edu/CompCogNeuro/index.php/MainPage)&amp;action=edit&amp;redlink=1" class="new" title=".OpenProjectFromWeb(cats and dogs.proj,https://grey.colorado.edu/CompCogNeuro/index.php/MainPage) (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Open Project in emergent</span></a>
+</td></tr>
+<tr>
+<th> Author
+</th>
+<td>  Randall C. O'Reilly
+</td></tr>
+<tr>
+<th> Email
+</th>
+<td> emergent-users@grey.colorado.edu
+</td></tr>
+<tr>
+<th> Publication
+</th>
+<td> <a href="https://grey.colorado.edu/CompCogNeuro/index.php/OReillyMunakataFrankEtAl12" title="OReillyMunakataFrankEtAl12">(O'Reilly, Munakata, Frank, Hazy, &amp; Contributors, 2012)</a>
+</td></tr>
+<tr>
+<th> First Published
+</th>
+<td> Jul 28 2016
+</td></tr>
+<tr>
+<th> Tags
+</th>
+<td>  Semantic Network, Generalization, Prototypes, Constraint Satisfaction
+</td></tr>
+<tr>
+<th> Description
+</th>
+<td>  A simple semantic network that demonstrates how networks can generalize, and represent prototypes, and satisfy various different constraints.
+</td></tr>
+<tr>
+<th> Updated
+</th>
+<td> 28 July 2016,  6 September 2016,  13 January 2017
+</td></tr>
+<tr>
+<th> Versions
+</th>
+<td> 8.0.0,  8.0.2,  8.0.3
+</td></tr>
+<tr>
+<th> Emergent Versions
+</th>
+<td> 8.0.0,  8.0.4
+</td></tr>
+<tr>
+<th> Other Files
+</th>
+<td> <a href="https://grey.colorado.edu/CompCogNeuro/index.php/File:CatsDogsNet.wts" title="File:CatsDogsNet.wts">File:CatsDogsNet.wts</a>
+</td></tr></tbody></table>
+<p><br>
+Back to <a href="https://grey.colorado.edu/CompCogNeuro/index.php/CCNBook/Sims/All" title="CCNBook/Sims/All">CCNBook/Sims/All</a> or <a href="https://grey.colorado.edu/CompCogNeuro/index.php/CCNBook/Networks" title="CCNBook/Networks">Networks Chapter</a>.
+</p>
+<h1><span class="mw-headline" id="Introduction">Introduction</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=CCNBook/Sims/Networks/Cats_and_Dogs&amp;action=edit&amp;section=1" title="Edit section: Introduction">edit</a><span class="mw-editsection-bracket">]</span></span></h1>
+<p>We will begin our exploration with a simple <b>semantic network</b> intended to represent a (very small) set of relationships among different features used to represent a set of entities in the world.  In our case, we represent some features of cats and dogs: their color, size, favorite food, and favorite toy.  The network contains information about a number of individual cats and dogs, and is able to use this information to make <i>generalizations</i> about what cats and dogs in general have in common, and what is unique about them.  It can also tell you about the <i>consistency</i> of a given feature with either cats or dogs -- this is where the harmony function can be useful in assessing the total constraint satisfaction level of the network with a particular configuration of feature inputs.  The network can also be used to perform <em>pattern completion</em> as a way of retrieving information about a particular individual or individuals. Thus, this simple network summarizes many of the topics covered in this chapter.
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> It is recommended that you <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.docs.ProjectDocs.OpenInWindow()&amp;action=edit&amp;redlink=1" class="new" title=".docs.ProjectDocs.OpenInWindow() (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">click here to undock</span></a> this document from the main project window. Use the Window menu to find this window if you lose it, and you can always return to this document by browsing to this document from the <span style="background:#FFFFD0"><tt><b>docs</b></tt></span> section in the left browser panel of the project's main window. <br>
+</td></tr>
+</tbody></table>
+<table class="wikitable" style="font-size: 100%; text-align: center; width: 500px;" align="right">
+<caption> Cats and Dogs Semantics
+</caption>
+<tbody><tr>
+<th scope="col"> Species
+</th>
+<th scope="col"> Name
+</th>
+<th scope="col"> Color
+</th>
+<th scope="col"> Size
+</th>
+<th scope="col"> Food
+</th>
+<th scope="col"> Toy
+</th></tr>
+<tr>
+<th scope="row"> Cat
+</th>
+<td> Morris
+</td>
+<td> Orange
+</td>
+<td> Small
+</td>
+<td> Grass
+</td>
+<td> String
+</td></tr>
+<tr>
+<th scope="row">
+</th>
+<td> Socks
+</td>
+<td> Black &amp; White
+</td>
+<td> Small
+</td>
+<td> Bugs
+</td>
+<td> Feather
+</td></tr>
+<tr>
+<th scope="row">
+</th>
+<td> Sylvester
+</td>
+<td> Black &amp; White
+</td>
+<td> Small
+</td>
+<td> Grass
+</td>
+<td> String
+</td></tr>
+<tr>
+<th scope="row">
+</th>
+<td> Garfield
+</td>
+<td> Orange
+</td>
+<td> Medium
+</td>
+<td> Scraps
+</td>
+<td> String
+</td></tr>
+<tr>
+<th scope="row">
+</th>
+<td> Fuzzy
+</td>
+<td> White
+</td>
+<td> Medium
+</td>
+<td> Grass
+</td>
+<td> Feather
+</td></tr>
+<tr>
+<th scope="row"> Dog
+</th>
+<td> Rex
+</td>
+<td> Black
+</td>
+<td> Large
+</td>
+<td> Scraps
+</td>
+<td> Bone
+</td></tr>
+<tr>
+<th scope="row">
+</th>
+<td> Fido
+</td>
+<td> Brown
+</td>
+<td> Medium
+</td>
+<td> Shoe
+</td>
+<td> Shoe
+</td></tr>
+<tr>
+<th scope="row">
+</th>
+<td> Spot
+</td>
+<td> Black &amp; White
+</td>
+<td> Medium
+</td>
+<td> Scraps
+</td>
+<td> Bone
+</td></tr>
+<tr>
+<th scope="row">
+</th>
+<td> Snoopy
+</td>
+<td> Black &amp; White
+</td>
+<td> Medium
+</td>
+<td> Scraps
+</td>
+<td> Bone
+</td></tr>
+<tr>
+<th scope="row">
+</th>
+<td> Butch
+</td>
+<td> Brown
+</td>
+<td> Large
+</td>
+<td> Shoe
+</td>
+<td> Shoe
+</td></tr></tbody></table>
+<p>The knowledge embedded in the network is summarized in the table to the right.  This knowledge is encoded by simply setting a weight of 1 between an <em>instance</em> node representing an individual cat or dog and the corresponding feature value that this individual possesses (c.f., the Jets and Sharks model from McClelland &amp; Rumelhart, 1988).  Each of the groups of features (i.e., values within one column of the table) are represented within distinct layers that have their own within-layer inhibition.  In additon, all of the identity units and the name units are within their own separate layers as well.  We use the <code>FFFB</code> inhibitory function here which allows considerable flexibility in the actual number of active units per layer.
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> As usual, take some time to examine the weights in the network, and verify that the weights implement the knowledge shown in the table.  To do so, select the <span style="background:#FFFFD0"><tt><b>r.wt</b></tt></span> value on the <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.T3Tab.CatsDogsNet&amp;action=edit&amp;redlink=1" class="new" title=".T3Tab.CatsDogsNet (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">CatsDogsNet</span></a> tab and then click on individual units in the display using the red arrow button. <br>
+</td></tr>
+</tbody></table>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> Now, click on the <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.T3Tab.StdInputData&amp;action=edit&amp;redlink=1" class="new" title=".T3Tab.StdInputData (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">StdInputData</span></a> view panel tab. <br>
+</td></tr>
+</tbody></table>
+<p>Let's first verify that when we present an individual's name as input, it will recall all of the information about that individual.  This is a form of pattern completion with a single unique input cue.  You should see that <code>Morris</code> in the <code>Name</code> layer units of <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.data.gp.InputData.StdInputData&amp;action=edit&amp;redlink=1" class="new" title=".data.gp.InputData.StdInputData (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">StdInputData</span></a> is already on by default (with a value of 1) -- we will use this.  
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> Press <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.programs.LeabraEpoch.Init()&amp;action=edit&amp;redlink=1" class="new" title=".programs.LeabraEpoch.Init() (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Init</span></a> and <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.programs.LeabraEpoch.Run()&amp;action=edit&amp;redlink=1" class="new" title=".programs.LeabraEpoch.Run() (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Run</span></a> in the <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.PanelTab.ControlPanel&amp;action=edit&amp;redlink=1" class="new" title=".PanelTab.ControlPanel (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">ControlPanel</span></a>. <br>
+</td></tr>
+</tbody></table>
+<p>You should see that the network activates the appropriate features for Morris.  You can think about this process as finding the most harmonious activation state given the input constraint of Morris, and the constraints in the network's weights. Equivalently, you can think about it as settling into the Morris attractor.
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> Go ahead and try a few other name activations (change the appropriate value from 0 to 1) in the StdInputData view -- first click on the red arrow in upper right-hand corner, then use the left mouse button to toggle unit activation on or off. <br>
+</td></tr>
+</tbody></table>
+<p>Now, let's see how this network can give us general information about cats versus dogs, even though at some level it just has information about a set of individuals.  
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> Select only the <code>Cat</code> <code>Species</code> input (first unit), and then <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.programs.LeabraEpoch.Run()&amp;action=edit&amp;redlink=1" class="new" title=".programs.LeabraEpoch.Run() (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Run</span></a>. <br>
+</td></tr>
+</tbody></table>
+<p>You should see that the network activates features that are typical of cats, and ends up settling on a subset of cat individuals  -- use <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.programs.LeabraEpoch.Step(.programs.LeabraCycle)&amp;action=edit&amp;redlink=1" class="new" title=".programs.LeabraEpoch.Step(.programs.LeabraCycle) (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Step Cycle</span></a> to see the settling in detail, or look at the <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.T3Tab.CycleGridData&amp;action=edit&amp;redlink=1" class="new" title=".T3Tab.CycleGridData (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">CycleGridData</span></a> to see the trajectory in one glance.  You can repeat this for dogs.
+</p>
+<hr>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#90FF90;font-size:small"><b>Question 3.4:</b> Explain why the subset of cat individuals ended up getting activated, when just <code>Cat</code> was provided as input -- how might this differential activation of individuals be useful?<br>
+</td></tr>
+</tbody></table>
+<hr>
+<h2><span class="mw-headline" id="Constraint_Satisfaction">Constraint Satisfaction</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=CCNBook/Sims/Networks/Cats_and_Dogs&amp;action=edit&amp;section=2" title="Edit section: Constraint Satisfaction">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>Now let's make use of some of the constraint satisfaction ideas. We can view the <em>harmony</em> of the network over cycles of settling using a graph view.
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> Select the <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.T3Tab.CycleHarmonyData&amp;action=edit&amp;redlink=1" class="new" title=".T3Tab.CycleHarmonyData (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">CycleHarmonyData</span></a> tab in the right view panel <br>
+</td></tr>
+</tbody></table>
+<p>Notice that, as we expected, this value appears to monotonically increase over settling, indicating that the network is increasingly satisfying the constraints as the activations are updated.
+</p><p>Now, let's make some more <em>specific</em> queries for the network.
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> Activate the <code>Large</code> size input (last unit in Size column) in addition to <code>Cat</code>, and press <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.programs.LeabraEpoch.Run()&amp;action=edit&amp;redlink=1" class="new" title=".programs.LeabraEpoch.Run() (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Run</span></a>. <br>
+</td></tr>
+</tbody></table>
+<p>You should see that the harmony value is lower than that for just <code>Cat</code> alone.  This lower harmony reflects the fact that you provided discordant, inconsistent constraints, which the network was not able to satisfy as well.
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> Turn off the <code>Large</code> size input and turn on the <code>Medium</code> one (middle unit in Size column) in addition to <code>Cat</code>, and press<a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.programs.LeabraEpoch.Run()&amp;action=edit&amp;redlink=1" class="new" title=".programs.LeabraEpoch.Run() (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Run</span></a>. <br>
+</td></tr>
+</tbody></table>
+<p>Although this case starts off earlier, the final harmony is also lower than Cat alone, because even though there are some medium-sized cats, there are fewer of them, so the constraints are tighter.  Put another way, <code>Cat</code> is an easy constraint to satisfy, so the resulting harmony is large.  <code>Cat</code> plus <code>Medium</code> is harder to satisfy because it applies to fewer things, so the harmony is lower.
+</p><p>There are a seemingly infinite number of different ways that you can query the network -- go ahead and present different input patterns and see what kinds of responses the network gives you.  Most of them will we hope be recognizable as a reasonable response to the set of constraints provided by the input pattern.
+</p><p>It is sometimes interesting to try to figure out how the activation spreads through the network as it settles.  You can view the <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.T3Tab.CycleGridData&amp;action=edit&amp;redlink=1" class="new" title=".T3Tab.CycleGridData (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">CycleGridData</span></a> view for this purpose.  It shows the state of the network every <code>grid_interval</code> (default = 5) cycles of updating.  
+</p><p>Have fun experimenting!
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> You may now close the project (use the window manager close button on the project window or <span style="background:#E0E0E0;border:1px solid black;"><tt>File/Close Project</tt></span> menu item) and then open a new one, or just quit emergent entirely by doing <span style="background:#E0E0E0;border:1px solid black;"><tt>Quit emergent</tt></span> menu option or clicking the close button on the root window. <br>
+</td></tr>
+</tbody></table>
+
+
+
+
+
+
+<hr><p>Randall C. O’Reilly / CCNLab, Regents of the University of Colorado. <a href="https://grey.colorado.edu/CompCogNeuro/index.php/CCNBook/Sims/Networks/Cats_and_Dogs">Original CCNBook article</a>. Article and this offline formatting adaptation: <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0 Unported</a>. Wiki navigation and external assets were omitted. Project: GPLv2, as declared in its metadata.</p></body></html>

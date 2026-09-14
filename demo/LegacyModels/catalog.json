@@ -1,0 +1,1324 @@
+{
+  "schema_version": 1,
+  "as_of_utc": "2026-09-14",
+  "scope": "Discovery catalog and explicitly selected validated revisions. Download availability and successful deserialization are not scientific validation or a redistribution grant. Earlier/different versions remain separate restoration targets.",
+  "archives": [
+    {
+      "id": "cecn8",
+      "description": "CECN 8.0 textbook bundle",
+      "url": "https://web.eecs.utk.edu/~bmaclenn/Classes/494-594-CCN-S18/cecn_8_0.zip",
+      "sha256": "c03db6875e64d44ad9c3278447c1dbdde5a48302cc9981cc50c3101113c73bef",
+      "bytes": 43399249,
+      "native_project_count": 43,
+      "license": "Mixed or absent per-project grants; inspect each project and companion asset.",
+      "notes": ""
+    },
+    {
+      "id": "cecn_old",
+      "description": "Earlier CECN textbook bundle",
+      "url": "https://www.ida.liu.se/~729G83/labs/bio/old/cecn_demos.zip",
+      "sha256": "3fe4a949408a0635108908ff1ceedf1f1517220afc78e46ea3eb5037a9862f0e",
+      "bytes": 32973285,
+      "native_project_count": 62,
+      "license": "Mixed or absent per-project grants; inspect each project and companion asset.",
+      "notes": "65 project files include autosave/backup copies; unique model count must not be inferred from raw file count."
+    },
+    {
+      "id": "pdpp",
+      "description": "Official historical PDP++ demos",
+      "url": "https://codeload.github.com/emer/pdpp/tar.gz/ccce243ae356dc5908cdd667419a7afd74cf22ad",
+      "sha256": "b9f4b2e04413a9b0c5906c7350bd0b127772e96220a62ac8e79de4b8002f4682",
+      "bytes": 108153438,
+      "revision": "ccce243ae356dc5908cdd667419a7afd74cf22ad",
+      "native_demo_count": 72,
+      "license": "Repository BSD-3-Clause and historical CopyRight notices both retained in discovery evidence; scope review pending."
+    }
+  ],
+  "current_course": {
+    "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/",
+    "native_project_count": 44,
+    "models": [
+      {
+        "source_path": "chapter_2/adapt_thr.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_2/adapt_thr.proj",
+        "sha256": "dcf96c41809257a912fdd101b7c49f8c8a004cfd64bf2bebc22edd94f597a00c",
+        "bytes": 124411,
+        "format": "// ta_Dump File v2.0 -- code v5.0.0.0",
+        "embedded_project_license": null,
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_2/detector.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_2/detector.proj",
+        "sha256": "f79b4c995effeffe1cd6278ae2fb0c5b89411d8afeca099f71ca4bb39cd52e7c",
+        "bytes": 249821,
+        "format": "// ta_Dump File v3.0 -- code v8.5.0.0 rev11328",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "authored tasks validated",
+        "selected": {
+          "project": "cecn/chapter_2/detector.proj",
+          "readme": "cecn/chapter_2/README.md",
+          "scope": "Authored tutorial exercises, original program listings, native GUI and save/reopen; exact checks documented with the model."
+        }
+      },
+      {
+        "source_path": "chapter_2/neuron.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_2/neuron.proj",
+        "sha256": "58f4983ceee6ea48af4082df69d926320f8e7e1c9eaa9c22326add7d7b52f9f5",
+        "bytes": 397099,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11361",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "authored tasks validated",
+        "selected": {
+          "project": "cecn/chapter_2/neuron.proj",
+          "readme": "cecn/chapter_2/README.md",
+          "scope": "Authored tutorial exercises, original program listings, native GUI and save/reopen; exact checks documented with the model."
+        }
+      },
+      {
+        "source_path": "chapter_2/neuron_inhib.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_2/neuron_inhib.proj",
+        "sha256": "71866b2a2696cb39484ef60be3ca53b097630a9497c5876183beeb25009cfc21",
+        "bytes": 493837,
+        "format": "// ta_Dump File v3.0 -- code v7.0.2.0 rev7575",
+        "embedded_project_license": null,
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_2/self_reg.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_2/self_reg.proj",
+        "sha256": "937956ab1c39ea523aa29e98c5d3bea4a4defd8a007feb731c0ce2d827cbc21f",
+        "bytes": 117593,
+        "format": "// ta_Dump File v3.0 -- code v5.1.0.0",
+        "embedded_project_license": null,
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_3/cats_and_dogs.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_3/cats_and_dogs.proj",
+        "sha256": "6578de031f4d909cf0d5fd5adaecb219c2bc2d89b27a59957a6724520f5fa60f",
+        "bytes": 260696,
+        "format": "// ta_Dump File v3.0 -- code v8.5.0.0 rev11328",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "authored tasks validated",
+        "selected": {
+          "project": "cecn/chapter_3/cats_and_dogs.proj",
+          "readme": "cecn/chapter_3/README.md",
+          "scope": "Authored tutorial exercises, original program listings, native GUI and save/reopen; exact checks documented with the model."
+        }
+      },
+      {
+        "source_path": "chapter_3/face_categ.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_3/face_categ.proj",
+        "sha256": "57961031e87093fa25b2d583f433a44f218e8fc34eeaaaa7726e24ef51001ef8",
+        "bytes": 663746,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11361",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_3/inhib.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_3/inhib.proj",
+        "sha256": "cb34eaa3fdc5f86f9e2114150e942417825e96a1b83bc99f272b731a44870dd1",
+        "bytes": 340967,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11361",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_3/inhib_spike.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_3/inhib_spike.proj",
+        "sha256": "b4cd46d16e4bae95076457d9c7d26bf9c3da51d1680bcda9ed26ea1f6cc7d209",
+        "bytes": 486943,
+        "format": "// ta_Dump File v3.0 -- code v8.0.2.0 rev10028",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_3/necker_cube.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_3/necker_cube.proj",
+        "sha256": "85125e0468938134a54f973172fc1ac6141fcc96f4dfa6dda958940937cd48bc",
+        "bytes": 205846,
+        "format": "// ta_Dump File v3.0 -- code v8.5.0.0 rev11328",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_4/err_driven_hidden.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_4/err_driven_hidden.proj",
+        "sha256": "e204228460206953acd82d38f12151505f87df845ca32ee02afe89fde2130819",
+        "bytes": 420250,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11361",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_4/family_trees.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_4/family_trees.proj",
+        "sha256": "8bda2589d4b29047b3aa467dd7e8ccc5a8ea5e1d6653b4c24eb4f365782784c0",
+        "bytes": 1574253,
+        "format": "// ta_Dump File v3.0 -- code v8.5.0.0 rev11331",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_4/hebb_correl.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_4/hebb_correl.proj",
+        "sha256": "ee1009154b9e87d16dd2021a59a45ed49dd2b2d03b27dc6dd1993a5d867442b9",
+        "bytes": 329478,
+        "format": "// ta_Dump File v3.0 -- code v6.0.1.0 rev5601",
+        "embedded_project_license": null,
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_4/model_and_task.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_4/model_and_task.proj",
+        "sha256": "f38eaaca9ac560dc4dfb0e72da775212f1fa2871c2685f10b1b9a7f61e4cf1f6",
+        "bytes": 515165,
+        "format": "// ta_Dump File v3.0 -- code v6.0.1.0 rev5601",
+        "embedded_project_license": null,
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_4/pat_assoc.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_4/pat_assoc.proj",
+        "sha256": "952e0bc4d41c42901b05685905806e66efc5eb58ae199b12991719ed6b819a45",
+        "bytes": 436893,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11361",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_4/self_org.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_4/self_org.proj",
+        "sha256": "690067c8a1f37800b1755ab225daa16cb815935eb097e8676e24463dfa97e202",
+        "bytes": 462961,
+        "format": "// ta_Dump File v3.0 -- code v8.5.0.0 rev11328",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_4/self_org_test.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_4/self_org_test.proj",
+        "sha256": "fc0ba6ead9755191d23fae11d0683780738b6247bd4928a3e442d8a9975169d2",
+        "bytes": 618498,
+        "format": "// ta_Dump File v3.0 -- code v8.0.3.0 rev10267",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_6/attn_simple.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_6/attn_simple.proj",
+        "sha256": "4609c6af31296965a5efffdfecffa4a0c82546cc395f001d2aba5749676e2570",
+        "bytes": 534935,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11353",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_6/objrec.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_6/objrec.proj",
+        "sha256": "b0679b955910beaef9f8dfcd7b867e89b981a82ebeaa096b26f6b6f17f571317",
+        "bytes": 1141365,
+        "format": "// ta_Dump File v3.0 -- code v8.5.0.0 rev11330",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_6/v1rf.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_6/v1rf.proj",
+        "sha256": "cafda052c479aff7e33ddfc6f858e72102733b777e482495f4363fed3323ddac",
+        "bytes": 1473557,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11351",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_6/v1rf_20hu.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_6/v1rf_20hu.proj",
+        "sha256": "932331af0db2e088bc25ba36bf267ac23a45be8afae8f401f141ccee41409ca8",
+        "bytes": 255910,
+        "format": "// ta_Dump File v2.0",
+        "embedded_project_license": null,
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_6/v1rf_auto_enc.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_6/v1rf_auto_enc.proj",
+        "sha256": "c85037e7fa9366a4848a64af143ddf00217f483f1d3518079073401102cc47ee",
+        "bytes": 856545,
+        "format": "// ta_Dump File v3.0 -- code v7.8.1.0 rev8267",
+        "embedded_project_license": null,
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_6/what_where_integ.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_6/what_where_integ.proj",
+        "sha256": "517ad83742b828eb9364534619d8a73c0a35d36ed3d2cf09d681fb4341067709",
+        "bytes": 7913837,
+        "format": "// ta_Dump File v3.0 -- code v8.2.1.0 rev11080",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_7/bg.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_7/bg.proj",
+        "sha256": "cb4137b060ff09cbed7cf413953eb480ad4af9aa53685b99e851c76d2d3fc07e",
+        "bytes": 706460,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11361",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_7/cereb.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_7/cereb.proj",
+        "sha256": "108676b68318381156673091060ea63332ff7a69f91a9bcb39b51303c4aeff24",
+        "bytes": 2067702,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11361",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_7/fsa.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_7/fsa.proj",
+        "sha256": "a74853dfa766eb885d6ebc4a526fb8c037e7e22694b526516c4ecaabfaef6104",
+        "bytes": 776906,
+        "format": "// ta_Dump File v3.0 -- code v6.1.1.0 rev5805",
+        "embedded_project_license": null,
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_7/pvlv.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_7/pvlv.proj",
+        "sha256": "58f3b25c380c4ec841f7d40b2d30e8aece2cc8de6203a09d1c91f22185d09754",
+        "bytes": 3935577,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11353",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_7/rl_cond.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_7/rl_cond.proj",
+        "sha256": "316d34079c778e02cf9691f84ca291215b483281ba8c77e4d5eedc25b20cb4e3",
+        "bytes": 476699,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11353",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_8/ab_ac_interference.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_8/ab_ac_interference.proj",
+        "sha256": "33945a866c58051a2d0e4097573ef87712477b086e8ae1750a4368fd0ddf821e",
+        "bytes": 485459,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11353",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_8/act_maint.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_8/act_maint.proj",
+        "sha256": "04b6bb62025649efcfdf0d92d50ad5dcb0bd503e97e3d3f11da1c9459e3e3da4",
+        "bytes": 313692,
+        "format": "// ta_Dump File v3.0 -- code v5.1.1.0",
+        "embedded_project_license": null,
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_8/act_priming.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_8/act_priming.proj",
+        "sha256": "951ec933a749f1091ddc80f2ebdccf96d25f63159de0b990111eb394afa9e477",
+        "bytes": 578587,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11353",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_8/hip.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_8/hip.proj",
+        "sha256": "6d270fc2ca127dc1d4bdfced447441538d805b1b3141342c778ba69a13b3a8f0",
+        "bytes": 668902,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11353",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_8/hip_gen_data.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_8/hip_gen_data.proj",
+        "sha256": "d32f6bbdf08a5d01672b44529cd9d87c7bacb4fc3ab56636b695adc4b1fd3b45",
+        "bytes": 165657,
+        "format": "// ta_Dump File v2.0 -- code v4.0.21.0",
+        "embedded_project_license": null,
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_8/pfc_maint_updt.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_8/pfc_maint_updt.proj",
+        "sha256": "a1808b5ab4b281c46a3522df3636b21b99b5ff72b76aa52f3fd834a6004d9018",
+        "bytes": 521764,
+        "format": "// ta_Dump File v3.0 -- code v5.1.0.0",
+        "embedded_project_license": null,
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_8/wt_priming.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_8/wt_priming.proj",
+        "sha256": "831c6f06f42ce267a0805d9d08611ad74c1905756b35437237b0130c59db94a6",
+        "bytes": 455408,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11353",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_9/dyslex.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_9/dyslex.proj",
+        "sha256": "8e9f4960d27d16e4537dcd2fec27061acaa66dd15587aefb16b377823e44c104",
+        "bytes": 1102352,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11353",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_9/pt.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_9/pt.proj",
+        "sha256": "14e745005f1426cf4d4a68a2a4f7c6fb40e802e1012ec222e13fe7ad9e2f8eb2",
+        "bytes": 2369505,
+        "format": "// ta_Dump File v3.0 -- code v5.1.0.0",
+        "embedded_project_license": null,
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_9/sem.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_9/sem.proj",
+        "sha256": "ce02270ab93dd3b73cf3f1803579fa2f5096ccda4883c113a9009f1857aeaffa",
+        "bytes": 1761956,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11358",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_9/sg.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_9/sg.proj",
+        "sha256": "4aaca5998c3486436d52e6f428ad752b49423b463dcbda1d4dabc8afbe03c457",
+        "bytes": 1582689,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11358",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_9/ss.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_9/ss.proj",
+        "sha256": "c46d9207b427731211a7fa13c517a07af850bca3d955107be3ecec640f4e7751",
+        "bytes": 2894065,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11358",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_10/a_not_b.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_10/a_not_b.proj",
+        "sha256": "283b383bcda16a842980b1d366dd477c4661cffc89544da2bfe5877754790c75",
+        "bytes": 307269,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11358",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_10/id_ed.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_10/id_ed.proj",
+        "sha256": "b5a094e9415a82cc52d4c3bea8ee4e4ce515dd746d3a40c19e6ac4370f08e3c0",
+        "bytes": 141084,
+        "format": "// ta_Dump File v2.0",
+        "embedded_project_license": null,
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_10/sir.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_10/sir.proj",
+        "sha256": "501a410815bc5b2b43505425f7139d10b63a31f4920d841d4a392689fb5c8387",
+        "bytes": 891176,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11358",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      },
+      {
+        "source_path": "chapter_10/stroop.proj",
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_10/stroop.proj",
+        "sha256": "8db57e5f3f44209d9a2436222d7afb840031d3d5fba9742d7c2322a48092e944",
+        "bytes": 741076,
+        "format": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11358",
+        "embedded_project_license": "GPLv2",
+        "behavior_validation": "pending"
+      }
+    ],
+    "misnamed_nonprojects": [
+      {
+        "url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/inhib_1.2.3.proj",
+        "sha256": "6802050f0dfd3eadf87796907465406e6a7b8d575cac450770b99efb331f889d",
+        "reason": "ELF Go executable named .proj; not an Emergent project and never executed."
+      }
+    ]
+  },
+  "publication_sources": [
+    {
+      "repository": "ccnlab/deep-obj-cat",
+      "source": "https://github.com/ccnlab/deep-obj-cat",
+      "revision": "d859baf8dc06c26f53a841966f045bfcbb3b7052",
+      "projects": [
+        {
+          "path": "sims/cemer/wwi_emer_bp.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/deep-obj-cat/d859baf8dc06c26f53a841966f045bfcbb3b7052/sims/cemer/wwi_emer_bp.proj",
+          "git_blob_sha": "34ac9c103b9c7ecd38d37fe2e8bce5aafeb0a209",
+          "repository_file_bytes": 8130465,
+          "header": "// ta_Dump File v3.0 -- code v8.5.6.0 rev11491",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/wwi_emer_std.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/deep-obj-cat/d859baf8dc06c26f53a841966f045bfcbb3b7052/sims/cemer/wwi_emer_std.proj",
+          "git_blob_sha": "ba1233786210965e09fb169af95b946b6e83d291",
+          "repository_file_bytes": 11129514,
+          "header": "// ta_Dump File v3.0 -- code v8.5.6.0 rev11491",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "behavior_validation": "pending"
+        }
+      ]
+    },
+    {
+      "repository": "ccnlab/map-nav",
+      "source": "https://github.com/ccnlab/map-nav",
+      "revision": "63e037d975cab70b92463388384bad49dc6f5894",
+      "projects": [
+        {
+          "path": "sims/seq_subgoal/original/Telos1.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/map-nav/63e037d975cab70b92463388384bad49dc6f5894/sims/seq_subgoal/original/Telos1.proj",
+          "git_blob_sha": "40b668509ef2aa235e4a1d5e931b4c649a677ce7",
+          "repository_file_bytes": 814419,
+          "header": "// ta_Dump File v3.0 -- code v8.5.2.0 rev11409",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "f92e3343538f170a16a7d350bd7556c2fa6efe0499e42c372b6a3ad0452cb0d5",
+          "behavior_validation": "pending"
+        }
+      ]
+    },
+    {
+      "repository": "ccnlab/MollickHazyKruegerEtAl20",
+      "source": "https://github.com/ccnlab/MollickHazyKruegerEtAl20",
+      "revision": "f17bd30e9dd7b6ad2f48e0c0a0b7f3028389fbb6",
+      "projects": [
+        {
+          "path": "cemer/bvPVLV_cel.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/MollickHazyKruegerEtAl20/f17bd30e9dd7b6ad2f48e0c0a0b7f3028389fbb6/cemer/bvPVLV_cel.proj",
+          "git_blob_sha": "492c91feef4b5dd79897344f152587d2e3db3859",
+          "repository_file_bytes": 4866091,
+          "header": "// ta_Dump File v3.0 -- code v8.5.6.0 rev11476",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "2ab3e344aa9e6770336e24b46184868dcdfc639c38654b246914488a9fa6209d",
+          "behavior_validation": "Initial untrained reward response validated; full authored suite running with two early-learning criteria failing in its first configuration.",
+          "selected_project": "publications/MollickHazyKruegerEtAl20/bvPVLV_cel.proj"
+        }
+      ]
+    },
+    {
+      "repository": "ccnlab/leabra",
+      "source": "https://github.com/ccnlab/leabra",
+      "revision": "b6be2343d9ff631cfe3d1a36d6b569cfbdc285de",
+      "projects": [
+        {
+          "path": "sims/cemer/actfun/act_fun_sim.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/actfun/act_fun_sim.proj",
+          "git_blob_sha": "559250bb2c3f2083f0598be1ea1cecdd71e6e76b",
+          "repository_file_bytes": 519842,
+          "header": "// ta_Dump File v3.0 -- code v5.1.0.0",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "fb0e6b28c8093dd73b76d7cf535d653afa781a7e3af03874bf1b4ce9dea958ce",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/actfun/act_fun_sim_dt.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/actfun/act_fun_sim_dt.proj",
+          "git_blob_sha": "7ce590691a896b46aa595b251b07f2058b20da19",
+          "repository_file_bytes": 557281,
+          "header": "// ta_Dump File v3.0 -- code v5.1.7.0 rev4937",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [
+              "NO_LIC"
+            ],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "a629ceb944d268750235dc5558d8c939ab9454e6fdf3ff042a94c1ad5ad97d8a",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/actfun/gelin_debug.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/actfun/gelin_debug.proj",
+          "git_blob_sha": "a00fd5ad09db62690ff12747db97b6a3ae75d2ad",
+          "repository_file_bytes": 646600,
+          "header": "// ta_Dump File v3.0 -- code v5.3.1.0 rev5229",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "a5d3cc2bfe92729396de10ae43d3fc5890dcd4b691e3ff85b5ee6bc220b6da74",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/actfun/nxx1_fun_approx.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/actfun/nxx1_fun_approx.proj",
+          "git_blob_sha": "14fc88e7e722c952c320a0798c7e85da3d1eccb2",
+          "repository_file_bytes": 170553,
+          "header": "// ta_Dump File v3.0 -- code v8.2.1.0 rev11084",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "34d125f2aa29d36c7f8ae632534982d81aeb9a8319b39ac6ca12f949f4a144a1",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/adaptation/leabra_ra25_kna.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/adaptation/leabra_ra25_kna.proj",
+          "git_blob_sha": "13be3514b23554973d979d9cc0c9f389aac43c0a",
+          "repository_file_bytes": 1301665,
+          "header": "// ta_Dump File v3.0 -- code v8.5.1.0 rev11388",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "74ba9ea6dbc2c13672c0e06bc45e36166cbd30b83e261252c4e100f77472a03e",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/adaptation/objrec_expt.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/adaptation/objrec_expt.proj",
+          "git_blob_sha": "8a620bd9e130b4480f6353c1117e26dd2eec676b",
+          "repository_file_bytes": 1532306,
+          "header": "// ta_Dump File v3.0 -- code v8.5.6.0 rev11438",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "84b8402612e6382a452b26a51bef6193b50e23c25a31d58227931e3906b5a9e5",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/blicket/blicket_3.3.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/blicket/blicket_3.3.proj",
+          "git_blob_sha": "ec83c75d8a446a76fe64d85f28c68b99325d236c",
+          "repository_file_bytes": 2330899,
+          "header": "// ta_Dump File v3.0 -- code v7.0.0.0 rev7263",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "7d58364ece8fa672fb3ce3e2790384318c2f0f5bc10300b36c3660f0868c5fb1",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/blicket/blicket_3.3_demo.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/blicket/blicket_3.3_demo.proj",
+          "git_blob_sha": "d4073a2485e3f2763ad8ad48072257d0b8aaeae7",
+          "repository_file_bytes": 2337601,
+          "header": "// ta_Dump File v3.0 -- code v7.0.0.0 rev7274",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "706a9f9e4421e48c56cc334c361d88ad29e568e6b756060837bdb2598761b8ee",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/coffe_tea/coffee_tea_ti.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/coffe_tea/coffee_tea_ti.proj",
+          "git_blob_sha": "10a1cb7ad12f46eb6d17da7be65f237a3c10aa72",
+          "repository_file_bytes": 1322733,
+          "header": "// ta_Dump File v3.0 -- code v7.8.4.0 rev8695",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "cb31304a21a919ea6a8fc14d72504474f091eb67714d303f1535f40864dd5ea7",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/coffe_tea/fsa_deep_trc.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/coffe_tea/fsa_deep_trc.proj",
+          "git_blob_sha": "4902fe2b21a60ab0d77e47751ce70283b66e7394",
+          "repository_file_bytes": 767153,
+          "header": "// ta_Dump File v3.0 -- code v8.5.6.0 rev11491",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "7960006310031561800eef4700550dccf9607d57658f496bb5f286c61a11dd43",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/fastwts/ca_eq_sim.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/fastwts/ca_eq_sim.proj",
+          "git_blob_sha": "3750d4b1c866544a8dcc59edb219c9aa137f067d",
+          "repository_file_bytes": 81246,
+          "header": "// ta_Dump File v2.0",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "bd33a2ba118838018c262e0b2f8fcf94d0a0a5e829c7c98b3ac547e68ec0f5e9",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/fastwts/fast_wts_time_constants.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/fastwts/fast_wts_time_constants.proj",
+          "git_blob_sha": "da8f315be72cd1ff60e128775deabc713dd0d5cc",
+          "repository_file_bytes": 521127,
+          "header": "// ta_Dump File v3.0 -- code v7.0.2.0 rev7710",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [
+              "NO_LIC"
+            ],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "11b1b6f563c1f4a70876aba481256d577558d4d0dd46cd82e4f850588d481bd8",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/fastwts/short_term_plasticity.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/fastwts/short_term_plasticity.proj",
+          "git_blob_sha": "3a2fa76a199391aaed388b633259a856d4249291",
+          "repository_file_bytes": 101067,
+          "header": "// ta_Dump File v3.0 -- code v7.0.2.0 rev7521",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [
+              "NO_LIC"
+            ],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "24f42a67419438fd2cabc0e036047182631b2ee90d56245890b7bdf0acd15cff",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/fastwts/soft_bounding_sim.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/fastwts/soft_bounding_sim.proj",
+          "git_blob_sha": "d04851cf0712cb6c6716ece7f7bd3a2e5cd7b432",
+          "repository_file_bytes": 54881,
+          "header": "// ta_Dump File v2.0",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "a6374c913af9df0e2841357723cbd2e3edbc28c9a32ec2f533e7419a22288641",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/ra/bp_ra25.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/ra/bp_ra25.proj",
+          "git_blob_sha": "fa73d63723639e7e2f9cee66f2e0f7db6c63c262",
+          "repository_file_bytes": 1045504,
+          "header": "// ta_Dump File v3.0 -- code v8.0.0.0 rev9914",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "b5f8f221b406fe77aa8521cb8bd8a61a0bd41ad2c3691b27da386f219c6e4b98",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/ra/leabra_ra25_fffb.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/ra/leabra_ra25_fffb.proj",
+          "git_blob_sha": "2d2a26af57e588d57f70905c4dc3172eb153f7ff",
+          "repository_file_bytes": 1197871,
+          "header": "// ta_Dump File v3.0 -- code v8.5.6.0 rev11491",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "007bf6f384e7948297311f0fe4b444e31423949ea7ab0616a9dbdf4bd5156675",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/ra/leabra_ra25_inhib.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/ra/leabra_ra25_inhib.proj",
+          "git_blob_sha": "1a28d70c2cabc092e3c05685b589d679779641f1",
+          "repository_file_bytes": 1444576,
+          "header": "// ta_Dump File v3.0 -- code v8.0.0.0 rev9851",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "f6fd85ea12758ec489aa980a410c3b57648cf25688b4062713d44f519db99e39",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/ra/leabra_ra25_kna.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/ra/leabra_ra25_kna.proj",
+          "git_blob_sha": "f01637084d0a782c74b36cac134376f1ff00ea31",
+          "repository_file_bytes": 1376456,
+          "header": "// ta_Dump File v3.0 -- code v8.3.0.0 rev11233",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "981fbf50823435a37beca87bba80572caf9519e578e781d855bd8e8ebe485f7e",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/spike/leabra_ra25_adapt_spike.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/spike/leabra_ra25_adapt_spike.proj",
+          "git_blob_sha": "91f775622ab03dac9fdf27db743467759ed0464a",
+          "repository_file_bytes": 1168169,
+          "header": "// ta_Dump File v3.0 -- code v7.0.2.0 rev7596",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [
+              "NO_LIC"
+            ],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "0e43f81720de2dba81508af900c8a04f72180d4d9d8b8e528d55a65e117fd457",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/spike/leabra_ra25_fffb_spike.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/spike/leabra_ra25_fffb_spike.proj",
+          "git_blob_sha": "21e0a8e534a2aa24ecceb810f0a63b6d9b341a2a",
+          "repository_file_bytes": 831430,
+          "header": "// ta_Dump File v3.0 -- code v6.3.6.0 rev6853",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [
+              "NO_LIC"
+            ],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "81e69b87363cd4b94b30359c40320a3da03b8d4577e3070aa91457c533859fd7",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/spike/proto_spk_flex.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/spike/proto_spk_flex.proj",
+          "git_blob_sha": "084694860287642b3054573407b3714dee24f484",
+          "repository_file_bytes": 2382187,
+          "header": "// ta_Dump File v3.0 -- code v5.3.2.0 rev5285",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "824d0cd7322c7eaf8c871c880cd6e14eee3ab47d08d7ee94422bd9e289bc5f81",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/stdp/ca_eq_sim.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/stdp/ca_eq_sim.proj",
+          "git_blob_sha": "3750d4b1c866544a8dcc59edb219c9aa137f067d",
+          "repository_file_bytes": 81246,
+          "header": "// ta_Dump File v2.0",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "bd33a2ba118838018c262e0b2f8fcf94d0a0a5e829c7c98b3ac547e68ec0f5e9",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "sims/cemer/stdp/ct_stdp_sim.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/sims/cemer/stdp/ct_stdp_sim.proj",
+          "git_blob_sha": "700a2a1a885b724a5acc8bad39ee984ad7a080ae",
+          "repository_file_bytes": 1069560,
+          "header": "// ta_Dump File v2.0 -- code v5.0.1.0",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "430a0acd1ab1943b69bec0c8ec0514647f86b31348db0d74d601eaaa6e7422f1",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "ti/random_struct_2014/rnd_0808.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/ti/random_struct_2014/rnd_0808.proj",
+          "git_blob_sha": "2f3d9659786504d02845e2dfde8798534412e5fe",
+          "repository_file_bytes": 1225914,
+          "header": "// ta_Dump File v3.0 -- code v7.0.0.0 rev7375",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [
+              "NO_LIC"
+            ],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "313342b0d0f5b49167955390e239676a5c5e496b3e1f767223ab8e8e69fdef13",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "ti/random_struct_2014/rnd_0808_implicit.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/ti/random_struct_2014/rnd_0808_implicit.proj",
+          "git_blob_sha": "f39dc15620d865647c10ea1b25c2962b909cf431",
+          "repository_file_bytes": 1193754,
+          "header": "// ta_Dump File v3.0 -- code v7.0.1.0 rev7447",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [
+              "NO_LIC"
+            ],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "e9992333270573542cb54c7855477fec9691bf30efe73a228988ac0dc66196c5",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "ti/random_struct_2014/rnd_0912.proj",
+          "url": "https://raw.githubusercontent.com/ccnlab/leabra/b6be2343d9ff631cfe3d1a36d6b569cfbdc285de/ti/random_struct_2014/rnd_0912.proj",
+          "git_blob_sha": "009f1b5aacead3d454f757578791398eeefa48e1",
+          "repository_file_bytes": 1003515,
+          "header": "// ta_Dump File v3.0 -- code v7.0.0.0 rev7375",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [
+              "NO_LIC"
+            ],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "a17172637eb0ce4da87e49ebf7938a1e07279dd6bf45a0b325d0fa3baff08763",
+          "behavior_validation": "pending"
+        }
+      ]
+    },
+    {
+      "repository": "ccnlab/hip-edl",
+      "source": "https://github.com/ccnlab/hip-edl",
+      "revision": "c1befe67294d26ee1deaec955376cb5db47c5f08",
+      "projects": []
+    },
+    {
+      "repository": "ModelDBRepository/79488",
+      "source": "https://github.com/ModelDBRepository/79488",
+      "revision": "be334aa89656307ecf111a0f606c5695d4b8ead9",
+      "projects": [
+        {
+          "path": "BG_DA_model_STN_2str_GoNoGoRF.proj.gz",
+          "url": "https://raw.githubusercontent.com/ModelDBRepository/79488/be334aa89656307ecf111a0f606c5695d4b8ead9/BG_DA_model_STN_2str_GoNoGoRF.proj.gz",
+          "git_blob_sha": "7c2822b56faae74a7dda1fcfb077c87a5ae8228c",
+          "repository_file_bytes": 215955,
+          "header": "// ta_Dump File v1.0",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "e5ca6cdead0717191104839b55f0bd381dd92c4ec737a229dedee6ca58dabbd2",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "BG_DA_model_STN_2str_ProbReversal_repl.proj.gz",
+          "url": "https://raw.githubusercontent.com/ModelDBRepository/79488/be334aa89656307ecf111a0f606c5695d4b8ead9/BG_DA_model_STN_2str_ProbReversal_repl.proj.gz",
+          "git_blob_sha": "89539e3e104052dcfbe28e23aecbeff880c55add",
+          "repository_file_bytes": 213543,
+          "header": "// ta_Dump File v1.0",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "593f290121008395029b4045bf3f83d2ad75777a1a1d76bff57148a0c8a9a704",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "BG_DA_model_STN_2str_WeatherPred_repl.proj.gz",
+          "url": "https://raw.githubusercontent.com/ModelDBRepository/79488/be334aa89656307ecf111a0f606c5695d4b8ead9/BG_DA_model_STN_2str_WeatherPred_repl.proj.gz",
+          "git_blob_sha": "466a56506d1d3d59b0704640b2a2151816e4c618",
+          "repository_file_bytes": 217128,
+          "header": "// ta_Dump File v1.0",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "b0c7d5315042dc2035820fee29337ab67fcf796437d50b7c63210f2f565b26bc",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "supplement/BG_ProbRev.proj",
+          "url": "https://raw.githubusercontent.com/ModelDBRepository/79488/be334aa89656307ecf111a0f606c5695d4b8ead9/supplement/BG_ProbRev.proj",
+          "git_blob_sha": "53a6aa3fc6934ee92baa17e69669380d0e47fb8f",
+          "repository_file_bytes": 309348,
+          "header": "// ta_Dump File v2.0",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "3797a615c7094757e5c3c86773119f282113fee902933b698db910b3b7a6221a",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "supplement/BG_ProbSelect.proj",
+          "url": "https://raw.githubusercontent.com/ModelDBRepository/79488/be334aa89656307ecf111a0f606c5695d4b8ead9/supplement/BG_ProbSelect.proj",
+          "git_blob_sha": "7b21638f81b816fe7dd1afc94454465fa2a11710",
+          "repository_file_bytes": 382734,
+          "header": "// ta_Dump File v2.0",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "a7faecf45baa885aee6c4f8b8d15b3956ce03ea59939207efe6238f02aa4c822",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "supplement/BG_WeatherPred.proj",
+          "url": "https://raw.githubusercontent.com/ModelDBRepository/79488/be334aa89656307ecf111a0f606c5695d4b8ead9/supplement/BG_WeatherPred.proj",
+          "git_blob_sha": "04cd8b3fde53b79cb4d76f4102f83b3c5532e495",
+          "repository_file_bytes": 295289,
+          "header": "// ta_Dump File v2.0",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "54c4c90fd184912fb2e3b8b42528f6c1ef654b3c4a9d9834d97683f370d36d88",
+          "behavior_validation": "pending"
+        }
+      ]
+    },
+    {
+      "repository": "twiecki/bg_inhib",
+      "source": "https://github.com/twiecki/bg_inhib",
+      "revision": "48fe9cfd5bff1cd9be8540b6964c714cd2b82d4c",
+      "projects": [
+        {
+          "path": "BG_inhib.proj",
+          "url": "https://raw.githubusercontent.com/twiecki/bg_inhib/48fe9cfd5bff1cd9be8540b6964c714cd2b82d4c/BG_inhib.proj",
+          "git_blob_sha": "47cf0266c4c79e2ba041da1d8c3a3c3ceedb10a3",
+          "repository_file_bytes": 1023724,
+          "header": "// ta_Dump File v3.0 -- code v6.3.2.0 rev6450",
+          "license_assessment": {
+            "status": "explicit author README license declaration",
+            "identifier": "BSD-2-Clause",
+            "redistributable_candidate": true,
+            "evidence_url": "https://github.com/twiecki/bg_inhib/blob/48fe9cfd5bff1cd9be8540b6964c714cd2b82d4c/README.rst",
+            "exact_declaration": ":License: Simplified BSD",
+            "scope_evidence": "The same Introduction states: This is the neural network model and accompanying scripts to run and analyze the model presented in: [Wiecki and Frank 2013].",
+            "reasoning": "README describes the contained model and scripts and declares their license without a model-file exclusion. The project NO_LIC field is retained as conflicting/default metadata, not automatically treated as overriding the separate author grant. Preserve the README and authorship with redistribution.",
+            "embedded_metadata": [
+              "NO_LIC"
+            ]
+          },
+          "sha256": "e8bba56b6039d21b73b44ee136b3f6e57136745100912921189ece921089c487",
+          "behavior_validation": "pending"
+        }
+      ]
+    },
+    {
+      "repository": "schapirolab/hip-sl",
+      "source": "https://github.com/schapirolab/hip-sl",
+      "revision": "822c4084172bde0b4af4f031b763565762117d80",
+      "projects": []
+    },
+    {
+      "repository": "noammiller/Leabra7-CLS-Modeling",
+      "source": "https://github.com/noammiller/Leabra7-CLS-Modeling",
+      "revision": "1974edb5e523db5e48929e88d3728062516b72bf",
+      "projects": []
+    },
+    {
+      "repository": "benureau/leabra",
+      "source": "https://github.com/benureau/leabra",
+      "revision": "3e4f308a9b4276552db09d28e2d1dcb6dfb5ece7",
+      "projects": [
+        {
+          "path": "tests/emergent_projects/LeabraStd25.proj",
+          "url": "https://raw.githubusercontent.com/benureau/leabra/3e4f308a9b4276552db09d28e2d1dcb6dfb5ece7/tests/emergent_projects/LeabraStd25.proj",
+          "git_blob_sha": "5df676caafd24bd177c150ca001cf26965e6d286",
+          "repository_file_bytes": 494359,
+          "header": "// ta_Dump File v3.0 -- code v8.1.1.0 rev11060",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "2f25e2cb6633d692dcc5b24e9e6b8b31555e68a3676c11a4c7bdca2258286137",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "tests/emergent_projects/LeabraStd4.proj",
+          "url": "https://raw.githubusercontent.com/benureau/leabra/3e4f308a9b4276552db09d28e2d1dcb6dfb5ece7/tests/emergent_projects/LeabraStd4.proj",
+          "git_blob_sha": "efc9338f2fcdef17fa2bb25ae1b15ff79846e37f",
+          "repository_file_bytes": 587486,
+          "header": "// ta_Dump File v3.0 -- code v8.1.1.0 rev11060",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "c3c1e3312e3567bde5ef17ed21e777f80711c79c075dd97d95909d79d57a46d5",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "tests/emergent_projects/layer_fffb.proj",
+          "url": "https://raw.githubusercontent.com/benureau/leabra/3e4f308a9b4276552db09d28e2d1dcb6dfb5ece7/tests/emergent_projects/layer_fffb.proj",
+          "git_blob_sha": "14fa366dc66e004076d4ba59b7082cf9f5134676",
+          "repository_file_bytes": 311647,
+          "header": "// ta_Dump File v3.0 -- code v8.1.1.0 rev11060",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "891892104a04e425addd83369449c65f5129e84d83cff885d9dce5786f151bbe",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "tests/emergent_projects/netin.proj",
+          "url": "https://raw.githubusercontent.com/benureau/leabra/3e4f308a9b4276552db09d28e2d1dcb6dfb5ece7/tests/emergent_projects/netin.proj",
+          "git_blob_sha": "4a91af7bf0ff65bb7d1060998bb5e017856691e9",
+          "repository_file_bytes": 488957,
+          "header": "// ta_Dump File v3.0 -- code v8.1.1.0 rev11060",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "2d93f22b953f91668dc7356a67b2d9a4b04462e653be72f7ee239a18a936ce3d",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "tests/emergent_projects/neuron.proj",
+          "url": "https://raw.githubusercontent.com/benureau/leabra/3e4f308a9b4276552db09d28e2d1dcb6dfb5ece7/tests/emergent_projects/neuron.proj",
+          "git_blob_sha": "9def62194b6c804d8904c87defbfecf0d2704063",
+          "repository_file_bytes": 448344,
+          "header": "// ta_Dump File v3.0 -- code v8.1.1.0 rev11060",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "41c460b0d0fe4117b1bdb08f0f1541437470c4617ecf5dcdba1e784296aeaf39",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "tests/emergent_projects/neuron_pair.proj",
+          "url": "https://raw.githubusercontent.com/benureau/leabra/3e4f308a9b4276552db09d28e2d1dcb6dfb5ece7/tests/emergent_projects/neuron_pair.proj",
+          "git_blob_sha": "857f28657cd2796ba2ee63fe3f234219f17e337a",
+          "repository_file_bytes": 492231,
+          "header": "// ta_Dump File v3.0 -- code v8.1.1.0 rev11060",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "a0509a0adccaf98decfcd3245fcaee48d2e25d48901f536f1c3f387fce4ab82e",
+          "behavior_validation": "pending"
+        },
+        {
+          "path": "tests/emergent_projects/pat_assoc.proj",
+          "url": "https://raw.githubusercontent.com/benureau/leabra/3e4f308a9b4276552db09d28e2d1dcb6dfb5ece7/tests/emergent_projects/pat_assoc.proj",
+          "git_blob_sha": "42663128ade55e40d615bdaf6556c4d90a9de0b2",
+          "repository_file_bytes": 577882,
+          "header": "// ta_Dump File v3.0 -- code v8.0.1.0 rev10018",
+          "license_assessment": {
+            "status": "explicit embedded grant",
+            "identifier": "GPL-2.0-only",
+            "evidence": "project license block",
+            "redistributable_candidate": true,
+            "scope": "this project file; auxiliary files require separate coverage"
+          },
+          "sha256": "b868e24c33427251d33fbdbc7f0abfbce5c5bbf4a907b3efddef6ee15df44db9",
+          "behavior_validation": "pending"
+        }
+      ]
+    },
+    {
+      "repository": "mliljeholm/Networks",
+      "source": "https://github.com/mliljeholm/Networks",
+      "revision": null,
+      "projects": []
+    },
+    {
+      "repository": "ModelDBRepository/115813",
+      "source": "https://github.com/ModelDBRepository/115813",
+      "revision": "e03334b719f3c12d27b20e5df191413af3eb5157",
+      "projects": [
+        {
+          "path": "antonpdp-3.7.3.1.proj.gz",
+          "url": "https://raw.githubusercontent.com/ModelDBRepository/115813/e03334b719f3c12d27b20e5df191413af3eb5157/antonpdp-3.7.3.1.proj.gz",
+          "header": "// ta_Dump File v1.0",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "8c6dd1dd471e9399c290a7e14b55eec1c83a90b85d2b8208a3bd78569026d688",
+          "behavior_validation": "pending"
+        }
+      ]
+    },
+    {
+      "repository": "ModelDBRepository/97972",
+      "source": "https://github.com/ModelDBRepository/97972",
+      "revision": "6a8c130351346855ba11a57bcbe8f8bce9df8d69",
+      "projects": [
+        {
+          "path": "Conflict_DBS.proj.gz",
+          "url": "https://raw.githubusercontent.com/ModelDBRepository/97972/6a8c130351346855ba11a57bcbe8f8bce9df8d69/Conflict_DBS.proj.gz",
+          "header": "// ta_Dump File v1.0",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected files",
+            "identifier": null,
+            "redistributable_candidate": false,
+            "embedded_metadata": [],
+            "scope": "discovery only; not approved for redistribution based solely on public availability"
+          },
+          "sha256": "b66a8a1edae48ffa8fca0cc3f7bb55e67e9cd8b4a88bac4ed001843242c40d0b",
+          "behavior_validation": "pending"
+        }
+      ]
+    },
+    {
+      "repository": "schapirolab/hip-cat",
+      "source": "https://github.com/schapirolab/hip-cat",
+      "revision": "77f01c4f473e985364990d5c07fb7166aa4f993d",
+      "projects": [
+        {
+          "path": "hip-cat.proj",
+          "url": "https://raw.githubusercontent.com/schapirolab/hip-cat/77f01c4f473e985364990d5c07fb7166aa4f993d/hip-cat.proj",
+          "git_blob_sha": "1c2a15e20e862b3a8ccc0a1ed05c2f2b5f479b98",
+          "repository_file_bytes": 1212031,
+          "header": "// ta_Dump File v3.0 -- code v7.0.1.0 rev7465",
+          "license_assessment": {
+            "status": "no applicable grant found in inspected project and repository",
+            "redistributable_candidate": false,
+            "identifier": null
+          },
+          "sha256": "d6f92c0599030dc0f4bea8229fbcaaf261d0d136de299d88216e1bcfaa5c5bdc",
+          "behavior_validation": "pending"
+        }
+      ]
+    }
+  ],
+  "not_exhaustive": true
+}

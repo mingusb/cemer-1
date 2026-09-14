@@ -1,0 +1,42 @@
+{
+  "models": [
+    {
+      "name": "cats_and_dogs",
+      "source_url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_3/cats_and_dogs.proj",
+      "source_sha256": "6578de031f4d909cf0d5fd5adaecb219c2bc2d89b27a59957a6724520f5fa60f",
+      "source_format": "// ta_Dump File v3.0 -- code v8.5.0.0 rev11328",
+      "project_file": "cats_and_dogs.proj",
+      "project_sha256": "7a4f7d02c532be8403e1e04ea6bc5a73febfdff9716e0dd37a491aee3af043fa",
+      "offline_html": "cats_and_dogs.html",
+      "offline_html_sha256": "8ee4cd3031e4f85847e3ea457d646ab4f0b6b48a0d52cc0bf92845dec6c11f9e",
+      "cached_original_html_sha256": "8e6b989f25572782987528d7958b0339ae7d1bd99789426b5c8c0f9e7eef3421",
+      "author": "Randall C. O\u2019Reilly",
+      "license": "GPLv2 project; CC BY-SA 3.0 wiki article",
+      "article_url": "https://grey.colorado.edu/CompCogNeuro/index.php/CCNBook/Sims/Networks/Cats_and_Dogs",
+      "migration": "Ordinary Load/SaveCopy; cached documentation made local. Network, weights, data, parameters and native programs retained. No external weights required.",
+      "native_listing_preserved": true,
+      "checks": [
+        {
+          "check": "console_exit",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "server.runtime_diagnostics",
+          "actual": [],
+          "expected": []
+        },
+        {
+          "check": "console_exit",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "server.runtime_diagnostics",
+          "actual": [],
+          "expected": []
+        }
+      ]
+    }
+  ]
+}

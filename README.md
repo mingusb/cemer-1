@@ -4,6 +4,9 @@ This fork modernizes the original C++ Emergent neural network simulator for
 Clang 24 nightly, Qt 6.12 Beta 4, and C++17. It retains the CSS (C Super Script)
 interpreter, reflected object system, and Coin/Quarter 3D interface.
 
+Development is targeting **Emergent 9.0**. The [major-release gates](docs/RELEASE_PLAN.md)
+require the complete model corpus to work; the download below is an interim preview.
+
 See [modern stack setup and verification](tools/toolchain/README.md) for the
 pinned SDK, build instructions, and test commands. C++ builds require
 `-Wall -Wextra -Werror -Woverloaded-virtual`, with no warning suppression flags.
@@ -33,6 +36,11 @@ EMERGENT_SOFTWARE_RENDERING=1 ./emergent-linux-x86_64/run-inductor-head
 This keeps the native 3D viewer and embedded browser available using CPU rendering. The same option works with the `emergent` launcher.
 
 For development, follow the [source build instructions](tools/toolchain/README.md). The portable runtime and source build are separate downloads.
+
+The source branch also contains a growing [historical cognitive-model collection](demo/LegacyModels/README.md),
+with native tutorial tasks, offline author documentation and behavioral integration
+tests. These additions follow the preview release; each model records its original
+version, license and the results actually verified.
 
 The original [emer/cemer](https://github.com/emer/cemer) history, authorship,
 and licenses are preserved. Its upstream team moved development to the

@@ -1,0 +1,79 @@
+// bvPVLVTask
+// objs_vars: global variables for accessing objs objects
+basic_train_time = BasicTrainTime (TimeUsed)
+
+// args: global script parameters (arguments)
+// network to operate on
+network = bvPVLVNet (LeabraNetwork)
+
+// vars: global (non-parameter) variables
+// if true, will update network views at end of settling
+update_net_view = true (bool)
+
+// functions: functions defined for this program
+IsTestTrial_fm_trial_gp() returns: bool
+  LocalVars (3 vars)
+    epoch_trial_gp_list = EpochTrialGpList (DataTable)
+    e_trl_nm =  (String)
+    tst_flg = 0 (int)
+  e_trl_nm = epoch_trial_gp_list->GetData("TrialGpName")
+  tst_flg = epoch_trial_gp_list->GetData("TestFlag")
+  // testing both is an extra safety measure for congruence
+  if (e_trl_nm.contains("_test") && tst_flg == 1)
+    return true
+  else if (e_trl_nm.contains("_test") || tst_flg == 1)
+    Print "ERROR: trial_gp_name and test_flag seem to be incongruent!"
+    return false
+  else
+    return false
+
+// init_code: code to initialize the program
+basic_train_time->ResetUsed()
+
+// prog_code: main code to run program
+LocalVars (1 vars)
+  input_idx = 3 (int)
+ 
+// === Start Alpha-Level Trial
+// === Start Alpha-Level Trial
+// what is this BasicTrainTime is used for?
+basic_train_time->StartTimer(false)
+TrialStart(network)
+// prepare next/current alpha-level trial to run
+bvPVLVEnv(network)
+// set network.train_mode
+if (IsTestTrial_fm_trial_gp())
+  network.train_mode = "TEST"
+else
+  network.train_mode = "TRAIN"
+ 
+// === Run Minus Phase
+// === Run Minus Phase
+// apply CS inputs - but NOT USs (i.e., PVs)
+ApplyInputs(network)
+// settle for minus phase, using ct_time.minus as fixed number of cycles to run
+SettleMinus(network)
+// NEED THIS GUY??? compute stats appropriate for given phase
+network->Compute_PhaseStats()
+// update network views, if update_net_view == true
+Net Update View
+Stop_Step Point
+ 
+// === Run Plus Phase
+// === Run Plus Phase
+// re-apply CS inputs - but NOT USs (i.e., PVs)
+ApplyInputs(network)
+ApplyPVInputs(network, input_idx)
+// settle for designated plus phase number of cycles
+SettlePlus(network)
+// NEED THIS GUY??? compute stats appropriate for given phase
+network->Compute_PhaseStats()
+// update network views, if update_net_view == true
+Net Update View
+// standard end of trial stuff
+TrialEnd(network)
+// what the hell does this do?? And, and where does it belong relative to trial, group, epoch, trng_run?
+basic_train_time->EndTimer()
+TrialMonitor()
+// === End Alpha-Level Trial
+// === End Alpha-Level Trial

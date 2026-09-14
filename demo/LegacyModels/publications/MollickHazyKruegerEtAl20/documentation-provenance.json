@@ -1,0 +1,17 @@
+{
+  "cached_article_revision": 5755,
+  "cached_article_sha256": "1d8fad54668e67e8bf7634d88168fec3ff084522b388815f4af312f0a3de3ea0",
+  "guide_sha256": "f680f322a1e80e88c34cbfc12f4d9f582b691107b4e69d7b528504501d801aa4",
+  "adaptation": "Extract author article, remove online wiki chrome/scripts, preserve prose/captions, replace unavailable code screenshots with explicitly labeled exact native ProgramListing text. No model edits.",
+  "replaced_illustrations": [
+    "fig_bvPVLVTask_code1.png",
+    "fig_bvPVLVEnv_code1.png",
+    "fig_PrepCurAlphTrial_code1.png",
+    "fig_SetStdInputData_code1.png"
+  ],
+  "native_exports": {
+    "bvPVLVTask": "690db3d3bf177d8689f12afcfb39a798e26dc314d6bf4ee3055dfed22de41ca9",
+    "bvPVLVEnv": "1b4215afa79f442bee9ab170aab4ae7e5ad215687ba1974bc9bccb0efd866c2c"
+  },
+  "license": "CC-BY-SA-3.0 article/adaptation; GPL-2.0-only native program transcriptions"
+}
