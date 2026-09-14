@@ -11,8 +11,10 @@ Ship the latest and best available author-maintained implementation of each
 **distinct model**, including models written for the Go version of Emergent.
 Porting every historical version, backup or release is not a release requirement.
 
-Use the [discovery catalog](../demo/LegacyModels/catalog.json) and its per-file
-source inventory to select one canonical implementation per model. Prefer current
+Use the [model source catalog](../demo/ModelCatalog/README.md) and its pinned
+source inventory to select one canonical implementation per model. The earlier
+[discovery catalog](../demo/LegacyModels/catalog.json) retains the initial bundle
+survey. Prefer current
 author-maintained successors, including [CCN textbook simulations](https://github.com/CompCogNeuro/sims),
 [Go Leabra](https://github.com/emer/leabra) and [Axon](https://github.com/emer/axon)
 examples where they implement that model. Use the latest available C++ or PDP++
@@ -75,11 +77,19 @@ detector, Cats and Dogs, and ACT-R counting/semantic tasks. Other downloaded
 models remain at various discovery, loading, behavior and GUI stages. The
 application and InductorHead also have dedicated integration tests.
 
-PVLV's initial untrained response and GUI are checked. Its full authored learning
-suite has early-learning failures and outdated configuration references; it is
-not a completed publication replication. The old PFC project now loads safely,
-but further legacy algorithm restoration is paused while current successors are
-selected. Go-era model selection and faithful porting are now included. These
-are known unfinished areas, not the only remaining models.
+The source catalog currently identifies 85 model candidates, with application
+utilities listed separately. Its source hashes and task identities have been
+reviewed; native implementation and scientific acceptance remain unfinished.
+This candidate count is not a count of working models.
+
+PVLV's initial untrained response and GUI are checked. The historical full
+authored suite recorded 68 passed criteria, 44 failures and 94 skipped requests,
+then shut down abnormally on the frozen older test binary. It is not a completed
+publication replication. Its selected current successor still needs a native
+port and acceptance checks. The old PFC project loads safely, but legacy
+algorithm restoration remains paused in favor of its current successor.
+Go-era port development is checkpointed and paused while the validated modern
+application delivery takes priority. These are known unfinished areas, not the
+only remaining models.
 
 No major-release completion date is established yet.
