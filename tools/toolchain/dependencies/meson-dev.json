@@ -1,0 +1,6 @@
+{
+  "name": "meson",
+  "repository": "https://github.com/mesonbuild/meson.git",
+  "commit": "45bfeba3858e71b9c229190622e7b41204ba72dd",
+  "version": "1.12.99"
+}

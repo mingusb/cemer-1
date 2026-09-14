@@ -1,0 +1,342 @@
+{
+  "updated_at": "2026-09-13T23:59:54.858562+00:00",
+  "dependencies": [
+    {
+      "name": "serf",
+      "version": "2.0.0",
+      "revision": "1a26bcb2d6e27abc4a996b0c32d661415214a0bf",
+      "source_url": "https://github.com/apache/serf.git",
+      "commit_date": "2026-07-02T15:45:41Z",
+      "source_path": "/home/b/toolchains/sources/serf",
+      "build_path": "/home/b/toolchains/build-deps/serf",
+      "install_prefix": "/home/b/toolchains/deps",
+      "runtime_dependencies": [
+        "apr",
+        "openssl",
+        "zlib",
+        "brotli"
+      ],
+      "license_files": [
+        "/home/b/toolchains/sources/serf/LICENSE",
+        "/home/b/toolchains/sources/serf/NOTICE"
+      ],
+      "source_patch": "tools/toolchain/dependencies/patches/serf.patch",
+      "source_patch_sha256": "2e34f2018ea4bca0ed61933a3c466449e79fec47e14e3a6b61caf6c1805a3ea8",
+      "build_recipe": "tools/toolchain/dependencies/build-networking.py",
+      "compiler": "Clang24 nightly 20260911 (58c46bae2118)",
+      "compile_commands": "/home/b/toolchains/build-deps/serf/compile_commands.json",
+      "compile_command_count": 124,
+      "active_suppression_flags": [],
+      "c_flags": "Upstream effective positive warnings plus -Wall -Werror",
+      "cxx_flags": "-Wall -Wextra -Werror -Woverloaded-virtual; GNU libstdc++",
+      "installed_libraries": {
+        "libserf-2.so.2.0.0": {
+          "path": "/home/b/toolchains/deps/lib/libserf-2.so.2.0.0",
+          "sha256": "997e73fec3ca21de38358f90db54667a574e4c61da34bfbcd64d5ef926ec319f",
+          "elf_dynamic": "\nDynamic section at offset 0x3cf00 contains 34 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libssl.so.4]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypto.so.4]\n 0x0000000000000001 (NEEDED)             Shared library: [libz.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libbrotlidec.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libserf-2.so.2.0.0]\n 0x0000000000000007 (RELA)               0x6598\n 0x0000000000000008 (RELASZ)             14064 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          400\n 0x0000000000000017 (JMPREL)             0x9c88\n 0x0000000000000002 (PLTRELSZ)           8544 (bytes)\n 0x0000000000000003 (PLTGOT)             0x40360\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x3b40\n 0x000000000000000a (STRSZ)              10835 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x3520\n 0x0000000000000019 (INIT_ARRAY)         0x3d138\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x3d130\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x3aaac\n 0x000000000000000d (FINI)               0x3aac8\n 0x000000006ffffff0 (VERSYM)             0x30b8\n 0x000000006ffffffe (VERNEED)            0x3490\n 0x000000006fffffff (VERNEEDNUM)         3\n 0x0000000000000000 (NULL)               0x0\n"
+        }
+      },
+      "logs": {
+        "build-final.log": {
+          "path": "/home/b/toolchains/build-deps/serf/build-final.log",
+          "sha256": "526fe90a9ed0c09cb97356ab6577e09e06596b67f89b21f4137d859397ca803b"
+        },
+        "test-final.log": {
+          "path": "/home/b/toolchains/build-deps/serf/test-final.log",
+          "sha256": "8a6b137348319c90c2504c3bfb2002062e41b5eeba7e6faba886f1c1b5ce9107"
+        },
+        "install-final.log": {
+          "path": "/home/b/toolchains/build-deps/serf/install-final.log",
+          "sha256": "a2b95627778911afc0fd4d593f16b11c6dc2c8b5754f5045ffa35530386cef75"
+        },
+        "test-openssl-final.log": {
+          "path": "/home/b/toolchains/build-deps/serf/test-openssl-final.log",
+          "sha256": "084b78f34223c1da855ed1f16b38684d5859ec17ecca33d03dfb143d6d534be6"
+        }
+      },
+      "status": "built_installed_tested",
+      "configure_command": [
+        "cmake",
+        "-S",
+        "/home/b/toolchains/sources/serf",
+        "-B",
+        "/home/b/toolchains/build-deps/serf",
+        "-G",
+        "Ninja",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_C_FLAGS=-Wall -Werror",
+        "-DCMAKE_C_FLAGS_RELEASE=-O2",
+        "-DCMAKE_INSTALL_LIBDIR=lib",
+        "-DCMAKE_LINKER_TYPE=LLD",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        "-DCMAKE_PREFIX_PATH=/home/b/toolchains/deps",
+        "-DCMAKE_INSTALL_PREFIX=/home/b/toolchains/deps",
+        "-DCMAKE_INSTALL_RPATH=/home/b/toolchains/deps/lib",
+        "-DOPENSSL_ROOT_DIR=/home/b/toolchains/deps"
+      ],
+      "validation": {
+        "upstream_ctest": "PASS 11/11, including 49 TLS tests; repeated successfully after final OpenSSL installation",
+        "certificate_buffer_fix": "Use counted ASN.1 lengths for name copying and embedded-NUL detection, avoiding OpenSSL4 buffer overreads and hostname failures."
+      },
+      "final_runtime_selected": true
+    },
+    {
+      "name": "subversion",
+      "version": "1.16.0-dev",
+      "revision": "37ce946992a102cc2b1010de8c7bc520fed58bc0",
+      "source_url": "https://github.com/apache/subversion.git",
+      "commit_date": "2026-09-11T20:55:57Z",
+      "source_path": "/home/b/toolchains/sources/subversion",
+      "build_path": "/home/b/toolchains/build-deps/subversion",
+      "install_prefix": "/home/b/toolchains/deps",
+      "runtime_dependencies": [
+        "apr",
+        "serf",
+        "sqlite",
+        "zlib",
+        "lz4",
+        "utf8proc"
+      ],
+      "license_files": [
+        "/home/b/toolchains/sources/subversion/LICENSE",
+        "/home/b/toolchains/sources/subversion/NOTICE"
+      ],
+      "source_patch": "tools/toolchain/dependencies/patches/subversion.patch",
+      "source_patch_sha256": "cf623a4587f7f9f5b841d29197de9add380fa835ec2820ce5d155617f5edcec9",
+      "build_recipe": "tools/toolchain/dependencies/build-networking.py",
+      "compiler": "Clang24 nightly 20260911 (58c46bae2118)",
+      "compile_commands": "/home/b/toolchains/build-deps/subversion/compile_commands.json",
+      "compile_command_count": 530,
+      "active_suppression_flags": [],
+      "c_flags": "Upstream effective positive warnings plus -Wall -Werror",
+      "cxx_flags": "-Wall -Wextra -Werror -Woverloaded-virtual; GNU libstdc++",
+      "installed_libraries": {
+        "libsvn_client-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_client-1.so.0.16.0",
+          "sha256": "b18ac5333a17bc5cdad3f60fbf431588623d4c8754a9c9009dbc93ffe6b26358",
+          "elf_dynamic": "\nDynamic section at offset 0x90068 contains 35 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_wc-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_ra-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_delta-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_diff-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_client-1.so.0]\n 0x0000000000000007 (RELA)               0xc8f0\n 0x0000000000000008 (RELASZ)             3120 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          119\n 0x0000000000000017 (JMPREL)             0xd520\n 0x0000000000000002 (PLTRELSZ)           16056 (bytes)\n 0x0000000000000003 (PLTGOT)             0x93360\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x6bec\n 0x000000000000000a (STRSZ)              23811 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x6048\n 0x0000000000000019 (INIT_ARRAY)         0x91c18\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x91c10\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x8e1fc\n 0x000000000000000d (FINI)               0x8e218\n 0x000000006ffffff0 (VERSYM)             0x58d8\n 0x000000006ffffffe (VERNEED)            0x6008\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_delta-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_delta-1.so.0.16.0",
+          "sha256": "b0e03f59667b8f48784eb351d04356d861f5c03af0c96ee5a2ba3efb38acc486",
+          "elf_dynamic": "\nDynamic section at offset 0x11b78 contains 32 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libz.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_delta-1.so.0]\n 0x0000000000000007 (RELA)               0x2530\n 0x0000000000000008 (RELASZ)             1344 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          50\n 0x0000000000000017 (JMPREL)             0x2a70\n 0x0000000000000002 (PLTRELSZ)           2808 (bytes)\n 0x0000000000000003 (PLTGOT)             0x14e38\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x163c\n 0x000000000000000a (STRSZ)              3824 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x1440\n 0x0000000000000019 (INIT_ARRAY)         0x13a68\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x13a60\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x122c8\n 0x000000000000000d (FINI)               0x122e4\n 0x000000006ffffff0 (VERSYM)             0x12b8\n 0x000000006ffffffe (VERNEED)            0x1410\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_diff-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_diff-1.so.0.16.0",
+          "sha256": "6b9e4f56fc53aa3cf72da6bc5e1a100136902cfdfde25684e09f999631a5a5a3",
+          "elf_dynamic": "\nDynamic section at offset 0x17590 contains 32 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libz.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_diff-1.so.0]\n 0x0000000000000007 (RELA)               0x2a88\n 0x0000000000000008 (RELASZ)             2376 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          94\n 0x0000000000000017 (JMPREL)             0x33d0\n 0x0000000000000002 (PLTRELSZ)           3360 (bytes)\n 0x0000000000000003 (PLTGOT)             0x1a7c0\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x18b0\n 0x000000000000000a (STRSZ)              4564 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x1698\n 0x0000000000000019 (INIT_ARRAY)         0x19118\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x19110\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x17808\n 0x000000000000000d (FINI)               0x17824\n 0x000000006ffffff0 (VERSYM)             0x14e0\n 0x000000006ffffffe (VERNEED)            0x1668\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_fs-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_fs-1.so.0.16.0",
+          "sha256": "7342875002de4807a30063acbb9a38ec0bd9f94992e1f314ae0f1a3345d3b70d",
+          "elf_dynamic": "\nDynamic section at offset 0xad40 contains 35 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_fs_fs-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_fs_x-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_fs_util-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_delta-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_fs-1.so.0]\n 0x0000000000000007 (RELA)               0x30f0\n 0x0000000000000008 (RELASZ)             888 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          26\n 0x0000000000000017 (JMPREL)             0x3468\n 0x0000000000000002 (PLTRELSZ)           2808 (bytes)\n 0x0000000000000003 (PLTGOT)             0xe040\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x1e2c\n 0x000000000000000a (STRSZ)              4799 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x1a48\n 0x0000000000000019 (INIT_ARRAY)         0xccb8\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0xccb0\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0xb518\n 0x000000000000000d (FINI)               0xb534\n 0x000000006ffffff0 (VERSYM)             0x1858\n 0x000000006ffffffe (VERNEED)            0x1a28\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_fs_fs-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_fs_fs-1.so.0.16.0",
+          "sha256": "95f5b88be193e194d794678bf9db901cb6aaa11bf55f878f4a97e58fae86d6e5",
+          "elf_dynamic": "\nDynamic section at offset 0x4eed0 contains 33 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_delta-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_fs_util-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_fs_fs-1.so.0]\n 0x0000000000000007 (RELA)               0x8040\n 0x0000000000000008 (RELASZ)             3624 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          70\n 0x0000000000000017 (JMPREL)             0x8e68\n 0x0000000000000002 (PLTRELSZ)           12504 (bytes)\n 0x0000000000000003 (PLTGOT)             0x52510\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x46d4\n 0x000000000000000a (STRSZ)              14696 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x3ed0\n 0x0000000000000019 (INIT_ARRAY)         0x50e18\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x50e10\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x4dd44\n 0x000000000000000d (FINI)               0x4dd60\n 0x000000006ffffff0 (VERSYM)             0x3a00\n 0x000000006ffffffe (VERNEED)            0x3ea0\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_fs_util-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_fs_util-1.so.0.16.0",
+          "sha256": "73be8a22f02e2b27593ef310a202ab4bcc122daf675dd1042f4fe24f7959542f",
+          "elf_dynamic": "\nDynamic section at offset 0x19a0 contains 31 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_fs_util-1.so.0]\n 0x0000000000000007 (RELA)               0xa48\n 0x0000000000000008 (RELASZ)             216 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          5\n 0x0000000000000017 (JMPREL)             0xb20\n 0x0000000000000002 (PLTRELSZ)           552 (bytes)\n 0x0000000000000003 (PLTGOT)             0x4bb8\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x6d0\n 0x000000000000000a (STRSZ)              882 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x680\n 0x0000000000000019 (INIT_ARRAY)         0x3978\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x3970\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x27c4\n 0x000000000000000d (FINI)               0x27e0\n 0x000000006ffffff0 (VERSYM)             0x610\n 0x000000006ffffffe (VERNEED)            0x65c\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_fs_x-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_fs_x-1.so.0.16.0",
+          "sha256": "5da384d7019e317431d1dec47b4cf8e836cefa969a1581eca1380d7706c1b894",
+          "elf_dynamic": "\nDynamic section at offset 0x4ec38 contains 33 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_delta-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_fs_util-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_fs_x-1.so.0]\n 0x0000000000000007 (RELA)               0x8e38\n 0x0000000000000008 (RELASZ)             3480 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          73\n 0x0000000000000017 (JMPREL)             0x9bd0\n 0x0000000000000002 (PLTRELSZ)           14112 (bytes)\n 0x0000000000000003 (PLTGOT)             0x52258\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x4e74\n 0x000000000000000a (STRSZ)              16321 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x45d0\n 0x0000000000000019 (INIT_ARRAY)         0x50b78\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x50b70\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x4d670\n 0x000000000000000d (FINI)               0x4d68c\n 0x000000006ffffff0 (VERSYM)             0x4078\n 0x000000006ffffffe (VERNEED)            0x45a0\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_ra-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_ra-1.so.0.16.0",
+          "sha256": "8409cfbc891192f2e4aadcce675f772c11eacc444820449012a0686abf87fcbc",
+          "elf_dynamic": "\nDynamic section at offset 0xb9c8 contains 35 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_ra_local-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_ra_serf-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_ra_svn-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_delta-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_ra-1.so.0]\n 0x0000000000000007 (RELA)               0x26f0\n 0x0000000000000008 (RELASZ)             840 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          20\n 0x0000000000000017 (JMPREL)             0x2a38\n 0x0000000000000002 (PLTRELSZ)           2952 (bytes)\n 0x0000000000000003 (PLTGOT)             0xec70\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x17a0\n 0x000000000000000a (STRSZ)              3920 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x1568\n 0x0000000000000019 (INIT_ARRAY)         0xd8e8\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0xd8e0\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0xc0ec\n 0x000000000000000d (FINI)               0xc108\n 0x000000006ffffff0 (VERSYM)             0x13d8\n 0x000000006ffffffe (VERNEED)            0x1548\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_ra_local-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_ra_local-1.so.0.16.0",
+          "sha256": "ba60ef40db9998b5724c2d28dc820d4e3924a6bed592ebf180fbc2aef6a512d1",
+          "elf_dynamic": "\nDynamic section at offset 0x8118 contains 34 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_repos-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_fs-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_delta-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_ra_local-1.so.0]\n 0x0000000000000007 (RELA)               0x1b58\n 0x0000000000000008 (RELASZ)             2232 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          83\n 0x0000000000000017 (JMPREL)             0x2410\n 0x0000000000000002 (PLTRELSZ)           2784 (bytes)\n 0x0000000000000003 (PLTGOT)             0xb390\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0xfe0\n 0x000000000000000a (STRSZ)              2936 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0xfb8\n 0x0000000000000019 (INIT_ARRAY)         0x9e48\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x9e40\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x86c0\n 0x000000000000000d (FINI)               0x86dc\n 0x000000006ffffff0 (VERSYM)             0xe98\n 0x000000006ffffffe (VERNEED)            0xf98\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_ra_serf-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_ra_serf-1.so.0.16.0",
+          "sha256": "c55ab95edbc160ad4ad6830de8f1dc67db5678de8f1c618bb7385be490a46c52",
+          "elf_dynamic": "\nDynamic section at offset 0x300e0 contains 34 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_delta-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libserf-2.so.2.0.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libz.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_ra_serf-1.so.0]\n 0x0000000000000007 (RELA)               0x4b88\n 0x0000000000000008 (RELASZ)             14688 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          549\n 0x0000000000000017 (JMPREL)             0x84e8\n 0x0000000000000002 (PLTRELSZ)           7608 (bytes)\n 0x0000000000000003 (PLTGOT)             0x333a8\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x29d4\n 0x000000000000000a (STRSZ)              8627 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x26d0\n 0x0000000000000019 (INIT_ARRAY)         0x2be18\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x2be10\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x29a00\n 0x000000000000000d (FINI)               0x29a1c\n 0x000000006ffffff0 (VERSYM)             0x23c8\n 0x000000006ffffffe (VERNEED)            0x268c\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_ra_svn-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_ra_svn-1.so.0.16.0",
+          "sha256": "95a4fc61667a47f8c5417a58e3e451f82b07ad1217b7028ed48efdaa7a94e29e",
+          "elf_dynamic": "\nDynamic section at offset 0x21ab0 contains 32 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_delta-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_ra_svn-1.so.0]\n 0x0000000000000007 (RELA)               0x3fa0\n 0x0000000000000008 (RELASZ)             3840 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          149\n 0x0000000000000017 (JMPREL)             0x4ea0\n 0x0000000000000002 (PLTRELSZ)           5712 (bytes)\n 0x0000000000000003 (PLTGOT)             0x24d38\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x2404\n 0x000000000000000a (STRSZ)              7068 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x2058\n 0x0000000000000019 (INIT_ARRAY)         0x23568\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x23560\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x21640\n 0x000000000000000d (FINI)               0x2165c\n 0x000000006ffffff0 (VERSYM)             0x1de0\n 0x000000006ffffffe (VERNEED)            0x2028\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_repos-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_repos-1.so.0.16.0",
+          "sha256": "a5be1abda8b551ca534e929d6ed54d7177519c0a70933eea201f61ee8ff9b281",
+          "elf_dynamic": "\nDynamic section at offset 0x3a2d0 contains 33 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_fs-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_delta-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_repos-1.so.0]\n 0x0000000000000007 (RELA)               0x6f00\n 0x0000000000000008 (RELASZ)             696 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          19\n 0x0000000000000017 (JMPREL)             0x71b8\n 0x0000000000000002 (PLTRELSZ)           10344 (bytes)\n 0x0000000000000003 (PLTGOT)             0x3d538\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x3f88\n 0x000000000000000a (STRSZ)              12146 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x39e8\n 0x0000000000000019 (INIT_ARRAY)         0x3c228\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x3c220\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x396e8\n 0x000000000000000d (FINI)               0x39704\n 0x000000006ffffff0 (VERSYM)             0x3568\n 0x000000006ffffffe (VERNEED)            0x39a4\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_subr-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_subr-1.so.0.16.0",
+          "sha256": "632a1547fe901c3e0f50440f6fed192e11c2d02f656a5e7e80d8f153784d79e8",
+          "elf_dynamic": "\nDynamic section at offset 0x90fc0 contains 34 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libz.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libsqlite3.so]\n 0x0000000000000001 (NEEDED)             Shared library: [liblz4.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libutf8proc.so.3]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_subr-1.so.0]\n 0x0000000000000007 (RELA)               0x13018\n 0x0000000000000008 (RELASZ)             23328 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          940\n 0x0000000000000017 (JMPREL)             0x18b38\n 0x0000000000000002 (PLTRELSZ)           17640 (bytes)\n 0x0000000000000003 (PLTGOT)             0x94708\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0xb154\n 0x000000000000000a (STRSZ)              32452 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x9360\n 0x0000000000000019 (INIT_ARRAY)         0x90378\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x90370\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x8c544\n 0x000000000000000d (FINI)               0x8c560\n 0x000000006ffffff0 (VERSYM)             0x87b8\n 0x000000006ffffffe (VERNEED)            0x92d0\n 0x000000006fffffff (VERNEEDNUM)         2\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_wc-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_wc-1.so.0.16.0",
+          "sha256": "1dd7e47495e867ec6c2eb23807848e70652b1f997869fc9b4048f1bcf3193a39",
+          "elf_dynamic": "\nDynamic section at offset 0xb24a0 contains 33 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_delta-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_diff-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_wc-1.so.0]\n 0x0000000000000007 (RELA)               0xd2a0\n 0x0000000000000008 (RELASZ)             10536 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          423\n 0x0000000000000017 (JMPREL)             0xfbc8\n 0x0000000000000002 (PLTRELSZ)           17256 (bytes)\n 0x0000000000000003 (PLTGOT)             0xb5808\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x7450\n 0x000000000000000a (STRSZ)              24143 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x6440\n 0x0000000000000019 (INIT_ARRAY)         0xb3388\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0xb3380\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0xaf654\n 0x000000000000000d (FINI)               0xaf670\n 0x000000006ffffff0 (VERSYM)             0x5c80\n 0x000000006ffffffe (VERNEED)            0x6400\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        }
+      },
+      "logs": {
+        "build-final.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/build-final.log",
+          "sha256": "ad4eacf86f138dfe07e0cd28eabd7e77eb1847ad3831207d188c806011222886"
+        },
+        "build-language-policy-final.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/build-language-policy-final.log",
+          "sha256": "9f6563970d52ced1e2037f79c7ab4720d9a8fd48933cd1c334caa78363475bf0"
+        },
+        "install.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/install.log",
+          "sha256": "5088ac0d0ac27491f0d8f59f551e3ce46e0f72d1ec6f9a5986b5a8d81e2f7fdc"
+        },
+        "api-build.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/api-build.log",
+          "sha256": "7c2b9efdedb523db0ab5916a01d9c425df0c1d1de158ee9a05e7f72b1ff7a99f"
+        },
+        "api-test.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/api-test.log",
+          "sha256": "ca65547f989859e09c0e74137ba421aee238560f7e3c4a0033c5f457449b7b1f"
+        },
+        "wrapper-syntax.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-syntax.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "https-system-ca-test.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/https-system-ca-test.log",
+          "sha256": "5952e3a1b11a395e99ffeaf4aea80de3d329789fc9dbeb304815b0cb6fd20877"
+        },
+        "test.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/test.log",
+          "sha256": "f58fdc3d671fb63aca8f905acf18d65cf510ef63f3b3c295fe7c20701cc19b3a"
+        },
+        "wrapper-object-build.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-object-build.log",
+          "sha256": "b92846f8fd829d3bca9f4e6332f2c7451fb40dd7f1946bfe5a73cb130c589c5e"
+        },
+        "wrapper-configure.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-configure.log",
+          "sha256": "2f5e09497a78f68f976150ff2106f2fdf9137395a8f3a89b4796236f4193836d"
+        },
+        "api-build-openssl-final.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/api-build-openssl-final.log",
+          "sha256": "7c2b9efdedb523db0ab5916a01d9c425df0c1d1de158ee9a05e7f72b1ff7a99f"
+        },
+        "api-test-openssl-final.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/api-test-openssl-final.log",
+          "sha256": "1ddecb3964f95bc70edc85955c9233fddf45c0decc2e327536b18da9f8566d0c"
+        },
+        "svn-default-ca.log": {
+          "path": "/home/b/toolchains/build-deps/openssl-final/svn-default-ca.log",
+          "sha256": "5952e3a1b11a395e99ffeaf4aea80de3d329789fc9dbeb304815b0cb6fd20877"
+        },
+        "tls-default-ca.log": {
+          "path": "/home/b/toolchains/build-deps/openssl-final/tls-default-ca.log",
+          "sha256": "11372d8e11f655c071f53b7b2d459240994d4ada3661a9584717e03db9a82f02"
+        },
+        "wrapper-build-final.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-build-final.log",
+          "sha256": "957260f2bf64efa773430df1b1b3f15e055522ae8f33291783fdfff6ed87f007"
+        },
+        "wrapper-test-final.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-test-final.log",
+          "sha256": "3ba916623fae10af8027ef432c506a11024076a9fe8711eaee3881f5b3fe2c47"
+        },
+        "wrapper-gdb-first.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-gdb-first.log",
+          "sha256": "3cec012b7fad606049fac08dc0f933114ea4ec2ec614ff8652c9e44219ea9fee"
+        },
+        "wrapper-syntax-diff-fix.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-syntax-diff-fix.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "wrapper-build-fixed.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-build-fixed.log",
+          "sha256": "57a5b701b0c8f26789dd7dacf714caa3ed60c6b0b823323bb1bb9152bdf040e8"
+        },
+        "wrapper-test-fixed.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-test-fixed.log",
+          "sha256": "f319cb56e5336e5d5a4a700f5d503aee27c04a5ee71e5b4ea2dc96b57528ba83"
+        },
+        "wrapper-closure-final.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-closure-final.log",
+          "sha256": "39f334c1c95ee58c133c9eb8d8912697afb2993a62473ca466976c286130e834"
+        },
+        "wrapper-test-details-final.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-test-details-final.log",
+          "sha256": "972168d8279173ce5af1096ad5f8e857a9687b328105c3e21b0c26cc7b85a371"
+        },
+        "final-installed-focused-cpu-tests.log": {
+          "path": "/home/b/cemer/artifacts/gui-export-fixed/focused-cpu-tests.log",
+          "sha256": "9c9fee4acf270e543ae41c24a85a4f848a4143b9921f7263f1496189be2c5f2a",
+          "size_bytes": 397
+        }
+      },
+      "status": "built_installed_tested",
+      "configure_command": [
+        "cmake",
+        "-S",
+        "/home/b/toolchains/sources/subversion",
+        "-B",
+        "/home/b/toolchains/build-deps/subversion",
+        "-G",
+        "Ninja",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_C_FLAGS=-Wall -Werror",
+        "-DCMAKE_CXX_FLAGS=-Wall -Wextra -Werror -Woverloaded-virtual",
+        "-DCMAKE_C_FLAGS_RELEASE=-O2",
+        "-DCMAKE_CXX_FLAGS_RELEASE=-O2",
+        "-DCMAKE_INSTALL_LIBDIR=lib",
+        "-DCMAKE_LINKER_TYPE=LLD",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        "-DCMAKE_PREFIX_PATH=/home/b/toolchains/deps",
+        "-DCMAKE_INSTALL_PREFIX=/home/b/toolchains/deps",
+        "-DCMAKE_INSTALL_RPATH=/home/b/toolchains/deps/lib",
+        "-DSVN_ENABLE_TESTS=ON",
+        "-DSVN_USE_INTERNAL_LZ4=OFF",
+        "-DSVN_USE_INTERNAL_UTF8PROC=OFF",
+        "-DSVN_TEST_CONFIGURE_FOR_PARALLEL=ON"
+      ],
+      "policy_note": "Upstream -Wformat=2 followed by -Wno-format-nonliteral is expressed for C using only equivalent positive flags: -Wformat -Wformat-security -Wformat-y2k. C++ retains -Wformat=2 and strict Wall/Extra/Werror. Other active suppression flags removed. No unrelated C format-string refactor retained.",
+      "source_changes": [
+        "Select detected lowercase pkg-config apr_VERSION before branching, preventing APR1/2 mixing.",
+        "Express effective C warning coverage with positive flags only."
+      ],
+      "validation": {
+        "cpp_sdk_api": "PASS local checkout/add/copy/move/mkdir/commit/info/list/cat/diff/revert/delete/cleanup; repeated successfully after final OpenSSL installation",
+        "application_wrapper_syntax": "PASS final SVN1.16/APR2 headers",
+        "upstream_ctest": "PASS 125/125 in 653.12 seconds",
+        "https": "PASS certificate and hostname verification against Apache SVN with SSL_CERT_FILE, SSL_CERT_DIR, and OPENSSL_CONF unset; installed OpenSSL default cert.pem uses the system CA bundle",
+        "actual_application_wrapper": "PASS against final frozen installed libtemt, together with SDK API and taFiler tests (3/3 in 0.38 seconds); no display",
+        "working_copy_diff_regression": "Reproduced SIGABRT in svn_uri_canonicalize from GetDiffWc with a local path, also passed by iSvnFileListModel. Fixed only this function to use existing URL/dirent canonicalSvnTarget; subsequent full wrapper flow passed.",
+        "wrapper_runtime_closure": "Selected SVN1.16, APR2, Serf2, OpenSSL4 and GNU libstdc++; no APR1/APR-util1, missing libraries or LLVM C++ runtime"
+      },
+      "final_runtime_selected": true,
+      "application_library_tested": {
+        "path": "/home/b/cemer/install/lib/libtemt.so.8.6.1",
+        "sha256": "73163f47c9e654439d7ce7e66a49494516cb970fda520944ea91c8b4ceca320d",
+        "size_bytes": 292045416,
+        "runpath": "/home/b/toolchains/deps/lib:/home/b/toolchains/Qt/lib"
+      },
+      "wrapper_test_source": "src/temt/ta_core/tests/subversion_wrapper_test.cpp",
+      "previous_application_libraries_tested": [
+        {
+          "path": "/home/b/cemer/build-modern-final/lib/libtemt.so.8.6.1",
+          "sha256": "825ead88e886f6a52e5a1f16f905952b46abdcedcb55cb4104ea4b9785cd0f47",
+          "size_bytes": 292045200
+        }
+      ],
+      "final_build_library": {
+        "path": "/home/b/cemer/build-modern-final/lib/libtemt.so.8.6.1",
+        "sha256": "b63688e9a17b61df2c8a2a990a77b58ca39e195b53d30aa35fba69982c226096",
+        "size_bytes": 292045416,
+        "runpath": "/home/b/toolchains/deps/lib:/home/b/toolchains/Qt/lib:"
+      }
+    }
+  ]
+}

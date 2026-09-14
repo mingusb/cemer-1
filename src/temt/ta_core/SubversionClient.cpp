@@ -865,7 +865,11 @@ SubversionClient::Checkout(const String& url_in, const String& to_wc, int rev, b
   svn_boolean_t ignore_externals = false;
   svn_boolean_t allow_unver_obstructions = true;
 
+#if SVN_VER_MAJOR > 1 || (SVN_VER_MAJOR == 1 && SVN_VER_MINOR >= 15)
+  if (svn_error_t *error = svn_client_checkout4
+#else
   if (svn_error_t *error = svn_client_checkout3
+#endif
       (&result_rev, // out param
        url,
        m_wc_path,
@@ -874,6 +878,9 @@ SubversionClient::Checkout(const String& url_in, const String& to_wc, int rev, b
        depth,
        ignore_externals,
        allow_unver_obstructions,
+#if SVN_VER_MAJOR > 1 || (SVN_VER_MAJOR == 1 && SVN_VER_MINOR >= 15)
+       nullptr, svn_tristate_unknown, // preserve checkout3 defaults
+#endif
        m_ctx,
        m_pool))
   {
@@ -1328,11 +1335,11 @@ SubversionClient::GetDiffWc(const String& from_url, String& to_str) {
   apr_pool_t* m_pool = svn_pool_create(0);
   QMutexLocker qml(svn_operation);
 
-#if (SVN_VER_MAJOR == 1 && SVN_VER_MINOR >= 7)
-  String from_url_canonical = svn_uri_canonicalize(from_url, m_pool);
-#else
-  String from_url_canonical = from_url;
-#endif
+  const char *from_url_canonical;
+  if (svn_error_t *error = canonicalSvnTarget(&from_url_canonical, from_url, m_pool)) {
+    svn_pool_destroy(m_pool);
+    throw Exception("Subversion error resolving working-copy diff target", error);
+  }
 
   // We don't want to use peg revisions, so set to unspecified.
   svn_opt_revision_t peg_revision;

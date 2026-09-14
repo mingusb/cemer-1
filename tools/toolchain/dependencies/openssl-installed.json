@@ -1,0 +1,162 @@
+{
+  "name": "openssl",
+  "version": "4.2.0-dev",
+  "revision": "f6eb87c560540cb29cedf5be739b5049bb1a385e",
+  "source_url": "https://github.com/openssl/openssl.git",
+  "source_path": "/home/b/toolchains/sources/openssl",
+  "build_path": "/home/b/toolchains/build-deps/openssl-final",
+  "install_prefix": "/home/b/toolchains/deps",
+  "source_patch": "patches/openssl.patch",
+  "source_patch_sha256": "e31b2ac623a63f74b43b23f63f9d65882508287aa567c0a7a10fd141aa3c89dc",
+  "license_files": [
+    "/home/b/toolchains/sources/openssl/LICENSE.txt"
+  ],
+  "compiler": "Clang 24.0.0 58c46bae2118",
+  "status": "built_installed_tested",
+  "configure": [
+    "perl",
+    "/home/b/toolchains/sources/openssl/Configure",
+    "linux-x86_64",
+    "--prefix={prefix}",
+    "--libdir=lib",
+    "shared",
+    "-O2",
+    "-Werror"
+  ],
+  "environment": {
+    "CC": "/usr/lib/llvm-24/bin/clang",
+    "CXX": "/usr/lib/llvm-24/bin/clang++",
+    "LDFLAGS": "-fuse-ld=lld"
+  },
+  "c_flags": "upstream -Wall plus -Werror; no warning-suppression flags",
+  "cxx_flags": "-O2 -Wall -Wextra -Werror -Woverloaded-virtual",
+  "build_log": "/home/b/toolchains/build-deps/openssl-final/build.log",
+  "test_log": "/home/b/toolchains/build-deps/openssl-final/test.log",
+  "test_result": "PASS: 399 test files, 3612 tests, 377 seconds; upstream optional-feature skips retained",
+  "install_log": "/home/b/toolchains/build-deps/openssl-final/install.log",
+  "compatibility_boundary": "Used by source-built Serf/Subversion. Official Qt SDK keeps its independently loaded OpenSSL3 ABI.",
+  "notes": [
+    "Small unused bookkeeping removals and compiler/link invocation corrections only; no disabled tests or diagnostic-suppression flags added.",
+    "Raw assembly compiler invocations omit inapplicable C preprocessor/thread/optimization options; link-only invocations omit assembler-only -Wa options.",
+    "Configure detection failures are intentional feature probes, distinct from actual source compilation.",
+    "Entirely fresh out-of-tree build supersedes early experimental objects and stale generated compiler metadata; installed version -a has no diagnostic-suppression options.",
+    "The selected OpenSSL configuration compiles C and assembly, with no C++ source objects; canonical Clang++ and strict GNU CXXFLAGS are recorded for any build helpers.",
+    "Standard upstream install_ssldirs installs default configuration; cert.pem follows the host CA store so OS trust updates are retained."
+  ],
+  "supersedes_build_path": "/home/b/toolchains/build-deps/openssl",
+  "configure_log": "/home/b/toolchains/build-deps/openssl-final/configure.log",
+  "compile_audit": "/home/b/toolchains/build-deps/openssl-final/compile-audit.json",
+  "compile_audit_result": {
+    "status": "PASS",
+    "compiler_command_count": 3162,
+    "cpp_compile_command_count": 0,
+    "suppression_commands": [],
+    "diagnostics": [],
+    "cpp_missing_strict_flags": [],
+    "test_compiler_command_count": 0,
+    "test_suppression_commands": [],
+    "build_compile_command_count": 2776,
+    "direct_compiler_command_count": 2783,
+    "link_driver_fallback_command_count": 379,
+    "LDCMD_environment": null,
+    "all_log_suppression_lines": [],
+    "install_compiler_command_count": 0,
+    "install_suppression_lines": [],
+    "install_compiler_diagnostics": []
+  },
+  "recipe": "/home/b/toolchains/build-deps/openssl-final/recipe.json",
+  "install_command": [
+    "make",
+    "install_sw",
+    "install_ssldirs",
+    "CXXFLAGS=-O2 -Wall -Wextra -Werror -Woverloaded-virtual"
+  ],
+  "runtime_validation": "/home/b/toolchains/build-deps/openssl-final/runtime-validation.json",
+  "validated_at": "2026-09-13T22:58:39.034428+00:00",
+  "installed_files": [
+    {
+      "path": "/home/b/toolchains/deps/bin/openssl",
+      "sha256": "3bc761204ba30d2951bcb9cd6ee65c6fd4b9d4e224a1f10acfd2251bd31de66d",
+      "bytes": 1229040
+    },
+    {
+      "path": "/home/b/toolchains/deps/lib/libssl.so.4",
+      "sha256": "160690dcbe15d885949fe1914ef7d95101c7d94b59460b38dcdf67d430434fd5",
+      "bytes": 1289048
+    },
+    {
+      "path": "/home/b/toolchains/deps/lib/libcrypto.so.4",
+      "sha256": "1e43cc1fb016cdc455953f38d78774122c2d93f12f284abb79208a2149765f4a",
+      "bytes": 6873296
+    },
+    {
+      "path": "/home/b/toolchains/deps/ssl/openssl.cnf",
+      "sha256": "d8df1023cd0436d34b3c8c1b03934325a37ab425587a85ff2cbda9b875057068",
+      "bytes": 12787
+    },
+    {
+      "path": "/home/b/toolchains/deps/lib/ossl-modules/legacy.so",
+      "sha256": "0e5d044c5a84a98dc99ab700eff790b43dc815dc025fdf418f192fb658881e83",
+      "bytes": 170112
+    }
+  ],
+  "default_certificate_trust": {
+    "default_file": "/home/b/toolchains/deps/ssl/cert.pem",
+    "symlink_target": "/etc/ssl/certs/ca-certificates.crt",
+    "source": "Host-managed CA trust store; certificate verification remains enabled",
+    "verification": "Direct TLS certificate and hostname validation plus SVN HTTPS succeeded with SSL_CERT_FILE, SSL_CERT_DIR and OPENSSL_CONF unset."
+  },
+  "evidence_files": [
+    {
+      "path": "/home/b/toolchains/build-deps/openssl-final/recipe.json",
+      "sha256": "c82fc1e8b38eb35a0a75adf4b7b00aaf372a51974e74ba49c8470888025011a3"
+    },
+    {
+      "path": "/home/b/toolchains/build-deps/openssl-final/configure.log",
+      "sha256": "d2b3b7cc961dcf2fe0a4262bf3a6863a5b908377556d71e97c268c541fbb2f6a"
+    },
+    {
+      "path": "/home/b/toolchains/build-deps/openssl-final/build.log",
+      "sha256": "17b282feb87179d11c2e5ebc2ff78c759e64a22eb1190fd29e07c4a1c3d88c52"
+    },
+    {
+      "path": "/home/b/toolchains/build-deps/openssl-final/test.log",
+      "sha256": "5e4018403e42b73a10eb41e68f99189136c4625c158f1c47b2bf9e5147dcb2f7"
+    },
+    {
+      "path": "/home/b/toolchains/build-deps/openssl-final/install.log",
+      "sha256": "88cbae30a49b49cbc25d66bcc591040ac720f2d0e52f3bb24cac0125a46989a4"
+    },
+    {
+      "path": "/home/b/toolchains/build-deps/openssl-final/compile-audit.json",
+      "sha256": "5016242f2a1f651f1391123f6747e876fc4970289808634878ea9ac2c0420588"
+    },
+    {
+      "path": "/home/b/toolchains/build-deps/openssl-final/version.log",
+      "sha256": "fdfd058003e46386ab3cf731e9204e3348544a458d1b706c57cdf195d1588621"
+    },
+    {
+      "path": "/home/b/toolchains/build-deps/openssl-final/tls-default-ca.log",
+      "sha256": "11372d8e11f655c071f53b7b2d459240994d4ada3661a9584717e03db9a82f02"
+    },
+    {
+      "path": "/home/b/toolchains/build-deps/openssl-final/svn-default-ca.log",
+      "sha256": "5952e3a1b11a395e99ffeaf4aea80de3d329789fc9dbeb304815b0cb6fd20877"
+    },
+    {
+      "path": "/home/b/toolchains/build-deps/openssl-final/runtime-validation.json",
+      "sha256": "4d14bf2afac2a04863ce5f008eff7335af97b2c131d2feaa2df9f00074516df4"
+    }
+  ],
+  "build_command": [
+    "make",
+    "-j4",
+    "CXXFLAGS=-O2 -Wall -Wextra -Werror -Woverloaded-virtual"
+  ],
+  "test_command": [
+    "make",
+    "test",
+    "HARNESS_JOBS=3",
+    "CXXFLAGS=-O2 -Wall -Wextra -Werror -Woverloaded-virtual"
+  ]
+}

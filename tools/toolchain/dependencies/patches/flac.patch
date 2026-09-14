@@ -1,0 +1,27 @@
+diff --git a/src/libFLAC/CMakeLists.txt b/src/libFLAC/CMakeLists.txt
+index 4336737f..20a89032 100644
+--- a/src/libFLAC/CMakeLists.txt
++++ b/src/libFLAC/CMakeLists.txt
+@@ -4,7 +4,9 @@ check_include_file("cpuid.h" HAVE_CPUID_H)
+ check_include_file("sys/param.h" HAVE_SYS_PARAM_H)
+ 
+ set(CMAKE_REQUIRED_LIBRARIES m)
+-check_function_exists(lround HAVE_LROUND)
++include(CheckCSourceCompiles)
++check_c_source_compiles("#include <math.h>
++int main(void) { volatile double value = 1.5; return lround(value) != 2; }" HAVE_LROUND)
+ 
+ include(CheckCSourceCompiles)
+ include(CheckCPUArch)
+diff --git a/src/test_streams/main.c b/src/test_streams/main.c
+index 60d17dd3..08847693 100644
+--- a/src/test_streams/main.c
++++ b/src/test_streams/main.c
+@@ -1349,6 +1349,7 @@ int main(int argc, char *argv[])
+ 	(void)argc;
+ 	(void)argv;
+ 	is_big_endian_host = (*((FLAC__byte*)(&test)))? false : true;
++    (void)is_big_endian_host;
+ 
+ #if !defined _MSC_VER && !defined __MINGW32__
+ 	{

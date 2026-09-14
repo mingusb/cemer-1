@@ -1,0 +1,146 @@
+{
+  "dependencies": [
+    {
+      "name": "ncurses",
+      "revision": "797a8eb3303f9145bf87c9d16b187a3b63c262b5",
+      "version": "6.6-20260912",
+      "source_url": "https://github.com/ThomasDickey/ncurses-snapshots.git",
+      "source_path": "/home/b/toolchains/sources/ncurses",
+      "build_path": "/home/b/toolchains/build-deps/ncurses-clean",
+      "install_prefix": "/home/b/toolchains/deps",
+      "commands": [
+        [
+          "/home/b/toolchains/sources/ncurses/configure",
+          "--prefix=/home/b/toolchains/deps",
+          "--with-shared",
+          "--with-termlib",
+          "--enable-widec",
+          "--with-pkg-config-libdir=/home/b/toolchains/deps/lib/pkgconfig",
+          "--enable-pc-files",
+          "--with-versioned-syms"
+        ],
+        [
+          "make",
+          "-j3",
+          "CFLAGS=-O2 -Wall -Werror",
+          "CXXFLAGS=-O2 -stdlib=libc++ -Wall -Wextra -Werror -Woverloaded-virtual"
+        ],
+        [
+          "make",
+          "install"
+        ]
+      ],
+      "environment": {
+        "CC": "/usr/lib/llvm-24/bin/clang",
+        "CXX": "/usr/lib/llvm-24/bin/clang++",
+        "CFLAGS": "-O2",
+        "CXXFLAGS": "-O2 -stdlib=libc++",
+        "CPPFLAGS": "-I/home/b/toolchains/deps/include",
+        "LDFLAGS": "-fuse-ld=lld -L/home/b/toolchains/deps/lib -Wl,-rpath,/home/b/toolchains/deps/lib"
+      },
+      "patch_sha256": "b635ece9c3a6b64d00fd952504ac8b54f673ad04514df73348879957f3a416e0",
+      "log_sha256": {
+        "configure": "d732c07c0a71f7ba8a280904b51453f38180ba05b5a846e53cf6182c971f2554",
+        "build": "9e6f6c3c52ec635e14b38a66134255a4b4a575286c861aa7403d577088be9bd7",
+        "install": "c452a515562507bd286dc9c8ab525b3aed790445380932c51e282927e9a4d72d"
+      },
+      "status": "built_installed_tested",
+      "license_files": [
+        "/home/b/toolchains/sources/ncurses/COPYING"
+      ],
+      "source_patch": "tools/toolchain/dependencies/patches/ncurses.patch",
+      "build_recipe": "tools/toolchain/dependencies/build-terminals.py",
+      "tests": {
+        "status": "PASS",
+        "coverage": [
+          "Unicode wide-character window roundtrip",
+          "panel lifecycle",
+          "Readline history expansion",
+          "Readline line input"
+        ],
+        "log": "/home/b/toolchains/build-deps/terminal-smoke.log",
+        "log_sha256": "c68977950a7d3c8ef670882f67caff931aea401bf5ff3438e9972f3b2537efd0",
+        "compiler_diagnostics": [],
+        "runtime_closure_log": "/home/b/toolchains/build-deps/terminal-smoke-ldd.log"
+      },
+      "installed_files": {
+        "libncursesw.so.6.6": "04ce442f354fe2256305dea2684956521e4ed1e692133be1bd130b462780450f",
+        "libtinfow.so.6.6": "7bb63df17e82f843e2b167cec59e126fede6c29cb278be295ae64e46624ac57a",
+        "libpanelw.so.6.6": "644221c2643e66ad916eaddfa70796238d1366dcf91085062bc196dcb71183b5",
+        "libmenuw.so.6.6": "bc13364877ea93cc6779ada9e5af354c3847edb1a917ff73a9f2bd0741772d8b",
+        "libformw.so.6.6": "e55238d7f7406927c035aa9c2b774d28bddc4894ffe2e1615741fba568194371"
+      },
+      "compiler_version": "Ubuntu clang version 24.0.0 (++20260911085248+58c46bae2118-1~exp1~20260911085258.254)",
+      "runtime_language_abi": "C",
+      "test_harness_cxx_abi": "libc++; test harness only, not an application runtime dependency"
+    },
+    {
+      "name": "readline",
+      "revision": "b72c50e04af0988724c1595e7a2e9697f1ab6eeb",
+      "version": "8.3-devel",
+      "source_url": "https://git.savannah.gnu.org/git/readline.git",
+      "source_path": "/home/b/toolchains/sources/readline",
+      "build_path": "/home/b/toolchains/build-deps/readline-clean",
+      "install_prefix": "/home/b/toolchains/deps",
+      "commands": [
+        [
+          "/home/b/toolchains/sources/readline/configure",
+          "--prefix=/home/b/toolchains/deps",
+          "--enable-shared",
+          "--with-curses=-ltinfow"
+        ],
+        [
+          "make",
+          "-j3",
+          "CFLAGS=-O2 -Wall -Werror",
+          "CXXFLAGS=-O2 -stdlib=libc++ -Wall -Wextra -Werror -Woverloaded-virtual",
+          "SHLIB_LIBS=-Wl,-z,defs"
+        ],
+        [
+          "make",
+          "install"
+        ]
+      ],
+      "environment": {
+        "CC": "/usr/lib/llvm-24/bin/clang",
+        "CXX": "/usr/lib/llvm-24/bin/clang++",
+        "CFLAGS": "-O2",
+        "CXXFLAGS": "-O2 -stdlib=libc++",
+        "CPPFLAGS": "-I/home/b/toolchains/deps/include",
+        "LDFLAGS": "-fuse-ld=lld -L/home/b/toolchains/deps/lib -Wl,-rpath,/home/b/toolchains/deps/lib"
+      },
+      "patch_sha256": "726d89a1875ed10ec2aa027e361f83a14f38162a6b1365b8fc0cb57f974c265e",
+      "log_sha256": {
+        "configure": "65821d7950f5654e87763b826af0d1c302a6a6baafb22df68e1a77e9ef5aa137",
+        "build": "6cf7753cdd988a22524156f93b241196359f7d3dd9768f239da4051ddd538f89",
+        "install": "87d20667790c5336c5c4a459af0ad450fd75483b221eb0aa2b2f141bb1165770"
+      },
+      "status": "built_installed_tested",
+      "license_files": [
+        "/home/b/toolchains/sources/readline/COPYING"
+      ],
+      "source_patch": "tools/toolchain/dependencies/patches/readline.patch",
+      "build_recipe": "tools/toolchain/dependencies/build-terminals.py",
+      "tests": {
+        "status": "PASS",
+        "coverage": [
+          "Unicode wide-character window roundtrip",
+          "panel lifecycle",
+          "Readline history expansion",
+          "Readline line input"
+        ],
+        "log": "/home/b/toolchains/build-deps/terminal-smoke.log",
+        "log_sha256": "c68977950a7d3c8ef670882f67caff931aea401bf5ff3438e9972f3b2537efd0",
+        "compiler_diagnostics": [],
+        "runtime_closure_log": "/home/b/toolchains/build-deps/terminal-smoke-ldd.log"
+      },
+      "installed_files": {
+        "libreadline.so.8.3": "aff7a06a27a804f36fb952a15dd3f4a978f0b92596c4fbf3e85d9b75727765fd",
+        "libhistory.so.8.3": "44764ba8f1e0fa54ce46ce6e2968aa62858f161620cfc2e8017ce7cb66faa164"
+      },
+      "compiler_version": "Ubuntu clang version 24.0.0 (++20260911085248+58c46bae2118-1~exp1~20260911085258.254)",
+      "runtime_language_abi": "C",
+      "test_harness_cxx_abi": "libc++; test harness only, not an application runtime dependency"
+    }
+  ]
+}

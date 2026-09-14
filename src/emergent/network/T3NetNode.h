@@ -77,7 +77,7 @@ public:
             bool mode_2d = false);
 
 protected:
-  void          setDefaultCaptionTransform(); // override
+  void          setDefaultCaptionTransform() override;
   ~T3NetNode();
 
 protected:

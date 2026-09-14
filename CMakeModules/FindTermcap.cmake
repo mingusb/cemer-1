@@ -1,4 +1,4 @@
-# find Terrmcap (terminal input library) includes and library
+# find Termcap (terminal input library) includes and library
 #
 # TERMCAP_INCLUDE_DIR - where the directory containing the TERMCAP headers can be found
 # TERMCAP_LIBRARY     - full path to the TERMCAP library
@@ -10,16 +10,18 @@ FIND_PATH(TERMCAP_INCLUDE_DIR termcap.h
 
     /opt/local/include
     $ENV{INCLUDE}
+    PATH_SUFFIXES ncursesw ncurses
 )
 
-FIND_LIBRARY(TERMCAP_LIBRARY NAMES termcap PATHS
+# Modern ncurses provides the termcap API in its separate terminfo library.
+FIND_LIBRARY(TERMCAP_LIBRARY NAMES tinfow tinfo termcap ncursesw ncurses PATHS
    /usr/lib
    /usr/local/lib
    /opt/local/lib
    /usr/lib64
 )
 
-# handle the QUIETLY and REQUIRED arguments and set COIN_FOUND to TRUE if
+# handle the QUIETLY and REQUIRED arguments and set TERMCAP_FOUND to TRUE if
 
 # all listed variables are TRUE
 INCLUDE(FindPackageHandleStandardArgs)

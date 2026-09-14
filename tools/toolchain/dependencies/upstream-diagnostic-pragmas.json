@@ -1,0 +1,237 @@
+{
+  "scope": "Pre-existing pragmas in tracked files of the Git-backed completed native libraries; inventory only, not newly added suppressions. LAME is an SVN export and is not covered by this Git inventory. Generated and bundled child sources can have separate parent inventories.",
+  "entries": [
+    {
+      "dependency": "coin",
+      "upstream_location": "HEAD:src/io/SoInput.cpp:2249:#pragma GCC diagnostic ignored \"-Wdeprecated-declarations\""
+    },
+    {
+      "dependency": "coin",
+      "upstream_location": "HEAD:src/io/SoInput_FileInfo.cpp:526:#pragma GCC diagnostic ignored \"-Wdeprecated-declarations\""
+    },
+    {
+      "dependency": "ode",
+      "upstream_location": "HEAD:include/ode/odecpp_collision.h:387:#pragma GCC diagnostic ignored \"-Wdeprecated-declarations\""
+    },
+    {
+      "dependency": "ode",
+      "upstream_location": "HEAD:include/ode/odecpp_collision.h:422:#pragma GCC diagnostic ignored \"-Wdeprecated-declarations\""
+    },
+    {
+      "dependency": "libjpeg-turbo",
+      "upstream_location": "HEAD:simd/powerpc/jsimd_altivec.h:94:#pragma clang diagnostic ignored \"-Wc99-extensions\""
+    },
+    {
+      "dependency": "libjpeg-turbo",
+      "upstream_location": "HEAD:simd/powerpc/jsimd_altivec.h:96:#pragma GCC diagnostic ignored \"-Wpedantic\""
+    },
+    {
+      "dependency": "freetype",
+      "upstream_location": "HEAD:src/autofit/ft-hb.c:61:#      pragma GCC diagnostic ignored \"-Wpedantic\""
+    },
+    {
+      "dependency": "freetype",
+      "upstream_location": "HEAD:src/gzip/ftgzip.c:93:#pragma GCC diagnostic ignored \"-Wstrict-prototypes\""
+    },
+    {
+      "dependency": "freetype",
+      "upstream_location": "HEAD:src/gzip/ftgzip.c:95:#pragma GCC diagnostic ignored \"-Wimplicit-fallthrough\""
+    },
+    {
+      "dependency": "freetype",
+      "upstream_location": "HEAD:src/gzip/ftgzip.c:96:#pragma GCC diagnostic ignored \"-Wredundant-decls\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb-algs.hh:470:#pragma GCC diagnostic ignored \"-Wcast-align\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb-algs.hh:1418:#pragma GCC diagnostic ignored \"-Wcast-align\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb-algs.hh:1444:#pragma GCC diagnostic ignored \"-Wcast-align\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb-algs.hh:1458:#pragma GCC diagnostic ignored \"-Wcast-align\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb-bit-set.hh:205:#pragma GCC diagnostic ignored \"-Wcast-align\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb-coretext.cc:328:#pragma GCC diagnostic ignored \"-Wdeprecated-declarations\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb-icu.cc:37:#pragma GCC diagnostic ignored \"-Wredundant-decls\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb-icu.cc:52:#pragma GCC diagnostic ignored \"-Wextra-semi-stmt\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb-kbts.cc:40:#pragma GCC diagnostic ignored \"-Wcast-align\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb-kbts.cc:41:#pragma GCC diagnostic ignored \"-Wunused-function\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb-kbts.cc:42:#pragma GCC diagnostic ignored \"-Wextra-semi-stmt\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb-machinery.hh:55:#pragma GCC diagnostic ignored \"-Wcast-align\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb-machinery.hh:63:#pragma GCC diagnostic ignored \"-Wcast-align\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb-mutex.hh:106:#pragma GCC diagnostic ignored \"-Wcast-align\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb-ot-shaper-indic-table.cc:24:#pragma GCC diagnostic ignored \"-Wunused-macros\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb-ot-shaper-use-table.hh:58:#pragma GCC diagnostic ignored \"-Wunused-macros\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb-raster-paint.cc:136:#pragma GCC diagnostic ignored \"-Wcast-align\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb-uniscribe.cc:224:#pragma GCC diagnostic ignored \"-Wcast-function-type\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:54:#pragma GCC diagnostic ignored \"-Wpragmas\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:55:#pragma GCC diagnostic ignored \"-Wunknown-pragmas\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:56:#pragma GCC diagnostic ignored \"-Wunknown-warning-option\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:124:#pragma GCC diagnostic ignored \"-Wmaybe-uninitialized\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:125:#pragma GCC diagnostic ignored \"-Wuninitialized\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:131:#pragma GCC diagnostic ignored \"-Wconversion\"\t\t\t// TODO fix"
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:132:#pragma GCC diagnostic ignored \"-Wshadow\"\t\t\t// TODO fix"
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:133:#pragma GCC diagnostic ignored \"-Wunused-parameter\"\t\t// TODO fix"
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:135:#pragma GCC diagnostic ignored \"-Wunused-result\"\t\t// TODO fix"
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:141:#pragma GCC diagnostic ignored \"-Warray-bounds\" // https://github.com/harfbuzz/harfbuzz/issues/5738"
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:142:#pragma GCC diagnostic ignored \"-Wclass-memaccess\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:143:#pragma GCC diagnostic ignored \"-Wcast-function-type-strict\" // https://github.com/harfbuzz/harfbuzz/pull/3859#issuecomment-1295409126"
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:144:#pragma GCC diagnostic ignored \"-Wdangling-reference\" // https://github.com/harfbuzz/harfbuzz/issues/4043"
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:145:#pragma GCC diagnostic ignored \"-Wdangling-pointer\" // Trigerred by hb_decycler_node_t()."
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:146:#pragma GCC diagnostic ignored \"-Wformat-nonliteral\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:147:#pragma GCC diagnostic ignored \"-Wformat-zero-length\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:148:#pragma GCC diagnostic ignored \"-Wmissing-field-initializers\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:149:#pragma GCC diagnostic ignored \"-Wold-style-cast\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:150:#pragma GCC diagnostic ignored \"-Wpacked\" // Erratic impl in clang"
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:151:#pragma GCC diagnostic ignored \"-Wrange-loop-analysis\" // https://github.com/harfbuzz/harfbuzz/issues/2834"
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:152:#pragma GCC diagnostic ignored \"-Wstrict-aliasing\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:153:#pragma GCC diagnostic ignored \"-Wtype-limits\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:154:#pragma GCC diagnostic ignored \"-Wunused-template\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:src/hb.hh:155:#pragma GCC diagnostic ignored \"-Wc++11-compat\" // only gcc raises it"
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:test/api/test-gpu.cc:51:#pragma GCC diagnostic ignored \"-Wcast-align\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:test/api/test-unicode.c:615:#pragma GCC diagnostic ignored \"-Wcast-function-type\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:util/gpu/matrix4x4.hh:11:#pragma GCC diagnostic ignored \"-Wdouble-promotion\""
+    },
+    {
+      "dependency": "harfbuzz",
+      "upstream_location": "HEAD:util/gpu/trackball.hh:7:#pragma GCC diagnostic ignored \"-Wdouble-promotion\""
+    },
+    {
+      "dependency": "opus",
+      "upstream_location": "HEAD:tests/test_opus_api.c:1773:#pragma GCC diagnostic ignored \"-Wdeprecated-declarations\""
+    },
+    {
+      "dependency": "opus",
+      "upstream_location": "HEAD:tests/test_opus_decode.c:143:#pragma GCC diagnostic ignored \"-Wnonnull\""
+    }
+  ]
+}

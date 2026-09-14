@@ -137,7 +137,7 @@ void taFiler::Close() {
 #include <ext/stdio_filebuf.h>  // should work for 3.4.0 and higher
 
 bool taFiler::FlushOutStream() {
-  if(!fstrm) return false;
+  if(!fstrm || !fstrm->is_open()) return false;
 
   int fd = -1;
   

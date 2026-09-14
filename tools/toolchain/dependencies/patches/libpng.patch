@@ -1,0 +1,20 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 162d63a8..5b4ec665 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -144,7 +144,14 @@ set(PNG_LINK_LIBRARIES ZLIB::ZLIB)
+ # Find the math library (unless we already know it's not available or
+ # not needed).
+ if(UNIX AND NOT (APPLE OR BEOS OR HAIKU OR EMSCRIPTEN))
+-  check_library_exists(m pow "" PNG_HAVE_LIBM_POW)
++  include(CheckCSourceCompiles)
++  include(CMakePushCheckState)
++  cmake_push_check_state(RESET)
++  set(CMAKE_REQUIRED_LIBRARIES m)
++  check_c_source_compiles("#include <math.h>
++    int main(void) { volatile double x = 2.0; return pow(x, x) > 0.0 ? 0 : 1; }"
++    PNG_HAVE_LIBM_POW)
++  cmake_pop_check_state()
+ endif()
+ if(PNG_HAVE_LIBM_POW)
+   list(APPEND PNG_LINK_LIBRARIES m)

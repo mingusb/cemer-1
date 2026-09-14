@@ -1,0 +1,49 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 6ff050f..81fe66a 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -416,13 +416,14 @@ else()
+     -Wpointer-arith
+     -Wwrite-strings
+     -Wshadow
+-    -Wformat=2
++    $<$<COMPILE_LANGUAGE:C>:-Wformat>
++    $<$<COMPILE_LANGUAGE:C>:-Wformat-security>
++    $<$<COMPILE_LANGUAGE:C>:-Wformat-y2k>
++    $<$<COMPILE_LANGUAGE:CXX>:-Wformat=2>
+     -Wunused
+     -Wmissing-declarations
+-    -Wno-multichar
+     -Wredundant-decls
+     -Winline
+-    -Wno-long-long
+     $<$<COMPILE_LANGUAGE:C>:-Wstrict-prototypes>
+     $<$<COMPILE_LANGUAGE:C>:-Wmissing-prototypes>
+     $<$<COMPILE_LANGUAGE:C>:-Wnested-externs>
+@@ -440,10 +441,7 @@ else()
+     -Wextra-tokens
+     -Wnewline-eof
+     -Wshorten-64-to-32
+-    -Wno-system-headers
+-    -Wno-format-nonliteral
+     -Wmissing-variable-declarations
+-    -Wno-unused-const-variable
+     -Werror=implicit-function-declaration
+     -Werror=declaration-after-statement
+     -Wold-style-definition
+@@ -452,7 +450,6 @@ else()
+     -Wextra-tokens
+     -Wnewline-eof
+     -Wshorten-64-to-32
+-    -Wno-system-headers
+   )
+ endif()
+ 
+@@ -600,6 +597,7 @@ endif()
+ 
+ if(SVN_USE_PKG_CONFIG)
+   pkg_search_module(apr REQUIRED IMPORTED_TARGET apr-2 apr-1)
++  set(APR_VERSION "${apr_VERSION}")
+   add_library(external-apr ALIAS PkgConfig::apr)
+ 
+   if(APR_VERSION VERSION_LESS 2.0.0)

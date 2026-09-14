@@ -1,0 +1,226 @@
+diff --git a/aclocal.m4 b/aclocal.m4
+index ffa1257..29ec301 100644
+--- a/aclocal.m4
++++ b/aclocal.m4
+@@ -1763,8 +1763,7 @@ if test "x$ifelse([$2],,CLANG_COMPILER,[$2])" = "xyes" ; then
+ 	AC_MSG_RESULT($CLANG_VERSION)
+ 
+ 	for cf_clang_opt in \
+-		-Qunused-arguments \
+-		-Wno-error=implicit-function-declaration
++		-Wall
+ 	do
+ 		AC_MSG_CHECKING(if option $cf_clang_opt works)
+ 		cf_save_CFLAGS="$CFLAGS"
+diff --git a/configure b/configure
+index c5e0788..5aa7a42 100755
+--- a/configure
++++ b/configure
+@@ -2755,8 +2755,7 @@ echo $ECHO_N "checking version of $CC... $ECHO_C" >&6
+ echo "${ECHO_T}$CLANG_VERSION" >&6
+ 
+ 	for cf_clang_opt in \
+-		-Qunused-arguments \
+-		-Wno-error=implicit-function-declaration
++		-Wall
+ 	do
+ 		echo "$as_me:2761: checking if option $cf_clang_opt works" >&5
+ echo $ECHO_N "checking if option $cf_clang_opt works... $ECHO_C" >&6
+@@ -17975,8 +17974,7 @@ echo $ECHO_N "checking version of $CC... $ECHO_C" >&6
+ echo "${ECHO_T}$CLANG_VERSION" >&6
+ 
+ 	for cf_clang_opt in \
+-		-Qunused-arguments \
+-		-Wno-error=implicit-function-declaration
++		-Wall
+ 	do
+ 		echo "$as_me:17981: checking if option $cf_clang_opt works" >&5
+ echo $ECHO_N "checking if option $cf_clang_opt works... $ECHO_C" >&6
+diff --git a/filter-version-map.py b/filter-version-map.py
+new file mode 100644
+index 0000000..192a06f
+--- /dev/null
++++ b/filter-version-map.py
+@@ -0,0 +1,28 @@
++#!/usr/bin/env python3
++"""Restrict an aggregate ELF version map to a particular shared library.
++
++The ncurses maps combine exports from separate libraries and optional features.
++Keep version nodes, inheritance and wildcards, but omit exact names which this
++library's input objects do not define. This preserves each real export's ABI
++version while allowing linkers to check every explicit export.
++"""
++import pathlib
++import re
++import subprocess
++import sys
++
++source, destination, *objects = sys.argv[1:]
++output = subprocess.check_output(
++    ["nm", "--defined-only", "--extern-only", "--format=posix", *objects], text=True)
++symbols = {line.split()[0] for line in output.splitlines()
++           if len(line.split()) >= 3 and not line.endswith(":")}
++lines = []
++for line in pathlib.Path(source).read_text().splitlines(keepends=True):
++    match = re.fullmatch(r"\s*([A-Za-z_.$][A-Za-z_0-9.$]*)\s*;\s*\n?", line)
++    if match and match.group(1) not in symbols:
++        continue
++    lines.append(line)
++path = pathlib.Path(destination)
++temporary = path.with_name(path.name + ".tmp")
++temporary.write_text("".join(lines))
++temporary.replace(path)
+diff --git a/mk-1st.awk b/mk-1st.awk
+index 1b0735e..372e528 100644
+--- a/mk-1st.awk
++++ b/mk-1st.awk
+@@ -176,7 +176,8 @@ function removelinks(directory) {
+ 		}
+ 	}
+ function make_shlib(objs, shlib_list) {
+-		printf "\t$(MK_SHARED_LIB) $(%s_OBJS) $(%s)\n", objs, shlib_list
++		printf "\t$(if $(findstring --version-script,$(VERSIONED_SYMS)),python3 $(top_srcdir)/filter-version-map.py $(RESULTING_SYMS) $@.map $(%s_OBJS),:)\n", objs
++		printf "\t$(if $(findstring --version-script,$(VERSIONED_SYMS)),$(subst $(RESULTING_SYMS),$@.map,$(MK_SHARED_LIB)),$(MK_SHARED_LIB)) $(%s_OBJS) $(%s)\n", objs, shlib_list
+ 	}
+ function sharedlinks(directory) {
+ 		if ( ShlibVer != "auto" && ShlibVer != "cygdll" && ShlibVer != "msysdll" && ShlibVer != "mingw" && ShlibVer != "msvcdll" ) {
+diff --git a/ncurses/base/MKkeyname.awk b/ncurses/base/MKkeyname.awk
+index dde41a3..5619f80 100644
+--- a/ncurses/base/MKkeyname.awk
++++ b/ncurses/base/MKkeyname.awk
+@@ -127,10 +127,14 @@ END {
+ 	print "						_nc_STRCPY(p, \"^?\", P_LIMIT);"
+ 	print "					else"
+ 	print "						_nc_SPRINTF(p, _nc_SLIMIT(P_LIMIT) \"%c\", cc);"
++	print "#if defined(__GNUC__) && !defined(__clang__)"
+ 	print "#pragma GCC diagnostic push"
+ 	print "#pragma GCC diagnostic ignored \"-Wanalyzer-malloc-leak\""
++	print "#endif"
+ 	print "					MyTable[c] = strdup(name);"
++	print "#if defined(__GNUC__) && !defined(__clang__)"
+ 	print "#pragma GCC diagnostic pop"
++	print "#endif"
+ 	print "				}"
+ 	print "				result = MyTable[c];"
+ 	print "			}"
+diff --git a/ncurses/tinfo/lib_tparm.c b/ncurses/tinfo/lib_tparm.c
+index 3e71ffe..44ff15b 100644
+--- a/ncurses/tinfo/lib_tparm.c
++++ b/ncurses/tinfo/lib_tparm.c
+@@ -595,7 +595,7 @@ _nc_tparm_analyze(TERMINAL *term, const char *string, char **p_is_s, int *popcou
+ /*
+  * Workaround for false positive with tsearch.
+  */
+-#if HAVE_TSEARCH
++#if HAVE_TSEARCH && defined(__GNUC__) && !defined(__clang__)
+ #pragma GCC diagnostic push
+ #pragma GCC diagnostic ignored "-Wanalyzer-malloc-leak"
+ #endif
+@@ -686,7 +686,7 @@ tparm_setup(TERMINAL *term, const char *string, TPARM_DATA *result)
+     return rc;
+ }
+ 
+-#if HAVE_TSEARCH
++#if HAVE_TSEARCH && defined(__GNUC__) && !defined(__clang__)
+ #pragma GCC diagnostic pop
+ #endif
+ 
+diff --git a/ncurses/tinfo/write_entry.c b/ncurses/tinfo/write_entry.c
+index 85cfddf..8cb4b9e 100644
+--- a/ncurses/tinfo/write_entry.c
++++ b/ncurses/tinfo/write_entry.c
+@@ -976,6 +976,7 @@ _nc_write_object(TERMTYPE2 *tp, char *buffer, unsigned *offset, unsigned limit)
+ NCURSES_EXPORT(int)
+ _nc_tic_written(void)
+ {
++    (void)total_parts;
+     TR(TRACE_DATABASE, ("_nc_tic_written %d entries, %d parts, %d size",
+ 			total_written, total_parts, total_size));
+     return total_written;
+diff --git a/test/ncurses.c b/test/ncurses.c
+index 264a72d..42380f7 100644
+--- a/test/ncurses.c
++++ b/test/ncurses.c
+@@ -154,8 +154,6 @@ static bool UseColors;		/* true if we use colors */
+ /* The form test must override wGetchar()'s handling of Control+D. */
+ static bool IsEditingForm = FALSE;
+ 
+-#undef max_pairs
+-static int max_pairs;		/* ...and the number of color pairs */
+ 
+ #if HAVE_COLOR_CONTENT
+ typedef struct {
+@@ -8116,7 +8114,6 @@ main(int argc, char *argv[])
+ #else /* normal SVr4 curses */
+ 	MaxColors = COLORS;	/* was > 8 ? 8 : COLORS */
+ #endif
+-	max_pairs = COLOR_PAIRS;	/* was > 256 ? 256 : COLOR_PAIRS */
+ 
+ #if HAVE_COLOR_CONTENT
+ 	if (can_change_color()) {
+diff --git a/test/picsmap.c b/test/picsmap.c
+index 3ab5573..5ca641f 100644
+--- a/test/picsmap.c
++++ b/test/picsmap.c
+@@ -634,10 +634,22 @@ init_palette(const char *palette_file)
+ 	{
+ 	    int cp;
+ 	    for (cp = 0; cp < COLORS; ++cp) {
+-		color_content((short) cp,
+-			      &all_colors[cp].red,
+-			      &all_colors[cp].green,
+-			      &all_colors[cp].blue);
++#if USE_EXTENDED_COLORS
++		if (use_extended_colors) {
++		    int red, green, blue;
++		    if (extended_color_content(cp, &red, &green, &blue) == OK) {
++			all_colors[cp].red = (short) red;
++			all_colors[cp].green = (short) green;
++			all_colors[cp].blue = (short) blue;
++		    }
++		} else
++#endif
++		{
++		    color_content((short) cp,
++				  &all_colors[cp].red,
++				  &all_colors[cp].green,
++				  &all_colors[cp].blue);
++		}
+ 	    }
+ 	}
+ #else
+diff --git a/test/worm.c b/test/worm.c
+index d9b1f42..47dfa19 100644
+--- a/test/worm.c
++++ b/test/worm.c
+@@ -94,8 +94,10 @@ typedef struct worm {
+ #endif
+ } WORM;
+ 
++#ifdef USE_PTHREADS
+ static unsigned long sequence = 0;
+ static bool quitting = FALSE;
++#endif
+ 
+ static WORM *worm;
+ static int max_refs;
+@@ -641,7 +643,9 @@ main(int argc, char *argv[])
+ #endif
+ 
+     while (!done) {
++#ifdef USE_PTHREADS
+ 	Locked(++sequence);
++#endif
+ 	if ((ch = get_input()) > 0) {
+ 
+ #ifdef KEY_RESIZE
+@@ -655,7 +659,9 @@ main(int argc, char *argv[])
+ 	     * normal operation -T.Dickey
+ 	     */
+ 	    if (ch == 'q') {
++#ifdef USE_PTHREADS
+ 		quitting = TRUE;
++#endif
+ 		done = TRUE;
+ 		Trace(("done - quitting"));
+ 		continue;

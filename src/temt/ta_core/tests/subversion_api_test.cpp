@@ -1,8 +1,8 @@
 // Standalone smoke test for the current SVN APIs used by SubversionClient.
-// Compile with pkg-config --cflags for libsvn_client, libsvn_repos and apr-1;
-// link with -lsvn_client-1 -lsvn_repos-1 -lsvn_subr-1 -lapr-1.
+// Build through the adjacent CMakeLists.txt to select a matching SVN/APR ABI.
 // Pass an empty temporary directory as the only argument. No network is used.
 #include <svn_client.h>
+#include <svn_version.h>
 #include <svn_dirent_uri.h>
 #include <svn_pools.h>
 #include <svn_repos.h>
@@ -82,8 +82,14 @@ int main(int argc, char **argv) {
     working.kind = svn_opt_revision_working;
     base_revision.kind = svn_opt_revision_base;
     svn_revnum_t revision;
+#if SVN_VER_MAJOR > 1 || (SVN_VER_MAJOR == 1 && SVN_VER_MINOR >= 15)
+    check(svn_client_checkout4(&revision, url, wc.c_str(), &head, &head,
+                              svn_depth_infinity, false, false,
+                              nullptr, svn_tristate_unknown, ctx, pool));
+#else
     check(svn_client_checkout3(&revision, url, wc.c_str(), &head, &head,
                               svn_depth_infinity, false, false, ctx, pool));
+#endif
     require(revision == 0, "Empty checkout revision");
     write(original, "original\n");
     check(svn_client_add5(original.c_str(), svn_depth_empty, true, false,

@@ -1,0 +1,94 @@
+{
+  "gsl": {
+    "commit": "7527c444cfa25b42c15bed73824c9e3ece28b2f3",
+    "commit_date": "2026-06-04T09:20:21-05:00",
+    "commit_subject": "add gsl_matrix_axpby + docs and tests",
+    "branch": "master",
+    "version_evidence": {
+      "configure.ac": [
+        "AC_INIT([gsl],[2.8+])",
+        "dnl Library versioning (C:R:A == current:revision:age)",
+        "dnl (*) There was an error on this release.  Firstly, the versioning",
+        "dnl How to update library version number",
+        "dnl See https://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html",
+        "GSL_LT_VERSION=\"${GSL_CURRENT}:${GSL_REVISION}:${GSL_AGE}\"",
+        "AC_SUBST(GSL_LT_VERSION)",
+        "GSL_LT_CBLAS_VERSION=\"${CBLAS_CURRENT}:${CBLAS_REVISION}:${CBLAS_AGE}\"",
+        "AC_SUBST(GSL_LT_CBLAS_VERSION)",
+        "case \"$VERSION\" in",
+        "dnl Split VERSION into GSL_VERSION_MAJOR and GSL_VERSION_MINOR",
+        "dnl Follows AX_SPLIT_VERSION macro from AC-Archive",
+        "GSL_MAJOR_VERSION=`echo \"$VERSION\" | $SED 's/\\([[^.]][[^.]]*\\).*/\\1/'`",
+        "GSL_MINOR_VERSION=`echo \"$VERSION\" | $SED 's/[[^.]][[^.]]*.\\([[^.]][[^.]]*\\).*/\\1/'`",
+        "AC_SUBST(GSL_MAJOR_VERSION)",
+        "AC_SUBST(GSL_MINOR_VERSION)",
+        "dnl Check for \"extern inline\", using a modified version of the test",
+        "       AC_MSG_RESULT([avoiding OpenBSD system log1p - using gsl version])",
+        "const char * s = \"5678.25\"; long double x = 1.234 ; ",
+        "if (x == 5678.25) {exit (0);} else {exit(1); };",
+        "      double q = GSL_COERCE_DBL(3.0/7.0) ;",
+        "      if (q == GSL_COERCE_DBL(3.0/7.0)) { ... } ;",
+        "   precision mode unless you compile a separate version of the",
+        "gsl_version.h                \\"
+      ]
+    }
+  },
+  "readline": {
+    "commit": "b72c50e04af0988724c1595e7a2e9697f1ab6eeb",
+    "commit_date": "2026-08-07T11:52:02-04:00",
+    "commit_subject": "fix redisplay issues when the first difference between the visible and new lines is in the middle of a CSI sequence in the prompt; reset the prompt after SIGWINCH so the array of invisible characters in the prompt gets updated; fix crash if the prompt exceeds 256 lines; fix visible-region rendering if the region is zero length; fix for unintended readline command execution if a vi-mode user types an arrow key instead of a mark identifier",
+    "branch": "devel",
+    "version_evidence": {
+      "configure.ac": [
+        "#   the Free Software Foundation, either version 3 of the License, or",
+        "#   (at your option) any later version.",
+        "AC_REVISION([for Readline 8.3, version 2.104])",
+        "AC_INIT(readline, 8.3, bug-readline@gnu.org)",
+        "dnl make sure we are using a recent autoconf version",
+        "dnl update the value of RL_READLINE_VERSION in readline.h when this changes",
+        "LIBVERSION=8.3",
+        "echo \"Beginning configuration for readline-$LIBVERSION for ${host_cpu}-${host_vendor}-${host_os}\"",
+        "\tAC_SUBST(SHLIB_LIBVERSION)",
+        "\tAC_SUBST(SHLIB_DLLVERSION)",
+        "\t# shared library versioning",
+        "\tSHLIB_MAJOR=[`expr \"$LIBVERSION\" : '\\([0-9]\\)\\..*'`]",
+        "\tSHLIB_MINOR=[`expr \"$LIBVERSION\" : '[0-9]\\.\\([0-9]\\).*'`]",
+        "AC_SUBST(LIBVERSION)"
+      ],
+      "patchlevel": []
+    }
+  },
+  "bison": {
+    "commit": "a47fb7838a1bf9128c6e0aed0d0194d47f17b8c6",
+    "commit_date": "2026-07-30T08:36:29-07:00",
+    "commit_subject": "build: update gnulib submodule to latest",
+    "branch": "master",
+    "version_evidence": {
+      "configure.ac": [
+        "# the Free Software Foundation, either version 3 of the License, or",
+        "# (at your option) any later version.",
+        "AC_INIT([GNU Bison],",
+        "        m4_esyscmd([build-aux/git-version-gen .tarball-version]),",
+        "# release candidates, we use version strings like 2.4.3_rc1, but gnits",
+        "# add a bogus NEWS entry.  In that case, the version string",
+        "                 m4_bmatch(m4_defn([AC_PACKAGE_VERSION]), [[-_]],",
+        "  # -Wno-tautological-constant-out-of-range-compare for Clang 3.3 and",
+        "  # 3.4 on GNU/Linux that choke on intprops.h's INT_MULTIPLY_WRAPV,",
+        "  # 1673../src/complain.c(393): error #188: enumerated type mixed with another type",
+        "  # error #3179: deprecated conversion of string literal to char* (should be const char*)",
+        "  # error #2259: non-pointer conversion from \"int\" to \"yybool={signed char}\" may lose significant bits",
+        "  warn_tests='-Wundef -pedantic -Wconversion",
+        "    -Wdeprecated -Wsign-compare -Wsign-conversion",
+        "  # Accept this warning only if it is not too touchy (e.g., clang 3.3",
+        "  # and 3.4).",
+        "  # Accept this warning only if it is not too touchy (e.g., clang 3.3",
+        "  # and 3.4).",
+        "AM_GNU_GETTEXT_VERSION([0.19])",
+        "  case $am__api_version in"
+      ],
+      ".prev-version": [
+        "3.8.2"
+      ]
+    }
+  }
+}

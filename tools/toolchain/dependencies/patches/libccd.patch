@@ -1,0 +1,98 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 35bf430..1f44554 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 2.8.11)
++cmake_minimum_required(VERSION 3.10...4.2)
+ 
+ if(POLICY CMP0042)
+   cmake_policy(SET CMP0042 NEW)
+diff --git a/src/ccd.c b/src/ccd.c
+index 23b63c0..21e925e 100644
+--- a/src/ccd.c
++++ b/src/ccd.c
+@@ -85,6 +85,8 @@ static int nextSupport(const void *obj1, const void *obj2, const ccd_t *ccd,
+ 
+ void ccdFirstDirDefault(const void *o1, const void *o2, ccd_vec3_t *dir)
+ {
++    (void)o1;
++    (void)o2;
+     ccdVec3Set(dir, CCD_ONE, CCD_ZERO, CCD_ZERO);
+ }
+ 
+@@ -138,6 +140,8 @@ static int penEPAPos(const ccd_pt_t *pt, const ccd_pt_el_t *nearest,
+     size_t i, len;
+     ccd_real_t scale;
+ 
++    (void)nearest;
++
+     // compute median
+     len = 0;
+     ccdListForEachEntry(&pt->vertices, v, ccd_pt_vertex_t, list){
+diff --git a/src/mpr.c b/src/mpr.c
+index 2ad6c87..c9a45f9 100644
+--- a/src/mpr.c
++++ b/src/mpr.c
+@@ -355,6 +355,9 @@ static void findPenetrTouch(const void *obj1, const void *obj2, const ccd_t *ccd
+                             ccd_simplex_t *portal,
+                             ccd_real_t *depth, ccd_vec3_t *dir, ccd_vec3_t *pos)
+ {
++    (void)obj1;
++    (void)obj2;
++    (void)ccd;
+     // Touching contact on portal's v1 - so depth is zero and direction
+     // is unimportant and pos can be guessed
+     *depth = CCD_REAL(0.);
+@@ -369,6 +372,9 @@ static void findPenetrSegment(const void *obj1, const void *obj2, const ccd_t *c
+                               ccd_simplex_t *portal,
+                               ccd_real_t *depth, ccd_vec3_t *dir, ccd_vec3_t *pos)
+ {
++    (void)obj1;
++    (void)obj2;
++    (void)ccd;
+     /*
+     ccd_vec3_t vec;
+     ccd_real_t k;
+@@ -400,6 +406,9 @@ static void findPenetrSegment(const void *obj1, const void *obj2, const ccd_t *c
+ static void findPos(const void *obj1, const void *obj2, const ccd_t *ccd,
+                     const ccd_simplex_t *portal, ccd_vec3_t *pos)
+ {
++    (void)obj1;
++    (void)obj2;
++    (void)ccd;
+     ccd_vec3_t dir;
+     size_t i;
+     ccd_real_t b[4], sum, inv;
+@@ -537,6 +546,7 @@ _ccd_inline int portalCanEncapsuleOrigin(const ccd_simplex_t *portal,
+                                          const ccd_support_t *v4,
+                                          const ccd_vec3_t *dir)
+ {
++    (void)portal;
+     ccd_real_t dot;
+     dot = ccdVec3Dot(&v4->v, dir);
+     return ccdIsZero(dot) || dot > CCD_ZERO;
+diff --git a/src/testsuites/bench.c b/src/testsuites/bench.c
+index 8ca770c..42150c5 100644
+--- a/src/testsuites/bench.c
++++ b/src/testsuites/bench.c
+@@ -1,4 +1,6 @@
+-#define CU_ENABLE_TIMER
++#ifndef CU_ENABLE_TIMER
++#define CU_ENABLE_TIMER 1
++#endif
+ #include <cu/cu.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+diff --git a/src/testsuites/bench2.c b/src/testsuites/bench2.c
+index 465acf3..db64ba4 100644
+--- a/src/testsuites/bench2.c
++++ b/src/testsuites/bench2.c
+@@ -1,4 +1,6 @@
+-#define CU_ENABLE_TIMER
++#ifndef CU_ENABLE_TIMER
++#define CU_ENABLE_TIMER 1
++#endif
+ #include <cu/cu.h>
+ #include <stdio.h>
+ #include <stdlib.h>

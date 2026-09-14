@@ -1,0 +1,2858 @@
+{
+  "schema_version": 1,
+  "researched_at": "2026-09-13T20:53:06.245027+00:00",
+  "scope": "Researched source revisions plus explicitly marked installed components. installed_evidence points to authoritative build, package and test records; research_candidate preserves superseded research metadata. Candidate paths are proposed locations, not proof of installation. Runtime and SDK inventories are supersets, not proof of final package shipment.",
+  "compiler_warning_policy": "Actual application and dependency C++ compilation must finish without warnings/errors. No active -w/-Wno-*/-Qunused-arguments flags and no newly introduced diagnostic suppression pragmas. Existing upstream pragmas are inventoried separately. These 16 native dependency builds additionally completed with -Wall -Wextra -Werror in C; other third-party C builds use upstream positive warnings plus -Werror. Intentional configure availability probes are distinct from real source compilation.",
+  "application_direct_dependencies": [
+    "qt",
+    "coin",
+    "opengl",
+    "subversion",
+    "apr",
+    "readline",
+    "ncurses",
+    "ode",
+    "libccd",
+    "gsl",
+    "zlib",
+    "libsndfile"
+  ],
+  "disabled_optional_dependencies": [
+    "MPI",
+    "CUDA",
+    "HPC profilers",
+    "Qt3D renderer"
+  ],
+  "normal_build_tools": [
+    "clang",
+    "cmake",
+    "ninja",
+    "python3",
+    "pkgconf"
+  ],
+  "parser_regeneration_tools": [
+    "bison"
+  ],
+  "inventory_files": [
+    "runtime-elf-graph.json",
+    "runtime-packages.json",
+    "qt-sdk-sbom-inventory.json"
+  ],
+  "boundaries": [
+    "Runtime ELF graph includes all installed Qt libraries/plugins, a superset of those used by Emergent.",
+    "Kernel/glibc/graphicsdrivers and remaining139 distro package families are inventoried as current; this manifest does not claim every platform package isupgraded.",
+    "Dynamically loaded graphics/audio backends can add dependencies beyond ELF DT_NEEDED.",
+    "Five optional Qt SQL drivers have unavailable client libraries; default Emergent does not use these plugins.",
+    "Bundled Qt/Chromium components must be updated via coherent Qt module builds and verified separately."
+  ],
+  "dependencies": [
+    {
+      "name": "coin",
+      "version": "4.0.10",
+      "revision": "2a182129c1b16d16848e2547767750546f5c56d4",
+      "source_url": "https://github.com/coin3d/coin.git",
+      "branch": "master",
+      "commit_date": "2026-09-13T18:23:28Z",
+      "commit_url": "https://github.com/coin3d/coin/commit/2a182129c1b16d16848e2547767750546f5c56d4",
+      "current_version": "4.0.6",
+      "current_packages": {
+        "libcoin80t64:amd64": "4.0.6+ds-1"
+      },
+      "status": "built_installed_tested",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "zlib",
+        "expat",
+        "freetype",
+        "fontconfig",
+        "opengl",
+        "bzip2",
+        "openal",
+        "simage"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [
+        "clang",
+        "cmake",
+        "ninja"
+      ],
+      "source_path": "/home/b/toolchains/sources/coin",
+      "build_path": "/home/b/toolchains/build/coin",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "direct_native",
+      "license_files": [
+        "/home/b/toolchains/sources/coin/COPYING"
+      ],
+      "build_log": "/home/b/toolchains/coin-build.log",
+      "recipe": "tools/toolchain/dependencies/build-native.sh",
+      "test_log": "/home/b/toolchains/coin-test.log",
+      "source_patch": "tools/toolchain/dependencies/patches/coin.patch",
+      "configure_log": "/home/b/toolchains/coin-configure.log",
+      "test_result": "8/8 CTest suites pass (including embedded Coin unit tests).",
+      "compiler": "Clang24.0.0 nightly 20260911 (58c46bae2118)",
+      "actual_c_flags": "-Wall -Wextra -Werror",
+      "cxx_standard_library": "GNU libstdc++ (Clang24 selects GCC15 headers), matching official Qt SDK ABI",
+      "actual_cxx_flags": "-Wall -Wextra -Werror -Woverloaded-virtual",
+      "source_patch_sha256": "0f64e54c1c613a0be6116ae9e148cd9416a1e1fb01a160dedd5ca13e0816da10",
+      "compile_commands": "/home/b/toolchains/build/coin/compile_commands.json",
+      "compile_command_count": 1061,
+      "active_suppression_flags": [],
+      "final_runtime_selected": true,
+      "gnu_abi_rebuild": "2026-09-13T22:28:27.287014+00:00",
+      "log_sha256": {
+        "configure": "a3fda9621eaea54a7a246afcc31bc02f703b3ae77ff07b5f275cd723008d90d9",
+        "build": "0174fceb80715fb2dba030f37d696497529a2577fb7d2c543bebc4e6309bd604",
+        "test": "e8698c8e7f13c1a2349c85801ade47a3c34ba9431ca5b317ca96521a0bc53a7f",
+        "install": "c3c7e1f5407f42bf715ec1e0c5cea57e31c569c874189e0df25da9ffe36744d0"
+      },
+      "installed_library_sha256": {
+        "/home/b/toolchains/deps/lib/libCoin.so.80.0.10": "5358ff604de3c52883289ebcec4e7631c593933481c6a82064dc99a7d7a338d3"
+      },
+      "actual_runtime_elf_dynamic": "\nDynamic section at offset 0x84dd38 contains 36 entries:\n  Tag        Type                         Name/Value\n 0x0000000000000001 (NEEDED)             Shared library: [libSM.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libICE.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libX11.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libXext.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libEGL.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libGLX.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libOpenGL.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libstdc++.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libgcc_s.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libCoin.so.80]\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x000000000000000c (INIT)               0x27e000\n 0x000000000000000d (FINI)               0x65b5b0\n 0x0000000000000019 (INIT_ARRAY)         0x818ad0\n 0x000000000000001b (INIT_ARRAYSZ)       4888 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x819de8\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x260\n 0x0000000000000005 (STRTAB)             0xb8918\n 0x0000000000000006 (SYMTAB)             0x2b648\n 0x000000000000000a (STRSZ)              873746 (bytes)\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000003 (PLTGOT)             0x856fe8\n 0x0000000000000002 (PLTRELSZ)           186336 (bytes)\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000017 (JMPREL)             0x250608\n 0x0000000000000007 (RELA)               0x199c08\n 0x0000000000000008 (RELASZ)             748032 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffffe (VERNEED)            0x199a68\n 0x000000006fffffff (VERNEEDNUM)         4\n 0x000000006ffffff0 (VERSYM)             0x18de2a\n 0x000000006ffffff9 (RELACOUNT)          2497\n 0x0000000000000000 (NULL)               0x0\n"
+    },
+    {
+      "name": "gsl",
+      "version": "2.8+",
+      "revision": "7527c444cfa25b42c15bed73824c9e3ece28b2f3",
+      "source_url": "https://git.savannah.gnu.org/git/gsl.git",
+      "branch": "master",
+      "commit_date": "2026-06-04T09:20:21-05:00",
+      "commit_url": null,
+      "current_version": "2.8",
+      "current_packages": {
+        "libgsl28:amd64": "2.8+dfsg-6",
+        "libgslcblas0:amd64": "2.8+dfsg-6"
+      },
+      "status": "built_installed_tested",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [
+        "clang",
+        "autoconf",
+        "automake",
+        "libtool",
+        "make"
+      ],
+      "source_path": "/home/b/toolchains/sources/gsl",
+      "build_path": "/home/b/toolchains/build/gsl",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "direct_native",
+      "license_files": [
+        "/home/b/toolchains/sources/gsl/COPYING"
+      ],
+      "build_log": "/home/b/toolchains/gsl-build.log",
+      "recipe": "tools/toolchain/dependencies/build-native.sh",
+      "test_log": "/home/b/toolchains/gsl-test.log",
+      "source_patch": "tools/toolchain/dependencies/patches/gsl.patch",
+      "configure_log": "/home/b/toolchains/gsl-configure.log",
+      "test_result": "59/59 upstream tests pass across55 Automake suites.",
+      "compiler": "Clang24.0.0 nightly 20260911 (58c46bae2118)",
+      "actual_c_flags": "-Wall -Wextra -Werror",
+      "configure_probe_policy": "Autoconf feature probes use -O2; actual library and test compilations use -O2 -Wall -Wextra -Werror.",
+      "source_patch_sha256": "cc40bb3019f18870dfa306142a38254b94bbe43846f80caed6470c078a42e3bc"
+    },
+    {
+      "name": "ode",
+      "version": "0.16.7-dev",
+      "revision": "232cbe216c5a762176f7754f04d190d2de00cdcc",
+      "source_url": "https://github.com/odedevs/ode.git",
+      "branch": "master",
+      "commit_date": "2026-08-07T22:47:08Z",
+      "commit_url": "https://github.com/odedevs/ode/commit/232cbe216c5a762176f7754f04d190d2de00cdcc",
+      "current_version": "0.16.6",
+      "current_packages": {
+        "libode8t64:amd64": "2:0.16.6-3"
+      },
+      "status": "built_installed_tested",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "libccd"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [
+        "clang",
+        "cmake",
+        "ninja"
+      ],
+      "source_path": "/home/b/toolchains/sources/ode",
+      "build_path": "/home/b/toolchains/build/ode",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "direct_native",
+      "license_files": [
+        "/home/b/toolchains/sources/ode/LICENSE-BSD",
+        "/home/b/toolchains/sources/ode/LICENSE-LGPL"
+      ],
+      "build_log": "/home/b/toolchains/ode-build.log",
+      "recipe": "tools/toolchain/dependencies/build-native.sh",
+      "test_log": "/home/b/toolchains/ode-test.log",
+      "source_patch": "tools/toolchain/dependencies/patches/ode.patch",
+      "configure_log": "/home/b/toolchains/ode-configure.log",
+      "test_result": "1/1 upstream unit-test suite passes.",
+      "compiler": "Clang24.0.0 nightly 20260911 (58c46bae2118)",
+      "actual_c_flags": "-Wall -Wextra -Werror",
+      "cxx_standard_library": "GNU libstdc++ (Clang24 selects GCC15 headers), matching official Qt SDK ABI",
+      "actual_cxx_flags": "-Wall -Wextra -Werror -Woverloaded-virtual",
+      "source_patch_sha256": "6e5ce6c62114bafd430a39f75b821dc262b0d156729bb171e98fc9e9556a800e",
+      "compile_commands": "/home/b/toolchains/build/ode/compile_commands.json",
+      "compile_command_count": 155,
+      "active_suppression_flags": [],
+      "final_runtime_selected": true,
+      "gnu_abi_rebuild": "2026-09-13",
+      "log_sha256": {
+        "configure": "3d5b6fa88878020fffaef8ff1aad203626539f08e2971a50257cea5f6678cabd",
+        "build": "950afdfdb23f27186a3095b955b6d2a3badd160dcc3ade643b0cc6fd932e1e13",
+        "test": "3a707b5c2436bd6ec998c43582092a6e408d7dc0dc6a4670bba287a8c492a6e2",
+        "install": "4c6741014340970814f53f6b0da861372dcc1a108917c02df47e2a0725875cc2"
+      },
+      "installed_library_sha256": {
+        "/home/b/toolchains/deps/lib/libode.so.8.0.0": "af0f269e57956e40168adc9292863ba9513e1f71cb0e1efba9733be51526d947"
+      },
+      "actual_runtime_elf_dynamic": "\nDynamic section at offset 0x1058e0 contains 30 entries:\n  Tag        Type                         Name/Value\n 0x0000000000000001 (NEEDED)             Shared library: [libccd.so.2]\n 0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libstdc++.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libgcc_s.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libode.so.8]\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x000000000000000c (INIT)               0x33000\n 0x000000000000000d (FINI)               0xe92a8\n 0x0000000000000019 (INIT_ARRAY)         0x104d38\n 0x000000000000001b (INIT_ARRAYSZ)       16 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x104d48\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x260\n 0x0000000000000005 (STRTAB)             0x11e20\n 0x0000000000000006 (SYMTAB)             0x4c38\n 0x000000000000000a (STRSZ)              91111 (bytes)\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000003 (PLTGOT)             0x106fe8\n 0x0000000000000002 (PLTRELSZ)           15696 (bytes)\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000017 (JMPREL)             0x2ed00\n 0x0000000000000007 (RELA)               0x29468\n 0x0000000000000008 (RELASZ)             22680 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffffe (VERNEED)            0x29388\n 0x000000006fffffff (VERNEEDNUM)         4\n 0x000000006ffffff0 (VERSYM)             0x28208\n 0x000000006ffffff9 (RELACOUNT)          22\n 0x0000000000000000 (NULL)               0x0\n"
+    },
+    {
+      "name": "zlib",
+      "version": "1.3.2.1-motley",
+      "revision": "e3dc0a85b7032e98380dec011bc8f2c2ee0d8fca",
+      "source_url": "https://github.com/madler/zlib.git",
+      "branch": "develop",
+      "commit_date": "2026-06-01T09:11:27Z",
+      "commit_url": "https://github.com/madler/zlib/commit/e3dc0a85b7032e98380dec011bc8f2c2ee0d8fca",
+      "current_version": "1.3.1",
+      "current_packages": {
+        "zlib1g:amd64": "1:1.3.dfsg+really1.3.1-1ubuntu3.1"
+      },
+      "status": "built_installed_validation_recorded",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/zlib",
+      "build_path": "/home/b/toolchains/build-deps/zlib",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "direct_native",
+      "license_files": [
+        "/home/b/toolchains/sources/zlib/LICENSE"
+      ],
+      "research_candidate": {
+        "version": "1.3.2.1-motley",
+        "revision": "e3dc0a85b7032e98380dec011bc8f2c2ee0d8fca",
+        "source_url": "https://github.com/madler/zlib.git",
+        "branch": "develop",
+        "commit_date": "2026-06-01T09:11:27Z",
+        "commit_url": "https://github.com/madler/zlib/commit/e3dc0a85b7032e98380dec011bc8f2c2ee0d8fca",
+        "candidate_kind": "development_snapshot",
+        "status": "candidate_researched_not_built",
+        "source_path": "/home/b/toolchains/sources/zlib",
+        "build_path": "/home/b/toolchains/build/zlib",
+        "install_prefix": "/home/b/toolchains/deps"
+      },
+      "record_kind": "researched_revision_with_installed_evidence",
+      "installed_evidence": {
+        "manifest": "foundations-installed.json",
+        "selector": {
+          "name": "zlib"
+        },
+        "revision": "e3dc0a85b7032e98380dec011bc8f2c2ee0d8fca",
+        "install_prefix": "/home/b/toolchains/deps",
+        "build_path": "/home/b/toolchains/build-deps/zlib",
+        "validation": "Upstream registered tests passed; retained unfiltered test log is authoritative for test count.",
+        "component_role": "library",
+        "package_selection_status": "not established by this installation record"
+      }
+    },
+    {
+      "name": "readline",
+      "version": "8.3-devel",
+      "revision": "b72c50e04af0988724c1595e7a2e9697f1ab6eeb",
+      "source_url": "https://git.savannah.gnu.org/git/readline.git",
+      "branch": "devel",
+      "commit_date": "2026-08-07T11:52:02-04:00",
+      "commit_url": null,
+      "current_version": "8.3",
+      "current_packages": {
+        "libreadline8t64:amd64": "8.3-4"
+      },
+      "status": "built_installed_tested",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "ncurses"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [
+        "clang",
+        "autoconf",
+        "automake",
+        "libtool",
+        "make"
+      ],
+      "source_path": "/home/b/toolchains/sources/readline",
+      "build_path": "/home/b/toolchains/build-deps/readline-clean",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "direct_native",
+      "license_files": [
+        "/home/b/toolchains/sources/readline/COPYING"
+      ],
+      "commands": [
+        [
+          "/home/b/toolchains/sources/readline/configure",
+          "--prefix=/home/b/toolchains/deps",
+          "--enable-shared",
+          "--with-curses=-ltinfow"
+        ],
+        [
+          "make",
+          "-j3",
+          "CFLAGS=-O2 -Wall -Werror",
+          "CXXFLAGS=-O2 -stdlib=libc++ -Wall -Wextra -Werror -Woverloaded-virtual",
+          "SHLIB_LIBS=-Wl,-z,defs"
+        ],
+        [
+          "make",
+          "install"
+        ]
+      ],
+      "environment": {
+        "CC": "/usr/lib/llvm-24/bin/clang",
+        "CXX": "/usr/lib/llvm-24/bin/clang++",
+        "CFLAGS": "-O2",
+        "CXXFLAGS": "-O2 -stdlib=libc++",
+        "CPPFLAGS": "-I/home/b/toolchains/deps/include",
+        "LDFLAGS": "-fuse-ld=lld -L/home/b/toolchains/deps/lib -Wl,-rpath,/home/b/toolchains/deps/lib"
+      },
+      "patch_sha256": "726d89a1875ed10ec2aa027e361f83a14f38162a6b1365b8fc0cb57f974c265e",
+      "log_sha256": {
+        "configure": "65821d7950f5654e87763b826af0d1c302a6a6baafb22df68e1a77e9ef5aa137",
+        "build": "6cf7753cdd988a22524156f93b241196359f7d3dd9768f239da4051ddd538f89",
+        "install": "87d20667790c5336c5c4a459af0ad450fd75483b221eb0aa2b2f141bb1165770"
+      },
+      "source_patch": "tools/toolchain/dependencies/patches/readline.patch",
+      "build_recipe": "tools/toolchain/dependencies/build-terminals.py",
+      "tests": {
+        "status": "PASS",
+        "coverage": [
+          "Unicode wide-character window roundtrip",
+          "panel lifecycle",
+          "Readline history expansion",
+          "Readline line input"
+        ],
+        "log": "/home/b/toolchains/build-deps/terminal-smoke.log",
+        "log_sha256": "c68977950a7d3c8ef670882f67caff931aea401bf5ff3438e9972f3b2537efd0",
+        "compiler_diagnostics": [],
+        "runtime_closure_log": "/home/b/toolchains/build-deps/terminal-smoke-ldd.log"
+      },
+      "installed_files": {
+        "libreadline.so.8.3": "aff7a06a27a804f36fb952a15dd3f4a978f0b92596c4fbf3e85d9b75727765fd",
+        "libhistory.so.8.3": "44764ba8f1e0fa54ce46ce6e2968aa62858f161620cfc2e8017ce7cb66faa164"
+      },
+      "compiler_version": "Ubuntu clang version 24.0.0 (++20260911085248+58c46bae2118-1~exp1~20260911085258.254)",
+      "runtime_language_abi": "C",
+      "test_harness_cxx_abi": "libc++; test harness only, not an application runtime dependency"
+    },
+    {
+      "name": "subversion",
+      "version": "1.16.0-dev",
+      "revision": "37ce946992a102cc2b1010de8c7bc520fed58bc0",
+      "source_url": "https://github.com/apache/subversion.git",
+      "branch": "trunk",
+      "commit_date": "2026-09-11T20:55:57Z",
+      "commit_url": "https://github.com/apache/subversion/commit/37ce946992a102cc2b1010de8c7bc520fed58bc0",
+      "current_version": "1.14.5",
+      "current_packages": {
+        "libsvn1:amd64": "1.14.5-6build1"
+      },
+      "status": "built_installed_tested",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "apr",
+        "serf",
+        "sqlite",
+        "zlib",
+        "lz4",
+        "utf8proc"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/subversion",
+      "build_path": "/home/b/toolchains/build-deps/subversion",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "direct_native",
+      "license_files": [
+        "/home/b/toolchains/sources/subversion/LICENSE",
+        "/home/b/toolchains/sources/subversion/NOTICE"
+      ],
+      "source_patch": "tools/toolchain/dependencies/patches/subversion.patch",
+      "source_patch_sha256": "cf623a4587f7f9f5b841d29197de9add380fa835ec2820ce5d155617f5edcec9",
+      "build_recipe": "tools/toolchain/dependencies/build-networking.py",
+      "compiler": "Clang24 nightly 20260911 (58c46bae2118)",
+      "compile_commands": "/home/b/toolchains/build-deps/subversion/compile_commands.json",
+      "compile_command_count": 530,
+      "active_suppression_flags": [],
+      "c_flags": "Upstream effective positive warnings plus -Wall -Werror",
+      "cxx_flags": "-Wall -Wextra -Werror -Woverloaded-virtual; GNU libstdc++",
+      "installed_libraries": {
+        "libsvn_client-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_client-1.so.0.16.0",
+          "sha256": "b18ac5333a17bc5cdad3f60fbf431588623d4c8754a9c9009dbc93ffe6b26358",
+          "elf_dynamic": "\nDynamic section at offset 0x90068 contains 35 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_wc-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_ra-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_delta-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_diff-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_client-1.so.0]\n 0x0000000000000007 (RELA)               0xc8f0\n 0x0000000000000008 (RELASZ)             3120 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          119\n 0x0000000000000017 (JMPREL)             0xd520\n 0x0000000000000002 (PLTRELSZ)           16056 (bytes)\n 0x0000000000000003 (PLTGOT)             0x93360\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x6bec\n 0x000000000000000a (STRSZ)              23811 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x6048\n 0x0000000000000019 (INIT_ARRAY)         0x91c18\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x91c10\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x8e1fc\n 0x000000000000000d (FINI)               0x8e218\n 0x000000006ffffff0 (VERSYM)             0x58d8\n 0x000000006ffffffe (VERNEED)            0x6008\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_delta-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_delta-1.so.0.16.0",
+          "sha256": "b0e03f59667b8f48784eb351d04356d861f5c03af0c96ee5a2ba3efb38acc486",
+          "elf_dynamic": "\nDynamic section at offset 0x11b78 contains 32 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libz.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_delta-1.so.0]\n 0x0000000000000007 (RELA)               0x2530\n 0x0000000000000008 (RELASZ)             1344 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          50\n 0x0000000000000017 (JMPREL)             0x2a70\n 0x0000000000000002 (PLTRELSZ)           2808 (bytes)\n 0x0000000000000003 (PLTGOT)             0x14e38\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x163c\n 0x000000000000000a (STRSZ)              3824 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x1440\n 0x0000000000000019 (INIT_ARRAY)         0x13a68\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x13a60\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x122c8\n 0x000000000000000d (FINI)               0x122e4\n 0x000000006ffffff0 (VERSYM)             0x12b8\n 0x000000006ffffffe (VERNEED)            0x1410\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_diff-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_diff-1.so.0.16.0",
+          "sha256": "6b9e4f56fc53aa3cf72da6bc5e1a100136902cfdfde25684e09f999631a5a5a3",
+          "elf_dynamic": "\nDynamic section at offset 0x17590 contains 32 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libz.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_diff-1.so.0]\n 0x0000000000000007 (RELA)               0x2a88\n 0x0000000000000008 (RELASZ)             2376 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          94\n 0x0000000000000017 (JMPREL)             0x33d0\n 0x0000000000000002 (PLTRELSZ)           3360 (bytes)\n 0x0000000000000003 (PLTGOT)             0x1a7c0\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x18b0\n 0x000000000000000a (STRSZ)              4564 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x1698\n 0x0000000000000019 (INIT_ARRAY)         0x19118\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x19110\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x17808\n 0x000000000000000d (FINI)               0x17824\n 0x000000006ffffff0 (VERSYM)             0x14e0\n 0x000000006ffffffe (VERNEED)            0x1668\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_fs-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_fs-1.so.0.16.0",
+          "sha256": "7342875002de4807a30063acbb9a38ec0bd9f94992e1f314ae0f1a3345d3b70d",
+          "elf_dynamic": "\nDynamic section at offset 0xad40 contains 35 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_fs_fs-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_fs_x-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_fs_util-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_delta-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_fs-1.so.0]\n 0x0000000000000007 (RELA)               0x30f0\n 0x0000000000000008 (RELASZ)             888 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          26\n 0x0000000000000017 (JMPREL)             0x3468\n 0x0000000000000002 (PLTRELSZ)           2808 (bytes)\n 0x0000000000000003 (PLTGOT)             0xe040\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x1e2c\n 0x000000000000000a (STRSZ)              4799 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x1a48\n 0x0000000000000019 (INIT_ARRAY)         0xccb8\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0xccb0\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0xb518\n 0x000000000000000d (FINI)               0xb534\n 0x000000006ffffff0 (VERSYM)             0x1858\n 0x000000006ffffffe (VERNEED)            0x1a28\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_fs_fs-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_fs_fs-1.so.0.16.0",
+          "sha256": "95f5b88be193e194d794678bf9db901cb6aaa11bf55f878f4a97e58fae86d6e5",
+          "elf_dynamic": "\nDynamic section at offset 0x4eed0 contains 33 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_delta-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_fs_util-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_fs_fs-1.so.0]\n 0x0000000000000007 (RELA)               0x8040\n 0x0000000000000008 (RELASZ)             3624 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          70\n 0x0000000000000017 (JMPREL)             0x8e68\n 0x0000000000000002 (PLTRELSZ)           12504 (bytes)\n 0x0000000000000003 (PLTGOT)             0x52510\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x46d4\n 0x000000000000000a (STRSZ)              14696 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x3ed0\n 0x0000000000000019 (INIT_ARRAY)         0x50e18\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x50e10\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x4dd44\n 0x000000000000000d (FINI)               0x4dd60\n 0x000000006ffffff0 (VERSYM)             0x3a00\n 0x000000006ffffffe (VERNEED)            0x3ea0\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_fs_util-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_fs_util-1.so.0.16.0",
+          "sha256": "73be8a22f02e2b27593ef310a202ab4bcc122daf675dd1042f4fe24f7959542f",
+          "elf_dynamic": "\nDynamic section at offset 0x19a0 contains 31 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_fs_util-1.so.0]\n 0x0000000000000007 (RELA)               0xa48\n 0x0000000000000008 (RELASZ)             216 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          5\n 0x0000000000000017 (JMPREL)             0xb20\n 0x0000000000000002 (PLTRELSZ)           552 (bytes)\n 0x0000000000000003 (PLTGOT)             0x4bb8\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x6d0\n 0x000000000000000a (STRSZ)              882 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x680\n 0x0000000000000019 (INIT_ARRAY)         0x3978\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x3970\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x27c4\n 0x000000000000000d (FINI)               0x27e0\n 0x000000006ffffff0 (VERSYM)             0x610\n 0x000000006ffffffe (VERNEED)            0x65c\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_fs_x-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_fs_x-1.so.0.16.0",
+          "sha256": "5da384d7019e317431d1dec47b4cf8e836cefa969a1581eca1380d7706c1b894",
+          "elf_dynamic": "\nDynamic section at offset 0x4ec38 contains 33 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_delta-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_fs_util-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_fs_x-1.so.0]\n 0x0000000000000007 (RELA)               0x8e38\n 0x0000000000000008 (RELASZ)             3480 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          73\n 0x0000000000000017 (JMPREL)             0x9bd0\n 0x0000000000000002 (PLTRELSZ)           14112 (bytes)\n 0x0000000000000003 (PLTGOT)             0x52258\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x4e74\n 0x000000000000000a (STRSZ)              16321 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x45d0\n 0x0000000000000019 (INIT_ARRAY)         0x50b78\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x50b70\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x4d670\n 0x000000000000000d (FINI)               0x4d68c\n 0x000000006ffffff0 (VERSYM)             0x4078\n 0x000000006ffffffe (VERNEED)            0x45a0\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_ra-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_ra-1.so.0.16.0",
+          "sha256": "8409cfbc891192f2e4aadcce675f772c11eacc444820449012a0686abf87fcbc",
+          "elf_dynamic": "\nDynamic section at offset 0xb9c8 contains 35 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_ra_local-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_ra_serf-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_ra_svn-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_delta-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_ra-1.so.0]\n 0x0000000000000007 (RELA)               0x26f0\n 0x0000000000000008 (RELASZ)             840 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          20\n 0x0000000000000017 (JMPREL)             0x2a38\n 0x0000000000000002 (PLTRELSZ)           2952 (bytes)\n 0x0000000000000003 (PLTGOT)             0xec70\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x17a0\n 0x000000000000000a (STRSZ)              3920 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x1568\n 0x0000000000000019 (INIT_ARRAY)         0xd8e8\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0xd8e0\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0xc0ec\n 0x000000000000000d (FINI)               0xc108\n 0x000000006ffffff0 (VERSYM)             0x13d8\n 0x000000006ffffffe (VERNEED)            0x1548\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_ra_local-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_ra_local-1.so.0.16.0",
+          "sha256": "ba60ef40db9998b5724c2d28dc820d4e3924a6bed592ebf180fbc2aef6a512d1",
+          "elf_dynamic": "\nDynamic section at offset 0x8118 contains 34 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_repos-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_fs-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_delta-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_ra_local-1.so.0]\n 0x0000000000000007 (RELA)               0x1b58\n 0x0000000000000008 (RELASZ)             2232 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          83\n 0x0000000000000017 (JMPREL)             0x2410\n 0x0000000000000002 (PLTRELSZ)           2784 (bytes)\n 0x0000000000000003 (PLTGOT)             0xb390\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0xfe0\n 0x000000000000000a (STRSZ)              2936 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0xfb8\n 0x0000000000000019 (INIT_ARRAY)         0x9e48\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x9e40\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x86c0\n 0x000000000000000d (FINI)               0x86dc\n 0x000000006ffffff0 (VERSYM)             0xe98\n 0x000000006ffffffe (VERNEED)            0xf98\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_ra_serf-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_ra_serf-1.so.0.16.0",
+          "sha256": "c55ab95edbc160ad4ad6830de8f1dc67db5678de8f1c618bb7385be490a46c52",
+          "elf_dynamic": "\nDynamic section at offset 0x300e0 contains 34 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_delta-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libserf-2.so.2.0.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libz.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_ra_serf-1.so.0]\n 0x0000000000000007 (RELA)               0x4b88\n 0x0000000000000008 (RELASZ)             14688 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          549\n 0x0000000000000017 (JMPREL)             0x84e8\n 0x0000000000000002 (PLTRELSZ)           7608 (bytes)\n 0x0000000000000003 (PLTGOT)             0x333a8\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x29d4\n 0x000000000000000a (STRSZ)              8627 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x26d0\n 0x0000000000000019 (INIT_ARRAY)         0x2be18\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x2be10\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x29a00\n 0x000000000000000d (FINI)               0x29a1c\n 0x000000006ffffff0 (VERSYM)             0x23c8\n 0x000000006ffffffe (VERNEED)            0x268c\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_ra_svn-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_ra_svn-1.so.0.16.0",
+          "sha256": "95a4fc61667a47f8c5417a58e3e451f82b07ad1217b7028ed48efdaa7a94e29e",
+          "elf_dynamic": "\nDynamic section at offset 0x21ab0 contains 32 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_delta-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_ra_svn-1.so.0]\n 0x0000000000000007 (RELA)               0x3fa0\n 0x0000000000000008 (RELASZ)             3840 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          149\n 0x0000000000000017 (JMPREL)             0x4ea0\n 0x0000000000000002 (PLTRELSZ)           5712 (bytes)\n 0x0000000000000003 (PLTGOT)             0x24d38\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x2404\n 0x000000000000000a (STRSZ)              7068 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x2058\n 0x0000000000000019 (INIT_ARRAY)         0x23568\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x23560\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x21640\n 0x000000000000000d (FINI)               0x2165c\n 0x000000006ffffff0 (VERSYM)             0x1de0\n 0x000000006ffffffe (VERNEED)            0x2028\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_repos-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_repos-1.so.0.16.0",
+          "sha256": "a5be1abda8b551ca534e929d6ed54d7177519c0a70933eea201f61ee8ff9b281",
+          "elf_dynamic": "\nDynamic section at offset 0x3a2d0 contains 33 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_fs-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_delta-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_repos-1.so.0]\n 0x0000000000000007 (RELA)               0x6f00\n 0x0000000000000008 (RELASZ)             696 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          19\n 0x0000000000000017 (JMPREL)             0x71b8\n 0x0000000000000002 (PLTRELSZ)           10344 (bytes)\n 0x0000000000000003 (PLTGOT)             0x3d538\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x3f88\n 0x000000000000000a (STRSZ)              12146 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x39e8\n 0x0000000000000019 (INIT_ARRAY)         0x3c228\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x3c220\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x396e8\n 0x000000000000000d (FINI)               0x39704\n 0x000000006ffffff0 (VERSYM)             0x3568\n 0x000000006ffffffe (VERNEED)            0x39a4\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_subr-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_subr-1.so.0.16.0",
+          "sha256": "632a1547fe901c3e0f50440f6fed192e11c2d02f656a5e7e80d8f153784d79e8",
+          "elf_dynamic": "\nDynamic section at offset 0x90fc0 contains 34 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libz.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libsqlite3.so]\n 0x0000000000000001 (NEEDED)             Shared library: [liblz4.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libutf8proc.so.3]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_subr-1.so.0]\n 0x0000000000000007 (RELA)               0x13018\n 0x0000000000000008 (RELASZ)             23328 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          940\n 0x0000000000000017 (JMPREL)             0x18b38\n 0x0000000000000002 (PLTRELSZ)           17640 (bytes)\n 0x0000000000000003 (PLTGOT)             0x94708\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0xb154\n 0x000000000000000a (STRSZ)              32452 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x9360\n 0x0000000000000019 (INIT_ARRAY)         0x90378\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x90370\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x8c544\n 0x000000000000000d (FINI)               0x8c560\n 0x000000006ffffff0 (VERSYM)             0x87b8\n 0x000000006ffffffe (VERNEED)            0x92d0\n 0x000000006fffffff (VERNEEDNUM)         2\n 0x0000000000000000 (NULL)               0x0\n"
+        },
+        "libsvn_wc-1.so.0.16.0": {
+          "path": "/home/b/toolchains/deps/lib/libsvn_wc-1.so.0.16.0",
+          "sha256": "1dd7e47495e867ec6c2eb23807848e70652b1f997869fc9b4048f1bcf3193a39",
+          "elf_dynamic": "\nDynamic section at offset 0xb24a0 contains 33 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_delta-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_diff-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libsvn_subr-1.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libsvn_wc-1.so.0]\n 0x0000000000000007 (RELA)               0xd2a0\n 0x0000000000000008 (RELASZ)             10536 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          423\n 0x0000000000000017 (JMPREL)             0xfbc8\n 0x0000000000000002 (PLTRELSZ)           17256 (bytes)\n 0x0000000000000003 (PLTGOT)             0xb5808\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x7450\n 0x000000000000000a (STRSZ)              24143 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x6440\n 0x0000000000000019 (INIT_ARRAY)         0xb3388\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0xb3380\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0xaf654\n 0x000000000000000d (FINI)               0xaf670\n 0x000000006ffffff0 (VERSYM)             0x5c80\n 0x000000006ffffffe (VERNEED)            0x6400\n 0x000000006fffffff (VERNEEDNUM)         1\n 0x0000000000000000 (NULL)               0x0\n"
+        }
+      },
+      "logs": {
+        "build-final.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/build-final.log",
+          "sha256": "ad4eacf86f138dfe07e0cd28eabd7e77eb1847ad3831207d188c806011222886"
+        },
+        "build-language-policy-final.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/build-language-policy-final.log",
+          "sha256": "9f6563970d52ced1e2037f79c7ab4720d9a8fd48933cd1c334caa78363475bf0"
+        },
+        "install.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/install.log",
+          "sha256": "5088ac0d0ac27491f0d8f59f551e3ce46e0f72d1ec6f9a5986b5a8d81e2f7fdc"
+        },
+        "api-build.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/api-build.log",
+          "sha256": "7c2b9efdedb523db0ab5916a01d9c425df0c1d1de158ee9a05e7f72b1ff7a99f"
+        },
+        "api-test.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/api-test.log",
+          "sha256": "ca65547f989859e09c0e74137ba421aee238560f7e3c4a0033c5f457449b7b1f"
+        },
+        "wrapper-syntax.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-syntax.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "https-system-ca-test.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/https-system-ca-test.log",
+          "sha256": "5952e3a1b11a395e99ffeaf4aea80de3d329789fc9dbeb304815b0cb6fd20877"
+        },
+        "test.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/test.log",
+          "sha256": "f58fdc3d671fb63aca8f905acf18d65cf510ef63f3b3c295fe7c20701cc19b3a"
+        },
+        "wrapper-object-build.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-object-build.log",
+          "sha256": "b92846f8fd829d3bca9f4e6332f2c7451fb40dd7f1946bfe5a73cb130c589c5e"
+        },
+        "wrapper-configure.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-configure.log",
+          "sha256": "2f5e09497a78f68f976150ff2106f2fdf9137395a8f3a89b4796236f4193836d"
+        },
+        "api-build-openssl-final.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/api-build-openssl-final.log",
+          "sha256": "7c2b9efdedb523db0ab5916a01d9c425df0c1d1de158ee9a05e7f72b1ff7a99f"
+        },
+        "api-test-openssl-final.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/api-test-openssl-final.log",
+          "sha256": "1ddecb3964f95bc70edc85955c9233fddf45c0decc2e327536b18da9f8566d0c"
+        },
+        "svn-default-ca.log": {
+          "path": "/home/b/toolchains/build-deps/openssl-final/svn-default-ca.log",
+          "sha256": "5952e3a1b11a395e99ffeaf4aea80de3d329789fc9dbeb304815b0cb6fd20877"
+        },
+        "tls-default-ca.log": {
+          "path": "/home/b/toolchains/build-deps/openssl-final/tls-default-ca.log",
+          "sha256": "11372d8e11f655c071f53b7b2d459240994d4ada3661a9584717e03db9a82f02"
+        },
+        "wrapper-build-final.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-build-final.log",
+          "sha256": "957260f2bf64efa773430df1b1b3f15e055522ae8f33291783fdfff6ed87f007"
+        },
+        "wrapper-test-final.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-test-final.log",
+          "sha256": "3ba916623fae10af8027ef432c506a11024076a9fe8711eaee3881f5b3fe2c47"
+        },
+        "wrapper-gdb-first.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-gdb-first.log",
+          "sha256": "3cec012b7fad606049fac08dc0f933114ea4ec2ec614ff8652c9e44219ea9fee"
+        },
+        "wrapper-syntax-diff-fix.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-syntax-diff-fix.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "wrapper-build-fixed.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-build-fixed.log",
+          "sha256": "57a5b701b0c8f26789dd7dacf714caa3ed60c6b0b823323bb1bb9152bdf040e8"
+        },
+        "wrapper-test-fixed.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-test-fixed.log",
+          "sha256": "f319cb56e5336e5d5a4a700f5d503aee27c04a5ee71e5b4ea2dc96b57528ba83"
+        },
+        "wrapper-closure-final.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-closure-final.log",
+          "sha256": "39f334c1c95ee58c133c9eb8d8912697afb2993a62473ca466976c286130e834"
+        },
+        "wrapper-test-details-final.log": {
+          "path": "/home/b/toolchains/build-deps/subversion/wrapper-test-details-final.log",
+          "sha256": "972168d8279173ce5af1096ad5f8e857a9687b328105c3e21b0c26cc7b85a371"
+        },
+        "final-installed-focused-cpu-tests.log": {
+          "path": "/home/b/cemer/artifacts/gui-export-fixed/focused-cpu-tests.log",
+          "sha256": "9c9fee4acf270e543ae41c24a85a4f848a4143b9921f7263f1496189be2c5f2a",
+          "size_bytes": 397
+        }
+      },
+      "configure_command": [
+        "cmake",
+        "-S",
+        "/home/b/toolchains/sources/subversion",
+        "-B",
+        "/home/b/toolchains/build-deps/subversion",
+        "-G",
+        "Ninja",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_C_FLAGS=-Wall -Werror",
+        "-DCMAKE_CXX_FLAGS=-Wall -Wextra -Werror -Woverloaded-virtual",
+        "-DCMAKE_C_FLAGS_RELEASE=-O2",
+        "-DCMAKE_CXX_FLAGS_RELEASE=-O2",
+        "-DCMAKE_INSTALL_LIBDIR=lib",
+        "-DCMAKE_LINKER_TYPE=LLD",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        "-DCMAKE_PREFIX_PATH=/home/b/toolchains/deps",
+        "-DCMAKE_INSTALL_PREFIX=/home/b/toolchains/deps",
+        "-DCMAKE_INSTALL_RPATH=/home/b/toolchains/deps/lib",
+        "-DSVN_ENABLE_TESTS=ON",
+        "-DSVN_USE_INTERNAL_LZ4=OFF",
+        "-DSVN_USE_INTERNAL_UTF8PROC=OFF",
+        "-DSVN_TEST_CONFIGURE_FOR_PARALLEL=ON"
+      ],
+      "policy_note": "Upstream -Wformat=2 followed by -Wno-format-nonliteral is expressed for C using only equivalent positive flags: -Wformat -Wformat-security -Wformat-y2k. C++ retains -Wformat=2 and strict Wall/Extra/Werror. Other active suppression flags removed. No unrelated C format-string refactor retained.",
+      "source_changes": [
+        "Select detected lowercase pkg-config apr_VERSION before branching, preventing APR1/2 mixing.",
+        "Express effective C warning coverage with positive flags only."
+      ],
+      "validation": {
+        "cpp_sdk_api": "PASS local checkout/add/copy/move/mkdir/commit/info/list/cat/diff/revert/delete/cleanup; repeated successfully after final OpenSSL installation",
+        "application_wrapper_syntax": "PASS final SVN1.16/APR2 headers",
+        "upstream_ctest": "PASS 125/125 in 653.12 seconds",
+        "https": "PASS certificate and hostname verification against Apache SVN with SSL_CERT_FILE, SSL_CERT_DIR, and OPENSSL_CONF unset; installed OpenSSL default cert.pem uses the system CA bundle",
+        "actual_application_wrapper": "PASS against final frozen installed libtemt, together with SDK API and taFiler tests (3/3 in 0.38 seconds); no display",
+        "working_copy_diff_regression": "Reproduced SIGABRT in svn_uri_canonicalize from GetDiffWc with a local path, also passed by iSvnFileListModel. Fixed only this function to use existing URL/dirent canonicalSvnTarget; subsequent full wrapper flow passed.",
+        "wrapper_runtime_closure": "Selected SVN1.16, APR2, Serf2, OpenSSL4 and GNU libstdc++; no APR1/APR-util1, missing libraries or LLVM C++ runtime"
+      },
+      "final_runtime_selected": true,
+      "application_library_tested": {
+        "path": "/home/b/cemer/install/lib/libtemt.so.8.6.1",
+        "sha256": "73163f47c9e654439d7ce7e66a49494516cb970fda520944ea91c8b4ceca320d",
+        "size_bytes": 292045416,
+        "runpath": "/home/b/toolchains/deps/lib:/home/b/toolchains/Qt/lib"
+      },
+      "wrapper_test_source": "src/temt/ta_core/tests/subversion_wrapper_test.cpp",
+      "previous_application_libraries_tested": [
+        {
+          "path": "/home/b/cemer/build-modern-final/lib/libtemt.so.8.6.1",
+          "sha256": "825ead88e886f6a52e5a1f16f905952b46abdcedcb55cb4104ea4b9785cd0f47",
+          "size_bytes": 292045200
+        }
+      ],
+      "final_build_library": {
+        "path": "/home/b/cemer/build-modern-final/lib/libtemt.so.8.6.1",
+        "sha256": "b63688e9a17b61df2c8a2a990a77b58ca39e195b53d30aa35fba69982c226096",
+        "size_bytes": 292045416,
+        "runpath": "/home/b/toolchains/deps/lib:/home/b/toolchains/Qt/lib:"
+      }
+    },
+    {
+      "name": "apr",
+      "version": "2.0.0-dev",
+      "revision": "c5db070f0800834ec9cbfef4a44862cdf87ccdf0",
+      "source_url": "https://github.com/apache/apr.git",
+      "branch": "trunk",
+      "commit_date": "2026-08-07T14:16:46Z",
+      "commit_url": "https://github.com/apache/apr/commit/c5db070f0800834ec9cbfef4a44862cdf87ccdf0",
+      "current_version": "1.7.6",
+      "current_packages": {
+        "libapr1t64:amd64": "1.7.6-3"
+      },
+      "status": "built_installed_validation_recorded",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "expat",
+        "openssl"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/apr",
+      "build_path": "/home/b/toolchains/build-deps/apr",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "direct_native",
+      "license_files": [
+        "/home/b/toolchains/sources/apr/LICENSE",
+        "/home/b/toolchains/sources/apr/NOTICE"
+      ],
+      "notes": [
+        "Trunk isAPR2 and includesAPR-util; SVN current build expectsAPR1/APR-util1. Latest ABI-compatible development alternative isAPR1.8.x382b81c951f26fc1aa23775efd083849bb14c671 (2026-08-05) withAPR-util1.7.x. Do not substituteAPR2 without porting and tests."
+      ],
+      "research_candidate": {
+        "version": "2.0.0-dev",
+        "revision": "c5db070f0800834ec9cbfef4a44862cdf87ccdf0",
+        "source_url": "https://github.com/apache/apr.git",
+        "branch": "trunk",
+        "commit_date": "2026-08-07T14:16:46Z",
+        "commit_url": "https://github.com/apache/apr/commit/c5db070f0800834ec9cbfef4a44862cdf87ccdf0",
+        "candidate_kind": "development_snapshot",
+        "status": "candidate_researched_not_built",
+        "source_path": "/home/b/toolchains/sources/apr",
+        "build_path": "/home/b/toolchains/build/apr",
+        "install_prefix": "/home/b/toolchains/deps",
+        "notes": [
+          "Trunk isAPR2 and includesAPR-util; SVN current build expectsAPR1/APR-util1. Latest ABI-compatible development alternative isAPR1.8.x382b81c951f26fc1aa23775efd083849bb14c671 (2026-08-05) withAPR-util1.7.x. Do not substituteAPR2 without porting and tests."
+        ]
+      },
+      "record_kind": "researched_revision_with_installed_evidence",
+      "installed_evidence": {
+        "manifest": "foundations-installed.json",
+        "selector": {
+          "name": "apr"
+        },
+        "revision": "c5db070f0800834ec9cbfef4a44862cdf87ccdf0",
+        "install_prefix": "/home/b/toolchains/deps",
+        "build_path": "/home/b/toolchains/build-deps/apr",
+        "validation": "Installed APR2 is exercised by Serf 11/11 and Subversion 125/125 upstream suites; no independent APR full-suite pass is claimed.",
+        "component_role": "library",
+        "package_selection_status": "not established by this installation record"
+      }
+    },
+    {
+      "name": "apr-util",
+      "version": "1.7.0-dev",
+      "revision": "7816152159f75b45444eb33432d49f8fd393d54c",
+      "source_url": "https://github.com/apache/apr-util.git",
+      "branch": "1.7.x",
+      "commit_date": "2026-08-25T12:52:43Z",
+      "commit_url": "https://github.com/apache/apr-util/commit/7816152159f75b45444eb33432d49f8fd393d54c",
+      "current_version": "1.6.3",
+      "current_packages": {
+        "libaprutil1t64:amd64": "1.6.3-3ubuntu3.1"
+      },
+      "status": "researched_not_built_unselected_apr2_configuration",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "apr",
+        "expat"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/apr-util",
+      "build_path": "/home/b/toolchains/build/apr-util",
+      "install_prefix": null,
+      "priority": "direct_native",
+      "license_files": [],
+      "research_candidate": {
+        "version": "1.7.0-dev",
+        "revision": "7816152159f75b45444eb33432d49f8fd393d54c",
+        "source_url": "https://github.com/apache/apr-util.git",
+        "branch": "1.7.x",
+        "commit_date": "2026-08-25T12:52:43Z",
+        "commit_url": "https://github.com/apache/apr-util/commit/7816152159f75b45444eb33432d49f8fd393d54c",
+        "candidate_kind": "development_snapshot",
+        "status": "candidate_researched_not_built",
+        "source_path": "/home/b/toolchains/sources/apr-util",
+        "build_path": "/home/b/toolchains/build/apr-util",
+        "install_prefix": "/home/b/toolchains/deps"
+      },
+      "record_kind": "unselected_research_candidate",
+      "candidate_selected": false,
+      "selection_reason": "The selected APR2 configuration integrates the utilities; separate APR-util1 is not built or selected.",
+      "selected_replacement_evidence": {
+        "manifest": "foundations-installed.json",
+        "selector": {
+          "name": "apr"
+        }
+      }
+    },
+    {
+      "name": "serf",
+      "version": "2.0.0",
+      "revision": "1a26bcb2d6e27abc4a996b0c32d661415214a0bf",
+      "source_url": "https://github.com/apache/serf.git",
+      "branch": "trunk",
+      "commit_date": "2026-07-02T15:45:41Z",
+      "commit_url": "https://github.com/apache/serf/commit/1a26bcb2d6e27abc4a996b0c32d661415214a0bf",
+      "current_version": "1.3.10",
+      "current_packages": {
+        "libserf-1-1:amd64": "1.3.10-3ubuntu2"
+      },
+      "status": "built_installed_tested",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "apr",
+        "openssl",
+        "zlib",
+        "brotli"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/serf",
+      "build_path": "/home/b/toolchains/build-deps/serf",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "direct_native",
+      "license_files": [
+        "/home/b/toolchains/sources/serf/LICENSE",
+        "/home/b/toolchains/sources/serf/NOTICE"
+      ],
+      "source_patch": "tools/toolchain/dependencies/patches/serf.patch",
+      "source_patch_sha256": "2e34f2018ea4bca0ed61933a3c466449e79fec47e14e3a6b61caf6c1805a3ea8",
+      "build_recipe": "tools/toolchain/dependencies/build-networking.py",
+      "compiler": "Clang24 nightly 20260911 (58c46bae2118)",
+      "compile_commands": "/home/b/toolchains/build-deps/serf/compile_commands.json",
+      "compile_command_count": 124,
+      "active_suppression_flags": [],
+      "c_flags": "Upstream effective positive warnings plus -Wall -Werror",
+      "cxx_flags": "-Wall -Wextra -Werror -Woverloaded-virtual; GNU libstdc++",
+      "installed_libraries": {
+        "libserf-2.so.2.0.0": {
+          "path": "/home/b/toolchains/deps/lib/libserf-2.so.2.0.0",
+          "sha256": "997e73fec3ca21de38358f90db54667a574e4c61da34bfbcd64d5ef926ec319f",
+          "elf_dynamic": "\nDynamic section at offset 0x3cf00 contains 34 entries:\n  Tag        Type                         Name/Value\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x0000000000000001 (NEEDED)             Shared library: [libapr-2.so.0]\n 0x0000000000000001 (NEEDED)             Shared library: [libssl.so.4]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypto.so.4]\n 0x0000000000000001 (NEEDED)             Shared library: [libz.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libbrotlidec.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libuuid.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libserf-2.so.2.0.0]\n 0x0000000000000007 (RELA)               0x6598\n 0x0000000000000008 (RELASZ)             14064 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffff9 (RELACOUNT)          400\n 0x0000000000000017 (JMPREL)             0x9c88\n 0x0000000000000002 (PLTRELSZ)           8544 (bytes)\n 0x0000000000000003 (PLTGOT)             0x40360\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000006 (SYMTAB)             0x298\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000005 (STRTAB)             0x3b40\n 0x000000000000000a (STRSZ)              10835 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x3520\n 0x0000000000000019 (INIT_ARRAY)         0x3d138\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x3d130\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000000000000c (INIT)               0x3aaac\n 0x000000000000000d (FINI)               0x3aac8\n 0x000000006ffffff0 (VERSYM)             0x30b8\n 0x000000006ffffffe (VERNEED)            0x3490\n 0x000000006fffffff (VERNEEDNUM)         3\n 0x0000000000000000 (NULL)               0x0\n"
+        }
+      },
+      "logs": {
+        "build-final.log": {
+          "path": "/home/b/toolchains/build-deps/serf/build-final.log",
+          "sha256": "526fe90a9ed0c09cb97356ab6577e09e06596b67f89b21f4137d859397ca803b"
+        },
+        "test-final.log": {
+          "path": "/home/b/toolchains/build-deps/serf/test-final.log",
+          "sha256": "8a6b137348319c90c2504c3bfb2002062e41b5eeba7e6faba886f1c1b5ce9107"
+        },
+        "install-final.log": {
+          "path": "/home/b/toolchains/build-deps/serf/install-final.log",
+          "sha256": "a2b95627778911afc0fd4d593f16b11c6dc2c8b5754f5045ffa35530386cef75"
+        },
+        "test-openssl-final.log": {
+          "path": "/home/b/toolchains/build-deps/serf/test-openssl-final.log",
+          "sha256": "084b78f34223c1da855ed1f16b38684d5859ec17ecca33d03dfb143d6d534be6"
+        }
+      },
+      "configure_command": [
+        "cmake",
+        "-S",
+        "/home/b/toolchains/sources/serf",
+        "-B",
+        "/home/b/toolchains/build-deps/serf",
+        "-G",
+        "Ninja",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_C_FLAGS=-Wall -Werror",
+        "-DCMAKE_C_FLAGS_RELEASE=-O2",
+        "-DCMAKE_INSTALL_LIBDIR=lib",
+        "-DCMAKE_LINKER_TYPE=LLD",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+        "-DCMAKE_PREFIX_PATH=/home/b/toolchains/deps",
+        "-DCMAKE_INSTALL_PREFIX=/home/b/toolchains/deps",
+        "-DCMAKE_INSTALL_RPATH=/home/b/toolchains/deps/lib",
+        "-DOPENSSL_ROOT_DIR=/home/b/toolchains/deps"
+      ],
+      "validation": {
+        "upstream_ctest": "PASS 11/11, including 49 TLS tests; repeated successfully after final OpenSSL installation",
+        "certificate_buffer_fix": "Use counted ASN.1 lengths for name copying and embedded-NUL detection, avoiding OpenSSL4 buffer overreads and hostname failures."
+      },
+      "final_runtime_selected": true
+    },
+    {
+      "name": "libsndfile",
+      "version": "1.2.2-dev",
+      "revision": "b9103bd48b6c8fb517ae737fe3baee0c718b804c",
+      "source_url": "https://github.com/libsndfile/libsndfile.git",
+      "branch": "master",
+      "commit_date": "2026-09-01T09:08:11Z",
+      "commit_url": "https://github.com/libsndfile/libsndfile/commit/b9103bd48b6c8fb517ae737fe3baee0c718b804c",
+      "current_version": "1.2.2",
+      "current_packages": {
+        "libsndfile1:amd64": "1.2.2-4"
+      },
+      "status": "built_installed_tested",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "ogg",
+        "vorbis",
+        "flac",
+        "opus",
+        "mpg123",
+        "lame"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [
+        "clang",
+        "cmake",
+        "ninja"
+      ],
+      "source_path": "/home/b/toolchains/sources/libsndfile",
+      "build_path": "/home/b/toolchains/build/libsndfile",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "direct_native",
+      "license_files": [
+        "/home/b/toolchains/sources/libsndfile/COPYING"
+      ],
+      "recipe": "tools/toolchain/dependencies/build-native.sh",
+      "build_log": "/home/b/toolchains/libsndfile-build.log",
+      "configure_log": "/home/b/toolchains/libsndfile-configure.log",
+      "test_log": "/home/b/toolchains/libsndfile-test.log",
+      "test_result": "143/143 upstream CTest cases pass in static companion build with all Xiph and MPEG codecs enabled; shared library installed.",
+      "compiler": "Clang24.0.0 nightly 20260911 (58c46bae2118)",
+      "actual_c_flags": "-Wall -Wextra -Werror",
+      "cxx_standard_library": "LLVM libc++24, matching installed Clang nightly",
+      "actual_cxx_flags": "-stdlib=libc++ -Wall -Wextra -Werror",
+      "source_patch": "tools/toolchain/dependencies/patches/libsndfile.patch",
+      "source_patch_sha256": "0160af5746599042374ff8bd25be162c8d73b85f6778eded900c7d06b00a9312",
+      "test_adjustments": "BWF/cart metadata fixtures now fill their fixed-width fields completely; Opus numerical fixture requests highest-fidelity quality explicitly, preserving original numeric tolerances. Automatic bitrate failed identically with Ubuntu and new Opus.",
+      "compile_commands": "/home/b/toolchains/build/libsndfile/compile_commands.json",
+      "compile_command_count": 119,
+      "active_suppression_flags": [],
+      "runtime_language_abi": "Shared libsndfile is C and has no libc++ dependency. Earlier C++ flags applied to example/test executables, which are not application runtime dependencies."
+    },
+    {
+      "name": "libccd",
+      "version": "2.0 (unbumped upstream version)",
+      "revision": "7931e764a19ef6b21b443376c699bbc9c6d4fba8",
+      "source_url": "https://github.com/danfis/libccd.git",
+      "branch": "master",
+      "commit_date": "2018-12-22T12:13:45Z",
+      "commit_url": "https://github.com/danfis/libccd/commit/7931e764a19ef6b21b443376c699bbc9c6d4fba8",
+      "current_version": "Debian 2.1-3; pkg-config 2.0",
+      "current_packages": {
+        "libccd2:amd64": "2.1-3"
+      },
+      "status": "built_installed_tested",
+      "candidate_kind": "unchanged_latest_upstream_head_rebuilt",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [
+        "clang",
+        "cmake",
+        "ninja"
+      ],
+      "source_path": "/home/b/toolchains/sources/libccd",
+      "build_path": "/home/b/toolchains/build/libccd",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/libccd/BSD-LICENSE"
+      ],
+      "build_log": "/home/b/toolchains/libccd-build.log",
+      "recipe": "tools/toolchain/dependencies/build-native.sh",
+      "notes": [
+        "Latest official master commit is from2018; rebuilding head does not imply newer release. Upstream version metadata remains2.0; distro package label is2.1."
+      ],
+      "test_log": "/home/b/toolchains/libccd-test.log",
+      "source_patch": "tools/toolchain/dependencies/patches/libccd.patch",
+      "test_result": "3/3 CTest suites pass.",
+      "configure_log": "/home/b/toolchains/libccd-configure.log",
+      "compiler": "Clang24.0.0 nightly 20260911 (58c46bae2118)",
+      "actual_c_flags": "-Wall -Wextra -Werror",
+      "source_patch_sha256": "b7da61f51fd9f15f8db7ed4cf64fcb2e0a422b1ad1cf161ae3239b9cc58b50d9",
+      "version_note": "Latest upstream Git still reports2.0; Ubuntu package version2.1 includes downstream packaging history. This is not claimed as a newer release.",
+      "compile_commands": "/home/b/toolchains/build/libccd/compile_commands.json",
+      "compile_command_count": 22,
+      "active_suppression_flags": [],
+      "final_runtime_selected": true,
+      "gnu_abi_rebuild": "2026-09-13",
+      "log_sha256": {
+        "configure": "0cebbb6f3746d0a56a2e6889b3215312157a2a003faee45db38460b827dd3bcf",
+        "build": "32700648d6e3f56300e899db4454e20ac63b7f6ea36c962f06e27d5d091bd86c",
+        "test": "da3e8c20d348c54662da9f99364d5636e3101ce2b289448a25f6dcc677e7db6d",
+        "install": "0e58945d7e862fb5c53e74279e0ad56014f1f7333585f06d9295432cf39c4352"
+      },
+      "installed_library_sha256": {
+        "/home/b/toolchains/deps/lib/libccd.so.2.0": "5098ab99d584ef7d10ce2f2b5c6123f98b0c59f1983a783d4eaa94834cfdd524"
+      },
+      "actual_runtime_elf_dynamic": "\nDynamic section at offset 0x8dc0 contains 27 entries:\n  Tag        Type                         Name/Value\n 0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x000000000000000e (SONAME)             Library soname: [libccd.so.2]\n 0x000000000000001d (RUNPATH)            Library runpath: [/home/b/toolchains/deps/lib]\n 0x000000000000000c (INIT)               0x1000\n 0x000000000000000d (FINI)               0x7990\n 0x0000000000000019 (INIT_ARRAY)         0x9db0\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x9db8\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x260\n 0x0000000000000005 (STRTAB)             0x648\n 0x0000000000000006 (SYMTAB)             0x318\n 0x000000000000000a (STRSZ)              559 (bytes)\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000003 (PLTGOT)             0x9fe8\n 0x0000000000000002 (PLTRELSZ)           432 (bytes)\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000017 (JMPREL)             0xa20\n 0x0000000000000007 (RELA)               0x900\n 0x0000000000000008 (RELASZ)             288 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000006ffffffe (VERNEED)            0x8c0\n 0x000000006fffffff (VERNEEDNUM)         2\n 0x000000006ffffff0 (VERSYM)             0x878\n 0x000000006ffffff9 (RELACOUNT)          5\n 0x0000000000000000 (NULL)               0x0\n"
+    },
+    {
+      "name": "cmake",
+      "version": "4.4.20260913",
+      "revision": "5440cd9785ffa9c48a60c5b3ee28f7d0ffd045c6",
+      "source_url": "https://github.com/Kitware/CMake.git",
+      "branch": "master",
+      "commit_date": "2026-09-13T04:05:59Z",
+      "commit_url": "https://github.com/Kitware/CMake/commit/5440cd9785ffa9c48a60c5b3ee28f7d0ffd045c6",
+      "current_version": "4.2.3",
+      "current_packages": {},
+      "status": "official_nightly_binary_installed",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "openssl"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/cmake",
+      "build_path": "/home/b/toolchains/build/cmake",
+      "install_prefix": "/home/b/toolchains/cmake-4.4.20260912-g5ffa52d-linux-x86_64",
+      "priority": "build_tool",
+      "license_files": [],
+      "research_candidate": {
+        "version": "4.4.20260913",
+        "revision": "5440cd9785ffa9c48a60c5b3ee28f7d0ffd045c6",
+        "source_url": "https://github.com/Kitware/CMake.git",
+        "branch": "master",
+        "commit_date": "2026-09-13T04:05:59Z",
+        "commit_url": "https://github.com/Kitware/CMake/commit/5440cd9785ffa9c48a60c5b3ee28f7d0ffd045c6",
+        "candidate_kind": "development_snapshot",
+        "status": "candidate_researched_not_built",
+        "source_path": "/home/b/toolchains/sources/cmake",
+        "build_path": "/home/b/toolchains/build/cmake",
+        "install_prefix": "/home/b/toolchains/deps"
+      },
+      "record_kind": "researched_candidate_with_installed_alternative",
+      "candidate_selected": false,
+      "candidate_status": "researched_source_revision_not_built",
+      "installed_evidence": {
+        "manifest": "cmake-nightly.json",
+        "version": "4.4.20260912-g5ffa52d",
+        "revision": "5ffa52d",
+        "install_prefix": "/home/b/toolchains/cmake-4.4.20260912-g5ffa52d-linux-x86_64",
+        "package_sha256": "8370a3ec3db597e944d5c60b7e77e4d15b2717256adf0ebf3b6fc3ae6634c63f",
+        "component_role": "build_tool",
+        "validation": "Installed executable reports the recorded version; used to configure the final app build."
+      }
+    },
+    {
+      "name": "ninja",
+      "version": "1.14.0.git",
+      "revision": "0f507b509621ed96171efa35332ce6e74fa0e08c",
+      "source_url": "https://github.com/ninja-build/ninja.git",
+      "branch": "master",
+      "commit_date": "2026-09-08T11:27:40Z",
+      "commit_url": "https://github.com/ninja-build/ninja/commit/0f507b509621ed96171efa35332ce6e74fa0e08c",
+      "current_version": "1.13.2",
+      "current_packages": {},
+      "status": "built_installed_validation_recorded",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/ninja",
+      "build_path": "/home/b/toolchains/build-deps/ninja",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "build_tool",
+      "license_files": [
+        "/home/b/toolchains/sources/ninja/COPYING"
+      ],
+      "research_candidate": {
+        "version": "1.14.0.git",
+        "revision": "0f507b509621ed96171efa35332ce6e74fa0e08c",
+        "source_url": "https://github.com/ninja-build/ninja.git",
+        "branch": "master",
+        "commit_date": "2026-09-08T11:27:40Z",
+        "commit_url": "https://github.com/ninja-build/ninja/commit/0f507b509621ed96171efa35332ce6e74fa0e08c",
+        "candidate_kind": "development_snapshot",
+        "status": "candidate_researched_not_built",
+        "source_path": "/home/b/toolchains/sources/ninja",
+        "build_path": "/home/b/toolchains/build/ninja",
+        "install_prefix": "/home/b/toolchains/deps"
+      },
+      "record_kind": "researched_revision_with_installed_evidence",
+      "installed_evidence": {
+        "manifest": "foundations-installed.json",
+        "selector": {
+          "name": "ninja"
+        },
+        "revision": "0f507b509621ed96171efa35332ce6e74fa0e08c",
+        "install_prefix": "/home/b/toolchains/deps",
+        "build_path": "/home/b/toolchains/build-deps/ninja",
+        "validation": "Upstream registered tests passed; retained unfiltered test log is authoritative for test count.",
+        "component_role": "build_tool",
+        "package_selection_status": "not established by this installation record"
+      }
+    },
+    {
+      "name": "bison",
+      "version": "3.8.2 + development commits",
+      "revision": "a47fb7838a1bf9128c6e0aed0d0194d47f17b8c6",
+      "source_url": "https://git.savannah.gnu.org/git/bison.git",
+      "branch": "master",
+      "commit_date": "2026-07-30T08:36:29-07:00",
+      "commit_url": null,
+      "current_version": "3.8.2",
+      "current_packages": {},
+      "status": "candidate_researched_not_built",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "m4"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [
+        "clang",
+        "autoconf",
+        "automake",
+        "libtool",
+        "make"
+      ],
+      "source_path": "/home/b/toolchains/sources/bison",
+      "build_path": "/home/b/toolchains/build/bison",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "build_tool",
+      "license_files": []
+    },
+    {
+      "name": "flex",
+      "version": "2.6.4 + development commits",
+      "revision": "4fcc71489ae298c35b0b786114ad524945f2cf95",
+      "source_url": "https://github.com/westes/flex.git",
+      "branch": "master",
+      "commit_date": "2026-07-30T10:52:27Z",
+      "commit_url": "https://github.com/westes/flex/commit/4fcc71489ae298c35b0b786114ad524945f2cf95",
+      "current_version": "2.6.4",
+      "current_packages": {},
+      "status": "candidate_researched_not_built",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "m4"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [
+        "clang",
+        "autoconf",
+        "automake",
+        "libtool",
+        "make"
+      ],
+      "source_path": "/home/b/toolchains/sources/flex",
+      "build_path": "/home/b/toolchains/build/flex",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "build_tool",
+      "license_files": []
+    },
+    {
+      "name": "ncurses",
+      "version": "6.6-20260912",
+      "revision": "797a8eb3303f9145bf87c9d16b187a3b63c262b5",
+      "source_url": "https://github.com/ThomasDickey/ncurses-snapshots.git",
+      "branch": "master",
+      "commit_date": "2026-09-12T22:48:29Z",
+      "commit_url": "https://github.com/ThomasDickey/ncurses-snapshots/commit/797a8eb3303f9145bf87c9d16b187a3b63c262b5",
+      "current_version": "6.6-20251231",
+      "current_packages": {
+        "libtinfo6:amd64": "6.6+20251231-1"
+      },
+      "status": "built_installed_tested",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/ncurses",
+      "build_path": "/home/b/toolchains/build-deps/ncurses-clean",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/ncurses/COPYING"
+      ],
+      "commands": [
+        [
+          "/home/b/toolchains/sources/ncurses/configure",
+          "--prefix=/home/b/toolchains/deps",
+          "--with-shared",
+          "--with-termlib",
+          "--enable-widec",
+          "--with-pkg-config-libdir=/home/b/toolchains/deps/lib/pkgconfig",
+          "--enable-pc-files",
+          "--with-versioned-syms"
+        ],
+        [
+          "make",
+          "-j3",
+          "CFLAGS=-O2 -Wall -Werror",
+          "CXXFLAGS=-O2 -stdlib=libc++ -Wall -Wextra -Werror -Woverloaded-virtual"
+        ],
+        [
+          "make",
+          "install"
+        ]
+      ],
+      "environment": {
+        "CC": "/usr/lib/llvm-24/bin/clang",
+        "CXX": "/usr/lib/llvm-24/bin/clang++",
+        "CFLAGS": "-O2",
+        "CXXFLAGS": "-O2 -stdlib=libc++",
+        "CPPFLAGS": "-I/home/b/toolchains/deps/include",
+        "LDFLAGS": "-fuse-ld=lld -L/home/b/toolchains/deps/lib -Wl,-rpath,/home/b/toolchains/deps/lib"
+      },
+      "patch_sha256": "b635ece9c3a6b64d00fd952504ac8b54f673ad04514df73348879957f3a416e0",
+      "log_sha256": {
+        "configure": "d732c07c0a71f7ba8a280904b51453f38180ba05b5a846e53cf6182c971f2554",
+        "build": "9e6f6c3c52ec635e14b38a66134255a4b4a575286c861aa7403d577088be9bd7",
+        "install": "c452a515562507bd286dc9c8ab525b3aed790445380932c51e282927e9a4d72d"
+      },
+      "source_patch": "tools/toolchain/dependencies/patches/ncurses.patch",
+      "build_recipe": "tools/toolchain/dependencies/build-terminals.py",
+      "tests": {
+        "status": "PASS",
+        "coverage": [
+          "Unicode wide-character window roundtrip",
+          "panel lifecycle",
+          "Readline history expansion",
+          "Readline line input"
+        ],
+        "log": "/home/b/toolchains/build-deps/terminal-smoke.log",
+        "log_sha256": "c68977950a7d3c8ef670882f67caff931aea401bf5ff3438e9972f3b2537efd0",
+        "compiler_diagnostics": [],
+        "runtime_closure_log": "/home/b/toolchains/build-deps/terminal-smoke-ldd.log"
+      },
+      "installed_files": {
+        "libncursesw.so.6.6": "04ce442f354fe2256305dea2684956521e4ed1e692133be1bd130b462780450f",
+        "libtinfow.so.6.6": "7bb63df17e82f843e2b167cec59e126fede6c29cb278be295ae64e46624ac57a",
+        "libpanelw.so.6.6": "644221c2643e66ad916eaddfa70796238d1366dcf91085062bc196dcb71183b5",
+        "libmenuw.so.6.6": "bc13364877ea93cc6779ada9e5af354c3847edb1a917ff73a9f2bd0741772d8b",
+        "libformw.so.6.6": "e55238d7f7406927c035aa9c2b774d28bddc4894ffe2e1615741fba568194371"
+      },
+      "compiler_version": "Ubuntu clang version 24.0.0 (++20260911085248+58c46bae2118-1~exp1~20260911085258.254)",
+      "runtime_language_abi": "C",
+      "test_harness_cxx_abi": "libc++; test harness only, not an application runtime dependency"
+    },
+    {
+      "name": "openssl",
+      "version": "development snapshot f6eb87c56054",
+      "revision": "f6eb87c560540cb29cedf5be739b5049bb1a385e",
+      "source_url": "https://github.com/openssl/openssl.git",
+      "branch": "master",
+      "commit_date": "2026-09-12T13:22:21Z",
+      "commit_url": "https://github.com/openssl/openssl/commit/f6eb87c560540cb29cedf5be739b5049bb1a385e",
+      "current_version": {
+        "libssl3t64:amd64": "3.5.5-1ubuntu3.5"
+      },
+      "current_packages": {
+        "libssl3t64:amd64": "3.5.5-1ubuntu3.5"
+      },
+      "status": "built_installed_tested",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/openssl",
+      "build_path": "/home/b/toolchains/build-deps/openssl-final",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/openssl/LICENSE.txt"
+      ],
+      "research_candidate": {
+        "version": "development snapshot f6eb87c56054",
+        "revision": "f6eb87c560540cb29cedf5be739b5049bb1a385e",
+        "source_url": "https://github.com/openssl/openssl.git",
+        "branch": "master",
+        "commit_date": "2026-09-12T13:22:21Z",
+        "commit_url": "https://github.com/openssl/openssl/commit/f6eb87c560540cb29cedf5be739b5049bb1a385e",
+        "candidate_kind": "development_snapshot",
+        "status": "candidate_researched_not_built",
+        "source_path": "/home/b/toolchains/sources/openssl",
+        "build_path": "/home/b/toolchains/build/openssl",
+        "install_prefix": "/home/b/toolchains/deps"
+      },
+      "record_kind": "researched_revision_with_installed_evidence",
+      "installed_evidence": {
+        "manifest": "openssl-installed.json",
+        "version": "4.2.0-dev",
+        "revision": "f6eb87c560540cb29cedf5be739b5049bb1a385e",
+        "install_prefix": "/home/b/toolchains/deps",
+        "build_path": "/home/b/toolchains/build-deps/openssl-final",
+        "validation": "PASS: 399 test files, 3612 tests, 377 seconds; upstream optional-feature skips retained",
+        "compatibility_boundary": "Used by source-built Serf/Subversion. Official Qt SDK keeps its independently loaded OpenSSL3 ABI."
+      }
+    },
+    {
+      "name": "sqlite",
+      "version": "development snapshot 7936c5107fa4",
+      "revision": "7936c5107fa4081c347852dc84054a7bb5c5fbe3",
+      "source_url": "https://github.com/sqlite/sqlite.git",
+      "branch": "master",
+      "commit_date": "2026-09-12T11:12:38Z",
+      "commit_url": "https://github.com/sqlite/sqlite/commit/7936c5107fa4081c347852dc84054a7bb5c5fbe3",
+      "current_version": {
+        "libsqlite3-0:amd64": "3.46.1-9ubuntu0.2"
+      },
+      "current_packages": {
+        "libsqlite3-0:amd64": "3.46.1-9ubuntu0.2"
+      },
+      "status": "built_installed_validation_recorded",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/sqlite",
+      "build_path": "/home/b/toolchains/build-deps/sqlite",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/sqlite/LICENSE.md"
+      ],
+      "research_candidate": {
+        "version": "development snapshot 7936c5107fa4",
+        "revision": "7936c5107fa4081c347852dc84054a7bb5c5fbe3",
+        "source_url": "https://github.com/sqlite/sqlite.git",
+        "branch": "master",
+        "commit_date": "2026-09-12T11:12:38Z",
+        "commit_url": "https://github.com/sqlite/sqlite/commit/7936c5107fa4081c347852dc84054a7bb5c5fbe3",
+        "candidate_kind": "development_snapshot",
+        "status": "candidate_researched_not_built",
+        "source_path": "/home/b/toolchains/sources/sqlite",
+        "build_path": "/home/b/toolchains/build/sqlite",
+        "install_prefix": "/home/b/toolchains/deps"
+      },
+      "record_kind": "researched_revision_with_installed_evidence",
+      "installed_evidence": {
+        "manifest": "foundations-installed.json",
+        "selector": {
+          "name": "sqlite"
+        },
+        "revision": "7936c5107fa4081c347852dc84054a7bb5c5fbe3",
+        "install_prefix": "/home/b/toolchains/deps",
+        "build_path": "/home/b/toolchains/build-deps/sqlite",
+        "validation": "PASS: real consumer smoke (SQLite WAL/JSON/math/transaction/reopen/integrity; XXH64 known vector; Zstd1.19MB binary round-trip; WebP64x48 RGBA lossless round-trip).",
+        "component_role": "library",
+        "package_selection_status": "not established by this installation record"
+      }
+    },
+    {
+      "name": "expat",
+      "version": "development snapshot 594e860114cd",
+      "revision": "594e860114cda04d048248649f07f34f7178942a",
+      "source_url": "https://github.com/libexpat/libexpat.git",
+      "branch": "master",
+      "commit_date": "2026-09-10T17:07:12Z",
+      "commit_url": "https://github.com/libexpat/libexpat/commit/594e860114cda04d048248649f07f34f7178942a",
+      "current_version": {
+        "libexpat1:amd64": "2.7.4-1"
+      },
+      "current_packages": {
+        "libexpat1:amd64": "2.7.4-1"
+      },
+      "status": "built_installed_validation_recorded",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/expat",
+      "build_path": "/home/b/toolchains/build-deps/expat",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/expat/COPYING",
+        "/home/b/toolchains/sources/expat/expat/COPYING"
+      ],
+      "research_candidate": {
+        "version": "development snapshot 594e860114cd",
+        "revision": "594e860114cda04d048248649f07f34f7178942a",
+        "source_url": "https://github.com/libexpat/libexpat.git",
+        "branch": "master",
+        "commit_date": "2026-09-10T17:07:12Z",
+        "commit_url": "https://github.com/libexpat/libexpat/commit/594e860114cda04d048248649f07f34f7178942a",
+        "candidate_kind": "development_snapshot",
+        "status": "candidate_researched_not_built",
+        "source_path": "/home/b/toolchains/sources/expat",
+        "build_path": "/home/b/toolchains/build/expat",
+        "install_prefix": "/home/b/toolchains/deps"
+      },
+      "record_kind": "researched_revision_with_installed_evidence",
+      "installed_evidence": {
+        "manifest": "foundations-installed.json",
+        "selector": {
+          "name": "expat"
+        },
+        "revision": "594e860114cda04d048248649f07f34f7178942a",
+        "install_prefix": "/home/b/toolchains/deps",
+        "build_path": "/home/b/toolchains/build-deps/expat",
+        "validation": "Upstream registered tests passed; retained unfiltered test log is authoritative for test count.",
+        "component_role": "library",
+        "package_selection_status": "not established by this installation record"
+      }
+    },
+    {
+      "name": "lz4",
+      "version": "development snapshot 0774d05537f9",
+      "revision": "0774d05537f9762f838f7ab541b7765f1a729cb5",
+      "source_url": "https://github.com/lz4/lz4.git",
+      "branch": "dev",
+      "commit_date": "2026-06-01T22:21:37Z",
+      "commit_url": "https://github.com/lz4/lz4/commit/0774d05537f9762f838f7ab541b7765f1a729cb5",
+      "current_version": {
+        "liblz4-1:amd64": "1.10.0-8"
+      },
+      "current_packages": {
+        "liblz4-1:amd64": "1.10.0-8"
+      },
+      "status": "built_installed_validation_recorded",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/lz4",
+      "build_path": "/home/b/toolchains/build-deps/lz4",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/lz4/LICENSE",
+        "/home/b/toolchains/sources/lz4/lib/LICENSE"
+      ],
+      "research_candidate": {
+        "version": "development snapshot 0774d05537f9",
+        "revision": "0774d05537f9762f838f7ab541b7765f1a729cb5",
+        "source_url": "https://github.com/lz4/lz4.git",
+        "branch": "dev",
+        "commit_date": "2026-06-01T22:21:37Z",
+        "commit_url": "https://github.com/lz4/lz4/commit/0774d05537f9762f838f7ab541b7765f1a729cb5",
+        "candidate_kind": "development_snapshot",
+        "status": "candidate_researched_not_built",
+        "source_path": "/home/b/toolchains/sources/lz4",
+        "build_path": "/home/b/toolchains/build/lz4",
+        "install_prefix": "/home/b/toolchains/deps"
+      },
+      "record_kind": "researched_revision_with_installed_evidence",
+      "installed_evidence": {
+        "manifest": "foundations-installed.json",
+        "selector": {
+          "name": "lz4"
+        },
+        "revision": "0774d05537f9762f838f7ab541b7765f1a729cb5",
+        "install_prefix": "/home/b/toolchains/deps",
+        "build_path": "/home/b/toolchains/build-deps/lz4",
+        "validation": "Upstream registered tests passed; retained unfiltered test log is authoritative for test count.",
+        "component_role": "library",
+        "package_selection_status": "not established by this installation record"
+      }
+    },
+    {
+      "name": "xxhash",
+      "version": "development snapshot c0b5ea995d66",
+      "revision": "c0b5ea995d66691734b1a79ad89e73a0d2fd5a53",
+      "source_url": "https://github.com/Cyan4973/xxHash.git",
+      "branch": "dev",
+      "commit_date": "2026-07-27T13:42:22Z",
+      "commit_url": "https://github.com/Cyan4973/xxHash/commit/c0b5ea995d66691734b1a79ad89e73a0d2fd5a53",
+      "current_version": {
+        "libxxhash0:amd64": "0.8.3-2build1"
+      },
+      "current_packages": {
+        "libxxhash0:amd64": "0.8.3-2build1"
+      },
+      "status": "built_installed_validation_recorded",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/xxhash",
+      "build_path": "/home/b/toolchains/build-deps/xxhash",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/xxhash/LICENSE"
+      ],
+      "research_candidate": {
+        "version": "development snapshot c0b5ea995d66",
+        "revision": "c0b5ea995d66691734b1a79ad89e73a0d2fd5a53",
+        "source_url": "https://github.com/Cyan4973/xxHash.git",
+        "branch": "dev",
+        "commit_date": "2026-07-27T13:42:22Z",
+        "commit_url": "https://github.com/Cyan4973/xxHash/commit/c0b5ea995d66691734b1a79ad89e73a0d2fd5a53",
+        "candidate_kind": "development_snapshot",
+        "status": "candidate_researched_not_built",
+        "source_path": "/home/b/toolchains/sources/xxhash",
+        "build_path": "/home/b/toolchains/build/xxhash",
+        "install_prefix": "/home/b/toolchains/deps"
+      },
+      "record_kind": "researched_revision_with_installed_evidence",
+      "installed_evidence": {
+        "manifest": "foundations-installed.json",
+        "selector": {
+          "name": "xxhash"
+        },
+        "revision": "c0b5ea995d66691734b1a79ad89e73a0d2fd5a53",
+        "install_prefix": "/home/b/toolchains/deps",
+        "build_path": "/home/b/toolchains/build-deps/xxhash",
+        "validation": "PASS: real consumer smoke (SQLite WAL/JSON/math/transaction/reopen/integrity; XXH64 known vector; Zstd1.19MB binary round-trip; WebP64x48 RGBA lossless round-trip).",
+        "component_role": "library",
+        "package_selection_status": "not established by this installation record"
+      }
+    },
+    {
+      "name": "utf8proc",
+      "version": "development snapshot 0075ed7d0adb",
+      "revision": "0075ed7d0adba45682ee6bf7a83b10f8fd110163",
+      "source_url": "https://github.com/JuliaStrings/utf8proc.git",
+      "branch": "master",
+      "commit_date": "2026-07-22T13:50:48Z",
+      "commit_url": "https://github.com/JuliaStrings/utf8proc/commit/0075ed7d0adba45682ee6bf7a83b10f8fd110163",
+      "current_version": {
+        "libutf8proc3:amd64": "2.10.0-2"
+      },
+      "current_packages": {
+        "libutf8proc3:amd64": "2.10.0-2"
+      },
+      "status": "built_installed_validation_recorded",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/utf8proc",
+      "build_path": "/home/b/toolchains/build-deps/utf8proc",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/utf8proc/LICENSE.md"
+      ],
+      "research_candidate": {
+        "version": "development snapshot 0075ed7d0adb",
+        "revision": "0075ed7d0adba45682ee6bf7a83b10f8fd110163",
+        "source_url": "https://github.com/JuliaStrings/utf8proc.git",
+        "branch": "master",
+        "commit_date": "2026-07-22T13:50:48Z",
+        "commit_url": "https://github.com/JuliaStrings/utf8proc/commit/0075ed7d0adba45682ee6bf7a83b10f8fd110163",
+        "candidate_kind": "development_snapshot",
+        "status": "candidate_researched_not_built",
+        "source_path": "/home/b/toolchains/sources/utf8proc",
+        "build_path": "/home/b/toolchains/build/utf8proc",
+        "install_prefix": "/home/b/toolchains/deps"
+      },
+      "record_kind": "researched_revision_with_installed_evidence",
+      "installed_evidence": {
+        "manifest": "foundations-installed.json",
+        "selector": {
+          "name": "utf8proc"
+        },
+        "revision": "0075ed7d0adba45682ee6bf7a83b10f8fd110163",
+        "install_prefix": "/home/b/toolchains/deps",
+        "build_path": "/home/b/toolchains/build-deps/utf8proc",
+        "validation": "Upstream registered tests passed; retained unfiltered test log is authoritative for test count.",
+        "component_role": "library",
+        "package_selection_status": "not established by this installation record"
+      }
+    },
+    {
+      "name": "icu",
+      "version": "development snapshot 88b9ebe5f368",
+      "revision": "88b9ebe5f368aed5d0fa82bc77e84a8b757097cb",
+      "source_url": "https://github.com/unicode-org/icu.git",
+      "branch": "main",
+      "commit_date": "2026-09-11T23:54:09Z",
+      "commit_url": "https://github.com/unicode-org/icu/commit/88b9ebe5f368aed5d0fa82bc77e84a8b757097cb",
+      "current_version": "73.2 (Qt SDK libraries)",
+      "current_packages": {},
+      "status": "candidate_researched_not_built",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/icu",
+      "build_path": "/home/b/toolchains/build/icu",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": []
+    },
+    {
+      "name": "zstd",
+      "version": "development snapshot d79e72359582",
+      "revision": "d79e72359582d2326c63e9669fe05c2f6580fec5",
+      "source_url": "https://github.com/facebook/zstd.git",
+      "branch": "dev",
+      "commit_date": "2026-09-11T20:18:16Z",
+      "commit_url": "https://github.com/facebook/zstd/commit/d79e72359582d2326c63e9669fe05c2f6580fec5",
+      "current_version": {
+        "libzstd1:amd64": "1.5.7+dfsg-3"
+      },
+      "current_packages": {
+        "libzstd1:amd64": "1.5.7+dfsg-3"
+      },
+      "status": "built_installed_validation_recorded",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/zstd",
+      "build_path": "/home/b/toolchains/build-deps/zstd",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/zstd/LICENSE",
+        "/home/b/toolchains/sources/zstd/COPYING"
+      ],
+      "research_candidate": {
+        "version": "development snapshot d79e72359582",
+        "revision": "d79e72359582d2326c63e9669fe05c2f6580fec5",
+        "source_url": "https://github.com/facebook/zstd.git",
+        "branch": "dev",
+        "commit_date": "2026-09-11T20:18:16Z",
+        "commit_url": "https://github.com/facebook/zstd/commit/d79e72359582d2326c63e9669fe05c2f6580fec5",
+        "candidate_kind": "development_snapshot",
+        "status": "candidate_researched_not_built",
+        "source_path": "/home/b/toolchains/sources/zstd",
+        "build_path": "/home/b/toolchains/build/zstd",
+        "install_prefix": "/home/b/toolchains/deps"
+      },
+      "record_kind": "researched_revision_with_installed_evidence",
+      "installed_evidence": {
+        "manifest": "foundations-installed.json",
+        "selector": {
+          "name": "zstd"
+        },
+        "revision": "d79e72359582d2326c63e9669fe05c2f6580fec5",
+        "install_prefix": "/home/b/toolchains/deps",
+        "build_path": "/home/b/toolchains/build-deps/zstd",
+        "validation": "PASS: real consumer smoke (SQLite WAL/JSON/math/transaction/reopen/integrity; XXH64 known vector; Zstd1.19MB binary round-trip; WebP64x48 RGBA lossless round-trip).",
+        "component_role": "library",
+        "package_selection_status": "not established by this installation record"
+      }
+    },
+    {
+      "name": "brotli",
+      "version": "development snapshot 09e1ac6c7eea",
+      "revision": "09e1ac6c7eea9d3b53f85bcdde6347358dbe1281",
+      "source_url": "https://github.com/google/brotli.git",
+      "branch": "master",
+      "commit_date": "2026-09-10T19:24:32Z",
+      "commit_url": "https://github.com/google/brotli/commit/09e1ac6c7eea9d3b53f85bcdde6347358dbe1281",
+      "current_version": {
+        "libbrotli1:amd64": "1.2.0-3build1"
+      },
+      "current_packages": {
+        "libbrotli1:amd64": "1.2.0-3build1"
+      },
+      "status": "built_installed_validation_recorded",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/brotli",
+      "build_path": "/home/b/toolchains/build-deps/brotli",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/brotli/LICENSE"
+      ],
+      "research_candidate": {
+        "version": "development snapshot 09e1ac6c7eea",
+        "revision": "09e1ac6c7eea9d3b53f85bcdde6347358dbe1281",
+        "source_url": "https://github.com/google/brotli.git",
+        "branch": "master",
+        "commit_date": "2026-09-10T19:24:32Z",
+        "commit_url": "https://github.com/google/brotli/commit/09e1ac6c7eea9d3b53f85bcdde6347358dbe1281",
+        "candidate_kind": "development_snapshot",
+        "status": "candidate_researched_not_built",
+        "source_path": "/home/b/toolchains/sources/brotli",
+        "build_path": "/home/b/toolchains/build/brotli",
+        "install_prefix": "/home/b/toolchains/deps"
+      },
+      "record_kind": "researched_revision_with_installed_evidence",
+      "installed_evidence": {
+        "manifest": "foundations-installed.json",
+        "selector": {
+          "name": "brotli"
+        },
+        "revision": "09e1ac6c7eea9d3b53f85bcdde6347358dbe1281",
+        "install_prefix": "/home/b/toolchains/deps",
+        "build_path": "/home/b/toolchains/build-deps/brotli",
+        "validation": "Upstream registered tests passed; retained unfiltered test log is authoritative for test count.",
+        "component_role": "library",
+        "package_selection_status": "not established by this installation record"
+      }
+    },
+    {
+      "name": "libpng",
+      "version": "development snapshot 964b41359497",
+      "revision": "964b4135949703b705fc760fc3fb546b86e5ab47",
+      "source_url": "https://github.com/pnggroup/libpng.git",
+      "branch": "libpng18",
+      "commit_date": "2026-09-11T19:47:43Z",
+      "commit_url": "https://github.com/pnggroup/libpng/commit/964b4135949703b705fc760fc3fb546b86e5ab47",
+      "current_version": {
+        "libpng16-16t64:amd64": "1.6.57-1"
+      },
+      "current_packages": {
+        "libpng16-16t64:amd64": "1.6.57-1"
+      },
+      "status": "built_installed_tested",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "zlib"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/libpng",
+      "build_path": "/home/b/toolchains/build/libpng",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/libpng/LICENSE.md"
+      ],
+      "notes": [
+        "Selectedlibpng18 developmentbranch changesABI; rebuild dependents together."
+      ],
+      "recipe": "tools/toolchain/dependencies/build-native.sh",
+      "build_log": "/home/b/toolchains/libpng-build.log",
+      "test_log": "/home/b/toolchains/libpng-test.log",
+      "source_patch": "tools/toolchain/dependencies/patches/libpng.patch",
+      "test_result": "37/37 CTest cases pass.",
+      "configure_log": "/home/b/toolchains/libpng-configure.log",
+      "compiler": "Clang24.0.0 nightly 20260911 (58c46bae2118)",
+      "actual_c_flags": "-Wall -Wextra -Werror",
+      "source_patch_sha256": "70ba9f2dc1a80cc26c07c9eac719dd14288f0f57a03b12c42f04848583e2fd38",
+      "compile_commands": "/home/b/toolchains/build/libpng/compile_commands.json",
+      "compile_command_count": 24,
+      "active_suppression_flags": []
+    },
+    {
+      "name": "libjpeg-turbo",
+      "version": "development snapshot 7b5fee3f7a83",
+      "revision": "7b5fee3f7a83b5c2bdbb52d5dd6ce6bfc53b6b58",
+      "source_url": "https://github.com/libjpeg-turbo/libjpeg-turbo.git",
+      "branch": "main",
+      "commit_date": "2026-09-11T17:24:04Z",
+      "commit_url": "https://github.com/libjpeg-turbo/libjpeg-turbo/commit/7b5fee3f7a83b5c2bdbb52d5dd6ce6bfc53b6b58",
+      "current_version": "not separately resolved; see runtime ELF/SBOM inventory",
+      "current_packages": {},
+      "status": "built_installed_tested",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/libjpeg-turbo",
+      "build_path": "/home/b/toolchains/build/libjpeg-turbo",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/libjpeg-turbo/LICENSE.md",
+        "/home/b/toolchains/sources/libjpeg-turbo/README.ijg"
+      ],
+      "recipe": "tools/toolchain/dependencies/build-native.sh",
+      "build_log": "/home/b/toolchains/libjpeg-turbo-build.log",
+      "test_log": "/home/b/toolchains/libjpeg-turbo-test.log",
+      "source_patch": "tools/toolchain/dependencies/patches/libjpeg-turbo.patch",
+      "test_result": "332/332 CTest cases pass.",
+      "configure_log": "/home/b/toolchains/libjpeg-turbo-configure.log",
+      "compiler": "Clang24.0.0 nightly 20260911 (58c46bae2118)",
+      "actual_c_flags": "-Wall -Wextra -Werror",
+      "source_patch_sha256": "dc04eca6dbba10f8549a9a24de67970a31eb5dd91288d5cb91d054dee4368bb9",
+      "compile_commands": "/home/b/toolchains/build/libjpeg-turbo/compile_commands.json",
+      "compile_command_count": 321,
+      "active_suppression_flags": []
+    },
+    {
+      "name": "libtiff",
+      "version": "development snapshot dd0ed2c6198f",
+      "revision": "dd0ed2c6198fb8fe736ec0329d24a50cfbb2f2ae",
+      "source_url": "https://gitlab.com/libtiff/libtiff.git",
+      "branch": "master",
+      "commit_date": "2026-08-27T18:09:35.000+00:00",
+      "commit_url": "https://gitlab.com/libtiff/libtiff/-/commit/dd0ed2c6198fb8fe736ec0329d24a50cfbb2f2ae",
+      "current_version": "not separately resolved; see runtime ELF/SBOM inventory",
+      "current_packages": {},
+      "status": "built_installed_validation_recorded",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "zlib",
+        "libjpeg-turbo",
+        "zstd"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/libtiff",
+      "build_path": "/home/b/toolchains/build-deps/libtiff",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/libtiff/LICENSE.md"
+      ],
+      "research_candidate": {
+        "version": "development snapshot dd0ed2c6198f",
+        "revision": "dd0ed2c6198fb8fe736ec0329d24a50cfbb2f2ae",
+        "source_url": "https://gitlab.com/libtiff/libtiff.git",
+        "branch": "master",
+        "commit_date": "2026-08-27T18:09:35.000+00:00",
+        "commit_url": "https://gitlab.com/libtiff/libtiff/-/commit/dd0ed2c6198fb8fe736ec0329d24a50cfbb2f2ae",
+        "candidate_kind": "development_snapshot",
+        "status": "candidate_researched_not_built",
+        "source_path": "/home/b/toolchains/sources/libtiff",
+        "build_path": "/home/b/toolchains/build/libtiff",
+        "install_prefix": "/home/b/toolchains/deps"
+      },
+      "record_kind": "researched_revision_with_installed_evidence",
+      "installed_evidence": {
+        "manifest": "foundations-installed.json",
+        "selector": {
+          "name": "libtiff"
+        },
+        "revision": "dd0ed2c6198fb8fe736ec0329d24a50cfbb2f2ae",
+        "install_prefix": "/home/b/toolchains/deps",
+        "build_path": "/home/b/toolchains/build-deps/libtiff",
+        "validation": "Upstream registered tests passed; retained unfiltered test log is authoritative for test count.",
+        "component_role": "library",
+        "package_selection_status": "not established by this installation record"
+      }
+    },
+    {
+      "name": "libwebp",
+      "version": "development snapshot 1f346354b670",
+      "revision": "1f346354b670aeb804cb68fcd7e1718a1b8ea555",
+      "source_url": "https://chromium.googlesource.com/webm/libwebp",
+      "branch": "main",
+      "commit_date": "Fri Sep 11 18:33:07 2026",
+      "commit_url": "https://chromium.googlesource.com/webm/libwebp/+/1f346354b670aeb804cb68fcd7e1718a1b8ea555",
+      "current_version": "not separately resolved; see runtime ELF/SBOM inventory",
+      "current_packages": {},
+      "status": "built_installed_validation_recorded",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/libwebp",
+      "build_path": "/home/b/toolchains/build-deps/libwebp",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/libwebp/COPYING"
+      ],
+      "research_candidate": {
+        "version": "development snapshot 1f346354b670",
+        "revision": "1f346354b670aeb804cb68fcd7e1718a1b8ea555",
+        "source_url": "https://chromium.googlesource.com/webm/libwebp",
+        "branch": "main",
+        "commit_date": "Fri Sep 11 18:33:07 2026",
+        "commit_url": "https://chromium.googlesource.com/webm/libwebp/+/1f346354b670aeb804cb68fcd7e1718a1b8ea555",
+        "candidate_kind": "development_snapshot",
+        "status": "candidate_researched_not_built",
+        "source_path": "/home/b/toolchains/sources/libwebp",
+        "build_path": "/home/b/toolchains/build/libwebp",
+        "install_prefix": "/home/b/toolchains/deps"
+      },
+      "record_kind": "researched_revision_with_installed_evidence",
+      "installed_evidence": {
+        "manifest": "foundations-installed.json",
+        "selector": {
+          "name": "libwebp"
+        },
+        "revision": "1f346354b670aeb804cb68fcd7e1718a1b8ea555",
+        "install_prefix": "/home/b/toolchains/deps",
+        "build_path": "/home/b/toolchains/build-deps/libwebp",
+        "validation": "PASS: real consumer smoke (SQLite WAL/JSON/math/transaction/reopen/integrity; XXH64 known vector; Zstd1.19MB binary round-trip; WebP64x48 RGBA lossless round-trip).",
+        "component_role": "library",
+        "package_selection_status": "not established by this installation record"
+      }
+    },
+    {
+      "name": "freetype",
+      "version": "development snapshot 5c79d6cd1ac7",
+      "revision": "5c79d6cd1ac73d70a55f3d963fb568aa32f6d794",
+      "source_url": "https://gitlab.freedesktop.org/freetype/freetype.git",
+      "branch": "master",
+      "commit_date": "2026-09-07T22:47:41.000-04:00",
+      "commit_url": "https://gitlab.freedesktop.org/freetype/freetype/-/commit/5c79d6cd1ac73d70a55f3d963fb568aa32f6d794",
+      "current_version": {
+        "libfreetype6:amd64": "2.14.2+dfsg-1ubuntu0.1"
+      },
+      "current_packages": {
+        "libfreetype6:amd64": "2.14.2+dfsg-1ubuntu0.1"
+      },
+      "status": "built_installed_tested",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "zlib",
+        "brotli",
+        "libpng"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/freetype",
+      "build_path": "/home/b/toolchains/build/freetype",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/freetype/LICENSE.TXT",
+        "/home/b/toolchains/sources/freetype/docs/FTL.TXT",
+        "/home/b/toolchains/sources/freetype/docs/GPLv2.TXT"
+      ],
+      "recipe": "tools/toolchain/dependencies/build-native.sh",
+      "build_log": "/home/b/toolchains/freetype-build.log",
+      "test_log": "/home/b/toolchains/font-smoke-test.log",
+      "source_patch": "tools/toolchain/dependencies/patches/freetype.patch",
+      "test_result": "Combined FreeType/HarfBuzz font smoke passes Latin ligature, Greek and Arabic rendering/shaping inputs.",
+      "configure_log": "/home/b/toolchains/freetype-configure.log",
+      "compiler": "Clang24.0.0 nightly 20260911 (58c46bae2118)",
+      "actual_c_flags": "-Wall -Wextra -Werror",
+      "source_patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "build_order_note": "Bootstrap without HarfBuzz, build HarfBuzz, then rerun FreeType with FT_REQUIRE_HARFBUZZ=ON.",
+      "compile_commands": "/home/b/toolchains/build/freetype/compile_commands.json",
+      "compile_command_count": 43,
+      "active_suppression_flags": [],
+      "gnu_client_smoke": {
+        "test_log": "/home/b/toolchains/font-smoke-gnu-test.log",
+        "build_log": "/home/b/toolchains/font-smoke-gnu-build.log",
+        "runtime_closure": "/home/b/toolchains/font-smoke-gnu-closure.log",
+        "result": "PASS: Latin ligatures, Greek and Arabic with strict GNU libstdc++ C++20 client; no libc++ runtime dependencies"
+      }
+    },
+    {
+      "name": "harfbuzz",
+      "version": "development snapshot 64e2b53235aa",
+      "revision": "64e2b53235aa33b5bad5442449a092b5729be66a",
+      "source_url": "https://github.com/harfbuzz/harfbuzz.git",
+      "branch": "main",
+      "commit_date": "2026-09-11T04:19:47Z",
+      "commit_url": "https://github.com/harfbuzz/harfbuzz/commit/64e2b53235aa33b5bad5442449a092b5729be66a",
+      "current_version": {
+        "libharfbuzz0b:amd64": "12.3.2-2"
+      },
+      "current_packages": {
+        "libharfbuzz0b:amd64": "12.3.2-2"
+      },
+      "status": "built_installed_tested",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "freetype",
+        "glib",
+        "icu"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/harfbuzz",
+      "build_path": "/home/b/toolchains/build/harfbuzz",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/harfbuzz/COPYING"
+      ],
+      "recipe": "tools/toolchain/dependencies/build-native.sh",
+      "build_log": "/home/b/toolchains/harfbuzz-build.log",
+      "test_log": "/home/b/toolchains/font-smoke-test.log",
+      "source_patch": "tools/toolchain/dependencies/patches/harfbuzz.patch",
+      "configure_log": "/home/b/toolchains/harfbuzz-configure.log",
+      "test_result": "Combined FreeType/HarfBuzz font smoke passes Latin ligature, Greek and Arabic rendering/shaping inputs, compiled with libc++24.",
+      "compiler": "Clang24.0.0 nightly 20260911 (58c46bae2118)",
+      "actual_c_flags": "-Wall -Wextra -Werror",
+      "cxx_standard_library": "LLVM libc++24, matching installed Clang nightly",
+      "actual_cxx_flags": "-stdlib=libc++ -Wall -Wextra -Werror",
+      "source_patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compile_commands": "/home/b/toolchains/build/harfbuzz/compile_commands.json",
+      "compile_command_count": 107,
+      "active_suppression_flags": [],
+      "runtime_language_abi": "Public C API; installed libharfbuzz.so has no libc++ or libc++abi DT_NEEDED despite the earlier compiler-header selection.",
+      "final_runtime_selection_note": "No C++ ABI boundary reaches the application through this library. Final SDK/plugin ELF closure determines whether it is actually loaded.",
+      "gnu_client_smoke": {
+        "test_log": "/home/b/toolchains/font-smoke-gnu-test.log",
+        "build_log": "/home/b/toolchains/font-smoke-gnu-build.log",
+        "runtime_closure": "/home/b/toolchains/font-smoke-gnu-closure.log",
+        "result": "PASS: Latin ligatures, Greek and Arabic with strict GNU libstdc++ C++20 client; no libc++ runtime dependencies"
+      }
+    },
+    {
+      "name": "fontconfig",
+      "version": "development snapshot 478e7774a514",
+      "revision": "478e7774a514244469424eda870ad2c029bf62a6",
+      "source_url": "https://gitlab.freedesktop.org/fontconfig/fontconfig.git",
+      "branch": "main",
+      "commit_date": "2026-09-11T14:42:49.000+00:00",
+      "commit_url": "https://gitlab.freedesktop.org/fontconfig/fontconfig/-/commit/478e7774a514244469424eda870ad2c029bf62a6",
+      "current_version": {
+        "libfontconfig1:amd64": "2.17.1-3ubuntu1"
+      },
+      "current_packages": {
+        "libfontconfig1:amd64": "2.17.1-3ubuntu1"
+      },
+      "status": "built_installed_tested",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "freetype",
+        "expat"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/fontconfig",
+      "build_path": "/home/b/toolchains/build/fontconfig",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/fontconfig/COPYING"
+      ],
+      "recipe": "tools/toolchain/dependencies/build-native.sh",
+      "build_log": "/home/b/toolchains/fontconfig-build.log",
+      "test_log": "/home/b/toolchains/fontconfig-test.log",
+      "source_patch": "tools/toolchain/dependencies/patches/fontconfig.patch",
+      "configure_log": "/home/b/toolchains/fontconfig-configure.log",
+      "test_result": "26 tests pass, 1 upstream skip (test_mt_fcinit exits77), 0 failures.",
+      "compiler": "Clang24.0.0 nightly 20260911 (58c46bae2118)",
+      "actual_c_flags": "-Wall -Wextra -Werror",
+      "source_patch_sha256": "4271f29c0417f8828d8234947471311e712ed298391870ea6dca9f00bc1a2569",
+      "configure_note": "Meson dev plus central preprocessing fix; -Wl,-rpath-link isolated lib directory avoids false FreeType function probes. All five FT metadata functions detected.",
+      "compile_commands": "/home/b/toolchains/build/fontconfig/compile_commands.json",
+      "compile_command_count": 98,
+      "active_suppression_flags": []
+    },
+    {
+      "name": "glib",
+      "version": "2.90.0",
+      "revision": "50d402c78a496e0fe51a846803a94b77285d6ab3",
+      "source_url": "https://github.com/GNOME/glib.git",
+      "branch": "main",
+      "commit_date": "2026-09-10T23:47:53Z",
+      "commit_url": "https://github.com/GNOME/glib/commit/50d402c78a496e0fe51a846803a94b77285d6ab3",
+      "current_version": {
+        "libglib2.0-0t64:amd64": "2.88.0-1"
+      },
+      "current_packages": {
+        "libglib2.0-0t64:amd64": "2.88.0-1"
+      },
+      "status": "configured_build_stopped_not_installed",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "libffi",
+        "pcre2"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [
+        "clang",
+        "meson",
+        "ninja",
+        "pkg-config"
+      ],
+      "source_path": "/home/b/toolchains/sources/glib",
+      "build_path": "/home/b/toolchains/build/glib",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/glib/COPYING"
+      ],
+      "build_log": "/home/b/toolchains/glib-build.log",
+      "configure_log": "/home/b/toolchains/glib-configure.log",
+      "test_result": "Not run; diagnostic build stopped after user narrowed source-modification scope.",
+      "build_notes": "Removed active suppression flags from Meson source. Explicit -Werror in feature probes falsely rejected system snprintf/Unix98 printf; no completed build or installed library is claimed."
+    },
+    {
+      "name": "gtk",
+      "version": "development snapshot ae709f962a51",
+      "revision": "ae709f962a51f9108a1e6381bcfbd05bbaecc840",
+      "source_url": "https://github.com/GNOME/gtk.git",
+      "branch": "main",
+      "commit_date": "2026-09-12T14:54:43Z",
+      "commit_url": "https://github.com/GNOME/gtk/commit/ae709f962a51f9108a1e6381bcfbd05bbaecc840",
+      "current_version": {
+        "libgtk-3-0t64:amd64": "3.24.52-0ubuntu1"
+      },
+      "current_packages": {
+        "libgtk-3-0t64:amd64": "3.24.52-0ubuntu1"
+      },
+      "status": "candidate_researched_not_built",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "glib",
+        "pango",
+        "cairo",
+        "gdk-pixbuf",
+        "epoxy",
+        "wayland",
+        "x11"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/gtk",
+      "build_path": "/home/b/toolchains/build/gtk",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [],
+      "notes": [
+        "CurrentQt GTK platform theme plugin usesGTK3. GTK main isGTK4; rebuild/port theme integration or use latestgtk-3-24 branch, not a soname substitution."
+      ]
+    },
+    {
+      "name": "pango",
+      "version": "development snapshot 8e74c27c113c",
+      "revision": "8e74c27c113c98664b77272d16b14bbce542c184",
+      "source_url": "https://github.com/GNOME/pango.git",
+      "branch": "main",
+      "commit_date": "2026-09-11T13:38:02Z",
+      "commit_url": "https://github.com/GNOME/pango/commit/8e74c27c113c98664b77272d16b14bbce542c184",
+      "current_version": {
+        "libpango-1.0-0:amd64": "1.57.0-1",
+        "libpangocairo-1.0-0:amd64": "1.57.0-1",
+        "libpangoft2-1.0-0:amd64": "1.57.0-1"
+      },
+      "current_packages": {
+        "libpango-1.0-0:amd64": "1.57.0-1",
+        "libpangocairo-1.0-0:amd64": "1.57.0-1",
+        "libpangoft2-1.0-0:amd64": "1.57.0-1"
+      },
+      "status": "candidate_researched_not_built",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "glib",
+        "fontconfig",
+        "freetype",
+        "harfbuzz"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/pango",
+      "build_path": "/home/b/toolchains/build/pango",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": []
+    },
+    {
+      "name": "cairo",
+      "version": "development snapshot dd6262c17e65",
+      "revision": "dd6262c17e6537fe992f3b17748578093392dac0",
+      "source_url": "https://gitlab.freedesktop.org/cairo/cairo.git",
+      "branch": "master",
+      "commit_date": "2026-09-06T10:59:06.000+00:00",
+      "commit_url": "https://gitlab.freedesktop.org/cairo/cairo/-/commit/dd6262c17e6537fe992f3b17748578093392dac0",
+      "current_version": {
+        "libcairo-gobject2:amd64": "1.18.4-3",
+        "libcairo2:amd64": "1.18.4-3"
+      },
+      "current_packages": {
+        "libcairo-gobject2:amd64": "1.18.4-3",
+        "libcairo2:amd64": "1.18.4-3"
+      },
+      "status": "candidate_researched_not_built",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "pixman",
+        "fontconfig",
+        "freetype",
+        "libpng",
+        "xcb"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/cairo",
+      "build_path": "/home/b/toolchains/build/cairo",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": []
+    },
+    {
+      "name": "pixman",
+      "version": "development snapshot 3c4764f72fdc",
+      "revision": "3c4764f72fdcfef82131786b336c83ba1c4ade98",
+      "source_url": "https://gitlab.freedesktop.org/pixman/pixman.git",
+      "branch": "master",
+      "commit_date": "2026-09-13T02:25:29.000+00:00",
+      "commit_url": "https://gitlab.freedesktop.org/pixman/pixman/-/commit/3c4764f72fdcfef82131786b336c83ba1c4ade98",
+      "current_version": {
+        "libpixman-1-0:amd64": "0.46.4-1"
+      },
+      "current_packages": {
+        "libpixman-1-0:amd64": "0.46.4-1"
+      },
+      "status": "candidate_researched_not_built",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/pixman",
+      "build_path": "/home/b/toolchains/build/pixman",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": []
+    },
+    {
+      "name": "mesa",
+      "version": "development snapshot f6f4f66c975c",
+      "revision": "f6f4f66c975c4ced2547e78e20c3b71850765ab5",
+      "source_url": "https://gitlab.freedesktop.org/mesa/mesa.git",
+      "branch": "main",
+      "commit_date": "2026-09-13T15:55:57.000-04:00",
+      "commit_url": "https://gitlab.freedesktop.org/mesa/mesa/-/commit/f6f4f66c975c4ced2547e78e20c3b71850765ab5",
+      "current_version": "not separately resolved; see runtime ELF/SBOM inventory",
+      "current_packages": {},
+      "status": "candidate_researched_not_built",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "libdrm",
+        "llvm",
+        "wayland",
+        "expat",
+        "zstd"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/mesa",
+      "build_path": "/home/b/toolchains/build/mesa",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": []
+    },
+    {
+      "name": "libglvnd",
+      "version": "development snapshot 606f6627cf48",
+      "revision": "606f6627cf481ee6dcb32387edc010c502cdf38b",
+      "source_url": "https://github.com/NVIDIA/libglvnd.git",
+      "branch": "master",
+      "commit_date": "2024-05-17T14:24:18Z",
+      "commit_url": "https://github.com/NVIDIA/libglvnd/commit/606f6627cf481ee6dcb32387edc010c502cdf38b",
+      "current_version": {
+        "libglvnd0:amd64": "1.7.0-3"
+      },
+      "current_packages": {
+        "libglvnd0:amd64": "1.7.0-3"
+      },
+      "status": "candidate_researched_not_built",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/libglvnd",
+      "build_path": "/home/b/toolchains/build/libglvnd",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": []
+    },
+    {
+      "name": "libdrm",
+      "version": "development snapshot 773536b1e5dd",
+      "revision": "773536b1e5dde694dd743815528aff8bb2cf2cc3",
+      "source_url": "https://gitlab.freedesktop.org/mesa/drm.git",
+      "branch": "main",
+      "commit_date": "2026-08-13T15:22:46.000-05:00",
+      "commit_url": "https://gitlab.freedesktop.org/mesa/libdrm/-/commit/773536b1e5dde694dd743815528aff8bb2cf2cc3",
+      "current_version": {
+        "libdrm2:amd64": "2.4.131-1"
+      },
+      "current_packages": {
+        "libdrm2:amd64": "2.4.131-1"
+      },
+      "status": "candidate_researched_not_built",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/libdrm",
+      "build_path": "/home/b/toolchains/build/libdrm",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": []
+    },
+    {
+      "name": "wayland",
+      "version": "development snapshot 381af21cf84f",
+      "revision": "381af21cf84f13be0ca24aed756a9cded3290d49",
+      "source_url": "https://gitlab.freedesktop.org/wayland/wayland.git",
+      "branch": "main",
+      "commit_date": "2026-08-30T13:03:14.000+00:00",
+      "commit_url": "https://gitlab.freedesktop.org/wayland/wayland/-/commit/381af21cf84f13be0ca24aed756a9cded3290d49",
+      "current_version": {
+        "libwayland-client0:amd64": "1.24.0-2",
+        "libwayland-cursor0:amd64": "1.24.0-2",
+        "libwayland-egl1:amd64": "1.24.0-2"
+      },
+      "current_packages": {
+        "libwayland-client0:amd64": "1.24.0-2",
+        "libwayland-cursor0:amd64": "1.24.0-2",
+        "libwayland-egl1:amd64": "1.24.0-2"
+      },
+      "status": "candidate_researched_not_built",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/wayland",
+      "build_path": "/home/b/toolchains/build/wayland",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": []
+    },
+    {
+      "name": "libxkbcommon",
+      "version": "development snapshot 829147ab7983",
+      "revision": "829147ab7983209bcb220308800968fc3c45a5fb",
+      "source_url": "https://github.com/xkbcommon/libxkbcommon.git",
+      "branch": "master",
+      "commit_date": "2026-09-12T08:04:36Z",
+      "commit_url": "https://github.com/xkbcommon/libxkbcommon/commit/829147ab7983209bcb220308800968fc3c45a5fb",
+      "current_version": {
+        "libxkbcommon-x11-0:amd64": "1.13.1-1",
+        "libxkbcommon0:amd64": "1.13.1-1"
+      },
+      "current_packages": {
+        "libxkbcommon-x11-0:amd64": "1.13.1-1",
+        "libxkbcommon0:amd64": "1.13.1-1"
+      },
+      "status": "candidate_researched_not_built",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/libxkbcommon",
+      "build_path": "/home/b/toolchains/build/libxkbcommon",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": []
+    },
+    {
+      "name": "dbus",
+      "version": "development snapshot e85d83239e9b",
+      "revision": "e85d83239e9b8215349f6586819569acbf66cd85",
+      "source_url": "https://gitlab.freedesktop.org/dbus/dbus.git",
+      "branch": "main",
+      "commit_date": "2026-08-19T11:13:16.000+00:00",
+      "commit_url": "https://gitlab.freedesktop.org/dbus/dbus/-/commit/e85d83239e9b8215349f6586819569acbf66cd85",
+      "current_version": {
+        "libdbus-1-3:amd64": "1.16.2-2ubuntu4"
+      },
+      "current_packages": {
+        "libdbus-1-3:amd64": "1.16.2-2ubuntu4"
+      },
+      "status": "candidate_researched_not_built",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/dbus",
+      "build_path": "/home/b/toolchains/build/dbus",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": []
+    },
+    {
+      "name": "pipewire",
+      "version": "development snapshot 1cd56b0615bb",
+      "revision": "1cd56b0615bb8bd112d9a2865a41cfdf638692f6",
+      "source_url": "https://github.com/PipeWire/pipewire.git",
+      "branch": "master",
+      "commit_date": "2026-09-12T11:45:22Z",
+      "commit_url": "https://github.com/PipeWire/pipewire/commit/1cd56b0615bb8bd112d9a2865a41cfdf638692f6",
+      "current_version": "not separately resolved; see runtime ELF/SBOM inventory",
+      "current_packages": {},
+      "status": "candidate_researched_not_built",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "dbus"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/pipewire",
+      "build_path": "/home/b/toolchains/build/pipewire",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": []
+    },
+    {
+      "name": "pulseaudio",
+      "version": "development snapshot 77d25a1e6130",
+      "revision": "77d25a1e613095bdf87a1d13b65e7c330565077a",
+      "source_url": "https://gitlab.freedesktop.org/pulseaudio/pulseaudio.git",
+      "branch": "master",
+      "commit_date": "2026-09-01T12:09:07.000-07:00",
+      "commit_url": "https://gitlab.freedesktop.org/pulseaudio/pulseaudio/-/commit/77d25a1e613095bdf87a1d13b65e7c330565077a",
+      "current_version": {
+        "libpulse0:amd64": "1:17.0+dfsg1-2ubuntu4"
+      },
+      "current_packages": {
+        "libpulse0:amd64": "1:17.0+dfsg1-2ubuntu4"
+      },
+      "status": "candidate_researched_not_built",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "dbus",
+        "alsa-lib",
+        "libsndfile"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/pulseaudio",
+      "build_path": "/home/b/toolchains/build/pulseaudio",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": []
+    },
+    {
+      "name": "alsa-lib",
+      "version": "development snapshot f84cd4ced7b3",
+      "revision": "f84cd4ced7b36fddb8e4ee24404cf7c091d27020",
+      "source_url": "https://github.com/alsa-project/alsa-lib.git",
+      "branch": "master",
+      "commit_date": "2026-08-30T18:23:29Z",
+      "commit_url": "https://github.com/alsa-project/alsa-lib/commit/f84cd4ced7b36fddb8e4ee24404cf7c091d27020",
+      "current_version": {
+        "libasound2t64:amd64": "1.2.15.3-1ubuntu1.1"
+      },
+      "current_packages": {
+        "libasound2t64:amd64": "1.2.15.3-1ubuntu1.1"
+      },
+      "status": "candidate_researched_not_built",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/alsa-lib",
+      "build_path": "/home/b/toolchains/build/alsa-lib",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": []
+    },
+    {
+      "name": "ffmpeg",
+      "version": "development snapshot 7523428c26bd",
+      "revision": "7523428c26bdb0b2302303534be591fe73178ab6",
+      "source_url": "https://github.com/FFmpeg/FFmpeg.git",
+      "branch": "master",
+      "commit_date": "2026-09-13T09:42:02Z",
+      "commit_url": "https://github.com/FFmpeg/FFmpeg/commit/7523428c26bdb0b2302303534be591fe73178ab6",
+      "current_version": "8.1.2 (Qt SDK libraries)",
+      "current_packages": {},
+      "status": "candidate_researched_not_built",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "opus",
+        "vorbis",
+        "openssl"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/ffmpeg",
+      "build_path": "/home/b/toolchains/build/ffmpeg",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [],
+      "notes": [
+        "InstalledQtSDK FFmpeg8.1.2; upstream currentmaster has newer ABI. RebuildQtMultimedia with selected FFmpeg instead of replacing incompatible shared objects."
+      ]
+    },
+    {
+      "name": "flac",
+      "version": "development snapshot e94ff9f68b8e",
+      "revision": "e94ff9f68b8e7dbd3e9f8b1ac18a8eca1914f181",
+      "source_url": "https://github.com/xiph/flac.git",
+      "branch": "master",
+      "commit_date": "2026-07-19T09:32:44Z",
+      "commit_url": "https://github.com/xiph/flac/commit/e94ff9f68b8e7dbd3e9f8b1ac18a8eca1914f181",
+      "current_version": {
+        "libflac14:amd64": "1.5.0+ds-5"
+      },
+      "current_packages": {
+        "libflac14:amd64": "1.5.0+ds-5"
+      },
+      "status": "built_installed_tested",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "ogg"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/flac",
+      "build_path": "/home/b/toolchains/build/flac",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/flac/COPYING.FDL",
+        "/home/b/toolchains/sources/flac/COPYING.Xiph",
+        "/home/b/toolchains/sources/flac/COPYING.LGPL",
+        "/home/b/toolchains/sources/flac/COPYING.GPL"
+      ],
+      "recipe": "tools/toolchain/dependencies/build-native.sh",
+      "build_log": "/home/b/toolchains/flac-build.log",
+      "test_log": "/home/b/toolchains/flac-test.log",
+      "source_patch": "tools/toolchain/dependencies/patches/flac.patch",
+      "configure_log": "/home/b/toolchains/flac-configure.log",
+      "test_result": "10/10 CTest cases pass.",
+      "compiler": "Clang24.0.0 nightly 20260911 (58c46bae2118)",
+      "actual_c_flags": "-Wall -Wextra -Werror",
+      "cxx_standard_library": "LLVM libc++24, matching installed Clang nightly",
+      "actual_cxx_flags": "-stdlib=libc++ -Wall -Wextra -Werror",
+      "source_patch_sha256": "408b13960b8af57770dba51e0eabedc5c136b9fdadfcd5e66b2f8742def891e8",
+      "compile_commands": "/home/b/toolchains/build/flac/compile_commands.json",
+      "compile_command_count": 100,
+      "active_suppression_flags": [],
+      "runtime_language_abi": "C libFLAC.so.14 is used by libsndfile; optional libFLAC++.so retains the isolated libc++ experiment and is not in the observed application closure."
+    },
+    {
+      "name": "ogg",
+      "version": "development snapshot 06a5e0262cdc",
+      "revision": "06a5e0262cdc28aa4ae6797627a783b5010440f0",
+      "source_url": "https://github.com/xiph/ogg.git",
+      "branch": "main",
+      "commit_date": "2026-03-02T13:10:35Z",
+      "commit_url": "https://github.com/xiph/ogg/commit/06a5e0262cdc28aa4ae6797627a783b5010440f0",
+      "current_version": {
+        "libogg0:amd64": "1.3.6-2"
+      },
+      "current_packages": {
+        "libogg0:amd64": "1.3.6-2"
+      },
+      "status": "built_installed_tested",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/ogg",
+      "build_path": "/home/b/toolchains/build/ogg",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/ogg/COPYING"
+      ],
+      "recipe": "tools/toolchain/dependencies/build-native.sh",
+      "build_log": "/home/b/toolchains/ogg-build.log",
+      "test_log": "/home/b/toolchains/ogg-test.log",
+      "source_patch": "tools/toolchain/dependencies/patches/ogg.patch",
+      "test_result": "Upstream bitwise and framing test executables both pass (not registered by upstream with CTest).",
+      "configure_log": "/home/b/toolchains/ogg-configure.log",
+      "compiler": "Clang24.0.0 nightly 20260911 (58c46bae2118)",
+      "actual_c_flags": "-Wall -Wextra -Werror",
+      "source_patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compile_commands": "/home/b/toolchains/build/ogg/compile_commands.json",
+      "compile_command_count": 4,
+      "active_suppression_flags": []
+    },
+    {
+      "name": "vorbis",
+      "version": "development snapshot 1b75110b5a27",
+      "revision": "1b75110b5a2754ba1931d82dd83cb822b266a21d",
+      "source_url": "https://github.com/xiph/vorbis.git",
+      "branch": "main",
+      "commit_date": "2026-08-04T01:51:25Z",
+      "commit_url": "https://github.com/xiph/vorbis/commit/1b75110b5a2754ba1931d82dd83cb822b266a21d",
+      "current_version": {
+        "libvorbis0a:amd64": "1.3.7-3build2",
+        "libvorbisenc2:amd64": "1.3.7-3build2"
+      },
+      "current_packages": {
+        "libvorbis0a:amd64": "1.3.7-3build2",
+        "libvorbisenc2:amd64": "1.3.7-3build2"
+      },
+      "status": "built_installed_tested",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "ogg"
+      ],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/vorbis",
+      "build_path": "/home/b/toolchains/build/vorbis",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/vorbis/COPYING"
+      ],
+      "recipe": "tools/toolchain/dependencies/build-native.sh",
+      "build_log": "/home/b/toolchains/vorbis-build.log",
+      "test_log": "/home/b/toolchains/vorbis-test.log",
+      "source_patch": "tools/toolchain/dependencies/patches/vorbis.patch",
+      "test_result": "2/2 CTest cases pass.",
+      "configure_log": "/home/b/toolchains/vorbis-configure.log",
+      "compiler": "Clang24.0.0 nightly 20260911 (58c46bae2118)",
+      "actual_c_flags": "-Wall -Wextra -Werror",
+      "source_patch_sha256": "eb4ee86c86262c30ad225005a02f75ea7d3b14cdb310f1167de7ecaf15cf51e6",
+      "compile_commands": "/home/b/toolchains/build/vorbis/compile_commands.json",
+      "compile_command_count": 26,
+      "active_suppression_flags": []
+    },
+    {
+      "name": "opus",
+      "version": "development snapshot 503d81b138d7",
+      "revision": "503d81b138d76621aae4b12786e90de48aa8db3a",
+      "source_url": "https://github.com/xiph/opus.git",
+      "branch": "main",
+      "commit_date": "2026-09-11T14:06:32Z",
+      "commit_url": "https://github.com/xiph/opus/commit/503d81b138d76621aae4b12786e90de48aa8db3a",
+      "current_version": {
+        "libopus0:amd64": "1.6.1-1"
+      },
+      "current_packages": {
+        "libopus0:amd64": "1.6.1-1"
+      },
+      "status": "built_installed_tested",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/opus",
+      "build_path": "/home/b/toolchains/build/opus",
+      "install_prefix": "/home/b/toolchains/deps",
+      "priority": "gui_media_dependency",
+      "license_files": [
+        "/home/b/toolchains/sources/opus/COPYING",
+        "/home/b/toolchains/sources/opus/LICENSE_PLEASE_READ.txt"
+      ],
+      "recipe": "tools/toolchain/dependencies/build-native.sh",
+      "build_log": "/home/b/toolchains/opus-build.log",
+      "test_log": "/home/b/toolchains/opus-test.log",
+      "source_patch": "tools/toolchain/dependencies/patches/opus.patch",
+      "test_result": "5/5 upstream CTest cases pass in static companion build; shared library installed.",
+      "configure_log": "/home/b/toolchains/opus-configure.log",
+      "compiler": "Clang24.0.0 nightly 20260911 (58c46bae2118)",
+      "actual_c_flags": "-Wall -Wextra -Werror",
+      "source_patch_sha256": "1be796f7c46b83350476d161c1cd11877f5509c4973163d89f07cfa5eb60ca4a",
+      "compile_commands": "/home/b/toolchains/build/opus/compile_commands.json",
+      "compile_command_count": 151,
+      "active_suppression_flags": []
+    },
+    {
+      "name": "llvm",
+      "version": "24.0.0git",
+      "revision": "ac8aca03372551f8a8c999e86e5cb6cbfae3e307",
+      "source_url": "https://github.com/llvm/llvm-project.git",
+      "branch": "main",
+      "commit_date": "2026-09-13T20:30:14Z",
+      "commit_url": "https://github.com/llvm/llvm-project/commit/ac8aca03372551f8a8c999e86e5cb6cbfae3e307",
+      "current_version": "24.0.0git (58c46bae2118; built 2026-09-11)",
+      "current_packages": {},
+      "status": "official_snapshot_packages_installed",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [],
+      "dependency_edges_kind": "configuration-dependent selected major edges; exact current ELF edges in runtime-elf-graph.json",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/llvm",
+      "build_path": "/home/b/toolchains/build/llvm",
+      "install_prefix": "/usr/lib/llvm-24",
+      "priority": "build_tool",
+      "license_files": [],
+      "research_candidate": {
+        "version": "24.0.0git",
+        "revision": "ac8aca03372551f8a8c999e86e5cb6cbfae3e307",
+        "source_url": "https://github.com/llvm/llvm-project.git",
+        "branch": "main",
+        "commit_date": "2026-09-13T20:30:14Z",
+        "commit_url": "https://github.com/llvm/llvm-project/commit/ac8aca03372551f8a8c999e86e5cb6cbfae3e307",
+        "candidate_kind": "development_snapshot",
+        "status": "candidate_researched_not_built",
+        "source_path": "/home/b/toolchains/sources/llvm",
+        "build_path": "/home/b/toolchains/build/llvm",
+        "install_prefix": "/home/b/toolchains/deps"
+      },
+      "record_kind": "researched_candidate_with_installed_alternative",
+      "candidate_selected": false,
+      "candidate_status": "researched_source_revision_not_built",
+      "installed_evidence": {
+        "manifest": "../README.md",
+        "version": "24.0.0git",
+        "revision": "58c46bae2118",
+        "package_version": "1:24~++20260911085248+58c46bae2118-1~exp1~20260911085258.254",
+        "install_prefix": "/usr/lib/llvm-24",
+        "component_role": "compiler_toolchain",
+        "validation": "Canonical clang --version matches the recorded package; used to compile the final app build."
+      }
+    },
+    {
+      "name": "qt",
+      "version": "6.13.0-alpha1",
+      "revision": "7e2b6df4a817175046f5aa2671078fc487e497ed",
+      "source_url": "https://code.qt.io/qt/qt5.git",
+      "branch": "dev",
+      "commit_date": "2026-09-13T10:40:38Z",
+      "commit_url": "https://code.qt.io/cgit/qt/qt5.git/commit/?id=7e2b6df4a817175046f5aa2671078fc487e497ed",
+      "current_version": "6.12.0-beta4 (official prebuilt GCC SDK)",
+      "current_packages": {},
+      "status": "official_sdk_installed_source_experiment_unselected",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "zlib",
+        "zstd",
+        "icu",
+        "openssl",
+        "glib",
+        "freetype",
+        "harfbuzz",
+        "fontconfig",
+        "libpng",
+        "libjpeg-turbo",
+        "libtiff",
+        "libwebp",
+        "libxkbcommon",
+        "xcb",
+        "dbus",
+        "mesa",
+        "libglvnd",
+        "wayland",
+        "ffmpeg",
+        "alsa-lib",
+        "pulseaudio",
+        "pipewire"
+      ],
+      "dependency_edges_kind": "Researched source-build edges, not the selected official SDK runtime closure; see official-qt-sdk.json and the final package inventory.",
+      "build_dependencies": [],
+      "source_path": "/home/b/toolchains/sources/qt",
+      "build_path": "/home/b/toolchains/build/qt",
+      "install_prefix": "/home/b/toolchains/Qt",
+      "priority": "gui_media_dependency",
+      "license_files": [],
+      "notes": [
+        "The top-level version/revision fields preserve the researched Qt 6.13 source head; they do not identify the selected runtime.",
+        "The selected runtime is the installed official Qt 6.12 Beta 4 SDK and matching WebEngine 6.140.0. The source experiment is preserved and unselected."
+      ],
+      "research_candidate": {
+        "version": "6.13.0-alpha1",
+        "revision": "7e2b6df4a817175046f5aa2671078fc487e497ed",
+        "source_url": "https://code.qt.io/qt/qt5.git",
+        "branch": "dev",
+        "commit_date": "2026-09-13T10:40:38Z",
+        "commit_url": "https://code.qt.io/cgit/qt/qt5.git/commit/?id=7e2b6df4a817175046f5aa2671078fc487e497ed",
+        "candidate_kind": "development_snapshot",
+        "status": "candidate_researched_not_built",
+        "source_path": "/home/b/toolchains/sources/qt",
+        "build_path": "/home/b/toolchains/build/qt",
+        "install_prefix": "/home/b/toolchains/deps",
+        "notes": [
+          "Superproject pin includesqtbase6.13.0alpha1. Installed6.12Beta4 SDK is earlier. Rebuild Qt modules together for ABI consistency."
+        ]
+      },
+      "record_kind": "unselected_source_experiment_with_selected_sdk",
+      "candidate_selected": false,
+      "candidate_status": "unselected_6_13_source_experiment",
+      "installed_evidence": {
+        "manifest": "official-qt-sdk.json",
+        "version": "6.12.0",
+        "preview": "Beta 4",
+        "package_version": "6.12.0-0-202609010620",
+        "webengine_version": "6.140.0",
+        "install_prefix": "/home/b/toolchains/Qt",
+        "cxx_abi": "GNU libstdc++",
+        "selection": "Selected official upstream SDK with its matching unmodified upstream WebEngine extension.",
+        "archive_manifest": "../downloads/qt-archives.urls",
+        "archive_sha256_manifest": "../downloads/SHA256SUMS"
+      }
+    },
+    {
+      "name": "mpg123",
+      "version": "1.34.0-dev",
+      "revision": "c1d38c66c60a6f79b0b81ab88dc396c2517f9d7e",
+      "source_url": "https://github.com/madebr/mpg123.git",
+      "branch": "master",
+      "commit_date": "2026-09-03T01:28:59Z",
+      "candidate_kind": "development_snapshot",
+      "status": "built_installed_tested",
+      "source_path": "/home/b/toolchains/sources/mpg123",
+      "build_path": "/home/b/toolchains/build/mpg123",
+      "install_prefix": "/home/b/toolchains/deps",
+      "license_files": [
+        "/home/b/toolchains/sources/mpg123/COPYING"
+      ],
+      "official_source_evidence": "https://www.mpg123.de/download.shtml",
+      "source_note": "Official download page recommends this Git mirror; pin master, not the mirror-specific default master-with-github-ci branch.",
+      "runtime_dependencies": [],
+      "recipe": "tools/toolchain/dependencies/build-native.sh",
+      "build_log": "/home/b/toolchains/mpg123-build.log",
+      "configure_log": "/home/b/toolchains/mpg123-configure.log",
+      "test_log": "/home/b/toolchains/mpg123-test.log",
+      "test_result": "Upstream text-conversion/chomp/length regression passes; libsndfile MPEG decode tests pass with this library.",
+      "compiler": "Clang24.0.0 nightly 20260911 (58c46bae2118)",
+      "actual_c_flags": "-Wall -Wextra -Werror",
+      "source_patch": "tools/toolchain/dependencies/patches/mpg123.patch",
+      "source_patch_sha256": "6c4e6a3c0448f749997e4a3f10ecc628f6670edf4b4cd789cfdaea627fe9fb74",
+      "compile_commands": "/home/b/toolchains/build/mpg123/compile_commands.json",
+      "compile_command_count": 50,
+      "active_suppression_flags": []
+    },
+    {
+      "name": "lame",
+      "version": "4.1-alpha",
+      "revision": "6830",
+      "source_url": "https://svn.code.sf.net/p/lame/svn/trunk/lame",
+      "branch": "trunk/lame",
+      "commit_date": "2026-09-12T15:27:06Z",
+      "candidate_kind": "development_snapshot",
+      "status": "built_installed_tested",
+      "source_path": "/home/b/toolchains/sources/lame",
+      "build_path": "/home/b/toolchains/build/lame",
+      "install_prefix": "/home/b/toolchains/deps",
+      "license_files": [
+        "/home/b/toolchains/sources/lame/LICENSE",
+        "/home/b/toolchains/sources/lame/COPYING"
+      ],
+      "official_source_evidence": "https://lame.sourceforge.io/developers.php",
+      "source_control": "svn",
+      "runtime_dependencies": [
+        "mpg123"
+      ],
+      "recipe": "tools/toolchain/dependencies/build-native.sh",
+      "build_log": "/home/b/toolchains/lame-build.log",
+      "configure_log": "/home/b/toolchains/lame-configure.log",
+      "test_log": "/home/b/toolchains/lame-test.log",
+      "test_result": "make check succeeds but upstream registers no tests; libsndfile MPEG encode/readback and size tests pass with this library.",
+      "compiler": "Clang24.0.0 nightly 20260911 (58c46bae2118)",
+      "actual_c_flags": "-Wall -Wextra -Werror",
+      "configure_probe_policy": "Autoconf feature probes use -O2; actual library and test compilations use -O2 -Wall -Wextra -Werror."
+    },
+    {
+      "name": "gperf",
+      "version": "3.3-dev",
+      "revision": "38ddb4c4e4c1f349af5a8c5c534271c119c0f5ed",
+      "source_url": "https://git.savannah.gnu.org/git/gperf.git",
+      "branch": "master",
+      "commit_date": "2026-02-24T09:10:00+01:00",
+      "candidate_kind": "development_snapshot",
+      "status": "installed_binary_reproduced_by_clean_fresh_build_and_upstream_tests",
+      "source_path": "/home/b/toolchains/sources/gperf",
+      "build_path": "/home/b/toolchains/build-deps/gperf",
+      "install_prefix": "/home/b/toolchains/deps",
+      "license_files": [
+        "/home/b/toolchains/sources/gperf/COPYING"
+      ],
+      "research_candidate": {
+        "version": "3.3-dev",
+        "revision": "38ddb4c4e4c1f349af5a8c5c534271c119c0f5ed",
+        "source_url": "https://git.savannah.gnu.org/git/gperf.git",
+        "branch": "master",
+        "commit_date": "2026-02-24T09:10:00+01:00",
+        "candidate_kind": "development_snapshot",
+        "status": "candidate_researched_not_built",
+        "source_path": "/home/b/toolchains/sources/gperf",
+        "build_path": "/home/b/toolchains/build/gperf",
+        "install_prefix": "/home/b/toolchains/deps"
+      },
+      "record_kind": "researched_revision_with_installed_evidence",
+      "installed_evidence": {
+        "manifest": "gperf-installed.json",
+        "version": "GNU gperf 3.3",
+        "revision": "38ddb4c4e4c1f349af5a8c5c534271c119c0f5ed",
+        "install_prefix": "/home/b/toolchains/deps",
+        "component_role": "build_generator",
+        "validation_status": "installed_binary_reproduced_by_clean_fresh_build_and_upstream_tests",
+        "cxx_abi_note": "The recorded libc++ generator build is separate from the GNU libstdc++ application runtime.",
+        "compile_audit": "/home/b/toolchains/build-deps/gperf-final-strict/compile-audit.json",
+        "binary_sha256": "27d9e65507de876c58ec14e98141494c348f3d2a636325a3cf614e320bc2c457",
+        "validation": "Fresh strict compile audit PASS; all nine upstream check groups PASS; built executable exactly reproduces installed bytes."
+      }
+    },
+    {
+      "name": "libffi",
+      "version": "3.8.0",
+      "revision": "e044ec8d00631edb77fa072187f2d9c02fb8950d",
+      "source_url": "https://github.com/libffi/libffi.git",
+      "branch": "master",
+      "commit_date": "2026-09-04T09:12:22-04:00",
+      "commit_url": "https://github.com/libffi/libffi/commit/e044ec8d00631edb77fa072187f2d9c02fb8950d",
+      "current_version": "3.5.2",
+      "status": "built_installed_smoke_tested",
+      "candidate_kind": "development_snapshot",
+      "runtime_dependencies": [
+        "glibc"
+      ],
+      "build_dependencies": [
+        "clang",
+        "autoconf",
+        "automake",
+        "libtool",
+        "make"
+      ],
+      "source_path": "/home/b/toolchains/sources/libffi",
+      "build_path": "/home/b/toolchains/build/libffi",
+      "install_prefix": "/home/b/toolchains/deps",
+      "license_files": [
+        "/home/b/toolchains/sources/libffi/LICENSE",
+        "/home/b/toolchains/sources/libffi/LICENSE-BUILDTOOLS"
+      ],
+      "build_log": "/home/b/toolchains/libffi-build.log",
+      "configure_log": "/home/b/toolchains/libffi-configure.log",
+      "recipe": "tools/toolchain/dependencies/build-native.sh libffi",
+      "source_patch": "tools/toolchain/dependencies/patches/libffi.patch",
+      "source_patch_sha256": "844400cba94aab5e9e79ffe22843179c11420772a16df6644a5223229c143ef7",
+      "actual_c_flags": "-O2 -Wall -Werror -fexceptions",
+      "active_library_suppression_flags": [],
+      "test_log": "/home/b/toolchains/libffi-smoke-test.log",
+      "test_build_log": "/home/b/toolchains/libffi-smoke-build.log",
+      "test_result": "Strict ABI smoke passes register/stack integer calls, mixed struct arguments/returns and size, variadic floating-point calls, executable closure and user data.",
+      "upstream_suite_result": "Not passed. Initial make check lacked DejaGnu. After host DejaGnu was installed, upstream drivers introduced -Wno flags and failed excess-diagnostic checks on Clang24; the run was stopped. Full suite is not claimed.",
+      "upstream_suite_log": "/home/b/toolchains/libffi-test-final.log"
+    },
+    {
+      "name": "pcre2",
+      "revision": "e6a61f8e5c5cf77fc2854c60b3ab2f9b745b25e4",
+      "source_url": "https://github.com/PCRE2Project/pcre2.git",
+      "source_path": "/home/b/toolchains/sources/pcre2",
+      "build_path": "/home/b/toolchains/build-deps/pcre2",
+      "install_prefix": "/home/b/toolchains/deps",
+      "license_files": [
+        "/home/b/toolchains/sources/pcre2/COPYING",
+        "/home/b/toolchains/sources/pcre2/LICENCE.md",
+        "/home/b/toolchains/sources/pcre2/deps/sljit/LICENSE"
+      ],
+      "version": "10.49",
+      "record_kind": "installed_component",
+      "priority": "gui_media_dependency",
+      "status": "built_installed_validation_recorded",
+      "installed_evidence": {
+        "manifest": "foundations-installed.json",
+        "selector": {
+          "name": "pcre2"
+        },
+        "revision": "e6a61f8e5c5cf77fc2854c60b3ab2f9b745b25e4",
+        "install_prefix": "/home/b/toolchains/deps",
+        "build_path": "/home/b/toolchains/build-deps/pcre2",
+        "validation": "Upstream registered tests passed; retained unfiltered test log is authoritative for test count.",
+        "component_role": "library",
+        "package_selection_status": "not established by this installation record"
+      }
+    }
+  ],
+  "native_validation_updated_at": "2026-09-13T21:49:43.296041+00:00",
+  "final_runtime_selection": "Selected application stack: official unmodified Qt6.12 Beta4/WebEngine with GNU libstdc++. Coin4.0.10, ODE0.16.7 and libccd pins are installed/tested for this selection. C-only completed native libraries remain eligible; final package ELF provenance determines shipped components. Prior libc++ experiment logs and artifacts are archived at /home/b/toolchains/experiments/libcxx-native.",
+  "native_gnu_abi_validation": "tools/toolchain/dependencies/native-gnu-abi-validation.json",
+  "networking_validation": "tools/toolchain/dependencies/networking-svn-installed.json",
+  "updated_at": "2026-09-13T23:59:54.858562+00:00",
+  "authoritative_installed_manifests": [
+    "foundations-installed.json",
+    "openssl-installed.json",
+    "official-qt-sdk.json",
+    "cmake-nightly.json",
+    "gperf-installed.json",
+    "networking-svn-installed.json",
+    "terminals-installed.json",
+    "native-gnu-abi-validation.json"
+  ],
+  "coin_header_validation": "/home/b/toolchains/native-coin-header-audit/audit.json",
+  "qt_png_abi_validation": "tools/toolchain/dependencies/qt-png-abi-validation.json",
+  "final_application_validation": "artifacts/gui-export-fixed/report.json"
+}

@@ -1,0 +1,65 @@
+diff --git a/src/java_raw_api.c b/src/java_raw_api.c
+index e0a02ef..2f6b1e0 100644
+--- a/src/java_raw_api.c
++++ b/src/java_raw_api.c
+@@ -41,8 +41,8 @@
+ 
+ #if !defined(NO_JAVA_RAW_API)
+ 
+-size_t
+-ffi_java_raw_size (ffi_cif *cif)
++static size_t
++ffi_java_raw_size_internal (ffi_cif *cif)
+ {
+   size_t result = 0;
+   int i;
+@@ -72,6 +72,12 @@ ffi_java_raw_size (ffi_cif *cif)
+   return result;
+ }
+ 
++size_t
++ffi_java_raw_size (ffi_cif *cif)
++{
++  return ffi_java_raw_size_internal (cif);
++}
++
+ 
+ void
+ ffi_java_raw_to_ptrarray (ffi_cif *cif, ffi_java_raw *raw, void **args)
+@@ -154,8 +160,8 @@ ffi_java_raw_to_ptrarray (ffi_cif *cif, ffi_java_raw *raw, void **args)
+ #endif /* WORDS_BIGENDIAN */
+ }
+ 
+-void
+-ffi_java_ptrarray_to_raw (ffi_cif *cif, void **args, ffi_java_raw *raw)
++static void
++ffi_java_ptrarray_to_raw_internal (ffi_cif *cif, void **args, ffi_java_raw *raw)
+ {
+   unsigned i;
+   ffi_type **tp = cif->arg_types;
+@@ -241,6 +247,12 @@ ffi_java_ptrarray_to_raw (ffi_cif *cif, void **args, ffi_java_raw *raw)
+     }
+ }
+ 
++void
++ffi_java_ptrarray_to_raw (ffi_cif *cif, void **args, ffi_java_raw *raw)
++{
++  ffi_java_ptrarray_to_raw_internal (cif, args, raw);
++}
++
+ #if !FFI_NATIVE_RAW_API
+ 
+ static void
+@@ -326,10 +338,10 @@ static void
+ ffi_java_translate_args (ffi_cif *cif, void *rvalue,
+ 		    void **avalue, void *user_data)
+ {
+-  ffi_java_raw *raw = (ffi_java_raw*)alloca (ffi_java_raw_size (cif));
++  ffi_java_raw *raw = (ffi_java_raw*)alloca (ffi_java_raw_size_internal (cif));
+   ffi_raw_closure *cl = (ffi_raw_closure*)user_data;
+ 
+-  ffi_java_ptrarray_to_raw (cif, avalue, raw);
++  ffi_java_ptrarray_to_raw_internal (cif, avalue, raw);
+   (*cl->fun) (cif, rvalue, (ffi_raw*)raw, cl->user_data);
+   ffi_java_raw_to_rvalue (cif, rvalue);
+ }

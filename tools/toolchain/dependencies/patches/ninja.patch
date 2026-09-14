@@ -1,0 +1,441 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c9a0f7d..f462d83 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -28,10 +28,6 @@ if(MSVC)
+   add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
+ else()
+   include(CheckCXXCompilerFlag)
+-  check_cxx_compiler_flag(-Wno-deprecated flag_no_deprecated)
+-  if(flag_no_deprecated)
+-    add_compile_options(-Wno-deprecated)
+-  endif()
+   if(CMAKE_VERSION VERSION_LESS 3.24)
+     check_cxx_compiler_flag(-fdiagnostics-color flag_color_diag)
+     if(flag_color_diag)
+diff --git a/src/browse.cc b/src/browse.cc
+index 2956f89..261beaa 100644
+--- a/src/browse.cc
++++ b/src/browse.cc
+@@ -26,6 +26,7 @@ using namespace std;
+ 
+ void RunBrowsePython(State* state, const char* ninja_command,
+                      const char* input_file, int argc, char* argv[]) {
++  (void)state;
+   // Fork off a Python process and have it run our code via its stdin.
+   // (Actually the Python process becomes the parent.)
+   int pipefd[2];
+diff --git a/src/build_log_test.cc b/src/build_log_test.cc
+index daac673..9d0d1da 100644
+--- a/src/build_log_test.cc
++++ b/src/build_log_test.cc
+@@ -39,7 +39,8 @@ struct BuildLogTest : public StateTestWithBuiltinRules, public BuildLogUser {
+   virtual void TearDown() {
+     platformAwareUnlink(kTestFilename);
+   }
+-  virtual bool IsPathDead(StringPiece s) const { return false; }
++  virtual bool IsPathDead(StringPiece s) const {
++  (void)s; return false; }
+ };
+ 
+ TEST_F(BuildLogTest, WriteRead) {
+@@ -228,23 +229,33 @@ TEST_F(BuildLogTest, DuplicateVersionHeader) {
+ 
+ struct TestDiskInterface : public DiskInterface {
+   TimeStamp Stat(const std::string& path, std::string* err) const override {
++  (void)err;
++  (void)path;
+     return 4;
+   }
+   bool WriteFile(const std::string& path, const std::string& contents,
+                  bool crlf_on_windows) override {
++  (void)contents;
++  (void)crlf_on_windows;
++  (void)path;
+     assert(false);
+     return true;
+   }
+   bool MakeDir(const std::string& path) override {
++  (void)path;
+     assert(false);
+     return false;
+   }
+   Status ReadFile(const std::string& path, std::string* contents,
+                   std::string* err) override {
++  (void)contents;
++  (void)err;
++  (void)path;
+     assert(false);
+     return NotFound;
+   }
+   int RemoveFile(const std::string& path) override {
++  (void)path;
+     assert(false);
+     return 0;
+   }
+diff --git a/src/build_test.cc b/src/build_test.cc
+index 8be051e..64cd305 100644
+--- a/src/build_test.cc
++++ b/src/build_test.cc
+@@ -55,6 +55,7 @@ struct PlanTest : public StateTestWithBuiltinRules {
+   }
+ 
+   void PrepareForTarget(const char* node, BuildLog *log=NULL) {
++  (void)log;
+     string err;
+     EXPECT_TRUE(plan_.AddTarget(GetNode(node), &err));
+     ASSERT_EQ("", err);
+@@ -572,7 +573,8 @@ struct BuildTest : public StateTestWithBuiltinRules, public BuildLogUser {
+     builder_.command_runner_.release();
+   }
+ 
+-  virtual bool IsPathDead(StringPiece s) const { return false; }
++  virtual bool IsPathDead(StringPiece s) const {
++  (void)s; return false; }
+ 
+   /// Rebuild target in the 'working tree' (fs_).
+   /// State of command_runner_ and logs contents (if specified) ARE MODIFIED.
+diff --git a/src/clparser.cc b/src/clparser.cc
+index 3d3e7de..e8ad0f6 100644
+--- a/src/clparser.cc
++++ b/src/clparser.cc
+@@ -79,6 +79,7 @@ bool CLParser::FilterInputFilename(string line) {
+ // static
+ bool CLParser::Parse(const string& output, const string& deps_prefix,
+                      string* filtered_output, string* err) {
++  (void)err;
+   METRIC_RECORD("CLParser::Parse");
+ 
+   // Loop over all lines in the output to process them.
+diff --git a/src/clparser_perftest.cc b/src/clparser_perftest.cc
+index 008ac46..17b3e0f 100644
+--- a/src/clparser_perftest.cc
++++ b/src/clparser_perftest.cc
+@@ -21,6 +21,8 @@
+ using namespace std;
+ 
+ int main(int argc, char* argv[]) {
++  (void)argc;
++  (void)argv;
+   // Output of /showIncludes from #include <iostream>
+   string perf_testdata =
+       "Note: including file: C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\INCLUDE\\iostream\r\n"
+diff --git a/src/disk_interface.cc b/src/disk_interface.cc
+index 2ad4ae8..82d6a10 100644
+--- a/src/disk_interface.cc
++++ b/src/disk_interface.cc
+@@ -395,6 +395,7 @@ int RealDiskInterface::RemoveFile(const string& path) {
+ }
+ 
+ void RealDiskInterface::AllowStatCache(bool allow) {
++  (void)allow;
+ #ifdef _WIN32
+   use_cache_ = allow;
+   if (!use_cache_)
+diff --git a/src/disk_interface_test.cc b/src/disk_interface_test.cc
+index 73e7408..c26d86d 100644
+--- a/src/disk_interface_test.cc
++++ b/src/disk_interface_test.cc
+@@ -286,18 +286,25 @@ struct StatTest : public StateTestWithBuiltinRules,
+   TimeStamp Stat(const string& path, string* err) const override;
+   bool WriteFile(const string& path, const string& contents,
+                  bool /*crlf_on_windows*/) override {
++  (void)contents;
++  (void)path;
+     assert(false);
+     return true;
+   }
+   bool MakeDir(const string& path) override {
++  (void)path;
+     assert(false);
+     return false;
+   }
+   Status ReadFile(const string& path, string* contents, string* err) override {
++  (void)contents;
++  (void)err;
++  (void)path;
+     assert(false);
+     return NotFound;
+   }
+   int RemoveFile(const string& path) override {
++  (void)path;
+     assert(false);
+     return 0;
+   }
+@@ -308,6 +315,7 @@ struct StatTest : public StateTestWithBuiltinRules,
+ };
+ 
+ TimeStamp StatTest::Stat(const string& path, string* err) const {
++  (void)err;
+   stats_.push_back(path);
+   map<string, TimeStamp>::const_iterator i = mtimes_.find(path);
+   if (i == mtimes_.end())
+diff --git a/src/graph.cc b/src/graph.cc
+index 5aa36a5..daf3e15 100644
+--- a/src/graph.cc
++++ b/src/graph.cc
+@@ -584,6 +584,7 @@ bool DependencyScan::VerifyDAG(Node* node, vector<Node*>* stack, string* err) {
+ 
+ bool DependencyScan::RecomputeOutputsDirty(Edge* edge, Node* most_recent_input,
+                                            bool* outputs_dirty, string* err) {
++  (void)err;
+   *outputs_dirty = RecomputeOutputsDirtyCache(build_log(), explanations_, edge)
+                        .all(most_recent_input);
+   return true;
+@@ -802,6 +803,7 @@ bool Edge::maybe_phonycycle_diagnostic() const {
+ 
+ // static
+ string Node::PathDecanonicalized(const string& path, uint64_t slash_bits) {
++  (void)slash_bits;
+   string result = path;
+ #ifdef _WIN32
+   uint64_t mask = 1;
+@@ -944,6 +946,7 @@ std::optional<EdgeInputsRange> ImplicitDepLoader::LoadDepFile(
+ 
+ bool ImplicitDepLoader::LoadDepFileTry(const Edge* edge, const string& path,
+                                        string* err) const {
++  (void)edge;
+   TimeStamp time_stamp = disk_interface_->Stat(path, err);
+ 
+   if (time_stamp > 0)
+@@ -960,6 +963,7 @@ bool ImplicitDepLoader::LoadDepFileTry(const Edge* edge, const string& path,
+ std::optional<EdgeInputsRange> ImplicitDepLoader::ProcessDepfileDeps(
+     Edge* edge, std::vector<StringPiece>* depfile_ins,
+     std::string* err) {
++  (void)err;
+   // Preallocate space in edge->inputs_ to be filled in below.
+   vector<Node*>::iterator implicit_dep =
+       PreallocateSpace(edge, static_cast<int>(depfile_ins->size()));
+diff --git a/src/jobserver.h b/src/jobserver.h
+index 9d8b0f9..a6275fc 100644
+--- a/src/jobserver.h
++++ b/src/jobserver.h
+@@ -205,7 +205,7 @@ struct Jobserver {
+     /// If the pool is destroyed before Ninja, then only the implicit slot
+     /// can be acquired in the next calls (if it was released). This simply
+     /// enforces serialization of all commands, instead of blocking.
+-    virtual void Release(Slot slot) {}
++    virtual void Release(Slot slot) { (void)slot; }
+ 
+ #ifndef _WIN32
+     /// Return the file descriptor that can be used to monitor
+diff --git a/src/missing_deps.cc b/src/missing_deps.cc
+index d7e205e..6efdce5 100644
+--- a/src/missing_deps.cc
++++ b/src/missing_deps.cc
+@@ -49,6 +49,7 @@ struct NodeStoringImplicitDepLoader : public ImplicitDepLoader {
+ 
+ std::optional<EdgeInputsRange> NodeStoringImplicitDepLoader::ProcessDepfileDeps(
+     Edge* edge, std::vector<StringPiece>* depfile_ins, std::string* err) {
++  (void)err;
+   for (std::vector<StringPiece>::iterator i = depfile_ins->begin();
+        i != depfile_ins->end(); ++i) {
+     uint64_t slash_bits;
+diff --git a/src/missing_deps_test.cc b/src/missing_deps_test.cc
+index dae377b..9834be6 100644
+--- a/src/missing_deps_test.cc
++++ b/src/missing_deps_test.cc
+@@ -24,7 +24,10 @@ const char kTestDepsLogFilename[] = "MissingDepTest-tempdepslog";
+ 
+ class MissingDependencyTestDelegate : public MissingDependencyScannerDelegate {
+   void OnMissingDep(Node* node, const std::string& path,
+-                    const Rule& generator) {}
++                    const Rule& generator) {
++  (void)generator;
++  (void)node;
++  (void)path;}
+ };
+ 
+ struct MissingDependencyScannerTest : public testing::Test {
+diff --git a/src/ninja.cc b/src/ninja.cc
+index 49ca21c..9b7a63c 100644
+--- a/src/ninja.cc
++++ b/src/ninja.cc
+@@ -448,6 +448,7 @@ bool NinjaMain::CollectTargetsFromArgs(int argc, char* argv[],
+ }
+ 
+ int NinjaMain::ToolGraph(const Options* options, int argc, char* argv[]) {
++  (void)options;
+   vector<Node*> nodes;
+   string err;
+   if (!CollectTargetsFromArgs(argc, argv, &nodes, &err)) {
+@@ -465,6 +466,7 @@ int NinjaMain::ToolGraph(const Options* options, int argc, char* argv[]) {
+ }
+ 
+ int NinjaMain::ToolQuery(const Options* options, int argc, char* argv[]) {
++  (void)options;
+   if (argc == 0) {
+     Error("expected a target to query");
+     return 1;
+@@ -617,6 +619,7 @@ int ToolTargetsList(State* state) {
+ }
+ 
+ int NinjaMain::ToolDeps(const Options* options, int argc, char** argv) {
++  (void)options;
+   vector<Node*> nodes;
+   if (argc == 0) {
+     for (vector<Node*>::const_iterator ni = deps_log_.nodes().begin();
+@@ -657,6 +660,7 @@ int NinjaMain::ToolDeps(const Options* options, int argc, char** argv) {
+ }
+ 
+ int NinjaMain::ToolMissingDeps(const Options* options, int argc, char** argv) {
++  (void)options;
+   vector<Node*> nodes;
+   string err;
+   if (!CollectTargetsFromArgs(argc, argv, &nodes, &err)) {
+@@ -677,6 +681,7 @@ int NinjaMain::ToolMissingDeps(const Options* options, int argc, char** argv) {
+ }
+ 
+ int NinjaMain::ToolTargets(const Options* options, int argc, char* argv[]) {
++  (void)options;
+   int depth = 1;
+   if (argc >= 1) {
+     string mode = argv[0];
+@@ -717,6 +722,7 @@ int NinjaMain::ToolTargets(const Options* options, int argc, char* argv[]) {
+ }
+ 
+ int NinjaMain::ToolRules(const Options* options, int argc, char* argv[]) {
++  (void)options;
+   // Parse options.
+ 
+   // The rules tool uses getopt, and expects argv[0] to contain the name of
+@@ -793,6 +799,7 @@ void PrintCommands(Edge* edge, EdgeSet* seen, PrintCommandMode mode) {
+ }
+ 
+ int NinjaMain::ToolCommands(const Options* options, int argc, char* argv[]) {
++  (void)options;
+   // The commands tool uses getopt, and expects argv[0] to contain the name of
+   // the tool, i.e. "commands".
+   ++argc;
+@@ -835,6 +842,7 @@ int NinjaMain::ToolCommands(const Options* options, int argc, char* argv[]) {
+ }
+ 
+ int NinjaMain::ToolInputs(const Options* options, int argc, char* argv[]) {
++  (void)options;
+   // The inputs tool uses getopt, and expects argv[0] to contain the name of
+   // the tool, i.e. "inputs".
+   argc++;
+@@ -914,6 +922,7 @@ int NinjaMain::ToolInputs(const Options* options, int argc, char* argv[]) {
+ }
+ 
+ int NinjaMain::ToolMultiInputs(const Options* options, int argc, char* argv[]) {
++  (void)options;
+   // The inputs tool uses getopt, and expects argv[0] to contain the name of
+   // the tool, i.e. "inputs".
+   argc++;
+@@ -982,6 +991,7 @@ int NinjaMain::ToolMultiInputs(const Options* options, int argc, char* argv[]) {
+ }
+ 
+ int NinjaMain::ToolClean(const Options* options, int argc, char* argv[]) {
++  (void)options;
+   // The clean tool uses getopt, and expects argv[0] to contain the name of
+   // the tool, i.e. "clean".
+   argc++;
+@@ -1031,6 +1041,9 @@ int NinjaMain::ToolClean(const Options* options, int argc, char* argv[]) {
+ }
+ 
+ int NinjaMain::ToolCleanDead(const Options* options, int argc, char* argv[]) {
++  (void)argc;
++  (void)argv;
++  (void)options;
+   Cleaner cleaner(&state_, config_, &disk_interface_);
+   return cleaner.CleanDead(build_log_.entries());
+ }
+@@ -1110,6 +1123,7 @@ void PrintCompdbObjectsForEdge(std::string const& directory, const Edge* const e
+ 
+ int NinjaMain::ToolCompilationDatabase(const Options* options, int argc,
+                                        char* argv[]) {
++  (void)options;
+   // The compdb tool uses getopt, and expects argv[0] to contain the name of
+   // the tool, i.e. "compdb".
+   argc++;
+@@ -1170,6 +1184,9 @@ int NinjaMain::ToolCompilationDatabase(const Options* options, int argc,
+ }
+ 
+ int NinjaMain::ToolRecompact(const Options* options, int argc, char* argv[]) {
++  (void)argc;
++  (void)argv;
++  (void)options;
+   if (!EnsureBuildDirExists())
+     return 1;
+ 
+@@ -1181,6 +1198,7 @@ int NinjaMain::ToolRecompact(const Options* options, int argc, char* argv[]) {
+ }
+ 
+ int NinjaMain::ToolRestat(const Options* options, int argc, char* argv[]) {
++  (void)options;
+   // The restat tool uses getopt, and expects argv[0] to contain the name of the
+   // tool, i.e. "restat"
+   argc++;
+@@ -1315,6 +1333,7 @@ void PrintCompdb(std::string const& directory, std::vector<Edge*> const& edges,
+ 
+ int NinjaMain::ToolCompilationDatabaseForTargets(const Options* options,
+                                                  int argc, char* argv[]) {
++  (void)options;
+   auto compdb = CompdbTargets::CreateFromArgs(argc, argv);
+ 
+   switch (compdb.action) {
+@@ -1356,6 +1375,9 @@ int NinjaMain::ToolCompilationDatabaseForTargets(const Options* options,
+ }
+ 
+ int NinjaMain::ToolUrtle(const Options* options, int argc, char** argv) {
++  (void)argc;
++  (void)argv;
++  (void)options;
+   // RLE encoded.
+   const char* urtle =
+ " 13 ,3;2!2;\n8 ,;<11!;\n5 `'<10!(2`'2!\n11 ,6;, `\\. `\\9 .,c13$ec,.\n6 "
+diff --git a/src/status_printer.cc b/src/status_printer.cc
+index 0c421a2..4cc310c 100644
+--- a/src/status_printer.cc
++++ b/src/status_printer.cc
+@@ -295,6 +295,7 @@ void StatusPrinter::BuildFinished() {
+ 
+ string StatusPrinter::FormatProgressStatus(const char* progress_status_format,
+                                            int64_t time_millis) const {
++  (void)time_millis;
+   string out;
+   char buf[32];
+   for (const char* s = progress_status_format; *s != '\0'; ++s) {
+diff --git a/src/string_piece_util_test.cc b/src/string_piece_util_test.cc
+index ca002d0..27f0177 100644
+--- a/src/string_piece_util_test.cc
++++ b/src/string_piece_util_test.cc
+@@ -137,8 +137,8 @@ TEST(StringPieceUtilTest, StringPieceLess) {
+   };
+   const StringPieceLess less;
+ 
+-  for (int l = 0; l < strings.size(); ++l) {
+-    for (int r = 0; r < strings.size(); ++r) {
++  for (size_t l = 0; l < strings.size(); ++l) {
++    for (size_t r = 0; r < strings.size(); ++r) {
+       EXPECT_EQ(less(strings[l], strings[r]), l < r)
+           << strings[l].AsString() << " < " << strings[r].AsString();
+     }
+diff --git a/src/subprocess-posix.cc b/src/subprocess-posix.cc
+index 1287f8e..300afea 100644
+--- a/src/subprocess-posix.cc
++++ b/src/subprocess-posix.cc
+@@ -231,6 +231,9 @@ void SubprocessSet::SetInterruptedFlag(int signum) {
+ }
+ 
+ void SubprocessSet::SigChldHandler(int signo, siginfo_t* info, void* context) {
++  (void)context;
++  (void)info;
++  (void)signo;
+   s_sigchld_received = 1;
+ }
+ 
+diff --git a/src/subprocess_test.cc b/src/subprocess_test.cc
+index 18d9440..4f02461 100644
+--- a/src/subprocess_test.cc
++++ b/src/subprocess_test.cc
+@@ -304,7 +304,7 @@ TEST_F(SubprocessTest, JobserverTokenAvailable) {
+ 
+   int read_fd = mock_jobserver.read_fd_;
+   int write_fd = mock_jobserver.write_fd_;
+-  subprocs_.SetJobserverFD(mock_jobserver.read_fd_);
++  subprocs_.SetJobserverFD(read_fd);
+ 
+   // Trigger mock jobserver token availability by
+   // writing a byte to the write end of the pipe.

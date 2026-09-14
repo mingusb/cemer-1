@@ -1,0 +1,20 @@
+diff --git a/cmake/CompilerChecks.cmake b/cmake/CompilerChecks.cmake
+index 8d647bb..1f069d7 100644
+--- a/cmake/CompilerChecks.cmake
++++ b/cmake/CompilerChecks.cmake
+@@ -73,7 +73,6 @@ if(CMAKE_C_COMPILER_ID STREQUAL "GNU" OR
+             -Wformat-security
+             -Wpointer-arith
+             -Wdisabled-optimization
+-            -Wno-unknown-pragmas
+             -fstrict-aliasing)
+     if(extra-warnings)
+         list(APPEND test_flags
+@@ -109,7 +108,6 @@ if(CMAKE_C_COMPILER_ID STREQUAL "GNU" OR
+                 -Wsizeof-pointer-memaccess
+                 -Wlogical-op
+                 -Wlogical-not-parentheses
+-                -Wno-int-to-pointer-cast
+                 -Wdangling-else
+                 -Wunreachable-code
+                 -Wbool-operation

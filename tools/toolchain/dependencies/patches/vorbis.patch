@@ -1,0 +1,32 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e78fc37..e19ba33 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -60,7 +60,13 @@ message(STATUS "Configuring ${PROJECT_NAME} ${PROJECT_VERSION}")
+ 
+ # Find math library
+ 
+-check_library_exists(m floor "" HAVE_LIBM)
++include(CheckCSourceCompiles)
++include(CMakePushCheckState)
++cmake_push_check_state(RESET)
++set(CMAKE_REQUIRED_LIBRARIES m)
++check_c_source_compiles("#include <math.h>
++int main(void) { volatile double value = 1.5; return floor(value) != 1.0; }" HAVE_LIBM)
++cmake_pop_check_state()
+ if(HAVE_LIBM)
+     set(VORBIS_LIBS "-lm")
+ endif()
+diff --git a/lib/floor1.c b/lib/floor1.c
+index 00a5a97..0dfeb4e 100644
+--- a/lib/floor1.c
++++ b/lib/floor1.c
+@@ -455,7 +455,7 @@ static int accumulate_fit(const float *flr,const float *mdct,
+ 
+ static int fit_line(lsfit_acc *a,int fits,int *y0,int *y1,
+                     vorbis_info_floor1 *info){
+-  double xb=0,yb=0,x2b=0,y2b=0,xyb=0,bn=0;
++  double xb=0,yb=0,x2b=0,y2b=0,xyb=0,bn=0; (void)y2b;
+   int i;
+   int x0=a[0].x0;
+   int x1=a[fits-1].x1;

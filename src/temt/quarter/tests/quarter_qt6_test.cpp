@@ -99,6 +99,10 @@ private slots:
     first.show();
     QVERIFY(QTest::qWaitForWindowExposed(&first));
     QTRY_VERIFY(widget.isValid());
+    widget.makeCurrent();
+    qInfo("OpenGL renderer: %s", reinterpret_cast<const char *>(
+      widget.context()->functions()->glGetString(GL_RENDERER)));
+    widget.doneCurrent();
     widget.viewAll();
     QTest::qWait(100);
     auto verifyFrame = [&widget]() {

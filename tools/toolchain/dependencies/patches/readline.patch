@@ -1,0 +1,505 @@
+diff --git a/bind.c b/bind.c
+index c663b63..b7dbe38 100644
+--- a/bind.c
++++ b/bind.c
+@@ -1563,7 +1563,7 @@ _rl_skip_to_delim (char *string, int start, int delim)
+ {
+   int i, c, passc;
+ 
+-  for (i = start,passc = 0; c = string[i]; i++)
++  for (i = start,passc = 0; (c = string[i]) != '\0'; i++)
+     {
+       if (passc)
+ 	{
+@@ -2807,7 +2807,7 @@ rl_function_dumper (int print_readably)
+ 
+   fprintf (rl_outstream, "\n");
+ 
+-  for (i = 0; name = names[i]; i++)
++  for (i = 0; (name = names[i]) != NULL; i++)
+     rl_print_keybinding (name, _rl_keymap, print_readably);
+ 
+   xfree (names);
+diff --git a/complete.c b/complete.c
+index 74e1b60..2d7018e 100644
+--- a/complete.c
++++ b/complete.c
+@@ -1221,7 +1221,7 @@ _rl_find_completion_word (int *fp, int *dp)
+       /* We didn't find an unclosed quoted substring upon which to do
+          completion, so use the word break characters to find the
+          substring on which to complete. */
+-      while (rl_point = MB_PREVCHAR (rl_line_buffer, rl_point, MB_FIND_ANY))
++      while ((rl_point = MB_PREVCHAR (rl_line_buffer, rl_point, MB_FIND_ANY)) != 0)
+ 	{
+ 	  scan = rl_line_buffer[rl_point];
+ 
+@@ -2353,7 +2353,7 @@ rl_completion_matches (const char *text, rl_compentry_func_t *entry_function)
+   match_list = (char **)xmalloc ((match_list_size + 1) * sizeof (char *));
+   match_list[1] = (char *)NULL;
+ 
+-  while (string = (*entry_function) (text, matches))
++  while ((string = (*entry_function) (text, matches)) != NULL)
+     {
+       if (RL_SIG_RECEIVED ())
+ 	{
+@@ -2422,7 +2422,7 @@ rl_username_completion_function (const char *text, int state)
+       setpwent ();
+     }
+ 
+-  while (entry = getpwent ())
++  while ((entry = getpwent ()) != NULL)
+     {
+       /* Null usernames should result in all users as possible completions. */
+       if (namelen == 0 || (STREQN (username, entry->pw_name, namelen)))
+diff --git a/display.c b/display.c
+index 2c3cc75..cac1879 100644
+--- a/display.c
++++ b/display.c
+@@ -66,7 +66,6 @@ static void norm_face (char *, int);
+ static void update_line (char *, char *, char *, char *, int, int, int, int);
+ static void space_to_eol (int);
+ static void delete_chars (int);
+-static void insert_some_chars (char *, int, int);
+ static void open_some_spaces (int);
+ static void cr (void);
+ static void redraw_prompt (char *);
+@@ -286,7 +285,6 @@ static int *local_prompt_invis_chars;
+    lines and the current line is so marked. */
+ static int modmark;
+ 
+-static int line_totbytes;
+ 
+ /* Variables to save and restore prompt and display information. */
+ 
+@@ -809,7 +807,7 @@ rl_redisplay (void)
+ {
+   int in, out, c, linenum, cursor_linenum;
+   int inv_botlin, lb_botlin, lb_linenum, o_cpos;
+-  int newlines, lpos, temp, num;
++  int newlines, lpos, temp;
+   char *prompt_this_line;
+   char cur_face;
+   int hl_begin, hl_end;
+@@ -1003,7 +1001,6 @@ rl_redisplay (void)
+ 
+ #if defined (HANDLE_MULTIBYTE)
+   memset (line_state_invisible->wrapped_line, 0, line_state_invisible->wbsize * sizeof (int));
+-  num = 0;
+ #endif
+ 
+   /* prompt_invis_chars_first_line is the number of invisible characters (bytes)
+@@ -1244,7 +1241,6 @@ rl_redisplay (void)
+ #endif
+     }
+   invis_nul (&out);
+-  line_totbytes = out;
+   if (cpos_buffer_position < 0)
+     {
+       cpos_buffer_position = out;
+@@ -1504,7 +1500,7 @@ rl_redisplay (void)
+ 	  if (cursor_linenum == prompt_last_screen_line)
+ 	    {
+ 	      int pmt_offset = local_prompt_newlines ? local_prompt_newlines[cursor_linenum] : 0;
+-	      int curline_invchars = local_prompt_invis_chars ? local_prompt_invis_chars[cursor_linenum] : wrap_offset;
++	      /* Invisible prompt columns are tracked by the surrounding redisplay state. */
+ 	      int cursor_bufpos;
+ 
+ 	      /* cursor_bufpos is where the portion of the prompt that appears
+@@ -3360,14 +3356,6 @@ _rl_clear_screen (int clrscr)
+ #endif /* __DJGPP__ */
+ }
+ 
+-/* Insert COUNT characters from STRING to the output stream at column COL. */
+-static void
+-insert_some_chars (char *string, int count, int col)
+-{
+-  open_some_spaces (col);
+-  _rl_output_some_chars (string, count);
+-}
+-
+ /* Insert COL spaces, keeping the cursor at the same position.  We follow the
+    ncurses documentation and use either im/ei with explicit spaces, or IC/ic
+    by itself.  We assume there will either be ei or we don't need to use it. */
+diff --git a/histexpand.c b/histexpand.c
+index c8e6741..04cce11 100644
+--- a/histexpand.c
++++ b/histexpand.c
+@@ -209,7 +209,7 @@ get_history_event (const char *string, int *caller_index, int delimiting_quote)
+     }
+ 
+   /* Only a closing `?' or a newline delimit a substring search string. */
+-  for (local_index = i; c = string[i]; i++)
++  for (local_index = i; (c = string[i]); i++)
+     {
+ #if defined (HANDLE_MULTIBYTE)
+       if (MB_CUR_MAX > 1 && rl_byte_oriented == 0)
+diff --git a/histfile.c b/histfile.c
+index a676014..04e5c13 100644
+--- a/histfile.c
++++ b/histfile.c
+@@ -140,9 +140,13 @@ int history_lines_written_to_file = 0;
+    for more extensive tests. */
+ #define HIST_TIMESTAMP_START(s)		(*(s) == history_comment_char && isdigit ((unsigned char)(s)[1]) )
+ 
++#if defined (DEBUG)
+ static char *history_backupfile (const char *);
++#endif
+ static char *history_tempfile (const char *);
++#if defined (DEBUG)
+ static int histfile_backup (const char *, const char *);
++#endif
+ static int histfile_restore (const char *, const char *);
+ static int history_rename (const char *, const char *);
+ 
+@@ -272,7 +276,7 @@ history_read_slow (int fd, char **bufp)
+   char *ret, *r;
+   size_t retsize, retlen;
+   char rbuf[RBUFSIZE];
+-  ssize_t nr, nw;
++  ssize_t nr;
+ 
+   if (bufp == 0)
+     return -1;
+@@ -283,7 +287,7 @@ history_read_slow (int fd, char **bufp)
+     return -1;
+   retlen = 0;
+ 
+-  while (nr = read (fd, rbuf, sizeof (rbuf)))
++  while ((nr = read (fd, rbuf, sizeof (rbuf))))
+     {
+       if (nr < 0)
+ 	{
+@@ -612,7 +616,7 @@ int
+ history_truncate_file (const char *fname, int lines)
+ {
+   char *buffer, *filename, *tempname, *bp, *bp1;		/* bp1 == bp+1 */
+-  int file, chars_read, rv, orig_lines, exists, r;
++  int file, chars_read, rv, orig_lines, exists;
+   struct stat finfo, nfinfo;
+   size_t file_size;
+ 
+@@ -784,7 +788,7 @@ truncate_write:
+      with a shared history file, we don't want to leave the history file
+      owned by root. */
+   if (rv == 0 && exists && SHOULD_CHOWN (finfo, nfinfo))
+-    r = chown (filename, finfo.st_uid, finfo.st_gid);
++    (void)chown (filename, finfo.st_uid, finfo.st_gid);
+ #endif
+ 
+   xfree (filename);
+diff --git a/histsearch.c b/histsearch.c
+index 36c4699..ca25829 100644
+--- a/histsearch.c
++++ b/histsearch.c
+@@ -255,7 +255,7 @@ _hs_history_patsearch (const char *string, int listdir, int linedir, int flags)
+   ret = len - 1;
+   /* fnmatch is required to reject a pattern that ends with an unescaped
+      backslash */
+-  if (unescaped_backslash = (string[ret] == '\\'))
++  if ((unescaped_backslash = (string[ret] == '\\')))
+     {
+       while (ret > 0 && string[--ret] == '\\')
+ 	unescaped_backslash = 1 - unescaped_backslash;
+diff --git a/input.c b/input.c
+index b207212..f9fa737 100644
+--- a/input.c
++++ b/input.c
+@@ -795,7 +795,7 @@ rl_read_key (void)
+   else
+     {
+       /* If input is coming from a macro, then use that. */
+-      if (c = _rl_next_macro_key ())
++      if ((c = _rl_next_macro_key ()))
+ 	return ((unsigned char)c);
+ 
+       /* If the user has an event function, then call it periodically. */
+@@ -846,7 +846,9 @@ rl_getc (FILE *stream)
+   unsigned char c, savec;
+   int fd;
+ #if defined (HAVE_PSELECT) || defined (HAVE_SELECT)
++#if !defined (HANDLE_SIGNALS)
+   sigset_t empty_set;
++#endif
+   fd_set readfds;
+ #endif
+ 
+diff --git a/isearch.c b/isearch.c
+index e2125e4..bc9ad85 100644
+--- a/isearch.c
++++ b/isearch.c
+@@ -187,7 +187,7 @@ rl_display_search (char *search_string, int flags, int where)
+ 
+   if (search_string && *search_string)
+     {
+-      for ( ; c = *search_string; search_string++)
++      for ( ; (c = *search_string) != '\0'; search_string++)
+ 	{
+ 	  if (CTRL_CHAR (c) || c == RUBOUT)
+ 	    {
+@@ -917,7 +917,7 @@ static int
+ rl_search_history (int direction, int invoking_key)
+ {
+   _rl_search_cxt *cxt;		/* local for now, but saved globally */
+-  int c, r;
++  int r;
+ 
+   RL_SETSTATE(RL_STATE_ISEARCH);
+   cxt = _rl_isearch_init (direction);
+@@ -932,8 +932,7 @@ rl_search_history (int direction, int invoking_key)
+   r = -1;
+   for (;;)
+     {
+-      c = _rl_search_getchar (cxt);
+-      /* We might want to handle EOF here (c == 0) */
++      _rl_search_getchar (cxt);
+       r = _rl_isearch_dispatch (cxt, cxt->lastc);
+       if (r <= 0)
+         break;
+diff --git a/misc.c b/misc.c
+index 34c22b8..0fda645 100644
+--- a/misc.c
++++ b/misc.c
+@@ -489,7 +489,7 @@ _rl_revert_previous_lines (void)
+   entry = (hpos == history_length) ? previous_history () : current_history ();
+   while (entry)
+     {
+-      if (ul = (UNDO_LIST *)entry->data)
++      if ((ul = (UNDO_LIST *)entry->data))
+ 	{
+ 	  if (ul == saved_undo_list)
+ 	    saved_undo_list = 0;
+@@ -549,7 +549,7 @@ rl_clear_history (void)
+   for (i = 0; i < history_length; i++)
+     {
+       hent = hlist[i];
+-      if (ul = (UNDO_LIST *)hent->data)
++      if ((ul = (UNDO_LIST *)hent->data))
+ 	{
+ 	  if (ul == saved_undo_list)
+ 	    saved_undo_list = 0;
+diff --git a/nls.c b/nls.c
+index e04991d..e768251 100644
+--- a/nls.c
++++ b/nls.c
+@@ -85,7 +85,9 @@ static char *legal_lang_values[] =
+ static char *normalize_codeset (char *);
+ #endif /* !HAVE_SETLOCALE */
+ 
++#if !HAVE_LANGINFO_CODESET || !defined (HAVE_SETLOCALE)
+ static char *find_codeset (char *, size_t *);
++#endif
+ 
+ static char *_rl_get_locale_var (const char *);
+ 
+@@ -283,6 +285,7 @@ normalize_codeset (char *codeset)
+ #endif /* !HAVE_SETLOCALE */
+ 
+ /* Isolate codeset portion of locale specification. */
++#if !HAVE_LANGINFO_CODESET || !defined (HAVE_SETLOCALE)
+ static char *
+ find_codeset (char *name, size_t *lenp)
+ {
+@@ -331,6 +334,8 @@ find_codeset (char *name, size_t *lenp)
+ 
+   return result;
+ }
++#endif
++
+ 
+ void
+ _rl_reset_locale (void)
+diff --git a/parens.c b/parens.c
+index 7f1e93f..e8cec03 100644
+--- a/parens.c
++++ b/parens.c
+@@ -112,7 +112,7 @@ rl_insert_close (int count, int invoking_key)
+   else
+     {
+ #if defined (HAVE_SELECT)
+-      int orig_point, match_point, ready;
++      int orig_point, match_point;
+       struct timeval timer;
+       fd_set readfds;
+ 
+@@ -133,9 +133,9 @@ rl_insert_close (int count, int invoking_key)
+       rl_point = match_point;
+       (*rl_redisplay_function) ();
+ #  if defined (RL_TIMEOUT_USE_SELECT)
+-      ready = _rl_timeout_select (1, &readfds, (fd_set *)NULL, (fd_set *)NULL, &timer, NULL);
++      _rl_timeout_select (1, &readfds, (fd_set *)NULL, (fd_set *)NULL, &timer, NULL);
+ #  else
+-      ready = select (1, &readfds, (fd_set *)NULL, (fd_set *)NULL, &timer);
++      select (1, &readfds, (fd_set *)NULL, (fd_set *)NULL, &timer);
+ #  endif
+       rl_point = orig_point;
+ #else /* !HAVE_SELECT */
+diff --git a/readline.c b/readline.c
+index e976f8f..0a76084 100644
+--- a/readline.c
++++ b/readline.c
+@@ -96,7 +96,6 @@ static void bind_arrow_keys (void);
+ static void bind_bracketed_paste_prefix (void);
+ 
+ static void readline_default_bindings (void);
+-static void reset_default_bindings (void);
+ 
+ static int _rl_subseq_result (int, Keymap, int, int);
+ static int _rl_subseq_getchar (int);
+@@ -574,8 +573,11 @@ readline_internal_char (void)
+ readline_internal_charloop (void)
+ #endif
+ {
+-  static int lastc, eof_found;
+-  int c, code, lk, r;
++  static int lastc;
++#if !defined (READLINE_CALLBACKS)
++  static int eof_found;
++#endif
++  int c, code, lk;
+   static procenv_t olevel;
+ 
+   lastc = EOF;
+@@ -687,7 +689,7 @@ readline_internal_charloop (void)
+ 	}
+ 
+       lastc = c;
+-      r = _rl_dispatch ((unsigned char)c, _rl_keymap);
++      _rl_dispatch ((unsigned char)c, _rl_keymap);
+       RL_CHECK_SIGNALS ();
+ 
+       if (_rl_command_to_execute)
+@@ -701,7 +703,7 @@ readline_internal_charloop (void)
+ 
+ 	  rl_dispatching = 1;
+ 	  RL_SETSTATE(RL_STATE_DISPATCHING);
+-	  r = (*(_rl_command_to_execute->func)) (_rl_command_to_execute->count, _rl_command_to_execute->key);
++	  (*(_rl_command_to_execute->func)) (_rl_command_to_execute->count, _rl_command_to_execute->key);
+ 	  _rl_command_to_execute = 0;
+ 	  RL_UNSETSTATE(RL_STATE_DISPATCHING);
+ 	  rl_dispatching = 0;
+@@ -1366,19 +1368,6 @@ readline_default_bindings (void)
+     rl_tty_set_default_bindings (_rl_keymap);
+ }
+ 
+-#if defined (DEBUG)
+-/* Reset the default bindings for the terminal special characters we're
+-   interested in back to rl_insert and read the new ones. */
+-static void
+-reset_default_bindings (void)
+-{
+-  if (_rl_bind_stty_chars)
+-    {
+-      rl_tty_unset_default_bindings (_rl_keymap);
+-      rl_tty_set_default_bindings (_rl_keymap);
+-    }
+-}
+-#endif
+ 
+ /* Bind some common arrow key sequences in MAP. */
+ static void
+diff --git a/rltty.c b/rltty.c
+index 2d10efd..621fc14 100644
+--- a/rltty.c
++++ b/rltty.c
+@@ -71,7 +71,7 @@ static void set_winsize (int);
+ 
+ static int terminal_prepped;
+ 
+-static _RL_TTY_CHARS _rl_tty_chars, _rl_last_tty_chars;
++static _RL_TTY_CHARS _rl_tty_chars;
+ 
+ /* If non-zero, means that this process has called tcflow(fd, TCOOFF)
+    and output is suspended. */
+@@ -143,7 +143,6 @@ static void set_special_char (Keymap, TIOTYPE *, int, rl_command_func_t *);
+ static void
+ save_tty_chars (TIOTYPE *tiop)
+ {
+-  _rl_last_tty_chars = _rl_tty_chars;
+ 
+   if (tiop->flags & SGTTY_SET)
+     {
+@@ -364,7 +363,6 @@ static void _rl_bind_tty_special_chars (Keymap, TIOTYPE);
+ static void
+ save_tty_chars (TIOTYPE *tiop)
+ {
+-  _rl_last_tty_chars = _rl_tty_chars;
+ 
+   _rl_tty_chars.t_eof = tiop->c_cc[VEOF];
+   _rl_tty_chars.t_eol = tiop->c_cc[VEOL];
+diff --git a/shlib/Makefile.in b/shlib/Makefile.in
+index 6039efe..8de2e7e 100644
+--- a/shlib/Makefile.in
++++ b/shlib/Makefile.in
+@@ -176,7 +176,7 @@ unsupported:
+ 
+ $(SHARED_READLINE):	$(SHARED_OBJ)
+ 	$(RM) $@
+-	$(SHOBJ_LD) ${SHOBJ_LDFLAGS} ${SHLIB_XLDFLAGS} -o $@ $(SHARED_OBJ) $(SHLIB_LIBS)
++	$(SHOBJ_LD) ${SHOBJ_LDFLAGS} ${SHLIB_XLDFLAGS} -o $@ $(SHARED_OBJ) $(SHLIB_LIBS) $(TERMCAP_LIB)
+ 
+ $(SHARED_HISTORY):	$(SHARED_HISTOBJ) xmalloc.so xfree.so
+ 	$(RM) $@
+diff --git a/signals.c b/signals.c
+index 6cd73f5..415167b 100644
+--- a/signals.c
++++ b/signals.c
+@@ -419,7 +419,7 @@ rl_set_signals (void)
+   SigHandler *oh;
+ #if defined (HAVE_POSIX_SIGNALS)
+   static int sigmask_set = 0;
+-  static sigset_t bset, oset;
++  static sigset_t bset;
+ #endif
+ 
+ #if defined (HAVE_POSIX_SIGNALS)
+diff --git a/text.c b/text.c
+index 72baf33..b4bc571 100644
+--- a/text.c
++++ b/text.c
+@@ -985,12 +985,11 @@ _rl_overwrite_char (int count, int c)
+ int
+ rl_insert (int count, int c)
+ {
+-  int r, n, x;
++  int r, n;
+ 
+   r = (rl_insert_mode == RL_IM_INSERT) ? _rl_insert_char (count, c) : _rl_overwrite_char (count, c);
+ 
+   /* XXX -- attempt to batch-insert pending input that maps to self-insert */
+-  x = 0;
+   n = (unsigned short)-2;
+   while (_rl_optimize_typeahead &&
+ 	 rl_num_chars_to_read == 0 &&
+@@ -1011,7 +1010,6 @@ rl_insert (int count, int c)
+ 	 stored the character in the pending_bytes array because that will
+ 	 result in doubled input. */
+       n = (unsigned short)-2;
+-      x++;		/* count of bytes of typeahead read, currently unused */
+       if (r == 1)	/* read partial multibyte character */
+ 	continue;
+       if (rl_done || r != 0)
+diff --git a/vi_mode.c b/vi_mode.c
+index 28a6b6d..1e090d3 100644
+--- a/vi_mode.c
++++ b/vi_mode.c
+@@ -622,7 +622,6 @@ rl_vi_eWord (int count, int ignore)
+ int
+ rl_vi_fword (int count, int ignore)
+ {
+-  int opoint;
+ 
+   while (count-- && rl_point < (rl_end - 1))
+     {
+@@ -639,11 +638,10 @@ rl_vi_fword (int count, int ignore)
+ 	    _rl_vi_advance_point ();
+ 	}
+ 
+-      opoint = rl_point;
+ 
+       /* Move past whitespace. */
+       while (whitespace (rl_line_buffer[rl_point]) && rl_point < rl_end)
+-	opoint = _rl_vi_advance_point ();
++	_rl_vi_advance_point ();
+     }
+   return (0);
+ }

@@ -1,0 +1,19 @@
+diff --git a/cmake/OpusConfig.cmake b/cmake/OpusConfig.cmake
+index 9dc5a812..c4c89ec6 100644
+--- a/cmake/OpusConfig.cmake
++++ b/cmake/OpusConfig.cmake
+@@ -40,7 +40,13 @@ endif()
+ include(CMakePushCheckState)
+ cmake_push_check_state(RESET)
+ include(CheckLibraryExists)
+-check_library_exists(m floor "" HAVE_LIBM)
++include(CheckCSourceCompiles)
++include(CMakePushCheckState)
++cmake_push_check_state(RESET)
++set(CMAKE_REQUIRED_LIBRARIES m)
++check_c_source_compiles("#include <math.h>
++int main(void) { volatile double value = 1.5; return floor(value) != 1.0; }" HAVE_LIBM)
++cmake_pop_check_state()
+ if(HAVE_LIBM)
+   list(APPEND OPUS_REQUIRED_LIBRARIES m)
+   set(CMAKE_REQUIRED_LIBRARIES m)

@@ -1,0 +1,201 @@
+diff --git a/buckets/hpack_buckets.c b/buckets/hpack_buckets.c
+index 570b8bd..bade92e 100644
+--- a/buckets/hpack_buckets.c
++++ b/buckets/hpack_buckets.c
+@@ -72,7 +72,7 @@ serf__hpack_huffman_decode(const unsigned char *encoded,
+     while (encoded_len || bits_left)
+     {
+         apr_uint32_t match;
+-        struct serf_hpack_huffman_item_t *r;
++        const struct serf_hpack_huffman_item_t *r;
+ 
+         while (bits_left < 30 && encoded_len)
+         {
+diff --git a/buckets/ssl_buckets.c b/buckets/ssl_buckets.c
+index 081759a..4c142eb 100644
+--- a/buckets/ssl_buckets.c
++++ b/buckets/ssl_buckets.c
+@@ -306,7 +306,7 @@ struct serf_ssl_certificate_t {
+ 
+ static void disable_compression(serf_ssl_context_t *ssl_ctx);
+ static char *
+-    pstrdup_escape_nul_bytes(const char *buf, int len, apr_pool_t *pool);
++    pstrdup_escape_nul_bytes(const char *buf, apr_size_t len, apr_pool_t *pool);
+ 
+ static const char *ssl_get_selected_protocol(serf_ssl_context_t *context);
+ 
+@@ -842,9 +842,9 @@ get_subject_alt_names(apr_array_header_t **san_arr, X509 *ssl_cert,
+                 {
+                     const char *const data =
+                         (const char*)ASN1_STRING_get0_data(nm->d.ia5);
+-                    const int length = ASN1_STRING_length(nm->d.ia5);
++                    const apr_size_t length = ASN1_STRING_get_length(nm->d.ia5);
+ 
+-                    if (copy_action == ErrorOnNul && strlen(data) != length)
++                    if (copy_action == ErrorOnNul && memchr(data, '\0', length) != NULL)
+                         return SERF_ERROR_SSL_CERT_FAILED;
+                     if (san_arr && *san_arr)
+                         p = pstrdup_escape_nul_bytes(data, length, pool);
+@@ -932,8 +932,8 @@ static apr_status_t validate_cert_hostname(X509 *server_cert, apr_pool_t *pool)
+         asn1 = get_first_name_entry_data(subject, NID_commonName);
+         if (asn1) {
+             const char *const data = (const char*)ASN1_STRING_get0_data(asn1);
+-            const int length = ASN1_STRING_length(asn1);
+-            if (data && length >= 0 && length != strlen(data))
++            const apr_size_t length = ASN1_STRING_get_length(asn1);
++            if (data && memchr(data, '\0', length) != NULL)
+                 return SERF_ERROR_SSL_CERT_FAILED;
+         }
+     }
+@@ -2657,9 +2657,9 @@ serf_ssl_context_t *serf_bucket_ssl_encrypt_context_get(
+  * The returned string is allocated in POOL.
+  */
+ static char *
+-pstrdup_escape_nul_bytes(const char *buf, int len, apr_pool_t *pool)
++pstrdup_escape_nul_bytes(const char *buf, apr_size_t len, apr_pool_t *pool)
+ {
+-    int i, nul_count = 0;
++    apr_size_t i, nul_count = 0;
+     char *ret;
+ 
+     /* First determine if there are any nul bytes in the string. */
+@@ -2670,7 +2670,7 @@ pstrdup_escape_nul_bytes(const char *buf, int len, apr_pool_t *pool)
+ 
+     if (nul_count == 0) {
+         /* There aren't so easy case to just copy the string */
+-        ret = apr_pstrdup(pool, buf);
++        ret = apr_pstrmemdup(pool, buf, len);
+     } else {
+         /* There are so we have to replace nul bytes with escape codes
+          * Proper length is the length of the original string, plus
+@@ -2702,7 +2702,7 @@ set_X500_name_entry(const_X509_NAME_p org, int nid,
+     const ASN1_STRING *const asn1 = get_first_name_entry_data(org, nid);
+     if (asn1) {
+         const char *const data = (const char*)ASN1_STRING_get0_data(asn1);
+-        const int length = ASN1_STRING_length(asn1);
++        const apr_size_t length = ASN1_STRING_get_length(asn1);
+         apr_hash_set(tgt, key, APR_HASH_KEY_STRING,
+                      pstrdup_escape_nul_bytes(data, length, pool));
+     }
+@@ -3383,13 +3383,13 @@ convert_asn1_generalized_time(ASN1_GENERALIZEDTIME *asn1_time,
+     apr_time_exp_t xt = { 0 };
+     const void *data;
+     char *date;
+-    int len;
++    apr_size_t len;
+     char tz;
+ 
+     if (ASN1_STRING_type(asn1_time) != V_ASN1_GENERALIZEDTIME)
+         return 0;
+ 
+-    len = ASN1_STRING_length(asn1_time);
++    len = ASN1_STRING_get_length(asn1_time);
+     data = ASN1_STRING_get0_data(asn1_time);
+     date = apr_pstrndup(scratch_pool, data, len);
+ 
+diff --git a/test/MockHTTPinC/MockHTTP_server.c b/test/MockHTTPinC/MockHTTP_server.c
+index 3fb91ac..e228957 100644
+--- a/test/MockHTTPinC/MockHTTP_server.c
++++ b/test/MockHTTPinC/MockHTTP_server.c
+@@ -1778,7 +1778,6 @@ void mhConfigServer(mhServCtx_t *serv_ctx, ...)
+  */
+ void mhStartServer(mhServCtx_t *ctx)
+ {
+-    mhError_t err = MOCKHTTP_NO_ERROR;
+     apr_status_t status;
+ 
+     if (ctx->threading == mhThreadSeparate) {
+@@ -1801,9 +1800,7 @@ void mhStartServer(mhServCtx_t *ctx)
+         status = setupTCPServer(ctx);
+     }
+ 
+-    if (status) {
+-        err = MOCKHTTP_SETUP_FAILED;
+-    }
++    (void)status;
+     /* TODO: store error message */
+ }
+ 
+@@ -2937,15 +2934,6 @@ static apr_status_t sslSocketShutdown(_mhClientCtx_t *cctx,
+     return APR_ENOTIMPL;
+ }
+ 
+-static void appendSSLErrMessage(const MockHTTP *mh, long result)
+-{
+-    apr_size_t startpos = strlen(mh->errmsg);
+-    ERR_error_string(result, mh->errmsg + startpos);
+-#if MH_VERBOSE
+-    ERR_print_errors_cb(err_file_print_cb, stderr);
+-#endif
+-}
+-
+ /******************************************************************************/
+ /* Connection-level matchers: define criteria to match different aspects of a */
+ /* HTTP or HTTPS connection.                                                  */
+@@ -2968,8 +2956,6 @@ bool _mhClientcert_valid_matcher(const mhConnMatcherBldr_t *mp,
+         if (result == X509_V_OK) {
+             /* The client sent a certificate which verified OK */
+             return YES;
+-        } else {
+-//            appendSSLErrMessage(mh, result);
+         }
+         /* TODO: add to error message */
+         _mhLog(MH_VERBOSE, cctx->skt, "No client certificate was received.\n");
+@@ -2991,20 +2977,20 @@ bool _mhClientcertcn_matcher(const mhConnMatcherBldr_t *mp,
+     /* Check client certificate */
+     peer = SSL_get_peer_certificate(ssl_ctx->ssl);
+     if (peer) {
+-        char buf[1024];
+-        int ret;
+-        X509_NAME *subject = X509_get_subject_name(peer);
+-
+-        ret = X509_NAME_get_text_by_NID(subject,
+-                                        NID_commonName,
+-                                        buf, 1024);
+-        if (ret != -1 && strcmp(clientCN, buf) == 0) {
++        const X509_NAME *subject = X509_get_subject_name(peer);
++        int index = X509_NAME_get_index_by_NID(subject, NID_commonName, -1);
++        const ASN1_STRING *name = index < 0 ? NULL :
++            X509_NAME_ENTRY_get_data(X509_NAME_get_entry(subject, index));
++        int matched = name && strlen(clientCN) == ASN1_STRING_get_length(name)
++            && memcmp(clientCN, ASN1_STRING_get0_data(name), strlen(clientCN)) == 0;
++        X509_free(peer);
++        if (matched) {
+             return YES;
+         }
+ 
+         /* TODO: add to error message */
+         _mhLog(MH_VERBOSE, cctx->skt, "Client certificate common name "
+-               "\"%s\" doesn't match expected \"%s\".\n", buf, clientCN);
++               "doesn't match expected \"%s\".\n", clientCN);
+         return NO;
+     } else {
+         /* TODO: add to error message */
+diff --git a/test/serf_get.c b/test/serf_get.c
+index d3882e7..8d660f0 100644
+--- a/test/serf_get.c
++++ b/test/serf_get.c
+@@ -707,8 +707,8 @@ int main(int argc, const char **argv)
+             break;
+         case 'r':
+             {
+-                char *sep;
+-                char *hdr_val;
++                const char *sep;
++                const char *hdr_val;
+ 
+                 if (req_hdrs == NULL) {
+                     /* first request header, allocate bucket */
+diff --git a/test/serf_httpd.c b/test/serf_httpd.c
+index 75e9864..759075c 100644
+--- a/test/serf_httpd.c
++++ b/test/serf_httpd.c
+@@ -338,7 +338,7 @@ static void configure_listener(serf_context_t *ctx,
+     listener_ctx_t *lctx;
+     serf_listener_t *listener;
+ 
+-    char *comma = strchr(arg, ',');
++    const char *comma = strchr(arg, ',');
+ 
+     listen_spec = comma ? comma + 1 : arg;
+ 

@@ -1,0 +1,19 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 721328e..0d327be 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -95,10 +95,12 @@ if (ENABLE_SANITIZER)
+   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=${ENABLE_SANITIZER}")
+ endif ()
+ 
+-include(CheckLibraryExists)
++include(CheckSymbolExists)
+ set(LIBM_LIBRARY)
+ set(LIBM_DEP)
+-CHECK_LIBRARY_EXISTS(m log2 "" HAVE_LIB_M)
++set(CMAKE_REQUIRED_LIBRARIES m)
++check_symbol_exists(log2 "math.h" HAVE_LIB_M)
++unset(CMAKE_REQUIRED_LIBRARIES)
+ if (HAVE_LIB_M)
+   set(LIBM_LIBRARY "m")
+   if (NOT BUILD_SHARED_LIBS)

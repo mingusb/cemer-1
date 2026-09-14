@@ -1,0 +1,6071 @@
+diff --git a/INSTALL b/INSTALL
+index 20998407..d43221a2 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -1,370 +1,380 @@
+ Installation Instructions
+ *************************
+ 
+-Copyright (C) 1994-1996, 1999-2002, 2004-2013 Free Software Foundation,
+-Inc.
+-
+-   Copying and distribution of this file, with or without modification,
+-are permitted in any medium without royalty provided the copyright
+-notice and this notice are preserved.  This file is offered as-is,
+-without warranty of any kind.
+-
+ Basic Installation
+ ==================
+ 
+-   Briefly, the shell command `./configure && make && make install'
+-should configure, build, and install this package.  The following
+-more-detailed instructions are generic; see the `README' file for
+-instructions specific to this package.  Some packages provide this
+-`INSTALL' file but do not implement all of the features documented
+-below.  The lack of an optional feature in a given package is not
+-necessarily a bug.  More recommendations for GNU packages can be found
+-in *note Makefile Conventions: (standards)Makefile Conventions.
+-
+-   The `configure' shell script attempts to guess correct values for
+-various system-dependent variables used during compilation.  It uses
+-those values to create a `Makefile' in each directory of the package.
+-It may also create one or more `.h' files containing system-dependent
+-definitions.  Finally, it creates a shell script `config.status' that
+-you can run in the future to recreate the current configuration, and a
+-file `config.log' containing compiler output (useful mainly for
+-debugging `configure').
+-
+-   It can also use an optional file (typically called `config.cache'
+-and enabled with `--cache-file=config.cache' or simply `-C') that saves
+-the results of its tests to speed up reconfiguring.  Caching is
+-disabled by default to prevent problems with accidental use of stale
+-cache files.
++   The following shell commands:
++
++     test -f configure || ./bootstrap
++     ./configure
++     make
++     make install
++
++should configure, build, and install this package.  The first line,
++which bootstraps, is intended for developers; when building from
++distribution tarballs it does nothing and can be skipped.  A package
++might name the bootstrapping script differently; if the name is
++‘autogen.sh’, for example, the first line should say ‘./autogen.sh’
++instead of ‘./bootstrap’.
++
++   The following more-detailed instructions are generic; see the
++‘README’ file for instructions specific to this package.  Some packages
++provide this ‘INSTALL’ file but do not implement all of the features
++documented below.  The lack of an optional feature in a given package is
++not necessarily a bug.  More recommendations for GNU packages can be
++found in the GNU Coding Standards.
++
++   Many packages have scripts meant for developers instead of ordinary
++builders, as they may use developer tools that are less commonly
++installed, or they may access the network, which has privacy
++implications.  These scripts attempt to bootstrap by building the
++‘configure’ script and related files, possibly using developer tools or
++the network.  Because the output of bootstrapping is system-independent,
++it is normally run by a package developer so that its output can be put
++into the distribution tarball and ordinary builders and users need not
++bootstrap.  Some packages have commands like ‘./autopull.sh’ and
++‘./autogen.sh’ that you can run instead of ‘./bootstrap’, for more
++fine-grained control over bootstrapping.
++
++   The ‘configure’ script attempts to guess correct values for various
++system-dependent variables used during compilation.  It uses those
++values to create a ‘Makefile’ in each directory of the package.  It may
++also create one or more ‘.h’ files containing system-dependent
++definitions.  Finally, it creates a script ‘config.status’ that you can
++run in the future to recreate the current configuration, and a file
++‘config.log’ containing output useful for debugging ‘configure’.
++
++   It can also use an optional file (typically called ‘config.cache’ and
++enabled with ‘--cache-file=config.cache’ or simply ‘-C’) that saves the
++results of its tests to speed up reconfiguring.  Caching is disabled by
++default to prevent problems with accidental use of stale cache files.
+ 
+    If you need to do unusual things to compile the package, please try
+-to figure out how `configure' could check whether to do them, and mail
+-diffs or instructions to the address given in the `README' so they can
++to figure out how ‘configure’ could check whether to do them, and mail
++diffs or instructions to the address given in the ‘README’ so they can
+ be considered for the next release.  If you are using the cache, and at
+-some point `config.cache' contains results you don't want to keep, you
++some point ‘config.cache’ contains results you don’t want to keep, you
+ may remove or edit it.
+ 
+-   The file `configure.ac' (or `configure.in') is used to create
+-`configure' by a program called `autoconf'.  You need `configure.ac' if
+-you want to change it or regenerate `configure' using a newer version
+-of `autoconf'.
++   The ‘autoconf’ program generates ‘configure’ from the file
++‘configure.ac’.  Normally you should edit ‘configure.ac’ instead of
++editing ‘configure’ directly.
+ 
+    The simplest way to compile this package is:
+ 
+-  1. `cd' to the directory containing the package's source code and type
+-     `./configure' to configure the package for your system.
++  1. ‘cd’ to the directory containing the package’s source code.
++
++  2. If this is a developer checkout and file ‘configure’ does not yet
++     exist, run the bootstrapping script (typically ‘./bootstrap’ or
++     ‘./autogen.sh’) to bootstrap and create the file.  You may need
++     special developer tools and network access to bootstrap, and the
++     network access may have privacy implications.
+ 
+-     Running `configure' might take a while.  While running, it prints
+-     some messages telling which features it is checking for.
++  3. Type ‘./configure’ to configure the package for your system.  This
++     might take a while.  While running, ‘configure’ prints messages
++     telling which features it is checking for.
+ 
+-  2. Type `make' to compile the package.
++  4. Type ‘make’ to compile the package.
+ 
+-  3. Optionally, type `make check' to run any self-tests that come with
++  5. Optionally, type ‘make check’ to run any self-tests that come with
+      the package, generally using the just-built uninstalled binaries.
+ 
+-  4. Type `make install' to install the programs and any data files and
++  6. Type ‘make install’ to install the programs and any data files and
+      documentation.  When installing into a prefix owned by root, it is
+      recommended that the package be configured and built as a regular
+-     user, and only the `make install' phase executed with root
++     user, and only the ‘make install’ phase executed with root
+      privileges.
+ 
+-  5. Optionally, type `make installcheck' to repeat any self-tests, but
++  7. Optionally, type ‘make installcheck’ to repeat any self-tests, but
+      this time using the binaries in their final installed location.
+      This target does not install anything.  Running this target as a
+-     regular user, particularly if the prior `make install' required
++     regular user, particularly if the prior ‘make install’ required
+      root privileges, verifies that the installation completed
+      correctly.
+ 
+-  6. You can remove the program binaries and object files from the
+-     source code directory by typing `make clean'.  To also remove the
+-     files that `configure' created (so you can compile the package for
+-     a different kind of computer), type `make distclean'.  There is
+-     also a `make maintainer-clean' target, but that is intended mainly
+-     for the package's developers.  If you use it, you may have to get
+-     all sorts of other programs in order to regenerate files that came
+-     with the distribution.
+-
+-  7. Often, you can also type `make uninstall' to remove the installed
+-     files again.  In practice, not all packages have tested that
+-     uninstallation works correctly, even though it is required by the
+-     GNU Coding Standards.
+-
+-  8. Some packages, particularly those that use Automake, provide `make
+-     distcheck', which can by used by developers to test that all other
+-     targets like `make install' and `make uninstall' work correctly.
+-     This target is generally not run by end users.
++  8. You can remove the program binaries and object files from the
++     source code directory by typing ‘make clean’.  To also remove the
++     files that ‘configure’ created (so you can compile the package for
++     a different kind of computer), type ‘make distclean’.  There is
++     also a ‘make maintainer-clean’ target, but that is intended mainly
++     for the package’s developers.  If you use it, you may have to
++     bootstrap again.
++
++  9. If the package follows the GNU Coding Standards, you can type ‘make
++     uninstall’ to remove the installed files.
++
++Installation Prerequisites
++==========================
++
++   Installation requires a POSIX-like environment with a shell and at
++least the following standard utilities:
++
++     awk cat cp diff echo expr false ls mkdir mv printf pwd rm rmdir sed
++     sort test tr
++
++This package’s installation may need other standard utilities such as
++‘grep’, ‘make’, ‘sleep’ and ‘touch’, along with compilers like ‘gcc’.
+ 
+ Compilers and Options
+ =====================
+ 
+    Some systems require unusual options for compilation or linking that
+-the `configure' script does not know about.  Run `./configure --help'
++the ‘configure’ script does not know about.  Run ‘./configure --help’
+ for details on some of the pertinent environment variables.
+ 
+-   You can give `configure' initial values for configuration parameters
+-by setting variables in the command line or in the environment.  Here
+-is an example:
++   You can give ‘configure’ initial values for configuration parameters
++by setting variables in the command line or in the environment.  Here is
++an example:
+ 
+-     ./configure CC=c99 CFLAGS=-g LIBS=-lposix
++     ./configure CC=gcc CFLAGS=-g LIBS=-lposix
+ 
+-   *Note Defining Variables::, for more details.
++   See “Defining Variables” for more details.
+ 
+ Compiling For Multiple Architectures
+ ====================================
+ 
+    You can compile the package for more than one kind of computer at the
+-same time, by placing the object files for each architecture in their
+-own directory.  To do this, you can use GNU `make'.  `cd' to the
+-directory where you want the object files and executables to go and run
+-the `configure' script.  `configure' automatically checks for the
+-source code in the directory that `configure' is in and in `..'.  This
+-is known as a "VPATH" build.
+-
+-   With a non-GNU `make', it is safer to compile the package for one
+-architecture at a time in the source code directory.  After you have
+-installed the package for one architecture, use `make distclean' before
+-reconfiguring for another architecture.
+-
+-   On MacOS X 10.5 and later systems, you can create libraries and
+-executables that work on multiple system types--known as "fat" or
+-"universal" binaries--by specifying multiple `-arch' options to the
+-compiler but only a single `-arch' option to the preprocessor.  Like
+-this:
+-
+-     ./configure CC="gcc -arch i386 -arch x86_64 -arch ppc -arch ppc64" \
+-                 CXX="g++ -arch i386 -arch x86_64 -arch ppc -arch ppc64" \
+-                 CPP="gcc -E" CXXCPP="g++ -E"
+-
+-   This is not guaranteed to produce working output in all cases, you
+-may have to build one architecture at a time and combine the results
+-using the `lipo' tool if you have problems.
++same time, by placing the object files for each system in their own
++directory.  To do this, you can use GNU ‘make’.  ‘cd’ to the directory
++where you want the object files and executables to go and run the
++‘configure’ script.  ‘configure’ automatically checks for the source
++code in the directory that ‘configure’ is in and in ‘..’.  This is known
++as a “VPATH” build.
++
++   With a non-GNU ‘make’, it is safer to compile the package for one
++system at a time in the source code directory.  After you have installed
++the package for one system, use ‘make distclean’ before reconfiguring
++for another system.
++
++   Some platforms, notably macOS, support “fat” or “universal” binaries,
++where a single binary can execute on different architectures.  On these
++platforms you can configure and compile just once, with options specific
++to that platform.
+ 
+ Installation Names
+ ==================
+ 
+-   By default, `make install' installs the package's commands under
+-`/usr/local/bin', include files under `/usr/local/include', etc.  You
+-can specify an installation prefix other than `/usr/local' by giving
+-`configure' the option `--prefix=PREFIX', where PREFIX must be an
++   By default, ‘make install’ installs the package’s commands under
++‘/usr/local/bin’, include files under ‘/usr/local/include’, etc.  You
++can specify an installation prefix other than ‘/usr/local’ by giving
++‘configure’ the option ‘--prefix=PREFIX’, where PREFIX must be an
+ absolute file name.
+ 
+    You can specify separate installation prefixes for
+ architecture-specific files and architecture-independent files.  If you
+-pass the option `--exec-prefix=PREFIX' to `configure', the package uses
++pass the option ‘--exec-prefix=PREFIX’ to ‘configure’, the package uses
+ PREFIX as the prefix for installing programs and libraries.
+ Documentation and other data files still use the regular prefix.
+ 
+    In addition, if you use an unusual directory layout you can give
+-options like `--bindir=DIR' to specify different values for particular
+-kinds of files.  Run `configure --help' for a list of the directories
+-you can set and what kinds of files go in them.  In general, the
+-default for these options is expressed in terms of `${prefix}', so that
+-specifying just `--prefix' will affect all of the other directory
++options like ‘--bindir=DIR’ to specify different values for particular
++kinds of files.  Run ‘configure --help’ for a list of the directories
++you can set and what kinds of files go in them.  In general, the default
++for these options is expressed in terms of ‘${prefix}’, so that
++specifying just ‘--prefix’ will affect all of the other directory
+ specifications that were not explicitly provided.
+ 
+    The most portable way to affect installation locations is to pass the
+-correct locations to `configure'; however, many packages provide one or
++correct locations to ‘configure’; however, many packages provide one or
+ both of the following shortcuts of passing variable assignments to the
+-`make install' command line to change installation locations without
++‘make install’ command line to change installation locations without
+ having to reconfigure or recompile.
+ 
+    The first method involves providing an override variable for each
+-affected directory.  For example, `make install
+-prefix=/alternate/directory' will choose an alternate location for all
++affected directory.  For example, ‘make install
++prefix=/alternate/directory’ will choose an alternate location for all
+ directory configuration variables that were expressed in terms of
+-`${prefix}'.  Any directories that were specified during `configure',
+-but not in terms of `${prefix}', must each be overridden at install
+-time for the entire installation to be relocated.  The approach of
+-makefile variable overrides for each directory variable is required by
+-the GNU Coding Standards, and ideally causes no recompilation.
+-However, some platforms have known limitations with the semantics of
+-shared libraries that end up requiring recompilation when using this
+-method, particularly noticeable in packages that use GNU Libtool.
+-
+-   The second method involves providing the `DESTDIR' variable.  For
+-example, `make install DESTDIR=/alternate/directory' will prepend
+-`/alternate/directory' before all installation names.  The approach of
+-`DESTDIR' overrides is not required by the GNU Coding Standards, and
++‘${prefix}’.  Any directories that were specified during ‘configure’,
++but not in terms of ‘${prefix}’, must each be overridden at install time
++for the entire installation to be relocated.  The approach of makefile
++variable overrides for each directory variable is required by the GNU
++Coding Standards, and ideally causes no recompilation.  However, some
++platforms have known limitations with the semantics of shared libraries
++that end up requiring recompilation when using this method, particularly
++noticeable in packages that use GNU Libtool.
++
++   The second method involves providing the ‘DESTDIR’ variable.  For
++example, ‘make install DESTDIR=/alternate/directory’ will prepend
++‘/alternate/directory’ before all installation names.  The approach of
++‘DESTDIR’ overrides is not required by the GNU Coding Standards, and
+ does not work on platforms that have drive letters.  On the other hand,
+ it does better at avoiding recompilation issues, and works well even
+-when some directory options were not specified in terms of `${prefix}'
+-at `configure' time.
++when some directory options were not specified in terms of ‘${prefix}’
++at ‘configure’ time.
+ 
+ Optional Features
+ =================
+ 
+    If the package supports it, you can cause programs to be installed
+-with an extra prefix or suffix on their names by giving `configure' the
+-option `--program-prefix=PREFIX' or `--program-suffix=SUFFIX'.
++with an extra prefix or suffix on their names by giving ‘configure’ the
++option ‘--program-prefix=PREFIX’ or ‘--program-suffix=SUFFIX’.
+ 
+-   Some packages pay attention to `--enable-FEATURE' options to
+-`configure', where FEATURE indicates an optional part of the package.
+-They may also pay attention to `--with-PACKAGE' options, where PACKAGE
+-is something like `gnu-as' or `x' (for the X Window System).  The
+-`README' should mention any `--enable-' and `--with-' options that the
+-package recognizes.
+-
+-   For packages that use the X Window System, `configure' can usually
+-find the X include and library files automatically, but if it doesn't,
+-you can use the `configure' options `--x-includes=DIR' and
+-`--x-libraries=DIR' to specify their locations.
++   Some packages pay attention to ‘--enable-FEATURE’ and
++‘--disable-FEATURE’ options to ‘configure’, where FEATURE indicates an
++optional part of the package.  They may also pay attention to
++‘--with-PACKAGE’ and ‘--without-PACKAGE’ options, where PACKAGE is
++something like ‘gnu-ld’.  ‘./configure --help’ should mention the
++‘--enable-...’ and ‘--with-...’ options that the package recognizes.
+ 
+    Some packages offer the ability to configure how verbose the
+-execution of `make' will be.  For these packages, running `./configure
+---enable-silent-rules' sets the default to minimal output, which can be
+-overridden with `make V=1'; while running `./configure
+---disable-silent-rules' sets the default to verbose, which can be
+-overridden with `make V=0'.
+-
+-Particular systems
+-==================
+-
+-   On HP-UX, the default C compiler is not ANSI C compatible.  If GNU
+-CC is not installed, it is recommended to use the following options in
+-order to use an ANSI C compiler:
+-
+-     ./configure CC="cc -Ae -D_XOPEN_SOURCE=500"
+-
+-and if that doesn't work, install pre-built binaries of GCC for HP-UX.
+-
+-   HP-UX `make' updates targets which have the same time stamps as
+-their prerequisites, which makes it generally unusable when shipped
+-generated files such as `configure' are involved.  Use GNU `make'
+-instead.
+-
+-   On OSF/1 a.k.a. Tru64, some versions of the default C compiler cannot
+-parse its `<wchar.h>' header file.  The option `-nodtk' can be used as
+-a workaround.  If GNU CC is not installed, it is therefore recommended
+-to try
+-
+-     ./configure CC="cc"
+-
+-and if that doesn't work, try
+-
+-     ./configure CC="cc -nodtk"
+-
+-   On Solaris, don't put `/usr/ucb' early in your `PATH'.  This
+-directory contains several dysfunctional programs; working variants of
+-these programs are available in `/usr/bin'.  So, if you need `/usr/ucb'
+-in your `PATH', put it _after_ `/usr/bin'.
+-
+-   On Haiku, software installed for all users goes in `/boot/common',
+-not `/usr/local'.  It is recommended to use the following options:
+-
+-     ./configure --prefix=/boot/common
+-
+-Specifying the System Type
+-==========================
+-
+-   There may be some features `configure' cannot figure out
+-automatically, but needs to determine by the type of machine the package
+-will run on.  Usually, assuming the package is built to be run on the
+-_same_ architectures, `configure' can figure that out, but if it prints
+-a message saying it cannot guess the machine type, give it the
+-`--build=TYPE' option.  TYPE can either be a short name for the system
+-type, such as `sun4', or a canonical name which has the form:
+-
+-     CPU-COMPANY-SYSTEM
+-
+-where SYSTEM can have one of these forms:
+-
+-     OS
+-     KERNEL-OS
+-
+-   See the file `config.sub' for the possible values of each field.  If
+-`config.sub' isn't included in this package, then this package doesn't
+-need to know the machine type.
+-
+-   If you are _building_ compiler tools for cross-compiling, you should
+-use the option `--target=TYPE' to select the type of system they will
+-produce code for.
+-
+-   If you want to _use_ a cross compiler, that generates code for a
+-platform different from the build platform, you should specify the
+-"host" platform (i.e., that on which the generated programs will
+-eventually be run) with `--host=TYPE'.
++execution of ‘make’ will be.  For these packages, running ‘./configure
++--enable-silent-rules’ sets the default to minimal output, which can be
++overridden with ‘make V=1’; while running ‘./configure
++--disable-silent-rules’ sets the default to verbose, which can be
++overridden with ‘make V=0’.
++
++Specifying a System Type
++========================
++
++   By default ‘configure’ builds for the current system.  To create
++binaries that can run on a different system type, specify a
++‘--host=TYPE’ option along with compiler variables that specify how to
++generate object code for TYPE.  For example, to create binaries intended
++to run on a 64-bit ARM processor:
++
++     ./configure --host=aarch64-linux-gnu \
++        CC=aarch64-linux-gnu-gcc \
++        CXX=aarch64-linux-gnu-g++
++
++If done on a machine that can execute these binaries (e.g., via
++‘qemu-aarch64’, ‘$QEMU_LD_PREFIX’, and Linux’s ‘binfmt_misc’
++capability), the build behaves like a native build.  Otherwise it is a
++cross-build: ‘configure’ will make cross-compilation guesses instead of
++running test programs, and ‘make check’ will not work.
++
++   A system type can either be a short name like ‘mingw64’, or a
++canonical name like ‘x86_64-pc-linux-gnu’.  Canonical names have the
++form CPU-COMPANY-SYSTEM where SYSTEM is either OS or KERNEL-OS.  To
++canonicalize and validate a system type, you can run the command
++‘config.sub’, which is often squirreled away in a subdirectory like
++‘build-aux’.  For example:
++
++     $ build-aux/config.sub arm64-linux
++     aarch64-unknown-linux-gnu
++     $ build-aux/config.sub riscv-lnx
++     Invalid configuration 'riscv-lnx': OS 'lnx' not recognized
++
++You can look at the ‘config.sub’ file to see which types are recognized.
++If the file is absent, this package does not need the system type.
++
++   If ‘configure’ fails with the diagnostic “cannot guess build type”.
++‘config.sub’ did not recognize your system’s type.  In this case, first
++fetch the newest versions of these files from the GNU config package
++(https://savannah.gnu.org/projects/config).  If that fixes things,
++please report it to the maintainers of the package containing
++‘configure’.  Otherwise, you can try the configure option ‘--build=TYPE’
++where TYPE comes close to your system type; also, please report the
++problem to <config-patches@gnu.org>.
++
++   For more details about configuring system types, see the Autoconf
++documentation.
+ 
+ Sharing Defaults
+ ================
+ 
+-   If you want to set default values for `configure' scripts to share,
+-you can create a site shell script called `config.site' that gives
+-default values for variables like `CC', `cache_file', and `prefix'.
+-`configure' looks for `PREFIX/share/config.site' if it exists, then
+-`PREFIX/etc/config.site' if it exists.  Or, you can set the
+-`CONFIG_SITE' environment variable to the location of the site script.
+-A warning: not all `configure' scripts look for a site script.
++   If you want to set default values for ‘configure’ scripts to share,
++you can create a site shell script called ‘config.site’ that gives
++default values for variables like ‘CC’, ‘cache_file’, and ‘prefix’.
++‘configure’ looks for ‘PREFIX/share/config.site’ if it exists, then
++‘PREFIX/etc/config.site’ if it exists.  Or, you can set the
++‘CONFIG_SITE’ environment variable to the location of the site script.
++A warning: not all ‘configure’ scripts look for a site script.
+ 
+ Defining Variables
+ ==================
+ 
+    Variables not defined in a site shell script can be set in the
+-environment passed to `configure'.  However, some packages may run
++environment passed to ‘configure’.  However, some packages may run
+ configure again during the build, and the customized values of these
+ variables may be lost.  In order to avoid this problem, you should set
+-them in the `configure' command line, using `VAR=value'.  For example:
++them in the ‘configure’ command line, using ‘VAR=value’.  For example:
+ 
+      ./configure CC=/usr/local2/bin/gcc
+ 
+-causes the specified `gcc' to be used as the C compiler (unless it is
++causes the specified ‘gcc’ to be used as the C compiler (unless it is
+ overridden in the site shell script).
+ 
+-Unfortunately, this technique does not work for `CONFIG_SHELL' due to
+-an Autoconf limitation.  Until the limitation is lifted, you can use
+-this workaround:
++Unfortunately, this technique does not work for ‘CONFIG_SHELL’ due to an
++Autoconf limitation.  Until the limitation is lifted, you can use this
++workaround:
+ 
+      CONFIG_SHELL=/bin/bash ./configure CONFIG_SHELL=/bin/bash
+ 
+-`configure' Invocation
++‘configure’ Invocation
+ ======================
+ 
+-   `configure' recognizes the following options to control how it
++   ‘configure’ recognizes the following options to control how it
+ operates.
+ 
+-`--help'
+-`-h'
+-     Print a summary of all of the options to `configure', and exit.
++‘--help’
++‘-h’
++     Print a summary of all of the options to ‘configure’, and exit.
+ 
+-`--help=short'
+-`--help=recursive'
+-     Print a summary of the options unique to this package's
+-     `configure', and exit.  The `short' variant lists options used
+-     only in the top level, while the `recursive' variant lists options
+-     also present in any nested packages.
++‘--help=short’
++‘--help=recursive’
++     Print a summary of the options unique to this package’s
++     ‘configure’, and exit.  The ‘short’ variant lists options used only
++     in the top level, while the ‘recursive’ variant lists options also
++     present in any nested packages.
+ 
+-`--version'
+-`-V'
+-     Print the version of Autoconf used to generate the `configure'
++‘--version’
++‘-V’
++     Print the version of Autoconf used to generate the ‘configure’
+      script, and exit.
+ 
+-`--cache-file=FILE'
++‘--cache-file=FILE’
+      Enable the cache: use and save the results of the tests in FILE,
+-     traditionally `config.cache'.  FILE defaults to `/dev/null' to
++     traditionally ‘config.cache’.  FILE defaults to ‘/dev/null’ to
+      disable caching.
+ 
+-`--config-cache'
+-`-C'
+-     Alias for `--cache-file=config.cache'.
++‘--config-cache’
++‘-C’
++     Alias for ‘--cache-file=config.cache’.
+ 
+-`--quiet'
+-`--silent'
+-`-q'
+-     Do not print messages saying which checks are being made.  To
+-     suppress all normal output, redirect it to `/dev/null' (any error
+-     messages will still be shown).
++‘--srcdir=DIR’
++     Look for the package’s source code in directory DIR.  Usually
++     ‘configure’ can determine that directory automatically.
++
++‘--prefix=DIR’
++     Use DIR as the installation prefix.  See “Installation Names” for
++     more details, including other options available for fine-tuning the
++     installation locations.
+ 
+-`--srcdir=DIR'
+-     Look for the package's source code in directory DIR.  Usually
+-     `configure' can determine that directory automatically.
++‘--host=TYPE’
++     Build binaries for system TYPE.  See “Specifying a System Type”.
+ 
+-`--prefix=DIR'
+-     Use DIR as the installation prefix.  *note Installation Names::
+-     for more details, including other options available for fine-tuning
+-     the installation locations.
++‘--enable-FEATURE’
++‘--disable-FEATURE’
++     Enable or disable the optional FEATURE.  See “Optional Features”.
+ 
+-`--no-create'
+-`-n'
++‘--with-PACKAGE’
++‘--without-PACKAGE’
++     Use or omit PACKAGE when building.  See “Optional Features”.
++
++‘--quiet’
++‘--silent’
++‘-q’
++     Do not print messages saying which checks are being made.  To
++     suppress all normal output, redirect it to ‘/dev/null’ (any error
++     messages will still be shown).
++
++‘--no-create’
++‘-n’
+      Run the configure checks, but stop before creating any output
+      files.
+ 
+-`configure' also accepts some other, not widely useful, options.  Run
+-`configure --help' for more details.
++‘configure’ also recognizes several environment variables, and accepts
++some other, less widely useful, options.  Run ‘configure --help’ for
++more details.
++
++Copyright notice
++================
++
++   Copyright © 1994–1996, 1999–2002, 2004–2017, 2020–2025 Free Software
++Foundation, Inc.
++
++   Copying and distribution of this file, with or without modification,
++are permitted in any medium without royalty provided the copyright
++notice and this notice are preserved.  This file is offered as-is,
++without warranty of any kind.
+diff --git a/cheb/test.c b/cheb/test.c
+index 762f5b47..4e3829e1 100644
+--- a/cheb/test.c
++++ b/cheb/test.c
+@@ -26,42 +26,60 @@
+ #include <gsl/gsl_chebyshev.h>
+ 
+ double f_T0 (double x, void * p) {
++  (void)p;
++  (void)x;
++
+   p = 0;
+   return 1.0;
+ }
+ 
+ double f_T1 (double x, void * p) {
++  (void)p;
++
+   p = 0;
+   return x;
+ }
+ 
+ double f_T2 (double x, void * p) {
++  (void)p;
++
+   p = 0;
+   return 2*x*x - 1;
+ }
+ 
+ double f_sin (double x, void * p) {
++  (void)p;
++
+   p = 0;
+   return sin(x);
+ }
+ 
+ double f_DP (double x, void * p) {
++  (void)p;
++  (void)x;
++
+   p = 0;
+   return 2.0;
+ }
+ 
+ double f_P (double x, void * p) {
++  (void)p;
++
+   p = 0;
+   return 2.0*x + 3.0;
+ }
+ 
+ double f_IP1 (double x, void * p) {
++  (void)p;
++
+   p = 0;
+   return 30*(x+5.0)/10.0;  /* first order approximation to integral over -5,5 */
+ }
+ 
+ 
+ double f_IP2 (double x, void * p) {
++  (void)p;
++
+   p = 0;
+   return x*x + 3*x - 10.0;
+ }
+diff --git a/deriv/test.c b/deriv/test.c
+index 0157294f..6b0cab48 100644
+--- a/deriv/test.c
++++ b/deriv/test.c
+@@ -30,18 +30,24 @@
+ double
+ f1 (double x, void *params)
+ {
++  (void)params;
++
+   return exp (x);
+ }
+ 
+ double
+ df1 (double x, void *params)
+ {
++  (void)params;
++
+   return exp (x);
+ }
+ 
+ double
+ f2 (double x, void *params)
+ {
++  (void)params;
++
+   if (x >= 0.0)
+     {
+       return x * sqrt (x);
+@@ -55,6 +61,8 @@ f2 (double x, void *params)
+ double
+ df2 (double x, void *params)
+ {
++  (void)params;
++
+   if (x >= 0.0)
+     {
+       return 1.5 * sqrt (x);
+@@ -68,6 +76,8 @@ df2 (double x, void *params)
+ double
+ f3 (double x, void *params)
+ {
++  (void)params;
++
+   if (x != 0.0)
+     {
+       return sin (1 / x);
+@@ -81,6 +91,8 @@ f3 (double x, void *params)
+ double
+ df3 (double x, void *params)
+ {
++  (void)params;
++
+   if (x != 0.0)
+     {
+       return -cos (1 / x) / (x * x);
+@@ -94,36 +106,48 @@ df3 (double x, void *params)
+ double
+ f4 (double x, void *params)
+ {
++  (void)params;
++
+   return exp (-x * x);
+ }
+ 
+ double
+ df4 (double x, void *params)
+ {
++  (void)params;
++
+   return -2.0 * x * exp (-x * x);
+ }
+ 
+ double
+ f5 (double x, void *params)
+ {
++  (void)params;
++
+   return x * x;
+ }
+ 
+ double
+ df5 (double x, void *params)
+ {
++  (void)params;
++
+   return 2.0 * x;
+ }
+ 
+ double
+ f6 (double x, void *params)
+ {
++  (void)params;
++
+   return 1.0 / x;
+ }
+ 
+ double
+ df6 (double x, void *params)
+ {
++  (void)params;
++
+   return -1.0 / (x * x);
+ }
+ 
+diff --git a/diff/test.c b/diff/test.c
+index c3aad4ad..a5598af0 100644
+--- a/diff/test.c
++++ b/diff/test.c
+@@ -32,18 +32,24 @@
+ double
+ f1 (double x, void *params)
+ {
++  (void)params;
++
+   return exp (x);
+ }
+ 
+ double
+ df1 (double x, void *params)
+ {
++  (void)params;
++
+   return exp (x);
+ }
+ 
+ double
+ f2 (double x, void *params)
+ {
++  (void)params;
++
+   if (x >= 0.0)
+     {
+       return x * sqrt (x);
+@@ -57,6 +63,8 @@ f2 (double x, void *params)
+ double
+ df2 (double x, void *params)
+ {
++  (void)params;
++
+   if (x >= 0.0)
+     {
+       return 1.5 * sqrt (x);
+@@ -70,6 +78,8 @@ df2 (double x, void *params)
+ double
+ f3 (double x, void *params)
+ {
++  (void)params;
++
+   if (x != 0.0)
+     {
+       return sin (1 / x);
+@@ -83,6 +93,8 @@ f3 (double x, void *params)
+ double
+ df3 (double x, void *params)
+ {
++  (void)params;
++
+   if (x != 0.0)
+     {
+       return -cos (1 / x) / (x * x);
+@@ -96,36 +108,48 @@ df3 (double x, void *params)
+ double
+ f4 (double x, void *params)
+ {
++  (void)params;
++
+   return exp (-x * x);
+ }
+ 
+ double
+ df4 (double x, void *params)
+ {
++  (void)params;
++
+   return -2.0 * x * exp (-x * x);
+ }
+ 
+ double
+ f5 (double x, void *params)
+ {
++  (void)params;
++
+   return x * x;
+ }
+ 
+ double
+ df5 (double x, void *params)
+ {
++  (void)params;
++
+   return 2.0 * x;
+ }
+ 
+ double
+ f6 (double x, void *params)
+ {
++  (void)params;
++
+   return 1.0 / x;
+ }
+ 
+ double
+ df6 (double x, void *params)
+ {
++  (void)params;
++
+   return -1.0 / (x * x);
+ }
+ 
+diff --git a/doc/examples/nlfit.c b/doc/examples/nlfit.c
+index 0a3f7af1..3a5ce941 100644
+--- a/doc/examples/nlfit.c
++++ b/doc/examples/nlfit.c
+@@ -71,6 +71,8 @@ void
+ callback(const size_t iter, void *params,
+          const gsl_multifit_nlinear_workspace *w)
+ {
++  (void)params;
++
+   gsl_vector *f = gsl_multifit_nlinear_residual(w);
+   gsl_vector *x = gsl_multifit_nlinear_position(w);
+   double rcond;
+diff --git a/doc/examples/nlfit2.c b/doc/examples/nlfit2.c
+index f9ff2357..5af54060 100644
+--- a/doc/examples/nlfit2.c
++++ b/doc/examples/nlfit2.c
+@@ -8,6 +8,8 @@
+ int
+ func_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+ 
+@@ -20,6 +22,8 @@ func_f (const gsl_vector * x, void *params, gsl_vector * f)
+ int
+ func_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+ 
+   gsl_matrix_set(J, 0, 0, -200.0*x1);
+@@ -34,6 +38,9 @@ int
+ func_fvv (const gsl_vector * x, const gsl_vector * v,
+           void *params, gsl_vector * fvv)
+ {
++  (void)params;
++  (void)x;
++
+   double v1 = gsl_vector_get(v, 0);
+ 
+   gsl_vector_set(fvv, 0, -200.0 * v1 * v1);
+@@ -46,6 +53,9 @@ void
+ callback(const size_t iter, void *params,
+          const gsl_multifit_nlinear_workspace *w)
+ {
++  (void)iter;
++  (void)params;
++
+   gsl_vector * x = gsl_multifit_nlinear_position(w);
+ 
+   /* print out current location */
+diff --git a/doc/examples/nlfit3.c b/doc/examples/nlfit3.c
+index 9dbf2783..332d66a7 100644
+--- a/doc/examples/nlfit3.c
++++ b/doc/examples/nlfit3.c
+@@ -69,6 +69,9 @@ void
+ callback(const size_t iter, void *params,
+          const gsl_multifit_nlinear_workspace *w)
+ {
++  (void)iter;
++  (void)params;
++
+   gsl_vector * x = gsl_multifit_nlinear_position(w);
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+diff --git a/doc/examples/siman_tsp.c b/doc/examples/siman_tsp.c
+index 7bd26c6e..dc2d624c 100644
+--- a/doc/examples/siman_tsp.c
++++ b/doc/examples/siman_tsp.c
+@@ -134,6 +134,8 @@ double Mtsp(void *xp, void *yp)
+ /* take a step through the TSP space */
+ void Stsp(const gsl_rng * r, void *xp, double step_size)
+ {
++  (void)step_size;
++
+   int x1, x2, dummy;
+   int *route = (int *) xp;
+ 
+diff --git a/eigen/gen.c b/eigen/gen.c
+index d735ecf9..998c5f7d 100644
+--- a/eigen/gen.c
++++ b/eigen/gen.c
+@@ -184,6 +184,8 @@ void
+ gsl_eigen_gen_params (const int compute_s, const int compute_t,
+                       const int balance, gsl_eigen_gen_workspace *w)
+ {
++  (void)balance;
++
+   w->compute_s = compute_s;
+   w->compute_t = compute_t;
+ } /* gsl_eigen_gen_params() */
+diff --git a/eigen/jacobi.c b/eigen/jacobi.c
+index aee863f6..805914ab 100644
+--- a/eigen/jacobi.c
++++ b/eigen/jacobi.c
+@@ -143,7 +143,6 @@ gsl_eigen_jacobi (gsl_matrix * a,
+ {
+   size_t i, p, q;
+   const size_t M = a->size1, N = a->size2;
+-  double red, redsum = 0.0;
+ 
+   if (M != N)
+     {
+@@ -174,8 +173,7 @@ gsl_eigen_jacobi (gsl_matrix * a,
+             {
+               double c, s;
+ 
+-              red = symschur2 (a, p, q, &c, &s);
+-              redsum += red;
++              symschur2 (a, p, q, &c, &s);
+ 
+               /* Compute A <- J^T A J */
+               apply_jacobi_L (a, p, q, c, s);
+diff --git a/eigen/test.c b/eigen/test.c
+index b0bdcc7d..ebe8144a 100644
+--- a/eigen/test.c
++++ b/eigen/test.c
+@@ -272,6 +272,8 @@ test_eigen_symm_results (const gsl_matrix * A,
+                          const char * desc,
+                          const char * desc2)
+ {
++  (void)count;
++
+   const size_t N = A->size1;
+   size_t i, j;
+   double emax = 0;
+@@ -472,6 +474,8 @@ test_eigen_herm_results (const gsl_matrix_complex * A,
+                          const char * desc,
+                          const char * desc2)
+ {
++  (void)count;
++
+   const size_t N = A->size1;
+   size_t i, j;
+ 
+diff --git a/err/error.c b/err/error.c
+index 51556619..2e87eb35 100644
+--- a/err/error.c
++++ b/err/error.c
+@@ -68,10 +68,10 @@ static void
+ no_error_handler (const char *reason, const char *file, int line, int gsl_errno)
+ {
+   /* do nothing */
+-  reason = 0;
+-  file = 0;
+-  line = 0;
+-  gsl_errno = 0;
++  (void)reason;
++  (void)file;
++  (void)line;
++  (void)gsl_errno;
+   return;
+ }
+ 
+diff --git a/fft/bitreverse.c b/fft/bitreverse.c
+index f781dfe5..776f46c7 100644
+--- a/fft/bitreverse.c
++++ b/fft/bitreverse.c
+@@ -29,6 +29,8 @@ FUNCTION(fft_complex,bitreverse_order) (BASE data[],
+                                         const size_t n,
+                                         size_t logn)
+ {
++  (void)logn;
++
+   /* This is the Goldrader bit-reversal algorithm */
+ 
+   size_t i;
+@@ -69,6 +71,8 @@ FUNCTION(fft_real,bitreverse_order) (BASE data[],
+                                 const size_t n,
+                                 size_t logn)
+ {
++  (void)logn;
++
+   /* This is the Goldrader bit-reversal algorithm */
+ 
+   size_t i;
+diff --git a/fft/c_radix2.c b/fft/c_radix2.c
+index df17a3dc..45e96506 100644
+--- a/fft/c_radix2.c
++++ b/fft/c_radix2.c
+@@ -74,7 +74,7 @@ FUNCTION(gsl_fft_complex,radix2_transform) (TYPE(gsl_complex_packed_array) data,
+   size_t dual;
+   size_t bit; 
+   size_t logn = 0;
+-  int status;
++  int status; (void)status;
+ 
+   if (n == 1) /* identity operation */
+     {
+@@ -231,7 +231,7 @@ FUNCTION(gsl_fft_complex,radix2_dif_transform) (TYPE(gsl_complex_packed_array) d
+   size_t dual;
+   size_t bit; 
+   size_t logn = 0;
+-  int status;
++  int status; (void)status;
+ 
+   if (n == 1) /* identity operation */
+     {
+diff --git a/fft/hc_main.c b/fft/hc_main.c
+index b34aa2db..ebfffd27 100644
+--- a/fft/hc_main.c
++++ b/fft/hc_main.c
+@@ -79,7 +79,7 @@ FUNCTION(gsl_fft_halfcomplex,transform) (BASE data[], const size_t stride, const
+   size_t i;
+   size_t nf;
+   int state;
+-  int product_1;
++  int product_1; (void)product_1;
+   int tskip;
+   TYPE(gsl_complex) *twiddle1, *twiddle2, *twiddle3, *twiddle4;
+ 
+diff --git a/fft/hc_pass_2.c b/fft/hc_pass_2.c
+index a65e7e06..73d5ed0a 100644
+--- a/fft/hc_pass_2.c
++++ b/fft/hc_pass_2.c
+@@ -26,7 +26,7 @@ FUNCTION(fft_halfcomplex,pass_2) (const BASE in[],
+                                   const size_t n,
+                                   const TYPE(gsl_complex) twiddle[])
+ {
+-  size_t i, j, k, k1, jump;
++  size_t i, j, k, k1, jump; (void)i; (void)j; (void)jump;
+   size_t factor, q, m, product_1;
+   i = 0;
+   j = 0;
+diff --git a/fft/hc_pass_3.c b/fft/hc_pass_3.c
+index 54f238db..a43b222d 100644
+--- a/fft/hc_pass_3.c
++++ b/fft/hc_pass_3.c
+@@ -27,7 +27,7 @@ FUNCTION(fft_halfcomplex,pass_3) (const BASE in[],
+                                   const TYPE(gsl_complex) twiddle1[],
+                                   const TYPE(gsl_complex) twiddle2[])
+ {
+-  size_t i, j, k, k1, jump;
++  size_t i, j, k, k1, jump; (void)i; (void)j; (void)jump;
+   size_t factor, q, m, product_1;
+ 
+   ATOMIC tau = sqrt (3.0) / 2.0;
+diff --git a/fft/hc_pass_4.c b/fft/hc_pass_4.c
+index 5e0da6c6..161db8f4 100644
+--- a/fft/hc_pass_4.c
++++ b/fft/hc_pass_4.c
+@@ -28,7 +28,7 @@ FUNCTION(fft_halfcomplex,pass_4) (const BASE in[],
+                                   const TYPE(gsl_complex) twiddle2[],
+                                   const TYPE(gsl_complex) twiddle3[])
+ {
+-  size_t i, j, k, k1, jump;
++  size_t i, j, k, k1, jump; (void)i; (void)j; (void)jump;
+   size_t factor, q, m, product_1;
+ 
+   i = 0;
+diff --git a/fft/hc_pass_5.c b/fft/hc_pass_5.c
+index e08eb391..6f4b9169 100644
+--- a/fft/hc_pass_5.c
++++ b/fft/hc_pass_5.c
+@@ -30,7 +30,7 @@ FUNCTION(fft_halfcomplex,pass_5) (const BASE in[],
+                                   const TYPE(gsl_complex) twiddle4[])
+ {
+ 
+-  size_t i, j, k, k1, jump;
++  size_t i, j, k, k1, jump; (void)j; (void)jump; (void)i;
+   size_t factor, q, m, product_1;
+ 
+   const ATOMIC sina = sin (2.0 * M_PI / 5.0);
+diff --git a/fft/hc_radix2.c b/fft/hc_radix2.c
+index 692fb546..b8a4684d 100644
+--- a/fft/hc_radix2.c
++++ b/fft/hc_radix2.c
+@@ -60,7 +60,7 @@ FUNCTION(gsl_fft_halfcomplex,radix2_transform) (BASE data[],
+   size_t p, p_1, q;
+   size_t i; 
+   size_t logn = 0;
+-  int status;
++  int status; (void)status;
+ 
+   if (n == 1) /* identity operation */
+     {
+diff --git a/fft/real_main.c b/fft/real_main.c
+index e2c2efc0..86423127 100644
+--- a/fft/real_main.c
++++ b/fft/real_main.c
+@@ -36,7 +36,7 @@ FUNCTION(gsl_fft_real,transform) (BASE data[], const size_t stride, const size_t
+ 
+   size_t i;
+ 
+-  size_t q, product = 1;
++  size_t q, product = 1; (void)q;
+   size_t tskip;
+   size_t product_1;
+ 
+diff --git a/fft/real_radix2.c b/fft/real_radix2.c
+index f03fc833..dbc0db54 100644
+--- a/fft/real_radix2.c
++++ b/fft/real_radix2.c
+@@ -24,7 +24,7 @@ FUNCTION(gsl_fft_real,radix2_transform) (BASE data[], const size_t stride,  cons
+   size_t p, p_1, q;
+   size_t i; 
+   size_t logn = 0;
+-  int status;
++  int status; (void)status;
+ 
+   if (n == 1) /* identity operation */
+     {
+diff --git a/filter/ringbuf.c b/filter/ringbuf.c
+index 241dae64..b0cdf38e 100644
+--- a/filter/ringbuf.c
++++ b/filter/ringbuf.c
+@@ -33,14 +33,14 @@ typedef struct
+ } ringbuf;
+ 
+ static size_t ringbuf_size(const size_t n);
+-static int ringbuf_empty(ringbuf * d);
++static inline int ringbuf_empty(ringbuf * d);
+ static int ringbuf_is_empty(const ringbuf * d);
+-static int ringbuf_is_full(const ringbuf * d);
++static inline int ringbuf_is_full(const ringbuf * d);
+ static int ringbuf_insert(const ringbuf_type_t x, ringbuf * d);
+ static int ringbuf_pop_back(ringbuf * b);
+-static ringbuf_type_t ringbuf_peek(const int i, const ringbuf * b);
+-static ringbuf_type_t ringbuf_peek_front(const ringbuf * d);
+-static ringbuf_type_t ringbuf_peek_back(const ringbuf * d);
++static inline ringbuf_type_t ringbuf_peek(const int i, const ringbuf * b);
++static inline ringbuf_type_t ringbuf_peek_front(const ringbuf * d);
++static inline ringbuf_type_t ringbuf_peek_back(const ringbuf * d);
+ static size_t ringbuf_copy(double * dest, const ringbuf * b);
+ 
+ static size_t
+@@ -65,7 +65,7 @@ ringbuf_init(const size_t n, ringbuf * b)
+ }
+ 
+ /* empty the buffer */
+-static int
++static inline int
+ ringbuf_empty(ringbuf * b)
+ {
+   b->head = -1;
+@@ -81,7 +81,7 @@ ringbuf_is_empty(const ringbuf * b)
+ }
+ 
+ /* check if buffer is full */
+-static int
++static inline int
+ ringbuf_is_full(const ringbuf * b)
+ {
+   return ((b->head == 0 && b->tail == b->size - 1) ||
+@@ -151,7 +151,7 @@ ringbuf_pop_back(ringbuf * b)
+     }
+ }
+ 
+-static ringbuf_type_t
++static inline ringbuf_type_t
+ ringbuf_peek(const int i, const ringbuf * b)
+ {
+   if (ringbuf_is_empty(b))
+@@ -164,7 +164,7 @@ ringbuf_peek(const int i, const ringbuf * b)
+     }
+ }
+ 
+-static ringbuf_type_t
++static inline ringbuf_type_t
+ ringbuf_peek_front(const ringbuf * b)
+ {
+   if (ringbuf_is_empty(b))
+@@ -177,7 +177,7 @@ ringbuf_peek_front(const ringbuf * b)
+     }
+ }
+ 
+-static ringbuf_type_t
++static inline ringbuf_type_t
+ ringbuf_peek_back(const ringbuf * b)
+ {
+   if (ringbuf_is_empty(b) || b->tail < 0)
+diff --git a/ieee-utils/read.c b/ieee-utils/read.c
+index 480720b3..59e21dde 100644
+--- a/ieee-utils/read.c
++++ b/ieee-utils/read.c
+@@ -39,7 +39,6 @@ gsl_ieee_read_mode_string (const char * description,
+ 
+   int precision_count = 0 ;
+   int rounding_count = 0 ;
+-  int exception_count = 0 ;
+ 
+   start = (char *) malloc(strlen(description) + 1) ;
+ 
+@@ -118,7 +117,6 @@ gsl_ieee_read_mode_string (const char * description,
+     if (new_exception) 
+       {
+         *exception_mask |= new_exception ;
+-        exception_count ++ ;
+       }
+ 
+     p = end ; 
+diff --git a/install-sh b/install-sh
+index 377bb868..1d8d9669 100755
+--- a/install-sh
++++ b/install-sh
+@@ -1,7 +1,7 @@
+ #!/bin/sh
+ # install - install a program, script, or datafile
+ 
+-scriptversion=2011-11-20.07; # UTC
++scriptversion=2025-06-18.21; # UTC
+ 
+ # This originates from X11R5 (mit/util/scripts/install.sh), which was
+ # later released in X11R6 (xc/config/util/install.sh) with the
+@@ -41,19 +41,15 @@ scriptversion=2011-11-20.07; # UTC
+ # This script is compatible with the BSD install script, but was written
+ # from scratch.
+ 
++tab='	'
+ nl='
+ '
+-IFS=" ""	$nl"
++IFS=" $tab$nl"
+ 
+-# set DOITPROG to echo to test this script
++# Set DOITPROG to "echo" to test this script.
+ 
+-# Don't use :- since 4.3BSD and earlier shells don't like it.
+ doit=${DOITPROG-}
+-if test -z "$doit"; then
+-  doit_exec=exec
+-else
+-  doit_exec=$doit
+-fi
++doit_exec=${doit:-exec}
+ 
+ # Put in absolute file names if you don't have them in your path;
+ # or use environment vars.
+@@ -68,22 +64,16 @@ mvprog=${MVPROG-mv}
+ rmprog=${RMPROG-rm}
+ stripprog=${STRIPPROG-strip}
+ 
+-posix_glob='?'
+-initialize_posix_glob='
+-  test "$posix_glob" != "?" || {
+-    if (set -f) 2>/dev/null; then
+-      posix_glob=
+-    else
+-      posix_glob=:
+-    fi
+-  }
+-'
+-
+ posix_mkdir=
+ 
+ # Desired mode of installed file.
+ mode=0755
+ 
++# Create dirs (including intermediate dirs) using mode 755.
++# This is like GNU 'install' as of coreutils 8.32 (2020).
++mkdir_umask=22
++
++backupsuffix=
+ chgrpcmd=
+ chmodcmd=$chmodprog
+ chowncmd=
+@@ -97,7 +87,7 @@ dir_arg=
+ dst_arg=
+ 
+ copy_on_change=false
+-no_target_directory=
++is_target_a_directory=possibly
+ 
+ usage="\
+ Usage: $0 [OPTION]... [-T] SRCFILE DSTFILE
+@@ -114,19 +104,29 @@ Options:
+      --version  display version info and exit.
+ 
+   -c            (ignored)
+-  -C            install only if different (preserve the last data modification time)
++  -C            install only if different (preserve data modification time)
+   -d            create directories instead of installing files.
+   -g GROUP      $chgrpprog installed files to GROUP.
+   -m MODE       $chmodprog installed files to MODE.
+   -o USER       $chownprog installed files to USER.
++  -p            pass -p to $cpprog.
+   -s            $stripprog installed files.
++  -S SUFFIX     attempt to back up existing files, with suffix SUFFIX.
+   -t DIRECTORY  install into DIRECTORY.
+   -T            report an error if DSTFILE is a directory.
+ 
+ Environment variables override the default commands:
+   CHGRPPROG CHMODPROG CHOWNPROG CMPPROG CPPROG MKDIRPROG MVPROG
+   RMPROG STRIPPROG
+-"
++
++By default, rm is invoked with -f; when overridden with RMPROG,
++it's up to you to specify -f if you want it.
++
++If -S is not specified, no backups are attempted.
++
++Report bugs to <bug-automake@gnu.org>.
++GNU Automake home page: <https://www.gnu.org/software/automake/>.
++General help using GNU software: <https://www.gnu.org/gethelp/>."
+ 
+ while test $# -ne 0; do
+   case $1 in
+@@ -137,46 +137,62 @@ while test $# -ne 0; do
+     -d) dir_arg=true;;
+ 
+     -g) chgrpcmd="$chgrpprog $2"
+-	shift;;
++        shift;;
+ 
+     --help) echo "$usage"; exit $?;;
+ 
+     -m) mode=$2
+-	case $mode in
+-	  *' '* | *'	'* | *'
+-'*	  | *'*'* | *'?'* | *'['*)
+-	    echo "$0: invalid mode: $mode" >&2
+-	    exit 1;;
+-	esac
+-	shift;;
++        case $mode in
++          *' '* | *"$tab"* | *"$nl"* | *'*'* | *'?'* | *'['*)
++            echo "$0: invalid mode: $mode" >&2
++            exit 1;;
++        esac
++        shift;;
+ 
+     -o) chowncmd="$chownprog $2"
+-	shift;;
++        shift;;
++
++    -p) cpprog="$cpprog -p";;
+ 
+     -s) stripcmd=$stripprog;;
+ 
+-    -t) dst_arg=$2
+-	# Protect names problematic for 'test' and other utilities.
+-	case $dst_arg in
+-	  -* | [=\(\)!]) dst_arg=./$dst_arg;;
+-	esac
+-	shift;;
++    -S) backupsuffix="$2"
++        shift;;
+ 
+-    -T) no_target_directory=true;;
++    -t)
++        is_target_a_directory=always
++        dst_arg=$2
++        # Protect names problematic for 'test' and other utilities.
++        case $dst_arg in
++          -* | [=\(\)!]) dst_arg=./$dst_arg;;
++        esac
++        shift;;
+ 
+-    --version) echo "$0 $scriptversion"; exit $?;;
++    -T) is_target_a_directory=never;;
+ 
+-    --)	shift
+-	break;;
++    --version) echo "$0 (GNU Automake) $scriptversion"; exit $?;;
+ 
+-    -*)	echo "$0: invalid option: $1" >&2
+-	exit 1;;
++    --) shift
++        break;;
++
++    -*) echo "$0: invalid option: $1" >&2
++        exit 1;;
+ 
+     *)  break;;
+   esac
+   shift
+ done
+ 
++# We allow the use of options -d and -T together, by making -d
++# take the precedence; this is for compatibility with GNU install.
++
++if test -n "$dir_arg"; then
++  if test -n "$dst_arg"; then
++    echo "$0: target directory not allowed when installing a directory." >&2
++    exit 1
++  fi
++fi
++
+ if test $# -ne 0 && test -z "$dir_arg$dst_arg"; then
+   # When -d is used, all remaining arguments are directories to create.
+   # When -t is used, the destination is already specified.
+@@ -207,6 +223,15 @@ if test $# -eq 0; then
+   exit 0
+ fi
+ 
++if test -z "$dir_arg"; then
++  if test $# -gt 1 || test "$is_target_a_directory" = always; then
++    if test ! -d "$dst_arg"; then
++      echo "$0: $dst_arg: Is not a directory." >&2
++      exit 1
++    fi
++  fi
++fi
++
+ if test -z "$dir_arg"; then
+   do_exit='(exit $ret); exit $ret'
+   trap "ret=129; $do_exit" 1
+@@ -223,16 +248,16 @@ if test -z "$dir_arg"; then
+ 
+     *[0-7])
+       if test -z "$stripcmd"; then
+-	u_plus_rw=
++        u_plus_rw=
+       else
+-	u_plus_rw='% 200'
++        u_plus_rw='% 200'
+       fi
+       cp_umask=`expr '(' 777 - $mode % 1000 ')' $u_plus_rw`;;
+     *)
+       if test -z "$stripcmd"; then
+-	u_plus_rw=
++        u_plus_rw=
+       else
+-	u_plus_rw=,u+rw
++        u_plus_rw=,u+rw
+       fi
+       cp_umask=$mode$u_plus_rw;;
+   esac
+@@ -250,6 +275,10 @@ do
+     dstdir=$dst
+     test -d "$dstdir"
+     dstdir_status=$?
++    # Don't chown directories that already exist.
++    if test $dstdir_status = 0; then
++      chowncmd=""
++    fi
+   else
+ 
+     # Waiting for this to be detected by the "$cpprog $src $dsttmp" command
+@@ -266,178 +295,148 @@ do
+     fi
+     dst=$dst_arg
+ 
+-    # If destination is a directory, append the input filename; won't work
+-    # if double slashes aren't ignored.
++    # If destination is a directory, append the input filename.
+     if test -d "$dst"; then
+-      if test -n "$no_target_directory"; then
+-	echo "$0: $dst_arg: Is a directory" >&2
+-	exit 1
++      if test "$is_target_a_directory" = never; then
++        echo "$0: $dst_arg: Is a directory" >&2
++        exit 1
+       fi
+       dstdir=$dst
+-      dst=$dstdir/`basename "$src"`
++      dstbase=`basename "$src"`
++      case $dst in
++	*/) dst=$dst$dstbase;;
++	*)  dst=$dst/$dstbase;;
++      esac
+       dstdir_status=0
+     else
+-      # Prefer dirname, but fall back on a substitute if dirname fails.
+-      dstdir=`
+-	(dirname "$dst") 2>/dev/null ||
+-	expr X"$dst" : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
+-	     X"$dst" : 'X\(//\)[^/]' \| \
+-	     X"$dst" : 'X\(//\)$' \| \
+-	     X"$dst" : 'X\(/\)' \| . 2>/dev/null ||
+-	echo X"$dst" |
+-	    sed '/^X\(.*[^/]\)\/\/*[^/][^/]*\/*$/{
+-		   s//\1/
+-		   q
+-		 }
+-		 /^X\(\/\/\)[^/].*/{
+-		   s//\1/
+-		   q
+-		 }
+-		 /^X\(\/\/\)$/{
+-		   s//\1/
+-		   q
+-		 }
+-		 /^X\(\/\).*/{
+-		   s//\1/
+-		   q
+-		 }
+-		 s/.*/./; q'
+-      `
+-
++      dstdir=`dirname "$dst"`
+       test -d "$dstdir"
+       dstdir_status=$?
+     fi
+   fi
+ 
++  case $dstdir in
++    */) dstdirslash=$dstdir;;
++    *)  dstdirslash=$dstdir/;;
++  esac
++
+   obsolete_mkdir_used=false
+ 
+   if test $dstdir_status != 0; then
+     case $posix_mkdir in
+       '')
+-	# Create intermediate dirs using mode 755 as modified by the umask.
+-	# This is like FreeBSD 'install' as of 1997-10-28.
+-	umask=`umask`
+-	case $stripcmd.$umask in
+-	  # Optimize common cases.
+-	  *[2367][2367]) mkdir_umask=$umask;;
+-	  .*0[02][02] | .[02][02] | .[02]) mkdir_umask=22;;
+-
+-	  *[0-7])
+-	    mkdir_umask=`expr $umask + 22 \
+-	      - $umask % 100 % 40 + $umask % 20 \
+-	      - $umask % 10 % 4 + $umask % 2
+-	    `;;
+-	  *) mkdir_umask=$umask,go-w;;
+-	esac
+-
+-	# With -d, create the new directory with the user-specified mode.
+-	# Otherwise, rely on $mkdir_umask.
+-	if test -n "$dir_arg"; then
+-	  mkdir_mode=-m$mode
++        # With -d, create the new directory with the user-specified mode.
++        # Otherwise, rely on $mkdir_umask.
++        if test -n "$dir_arg"; then
++          mkdir_mode=-m$mode
++        else
++          mkdir_mode=
++        fi
++
++        posix_mkdir=false
++	# The $RANDOM variable is not portable (e.g., dash).  Use it
++	# here however when possible just to lower collision chance.
++	tmpdir=${TMPDIR-/tmp}/ins$RANDOM-$$
++
++	trap '
++	  ret=$?
++	  rmdir "$tmpdir/a/b" "$tmpdir/a" "$tmpdir" 2>/dev/null
++	  exit $ret
++	' 0
++
++	# Because "mkdir -p" follows existing symlinks and we likely work
++	# directly in world-writable /tmp, make sure that the '$tmpdir'
++	# directory is successfully created first before we actually test
++	# 'mkdir -p'.
++	if (umask $mkdir_umask &&
++	    $mkdirprog $mkdir_mode "$tmpdir" &&
++	    exec $mkdirprog $mkdir_mode -p -- "$tmpdir/a/b") >/dev/null 2>&1
++	then
++	  if test -z "$dir_arg" || {
++	       # Check for POSIX incompatibility with -m.
++	       # HP-UX 11.23 and IRIX 6.5 mkdir -m -p sets group- or
++	       # other-writable bit of parent directory when it shouldn't.
++	       # FreeBSD 6.1 mkdir -m -p sets mode of existing directory.
++	       test_tmpdir="$tmpdir/a"
++	       ls_ld_tmpdir=`ls -ld "$test_tmpdir"`
++	       case $ls_ld_tmpdir in
++		 d????-?r-*) different_mode=700;;
++		 d????-?--*) different_mode=755;;
++		 *) false;;
++	       esac &&
++	       $mkdirprog -m$different_mode -p -- "$test_tmpdir" && {
++		 ls_ld_tmpdir_1=`ls -ld "$test_tmpdir"`
++		 test "$ls_ld_tmpdir" = "$ls_ld_tmpdir_1"
++	       }
++	     }
++	  then posix_mkdir=:
++	  fi
++	  rmdir "$tmpdir/a/b" "$tmpdir/a" "$tmpdir"
+ 	else
+-	  mkdir_mode=
++	  # Remove any dirs left behind by ancient mkdir implementations.
++	  rmdir ./$mkdir_mode ./-p ./-- "$tmpdir" 2>/dev/null
+ 	fi
+-
+-	posix_mkdir=false
+-	case $umask in
+-	  *[123567][0-7][0-7])
+-	    # POSIX mkdir -p sets u+wx bits regardless of umask, which
+-	    # is incompatible with FreeBSD 'install' when (umask & 300) != 0.
+-	    ;;
+-	  *)
+-	    tmpdir=${TMPDIR-/tmp}/ins$RANDOM-$$
+-	    trap 'ret=$?; rmdir "$tmpdir/d" "$tmpdir" 2>/dev/null; exit $ret' 0
+-
+-	    if (umask $mkdir_umask &&
+-		exec $mkdirprog $mkdir_mode -p -- "$tmpdir/d") >/dev/null 2>&1
+-	    then
+-	      if test -z "$dir_arg" || {
+-		   # Check for POSIX incompatibilities with -m.
+-		   # HP-UX 11.23 and IRIX 6.5 mkdir -m -p sets group- or
+-		   # other-writable bit of parent directory when it shouldn't.
+-		   # FreeBSD 6.1 mkdir -m -p sets mode of existing directory.
+-		   ls_ld_tmpdir=`ls -ld "$tmpdir"`
+-		   case $ls_ld_tmpdir in
+-		     d????-?r-*) different_mode=700;;
+-		     d????-?--*) different_mode=755;;
+-		     *) false;;
+-		   esac &&
+-		   $mkdirprog -m$different_mode -p -- "$tmpdir" && {
+-		     ls_ld_tmpdir_1=`ls -ld "$tmpdir"`
+-		     test "$ls_ld_tmpdir" = "$ls_ld_tmpdir_1"
+-		   }
+-		 }
+-	      then posix_mkdir=:
+-	      fi
+-	      rmdir "$tmpdir/d" "$tmpdir"
+-	    else
+-	      # Remove any dirs left behind by ancient mkdir implementations.
+-	      rmdir ./$mkdir_mode ./-p ./-- 2>/dev/null
+-	    fi
+-	    trap '' 0;;
+-	esac;;
++	trap '' 0;;
+     esac
+ 
+     if
+       $posix_mkdir && (
+-	umask $mkdir_umask &&
+-	$doit_exec $mkdirprog $mkdir_mode -p -- "$dstdir"
++        umask $mkdir_umask &&
++        $doit_exec $mkdirprog $mkdir_mode -p -- "$dstdir"
+       )
+     then :
+     else
+ 
+-      # The umask is ridiculous, or mkdir does not conform to POSIX,
++      # mkdir does not conform to POSIX,
+       # or it failed possibly due to a race condition.  Create the
+       # directory the slow way, step by step, checking for races as we go.
+ 
+       case $dstdir in
+-	/*) prefix='/';;
+-	[-=\(\)!]*) prefix='./';;
+-	*)  prefix='';;
++        /*) prefix='/';;
++        [-=\(\)!]*) prefix='./';;
++        *)  prefix='';;
+       esac
+ 
+-      eval "$initialize_posix_glob"
+-
+       oIFS=$IFS
+       IFS=/
+-      $posix_glob set -f
++      set -f
+       set fnord $dstdir
+       shift
+-      $posix_glob set +f
++      set +f
+       IFS=$oIFS
+ 
+       prefixes=
+ 
+       for d
+       do
+-	test X"$d" = X && continue
+-
+-	prefix=$prefix$d
+-	if test -d "$prefix"; then
+-	  prefixes=
+-	else
+-	  if $posix_mkdir; then
+-	    (umask=$mkdir_umask &&
+-	     $doit_exec $mkdirprog $mkdir_mode -p -- "$dstdir") && break
+-	    # Don't fail if two instances are running concurrently.
+-	    test -d "$prefix" || exit 1
+-	  else
+-	    case $prefix in
+-	      *\'*) qprefix=`echo "$prefix" | sed "s/'/'\\\\\\\\''/g"`;;
+-	      *) qprefix=$prefix;;
+-	    esac
+-	    prefixes="$prefixes '$qprefix'"
+-	  fi
+-	fi
+-	prefix=$prefix/
++        test X"$d" = X && continue
++
++        prefix=$prefix$d
++        if test -d "$prefix"; then
++          prefixes=
++        else
++          if $posix_mkdir; then
++            (umask $mkdir_umask &&
++             $doit_exec $mkdirprog $mkdir_mode -p -- "$dstdir") && break
++            # Don't fail if two instances are running concurrently.
++            test -d "$prefix" || exit 1
++          else
++            case $prefix in
++              *\'*) qprefix=`echo "$prefix" | sed "s/'/'\\\\\\\\''/g"`;;
++              *) qprefix=$prefix;;
++            esac
++            prefixes="$prefixes '$qprefix'"
++          fi
++        fi
++        prefix=$prefix/
+       done
+ 
+       if test -n "$prefixes"; then
+-	# Don't fail if two instances are running concurrently.
+-	(umask $mkdir_umask &&
+-	 eval "\$doit_exec \$mkdirprog $prefixes") ||
+-	  test -d "$dstdir" || exit 1
+-	obsolete_mkdir_used=true
++        # Don't fail if two instances are running concurrently.
++        (umask $mkdir_umask &&
++         eval "\$doit_exec \$mkdirprog $prefixes") ||
++          test -d "$dstdir" || exit 1
++        obsolete_mkdir_used=true
+       fi
+     fi
+   fi
+@@ -450,14 +449,25 @@ do
+   else
+ 
+     # Make a couple of temp file names in the proper directory.
+-    dsttmp=$dstdir/_inst.$$_
+-    rmtmp=$dstdir/_rm.$$_
++    dsttmp=${dstdirslash}_inst.$$_
++    rmtmp=${dstdirslash}_rm.$$_
+ 
+     # Trap to clean up those temp files at exit.
+     trap 'ret=$?; rm -f "$dsttmp" "$rmtmp" && exit $ret' 0
+ 
+     # Copy the file name to the temp name.
+-    (umask $cp_umask && $doit_exec $cpprog "$src" "$dsttmp") &&
++    (umask $cp_umask &&
++     { test -z "$stripcmd" || {
++	 # Create $dsttmp read-write so that cp doesn't create it read-only,
++	 # which would cause strip to fail.
++	 if test -z "$doit"; then
++	   : >"$dsttmp" # No need to fork-exec 'touch'.
++	 else
++	   $doit touch "$dsttmp"
++	 fi
++       }
++     } &&
++     $doit_exec $cpprog "$src" "$dsttmp") &&
+ 
+     # and set any options; do chmod last to preserve setuid bits.
+     #
+@@ -472,20 +482,24 @@ do
+ 
+     # If -C, don't bother to copy if it wouldn't change the file.
+     if $copy_on_change &&
+-       old=`LC_ALL=C ls -dlL "$dst"	2>/dev/null` &&
+-       new=`LC_ALL=C ls -dlL "$dsttmp"	2>/dev/null` &&
+-
+-       eval "$initialize_posix_glob" &&
+-       $posix_glob set -f &&
++       old=`LC_ALL=C ls -dlL "$dst"     2>/dev/null` &&
++       new=`LC_ALL=C ls -dlL "$dsttmp"  2>/dev/null` &&
++       set -f &&
+        set X $old && old=:$2:$4:$5:$6 &&
+        set X $new && new=:$2:$4:$5:$6 &&
+-       $posix_glob set +f &&
+-
++       set +f &&
+        test "$old" = "$new" &&
+        $cmpprog "$dst" "$dsttmp" >/dev/null 2>&1
+     then
+       rm -f "$dsttmp"
+     else
++      # If $backupsuffix is set, and the file being installed
++      # already exists, attempt a backup.  Don't worry if it fails,
++      # e.g., if mv doesn't support -f.
++      if test -n "$backupsuffix" && test -f "$dst"; then
++        $doit $mvcmd -f "$dst" "$dst$backupsuffix" 2>/dev/null
++      fi
++
+       # Rename the file to the real destination.
+       $doit $mvcmd -f "$dsttmp" "$dst" 2>/dev/null ||
+ 
+@@ -493,24 +507,24 @@ do
+       # to itself, or perhaps because mv is so ancient that it does not
+       # support -f.
+       {
+-	# Now remove or move aside any old file at destination location.
+-	# We try this two ways since rm can't unlink itself on some
+-	# systems and the destination file might be busy for other
+-	# reasons.  In this case, the final cleanup might fail but the new
+-	# file should still install successfully.
+-	{
+-	  test ! -f "$dst" ||
+-	  $doit $rmcmd -f "$dst" 2>/dev/null ||
+-	  { $doit $mvcmd -f "$dst" "$rmtmp" 2>/dev/null &&
+-	    { $doit $rmcmd -f "$rmtmp" 2>/dev/null; :; }
+-	  } ||
+-	  { echo "$0: cannot unlink or rename $dst" >&2
+-	    (exit 1); exit 1
+-	  }
+-	} &&
+-
+-	# Now rename the file to the real destination.
+-	$doit $mvcmd "$dsttmp" "$dst"
++        # Now remove or move aside any old file at destination location.
++        # We try this two ways since rm can't unlink itself on some
++        # systems and the destination file might be busy for other
++        # reasons.  In this case, the final cleanup might fail but the new
++        # file should still install successfully.
++        {
++          test ! -f "$dst" ||
++          $doit $rmcmd "$dst" 2>/dev/null ||
++          { $doit $mvcmd -f "$dst" "$rmtmp" 2>/dev/null &&
++            { $doit $rmcmd "$rmtmp" 2>/dev/null; :; }
++          } ||
++          { echo "$0: cannot unlink or rename $dst" >&2
++            (exit 1); exit 1
++          }
++        } &&
++
++        # Now rename the file to the real destination.
++        $doit $mvcmd "$dsttmp" "$dst"
+       }
+     fi || exit 1
+ 
+@@ -519,9 +533,9 @@ do
+ done
+ 
+ # Local variables:
+-# eval: (add-hook 'write-file-hooks 'time-stamp)
++# eval: (add-hook 'before-save-hook 'time-stamp nil t)
+ # time-stamp-start: "scriptversion="
+-# time-stamp-format: "%:y-%02m-%02d.%02H"
+-# time-stamp-time-zone: "UTC"
++# time-stamp-format: "%Y-%02m-%02d.%02H"
++# time-stamp-time-zone: "UTC0"
+ # time-stamp-end: "; # UTC"
+ # End:
+diff --git a/integration/cquad.c b/integration/cquad.c
+index 831040c4..7d55e8e1 100644
+--- a/integration/cquad.c
++++ b/integration/cquad.c
+@@ -203,7 +203,7 @@ gsl_integration_cquad (const gsl_function * f, double a, double b,
+ 
+   /* Actual variables (as opposed to constants above). */
+   double m, h, temp;
+-  double igral, err, igral_final, err_final, err_excess;
++  double igral, err, igral_final, err_final, err_excess; (void)err_excess;
+   int nivals, neval = 0;
+   int i, j, d, split, t;
+   int nnans, nans[32];
+@@ -273,7 +273,7 @@ gsl_integration_cquad (const gsl_function * f, double a, double b,
+ 
+ 
+   /* Initialize the heaps. */
+-  for (i = 0; i < ws->size; i++)
++  for (i = 0; (size_t)i < ws->size; i++)
+     ws->heap[i] = i;
+ 
+ 
+@@ -635,7 +635,7 @@ gsl_integration_cquad (const gsl_function * f, double a, double b,
+ 
+       /* If the heap is about to overflow, remove the last two
+          intervals. */
+-      while (nivals > ws->size - 2)
++      while ((size_t)nivals > ws->size - 2)
+ 	{
+ 	  iv = &(ws->ivals[ws->heap[nivals - 1]]);
+ 
+diff --git a/integration/tests.c b/integration/tests.c
+index 3cbb30b8..f1b5164e 100644
+--- a/integration/tests.c
++++ b/integration/tests.c
+@@ -137,6 +137,8 @@ double f17 (double x, void * params) {
+ /* integ(f454,x,0,inf) = 61 log(2) + (77/4) log(7) - 27 */
+ 
+ double f454 (double x, void * params) {
++  (void)params;
++
+   double x2 = x * x;
+   double x3 = x * x2;
+   params = 0 ;
+@@ -147,6 +149,8 @@ double f454 (double x, void * params) {
+ /* integ(f455,x,0,inf) = -log(10)/20 */
+ 
+ double f455 (double x, void * params) {
++  (void)params;
++
+   params = 0 ;
+   return log(x) / (1.0 + 100.0 * x * x) ;
+ }
+@@ -155,6 +159,8 @@ double f455 (double x, void * params) {
+ /* integ(f456*sin(10 pi x),x,0,1) = -(gamma + log(10pi) - Ci(10pi))/(10pi) */
+ 
+ double f456 (double x, void * params) {
++  (void)params;
++
+   params = 0 ;
+   if (x == 0.0)
+     {
+@@ -167,6 +173,8 @@ double f456 (double x, void * params) {
+ /* integ(f457*cos(pi x / 2),x,0,+inf) = 1 */
+ 
+ double f457 (double x, void * params) {
++  (void)params;
++
+   params = 0 ;
+   if (x == 0.0)
+     {
+@@ -180,6 +188,8 @@ double f457 (double x, void * params) {
+                                = -0.1892752 */
+ 
+ double f458 (double x, void * params) {
++  (void)params;
++
+   params = 0 ;
+ 
+   if (x == 0.0) 
+@@ -199,6 +209,8 @@ double f458 (double x, void * params) {
+ /* integ(f459/(x-0),x,-1,5) = log(125/631)/18 */
+ 
+ double f459 (double x, void * params) {
++  (void)params;
++
+   params = 0 ;
+   return 1.0 / (5.0 * x * x * x + 6.0) ;
+ }
+@@ -207,6 +219,8 @@ double f459 (double x, void * params) {
+ /* integ(myfn1,x,-inf,inf) = sqrt(pi) exp(-1/4) */
+ 
+ double myfn1 (double x, void * params) {
++  (void)params;
++
+   params = 0;
+   return exp(-x - x*x) ;
+ }
+@@ -240,6 +254,8 @@ double integ_f_monomial(double a, double b, struct monomial_params * p)
+ /* f(x) = sin(x) */
+ double f_sin(double x, void * params)
+ {
++  (void)params;
++
+     return sin(x);
+ }
+ 
+@@ -252,110 +268,160 @@ double integ_f_sin(double a, double b)
+ 
+ /* The test functions. */
+ double cqf1 ( double x , void *params ) {
++  (void)params;
++
+   return exp(x);
+ }
+     
+ double cqf2 ( double x , void *params ) {
++  (void)params;
++
+   return x >= 0.3;
+ }
+ 
+ double cqf3 ( double x , void *params ) {
++  (void)params;
++
+   return sqrt(x);
+ }
+ 
+ 
+ double cqf4 ( double x , void *params ) {
++  (void)params;
++
+   return (23.0/25) * cosh(x) - cos(x);
+ }
+ 
+ double cqf5 ( double x , void *params ) {
++  (void)params;
++
+   double x2 = x*x;
+   return 1.0 / ( x2 * (x2 + 1) + 0.9);
+ }
+ 
+ double cqf6 ( double x , void *params ) {
++  (void)params;
++
+   return x * sqrt( x );
+ }
+ 
+ double cqf7 ( double x , void *params ) {
++  (void)params;
++
+   return 1.0 / sqrt(x);
+ }
+ 
+ double cqf8 ( double x , void *params ) {
++  (void)params;
++
+   double x2 = x*x;
+   return 1.0 / (1 + x2*x2);
+ }
+ 
+ double cqf9 ( double x , void *params ) {
++  (void)params;
++
+   return 2.0 / (2 + sin(10*M_PI*x));
+ }
+ 
+ double cqf10 ( double x , void *params ) {
++  (void)params;
++
+   return 1.0 / (1 + x);
+ }
+ 
+ double cqf11 ( double x , void *params ) {
++  (void)params;
++
+   return 1.0 / (1 + exp(x));
+ }
+ 
+ double cqf12 ( double x , void *params ) {
++  (void)params;
++
+   return x / (exp(x) - 1.0);
+ }
+ 
+ double cqf13 ( double x , void *params ) {
++  (void)params;
++
+   return sin(100 * M_PI * x) / (M_PI * x);
+ }
+ 
+ double cqf14 ( double x , void *params ) {
++  (void)params;
++
+   return sqrt(50.0) * exp(-50*M_PI*x*x);
+ }
+ 
+ double cqf15 ( double x , void *params ) {
++  (void)params;
++
+   return 25.0 * exp(-25*x);
+ }
+ 
+ double cqf16 ( double x , void *params ) {
++  (void)params;
++
+   return 50 / M_PI * (2500 * x*x + 1);
+ }
+ 
+ double cqf17 ( double x , void *params ) {
++  (void)params;
++
+   double t1 = 50 * M_PI * x ,t2;
+   t2 = sin(t1) / t1;
+   return 50 * t2 * t2;
+ }
+ 
+ double cqf18 ( double x , void *params ) {
++  (void)params;
++
+   return cos( cos(x) + 3*sin(x) + 2*cos(2*x) + 3*sin(2*x) + 3*cos(3*x) );
+ }
+ 
+ double cqf19 ( double x , void *params ) {
++  (void)params;
++
+   return log(x);
+ }
+ 
+ double cqf20 ( double x , void *params ) {
++  (void)params;
++
+   return 1 / (x*x + 1.005);
+ }
+ 
+ double cqf21 ( double x , void *params ) {
++  (void)params;
++
+   return 1 / cosh( 10 * (x - 0.2) * 2 ) + 
+     1 / cosh( 100 * (x - 0.4) * 4 ) + 
+     1 / cosh( 1000 * (x - 0.6) * 8 );
+ }
+ 
+ double cqf22 ( double x , void *params ) {
++  (void)params;
++
+   return 4 * M_PI*M_PI * x * sin(20*M_PI*x) * cos(2*M_PI*x);
+ }
+ 
+ double cqf23 ( double x , void *params ) {
++  (void)params;
++
+   double t = 230*x - 30;
+   return 1 / (1 + t*t);
+ }
+ 
+ double cqf24 ( double x , void *params ) {
++  (void)params;
++
+   return floor(exp(x));
+ }
+ 
+ double cqf25 ( double x , void *params ) {
++  (void)params;
++
+   return (x < 1) * (x + 1) + 
+     (1 <= x && x <= 3) * (3 - x) + 
+     (x > 3) * 2;
+diff --git a/interpolation/bilinear.c b/interpolation/bilinear.c
+index d6206cd8..02fe9aa5 100644
+--- a/interpolation/bilinear.c
++++ b/interpolation/bilinear.c
+@@ -28,6 +28,13 @@ static int
+ bilinear_init(void * state, const double xa[], const double ya[],
+               const double za[], size_t xsize, size_t ysize)
+ {
++  (void)state;
++  (void)xa;
++  (void)xsize;
++  (void)ya;
++  (void)ysize;
++  (void)za;
++
+   return GSL_SUCCESS;
+ }
+ 
+@@ -37,6 +44,8 @@ bilinear_eval(const void * state, const double xarr[], const double yarr[],
+               double x, double y, gsl_interp_accel * xa,
+               gsl_interp_accel * ya, double * z)
+ {
++  (void)state;
++
+   double xmin, xmax, ymin, ymax, zminmin, zminmax, zmaxmin, zmaxmax;
+   double dx, dy;
+   double t, u;
+@@ -75,6 +84,8 @@ bilinear_deriv_x(const void * state, const double xarr[],
+                  size_t xsize, size_t ysize, double x, double y,
+                  gsl_interp_accel * xa, gsl_interp_accel * ya, double * z_p)
+ {
++  (void)state;
++
+   double xmin, xmax, ymin, ymax, zminmin, zminmax, zmaxmin, zmaxmax;
+   double dx, dy;
+   double dt, u;
+@@ -113,6 +124,8 @@ bilinear_deriv_y(const void * state, const double xarr[],
+                  size_t xsize, size_t ysize, double x, double y,
+                  gsl_interp_accel * xa, gsl_interp_accel * ya, double * z_p)
+ {
++  (void)state;
++
+   double xmin, xmax, ymin, ymax, zminmin, zminmax, zmaxmin, zmaxmax;
+   double dx, dy;
+   double t, du;
+@@ -151,6 +164,17 @@ bilinear_deriv2(const void * state, const double xarr[],
+                 size_t xsize, size_t ysize, double x, double y,
+                 gsl_interp_accel * xa, gsl_interp_accel * ya, double * z_pp)
+ {
++  (void)state;
++  (void)x;
++  (void)xa;
++  (void)xarr;
++  (void)xsize;
++  (void)y;
++  (void)ya;
++  (void)yarr;
++  (void)ysize;
++  (void)zarr;
++
+   *z_pp = 0.0;
+   return GSL_SUCCESS;
+ }
+@@ -161,6 +185,8 @@ bilinear_derivxy(const void * state, const double xarr[],
+                  size_t xsize, size_t ysize, double x, double y,
+                  gsl_interp_accel * xa, gsl_interp_accel * ya, double * z_pp)
+ {
++  (void)state;
++
+   double xmin, xmax, ymin, ymax, zminmin, zminmax, zmaxmin, zmaxmax;
+   double dx, dy;
+   double dt, du;
+diff --git a/interpolation/linear.c b/interpolation/linear.c
+index 65ca83ea..d4e4ba00 100644
+--- a/interpolation/linear.c
++++ b/interpolation/linear.c
+@@ -30,6 +30,11 @@ linear_init (void * vstate,
+              const double y_array[],
+              size_t size)
+ {
++  (void)size;
++  (void)vstate;
++  (void)x_array;
++  (void)y_array;
++
+   return GSL_SUCCESS;
+ }
+ 
+@@ -41,6 +46,8 @@ linear_eval (const void * vstate,
+              gsl_interp_accel * a,
+              double *y)
+ {
++  (void)vstate;
++
+   double x_lo, x_hi;
+   double y_lo, y_hi;
+   double dx;
+@@ -82,6 +89,8 @@ linear_eval_deriv (const void * vstate,
+                    gsl_interp_accel * a,
+                    double *dydx)
+ {
++  (void)vstate;
++
+   double x_lo, x_hi;
+   double y_lo, y_hi;
+   double dx;
+@@ -125,6 +134,13 @@ linear_eval_deriv2 (const void * vstate,
+                     gsl_interp_accel * a,
+                     double *y_pp)
+ {
++  (void)a;
++  (void)size;
++  (void)vstate;
++  (void)x;
++  (void)x_array;
++  (void)y_array;
++
+   *y_pp = 0.0;
+ 
+   return GSL_SUCCESS;
+@@ -139,6 +155,8 @@ linear_eval_integ (const void * vstate,
+                    double a, double b,
+                    double * result)
+ {
++  (void)vstate;
++
+   size_t i, index_a, index_b;
+   
+   if (acc != 0)
+diff --git a/interpolation/poly.c b/interpolation/poly.c
+index 6d7853f3..c99465b8 100644
+--- a/interpolation/poly.c
++++ b/interpolation/poly.c
+@@ -89,6 +89,9 @@ polynomial_eval (const void *vstate,
+                  const double xa[], const double ya[], size_t size, double x,
+                  gsl_interp_accel * acc, double *y)
+ {
++  (void)acc;
++  (void)ya;
++
+   const polynomial_state_t *state = (const polynomial_state_t *) vstate;
+ 
+   *y = gsl_poly_dd_eval (state->d, xa, size, x);
+@@ -102,6 +105,9 @@ polynomial_deriv (const void *vstate,
+                   const double xa[], const double ya[], size_t size, double x,
+                   gsl_interp_accel * acc, double *y)
+ {
++  (void)acc;
++  (void)ya;
++
+   const polynomial_state_t *state = (const polynomial_state_t *) vstate;
+ 
+   gsl_poly_dd_taylor (state->coeff, x, state->d, xa, size, state->work);
+@@ -116,6 +122,9 @@ polynomial_deriv2 (const void *vstate,
+                    const double xa[], const double ya[], size_t size,
+                    double x, gsl_interp_accel * acc, double *y)
+ {
++  (void)acc;
++  (void)ya;
++
+   const polynomial_state_t *state = (const polynomial_state_t *) vstate;
+ 
+   gsl_poly_dd_taylor (state->coeff, x, state->d, xa, size, state->work);
+@@ -130,6 +139,9 @@ polynomial_integ (const void *vstate, const double xa[], const double ya[],
+                   size_t size, gsl_interp_accel * acc, double a, double b,
+                   double *result)
+ {
++  (void)acc;
++  (void)ya;
++
+   const polynomial_state_t *state = (const polynomial_state_t *) vstate;
+   size_t i;
+   double sum;
+diff --git a/interpolation/steffen.c b/interpolation/steffen.c
+index 1c9ce104..51e71253 100644
+--- a/interpolation/steffen.c
++++ b/interpolation/steffen.c
+@@ -208,6 +208,8 @@ steffen_eval (const void * vstate,
+               const double x_array[], const double y_array[], size_t size,
+               double x, gsl_interp_accel * a, double *y)
+ {
++  (void)y_array;
++
+   const steffen_state_t *state = (const steffen_state_t *) vstate;
+ 
+   size_t index;
+@@ -242,6 +244,8 @@ steffen_eval_deriv (const void * vstate,
+                     const double x_array[], const double y_array[], size_t size,
+                     double x, gsl_interp_accel * a, double *dydx)
+ {
++  (void)y_array;
++
+   const steffen_state_t *state = (const steffen_state_t *) vstate;
+ 
+   size_t index;
+@@ -276,6 +280,8 @@ steffen_eval_deriv2 (const void * vstate,
+                      const double x_array[], const double y_array[], size_t size,
+                      double x, gsl_interp_accel * a, double *y_pp)
+ {
++  (void)y_array;
++
+   const steffen_state_t *state = (const steffen_state_t *) vstate;
+ 
+   size_t index;
+@@ -308,6 +314,8 @@ steffen_eval_integ (const void * vstate,
+                     gsl_interp_accel * acc, double a, double b,
+                     double * result)
+ {
++  (void)y_array;
++
+   /* a and b are the boundaries of the integration. */
+   
+   const steffen_state_t *state = (const steffen_state_t *) vstate;
+diff --git a/interpolation/test.c b/interpolation/test.c
+index 53e37839..38a35200 100644
+--- a/interpolation/test.c
++++ b/interpolation/test.c
+@@ -1208,7 +1208,10 @@ test_steffen2 (void)
+ int 
+ main (int argc, char **argv)
+ {
+-  int status = 0;
++  (void)argc;
++  (void)argv;
++
++  int status = 0; (void)status;
+ 
+   gsl_ieee_env_setup ();
+ 
+diff --git a/min/brent.c b/min/brent.c
+index 4eebc553..5782a33d 100644
+--- a/min/brent.c
++++ b/min/brent.c
+@@ -46,6 +46,11 @@ static int brent_iterate (void *vstate, gsl_function * f, double *x_minimum, dou
+ static int
+ brent_init (void *vstate, gsl_function * f, double x_minimum, double f_minimum, double x_lower, double f_lower, double x_upper, double f_upper)
+ {
++  (void)f_lower;
++  (void)f_minimum;
++  (void)f_upper;
++  (void)x_minimum;
++
+   brent_state_t *state = (brent_state_t *) vstate;
+ 
+   const double golden = 0.3819660;      /* golden = (3 - sqrt(5))/2 */
+diff --git a/min/quad_golden.c b/min/quad_golden.c
+index c078bd66..bdf8016c 100644
+--- a/min/quad_golden.c
++++ b/min/quad_golden.c
+@@ -88,6 +88,12 @@ quad_golden_init (void *vstate, gsl_function * f, double x_minimum,
+ 		  double f_minimum, double x_lower, double f_lower,
+ 		  double x_upper, double f_upper)
+ {
++  (void)f;
++  (void)f_lower;
++  (void)f_upper;
++  (void)x_lower;
++  (void)x_upper;
++
+   quad_golden_state_t *state = (quad_golden_state_t *) vstate;
+ 
+   /* For the original behavior, the first value for x_minimum_minimum
+diff --git a/min/test_funcs.c b/min/test_funcs.c
+index 50f4f525..21df1084 100644
+--- a/min/test_funcs.c
++++ b/min/test_funcs.c
+@@ -33,6 +33,8 @@ gsl_function create_function (double (*f)(double, void *))
+ double
+ f_cos (double x, void * p)
+ {
++  (void)p;
++
+   p = 0;  /* avoid warning about unused parameter */
+   return cos(x);
+ }
+@@ -43,6 +45,8 @@ f_cos (double x, void * p)
+ double
+ func1 (double x, void * p)
+ {
++  (void)p;
++
+   p = 0;  /* avoid warning about unused parameter */
+   return pow (x, 4.0) - 1;
+ }
+@@ -53,6 +57,8 @@ func1 (double x, void * p)
+ double
+ func2 (double x, void * p)
+ {
++  (void)p;
++
+   p = 0;  /* avoid warning about unused parameter */
+   return sqrt(fabs(x));
+ }
+@@ -64,6 +70,8 @@ func2 (double x, void * p)
+ double
+ func3 (double x, void * p)
+ {
++  (void)p;
++
+   p = 0;  /* avoid warning about unused parameter */
+ 
+   if (x < 1)
+@@ -78,6 +86,8 @@ func3 (double x, void * p)
+ double
+ func4 (double x, void * p)
+ {
++  (void)p;
++
+   p = 0;  /* avoid warning about unused parameter */
+ 
+   return x - 30.0 / (1.0 + 1e5 * pow(x-0.8, 2.0));
+diff --git a/missing b/missing
+index cdea5149..5e450bab 100755
+--- a/missing
++++ b/missing
+@@ -1,9 +1,11 @@
+ #! /bin/sh
+-# Common wrapper for a few potentially missing GNU programs.
++# Common wrapper for a few potentially missing GNU and other programs.
+ 
+-scriptversion=2012-06-26.16; # UTC
++scriptversion=2025-06-18.21; # UTC
+ 
+-# Copyright (C) 1996-2013 Free Software Foundation, Inc.
++# shellcheck disable=SC2006,SC2268 # we must support pre-POSIX shells
++
++# Copyright (C) 1996-2025 Free Software Foundation, Inc.
+ # Originally written by Fran,cois Pinard <pinard@iro.umontreal.ca>, 1996.
+ 
+ # This program is free software; you can redistribute it and/or modify
+@@ -17,7 +19,7 @@ scriptversion=2012-06-26.16; # UTC
+ # GNU General Public License for more details.
+ 
+ # You should have received a copy of the GNU General Public License
+-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
++# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ 
+ # As a special exception to the GNU General Public License, if you
+ # distribute this file as part of a program that contains a
+@@ -54,18 +56,20 @@ Options:
+   -v, --version   output version information and exit
+ 
+ Supported PROGRAM values:
+-  aclocal   autoconf  autoheader   autom4te  automake  makeinfo
+-  bison     yacc      flex         lex       help2man
++aclocal autoconf autogen  autoheader autom4te automake autoreconf
++bison   flex     help2man lex        makeinfo perl     yacc
+ 
+ Version suffixes to PROGRAM as well as the prefixes 'gnu-', 'gnu', and
+ 'g' are ignored when checking the name.
+ 
+-Send bug reports to <bug-automake@gnu.org>."
++Report bugs to <bug-automake@gnu.org>.
++GNU Automake home page: <https://www.gnu.org/software/automake/>.
++General help using GNU software: <https://www.gnu.org/gethelp/>."
+     exit $?
+     ;;
+ 
+   -v|--v|--ve|--ver|--vers|--versi|--versio|--version)
+-    echo "missing $scriptversion (GNU Automake)"
++    echo "missing (GNU Automake) $scriptversion"
+     exit $?
+     ;;
+ 
+@@ -101,14 +105,14 @@ else
+   exit $st
+ fi
+ 
+-perl_URL=http://www.perl.org/
+-flex_URL=http://flex.sourceforge.net/
+-gnu_software_URL=http://www.gnu.org/software
++perl_URL=https://www.perl.org/
++flex_URL=https://github.com/westes/flex
++gnu_software_URL=https://www.gnu.org/software
+ 
+ program_details ()
+ {
+   case $1 in
+-    aclocal|automake)
++    aclocal|automake|autoreconf)
+       echo "The '$1' program is part of the GNU Automake package:"
+       echo "<$gnu_software_URL/automake>"
+       echo "It also requires GNU Autoconf, GNU m4 and Perl in order to run:"
+@@ -123,6 +127,9 @@ program_details ()
+       echo "<$gnu_software_URL/m4/>"
+       echo "<$perl_URL>"
+       ;;
++    *)
++      :
++      ;;
+   esac
+ }
+ 
+@@ -137,48 +144,55 @@ give_advice ()
+   printf '%s\n' "'$1' is $msg."
+ 
+   configure_deps="'configure.ac' or m4 files included by 'configure.ac'"
++  autoheader_deps="'acconfig.h'"
++  automake_deps="'Makefile.am'"
++  aclocal_deps="'acinclude.m4'"
+   case $normalized_program in
++    aclocal*)
++      echo "You should only need it if you modified $aclocal_deps or"
++      echo "$configure_deps."
++      ;;
+     autoconf*)
+-      echo "You should only need it if you modified 'configure.ac',"
+-      echo "or m4 files included by it."
+-      program_details 'autoconf'
++      echo "You should only need it if you modified $configure_deps."
++      ;;
++    autogen*)
++      echo "You should only need it if you modified a '.def' or '.tpl' file."
++      echo "You may want to install the GNU AutoGen package:"
++      echo "<$gnu_software_URL/autogen/>"
+       ;;
+     autoheader*)
+-      echo "You should only need it if you modified 'acconfig.h' or"
++      echo "You should only need it if you modified $autoheader_deps or"
+       echo "$configure_deps."
+-      program_details 'autoheader'
+       ;;
+     automake*)
+-      echo "You should only need it if you modified 'Makefile.am' or"
+-      echo "$configure_deps."
+-      program_details 'automake'
+-      ;;
+-    aclocal*)
+-      echo "You should only need it if you modified 'acinclude.m4' or"
++      echo "You should only need it if you modified $automake_deps or"
+       echo "$configure_deps."
+-      program_details 'aclocal'
+       ;;
+-   autom4te*)
++    autom4te*)
+       echo "You might have modified some maintainer files that require"
+-      echo "the 'automa4te' program to be rebuilt."
+-      program_details 'autom4te'
++      echo "the 'autom4te' program to be rebuilt."
++      ;;
++    autoreconf*)
++      echo "You should only need it if you modified $aclocal_deps or"
++      echo "$automake_deps or $autoheader_deps or $automake_deps or"
++      echo "$configure_deps."
+       ;;
+     bison*|yacc*)
+       echo "You should only need it if you modified a '.y' file."
+       echo "You may want to install the GNU Bison package:"
+       echo "<$gnu_software_URL/bison/>"
+       ;;
+-    lex*|flex*)
+-      echo "You should only need it if you modified a '.l' file."
+-      echo "You may want to install the Fast Lexical Analyzer package:"
+-      echo "<$flex_URL>"
+-      ;;
+     help2man*)
+       echo "You should only need it if you modified a dependency" \
+            "of a man page."
+       echo "You may want to install the GNU Help2man package:"
+       echo "<$gnu_software_URL/help2man/>"
+     ;;
++    lex*|flex*)
++      echo "You should only need it if you modified a '.l' file."
++      echo "You may want to install the Fast Lexical Analyzer package:"
++      echo "<$flex_URL>"
++      ;;
+     makeinfo*)
+       echo "You should only need it if you modified a '.texi' file, or"
+       echo "any other file indirectly affecting the aspect of the manual."
+@@ -189,6 +203,12 @@ give_advice ()
+       echo "want to install GNU make:"
+       echo "<$gnu_software_URL/make/>"
+       ;;
++    perl*)
++      echo "You should only need it to run GNU Autoconf, GNU Automake, "
++      echo "  assorted other tools, or if you modified a Perl source file."
++      echo "You may want to install the Perl 5 language interpreter:"
++      echo "<$perl_URL>"
++      ;;
+     *)
+       echo "You might have modified some files without having the proper"
+       echo "tools for further handling them.  Check the 'README' file, it"
+@@ -197,6 +217,7 @@ give_advice ()
+       echo "case some other package contains this missing '$1' program."
+       ;;
+   esac
++  program_details "$normalized_program"
+ }
+ 
+ give_advice "$1" | sed -e '1s/^/WARNING: /' \
+@@ -207,9 +228,9 @@ give_advice "$1" | sed -e '1s/^/WARNING: /' \
+ exit $st
+ 
+ # Local variables:
+-# eval: (add-hook 'write-file-hooks 'time-stamp)
++# eval: (add-hook 'before-save-hook 'time-stamp nil t)
+ # time-stamp-start: "scriptversion="
+-# time-stamp-format: "%:y-%02m-%02d.%02H"
+-# time-stamp-time-zone: "UTC"
++# time-stamp-format: "%Y-%02m-%02d.%02H"
++# time-stamp-time-zone: "UTC0"
+ # time-stamp-end: "; # UTC"
+ # End:
+diff --git a/mkinstalldirs b/mkinstalldirs
+index 55d537f8..498a641d 100755
+--- a/mkinstalldirs
++++ b/mkinstalldirs
+@@ -1,7 +1,7 @@
+ #! /bin/sh
+ # mkinstalldirs --- make directory hierarchy
+ 
+-scriptversion=2009-04-28.21; # UTC
++scriptversion=2025-06-18.21; # UTC
+ 
+ # Original author: Noah Friedman <friedman@prep.ai.mit.edu>
+ # Created: 1993-05-16
+@@ -23,7 +23,9 @@ Usage: mkinstalldirs [-h] [--help] [--version] [-m MODE] DIR ...
+ Create each directory DIR (with mode MODE, if specified), including all
+ leading file name components.
+ 
+-Report bugs to <bug-automake@gnu.org>."
++Report bugs to <bug-automake@gnu.org>.
++GNU Automake home page: <https://www.gnu.org/software/automake/>.
++General help using GNU software: <https://www.gnu.org/gethelp/>."
+ 
+ # process command line arguments
+ while test $# -gt 0 ; do
+@@ -39,7 +41,7 @@ while test $# -gt 0 ; do
+       shift
+       ;;
+     --version)
+-      echo "$0 $scriptversion"
++      echo "$0 (GNU Automake) $scriptversion"
+       exit $?
+       ;;
+     --)                         # stop option processing
+@@ -92,6 +94,8 @@ case $dirmode in
+   *)
+     if mkdir -m "$dirmode" -p --version . >/dev/null 2>&1 &&
+        test ! -d ./--version; then
++      echo "umask 22"
++      umask 22
+       echo "mkdir -m $dirmode -p -- $*"
+       exec mkdir -m "$dirmode" -p -- "$@"
+     else
+@@ -104,6 +108,9 @@ case $dirmode in
+     ;;
+ esac
+ 
++echo "umask 22"
++umask 22
++
+ for file
+ do
+   case $file in
+@@ -132,21 +139,16 @@ do
+ 
+       if test ! -d "$pathcomp"; then
+ 	errstatus=$lasterr
+-      else
+-	if test ! -z "$dirmode"; then
+-	  echo "chmod $dirmode $pathcomp"
+-	  lasterr=
+-	  chmod "$dirmode" "$pathcomp" || lasterr=$?
+-
+-	  if test ! -z "$lasterr"; then
+-	    errstatus=$lasterr
+-	  fi
+-	fi
+       fi
+     fi
+ 
+     pathcomp=$pathcomp/
+   done
++
++  if test ! -z "$dirmode"; then
++    echo "chmod $dirmode $file"
++    chmod "$dirmode" "$file" || errstatus=$?
++  fi
+ done
+ 
+ exit $errstatus
+@@ -154,9 +156,9 @@ exit $errstatus
+ # Local Variables:
+ # mode: shell-script
+ # sh-indentation: 2
+-# eval: (add-hook 'write-file-hooks 'time-stamp)
++# eval: (add-hook 'before-save-hook 'time-stamp nil t)
+ # time-stamp-start: "scriptversion="
+-# time-stamp-format: "%:y-%02m-%02d.%02H"
+-# time-stamp-time-zone: "UTC"
++# time-stamp-format: "%Y-%02m-%02d.%02H"
++# time-stamp-time-zone: "UTC0"
+ # time-stamp-end: "; # UTC"
+ # End:
+diff --git a/monte/test.c b/monte/test.c
+index 4426e22a..b5b13fb4 100644
+--- a/monte/test.c
++++ b/monte/test.c
+@@ -389,6 +389,10 @@ main (void)
+ double
+ fconst (double x[], size_t num_dim, void *params)
+ {
++  (void)num_dim;
++  (void)params;
++  (void)x;
++
+   return 1;
+ }
+ 
+@@ -397,6 +401,9 @@ fconst (double x[], size_t num_dim, void *params)
+ double
+ fstep (double x[], size_t num_dim, void *params)
+ {
++  (void)num_dim;
++  (void)params;
++
+   return (x[0] > 0.1 && x[0] < 0.9) ? 1 : 0;
+ }
+ 
+@@ -404,6 +411,8 @@ fstep (double x[], size_t num_dim, void *params)
+ double
+ f0 (double x[], size_t num_dim, void *params)
+ {
++  (void)params;
++
+   double prod = 1.0;
+   unsigned int i;
+ 
+diff --git a/movstat/deque.c b/movstat/deque.c
+index 3ae51167..4382c803 100644
+--- a/movstat/deque.c
++++ b/movstat/deque.c
+@@ -31,10 +31,10 @@ typedef struct
+ 
+ static size_t deque_size(const size_t n);
+ static int deque_init(const size_t n, deque * d);
+-static int deque_empty(deque * d);
++static inline int deque_empty(deque * d);
+ static int deque_is_empty(const deque * d);
+ static int deque_is_full(const deque * d);
+-static int deque_push_front(const deque_type_t x, deque * d);
++static inline int deque_push_front(const deque_type_t x, deque * d);
+ static int deque_push_back(const deque_type_t x, deque * d);
+ static int deque_pop_front(deque * d);
+ static int deque_pop_back(deque * d);
+@@ -64,7 +64,7 @@ deque_init(const size_t n, deque * d)
+ }
+ 
+ /* empty the queue */
+-static int
++static inline int
+ deque_empty(deque * d)
+ {
+   d->head = -1;
+@@ -87,7 +87,7 @@ deque_is_full(const deque * d)
+           (d->head == d->tail + 1));
+ }
+ 
+-static int
++static inline int
+ deque_push_front(const deque_type_t x, deque * d)
+ {
+   if (deque_is_full(d))
+diff --git a/movstat/madacc.c b/movstat/madacc.c
+index ad0595c4..09ab7f0d 100644
+--- a/movstat/madacc.c
++++ b/movstat/madacc.c
+@@ -47,7 +47,6 @@ typedef struct
+ static size_t madacc_size(const size_t n);
+ static int madacc_init(const size_t n, void * vstate);
+ static int madacc_insert(const madacc_type_t x, void * vstate);
+-static int madacc_delete(void * vstate);
+ static int madacc_medmad(void * params, madacc_type_t * result, const void * vstate);
+ 
+ static size_t
+@@ -96,16 +95,7 @@ madacc_insert(const madacc_type_t x, void * vstate)
+   return GSL_SUCCESS;
+ }
+ 
+-static int
+-madacc_delete(void * vstate)
+-{
+-  madacc_state_t * state = (madacc_state_t *) vstate;
+ 
+-  if (!ringbuf_is_empty(state->rbuf))
+-    ringbuf_pop_back(state->rbuf);
+-
+-  return GSL_SUCCESS;
+-}
+ 
+ static int
+ madacc_medmad(void * params, madacc_type_t * result, const void * vstate)
+diff --git a/movstat/medacc.c b/movstat/medacc.c
+index b1eec034..2a136d90 100644
+--- a/movstat/medacc.c
++++ b/movstat/medacc.c
+@@ -48,7 +48,6 @@ typedef struct
+ static size_t medacc_size(const size_t n);
+ static int medacc_init(const size_t n, void * vstate);
+ static int medacc_insert(const medacc_type_t x, void * vstate);
+-static int medacc_delete(void * vstate);
+ static int medacc_get(void * params, medacc_type_t * result, const void * vstate);
+ 
+ static int mmless(const medacc_state_t * state, const int i, const int j);
+@@ -133,34 +132,7 @@ medacc_insert(const medacc_type_t x, void * vstate)
+   return GSL_SUCCESS;
+ }
+ 
+-static int
+-medacc_delete(void * vstate)
+-{
+-  medacc_state_t * state = (medacc_state_t *) vstate;
+-
+-  if (state->ct > 0)
+-    {
+-      int p = state->pos[(state->idx - state->ct + state->n) % state->n];
+ 
+-      if (p > 0)        /* oldest item is in minHeap */
+-        {
+-          mmexchange(state, p, minCt(state));
+-          --(state->ct);
+-          minSortDown(state, 2 * p);
+-        }
+-      else if (p < 0)   /* oldest item is in maxHeap */
+-        {
+-          mmexchange(state, p, maxCt(state));
+-          --(state->ct);
+-          maxSortDown(state, 2 * p);
+-        }
+-      else if (p == 0)  /* oldest item is at median */
+-        {
+-        }
+-    }
+-
+-  return GSL_SUCCESS;
+-}
+ 
+ /* returns median (or average of 2 when item count is even) */
+ static int
+diff --git a/movstat/ringbuf.c b/movstat/ringbuf.c
+index ab2ccd09..f0d651db 100644
+--- a/movstat/ringbuf.c
++++ b/movstat/ringbuf.c
+@@ -33,15 +33,15 @@ typedef struct
+ } ringbuf;
+ 
+ static size_t ringbuf_size(const size_t n);
+-static int ringbuf_empty(ringbuf * d);
++static inline int ringbuf_empty(ringbuf * d);
+ static int ringbuf_is_empty(const ringbuf * d);
+-static int ringbuf_is_full(const ringbuf * d);
++static inline int ringbuf_is_full(const ringbuf * d);
+ static int ringbuf_insert(const ringbuf_type_t x, ringbuf * d);
+-static int ringbuf_pop_back(ringbuf * b);
+-static ringbuf_type_t ringbuf_peek(const int i, const ringbuf * b);
+-static ringbuf_type_t ringbuf_peek_front(const ringbuf * d);
+-static ringbuf_type_t ringbuf_peek_back(const ringbuf * d);
+-static size_t ringbuf_copy(double * dest, const ringbuf * b);
++static inline int ringbuf_pop_back(ringbuf * b);
++static inline ringbuf_type_t ringbuf_peek(const int i, const ringbuf * b);
++static inline ringbuf_type_t ringbuf_peek_front(const ringbuf * d);
++static inline ringbuf_type_t ringbuf_peek_back(const ringbuf * d);
++static inline size_t ringbuf_copy(double * dest, const ringbuf * b);
+ static int ringbuf_n(const ringbuf * b);
+ 
+ static size_t
+@@ -66,7 +66,7 @@ ringbuf_init(const size_t n, ringbuf * b)
+ }
+ 
+ /* empty the buffer */
+-static int
++static inline int
+ ringbuf_empty(ringbuf * b)
+ {
+   b->head = -1;
+@@ -82,7 +82,7 @@ ringbuf_is_empty(const ringbuf * b)
+ }
+ 
+ /* check if buffer is full */
+-static int
++static inline int
+ ringbuf_is_full(const ringbuf * b)
+ {
+   return ((b->head == 0 && b->tail == b->size - 1) ||
+@@ -125,7 +125,7 @@ ringbuf_insert(const ringbuf_type_t x, ringbuf * b)
+   return GSL_SUCCESS;
+ }
+ 
+-static int
++static inline int
+ ringbuf_pop_back(ringbuf * b)
+ {
+   if (ringbuf_is_empty(b) || b->tail < 0)
+@@ -152,7 +152,7 @@ ringbuf_pop_back(ringbuf * b)
+     }
+ }
+ 
+-static ringbuf_type_t
++static inline ringbuf_type_t
+ ringbuf_peek(const int i, const ringbuf * b)
+ {
+   if (ringbuf_is_empty(b))
+@@ -165,7 +165,7 @@ ringbuf_peek(const int i, const ringbuf * b)
+     }
+ }
+ 
+-static ringbuf_type_t
++static inline ringbuf_type_t
+ ringbuf_peek_front(const ringbuf * b)
+ {
+   if (ringbuf_is_empty(b))
+@@ -178,7 +178,7 @@ ringbuf_peek_front(const ringbuf * b)
+     }
+ }
+ 
+-static ringbuf_type_t
++static inline ringbuf_type_t
+ ringbuf_peek_back(const ringbuf * b)
+ {
+   if (ringbuf_is_empty(b) || b->tail < 0)
+@@ -191,7 +191,7 @@ ringbuf_peek_back(const ringbuf * b)
+     }
+ }
+ 
+-static size_t
++static inline size_t
+ ringbuf_copy(double * dest, const ringbuf * b)
+ {
+   if (ringbuf_is_empty(b) || b->tail < 0)
+diff --git a/multifit/convergence.c b/multifit/convergence.c
+index f0c6a1ce..beb6a02a 100644
+--- a/multifit/convergence.c
++++ b/multifit/convergence.c
+@@ -48,6 +48,8 @@ gsl_multifit_fdfsolver_test (const gsl_multifit_fdfsolver * s,
+                              const double xtol, const double gtol,
+                              const double ftol, int *info)
+ {
++  (void)ftol;
++
+   int status;
+   double gnorm, fnorm, phi;
+ 
+diff --git a/multifit/lmniel.c b/multifit/lmniel.c
+index 44615c3a..a9f97acc 100644
+--- a/multifit/lmniel.c
++++ b/multifit/lmniel.c
+@@ -159,6 +159,8 @@ lmniel_set(void *vstate, const gsl_vector *swts,
+            gsl_multifit_function_fdf *fdf, gsl_vector *x,
+            gsl_vector *f, gsl_vector *dx)
+ {
++  (void)dx;
++
+   int status;
+   lmniel_state_t *state = (lmniel_state_t *) vstate;
+   const size_t p = x->size;
+diff --git a/multifit/robust_wfun.c b/multifit/robust_wfun.c
+index af8d2c3e..60cac903 100644
+--- a/multifit/robust_wfun.c
++++ b/multifit/robust_wfun.c
+@@ -208,6 +208,8 @@ static const gsl_multifit_robust_type huber_type = {
+ static int
+ ols(const gsl_vector *r, gsl_vector *w)
+ {
++  (void)r;
++
+   gsl_vector_set_all(w, 1.0);
+ 
+   return GSL_SUCCESS;
+@@ -216,6 +218,8 @@ ols(const gsl_vector *r, gsl_vector *w)
+ static int
+ ols_dpsi(const gsl_vector *r, gsl_vector *dpsi)
+ {
++  (void)r;
++
+   gsl_vector_set_all(dpsi, 1.0);
+ 
+   return GSL_SUCCESS;
+diff --git a/multifit/test.c b/multifit/test.c
+index 6daa31a7..bf9e73ce 100644
+--- a/multifit/test.c
++++ b/multifit/test.c
+@@ -35,7 +35,9 @@
+ #include <gsl/gsl_ieee_utils.h>
+ 
+ #include "test_linear.c"
++#if 0 /* fdfsolver interface now deprecated, like the test call below. */
+ #include "test_nonlinear.c"
++#endif
+ 
+ int
+ main (void)
+diff --git a/multifit/test_bard.c b/multifit/test_bard.c
+index 4e48ad0e..99e32027 100644
+--- a/multifit/test_bard.c
++++ b/multifit/test_bard.c
+@@ -56,6 +56,8 @@ bard_checksol(const double x[], const double sumsq,
+ static int
+ bard_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   double x3 = gsl_vector_get(x, 2);
+@@ -78,6 +80,8 @@ bard_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ bard_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   double x2 = gsl_vector_get(x, 1);
+   double x3 = gsl_vector_get(x, 2);
+   size_t i;
+diff --git a/multifit/test_beale.c b/multifit/test_beale.c
+index bfd2ed52..faf8f7e0 100644
+--- a/multifit/test_beale.c
++++ b/multifit/test_beale.c
+@@ -30,6 +30,8 @@ beale_checksol(const double x[], const double sumsq,
+ static int
+ beale_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   size_t i;
+@@ -48,6 +50,8 @@ beale_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ beale_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   size_t i;
+diff --git a/multifit/test_biggs.c b/multifit/test_biggs.c
+index d42ad3c5..a2ecfe0f 100644
+--- a/multifit/test_biggs.c
++++ b/multifit/test_biggs.c
+@@ -11,6 +11,8 @@ biggs_checksol(const double x[], const double sumsq,
+                const double epsrel, const char *sname,
+                const char *pname)
+ {
++  (void)x;
++
+   const double sumsq_exact = 0.0;
+   const double biggs_x[biggs_P] = { 1.0, 10.0, 1.0, 5.0, 4.0, 3.0 };
+   const double norm_exact = 12.3288280059380;
+@@ -31,6 +33,8 @@ biggs_checksol(const double x[], const double sumsq,
+ static int
+ biggs_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   double x3 = gsl_vector_get(x, 2);
+@@ -54,6 +58,8 @@ biggs_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ biggs_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   double x3 = gsl_vector_get(x, 2);
+diff --git a/multifit/test_box.c b/multifit/test_box.c
+index d742ed0d..cf26e959 100644
+--- a/multifit/test_box.c
++++ b/multifit/test_box.c
+@@ -28,6 +28,8 @@ box_checksol(const double x[], const double sumsq,
+ static int
+ box_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   double x3 = gsl_vector_get(x, 2);
+@@ -46,6 +48,8 @@ box_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ box_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   size_t i;
+diff --git a/multifit/test_boxbod.c b/multifit/test_boxbod.c
+index 0ad9e0fd..fc68a54c 100644
+--- a/multifit/test_boxbod.c
++++ b/multifit/test_boxbod.c
+@@ -39,6 +39,8 @@ boxbod_checksol(const double x[], const double sumsq,
+ static int
+ boxbod_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double b[boxbod_P];
+   size_t i;
+ 
+@@ -62,6 +64,8 @@ boxbod_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ boxbod_df (const gsl_vector * x, void *params, gsl_matrix * df)
+ {
++  (void)params;
++
+   double b[boxbod_P];
+   size_t i;
+ 
+diff --git a/multifit/test_brown1.c b/multifit/test_brown1.c
+index a42ae497..d1d0ca2a 100644
+--- a/multifit/test_brown1.c
++++ b/multifit/test_brown1.c
+@@ -30,6 +30,8 @@ brown1_checksol(const double x[], const double sumsq,
+ static int
+ brown1_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x0 = gsl_vector_get (x, 0);
+   double x1 = gsl_vector_get (x, 1);
+   double x2 = gsl_vector_get (x, 2);
+@@ -51,6 +53,8 @@ brown1_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ brown1_df (const gsl_vector * x, void *params, gsl_matrix * df)
+ {
++  (void)params;
++
+   double x0 = gsl_vector_get (x, 0);
+   double x1 = gsl_vector_get (x, 1);
+   double x2 = gsl_vector_get (x, 2);
+diff --git a/multifit/test_brown2.c b/multifit/test_brown2.c
+index 7b46a24b..62cc30f3 100644
+--- a/multifit/test_brown2.c
++++ b/multifit/test_brown2.c
+@@ -55,6 +55,8 @@ brown2_checksol(const double x[], const double sumsq,
+ static int
+ brown2_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   size_t i;
+   double sum = -(brown2_N + 1.0);
+   double prod = 1.0;
+@@ -80,6 +82,8 @@ brown2_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ brown2_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   size_t i, j;
+ 
+   for (j = 0; j < brown2_P; ++j)
+diff --git a/multifit/test_brown3.c b/multifit/test_brown3.c
+index d9eceb70..0c2f260f 100644
+--- a/multifit/test_brown3.c
++++ b/multifit/test_brown3.c
+@@ -28,6 +28,8 @@ brown3_checksol(const double x[], const double sumsq,
+ static int
+ brown3_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+ 
+@@ -41,6 +43,8 @@ brown3_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ brown3_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+ 
+diff --git a/multifit/test_eckerle.c b/multifit/test_eckerle.c
+index d81cc9e2..ad18706e 100644
+--- a/multifit/test_eckerle.c
++++ b/multifit/test_eckerle.c
+@@ -53,6 +53,8 @@ eckerle_checksol(const double x[], const double sumsq,
+ static int
+ eckerle_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double b[eckerle_P];
+   size_t i;
+ 
+@@ -77,6 +79,8 @@ eckerle_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ eckerle_df (const gsl_vector * x, void *params, gsl_matrix * df)
+ {
++  (void)params;
++
+   double b[eckerle_P];
+   size_t i;
+ 
+diff --git a/multifit/test_enso.c b/multifit/test_enso.c
+index 70956d14..2898f81c 100644
+--- a/multifit/test_enso.c
++++ b/multifit/test_enso.c
+@@ -217,6 +217,8 @@ enso_checksol(const double x[], const double sumsq,
+ static int
+ enso_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double b[enso_P];
+   size_t i;
+ 
+@@ -246,6 +248,8 @@ enso_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ enso_df (const gsl_vector * x, void *params, gsl_matrix * df)
+ {
++  (void)params;
++
+   double b[enso_P];
+   size_t i;
+ 
+diff --git a/multifit/test_exp1.c b/multifit/test_exp1.c
+index 211c6754..e8fb43d5 100644
+--- a/multifit/test_exp1.c
++++ b/multifit/test_exp1.c
+@@ -40,6 +40,8 @@ exp1_checksol(const double x[], const double sumsq,
+ static int
+ exp1_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   double x3 = gsl_vector_get(x, 2);
+@@ -60,6 +62,8 @@ exp1_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ exp1_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   double x3 = gsl_vector_get(x, 2);
+diff --git a/multifit/test_gaussian.c b/multifit/test_gaussian.c
+index bd4389e6..a571aa43 100644
+--- a/multifit/test_gaussian.c
++++ b/multifit/test_gaussian.c
+@@ -36,6 +36,8 @@ gaussian_checksol(const double x[], const double sumsq,
+ static int
+ gaussian_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   double x3 = gsl_vector_get(x, 2);
+@@ -56,6 +58,8 @@ gaussian_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ gaussian_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   double x3 = gsl_vector_get(x, 2);
+diff --git a/multifit/test_hahn1.c b/multifit/test_hahn1.c
+index 0cf84b11..d828fe57 100644
+--- a/multifit/test_hahn1.c
++++ b/multifit/test_hahn1.c
+@@ -524,6 +524,8 @@ hahn1_checksol(const double x[], const double sumsq,
+ static int
+ hahn1_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double b[hahn1_P];
+   size_t i;
+ 
+@@ -546,6 +548,8 @@ hahn1_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ hahn1_df (const gsl_vector * x, void *params, gsl_matrix * df)
+ {
++  (void)params;
++
+   double b[hahn1_P];
+   size_t i;
+ 
+diff --git a/multifit/test_helical.c b/multifit/test_helical.c
+index 6bc3f394..5dde007e 100644
+--- a/multifit/test_helical.c
++++ b/multifit/test_helical.c
+@@ -29,6 +29,8 @@ helical_checksol(const double x[], const double sumsq,
+ static int
+ helical_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   double x3 = gsl_vector_get(x, 2);
+@@ -45,6 +47,8 @@ helical_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ helical_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   double nx = gsl_hypot(x1, x2);
+diff --git a/multifit/test_jennrich.c b/multifit/test_jennrich.c
+index e129cfbb..6d66a766 100644
+--- a/multifit/test_jennrich.c
++++ b/multifit/test_jennrich.c
+@@ -29,6 +29,8 @@ jennrich_checksol(const double x[], const double sumsq,
+ static int
+ jennrich_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   size_t i;
+@@ -46,6 +48,8 @@ jennrich_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ jennrich_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   size_t i;
+diff --git a/multifit/test_kirby2.c b/multifit/test_kirby2.c
+index 5c6fcb00..1638924f 100644
+--- a/multifit/test_kirby2.c
++++ b/multifit/test_kirby2.c
+@@ -350,6 +350,8 @@ kirby2_checksol(const double x[], const double sumsq,
+ static int
+ kirby2_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double b[kirby2_P];
+   size_t i;
+ 
+@@ -372,6 +374,8 @@ kirby2_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ kirby2_df (const gsl_vector * x, void *params, gsl_matrix * df)
+ {
++  (void)params;
++
+   double b[kirby2_P];
+   size_t i;
+ 
+diff --git a/multifit/test_kowalik.c b/multifit/test_kowalik.c
+index 0179851f..5b70f321 100644
+--- a/multifit/test_kowalik.c
++++ b/multifit/test_kowalik.c
+@@ -65,6 +65,8 @@ kowalik_checksol(const double x[], const double sumsq,
+ static int
+ kowalik_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   double x3 = gsl_vector_get(x, 2);
+@@ -85,6 +87,8 @@ kowalik_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ kowalik_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   double x3 = gsl_vector_get(x, 2);
+diff --git a/multifit/test_lin1.c b/multifit/test_lin1.c
+index 2c28ab8d..541b063f 100644
+--- a/multifit/test_lin1.c
++++ b/multifit/test_lin1.c
+@@ -27,6 +27,8 @@ lin1_checksol(const double x[], const double sumsq,
+ static int
+ lin1_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   size_t i, j;
+ 
+   for (i = 0; i < lin1_N; ++i)
+@@ -51,6 +53,9 @@ lin1_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ lin1_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++  (void)x;
++
+   size_t i, j;
+ 
+   for (i = 0; i < lin1_N; ++i)
+diff --git a/multifit/test_lin2.c b/multifit/test_lin2.c
+index 0fbc690e..c8f4c62b 100644
+--- a/multifit/test_lin2.c
++++ b/multifit/test_lin2.c
+@@ -30,6 +30,8 @@ lin2_checksol(const double x[], const double sumsq,
+ static int
+ lin2_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   size_t i, j;
+ 
+   for (i = 0; i < lin2_N; ++i)
+@@ -52,6 +54,9 @@ lin2_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ lin2_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++  (void)x;
++
+   size_t i, j;
+ 
+   for (i = 0; i < lin2_N; ++i)
+diff --git a/multifit/test_lin3.c b/multifit/test_lin3.c
+index 7d6a8dd1..04105154 100644
+--- a/multifit/test_lin3.c
++++ b/multifit/test_lin3.c
+@@ -30,6 +30,8 @@ lin3_checksol(const double x[], const double sumsq,
+ static int
+ lin3_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   size_t i, j;
+ 
+   gsl_vector_set(f, 0, -1.0);
+@@ -55,6 +57,9 @@ lin3_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ lin3_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++  (void)x;
++
+   size_t i, j;
+ 
+   gsl_matrix_set_zero(J);
+diff --git a/multifit/test_meyer.c b/multifit/test_meyer.c
+index 2709c0fd..59821482 100644
+--- a/multifit/test_meyer.c
++++ b/multifit/test_meyer.c
+@@ -36,6 +36,8 @@ meyer_checksol(const double x[], const double sumsq,
+ static int
+ meyer_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   double x3 = gsl_vector_get(x, 2);
+@@ -55,6 +57,8 @@ meyer_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ meyer_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   double x3 = gsl_vector_get(x, 2);
+diff --git a/multifit/test_meyerscal.c b/multifit/test_meyerscal.c
+index d75f3f99..a99f4faf 100644
+--- a/multifit/test_meyerscal.c
++++ b/multifit/test_meyerscal.c
+@@ -36,6 +36,8 @@ meyerscal_checksol(const double x[], const double sumsq,
+ static int
+ meyerscal_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   double x3 = gsl_vector_get(x, 2);
+@@ -55,6 +57,8 @@ meyerscal_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ meyerscal_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   double x3 = gsl_vector_get(x, 2);
+diff --git a/multifit/test_osborne.c b/multifit/test_osborne.c
+index 0a3ca41d..83682e6a 100644
+--- a/multifit/test_osborne.c
++++ b/multifit/test_osborne.c
+@@ -38,6 +38,8 @@ osborne_checksol(const double x[], const double sumsq,
+ static int
+ osborne_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   double x3 = gsl_vector_get(x, 2);
+@@ -59,6 +61,8 @@ osborne_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ osborne_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   double x2 = gsl_vector_get(x, 1);
+   double x3 = gsl_vector_get(x, 2);
+   double x4 = gsl_vector_get(x, 3);
+diff --git a/multifit/test_penalty1.c b/multifit/test_penalty1.c
+index 52309199..efb2a00d 100644
+--- a/multifit/test_penalty1.c
++++ b/multifit/test_penalty1.c
+@@ -13,6 +13,8 @@ penalty1_checksol(const double x[], const double sumsq,
+                   const double epsrel, const char *sname,
+                   const char *pname)
+ {
++  (void)x;
++
+   const double sumsq_exact = 7.08765146709037993e-05;
+ 
+   gsl_test_rel(sumsq, sumsq_exact, epsrel, "%s/%s sumsq",
+@@ -22,6 +24,8 @@ penalty1_checksol(const double x[], const double sumsq,
+ static int
+ penalty1_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   const double alpha = 1.0e-5;
+   const double sqrt_alpha = sqrt(alpha);
+   size_t i;
+@@ -44,6 +48,8 @@ penalty1_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ penalty1_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   const double alpha = 1.0e-5;
+   const double sqrt_alpha = sqrt(alpha);
+   size_t i;
+diff --git a/multifit/test_penalty2.c b/multifit/test_penalty2.c
+index 93c53349..f0f34eeb 100644
+--- a/multifit/test_penalty2.c
++++ b/multifit/test_penalty2.c
+@@ -11,6 +11,8 @@ penalty2_checksol(const double x[], const double sumsq,
+                   const double epsrel, const char *sname,
+                   const char *pname)
+ {
++  (void)x;
++
+   const double sumsq_exact = 9.37629300735544219e-06;
+ 
+   gsl_test_rel(sumsq, sumsq_exact, epsrel, "%s/%s sumsq",
+@@ -20,6 +22,8 @@ penalty2_checksol(const double x[], const double sumsq,
+ static int
+ penalty2_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   const double alpha = 1.0e-5;
+   const double sqrt_alpha = sqrt(alpha);
+   double x1 = gsl_vector_get(x, 0);
+@@ -57,6 +61,8 @@ penalty2_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ penalty2_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   const double alpha = 1.0e-5;
+   const double sqrt_alpha = sqrt(alpha);
+   size_t i, j;
+diff --git a/multifit/test_powell1.c b/multifit/test_powell1.c
+index 572de3be..c35aac34 100644
+--- a/multifit/test_powell1.c
++++ b/multifit/test_powell1.c
+@@ -27,6 +27,8 @@ powell1_checksol(const double x[], const double sumsq,
+ static int
+ powell1_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get (x, 0);
+   double x2 = gsl_vector_get (x, 1);
+   double x3 = gsl_vector_get (x, 2);
+@@ -43,6 +45,8 @@ powell1_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ powell1_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get (x, 0);
+   double x2 = gsl_vector_get (x, 1);
+   double x3 = gsl_vector_get (x, 2);
+diff --git a/multifit/test_powell2.c b/multifit/test_powell2.c
+index 05a4417c..46fcef73 100644
+--- a/multifit/test_powell2.c
++++ b/multifit/test_powell2.c
+@@ -27,6 +27,8 @@ powell2_checksol(const double x[], const double sumsq,
+ static int
+ powell2_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x0 = gsl_vector_get (x, 0);
+   double x1 = gsl_vector_get (x, 1);
+ 
+@@ -39,6 +41,8 @@ powell2_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ powell2_df (const gsl_vector * x, void *params, gsl_matrix * df)
+ {
++  (void)params;
++
+   double x0 = gsl_vector_get (x, 0);
+   double x1 = gsl_vector_get (x, 1);
+   double term = x0 + 0.1;
+diff --git a/multifit/test_powell3.c b/multifit/test_powell3.c
+index 7c833844..5229c8a2 100644
+--- a/multifit/test_powell3.c
++++ b/multifit/test_powell3.c
+@@ -29,6 +29,8 @@ powell3_checksol(const double x[], const double sumsq,
+ static int
+ powell3_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+ 
+@@ -41,6 +43,8 @@ powell3_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ powell3_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+ 
+diff --git a/multifit/test_rat42.c b/multifit/test_rat42.c
+index 32a652bd..96af54ca 100644
+--- a/multifit/test_rat42.c
++++ b/multifit/test_rat42.c
+@@ -42,6 +42,8 @@ rat42_checksol(const double x[], const double sumsq,
+ static int
+ rat42_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double b[rat42_P];
+   size_t i;
+ 
+@@ -63,6 +65,8 @@ rat42_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ rat42_df (const gsl_vector * x, void *params, gsl_matrix * df)
+ {
++  (void)params;
++
+   double b[rat42_P];
+   size_t i;
+ 
+diff --git a/multifit/test_rat43.c b/multifit/test_rat43.c
+index 25669262..d98302a0 100644
+--- a/multifit/test_rat43.c
++++ b/multifit/test_rat43.c
+@@ -42,6 +42,8 @@ rat43_checksol(const double x[], const double sumsq,
+ static int
+ rat43_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double b[rat43_P];
+   size_t i;
+ 
+@@ -64,6 +66,8 @@ rat43_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ rat43_df (const gsl_vector * x, void *params, gsl_matrix * df)
+ {
++  (void)params;
++
+   double b[rat43_P];
+   size_t i;
+ 
+diff --git a/multifit/test_rosenbrock.c b/multifit/test_rosenbrock.c
+index d42806e3..42b7ea2c 100644
+--- a/multifit/test_rosenbrock.c
++++ b/multifit/test_rosenbrock.c
+@@ -27,6 +27,8 @@ rosenbrock_checksol(const double x[], const double sumsq,
+ static int
+ rosenbrock_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+ 
+@@ -39,6 +41,8 @@ rosenbrock_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ rosenbrock_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+ 
+   gsl_matrix_set(J, 0, 0, -20.0*x1);
+diff --git a/multifit/test_rosenbrocke.c b/multifit/test_rosenbrocke.c
+index fca65fce..d1cf7508 100644
+--- a/multifit/test_rosenbrocke.c
++++ b/multifit/test_rosenbrocke.c
+@@ -31,6 +31,8 @@ rosenbrocke_checksol(const double x[], const double sumsq,
+ static int
+ rosenbrocke_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   size_t i;
+ 
+   for (i = 0; i < rosenbrocke_N / 2; ++i)
+@@ -48,6 +50,8 @@ rosenbrocke_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ rosenbrocke_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   size_t i;
+ 
+   gsl_matrix_set_zero(J);
+diff --git a/multifit/test_roth.c b/multifit/test_roth.c
+index 87f7ae00..7888d52e 100644
+--- a/multifit/test_roth.c
++++ b/multifit/test_roth.c
+@@ -43,6 +43,8 @@ roth_checksol(const double x[], const double sumsq,
+ static int
+ roth_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+ 
+@@ -55,6 +57,8 @@ roth_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ roth_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   double x2 = gsl_vector_get(x, 1);
+ 
+   gsl_matrix_set(J, 0, 0, 1.0);
+diff --git a/multifit/test_shaw.c b/multifit/test_shaw.c
+index b9270386..5f2589e1 100644
+--- a/multifit/test_shaw.c
++++ b/multifit/test_shaw.c
+@@ -23,7 +23,7 @@ shaw_gcv_G(const double lambda, const gsl_matrix * X, const gsl_vector * y,
+   gsl_vector * c = gsl_vector_alloc(p);
+   gsl_vector_view d;
+   double rnorm, snorm;
+-  double term1, term2, G;
++  double term1, term2, G; (void)G;
+   size_t i;
+ 
+   /* compute regularized solution with this lambda */
+@@ -226,7 +226,7 @@ test_shaw_system_gcv(gsl_rng *rng_p, const size_t n, const size_t p,
+                      gsl_vector *rhs)
+ {
+   const size_t npoints = 200; /* number of points on L-curve */
+-  const double tol1 = 1.0e-12;
++  const double tol1 = 1.0e-12; (void)tol1;
+   const double tol2 = 1.4e-10;
+   const double tol3 = 1.0e-5;
+   gsl_vector * reg_param = gsl_vector_alloc(npoints);
+@@ -241,7 +241,7 @@ test_shaw_system_gcv(gsl_rng *rng_p, const size_t n, const size_t p,
+   gsl_multifit_linear_workspace * work = 
+     gsl_multifit_linear_alloc (n, p);
+ 
+-  size_t reg_idx, i;
++  size_t reg_idx, i; (void)reg_idx;
+   double lambda, rnorm, snorm, G_lambda;
+ 
+   /* build design matrix */
+diff --git a/multifit/test_thurber.c b/multifit/test_thurber.c
+index fd073098..afb49345 100644
+--- a/multifit/test_thurber.c
++++ b/multifit/test_thurber.c
+@@ -58,6 +58,8 @@ thurber_checksol(const double x[], const double sumsq,
+ static int
+ thurber_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double b[thurber_P];
+   size_t i;
+ 
+@@ -83,6 +85,8 @@ thurber_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ thurber_df (const gsl_vector * x, void *params, gsl_matrix * df)
+ {
++  (void)params;
++
+   double b[thurber_P];
+   size_t i;
+ 
+diff --git a/multifit/test_vardim.c b/multifit/test_vardim.c
+index 03dda5c6..701889cc 100644
+--- a/multifit/test_vardim.c
++++ b/multifit/test_vardim.c
+@@ -28,6 +28,8 @@ vardim_checksol(const double x[], const double sumsq,
+ static int
+ vardim_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   size_t i;
+   double sum = 0.0;
+ 
+@@ -49,6 +51,8 @@ vardim_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ vardim_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   size_t i;
+   double sum = 0.0;
+   gsl_matrix_view m = gsl_matrix_submatrix(J, 0, 0, vardim_P, vardim_P);
+diff --git a/multifit/test_watson.c b/multifit/test_watson.c
+index cd7c663c..00b87e6a 100644
+--- a/multifit/test_watson.c
++++ b/multifit/test_watson.c
+@@ -30,6 +30,8 @@ watson_checksol(const double x[], const double sumsq,
+ static int
+ watson_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   const double x1 = gsl_vector_get(x, 0);
+   const double x2 = gsl_vector_get(x, 1);
+   size_t i, j;
+@@ -66,6 +68,8 @@ watson_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ watson_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get (x, 0);
+   size_t i, j;
+ 
+diff --git a/multifit/test_wood.c b/multifit/test_wood.c
+index e2b6ad37..37d94bb8 100644
+--- a/multifit/test_wood.c
++++ b/multifit/test_wood.c
+@@ -28,6 +28,8 @@ wood_checksol(const double x[], const double sumsq,
+ static int
+ wood_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x2 = gsl_vector_get(x, 1);
+   double x3 = gsl_vector_get(x, 2);
+@@ -46,6 +48,8 @@ wood_f (const gsl_vector * x, void *params, gsl_vector * f)
+ static int
+ wood_df (const gsl_vector * x, void *params, gsl_matrix * J)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get(x, 0);
+   double x3 = gsl_vector_get(x, 2);
+   double s90 = sqrt(90.0);
+diff --git a/multifit_nlinear/common.c b/multifit_nlinear/common.c
+index 9899e7ee..d708acff 100644
+--- a/multifit_nlinear/common.c
++++ b/multifit_nlinear/common.c
+@@ -17,15 +17,15 @@
+  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+  */
+ 
+-static double scaled_enorm (const gsl_vector * d, const gsl_vector * f);
+-static void scaled_addition (const double alpha, const gsl_vector * x,
++static inline double scaled_enorm (const gsl_vector * d, const gsl_vector * f);
++static inline void scaled_addition (const double alpha, const gsl_vector * x,
+                              const double beta, const gsl_vector * y,
+                              gsl_vector * z);
+-static double quadratic_preduction(const gsl_vector *f, const gsl_matrix * J,
++static inline double quadratic_preduction(const gsl_vector *f, const gsl_matrix * J,
+                                    const gsl_vector * dx, gsl_vector * work);
+ 
+ /* compute || diag(d) f || */
+-static double
++static inline double
+ scaled_enorm (const gsl_vector * d, const gsl_vector * f)
+ {
+   double e2 = 0;
+@@ -41,7 +41,7 @@ scaled_enorm (const gsl_vector * d, const gsl_vector * f)
+ }
+ 
+ /* compute z = alpha*x + beta*y */
+-static void
++static inline void
+ scaled_addition (const double alpha, const gsl_vector * x,
+                  const double beta, const gsl_vector * y, gsl_vector * z)
+ {
+@@ -77,7 +77,7 @@ Inputs: f     - f(x), size n
+ Return: predicted reduction
+ */
+ 
+-static double
++static inline double
+ quadratic_preduction(const gsl_vector * f, const gsl_matrix * J,
+                      const gsl_vector * dx, gsl_vector * work)
+ {
+diff --git a/multilarge/test.c b/multilarge/test.c
+index 24726db0..fcc68568 100644
+--- a/multilarge/test.c
++++ b/multilarge/test.c
+@@ -28,8 +28,6 @@
+ #include <gsl/gsl_linalg.h>
+ #include <gsl/gsl_ieee_utils.h>
+ 
+-static void test_random_matrix_orth(gsl_matrix *m, const gsl_rng *r);
+-static void test_random_matrix_ill(gsl_matrix *m, const gsl_rng *r);
+ static void test_random_vector(gsl_vector *v, const gsl_rng *r,
+                                const double lower, const double upper);
+ static void test_random_matrix(gsl_matrix *m, const gsl_rng *r,
+@@ -47,60 +45,10 @@ static void test_multilarge_solve(const gsl_multilarge_linear_type * T, const do
+                                   double *rnorm, double *snorm, gsl_vector * c);
+ 
+ /* generate random square orthogonal matrix via QR decomposition */
+-static void
+-test_random_matrix_orth(gsl_matrix *m, const gsl_rng *r)
+-{
+-  const size_t M = m->size1;
+-  gsl_matrix *A = gsl_matrix_alloc(M, M);
+-  gsl_vector *tau = gsl_vector_alloc(M);
+-  gsl_matrix *R = gsl_matrix_alloc(M, M);
+-
+-  test_random_matrix(A, r, -1.0, 1.0);
+-  gsl_linalg_QR_decomp(A, tau);
+-  gsl_linalg_QR_unpack(A, tau, m, R);
+-
+-  gsl_matrix_free(A);
+-  gsl_matrix_free(R);
+-  gsl_vector_free(tau);
+-}
+ 
+-/* construct ill-conditioned matrix via SVD */
+-static void
+-test_random_matrix_ill(gsl_matrix *m, const gsl_rng *r)
+-{
+-  const size_t M = m->size1;
+-  const size_t N = m->size2;
+-  gsl_matrix *U = gsl_matrix_alloc(M, M);
+-  gsl_matrix *V = gsl_matrix_alloc(N, N);
+-  gsl_vector *S = gsl_vector_alloc(N);
+-  gsl_matrix_view Uv = gsl_matrix_submatrix(U, 0, 0, M, N);
+-  const double smin = 16.0 * GSL_DBL_EPSILON;
+-  const double smax = 10.0;
+-  const double ratio = pow(smin / smax, 1.0 / (N - 1.0));
+-  double s;
+-  size_t j;
+-
+-  test_random_matrix_orth(U, r);
+-  test_random_matrix_orth(V, r);
+-
+-  /* compute U * S */
+-
+-  s = smax;
+-  for (j = 0; j < N; ++j)
+-    {
+-      gsl_vector_view uj = gsl_matrix_column(U, j);
+-
+-      gsl_vector_scale(&uj.vector, s);
+-      s *= ratio;
+-    }
+ 
+-  /* compute m = (U * S) * V' */
+-  gsl_blas_dgemm(CblasNoTrans, CblasTrans, 1.0, &Uv.matrix, V, 0.0, m);
++/* construct ill-conditioned matrix via SVD */
+ 
+-  gsl_matrix_free(U);
+-  gsl_matrix_free(V);
+-  gsl_vector_free(S);
+-}
+ 
+ static void
+ test_random_vector(gsl_vector *v, const gsl_rng *r,
+diff --git a/multilarge_nlinear/common.c b/multilarge_nlinear/common.c
+index cefd1932..8e3c72aa 100644
+--- a/multilarge_nlinear/common.c
++++ b/multilarge_nlinear/common.c
+@@ -17,15 +17,15 @@
+  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+  */
+ 
+-static double scaled_enorm (const gsl_vector * d, const gsl_vector * f);
+-static void scaled_addition (const double alpha, const gsl_vector * x,
++static inline double scaled_enorm (const gsl_vector * d, const gsl_vector * f);
++static inline void scaled_addition (const double alpha, const gsl_vector * x,
+                              const double beta, const gsl_vector * y,
+                              gsl_vector * z);
+-static double quadratic_preduction(const gsl_multilarge_nlinear_trust_state * trust_state,
++static inline double quadratic_preduction(const gsl_multilarge_nlinear_trust_state * trust_state,
+                                    const gsl_vector * dx, gsl_vector * work);
+ 
+ /* compute || diag(d) f || */
+-static double
++static inline double
+ scaled_enorm (const gsl_vector * d, const gsl_vector * f)
+ {
+   double e2 = 0;
+@@ -41,7 +41,7 @@ scaled_enorm (const gsl_vector * d, const gsl_vector * f)
+ }
+ 
+ /* compute z = alpha*x + beta*y */
+-static void
++static inline void
+ scaled_addition (const double alpha, const gsl_vector * x,
+                  const double beta, const gsl_vector * y, gsl_vector * z)
+ {
+@@ -76,7 +76,7 @@ Inputs: trust_state - trust state
+ Return: predicted reduction
+ */
+ 
+-static double
++static inline double
+ quadratic_preduction(const gsl_multilarge_nlinear_trust_state * trust_state,
+                      const gsl_vector * dx, gsl_vector * work)
+ {
+diff --git a/multilarge_nlinear/convergence.c b/multilarge_nlinear/convergence.c
+index d2d8d087..eabbf2f2 100644
+--- a/multilarge_nlinear/convergence.c
++++ b/multilarge_nlinear/convergence.c
+@@ -50,6 +50,8 @@ gsl_multilarge_nlinear_test (const double xtol, const double gtol,
+                              const double ftol, int *info,
+                              const gsl_multilarge_nlinear_workspace * w)
+ {
++  (void)ftol;
++
+   int status;
+   double gnorm, fnorm, phi;
+ 
+diff --git a/multilarge_nlinear/fdf.c b/multilarge_nlinear/fdf.c
+index bdea91c8..7eff9e88 100644
+--- a/multilarge_nlinear/fdf.c
++++ b/multilarge_nlinear/fdf.c
+@@ -467,6 +467,12 @@ gsl_multilarge_nlinear_eval_df(const CBLAS_TRANSPOSE_t TransJ,
+                                gsl_matrix *JTJ,
+                                gsl_vector *work)
+ {
++  (void)f;
++  (void)fdtype;
++  (void)h;
++  (void)swts;
++  (void)work;
++
+   const size_t n = fdf->n;
+   const size_t p = fdf->p;
+ 
+@@ -540,6 +546,10 @@ gsl_multilarge_nlinear_eval_fvv(const double h,
+                                 gsl_vector *yvv,
+                                 gsl_vector *work)
+ {
++  (void)f;
++  (void)h;
++  (void)work;
++
+   int status = GSL_SUCCESS;
+   
+   if (fdf->fvv != NULL)
+diff --git a/multilarge_nlinear/test_wnlin.c b/multilarge_nlinear/test_wnlin.c
+index 9f5a661a..4a86b0da 100644
+--- a/multilarge_nlinear/test_wnlin.c
++++ b/multilarge_nlinear/test_wnlin.c
+@@ -54,6 +54,8 @@ wnlin_checksol(const double x[], const double sumsq,
+ static int
+ wnlin_f (const gsl_vector *x, void *params, gsl_vector *f)
+ {
++  (void)params;
++
+   double A = gsl_vector_get (x, 0);
+   double lambda = gsl_vector_get (x, 1);
+   double b = gsl_vector_get (x, 2);
+@@ -78,6 +80,8 @@ wnlin_df (CBLAS_TRANSPOSE_t TransJ, const gsl_vector * x,
+           const gsl_vector * u, void * params, gsl_vector * v,
+           gsl_matrix * JTJ)
+ {
++  (void)params;
++
+   gsl_matrix_view J = gsl_matrix_view_array(wnlin_J, wnlin_N, wnlin_P);
+   double A = gsl_vector_get (x, 0);
+   double lambda = gsl_vector_get (x, 1);
+@@ -110,6 +114,8 @@ static int
+ wnlin_fvv (const gsl_vector * x, const gsl_vector * v,
+            void *params, gsl_vector * fvv)
+ {
++  (void)params;
++
+   double A = gsl_vector_get (x, 0);
+   double lambda = gsl_vector_get (x, 1);
+   double v1 = gsl_vector_get(v, 0);
+diff --git a/multimin/directional_minimize.c b/multimin/directional_minimize.c
+index 6dfa0acc..54a4f2b2 100644
+--- a/multimin/directional_minimize.c
++++ b/multimin/directional_minimize.c
+@@ -38,6 +38,8 @@ intermediate_point (gsl_multimin_function_fdf * fdf,
+                     gsl_vector * x1, gsl_vector * dx, gsl_vector * gradient,
+                     double * step, double * f)
+ {
++  (void)stepa;
++
+   double stepb, fb;
+ 
+ trial:
+diff --git a/multimin/test_funcs.c b/multimin/test_funcs.c
+index d783e487..64ac3c20 100644
+--- a/multimin/test_funcs.c
++++ b/multimin/test_funcs.c
+@@ -48,6 +48,8 @@ void simpleabs_initpt1 (gsl_vector * x)
+ 
+ double simpleabs_f (const gsl_vector * x, void *params)
+ {
++  (void)params;
++
+   double u = gsl_vector_get(x,0);
+   double v = gsl_vector_get(x,1);
+   double a = u - 1;
+@@ -58,6 +60,8 @@ double simpleabs_f (const gsl_vector * x, void *params)
+ 
+ void simpleabs_df (const gsl_vector * x, void *params, gsl_vector * df)
+ {
++  (void)params;
++
+   double u = gsl_vector_get(x,0);
+   double v = gsl_vector_get(x,1);
+   gcount++;
+@@ -68,6 +72,8 @@ void simpleabs_df (const gsl_vector * x, void *params, gsl_vector * df)
+ void simpleabs_fdf (const gsl_vector * x, void *params, double * f,
+                      gsl_vector * df) 
+ {
++  (void)params;
++
+   double u = gsl_vector_get(x,0);
+   double v = gsl_vector_get(x,1);
+   double a = u - 1;
+@@ -102,6 +108,8 @@ void rosenbrock_initpt1 (gsl_vector * x)
+ 
+ double rosenbrock_f (const gsl_vector * x, void *params)
+ {
++  (void)params;
++
+   double u = gsl_vector_get(x,0);
+   double v = gsl_vector_get(x,1);
+   double a = u - 1;
+@@ -112,6 +120,8 @@ double rosenbrock_f (const gsl_vector * x, void *params)
+ 
+ void rosenbrock_df (const gsl_vector * x, void *params, gsl_vector * df)
+ {
++  (void)params;
++
+   double u = gsl_vector_get(x,0);
+   double v = gsl_vector_get(x,1);
+   double b = u * u - v;
+@@ -123,6 +133,8 @@ void rosenbrock_df (const gsl_vector * x, void *params, gsl_vector * df)
+ void rosenbrock_fdf (const gsl_vector * x, void *params, double * f,
+                      gsl_vector * df) 
+ {
++  (void)params;
++
+   double u = gsl_vector_get(x,0);
+   double v = gsl_vector_get(x,1);
+   double a = u - 1;
+@@ -151,6 +163,8 @@ void roth_initpt (gsl_vector * x)
+ 
+ double roth_f (const gsl_vector * x, void *params)
+ {
++  (void)params;
++
+   double u = gsl_vector_get(x,0);
+   double v = gsl_vector_get(x,1);
+   double a = -13.0 + u + ((5.0 - v)*v - 2.0)*v;
+@@ -161,6 +175,8 @@ double roth_f (const gsl_vector * x, void *params)
+ 
+ void roth_df (const gsl_vector * x, void *params, gsl_vector * df)
+ {
++  (void)params;
++
+   double u = gsl_vector_get(x,0);
+   double v = gsl_vector_get(x,1);
+   double a = -13.0 + u + ((5.0 - v)*v - 2.0)*v;
+@@ -200,6 +216,8 @@ wood_initpt (gsl_vector * x)
+ 
+ double wood_f (const gsl_vector * x, void *params)
+ {
++  (void)params;
++
+   double u1 = gsl_vector_get(x,0);
+   double u2 = gsl_vector_get(x,1);
+   double u3 = gsl_vector_get(x,2);
+@@ -216,6 +234,8 @@ double wood_f (const gsl_vector * x, void *params)
+ 
+ void wood_df (const gsl_vector * x, void *params, gsl_vector * df)
+ {
++  (void)params;
++
+   double u1 = gsl_vector_get(x,0);
+   double u2 = gsl_vector_get(x,1);
+   double u3 = gsl_vector_get(x,2);
+@@ -320,6 +340,8 @@ spring_initpt (gsl_vector * x)
+ double
+ spring_f (const gsl_vector * x, void *params)
+ {
++  (void)params;
++
+   double x0 = gsl_vector_get (x, 0);
+   double x1 = gsl_vector_get (x, 1);
+   double x2 = gsl_vector_get (x, 2);
+diff --git a/multimin/vector_bfgs2.c b/multimin/vector_bfgs2.c
+index 92ffc03a..4a32d40f 100644
+--- a/multimin/vector_bfgs2.c
++++ b/multimin/vector_bfgs2.c
+@@ -209,6 +209,8 @@ vector_bfgs2_iterate (void *vstate, gsl_multimin_function_fdf * fdf,
+                       gsl_vector * x, double *f,
+                       gsl_vector * gradient, gsl_vector * dx)
+ {
++  (void)fdf;
++
+   vector_bfgs2_state_t *state = (vector_bfgs2_state_t *) vstate;
+   double alpha = 0.0, alpha1;
+   gsl_vector *x0 = state->x0;
+diff --git a/multiroots/newton.c b/multiroots/newton.c
+index f60ddca9..f10a9f9f 100644
+--- a/multiroots/newton.c
++++ b/multiroots/newton.c
+@@ -75,7 +75,7 @@ newton_alloc (void * vstate, size_t n)
+ static int 
+ newton_set (void * vstate, gsl_multiroot_function_fdf * FDF, gsl_vector * x, gsl_vector * f, gsl_matrix * J, gsl_vector * dx)
+ {
+-  newton_state_t * state = (newton_state_t *) vstate;
++  newton_state_t * state = (newton_state_t *) vstate; (void)state;
+ 
+   size_t i, n = FDF->n ;
+ 
+diff --git a/multiroots/test_funcs.c b/multiroots/test_funcs.c
+index b1dbf779..e55ee98e 100644
+--- a/multiroots/test_funcs.c
++++ b/multiroots/test_funcs.c
+@@ -51,6 +51,8 @@ rosenbrock_initpt (gsl_vector * x)
+ int
+ rosenbrock_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x0 = gsl_vector_get (x, 0);
+   double x1 = gsl_vector_get (x, 1);
+ 
+@@ -68,6 +70,8 @@ rosenbrock_f (const gsl_vector * x, void *params, gsl_vector * f)
+ int
+ rosenbrock_df (const gsl_vector * x, void *params, gsl_matrix * df)
+ {
++  (void)params;
++
+   double x0 = gsl_vector_get (x, 0);
+ 
+   double df00 = -1;
+@@ -114,6 +118,8 @@ roth_initpt (gsl_vector * x)
+ int
+ roth_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x0 = gsl_vector_get (x, 0);
+   double x1 = gsl_vector_get (x, 1);
+ 
+@@ -131,6 +137,8 @@ roth_f (const gsl_vector * x, void *params, gsl_vector * f)
+ int
+ roth_df (const gsl_vector * x, void *params, gsl_matrix * df)
+ {
++  (void)params;
++
+   double x1 = gsl_vector_get (x, 1);
+ 
+   double df00 = 1;
+@@ -178,6 +186,8 @@ powellscal_initpt (gsl_vector * x)
+ int
+ powellscal_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x0 = gsl_vector_get (x, 0);
+   double x1 = gsl_vector_get (x, 1);
+ 
+@@ -195,6 +205,8 @@ powellscal_f (const gsl_vector * x, void *params, gsl_vector * f)
+ int
+ powellscal_df (const gsl_vector * x, void *params, gsl_matrix * df)
+ {
++  (void)params;
++
+   double x0 = gsl_vector_get (x, 0);
+   double x1 = gsl_vector_get (x, 1);
+ 
+@@ -240,6 +252,8 @@ brownscal_initpt (gsl_vector * x)
+ int
+ brownscal_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x0 = gsl_vector_get (x, 0);
+   double x1 = gsl_vector_get (x, 1);
+ 
+@@ -257,6 +271,8 @@ brownscal_f (const gsl_vector * x, void *params, gsl_vector * f)
+ int
+ brownscal_df (const gsl_vector * x, void *params, gsl_matrix * df)
+ {
++  (void)params;
++
+   double x0 = gsl_vector_get (x, 0);
+   double x1 = gsl_vector_get (x, 1);
+ 
+@@ -304,6 +320,8 @@ powellsing_initpt (gsl_vector * x)
+ int
+ powellsing_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x0 = gsl_vector_get (x, 0);
+   double x1 = gsl_vector_get (x, 1);
+   double x2 = gsl_vector_get (x, 2);
+@@ -327,6 +345,8 @@ powellsing_f (const gsl_vector * x, void *params, gsl_vector * f)
+ int
+ powellsing_df (const gsl_vector * x, void *params, gsl_matrix * df)
+ {
++  (void)params;
++
+   double x0 = gsl_vector_get (x, 0);
+   double x1 = gsl_vector_get (x, 1);
+   double x2 = gsl_vector_get (x, 2);
+@@ -393,6 +413,8 @@ wood_initpt (gsl_vector * x)
+ int
+ wood_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x0 = gsl_vector_get (x, 0);
+   double x1 = gsl_vector_get (x, 1);
+   double x2 = gsl_vector_get (x, 2);
+@@ -419,6 +441,8 @@ wood_f (const gsl_vector * x, void *params, gsl_vector * f)
+ int
+ wood_df (const gsl_vector * x, void *params, gsl_matrix * df)
+ {
++  (void)params;
++
+   double x0 = gsl_vector_get (x, 0);
+   double x1 = gsl_vector_get (x, 1);
+   double x2 = gsl_vector_get (x, 2);
+@@ -487,6 +511,8 @@ helical_initpt (gsl_vector * x)
+ int
+ helical_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   double x0 = gsl_vector_get (x, 0);
+   double x1 = gsl_vector_get (x, 1);
+   double x2 = gsl_vector_get (x, 2);
+@@ -525,6 +551,8 @@ helical_f (const gsl_vector * x, void *params, gsl_vector * f)
+ int
+ helical_df (const gsl_vector * x, void *params, gsl_matrix * df)
+ {
++  (void)params;
++
+   double x0 = gsl_vector_get (x, 0);
+   double x1 = gsl_vector_get (x, 1);
+ 
+@@ -591,6 +619,8 @@ dbv_initpt (gsl_vector * x)
+ int
+ dbv_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   size_t i;
+ 
+   double h = 1.0 / (N + 1.0);
+@@ -622,6 +652,8 @@ dbv_f (const gsl_vector * x, void *params, gsl_vector * f)
+ int
+ dbv_df (const gsl_vector * x, void *params, gsl_matrix * df)
+ {
++  (void)params;
++
+   size_t i, j;
+ 
+   double h = 1.0 / (N + 1.0);
+@@ -685,6 +717,8 @@ trig_initpt (gsl_vector * x)
+ int
+ trig_f (const gsl_vector * x, void *params, gsl_vector * f)
+ {
++  (void)params;
++
+   size_t i;
+   double sum = 0;
+ 
+@@ -709,6 +743,8 @@ trig_f (const gsl_vector * x, void *params, gsl_vector * f)
+ int
+ trig_df (const gsl_vector * x, void *params, gsl_matrix * df)
+ {
++  (void)params;
++
+   size_t i, j;
+ 
+   for (i = 0; i < N; i++)
+diff --git a/ntuple/test.c b/ntuple/test.c
+index 0827c131..a193f16b 100644
+--- a/ntuple/test.c
++++ b/ntuple/test.c
+@@ -142,7 +142,7 @@ main (void)
+ int
+ sel_func (void *ntuple_data, void * params)
+ {
+-  double x, y, z, scale;
++  double x, y, z, scale; (void)y; (void)z;
+   scale = *(double *)params;
+ 
+   x = ((struct data *) ntuple_data)->x;
+diff --git a/ode-initval/gear1.c b/ode-initval/gear1.c
+index 1111bd3f..7988de82 100644
+--- a/ode-initval/gear1.c
++++ b/ode-initval/gear1.c
+@@ -153,6 +153,8 @@ gear1_apply(void * vstate,
+             double dydt_out[],
+             const gsl_odeiv_system * sys)
+ {
++  (void)dydt_in;
++
+   gear1_state_t *state = (gear1_state_t *) vstate;
+ 
+   size_t i;
+@@ -243,7 +245,7 @@ gear1_reset (void *vstate, size_t dim)
+ static unsigned int
+ gear1_order (void *vstate)
+ {
+-  gear1_state_t *state = (gear1_state_t *) vstate;
++  gear1_state_t *state = (gear1_state_t *) vstate; (void)state;
+   state = 0; /* prevent warnings about unused parameters */
+   return 1;
+ }
+diff --git a/ode-initval/gear2.c b/ode-initval/gear2.c
+index f27b2f3e..8d900b50 100644
+--- a/ode-initval/gear2.c
++++ b/ode-initval/gear2.c
+@@ -314,7 +314,7 @@ gear2_reset (void *vstate, size_t dim)
+ static unsigned int
+ gear2_order (void *vstate)
+ {
+-  gear2_state_t *state = (gear2_state_t *) vstate;
++  gear2_state_t *state = (gear2_state_t *) vstate; (void)state;
+   state = 0;                    /* prevent warnings about unused parameters */
+   return 3;
+ }
+diff --git a/ode-initval/rk2.c b/ode-initval/rk2.c
+index 54b20324..da23ec66 100644
+--- a/ode-initval/rk2.c
++++ b/ode-initval/rk2.c
+@@ -221,7 +221,7 @@ rk2_reset (void *vstate, size_t dim)
+ static unsigned int
+ rk2_order (void *vstate)
+ {
+-  rk2_state_t *state = (rk2_state_t *) vstate;
++  rk2_state_t *state = (rk2_state_t *) vstate; (void)state;
+   state = 0; /* prevent warnings about unused parameters */
+   return 2;
+ }
+diff --git a/ode-initval/rk2imp.c b/ode-initval/rk2imp.c
+index 4e94b082..84822e78 100644
+--- a/ode-initval/rk2imp.c
++++ b/ode-initval/rk2imp.c
+@@ -305,7 +305,7 @@ rk2imp_reset (void *vstate, size_t dim)
+ static unsigned int
+ rk2imp_order (void *vstate)
+ {
+-  rk2imp_state_t *state = (rk2imp_state_t *) vstate;
++  rk2imp_state_t *state = (rk2imp_state_t *) vstate; (void)state;
+   state = 0; /* prevent warnings about unused parameters */
+   return 2;
+ }
+diff --git a/ode-initval/rk2simp.c b/ode-initval/rk2simp.c
+index 6d979e02..c4f50d02 100644
+--- a/ode-initval/rk2simp.c
++++ b/ode-initval/rk2simp.c
+@@ -252,6 +252,8 @@ rk2simp_apply (void *vstate, size_t dim, double t, double h,
+                double y[], double yerr[], const double dydt_in[],
+                double dydt_out[], const gsl_odeiv_system * sys)
+ {
++  (void)dydt_in;
++
+   rk2simp_state_t *state = (rk2simp_state_t *) vstate;
+ 
+   size_t i;
+@@ -349,7 +351,7 @@ rk2simp_reset (void *vstate, size_t dim)
+ static unsigned int
+ rk2simp_order (void *vstate)
+ {
+-  rk2simp_state_t *state = (rk2simp_state_t *) vstate;
++  rk2simp_state_t *state = (rk2simp_state_t *) vstate; (void)state;
+   state = 0;                    /* prevent warnings about unused parameters */
+   return 2;
+ }
+diff --git a/ode-initval/rk4.c b/ode-initval/rk4.c
+index fda74361..510c47c8 100644
+--- a/ode-initval/rk4.c
++++ b/ode-initval/rk4.c
+@@ -335,7 +335,7 @@ rk4_reset (void *vstate, size_t dim)
+ static unsigned int
+ rk4_order (void *vstate)
+ {
+-  rk4_state_t *state = (rk4_state_t *) vstate;
++  rk4_state_t *state = (rk4_state_t *) vstate; (void)state;
+   state = 0; /* prevent warnings about unused parameters */
+   return 4;
+ }
+diff --git a/ode-initval/rk4imp.c b/ode-initval/rk4imp.c
+index e569b7e5..b58ee96b 100644
+--- a/ode-initval/rk4imp.c
++++ b/ode-initval/rk4imp.c
+@@ -357,7 +357,7 @@ rk4imp_reset (void *vstate, size_t dim)
+ static unsigned int
+ rk4imp_order (void *vstate)
+ {
+-  rk4imp_state_t *state = (rk4imp_state_t *) vstate;
++  rk4imp_state_t *state = (rk4imp_state_t *) vstate; (void)state;
+   state = 0; /* prevent warnings about unused parameters */
+   return 4;
+ }
+diff --git a/ode-initval/rk8pd.c b/ode-initval/rk8pd.c
+index a82d1bd2..02c6cb94 100644
+--- a/ode-initval/rk8pd.c
++++ b/ode-initval/rk8pd.c
+@@ -504,7 +504,7 @@ rk8pd_reset (void *vstate, size_t dim)
+ static unsigned int
+ rk8pd_order (void *vstate)
+ {
+-  rk8pd_state_t *state = (rk8pd_state_t *) vstate;
++  rk8pd_state_t *state = (rk8pd_state_t *) vstate; (void)state;
+   state = 0; /* prevent warnings about unused parameters */
+   return 8;
+ }
+diff --git a/ode-initval/rkck.c b/ode-initval/rkck.c
+index 73ee3a5f..90743728 100644
+--- a/ode-initval/rkck.c
++++ b/ode-initval/rkck.c
+@@ -337,7 +337,7 @@ rkck_reset (void *vstate, size_t dim)
+ static unsigned int
+ rkck_order (void *vstate)
+ {
+-  rkck_state_t *state = (rkck_state_t *) vstate;
++  rkck_state_t *state = (rkck_state_t *) vstate; (void)state;
+   state = 0; /* prevent warnings about unused parameters */
+   return 5; /* FIXME: should this be 4? */
+ }
+diff --git a/ode-initval/rkf45.c b/ode-initval/rkf45.c
+index f938d612..d55a9eda 100644
+--- a/ode-initval/rkf45.c
++++ b/ode-initval/rkf45.c
+@@ -338,7 +338,7 @@ rkf45_reset (void *vstate, size_t dim)
+ static unsigned int
+ rkf45_order (void *vstate)
+ {
+-  rkf45_state_t *state = (rkf45_state_t *) vstate;
++  rkf45_state_t *state = (rkf45_state_t *) vstate; (void)state;
+   state = 0; /* prevent warnings about unused parameters */
+   return 5;
+ }
+diff --git a/ode-initval/test.c b/ode-initval/test.c
+index 409c3dd6..48d15ef3 100644
+--- a/ode-initval/test.c
++++ b/ode-initval/test.c
+@@ -42,6 +42,10 @@
+ int
+ rhs_linear (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)t;
++  (void)y;
++
+   f[0] = 2.0;
+ 
+   return GSL_SUCCESS;
+@@ -51,6 +55,10 @@ int
+ jac_linear (double t, const double y[], double *dfdy, double dfdt[],
+             void *params)
+ {
++  (void)params;
++  (void)t;
++  (void)y;
++
+   dfdy[0] = 0.0;
+   dfdt[0] = 0.0;
+ 
+@@ -69,6 +77,9 @@ gsl_odeiv_system rhs_func_lin = {
+ int
+ rhs_exp (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)t;
++
+   f[0] = y[0];
+ 
+   return GSL_SUCCESS;
+@@ -78,6 +89,9 @@ int
+ jac_exp (double t, const double y[], double *dfdy, double dfdt[],
+          void *params)
+ {
++  (void)params;
++  (void)t;
++
+   dfdy[0] = y[0];
+   dfdt[0] = 0.0;
+ 
+@@ -98,6 +112,9 @@ gsl_odeiv_system rhs_func_exp = {
+ int
+ rhs_sin (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)t;
++
+   f[0] = -y[1];
+   f[1] = y[0];
+ 
+@@ -108,6 +125,10 @@ int
+ jac_sin (double t, const double y[], double *dfdy, double dfdt[],
+          void *params)
+ {
++  (void)params;
++  (void)t;
++  (void)y;
++
+   dfdy[0] = 0.0;
+   dfdy[1] = -1.0;
+   dfdy[2] = 1.0;
+@@ -134,6 +155,9 @@ static int jac_xsin_reset = 0;
+ int
+ rhs_xsin (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)t;
++
+   static int n = 0, m = 0;
+   
+   if (rhs_xsin_reset) { rhs_xsin_reset = 0; n = 0; m = 1;}
+@@ -160,6 +184,11 @@ int
+ jac_xsin (double t, const double y[], double *dfdy, double dfdt[],
+          void *params)
+ {
++  (void)params;
++
++  (void)t;
++  (void)y;
++
+   static int n = 0;
+ 
+   if (jac_xsin_reset) { jac_xsin_reset = 0; n = 0; }
+@@ -208,6 +237,9 @@ gsl_odeiv_system rhs_func_xsin = {
+ int
+ rhs_stiff (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)t;
++
+   f[0] = 998.0 * y[0] + 1998.0 * y[1];
+   f[1] = -999.0 * y[0] - 1999.0 * y[1];
+ 
+@@ -218,6 +250,10 @@ int
+ jac_stiff (double t, const double y[], double *dfdy, double dfdt[],
+            void *params)
+ {
++  (void)params;
++  (void)t;
++  (void)y;
++
+   dfdy[0] = 998.0;
+   dfdy[1] = 1998.0;
+   dfdy[2] = -999.0;
+@@ -244,6 +280,9 @@ gsl_odeiv_system rhs_func_stiff = {
+ int
+ rhs_vanderpol (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)t;
++
+   const double mu = 10.0;
+ 
+   f[0] = y[1];
+@@ -256,6 +295,9 @@ int
+ jac_vanderpol (double t, const double y[], double *dfdy, double dfdt[],
+ 	       void *params)
+ {
++  (void)params;
++  (void)t;
++
+   const double mu = 10.0;
+ 
+   dfdy[0] = 0.0;
+@@ -283,6 +325,9 @@ gsl_odeiv_system rhs_func_vanderpol = {
+ int
+ rhs_oregonator (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)t;
++
+   const double c1=77.27;
+   const double c2=8.375e-6;
+   const double c3=0.161;
+@@ -298,6 +343,9 @@ int
+ jac_oregonator (double t, const double y[], double *dfdy, double dfdt[],
+ 		void *params)
+ {
++  (void)params;
++  (void)t;
++
+   const double c1=77.27;
+   const double c2=8.375e-6;
+   const double c3=0.161;
+@@ -337,6 +385,9 @@ gsl_odeiv_system rhs_func_oregonator = {
+ int
+ rhs_vl (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)t;
++
+   const double a = 1.0;
+   const double b = 1.0;
+   const double c = 1.0;
+@@ -352,6 +403,9 @@ int
+ jac_vl (double t, const double y[], double *dfdy, double dfdt[],
+             void *params)
+ {
++  (void)params;
++  (void)t;
++
+   const double a = 1.0;
+   const double b = 1.0;
+   const double c = 1.0;
+@@ -383,6 +437,8 @@ gsl_odeiv_system rhs_func_vl = {
+ int
+ rhs_stifftrig (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++
+   f[0] = -50 * (y[0] - cos(t));
+ 
+   return GSL_SUCCESS;
+@@ -392,6 +448,9 @@ int
+ jac_stifftrig (double t, const double y[], double *dfdy, double dfdt[],
+             void *params)
+ {
++  (void)params;
++  (void)y;
++
+   dfdy[0] = -50;
+ 
+   dfdt[0] = -50 * sin(t);
+@@ -419,6 +478,9 @@ gsl_odeiv_system rhs_func_stifftrig = {
+ int
+ rhs_e5 (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)t;
++
+   const double a = 7.89e-10;
+   const double b = 1.1e7;
+   const double c = 1.13e3;
+@@ -436,6 +498,9 @@ int
+ jac_e5 (double t, const double y[], double *dfdy, double dfdt[],
+             void *params)
+ {
++  (void)params;
++  (void)t;
++
+   const double a = 7.89e-10;
+   const double b = 1.1e7;
+   const double c = 1.13e3;
+@@ -1004,6 +1069,9 @@ test_evolve_stiff5 (const gsl_odeiv_step_type * T, double h, double err)
+ /* Test cases from Frank Reininghaus <frank78ac@googlemail.com> */
+ 
+ int rhs_stepfn (double t, const double * y, double * dydt, void * params) {
++  (void)params;
++  (void)y;
++
+   if (t >= 1.0)
+     dydt [0] = 1;
+   else
+@@ -1049,6 +1117,9 @@ void test_stepfn (void) {
+ }
+ 
+ int rhs_stepfn2 (double t, const double * y, double * dydt, void * params) {
++  (void)params;
++  (void)y;
++
+   if (t >= 0.0)
+     dydt [0] = 1e300;
+   else
+@@ -1095,6 +1166,9 @@ void test_stepfn2 (void) {
+ }
+ 
+ int rhs_stepfn3 (double t, const double * y, double * dydt, void * params) {
++  (void)params;
++  (void)y;
++
+ 
+   static int calls = 0;
+ 
+@@ -1147,6 +1221,9 @@ void test_stepfn3 (void) {
+ }
+ 
+ int rhs_cos (double t, const double * y, double * dydt, void * params) {
++  (void)params;
++  (void)y;
++
+   dydt [0] = cos (t);
+   return GSL_SUCCESS;
+ }
+@@ -1154,6 +1231,9 @@ int rhs_cos (double t, const double * y, double * dydt, void * params) {
+ int jac_cos (double t, const double y[], double *dfdy, double dfdt[],
+              void *params)
+ {
++  (void)params;
++  (void)y;
++
+   dfdy[0] = 0.0;
+   dfdt[0] = -sin(t);
+ 
+diff --git a/ode-initval2/msbdf.c b/ode-initval2/msbdf.c
+index 14979cff..33bbaada 100644
+--- a/ode-initval2/msbdf.c
++++ b/ode-initval2/msbdf.c
+@@ -649,6 +649,8 @@ msbdf_update (void *vstate, const size_t dim, gsl_matrix * dfdy, double *dfdt,
+               const double tprev, const double failt,
+               const double gamma, const double gammaprev, const double hratio)
+ {
++  (void)iter;
++
+   /* Evaluates Jacobian dfdy and updates iteration matrix M
+      if criteria for update is met.
+    */
+diff --git a/ode-initval2/rk1imp.c b/ode-initval2/rk1imp.c
+index a0a8b1f2..98738de9 100644
+--- a/ode-initval2/rk1imp.c
++++ b/ode-initval2/rk1imp.c
+@@ -460,7 +460,7 @@ rk1imp_reset (void *vstate, size_t dim)
+ static unsigned int
+ rk1imp_order (void *vstate)
+ {
+-  rk1imp_state_t *state = (rk1imp_state_t *) vstate;
++  rk1imp_state_t *state = (rk1imp_state_t *) vstate; (void)state;
+   state = 0;                    /* prevent warnings about unused parameters */
+   return 1;
+ }
+diff --git a/ode-initval2/rk2.c b/ode-initval2/rk2.c
+index 4d0eaef2..6a3545f6 100644
+--- a/ode-initval2/rk2.c
++++ b/ode-initval2/rk2.c
+@@ -221,7 +221,7 @@ rk2_reset (void *vstate, size_t dim)
+ static unsigned int
+ rk2_order (void *vstate)
+ {
+-  rk2_state_t *state = (rk2_state_t *) vstate;
++  rk2_state_t *state = (rk2_state_t *) vstate; (void)state;
+   state = 0;                    /* prevent warnings about unused parameters */
+   return 2;
+ }
+diff --git a/ode-initval2/rk2imp.c b/ode-initval2/rk2imp.c
+index e4cddd82..a20a7459 100644
+--- a/ode-initval2/rk2imp.c
++++ b/ode-initval2/rk2imp.c
+@@ -580,7 +580,7 @@ rk2imp_reset (void *vstate, size_t dim)
+ static unsigned int
+ rk2imp_order (void *vstate)
+ {
+-  rk2imp_state_t *state = (rk2imp_state_t *) vstate;
++  rk2imp_state_t *state = (rk2imp_state_t *) vstate; (void)state;
+   state = 0;                    /* prevent warnings about unused parameters */
+   return 2;
+ }
+diff --git a/ode-initval2/rk4.c b/ode-initval2/rk4.c
+index 626ae4e6..2c0ff0fb 100644
+--- a/ode-initval2/rk4.c
++++ b/ode-initval2/rk4.c
+@@ -329,7 +329,7 @@ rk4_reset (void *vstate, size_t dim)
+ static unsigned int
+ rk4_order (void *vstate)
+ {
+-  rk4_state_t *state = (rk4_state_t *) vstate;
++  rk4_state_t *state = (rk4_state_t *) vstate; (void)state;
+   state = 0;                    /* prevent warnings about unused parameters */
+   return 4;
+ }
+diff --git a/ode-initval2/rk4imp.c b/ode-initval2/rk4imp.c
+index a0038404..5bc7b2c3 100644
+--- a/ode-initval2/rk4imp.c
++++ b/ode-initval2/rk4imp.c
+@@ -493,7 +493,7 @@ rk4imp_reset (void *vstate, size_t dim)
+ static unsigned int
+ rk4imp_order (void *vstate)
+ {
+-  rk4imp_state_t *state = (rk4imp_state_t *) vstate;
++  rk4imp_state_t *state = (rk4imp_state_t *) vstate; (void)state;
+   state = 0;                    /* prevent warnings about unused parameters */
+   return 4;
+ }
+diff --git a/ode-initval2/rk8pd.c b/ode-initval2/rk8pd.c
+index 5880f141..d9a31b22 100644
+--- a/ode-initval2/rk8pd.c
++++ b/ode-initval2/rk8pd.c
+@@ -512,7 +512,7 @@ rk8pd_reset (void *vstate, size_t dim)
+ static unsigned int
+ rk8pd_order (void *vstate)
+ {
+-  rk8pd_state_t *state = (rk8pd_state_t *) vstate;
++  rk8pd_state_t *state = (rk8pd_state_t *) vstate; (void)state;
+   state = 0;                    /* prevent warnings about unused parameters */
+   return 8;
+ }
+diff --git a/ode-initval2/rkck.c b/ode-initval2/rkck.c
+index ef5ce2b3..1769d961 100644
+--- a/ode-initval2/rkck.c
++++ b/ode-initval2/rkck.c
+@@ -342,7 +342,7 @@ rkck_reset (void *vstate, size_t dim)
+ static unsigned int
+ rkck_order (void *vstate)
+ {
+-  rkck_state_t *state = (rkck_state_t *) vstate;
++  rkck_state_t *state = (rkck_state_t *) vstate; (void)state;
+   state = 0;                    /* prevent warnings about unused parameters */
+   return 5;                     /* FIXME: should this be 4? */
+ }
+diff --git a/ode-initval2/rkf45.c b/ode-initval2/rkf45.c
+index 1415055b..771d16a7 100644
+--- a/ode-initval2/rkf45.c
++++ b/ode-initval2/rkf45.c
+@@ -346,7 +346,7 @@ rkf45_reset (void *vstate, size_t dim)
+ static unsigned int
+ rkf45_order (void *vstate)
+ {
+-  rkf45_state_t *state = (rkf45_state_t *) vstate;
++  rkf45_state_t *state = (rkf45_state_t *) vstate; (void)state;
+   state = 0;                    /* prevent warnings about unused parameters */
+   return 5;
+ }
+diff --git a/ode-initval2/step_utils.c b/ode-initval2/step_utils.c
+index 9b71be4e..89590e37 100644
+--- a/ode-initval2/step_utils.c
++++ b/ode-initval2/step_utils.c
+@@ -20,6 +20,9 @@
+ static int
+ stepper_set_driver_null (void *vstate, const gsl_odeiv2_driver * d)
+ {
++  (void)d;
++  (void)vstate;
++
+   /* Dummy set function for those steppers that do not
+      need pointer to driver object. */
+ 
+diff --git a/ode-initval2/test.c b/ode-initval2/test.c
+index ae87bd0e..f23016a5 100644
+--- a/ode-initval2/test.c
++++ b/ode-initval2/test.c
+@@ -54,6 +54,10 @@ int nje;
+ int
+ rhs_linear (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)t;
++  (void)y;
++
+   extern int nfe;
+   nfe += 1;
+ 
+@@ -66,6 +70,10 @@ int
+ jac_linear (double t, const double y[], double *dfdy, double dfdt[],
+             void *params)
+ {
++  (void)params;
++  (void)t;
++  (void)y;
++
+   extern int nje;
+   nje += 1;
+ 
+@@ -87,6 +95,9 @@ gsl_odeiv2_system rhs_func_lin = {
+ int
+ rhs_exp (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)t;
++
+   extern int nfe;
+   nfe += 1;
+ 
+@@ -99,6 +110,9 @@ int
+ jac_exp (double t, const double y[], double *dfdy, double dfdt[],
+          void *params)
+ {
++  (void)params;
++  (void)t;
++
+   extern int nje;
+   nje += 1;
+ 
+@@ -118,6 +132,9 @@ gsl_odeiv2_system rhs_func_exp = {
+ int
+ rhs_sin (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)t;
++
+   extern int nfe;
+   nfe += 1;
+ 
+@@ -131,6 +148,10 @@ int
+ jac_sin (double t, const double y[], double *dfdy, double dfdt[],
+          void *params)
+ {
++  (void)params;
++  (void)t;
++  (void)y;
++
+   extern int nje;
+   nje += 1;
+ 
+@@ -160,6 +181,9 @@ static int jac_xsin_reset = 0;
+ int
+ rhs_xsin (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)t;
++
+   static int n = 0, m = 0;
+   extern int nfe;
+   nfe += 1;
+@@ -195,6 +219,11 @@ int
+ jac_xsin (double t, const double y[], double *dfdy, double dfdt[],
+           void *params)
+ {
++  (void)params;
++
++  (void)t;
++  (void)y;
++
+   static int n = 0;
+   extern int nje;
+   nje += 1;
+@@ -248,6 +277,9 @@ gsl_odeiv2_system rhs_func_xsin = {
+ int
+ rhs_stiff (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)t;
++
+   extern int nfe;
+   nfe += 1;
+ 
+@@ -261,6 +293,10 @@ int
+ jac_stiff (double t, const double y[], double *dfdy, double dfdt[],
+            void *params)
+ {
++  (void)params;
++  (void)t;
++  (void)y;
++
+   extern int nje;
+   nje += 1;
+ 
+@@ -287,6 +323,9 @@ gsl_odeiv2_system rhs_func_stiff = {
+ int
+ rhs_cos (double t, const double *y, double *dydt, void *params)
+ {
++  (void)params;
++  (void)y;
++
+   dydt[0] = cos (t);
+   return GSL_SUCCESS;
+ }
+@@ -295,6 +334,9 @@ int
+ jac_cos (double t, const double y[], double *dfdy, double dfdt[],
+          void *params)
+ {
++  (void)params;
++  (void)y;
++
+   dfdy[0] = 0.0;
+   dfdt[0] = -sin (t);
+ 
+@@ -316,6 +358,9 @@ gsl_odeiv2_system rhs_func_cos = {
+ int
+ rhs_broken (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)y;
++
+   if (t < 10.0)
+     {
+       f[0] = 1.0;
+@@ -334,6 +379,9 @@ int
+ jac_broken (double t, const double y[], double *dfdy, double dfdt[],
+             void *params)
+ {
++  (void)params;
++  (void)y;
++
+   if (t < 10.0)
+     {
+       dfdy[0] = 0.0;
+@@ -361,6 +409,8 @@ gsl_odeiv2_system rhs_func_broken = {
+ int
+ rhs_sin_ub (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++
+   extern int nfe;
+   nfe += 1;
+ 
+@@ -379,6 +429,9 @@ int
+ jac_sin_ub (double t, const double y[], double *dfdy, double dfdt[],
+             void *params)
+ {
++  (void)params;
++  (void)y;
++
+   extern int nje;
+   nje += 1;
+ 
+@@ -410,6 +463,11 @@ gsl_odeiv2_system rhs_func_sin_ub = {
+ int
+ rhs_br (double t, const double *y, double *dydt, void *params)
+ {
++  (void)params;
++
++  (void)t;
++  (void)y;
++
+   dydt[0] = (rand () - RAND_MAX / 2) * 2e100;
+   return GSL_SUCCESS;
+ }
+@@ -417,6 +475,10 @@ rhs_br (double t, const double *y, double *dydt, void *params)
+ int
+ jac_br (double t, const double y[], double *dfdy, double dfdt[], void *params)
+ {
++  (void)params;
++  (void)t;
++  (void)y;
++
+   dfdy[0] = (rand () - RAND_MAX / 2) * 2e100;
+   dfdt[0] = (rand () - RAND_MAX / 2) * 2e100;
+ 
+@@ -439,6 +501,9 @@ gsl_odeiv2_system rhs_func_br = {
+ int
+ rhs_stepfn (double t, const double *y, double *dydt, void *params)
+ {
++  (void)params;
++  (void)y;
++
+   if (t >= 1.0)
+     dydt[0] = 1;
+   else
+@@ -451,6 +516,10 @@ int
+ jac_stepfn (double t, const double y[], double *dfdy, double dfdt[],
+             void *params)
+ {
++  (void)params;
++  (void)t;
++  (void)y;
++
+   dfdy[0] = 0.0;
+   dfdt[0] = 0.0;
+ 
+@@ -469,6 +538,9 @@ gsl_odeiv2_system rhs_func_stepfn = {
+ int
+ rhs_stepfn2 (double t, const double *y, double *dydt, void *params)
+ {
++  (void)params;
++  (void)y;
++
+   if (t >= 0.0)
+     dydt[0] = 1e300;
+   else
+@@ -492,6 +564,9 @@ gsl_odeiv2_system rhs_func_stepfn2 = {
+ int
+ rhs_vl (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)t;
++
+   const double a = -1.0;
+   const double b = -1.0;
+   const double c = -2.0;
+@@ -509,6 +584,9 @@ rhs_vl (double t, const double y[], double f[], void *params)
+ int
+ jac_vl (double t, const double y[], double *dfdy, double dfdt[], void *params)
+ {
++  (void)params;
++  (void)t;
++
+   const double a = -1.0;
+   const double b = -1.0;
+   const double c = -2.0;
+@@ -543,6 +621,9 @@ gsl_odeiv2_system rhs_func_vl = {
+ int
+ rhs_vanderpol (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)t;
++
+   const double mu = 10.0;
+ 
+   extern int nfe;
+@@ -558,6 +639,9 @@ int
+ jac_vanderpol (double t, const double y[], double *dfdy, double dfdt[],
+                void *params)
+ {
++  (void)params;
++  (void)t;
++
+   const double mu = 10.0;
+ 
+   extern int nje;
+@@ -588,6 +672,8 @@ gsl_odeiv2_system rhs_func_vanderpol = {
+ int
+ rhs_stifftrig (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++
+   extern int nfe;
+   nfe += 1;
+ 
+@@ -600,6 +686,9 @@ int
+ jac_stifftrig (double t, const double y[], double *dfdy, double dfdt[],
+                void *params)
+ {
++  (void)params;
++  (void)y;
++
+   extern int nje;
+   nje += 1;
+ 
+@@ -624,6 +713,9 @@ gsl_odeiv2_system rhs_func_stifftrig = {
+ int
+ rhs_oregonator (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)t;
++
+   const double c1 = 77.27;
+   const double c2 = 8.375e-6;
+   const double c3 = 0.161;
+@@ -642,6 +734,9 @@ int
+ jac_oregonator (double t, const double y[], double *dfdy, double dfdt[],
+                 void *params)
+ {
++  (void)params;
++  (void)t;
++
+   const double c1 = 77.27;
+   const double c2 = 8.375e-6;
+   const double c3 = 0.161;
+@@ -688,6 +783,9 @@ gsl_odeiv2_system rhs_func_oregonator = {
+ int
+ rhs_e5 (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)t;
++
+   const double a = 7.89e-10;
+   const double b = 1.1e7;
+   const double c = 1.13e3;
+@@ -707,6 +805,9 @@ rhs_e5 (double t, const double y[], double f[], void *params)
+ int
+ jac_e5 (double t, const double y[], double *dfdy, double dfdt[], void *params)
+ {
++  (void)params;
++  (void)t;
++
+   const double a = 7.89e-10;
+   const double b = 1.1e7;
+   const double c = 1.13e3;
+@@ -762,6 +863,9 @@ gsl_odeiv2_system rhs_func_e5 = {
+ int
+ rhs_robertson (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)t;
++
+   const double a = 0.04;
+   const double b = 1.0e4;
+   const double c = 3.0e7;
+@@ -780,6 +884,9 @@ int
+ jac_robertson (double t, const double y[], double *dfdy, double dfdt[],
+                void *params)
+ {
++  (void)params;
++  (void)t;
++
+   const double a = 0.04;
+   const double b = 1.0e4;
+   const double c = 3.0e7;
+@@ -822,6 +929,9 @@ gsl_odeiv2_system rhs_func_robertson = {
+ int
+ rhs_brusselator (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++  (void)t;
++
+   const double a = 1.0;
+   const double b = 3.0;
+ 
+@@ -838,6 +948,9 @@ int
+ jac_brusselator (double t, const double y[], double *dfdy, double dfdt[],
+                  void *params)
+ {
++  (void)params;
++  (void)t;
++
+   const double b = 3.0;
+ 
+   extern int nje;
+@@ -874,6 +987,8 @@ gsl_odeiv2_system rhs_func_brusselator = {
+ int
+ rhs_ringmod (double t, const double y[], double f[], void *params)
+ {
++  (void)params;
++
+   const double c = 1.6e-8;
+   const double cs = 2e-12;
+   const double cp = 1e-8;
+@@ -930,6 +1045,8 @@ int
+ jac_ringmod (double t, const double y[], double *dfdy, double dfdt[],
+              void *params)
+ {
++  (void)params;
++
+   const double c = 1.6e-8;
+   const double cs = 2e-12;
+   const double cp = 1e-8;
+diff --git a/qrng/halton.c b/qrng/halton.c
+index 54e6cc43..32985d97 100644
+--- a/qrng/halton.c
++++ b/qrng/halton.c
+@@ -184,6 +184,8 @@ halton_state_t;
+ static size_t
+ halton_state_size (unsigned int dimension)
+ {
++  (void)dimension;
++
+   return sizeof (halton_state_t);
+ }
+ 
+diff --git a/qrng/niederreiter-2.c b/qrng/niederreiter-2.c
+index 1a28009f..dc87ac71 100644
+--- a/qrng/niederreiter-2.c
++++ b/qrng/niederreiter-2.c
+@@ -77,6 +77,8 @@ typedef struct
+ 
+ static size_t nied2_state_size(unsigned int dimension)
+ {
++  (void)dimension;
++
+   return sizeof(nied2_state_t);
+ }
+ 
+diff --git a/qrng/reversehalton.c b/qrng/reversehalton.c
+index 1a566bbd..dd871356 100644
+--- a/qrng/reversehalton.c
++++ b/qrng/reversehalton.c
+@@ -186,6 +186,8 @@ reversehalton_state_t;
+ static size_t
+ reversehalton_state_size (unsigned int dimension)
+ {
++  (void)dimension;
++
+   return sizeof (reversehalton_state_t);
+ }
+ 
+diff --git a/qrng/sobol.c b/qrng/sobol.c
+index 51c9baae..3b287a1e 100644
+--- a/qrng/sobol.c
++++ b/qrng/sobol.c
+@@ -128,6 +128,8 @@ typedef struct
+ 
+ static size_t sobol_state_size(unsigned int dimension)
+ {
++  (void)dimension;
++
+   return sizeof(sobol_state_t);
+ }
+ 
+diff --git a/qrng/test.c b/qrng/test.c
+index c5ab7cde..8f75c1bc 100644
+--- a/qrng/test.c
++++ b/qrng/test.c
+@@ -118,7 +118,7 @@ void test_halton(void)
+ 
+ void test_reversehalton(void)
+ {
+-	int status = 0;
++	int status = 0; (void)status;
+ 	double v[3];
+ 
+ 	/* test in dimension 2 */
+diff --git a/randist/test.c b/randist/test.c
+index c841f8b9..4739e05c 100644
+--- a/randist/test.c
++++ b/randist/test.c
+@@ -1964,7 +1964,7 @@ test_wishart (void)
+ {
+   size_t d = 1, i, j;
+   double df[5] = {1, 3, 5, 7, 9}, mean_wishart, var_wishart;
+-  int status;
++  int status; (void)status;
+   gsl_matrix * V = gsl_matrix_calloc(d, d);
+   gsl_matrix * L = gsl_matrix_calloc(d, d);
+   gsl_matrix * sample_wishart = gsl_matrix_calloc(d, d);
+diff --git a/rng/uni.c b/rng/uni.c
+index a3fcc69c..959af169 100644
+--- a/rng/uni.c
++++ b/rng/uni.c
+@@ -105,7 +105,6 @@ static inline unsigned long int uni_get (void *vstate);
+ static double uni_get_double (void *vstate);
+ static void uni_set (void *state, unsigned long int s);
+ 
+-static const unsigned int MDIG = 16;    /* Machine digits in int */
+ static const unsigned int m1 = 32767;   /* 2^(MDIG-1) - 1 */
+ static const unsigned int m2 = 256;     /* 2^(MDIG/2) */
+ 
+diff --git a/rng/uni32.c b/rng/uni32.c
+index 35f69065..49b7ffea 100644
+--- a/rng/uni32.c
++++ b/rng/uni32.c
+@@ -105,7 +105,6 @@ static inline unsigned long int uni32_get (void *vstate);
+ static double uni32_get_double (void *vstate);
+ static void uni32_set (void *state, unsigned long int s);
+ 
+-static const unsigned long int MDIG = 32;       /* Machine digits in int */
+ static const unsigned long int m1 = 2147483647;         /* 2^(MDIG-1) - 1 */
+ static const unsigned long int m2 = 65536;      /* 2^(MDIG/2) */
+ 
+diff --git a/roots/test.c b/roots/test.c
+index e27294f7..d017554b 100644
+--- a/roots/test.c
++++ b/roots/test.c
+@@ -43,7 +43,7 @@ int
+ main (void)
+ {
+   gsl_function F_sin, F_cos, F_func1, F_func2, F_func3, F_func4,
+-	  F_func5, F_func6;
++	  F_func5, F_func6; (void)F_func5;
+   
+   gsl_function_fdf FDF_sin, FDF_cos, FDF_func1, FDF_func2, FDF_func3, FDF_func4,
+ 	  FDF_func5, FDF_func6, FDF_func7;
+diff --git a/roots/test_funcs.c b/roots/test_funcs.c
+index 6a602e74..3b1052b4 100644
+--- a/roots/test_funcs.c
++++ b/roots/test_funcs.c
+@@ -52,12 +52,16 @@ gsl_function_fdf create_fdf (double (*f)(double, void *),
+ double
+ func1 (double x, void *p)
+ {
++  (void)p;
++
+   return pow (x, 20.0) - 1;
+ }
+ 
+ double
+ func1_df (double x, void * p)
+ {
++  (void)p;
++
+   return 20.0 * pow (x, 19.0);
+ }
+ 
+@@ -74,6 +78,8 @@ func1_fdf (double x, void * p, double *y, double *yprime)
+ double
+ func2 (double x, void * p)
+ {
++  (void)p;
++
+   double delta;
+ 
+   if (x > 0)
+@@ -89,6 +95,8 @@ func2 (double x, void * p)
+ double
+ func2_df (double x, void * p)
+ {
++  (void)p;
++
+   return 1 / sqrt (fabs (x));
+ }
+ 
+@@ -106,12 +114,16 @@ func2_fdf (double x, void * p, double *y, double *yprime)
+ double
+ func3 (double x, void * p)
+ {
++  (void)p;
++
+   return pow (x, 2.0) - 1e-8;
+ }
+ 
+ double
+ func3_df (double x, void * p)
+ {
++  (void)p;
++
+   return 2 * x;
+ }
+ 
+@@ -128,12 +140,16 @@ func3_fdf (double x, void * p, double *y, double *yprime)
+ double
+ func4 (double x, void * p)
+ {
++  (void)p;
++
+   return x * exp (-x);
+ }
+ 
+ double
+ func4_df (double x, void * p)
+ {
++  (void)p;
++
+   return exp (-x) - x * exp (-x);
+ }
+ 
+@@ -150,12 +166,16 @@ func4_fdf (double x, void * p, double *y, double *yprime)
+ double
+ func5 (double x, void * p)
+ {
++  (void)p;
++
+   return 1 / (1 + exp (x));
+ }
+ 
+ double
+ func5_df (double x, void * p)
+ {
++  (void)p;
++
+   return -exp (x) / pow (1 + exp (x), 2.0);
+ }
+ 
+@@ -172,12 +192,16 @@ func5_fdf (double x, void * p, double *y, double *yprime)
+ double
+ func6 (double x, void * p)
+ {
++  (void)p;
++
+   return pow (x - 1, 7.0);
+ }
+ 
+ double
+ func6_df (double x, void * p)
+ {
++  (void)p;
++
+   return 7.0 * pow (x - 1, 6.0);
+ }
+ 
+@@ -192,18 +216,24 @@ func6_fdf (double x, void * p, double *y, double *yprime)
+ double
+ sin_f (double x, void * p)
+ {
++  (void)p;
++
+   return sin (x);
+ }
+ 
+ double
+ sin_df (double x, void * p)
+ {
++  (void)p;
++
+   return cos (x);
+ }
+ 
+ void
+ sin_fdf (double x, void * p, double *y, double *yprime)
+ {
++  (void)p;
++
+   *y = sin (x);
+   *yprime = cos (x);
+ }
+@@ -212,18 +242,24 @@ sin_fdf (double x, void * p, double *y, double *yprime)
+ double
+ cos_f (double x, void * p)
+ {
++  (void)p;
++
+   return cos (x);
+ }
+ 
+ double
+ cos_df (double x, void * p)
+ {
++  (void)p;
++
+   return -sin (x);
+ }
+ 
+ void
+ cos_fdf (double x, void * p, double *y, double *yprime)
+ {
++  (void)p;
++
+   *y = cos (x);
+   *yprime = -sin (x);
+ }
+@@ -233,11 +269,16 @@ cos_fdf (double x, void * p, double *y, double *yprime)
+ 
+ double func7(double x, void * p)
+ {
++  (void)p;
++
+ 	return -M_PI * x + M_E;
+ }
+ 
+ double func7_df(double x, void * p)
+ {
++  (void)p;
++  (void)x;
++
+ 	return -M_PI;
+ }
+ 
+diff --git a/rstat/test_wrstat.c b/rstat/test_wrstat.c
+index 2dd32383..0ddc738d 100644
+--- a/rstat/test_wrstat.c
++++ b/rstat/test_wrstat.c
+@@ -36,7 +36,7 @@ test_wrstat_basic(const double tol, const size_t n, const double weights[], cons
+   gsl_wrstat_workspace *wrstat_workspace_p = gsl_wrstat_alloc();
+   const double expected_wmean = gsl_stats_wmean(weights, 1, data, 1, n);
+   double expected_rms = 0.0;
+-  double wmean, var, sd, rms, norm;
++  double wmean, var, sd, rms, norm; (void)norm;
+   double sumW = 0.0;
+   size_t i, num;
+   int status;
+@@ -87,7 +87,7 @@ static int
+ test_wrstat(gsl_rng * r)
+ {
+   const double tol1 = 1.0e-8;
+-  const double tol2 = 1.0e-3;
++  const double tol2 = 1.0e-3; (void)tol2;
+ 
+   {
+     const size_t N = 2000000;
+diff --git a/siman/siman.c b/siman/siman.c
+index 65b9177f..cfff0703 100644
+--- a/siman/siman.c
++++ b/siman/siman.c
+@@ -60,11 +60,13 @@ gsl_siman_solve (const gsl_rng * r, void *x0_p, gsl_siman_Efunc_t Ef,
+                  size_t element_size,
+                  gsl_siman_params_t params)
+ {
++  (void)distance;
++
+   void *x, *new_x, *best_x;
+   double E, new_E, best_E;
+   int i;
+   double T, T_factor;
+-  int n_evals = 1, n_iter = 0, n_accepts, n_rejects, n_eless;
++  int n_evals = 1, n_iter = 0, n_accepts, n_rejects, n_eless; (void)n_accepts; (void)n_eless; (void)n_rejects;
+ 
+   /* this function requires that either the dynamic functions (copy,
+      copy_constructor and destrcutor) are passed, or that an element
+diff --git a/siman/siman_tsp.c b/siman/siman_tsp.c
+index 7bd26c6e..dc2d624c 100644
+--- a/siman/siman_tsp.c
++++ b/siman/siman_tsp.c
+@@ -134,6 +134,8 @@ double Mtsp(void *xp, void *yp)
+ /* take a step through the TSP space */
+ void Stsp(const gsl_rng * r, void *xp, double step_size)
+ {
++  (void)step_size;
++
+   int x1, x2, dummy;
+   int *route = (int *) xp;
+ 
+diff --git a/specfunc/coulomb.c b/specfunc/coulomb.c
+index 519c1633..e87dbe43 100644
+--- a/specfunc/coulomb.c
++++ b/specfunc/coulomb.c
+@@ -1058,7 +1058,7 @@ gsl_sf_coulomb_wave_FG_e(const double eta, const double x,
+     int stat_lam_F;
+     int stat_lam_G;
+     int stat_CF1_lam_F;
+-    int stat_CF1_lam_G;
++    int stat_CF1_lam_G; (void)stat_CF1_lam_G;
+     int CF1_count;
+     double Fp_over_F_lam_F;
+     double Fp_over_F_lam_G;
+@@ -1128,7 +1128,7 @@ gsl_sf_coulomb_wave_FG_e(const double eta, const double x,
+     double F_lam_F, Fp_lam_F;
+     double G_lam_G, Gp_lam_G;
+     double F_lam_min_unnorm, Fp_lam_min_unnorm;
+-    double F_lam_min, Fp_lam_min;
++    double F_lam_min, Fp_lam_min; (void)Fp_lam_min;
+     double G_lam_min, Gp_lam_min;
+     double Fp_over_F_lam_F;
+     double Fp_over_F_lam_min;
+diff --git a/specfunc/hyperg_2F1.c b/specfunc/hyperg_2F1.c
+index 761554f1..c5fcbc22 100644
+--- a/specfunc/hyperg_2F1.c
++++ b/specfunc/hyperg_2F1.c
+@@ -382,7 +382,7 @@ hyperg_2F1_reflect(const double a, const double b, const double c,
+     gsl_sf_result lng_c;
+     gsl_sf_result lng_ad2;
+     gsl_sf_result lng_bd2;
+-    int stat_c;
++    int stat_c; (void)stat_c;
+     int stat_ad2;
+     int stat_bd2;
+ 
+diff --git a/specfunc/hyperg_U.c b/specfunc/hyperg_U.c
+index 04f3ccb3..ea960dd8 100644
+--- a/specfunc/hyperg_U.c
++++ b/specfunc/hyperg_U.c
+@@ -299,7 +299,7 @@ hyperg_U_finite_sum(int N, double a, double b, double x, double xeps,
+       gsl_sf_result gbm1;
+       gsl_sf_result gamr;
+       int stat_gbm1;
+-      int stat_gamr;
++      int stat_gamr; (void)stat_gamr;
+       double t_val = 1.0;
+       double t_err = 0.0;
+ 
+@@ -548,6 +548,8 @@ int
+ hyperg_U_infinite_sum_improved(int N, double a, double bint, double b, double beps, double x, double xeps, gsl_sf_result sum,
+                                gsl_sf_result * result)
+ {
++  (void)xeps;
++
+   const double EPS      = 2.0 * GSL_DBL_EPSILON;  /* EPS = D1MACH(3) */
+   const double lnx = log(x);
+ 
+diff --git a/specfunc/mathieu_charv.c b/specfunc/mathieu_charv.c
+index 8dfa0a66..794ee79e 100644
+--- a/specfunc/mathieu_charv.c
++++ b/specfunc/mathieu_charv.c
+@@ -718,7 +718,7 @@ int gsl_sf_mathieu_a_array(int order_min, int order_max, double qq, gsl_sf_mathi
+   gsl_vector_view eval;
+   gsl_eigen_symmv_workspace *wmat = work->wmat;
+   
+-  if (order_max > work->size || order_max <= order_min || order_min < 0)
++  if (order_min < 0 || order_max <= order_min || (size_t)order_max > work->size)
+     {
+       GSL_ERROR ("invalid range [order_min,order_max]", GSL_EINVAL);
+     }
+@@ -796,7 +796,7 @@ int gsl_sf_mathieu_a_array(int order_min, int order_max, double qq, gsl_sf_mathi
+   for (ii=0; ii<odd_order-extra_values; ii++)
+       aa[2*ii+1] = gsl_vector_get(&eval.vector, ii);
+ 
+-  for (ii = order_min ; ii <= order_max ; ii++)
++  for (ii = order_min ; ii <= (unsigned int)order_max ; ii++)
+     {
+       result_array[ii - order_min] = aa[ii];
+     }
+@@ -814,7 +814,7 @@ int gsl_sf_mathieu_b_array(int order_min, int order_max, double qq, gsl_sf_mathi
+   gsl_vector_view eval;
+   gsl_eigen_symmv_workspace *wmat = work->wmat;
+ 
+-  if (order_max > work->size || order_max <= order_min || order_min < 0)
++  if (order_min < 0 || order_max <= order_min || (size_t)order_max > work->size)
+     {
+       GSL_ERROR ("invalid range [order_min,order_max]", GSL_EINVAL);
+     }
+@@ -866,7 +866,7 @@ int gsl_sf_mathieu_b_array(int order_min, int order_max, double qq, gsl_sf_mathi
+   for (ii=0; ii<odd_order-extra_values; ii++)
+       bb[2*ii+1] = gsl_vector_get(&eval.vector, ii);  
+ 
+-  for (ii = order_min ; ii <= order_max ; ii++)
++  for (ii = order_min ; ii <= (unsigned int)order_max ; ii++)
+     {
+       result_array[ii - order_min] = bb[ii];
+     }
+diff --git a/specfunc/sincos_pi.c b/specfunc/sincos_pi.c
+index bf46bdb1..74be1350 100644
+--- a/specfunc/sincos_pi.c
++++ b/specfunc/sincos_pi.c
+@@ -151,7 +151,7 @@ gsl_sf_sin_pi_e(const double x, gsl_sf_result *result)
+   if (fracx == 0.0) return GSL_SUCCESS;
+   if(fabs(intx) >= TWOBIG) return GSL_SUCCESS; /* to be sure. Actually should be covered by the line above */
+ 
+-  q = ( ( (intx >= LONG_MIN) && (intx <= LONG_MAX) ) ? intx : fmod(intx, 2.0) );
++  q = ( ( (intx >= LONG_MIN) && (intx <= ((double)LONG_MAX)) ) ? intx : fmod(intx, 2.0) );
+   sign = ( q % 2 ? -1 : 1 );
+ 
+   /* int sign = 1 - 2*((int)round(fmod(fabs(intx),2.0))); */
+@@ -197,7 +197,7 @@ gsl_sf_cos_pi_e(const double x, gsl_sf_result *result)
+     return GSL_SUCCESS;
+   }
+ 
+-  q = ( ( (intx >= LONG_MIN) && (intx <= LONG_MAX) ) ? intx : fmod(intx, 2.0) );
++  q = ( ( (intx >= LONG_MIN) && (intx <= ((double)LONG_MAX)) ) ? intx : fmod(intx, 2.0) );
+   sign = ( q % 2 ? -1 : 1 );
+ 
+   /* int sign = 1 - 2*((int)round(fmod(fabs(intx),2.0))); */
+diff --git a/specfunc/test_alf.c b/specfunc/test_alf.c
+index 6c0166d3..6d5ec405 100644
+--- a/specfunc/test_alf.c
++++ b/specfunc/test_alf.c
+@@ -51,20 +51,7 @@ This sum should equate to 1.0 for Schmidt semi-normalized
+ ALFs for all l.
+ */
+ 
+-static double
+-test_alf_sum(const size_t lmax, const size_t l, double *p)
+-{
+-  double sum = 0.0;
+-  size_t m;
+ 
+-  for (m = 0; m <= l; ++m)
+-    {
+-      size_t idx = gsl_sf_alf_array_index(l, m, lmax);
+-      sum += p[idx] * p[idx];
+-    }
+-
+-  return sum;
+-}
+ 
+ /*
+ test_alf_sum_deriv()
+diff --git a/specfunc/test_coulomb.c b/specfunc/test_coulomb.c
+index 899293c2..726df718 100644
+--- a/specfunc/test_coulomb.c
++++ b/specfunc/test_coulomb.c
+@@ -41,7 +41,7 @@ int test_coulomb(void)
+   /* double F[kmax+1], Fp[kmax+1], G[kmax+1], Gp[kmax+1]; */
+   gsl_sf_result F, Fp, G, Gp;
+   double Fe, Ge;
+-  double lam_min;
++  double lam_min; (void)lam_min;
+   double lam_F;
+   double eta, x;
+   int k_G;
+diff --git a/specfunc/test_sf.c b/specfunc/test_sf.c
+index 50340407..fc3cfb8a 100644
+--- a/specfunc/test_sf.c
++++ b/specfunc/test_sf.c
+@@ -1549,7 +1549,7 @@ int test_jac(void)
+ {
+   double u, m;
+   double sn, cn, dn;
+-  int stat_ej;
++  int stat_ej; (void)stat_ej;
+   int s = 0;
+   int sa;
+ 
+@@ -2084,7 +2084,7 @@ int test_pow_int(void)
+ {
+   gsl_sf_result r;
+   int status = 0;
+-  int s = 0;
++  int s = 0; (void)s;
+   
+   TEST_SF(s,  gsl_sf_pow_int_e, (2.0, 3, &r), 8.0, TEST_TOL0, GSL_SUCCESS);
+   TEST_SF(s,  gsl_sf_pow_int_e, (-2.0, 3, &r), -8.0, TEST_TOL0, GSL_SUCCESS);
+@@ -2745,6 +2745,9 @@ int test_results(void)
+ 
+ int main(int argc, char * argv[])
+ {
++  (void)argc;
++  (void)argv;
++
+   gsl_ieee_env_setup ();
+   gsl_set_error_handler_off ();
+ 
+diff --git a/specfunc/test_sf.h b/specfunc/test_sf.h
+index 19c0512b..139d947f 100644
+--- a/specfunc/test_sf.h
++++ b/specfunc/test_sf.h
+@@ -92,7 +92,7 @@ int test_sf_return (int status, int expect_return, const char * desc);
+ 
+ #define TEST_SF_SGN(stat, func, args, val_in, tol, expect_sgn, expect_return) { int status = func args; stat += test_sf_sgn(r, sgn, val_in, tol, expect_sgn, status, expect_return, #func #args); }
+ 
+-#define TEST_SF_THETA(stat, func, args, val_in, tol) { int status; theta=args; status = func (&theta);  stat += test_sf_val(theta, val_in, tol, #func #args); }
++#define TEST_SF_THETA(stat, func, args, val_in, tol) { int status; theta=args; status = func (&theta); (void)status; stat += test_sf_val(theta, val_in, tol, #func #args); }
+ 
+ #define TEST_SF_RETURN(stat, func, args, expect_return) { int status = func args; stat += test_sf_return(status, expect_return, #func #args); }
+ 
+diff --git a/specfunc/test_sincos_pi.c b/specfunc/test_sincos_pi.c
+index c650903d..59226d05 100644
+--- a/specfunc/test_sincos_pi.c
++++ b/specfunc/test_sincos_pi.c
+@@ -196,7 +196,7 @@ test_sincos_pi(void)
+ 
+   fx = 0.0625;
+   exact = 0.195090322016128267848284868477;
+-  ix = LONG_MAX + 1.0;
++  ix = ((double)LONG_MAX) + 1.0;
+   ix += fabs(fmod(ix,2.0)); /* make sure of even number */
+   
+   for (k=0; k<kmax; k++) {
+@@ -364,7 +364,7 @@ test_sincos_pi(void)
+ 
+   fx = 0.0625;
+   exact = 0.980785280403230449126182236134;
+-  ix = LONG_MAX + 1.0;
++  ix = ((double)LONG_MAX) + 1.0;
+   ix += fabs(fmod(ix,2.0)); /* make sure of even number */
+   
+   for (k=0; k<kmax; k++) {
+diff --git a/statistics/Qn_source.c b/statistics/Qn_source.c
+index 794a8e64..28af98f7 100644
+--- a/statistics/Qn_source.c
++++ b/statistics/Qn_source.c
+@@ -297,7 +297,7 @@ FUNCTION(Qn,whimed)(BASE * a, int * w, int n, BASE * a_cand, BASE * a_srt, int *
+ {
+   int n2, i, kcand;
+   /* sum of weights: `int' do overflow when  n ~>= 1e5 */
+-  int64_t wleft, wmid, wright, w_tot, wrest;
++  int64_t wleft, wmid, wright, w_tot, wrest; (void)wright;
+ 
+   BASE trial;
+ 
+diff --git a/sum/levin_u.c b/sum/levin_u.c
+index 81dcc75e..3f2cb08f 100644
+--- a/sum/levin_u.c
++++ b/sum/levin_u.c
+@@ -65,7 +65,7 @@ gsl_sum_levin_u_minmax (const double *array, const size_t array_size,
+     {
+       const double SMALL = 0.01;
+       const size_t nmax = GSL_MAX (max_terms, array_size) - 1;
+-      double noise_n = 0.0, noise_nm1 = 0.0;
++      double noise_n = 0.0, noise_nm1 = 0.0; (void)noise_nm1;
+       double trunc_n = 0.0, trunc_nm1 = 0.0;
+       double actual_trunc_n = 0.0, actual_trunc_nm1 = 0.0;
+       double result_n = 0.0, result_nm1 = 0.0;
+diff --git a/utils/placeholder.c b/utils/placeholder.c
+index e96ec1ae..c844e157 100644
+--- a/utils/placeholder.c
++++ b/utils/placeholder.c
+@@ -4,6 +4,4 @@ gsl_utils_placeholder (void);
+ void
+ gsl_utils_placeholder (void) 
+ {
+-  int i = 0;
+-  i++ ;
+ }
+diff --git a/wavelet/test.c b/wavelet/test.c
+index db8dcd58..c8b4e481 100644
+--- a/wavelet/test.c
++++ b/wavelet/test.c
+@@ -34,6 +34,9 @@ test_2d (size_t N, size_t tda, const gsl_wavelet_type * T, size_t member, int ty
+ int
+ main (int argc, char **argv)
+ {
++  (void)argc;
++  (void)argv;
++
+   size_t i, N, stride, tda;
+   const int S = 1, NS = 2;  /* Standard & Non-standard transforms */
+ 

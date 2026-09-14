@@ -1,0 +1,113 @@
+{
+  "checked_at": "2026-09-13T23:42:45.250091+00:00",
+  "status": "PASS",
+  "test_source": "tools/toolchain/tests/qt-png-roundtrip.cpp",
+  "compiler_flags": [
+    "-std=c++17",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-Woverloaded-virtual"
+  ],
+  "compile_diagnostics_bytes": 0,
+  "qt_configuration_evidence": {
+    "path": "/home/b/toolchains/Qt/include/QtGui/6.12.0/QtGui/private/qtgui-config_p.h",
+    "png": 1,
+    "system_png": -1
+  },
+  "elf_records": [
+    {
+      "path": "/home/b/toolchains/Qt/lib/libQt6Gui.so.6",
+      "png_dynamic_symbols": [],
+      "png_needed": [],
+      "log": "/home/b/toolchains/qt-png-abi-validation/libQt6Gui.so.6.elf.log",
+      "sha256": "78d32d1089d313557d19279354738ae9a8e0087368ae2b47b55f74694fd299ea"
+    },
+    {
+      "path": "/home/b/toolchains/Qt/plugins/imageformats/libqsvg.so",
+      "png_dynamic_symbols": [],
+      "png_needed": [],
+      "log": "/home/b/toolchains/qt-png-abi-validation/libqsvg.so.elf.log",
+      "sha256": "05f7d95e02fefe93f2f66d4b3d0724ffce44ff7ef53ff577b6eb83ad3dcc2d59"
+    },
+    {
+      "path": "/home/b/toolchains/Qt/plugins/imageformats/libqtga.so",
+      "png_dynamic_symbols": [],
+      "png_needed": [],
+      "log": "/home/b/toolchains/qt-png-abi-validation/libqtga.so.elf.log",
+      "sha256": "84c6cf692fd74c73eb99d244c24f2849a952a38af66175a49365c4870b96f7c1"
+    },
+    {
+      "path": "/home/b/toolchains/Qt/plugins/imageformats/libqtiff.so",
+      "png_dynamic_symbols": [],
+      "png_needed": [],
+      "log": "/home/b/toolchains/qt-png-abi-validation/libqtiff.so.elf.log",
+      "sha256": "a7fd9b0436af00de3399d8d847ea279cd47d67e358812ab9acb852d36571ea07"
+    },
+    {
+      "path": "/home/b/toolchains/Qt/plugins/imageformats/libqwebp.so",
+      "png_dynamic_symbols": [],
+      "png_needed": [],
+      "log": "/home/b/toolchains/qt-png-abi-validation/libqwebp.so.elf.log",
+      "sha256": "2480cddb7a7f346a5e6189dcd5e34ba3742b2360f78364a8e244ce9c6dfb93f1"
+    },
+    {
+      "path": "/home/b/toolchains/Qt/plugins/imageformats/libqgif.so",
+      "png_dynamic_symbols": [],
+      "png_needed": [],
+      "log": "/home/b/toolchains/qt-png-abi-validation/libqgif.so.elf.log",
+      "sha256": "07c9b46a8acf944e0f31cd685832784412d676b71cd78f5108ac0447fee92199"
+    },
+    {
+      "path": "/home/b/toolchains/Qt/plugins/imageformats/libqicns.so",
+      "png_dynamic_symbols": [],
+      "png_needed": [],
+      "log": "/home/b/toolchains/qt-png-abi-validation/libqicns.so.elf.log",
+      "sha256": "8d182057d20cf93278681107c67a7203d3ae396423446032d7fae1d799d4356c"
+    },
+    {
+      "path": "/home/b/toolchains/Qt/plugins/imageformats/libqjpeg.so",
+      "png_dynamic_symbols": [],
+      "png_needed": [],
+      "log": "/home/b/toolchains/qt-png-abi-validation/libqjpeg.so.elf.log",
+      "sha256": "6b471ca48afad19efab84ba21af0ed6fa313a6fdea93527d898869c9f4adcb9e"
+    },
+    {
+      "path": "/home/b/toolchains/Qt/plugins/imageformats/libqico.so",
+      "png_dynamic_symbols": [],
+      "png_needed": [],
+      "log": "/home/b/toolchains/qt-png-abi-validation/libqico.so.elf.log",
+      "sha256": "8703d82483925896c530ea07879c93674e45961b1c12f75bb2e3cf45a33a45b1"
+    },
+    {
+      "path": "/home/b/toolchains/Qt/plugins/imageformats/libqwbmp.so",
+      "png_dynamic_symbols": [],
+      "png_needed": [],
+      "log": "/home/b/toolchains/qt-png-abi-validation/libqwbmp.so.elf.log",
+      "sha256": "fe09055cc2032dc7e3640d68e792d1832a4dc3132b9a8b6377394708419a803c"
+    }
+  ],
+  "runtime_library_order": [
+    "/home/b/cemer/install/lib",
+    "/home/b/toolchains/deps/lib",
+    "/home/b/toolchains/Qt/lib"
+  ],
+  "validation": "Four pixel-exact memory/file PNG roundtrips: ARGB32, RGBA64, Grayscale16, indexed transparency. Selected FreeType/PNG18 is loaded; no PNG16 is loaded. QCoreApplication only; no display or GPU context.",
+  "compile_command": "PKG_CONFIG_PATH=/path/to/Qt/lib/pkgconfig clang++ -std=c++17 -Wall -Wextra -Werror -Woverloaded-virtual tools/toolchain/tests/qt-png-roundtrip.cpp $(pkg-config --define-variable=prefix=/path/to/Qt --cflags --libs Qt6Core Qt6Gui) -Wl,-rpath,/path/to/Qt/lib -o qt-png-roundtrip",
+  "run_command": "env -u DISPLAY -u WAYLAND_DISPLAY -u LD_PRELOAD LD_LIBRARY_PATH=/path/to/install/lib:/path/to/deps/lib:/path/to/Qt/lib QT_PLUGIN_PATH=/path/to/Qt/plugins ./qt-png-roundtrip",
+  "logs": {
+    "build.log": {
+      "path": "/home/b/toolchains/qt-png-abi-validation/build.log",
+      "sha256": "acb2e73b6b5af3174fc7787400340f7fe56f8428d74e4ab341f2246c8a159255"
+    },
+    "build-correct-prefix.log": {
+      "path": "/home/b/toolchains/qt-png-abi-validation/build-correct-prefix.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "test-final.log": {
+      "path": "/home/b/toolchains/qt-png-abi-validation/test-final.log",
+      "sha256": "1f0bf41ad479bdda49043abe7d584bd802da12b0e7261e49463f13adddf7cd6e"
+    }
+  },
+  "initial_configuration_failure": "Unrelocated SDK pkg-config prefix pointed to /home/qt/work/install; final command supplies the correct prefix without modifying the official SDK."
+}

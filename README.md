@@ -8,6 +8,32 @@ See [modern stack setup and verification](tools/toolchain/README.md) for the
 pinned SDK, build instructions, and test commands. C++ builds require
 `-Wall -Wextra -Werror -Woverloaded-virtual`, with no warning suppression flags.
 
+## Run on Linux
+
+Download and launch the [Linux x86_64 preview](https://github.com/mingusb/cemer-1/releases/tag/v8.6.1-clang24-qt6.12-preview.1):
+
+```sh
+curl -fL https://github.com/mingusb/cemer-1/releases/download/v8.6.1-clang24-qt6.12-preview.1/emergent-linux-x86_64.tar.xz -o emergent-linux-x86_64.tar.xz
+tar -xJf emergent-linux-x86_64.tar.xz
+./emergent-linux-x86_64/run-inductor-head
+```
+
+This opens the interactive [Inductor Head tutorial](demo/InductorHead/README.md), with the original native 3D viewer, controls, and CSS console. Use `./emergent-linux-x86_64/emergent` to open the general application instead. The runtime includes Qt, WebEngine, and its required libraries; no compiler or separate Qt installation is needed. It requires Ubuntu 26.04 x86_64 or a compatible newer glibc environment, with working host graphics drivers, display/audio services, fonts and a CA trust store.
+
+![InductorHead running with the modern Qt stack](demo/InductorHead/preview.png)
+
+On WSL with the NVIDIA/D3D12 runtime present, the launcher selects the NVIDIA GPU for the native 3D viewer and software composition for embedded web pages. It needs no Linux NVIDIA kernel driver installation. `EMERGENT_WSL_GPU=0` disables that automatic selection.
+
+If GPU rendering is unavailable, use the software renderer:
+
+```sh
+EMERGENT_SOFTWARE_RENDERING=1 ./emergent-linux-x86_64/run-inductor-head
+```
+
+This keeps the native 3D viewer and embedded browser available using CPU rendering. The same option works with the `emergent` launcher.
+
+For development, follow the [source build instructions](tools/toolchain/README.md). The portable runtime and source build are separate downloads.
+
 The original [emer/cemer](https://github.com/emer/cemer) history, authorship,
 and licenses are preserved. Its upstream team moved development to the
 [Go implementation](https://github.com/emer/emergent). Historical C++

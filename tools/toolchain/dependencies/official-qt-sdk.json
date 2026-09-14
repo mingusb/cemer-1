@@ -1,0 +1,53 @@
+{
+  "verified_on": "2026-09-13",
+  "strategy": "Official upstream preview SDK and its matching upstream WebEngine extension; no custom Chromium build or source modifications.",
+  "qt": {
+    "version": "6.12.0",
+    "preview": "Beta 4",
+    "package": {
+      "Name": "qt.qt6.6120.linux_gcc_64",
+      "Version": "6.12.0-0-202609010620",
+      "ReleaseDate": "2026-09-01",
+      "DisplayName": "Desktop",
+      "Dependencies": "qt.tools.qtcreator, qt.qt6.6120.doc, qt.qt6.6120.examples",
+      "DownloadableArchives": "qtbase-Linux-RHEL_9_6-GCC-Linux-RHEL_9_6-X86_64.7z, qtsvg-Linux-RHEL_9_6-GCC-Linux-RHEL_9_6-X86_64.7z, qtdeclarative-Linux-RHEL_9_6-GCC-Linux-RHEL_9_6-X86_64.7z, qtdoc-Linux-RHEL_9_6-GCC-Linux-RHEL_9_6-X86_64.7z, qttools-Linux-RHEL_9_6-GCC-Linux-RHEL_9_6-X86_64.7z, qttranslations-Linux-RHEL_9_6-GCC-Linux-RHEL_9_6-X86_64.7z, qtwayland-Linux-RHEL_9_6-GCC-Linux-RHEL_9_6-X86_64.7z, icu-linux-Rhel8.6-x86_64.7z"
+    },
+    "metadata_url": "https://download.qt.io/online/qtsdkrepository/linux_x64/desktop/qt6_6120/qt6_6120/Updates.xml"
+  },
+  "webengine": {
+    "version": "6.140.0",
+    "package": {
+      "Name": "extensions.qtwebengine.6120.61400.linux_gcc_64",
+      "Version": "6.12.0-0-202609010620",
+      "ReleaseDate": "2026-09-01",
+      "DisplayName": "Desktop",
+      "Dependencies": "extensions.qtwebengine.6120.61400",
+      "DownloadableArchives": "qtwebengine-Linux-RHEL_9_6-GCC-Linux-RHEL_9_6-X86_64.7z, qtwebview_qtwebengine_plugin.7z"
+    },
+    "metadata_url": "https://download.qt.io/online/qtsdkrepository/linux_x64/extensions/qtwebengine/6120/61400/x86_64/Updates.xml"
+  },
+  "platform": {
+    "architecture": "x86_64",
+    "upstream_build_platform": "Linux RHEL 9.6",
+    "upstream_compiler_family": "GCC",
+    "cxx_abi": "GNU libstdc++",
+    "elf_runtime_dependencies": [
+      "libstdc++.so.6",
+      "libgcc_s.so.1"
+    ],
+    "qtcore_icu_abi": "73"
+  },
+  "repository_cross_check": {
+    "dev_repository_url": "https://download.qt.io/online/qtsdkrepository/linux_x64/desktop/qt6_dev/qt6_dev/Updates.xml",
+    "dev_repository_package_version": "6.11.0-0-202509030440",
+    "release_schedule": "https://wiki.qt.io/Qt_6.12_Release",
+    "beta4_release_date": "2026-09-04",
+    "release_candidate_scheduled_date": "2026-09-14"
+  },
+  "reproducibility": {
+    "archive_urls": "../downloads/qt-archives.urls",
+    "archive_sha256": "../downloads/SHA256SUMS",
+    "installer": "../install-qt-sdk.py"
+  },
+  "local_validation": "Both installed QtCore and QtWebEngineCore ELF dependencies use libstdc++.so.6 and libgcc_s.so.1. QtCore uses the SDK ICU 73 libraries. The 6.13/libc++ source experiment was isolated and is not part of this SDK."
+}

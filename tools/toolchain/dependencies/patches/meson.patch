@@ -1,0 +1,26 @@
+diff --git a/mesonbuild/compilers/mixins/clike.py b/mesonbuild/compilers/mixins/clike.py
+index 148faeb..a90f75b 100644
+--- a/mesonbuild/compilers/mixins/clike.py
++++ b/mesonbuild/compilers/mixins/clike.py
+@@ -176,7 +176,7 @@ class CLikeCompiler(Compiler):
+         return ['-E', '-P']
+ 
+     def get_compile_only_args(self) -> T.List[str]:
+-        return ['-c']
++        return [] if self.mode == 'PREPROCESSOR' else ['-c']
+ 
+     def get_no_optimization_args(self) -> T.List[str]:
+         return ['-O0', '-U_FORTIFY_SOURCE']
+diff --git a/mesonbuild/compilers/mixins/gnu.py b/mesonbuild/compilers/mixins/gnu.py
+index 3e3b77b..69a6090 100644
+--- a/mesonbuild/compilers/mixins/gnu.py
++++ b/mesonbuild/compilers/mixins/gnu.py
+@@ -506,7 +506,7 @@ class GnuLikeCompiler(Compiler, metaclass=mesonlib.SimpleABC):
+         return ['-MD', '-MQ', outtarget, '-MF', outfile]
+ 
+     def get_compile_only_args(self) -> T.List[str]:
+-        return ['-c']
++        return [] if self.mode == 'PREPROCESSOR' else ['-c']
+ 
+     def get_include_args(self, path: str, is_system: bool) -> T.List[str]:
+         if not path:

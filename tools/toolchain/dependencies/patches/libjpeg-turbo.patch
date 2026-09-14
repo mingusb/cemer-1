@@ -1,0 +1,1166 @@
+diff --git a/sharedlib/spng/CMakeLists.txt b/sharedlib/spng/CMakeLists.txt
+index 895e55b..cde6050 100644
+--- a/sharedlib/spng/CMakeLists.txt
++++ b/sharedlib/spng/CMakeLists.txt
+@@ -11,7 +11,7 @@ if(NOT WITH_SYSTEM_ZLIB)
+   target_compile_definitions(zlib PRIVATE Z_PREFIX)
+ 
+   if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID MATCHES "Clang")
+-    target_compile_options(zlib PRIVATE -w)
++
+     if(NOT WIN32)
+       target_compile_options(zlib PRIVATE -fvisibility=hidden)
+     endif()
+@@ -31,7 +31,7 @@ if(NOT WITH_SYSTEM_ZLIB)
+ endif()
+ 
+ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID MATCHES "Clang")
+-  target_compile_options(spng PRIVATE -w)
++
+   if(NOT WIN32)
+     target_compile_options(spng PRIVATE -fvisibility=hidden)
+   endif()
+diff --git a/simd/jsimd.c b/simd/jsimd.c
+index 2a7c190..6923d68 100644
+--- a/simd/jsimd.c
++++ b/simd/jsimd.c
+@@ -296,6 +296,8 @@ jsimd_set_ycc_rgb(j_decompress_ptr cinfo)
+ HIDDEN unsigned int
+ jsimd_set_ycc_rgb565(j_decompress_ptr cinfo)
+ {
++  (void)cinfo;
++
+ #if SIMD_ARCHITECTURE == ARM64 || SIMD_ARCHITECTURE == ARM
+   init_simd((j_common_ptr)cinfo);
+ 
+@@ -503,6 +505,8 @@ HIDDEN void
+ jsimd_h2v1_upsample(j_decompress_ptr cinfo, jpeg_component_info *compptr,
+                     JSAMPARRAY input_data, JSAMPARRAY *output_data_ptr)
+ {
++  (void)compptr;
++
+   cinfo->upsample->h2v1_upsample_simd(cinfo->max_v_samp_factor,
+                                       cinfo->output_width, input_data,
+                                       output_data_ptr);
+@@ -561,6 +565,8 @@ HIDDEN void
+ jsimd_h2v2_upsample(j_decompress_ptr cinfo, jpeg_component_info *compptr,
+                     JSAMPARRAY input_data, JSAMPARRAY *output_data_ptr)
+ {
++  (void)compptr;
++
+   cinfo->upsample->h2v2_upsample_simd(cinfo->max_v_samp_factor,
+                                       cinfo->output_width, input_data,
+                                       output_data_ptr);
+diff --git a/src/bmpsizetest.c b/src/bmpsizetest.c
+index 23bf18b..ead9afa 100644
+--- a/src/bmpsizetest.c
++++ b/src/bmpsizetest.c
+@@ -288,6 +288,8 @@ bailout:
+ 
+ static int test_write_GIF(int width, int height, int unused)
+ {
++  (void)unused;
++
+   struct jpeg_decompress_struct cinfo;
+   struct my_error_mgr myerr;
+   struct jpeg_error_mgr *jerr = &myerr.pub;
+@@ -684,6 +686,8 @@ bailout:
+ 
+ static int test_write_TGA(int width, int height, int unused)
+ {
++  (void)unused;
++
+   struct jpeg_decompress_struct cinfo;
+   struct my_error_mgr myerr;
+   struct jpeg_error_mgr *jerr = &myerr.pub;
+diff --git a/src/jccoefct.c b/src/jccoefct.c
+index 084cb3b..3ca3db6 100644
+--- a/src/jccoefct.c
++++ b/src/jccoefct.c
+@@ -358,6 +358,8 @@ compress_first_pass(j_compress_ptr cinfo, _JSAMPIMAGE input_buf)
+ METHODDEF(boolean)
+ compress_output(j_compress_ptr cinfo, _JSAMPIMAGE input_buf)
+ {
++  (void)input_buf;
++
+   my_coef_ptr coef = (my_coef_ptr)cinfo->coef;
+   JDIMENSION MCU_col_num;       /* index of current MCU within row */
+   int blkn, ci, xindex, yindex, yoffset;
+diff --git a/src/jccolext.c b/src/jccolext.c
+index 6d83a93..9d0572f 100644
+--- a/src/jccolext.c
++++ b/src/jccolext.c
+@@ -32,6 +32,10 @@ LOCAL(void)
+ rgb_ycc_convert(j_compress_ptr cinfo, _JSAMPARRAY input_buf,
+                 _JSAMPIMAGE output_buf, JDIMENSION output_row, int num_rows)
+ {
++  (void)input_buf;
++  (void)output_buf;
++  (void)num_rows;  (void)output_row;
++
+ #if BITS_IN_JSAMPLE != 16
+   my_cconvert_ptr cconvert = (my_cconvert_ptr)cinfo->cconvert;
+   register int r, g, b;
+@@ -89,6 +93,10 @@ LOCAL(void)
+ rgb_gray_convert(j_compress_ptr cinfo, _JSAMPARRAY input_buf,
+                  _JSAMPIMAGE output_buf, JDIMENSION output_row, int num_rows)
+ {
++  (void)input_buf;
++  (void)output_buf;
++  (void)num_rows;  (void)output_row;
++
+ #if BITS_IN_JSAMPLE != 16
+   my_cconvert_ptr cconvert = (my_cconvert_ptr)cinfo->cconvert;
+   register int r, g, b;
+diff --git a/src/jccolor.c b/src/jccolor.c
+index 90e061e..41708c6 100644
+--- a/src/jccolor.c
++++ b/src/jccolor.c
+@@ -262,6 +262,11 @@ METHODDEF(void)
+ cmyk_ycck_convert(j_compress_ptr cinfo, _JSAMPARRAY input_buf,
+                   _JSAMPIMAGE output_buf, JDIMENSION output_row, int num_rows)
+ {
++  (void)input_buf;
++  (void)num_rows;
++  (void)output_buf;
++  (void)output_row;
++
+ #if BITS_IN_JSAMPLE != 16
+   my_cconvert_ptr cconvert = (my_cconvert_ptr)cinfo->cconvert;
+   register int r, g, b;
+@@ -405,6 +410,8 @@ null_convert(j_compress_ptr cinfo, _JSAMPARRAY input_buf,
+ METHODDEF(void)
+ null_method(j_compress_ptr cinfo)
+ {
++  (void)cinfo;
++
+   /* no work needed */
+ }
+ 
+diff --git a/src/jcdiffct.c b/src/jcdiffct.c
+index d378202..b5c96c5 100644
+--- a/src/jcdiffct.c
++++ b/src/jcdiffct.c
+@@ -311,6 +311,8 @@ compress_first_pass(j_compress_ptr cinfo, _JSAMPIMAGE input_buf)
+ METHODDEF(boolean)
+ compress_output(j_compress_ptr cinfo, _JSAMPIMAGE input_buf)
+ {
++  (void)input_buf;
++
+   my_diff_ptr diff = (my_diff_ptr)cinfo->coef;
+   int ci, compi;
+   _JSAMPARRAY buffer[MAX_COMPS_IN_SCAN];
+diff --git a/src/jclossls.c b/src/jclossls.c
+index 80afd9e..fe80bb6 100644
+--- a/src/jclossls.c
++++ b/src/jclossls.c
+@@ -195,6 +195,8 @@ jpeg_difference_first_row(j_compress_ptr cinfo, int ci,
+                           _JSAMPROW input_buf, _JSAMPROW prev_row,
+                           JDIFFROW diff_buf, JDIMENSION width)
+ {
++  (void)prev_row;
++
+   DIFFERENCE_1D(INITIAL_PREDICTORx);
+ 
+   /*
+@@ -269,6 +271,8 @@ METHODDEF(void)
+ noscale(j_compress_ptr cinfo,
+         _JSAMPROW input_buf, _JSAMPROW output_buf, JDIMENSION width)
+ {
++  (void)cinfo;
++
+   memcpy(output_buf, input_buf, width * sizeof(_JSAMPLE));
+ }
+ 
+diff --git a/src/jcmaster.c b/src/jcmaster.c
+index ca156fb..511e51f 100644
+--- a/src/jcmaster.c
++++ b/src/jcmaster.c
+@@ -164,6 +164,8 @@ LOCAL(void)
+ initial_setup(j_compress_ptr cinfo, boolean transcode_only)
+ /* Do computations that are needed before master selection phase */
+ {
++  (void)transcode_only;
++
+   int ci;
+   jpeg_component_info *compptr;
+   long samplesperrow;
+diff --git a/src/jcsample.c b/src/jcsample.c
+index 7c83ec4..87174f8 100644
+--- a/src/jcsample.c
++++ b/src/jcsample.c
+@@ -87,6 +87,8 @@ typedef my_downsampler *my_downsample_ptr;
+ METHODDEF(void)
+ start_pass_downsample(j_compress_ptr cinfo)
+ {
++  (void)cinfo;
++
+   /* no work for now */
+ }
+ 
+diff --git a/src/jctrans.c b/src/jctrans.c
+index ae52e39..cc1bed0 100644
+--- a/src/jctrans.c
++++ b/src/jctrans.c
+@@ -296,6 +296,8 @@ start_pass_coef(j_compress_ptr cinfo, J_BUF_MODE pass_mode)
+ METHODDEF(boolean)
+ compress_output(j_compress_ptr cinfo, JSAMPIMAGE input_buf)
+ {
++  (void)input_buf;
++
+   my_coef_ptr coef = (my_coef_ptr)cinfo->coef;
+   JDIMENSION MCU_col_num;       /* index of current MCU within row */
+   JDIMENSION last_MCU_col = cinfo->MCUs_per_row - 1;
+diff --git a/src/jdapistd.c b/src/jdapistd.c
+index a285349..610f412 100644
+--- a/src/jdapistd.c
++++ b/src/jdapistd.c
+@@ -380,6 +380,11 @@ LOCAL(void)
+ noop_convert(j_decompress_ptr cinfo, _JSAMPIMAGE input_buf,
+              JDIMENSION input_row, _JSAMPARRAY output_buf, int num_rows)
+ {
++  (void)output_buf;
++
++  (void)cinfo;
++  (void)input_row;
++  (void)input_buf;  (void)num_rows;
+ }
+ 
+ 
+@@ -388,6 +393,10 @@ LOCAL(void)
+ noop_quantize(j_decompress_ptr cinfo, _JSAMPARRAY input_buf,
+               _JSAMPARRAY output_buf, int num_rows)
+ {
++  (void)cinfo;
++  (void)num_rows;
++  (void)input_buf;  (void)output_buf;
++
+ }
+ 
+ 
+diff --git a/src/jdatadst-tj.c b/src/jdatadst-tj.c
+index f5fec11..ca24c3c 100644
+--- a/src/jdatadst-tj.c
++++ b/src/jdatadst-tj.c
+@@ -58,6 +58,8 @@ typedef my_mem_destination_mgr *my_mem_dest_ptr;
+ METHODDEF(void)
+ init_mem_destination(j_compress_ptr cinfo)
+ {
++  (void)cinfo;
++
+   /* no work necessary here */
+ }
+ 
+diff --git a/src/jdatadst.c b/src/jdatadst.c
+index 198e41b..2d221b7 100644
+--- a/src/jdatadst.c
++++ b/src/jdatadst.c
+@@ -78,6 +78,8 @@ init_destination(j_compress_ptr cinfo)
+ METHODDEF(void)
+ init_mem_destination(j_compress_ptr cinfo)
+ {
++  (void)cinfo;
++
+   /* no work necessary here */
+ }
+ 
+diff --git a/src/jdatasrc-tj.c b/src/jdatasrc-tj.c
+index a5970b5..21bb8c2 100644
+--- a/src/jdatasrc-tj.c
++++ b/src/jdatasrc-tj.c
+@@ -35,6 +35,8 @@ void jpeg_mem_src_tj(j_decompress_ptr cinfo, const unsigned char *inbuffer,
+ METHODDEF(void)
+ init_mem_source(j_decompress_ptr cinfo)
+ {
++  (void)cinfo;
++
+   /* no work necessary here */
+ }
+ 
+@@ -150,6 +152,8 @@ skip_input_data(j_decompress_ptr cinfo, long num_bytes)
+ METHODDEF(void)
+ term_source(j_decompress_ptr cinfo)
+ {
++  (void)cinfo;
++
+   /* no work necessary here */
+ }
+ 
+diff --git a/src/jdatasrc.c b/src/jdatasrc.c
+index dc135f4..d8ebfda 100644
+--- a/src/jdatasrc.c
++++ b/src/jdatasrc.c
+@@ -59,6 +59,8 @@ init_source(j_decompress_ptr cinfo)
+ METHODDEF(void)
+ init_mem_source(j_decompress_ptr cinfo)
+ {
++  (void)cinfo;
++
+   /* no work necessary here */
+ }
+ 
+@@ -199,6 +201,8 @@ skip_input_data(j_decompress_ptr cinfo, long num_bytes)
+ METHODDEF(void)
+ term_source(j_decompress_ptr cinfo)
+ {
++  (void)cinfo;
++
+   /* no work necessary here */
+ }
+ 
+diff --git a/src/jdcoefct.c b/src/jdcoefct.c
+index a63a9ad..2c95655 100644
+--- a/src/jdcoefct.c
++++ b/src/jdcoefct.c
+@@ -200,6 +200,8 @@ decompress_onepass(j_decompress_ptr cinfo, _JSAMPIMAGE output_buf)
+ METHODDEF(int)
+ dummy_consume_data(j_decompress_ptr cinfo)
+ {
++  (void)cinfo;
++
+   return JPEG_SUSPENDED;        /* Always indicate nothing was done */
+ }
+ 
+diff --git a/src/jdcol565.c b/src/jdcol565.c
+index 2172d98..af04ad8 100644
+--- a/src/jdcol565.c
++++ b/src/jdcol565.c
+@@ -21,6 +21,11 @@ ycc_rgb565_convert_internal(j_decompress_ptr cinfo, _JSAMPIMAGE input_buf,
+                             JDIMENSION input_row, _JSAMPARRAY output_buf,
+                             int num_rows)
+ {
++  (void)input_buf;
++  (void)input_row;
++  (void)num_rows;
++  (void)output_buf;
++
+ #if BITS_IN_JSAMPLE != 16
+   my_cconvert_ptr cconvert = (my_cconvert_ptr)cinfo->cconvert;
+   register int y, cb, cr;
+@@ -104,6 +109,11 @@ ycc_rgb565D_convert_internal(j_decompress_ptr cinfo, _JSAMPIMAGE input_buf,
+                              JDIMENSION input_row, _JSAMPARRAY output_buf,
+                              int num_rows)
+ {
++  (void)input_buf;
++  (void)input_row;
++  (void)num_rows;
++  (void)output_buf;
++
+ #if BITS_IN_JSAMPLE != 16
+   my_cconvert_ptr cconvert = (my_cconvert_ptr)cinfo->cconvert;
+   register int y, cb, cr;
+diff --git a/src/jdcolext.c b/src/jdcolext.c
+index 9c98d12..973db5a 100644
+--- a/src/jdcolext.c
++++ b/src/jdcolext.c
+@@ -31,6 +31,10 @@ LOCAL(void)
+ ycc_rgb_convert(j_decompress_ptr cinfo, _JSAMPIMAGE input_buf,
+                 JDIMENSION input_row, _JSAMPARRAY output_buf, int num_rows)
+ {
++  (void)input_buf;
++  (void)num_rows;
++  (void)input_row;  (void)output_buf;
++
+ #if BITS_IN_JSAMPLE != 16
+   my_cconvert_ptr cconvert = (my_cconvert_ptr)cinfo->cconvert;
+   register int y, cb, cr;
+diff --git a/src/jdcolor.c b/src/jdcolor.c
+index 23964b9..63849cc 100644
+--- a/src/jdcolor.c
++++ b/src/jdcolor.c
+@@ -295,6 +295,11 @@ METHODDEF(void)
+ rgb_gray_convert(j_decompress_ptr cinfo, _JSAMPIMAGE input_buf,
+                  JDIMENSION input_row, _JSAMPARRAY output_buf, int num_rows)
+ {
++  (void)input_buf;
++  (void)input_row;
++  (void)num_rows;
++  (void)output_buf;
++
+ #if BITS_IN_JSAMPLE != 16
+   my_cconvert_ptr cconvert = (my_cconvert_ptr)cinfo->cconvert;
+   register int r, g, b;
+@@ -411,6 +416,12 @@ METHODDEF(void)
+ ycck_cmyk_convert(j_decompress_ptr cinfo, _JSAMPIMAGE input_buf,
+                   JDIMENSION input_row, _JSAMPARRAY output_buf, int num_rows)
+ {
++  (void)input_row;
++  (void)num_rows;
++  (void)output_buf;
++
++  (void)input_buf;
++
+ #if BITS_IN_JSAMPLE != 16
+   my_cconvert_ptr cconvert = (my_cconvert_ptr)cinfo->cconvert;
+   register int y, cb, cr;
+@@ -612,6 +623,8 @@ gray_rgb565D_convert(j_decompress_ptr cinfo, _JSAMPIMAGE input_buf,
+ METHODDEF(void)
+ start_pass_dcolor(j_decompress_ptr cinfo)
+ {
++  (void)cinfo;
++
+   /* no work needed */
+ }
+ 
+diff --git a/src/jddiffct.c b/src/jddiffct.c
+index 0a1ec5a..bdf0072 100644
+--- a/src/jddiffct.c
++++ b/src/jddiffct.c
+@@ -248,6 +248,8 @@ decompress_data(j_decompress_ptr cinfo, _JSAMPIMAGE output_buf)
+ METHODDEF(int)
+ dummy_consume_data(j_decompress_ptr cinfo)
+ {
++  (void)cinfo;
++
+   return JPEG_SUSPENDED;        /* Always indicate nothing was done */
+ }
+ 
+diff --git a/src/jdlossls.c b/src/jdlossls.c
+index 5517a69..3e36af2 100644
+--- a/src/jdlossls.c
++++ b/src/jdlossls.c
+@@ -109,6 +109,9 @@ jpeg_undifference1(j_decompress_ptr cinfo, int comp_index,
+                    JDIFFROW diff_buf, JDIFFROW prev_row,
+                    JDIFFROW undiff_buf, JDIMENSION width)
+ {
++  (void)cinfo;
++  (void)comp_index;
++
+   UNDIFFERENCE_1D(INITIAL_PREDICTOR2);
+ }
+ 
+@@ -117,6 +120,9 @@ jpeg_undifference2(j_decompress_ptr cinfo, int comp_index,
+                    JDIFFROW diff_buf, JDIFFROW prev_row,
+                    JDIFFROW undiff_buf, JDIMENSION width)
+ {
++  (void)cinfo;
++  (void)comp_index;
++
+   UNDIFFERENCE_2D(PREDICTOR2);
+   (void)(Rc);
+ }
+@@ -126,6 +132,9 @@ jpeg_undifference3(j_decompress_ptr cinfo, int comp_index,
+                    JDIFFROW diff_buf, JDIFFROW prev_row,
+                    JDIFFROW undiff_buf, JDIMENSION width)
+ {
++  (void)cinfo;
++  (void)comp_index;
++
+   UNDIFFERENCE_2D(PREDICTOR3);
+ }
+ 
+@@ -134,6 +143,9 @@ jpeg_undifference4(j_decompress_ptr cinfo, int comp_index,
+                    JDIFFROW diff_buf, JDIFFROW prev_row,
+                    JDIFFROW undiff_buf, JDIMENSION width)
+ {
++  (void)cinfo;
++  (void)comp_index;
++
+   UNDIFFERENCE_2D(PREDICTOR4);
+ }
+ 
+@@ -142,6 +154,9 @@ jpeg_undifference5(j_decompress_ptr cinfo, int comp_index,
+                    JDIFFROW diff_buf, JDIFFROW prev_row,
+                    JDIFFROW undiff_buf, JDIMENSION width)
+ {
++  (void)cinfo;
++  (void)comp_index;
++
+   UNDIFFERENCE_2D(PREDICTOR5);
+ }
+ 
+@@ -150,6 +165,9 @@ jpeg_undifference6(j_decompress_ptr cinfo, int comp_index,
+                    JDIFFROW diff_buf, JDIFFROW prev_row,
+                    JDIFFROW undiff_buf, JDIMENSION width)
+ {
++  (void)cinfo;
++  (void)comp_index;
++
+   UNDIFFERENCE_2D(PREDICTOR6);
+ }
+ 
+@@ -158,6 +176,9 @@ jpeg_undifference7(j_decompress_ptr cinfo, int comp_index,
+                    JDIFFROW diff_buf, JDIFFROW prev_row,
+                    JDIFFROW undiff_buf, JDIMENSION width)
+ {
++  (void)cinfo;
++  (void)comp_index;
++
+   UNDIFFERENCE_2D(PREDICTOR7);
+   (void)(Rc);
+ }
+@@ -175,6 +196,8 @@ jpeg_undifference_first_row(j_decompress_ptr cinfo, int comp_index,
+                             JDIFFROW diff_buf, JDIFFROW prev_row,
+                             JDIFFROW undiff_buf, JDIMENSION width)
+ {
++  (void)prev_row;
++
+   lossless_decomp_ptr losslessd = (lossless_decomp_ptr)cinfo->idct;
+ 
+   UNDIFFERENCE_1D(INITIAL_PREDICTORx);
+@@ -228,6 +251,8 @@ METHODDEF(void)
+ noscale(j_decompress_ptr cinfo,
+         JDIFFROW diff_buf, _JSAMPROW output_buf, JDIMENSION width)
+ {
++  (void)cinfo;
++
+   do {
+     *output_buf++ = (_JSAMPLE)(*diff_buf++);
+   } while (--width);
+diff --git a/src/jdmerge.c b/src/jdmerge.c
+index 3c77e1a..021a4e3 100644
+--- a/src/jdmerge.c
++++ b/src/jdmerge.c
+@@ -230,6 +230,8 @@ merged_2v_upsample(j_decompress_ptr cinfo, _JSAMPIMAGE input_buf,
+                    JDIMENSION *out_row_ctr, JDIMENSION out_rows_avail)
+ /* 2:1 vertical sampling case: may need a spare row. */
+ {
++  (void)in_row_groups_avail;
++
+   my_merged_upsample_ptr upsample = (my_merged_upsample_ptr)cinfo->upsample;
+   _JSAMPROW work_ptrs[2];
+   JDIMENSION num_rows;          /* number of rows returned to caller */
+@@ -289,6 +291,9 @@ merged_1v_upsample(j_decompress_ptr cinfo, _JSAMPIMAGE input_buf,
+                    JDIMENSION *out_row_ctr, JDIMENSION out_rows_avail)
+ /* 1:1 vertical sampling case: much easier, never need a spare row. */
+ {
++  (void)in_row_groups_avail;
++  (void)out_rows_avail;
++
+   my_merged_upsample_ptr upsample = (my_merged_upsample_ptr)cinfo->upsample;
+ 
+   /* Just do the upsampling. */
+diff --git a/src/jdpostct.c b/src/jdpostct.c
+index 9bc6210..05d8cf3 100644
+--- a/src/jdpostct.c
++++ b/src/jdpostct.c
+@@ -178,6 +178,9 @@ post_process_prepass(j_decompress_ptr cinfo, _JSAMPIMAGE input_buf,
+                      JDIMENSION in_row_groups_avail, _JSAMPARRAY output_buf,
+                      JDIMENSION *out_row_ctr, JDIMENSION out_rows_avail)
+ {
++  (void)out_rows_avail;
++  (void)output_buf;
++
+   my_post_ptr post = (my_post_ptr)cinfo->post;
+   JDIMENSION old_next_row, num_rows;
+ 
+@@ -221,6 +224,9 @@ post_process_2pass(j_decompress_ptr cinfo, _JSAMPIMAGE input_buf,
+                    JDIMENSION in_row_groups_avail, _JSAMPARRAY output_buf,
+                    JDIMENSION *out_row_ctr, JDIMENSION out_rows_avail)
+ {
++  (void)in_row_group_ctr;
++  (void)input_buf;
++  (void)in_row_groups_avail;
+   my_post_ptr post = (my_post_ptr)cinfo->post;
+   JDIMENSION num_rows, max_rows;
+ 
+@@ -265,6 +271,8 @@ post_process_2pass(j_decompress_ptr cinfo, _JSAMPIMAGE input_buf,
+ GLOBAL(void)
+ _jinit_d_post_controller(j_decompress_ptr cinfo, boolean need_full_buffer)
+ {
++  (void)need_full_buffer;
++
+   my_post_ptr post;
+ 
+ #ifdef D_LOSSLESS_SUPPORTED
+diff --git a/src/jdsample.c b/src/jdsample.c
+index 8c8f877..f707636 100644
+--- a/src/jdsample.c
++++ b/src/jdsample.c
+@@ -68,6 +68,8 @@ sep_upsample(j_decompress_ptr cinfo, _JSAMPIMAGE input_buf,
+              _JSAMPARRAY output_buf, JDIMENSION *out_row_ctr,
+              JDIMENSION out_rows_avail)
+ {
++  (void)in_row_groups_avail;
++
+   my_upsample_ptr upsample = (my_upsample_ptr)cinfo->upsample;
+   int ci;
+   jpeg_component_info *compptr;
+@@ -149,6 +151,9 @@ METHODDEF(void)
+ fullsize_upsample(j_decompress_ptr cinfo, jpeg_component_info *compptr,
+                   _JSAMPARRAY input_data, _JSAMPARRAY *output_data_ptr)
+ {
++  (void)cinfo;
++  (void)compptr;
++
+   *output_data_ptr = input_data;
+ }
+ 
+@@ -162,6 +167,9 @@ METHODDEF(void)
+ noop_upsample(j_decompress_ptr cinfo, jpeg_component_info *compptr,
+               _JSAMPARRAY input_data, _JSAMPARRAY *output_data_ptr)
+ {
++  (void)cinfo;
++  (void)input_data;
++  (void)compptr;
+   *output_data_ptr = NULL;      /* safety check */
+ }
+ 
+@@ -225,6 +233,8 @@ METHODDEF(void)
+ h2v1_upsample(j_decompress_ptr cinfo, jpeg_component_info *compptr,
+               _JSAMPARRAY input_data, _JSAMPARRAY *output_data_ptr)
+ {
++  (void)compptr;
++
+   _JSAMPARRAY output_data = *output_data_ptr;
+   register _JSAMPROW inptr, outptr;
+   register _JSAMPLE invalue;
+@@ -253,6 +263,8 @@ METHODDEF(void)
+ h2v2_upsample(j_decompress_ptr cinfo, jpeg_component_info *compptr,
+               _JSAMPARRAY input_data, _JSAMPARRAY *output_data_ptr)
+ {
++  (void)compptr;
++
+   _JSAMPARRAY output_data = *output_data_ptr;
+   register _JSAMPROW inptr, outptr;
+   register _JSAMPLE invalue;
+diff --git a/src/jmemnobs.c b/src/jmemnobs.c
+index 692775f..21fc6f3 100644
+--- a/src/jmemnobs.c
++++ b/src/jmemnobs.c
+@@ -31,12 +31,17 @@
+ GLOBAL(void *)
+ jpeg_get_small(j_common_ptr cinfo, size_t sizeofobject)
+ {
++  (void)cinfo;
++
+   return (void *)MALLOC(sizeofobject);
+ }
+ 
+ GLOBAL(void)
+ jpeg_free_small(j_common_ptr cinfo, void *object, size_t sizeofobject)
+ {
++  (void)cinfo;
++  (void)sizeofobject;
++
+   free(object);
+ }
+ 
+@@ -48,12 +53,17 @@ jpeg_free_small(j_common_ptr cinfo, void *object, size_t sizeofobject)
+ GLOBAL(void *)
+ jpeg_get_large(j_common_ptr cinfo, size_t sizeofobject)
+ {
++  (void)cinfo;
++
+   return (void *)MALLOC(sizeofobject);
+ }
+ 
+ GLOBAL(void)
+ jpeg_free_large(j_common_ptr cinfo, void *object, size_t sizeofobject)
+ {
++  (void)cinfo;
++  (void)sizeofobject;
++
+   free(object);
+ }
+ 
+@@ -66,6 +76,8 @@ GLOBAL(size_t)
+ jpeg_mem_available(j_common_ptr cinfo, size_t min_bytes_needed,
+                    size_t max_bytes_needed, size_t already_allocated)
+ {
++  (void)min_bytes_needed;
++
+   if (cinfo->mem->max_memory_to_use) {
+     if ((size_t)cinfo->mem->max_memory_to_use > already_allocated)
+       return cinfo->mem->max_memory_to_use - already_allocated;
+@@ -88,6 +100,9 @@ GLOBAL(void)
+ jpeg_open_backing_store(j_common_ptr cinfo, backing_store_ptr info,
+                         long total_bytes_needed)
+ {
++  (void)info;
++  (void)total_bytes_needed;
++
+   ERREXIT(cinfo, JERR_NO_BACKING_STORE);
+ }
+ 
+@@ -100,11 +115,15 @@ jpeg_open_backing_store(j_common_ptr cinfo, backing_store_ptr info,
+ GLOBAL(long)
+ jpeg_mem_init(j_common_ptr cinfo)
+ {
++  (void)cinfo;
++
+   return 0;                     /* just set max_memory_to_use to 0 */
+ }
+ 
+ GLOBAL(void)
+ jpeg_mem_term(j_common_ptr cinfo)
+ {
++  (void)cinfo;
++
+   /* no work */
+ }
+diff --git a/src/jquant1.c b/src/jquant1.c
+index b864371..a066ec9 100644
+--- a/src/jquant1.c
++++ b/src/jquant1.c
+@@ -251,6 +251,9 @@ output_value(j_decompress_ptr cinfo, int ci, int j, int maxj)
+ /* Return j'th output value, where j will range from 0 to maxj */
+ /* The output values must fall in 0.._MAXJSAMPLE in increasing order */
+ {
++  (void)ci;
++  (void)cinfo;
++
+   /* We always provide values 0 and _MAXJSAMPLE for each component;
+    * any additional values are equally spaced between these limits.
+    * (Forcing the upper and lower values to the limits ensures that
+@@ -265,6 +268,9 @@ largest_input_value(j_decompress_ptr cinfo, int ci, int j, int maxj)
+ /* Return largest input value that should map to j'th output value */
+ /* Must have largest(j=0) >= 0, and largest(j=maxj) >= _MAXJSAMPLE */
+ {
++  (void)ci;
++  (void)cinfo;
++
+   /* Breakpoints are halfway between values returned by output_value */
+   return (int)(((JLONG)(2 * j + 1) * _MAXJSAMPLE + maxj) / (2 * maxj));
+ }
+@@ -741,6 +747,8 @@ alloc_fs_workspace(j_decompress_ptr cinfo)
+ METHODDEF(void)
+ start_pass_1_quant(j_decompress_ptr cinfo, boolean is_pre_scan)
+ {
++  (void)is_pre_scan;
++
+   my_cquantize_ptr cquantize = (my_cquantize_ptr)cinfo->cquantize;
+   size_t arraysize;
+   int i;
+@@ -798,6 +806,8 @@ start_pass_1_quant(j_decompress_ptr cinfo, boolean is_pre_scan)
+ METHODDEF(void)
+ finish_pass_1_quant(j_decompress_ptr cinfo)
+ {
++  (void)cinfo;
++
+   /* no work in 1-pass case */
+ }
+ 
+diff --git a/src/jquant2.c b/src/jquant2.c
+index 9ba51fa..e7237a0 100644
+--- a/src/jquant2.c
++++ b/src/jquant2.c
+@@ -204,6 +204,8 @@ METHODDEF(void)
+ prescan_quantize(j_decompress_ptr cinfo, _JSAMPARRAY input_buf,
+                  _JSAMPARRAY output_buf, int num_rows)
+ {
++  (void)output_buf;
++
+   my_cquantize_ptr cquantize = (my_cquantize_ptr)cinfo->cquantize;
+   register _JSAMPROW ptr;
+   register histptr histp;
+@@ -1133,6 +1135,8 @@ finish_pass1(j_decompress_ptr cinfo)
+ METHODDEF(void)
+ finish_pass2(j_decompress_ptr cinfo)
+ {
++  (void)cinfo;
++
+   /* no work */
+ }
+ 
+diff --git a/src/rdbmp.c b/src/rdbmp.c
+index 6205c19..9f63933 100644
+--- a/src/rdbmp.c
++++ b/src/rdbmp.c
+@@ -638,6 +638,10 @@ METHODDEF(boolean)
+ read_icc_profile_bmp(j_compress_ptr cinfo, cjpeg_source_ptr sinfo,
+                      JOCTET **icc_data_ptr, unsigned int *icc_data_len)
+ {
++  (void)cinfo;
++  (void)icc_data_ptr;
++  (void)icc_data_len;  (void)sinfo;
++
+   return FALSE;
+ }
+ 
+@@ -649,6 +653,9 @@ read_icc_profile_bmp(j_compress_ptr cinfo, cjpeg_source_ptr sinfo,
+ METHODDEF(void)
+ finish_input_bmp(j_compress_ptr cinfo, cjpeg_source_ptr sinfo)
+ {
++  (void)cinfo;
++  (void)sinfo;
++
+   /* no work */
+ }
+ 
+diff --git a/src/rdgif.c b/src/rdgif.c
+index 81eaeed..bb873ec 100644
+--- a/src/rdgif.c
++++ b/src/rdgif.c
+@@ -680,6 +680,11 @@ METHODDEF(boolean)
+ read_icc_profile_gif(j_compress_ptr cinfo, cjpeg_source_ptr sinfo,
+                      JOCTET **icc_data_ptr, unsigned int *icc_data_len)
+ {
++  (void)cinfo;
++  (void)icc_data_len;
++  (void)icc_data_ptr;
++  (void)sinfo;
++
+   return FALSE;
+ }
+ 
+@@ -691,6 +696,9 @@ read_icc_profile_gif(j_compress_ptr cinfo, cjpeg_source_ptr sinfo,
+ METHODDEF(void)
+ finish_input_gif(j_compress_ptr cinfo, cjpeg_source_ptr sinfo)
+ {
++  (void)cinfo;
++  (void)sinfo;
++
+   /* no work */
+ }
+ 
+diff --git a/src/rdpng.c b/src/rdpng.c
+index 4f89ead..c62a774 100644
+--- a/src/rdpng.c
++++ b/src/rdpng.c
+@@ -686,6 +686,8 @@ read_icc_profile_png(j_compress_ptr cinfo, cjpeg_source_ptr sinfo,
+ METHODDEF(void)
+ finish_input_png(j_compress_ptr cinfo, cjpeg_source_ptr sinfo)
+ {
++  (void)cinfo;
++
+   png_source_ptr source = (png_source_ptr)sinfo;
+ 
+   if (source->ctx) {
+diff --git a/src/rdppm.c b/src/rdppm.c
+index 51f08c0..cc4c66e 100644
+--- a/src/rdppm.c
++++ b/src/rdppm.c
+@@ -900,6 +900,10 @@ METHODDEF(boolean)
+ read_icc_profile_ppm(j_compress_ptr cinfo, cjpeg_source_ptr sinfo,
+                      JOCTET **icc_data_ptr, unsigned int *icc_data_len)
+ {
++  (void)cinfo;
++  (void)icc_data_ptr;
++  (void)icc_data_len;  (void)sinfo;
++
+   return FALSE;
+ }
+ 
+@@ -911,6 +915,9 @@ read_icc_profile_ppm(j_compress_ptr cinfo, cjpeg_source_ptr sinfo,
+ METHODDEF(void)
+ finish_input_ppm(j_compress_ptr cinfo, cjpeg_source_ptr sinfo)
+ {
++  (void)cinfo;
++  (void)sinfo;
++
+   /* no work */
+ }
+ 
+diff --git a/src/rdtarga.c b/src/rdtarga.c
+index 56e6acf..0c69144 100644
+--- a/src/rdtarga.c
++++ b/src/rdtarga.c
+@@ -471,6 +471,11 @@ METHODDEF(boolean)
+ read_icc_profile_tga(j_compress_ptr cinfo, cjpeg_source_ptr sinfo,
+                      JOCTET **icc_data_ptr, unsigned int *icc_data_len)
+ {
++  (void)cinfo;
++  (void)icc_data_len;
++  (void)icc_data_ptr;
++  (void)sinfo;
++
+   return FALSE;
+ }
+ 
+@@ -482,6 +487,9 @@ read_icc_profile_tga(j_compress_ptr cinfo, cjpeg_source_ptr sinfo,
+ METHODDEF(void)
+ finish_input_tga(j_compress_ptr cinfo, cjpeg_source_ptr sinfo)
+ {
++  (void)cinfo;
++  (void)sinfo;
++
+   /* no work */
+ }
+ 
+diff --git a/src/spng/CMakeLists.txt b/src/spng/CMakeLists.txt
+index 6fe4f33..6a98f06 100644
+--- a/src/spng/CMakeLists.txt
++++ b/src/spng/CMakeLists.txt
+@@ -12,7 +12,6 @@ if(NOT WITH_SYSTEM_ZLIB)
+   target_compile_definitions(zlib-static PRIVATE Z_PREFIX)
+ 
+   if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID MATCHES "Clang")
+-    target_compile_options(zlib-static PRIVATE -w)
+     if(NOT WIN32)
+       target_compile_options(zlib-static PRIVATE -fvisibility=hidden)
+     endif()
+@@ -36,7 +35,6 @@ if(NOT WITH_SYSTEM_ZLIB)
+ endif()
+ 
+ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID MATCHES "Clang")
+-  target_compile_options(spng-static PRIVATE -w)
+   if(NOT WIN32)
+     target_compile_options(spng-static PRIVATE -fvisibility=hidden)
+   endif()
+diff --git a/src/strtest.c b/src/strtest.c
+index 4b6e27f..8ba0862 100644
+--- a/src/strtest.c
++++ b/src/strtest.c
+@@ -35,6 +35,9 @@ void invalid_parameter_handler(const wchar_t *expression,
+ 
+ int main(int argc, char **argv)
+ {
++  (void)argc;
++  (void)argv;
++
+ #if !defined(NO_GETENV) || !defined(NO_PUTENV)
+   int err;
+ #endif
+diff --git a/src/tjbench.c b/src/tjbench.c
+index 95eb9b5..04eab06 100644
+--- a/src/tjbench.c
++++ b/src/tjbench.c
+@@ -165,6 +165,11 @@ static int dummyDCTFilter(short *coeffs, tjregion arrayRegion,
+                           tjregion planeRegion, int componentIndex,
+                           int transformIndex, tjtransform *transform)
+ {
++  (void)componentIndex;
++  (void)planeRegion;
++  (void)transform;
++  (void)transformIndex;
++
+   int i;
+ 
+   for (i = 0; i < arrayRegion.w * arrayRegion.h; i++)
+diff --git a/src/tjunittest.c b/src/tjunittest.c
+index b2def92..cadf611 100644
+--- a/src/tjunittest.c
++++ b/src/tjunittest.c
+@@ -532,6 +532,8 @@ static void _decompTest(tjhandle handle, unsigned char *jpegBuf,
+                         size_t jpegSize, int w, int h, int pf, char *basename,
+                         int subsamp, tjscalingfactor sf)
+ {
++  (void)basename;
++
+   void *dstBuf = NULL;
+   unsigned char *yuvBuf = NULL;
+   int success = 1;
+diff --git a/src/turbojpeg.c b/src/turbojpeg.c
+index 9ad54c5..95e924e 100644
+--- a/src/turbojpeg.c
++++ b/src/turbojpeg.c
+@@ -2526,6 +2526,8 @@ DLLEXPORT int tjDecompressToYUV(tjhandle handle, unsigned char *jpegBuf,
+ 
+ static void setDecodeDefaults(tjinstance *this, int pixelFormat)
+ {
++  (void)pixelFormat;
++
+   int i;
+ 
+   this->dinfo.scale_num = this->dinfo.scale_denom = 1;
+@@ -2567,11 +2569,15 @@ static void setDecodeDefaults(tjinstance *this, int pixelFormat)
+ 
+ static int my_read_markers(j_decompress_ptr dinfo)
+ {
++  (void)dinfo;
++
+   return JPEG_REACHED_SOS;
+ }
+ 
+ static void my_reset_marker_reader(j_decompress_ptr dinfo)
+ {
++  (void)dinfo;
++
+ }
+ 
+ /* TurboJPEG 3.0+ */
+diff --git a/src/wrbmp.c b/src/wrbmp.c
+index ae6020a..6d26cca 100644
+--- a/src/wrbmp.c
++++ b/src/wrbmp.c
+@@ -98,6 +98,8 @@ put_pixel_rows(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo,
+                JDIMENSION rows_supplied)
+ /* This version is for writing 24-bit pixels */
+ {
++  (void)rows_supplied;
++
+   bmp_dest_ptr dest = (bmp_dest_ptr)dinfo;
+   JSAMPARRAY image_ptr;
+   register JSAMPROW inptr, outptr;
+@@ -173,6 +175,8 @@ put_gray_rows(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo,
+               JDIMENSION rows_supplied)
+ /* This version is for grayscale OR quantized color output */
+ {
++  (void)rows_supplied;
++
+   bmp_dest_ptr dest = (bmp_dest_ptr)dinfo;
+   JSAMPARRAY image_ptr;
+   register JSAMPROW inptr, outptr;
+@@ -436,6 +440,10 @@ METHODDEF(void)
+ write_icc_profile_bmp(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo,
+                       const JOCTET *icc_data_ptr, unsigned int icc_data_len)
+ {
++  (void)cinfo;
++  (void)icc_data_len;
++  (void)dinfo;  (void)icc_data_ptr;
++
+ }
+ 
+ 
+diff --git a/src/wrgif.c b/src/wrgif.c
+index 3c591c6..91c2ff0 100644
+--- a/src/wrgif.c
++++ b/src/wrgif.c
+@@ -359,6 +359,8 @@ METHODDEF(void)
+ put_LZW_pixel_rows(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo,
+                    JDIMENSION rows_supplied)
+ {
++  (void)rows_supplied;
++
+   gif_dest_ptr dest = (gif_dest_ptr)dinfo;
+   register _JSAMPROW ptr;
+   register JDIMENSION col;
+@@ -460,6 +462,8 @@ METHODDEF(void)
+ put_raw_pixel_rows(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo,
+                    JDIMENSION rows_supplied)
+ {
++  (void)rows_supplied;
++
+   gif_dest_ptr dest = (gif_dest_ptr)dinfo;
+   register _JSAMPROW ptr;
+   register JDIMENSION col;
+@@ -491,6 +495,11 @@ METHODDEF(void)
+ write_icc_profile_gif(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo,
+                       const JOCTET *icc_data_ptr, unsigned int icc_data_len)
+ {
++  (void)cinfo;
++  (void)dinfo;
++  (void)icc_data_len;
++  (void)icc_data_ptr;
++
+ }
+ 
+ 
+@@ -523,6 +532,9 @@ finish_output_gif(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo)
+ METHODDEF(void)
+ calc_buffer_dimensions_gif(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo)
+ {
++  (void)cinfo;
++  (void)dinfo;
++
+ }
+ 
+ 
+diff --git a/src/wrpng.c b/src/wrpng.c
+index 93dc80b..b697fb8 100644
+--- a/src/wrpng.c
++++ b/src/wrpng.c
+@@ -74,6 +74,8 @@ METHODDEF(void)
+ put_pixel_rows(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo,
+                JDIMENSION rows_supplied)
+ {
++  (void)rows_supplied;
++
+   png_dest_ptr dest = (png_dest_ptr)dinfo;
+   int spng_error;
+ 
+diff --git a/src/wrppm.c b/src/wrppm.c
+index dce648b..5458b23 100644
+--- a/src/wrppm.c
++++ b/src/wrppm.c
+@@ -94,6 +94,9 @@ METHODDEF(void)
+ put_pixel_rows(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo,
+                JDIMENSION rows_supplied)
+ {
++  (void)cinfo;
++  (void)rows_supplied;
++
+   ppm_dest_ptr dest = (ppm_dest_ptr)dinfo;
+ 
+   fwrite(dest->iobuffer, 1, dest->buffer_width, dest->pub.output_file);
+@@ -111,6 +114,9 @@ METHODDEF(void)
+ copy_pixel_rows(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo,
+                 JDIMENSION rows_supplied)
+ {
++  (void)cinfo;
++  (void)rows_supplied;
++
+   ppm_dest_ptr dest = (ppm_dest_ptr)dinfo;
+   register char *bufferptr;
+   register _JSAMPROW ptr;
+@@ -132,6 +138,8 @@ copy_pixel_rows(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo,
+ METHODDEF(void)
+ put_rgb(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo, JDIMENSION rows_supplied)
+ {
++  (void)rows_supplied;
++
+   ppm_dest_ptr dest = (ppm_dest_ptr)dinfo;
+   register char *bufferptr;
+   register _JSAMPROW ptr;
+@@ -161,6 +169,8 @@ METHODDEF(void)
+ put_cmyk(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo,
+          JDIMENSION rows_supplied)
+ {
++  (void)rows_supplied;
++
+   ppm_dest_ptr dest = (ppm_dest_ptr)dinfo;
+   register char *bufferptr;
+   register _JSAMPROW ptr;
+@@ -188,6 +198,8 @@ METHODDEF(void)
+ put_demapped_rgb(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo,
+                  JDIMENSION rows_supplied)
+ {
++  (void)rows_supplied;
++
+   ppm_dest_ptr dest = (ppm_dest_ptr)dinfo;
+   register char *bufferptr;
+   register int pixval;
+@@ -216,6 +228,8 @@ METHODDEF(void)
+ put_demapped_gray(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo,
+                   JDIMENSION rows_supplied)
+ {
++  (void)rows_supplied;
++
+   ppm_dest_ptr dest = (ppm_dest_ptr)dinfo;
+   register char *bufferptr;
+   register _JSAMPROW ptr;
+@@ -275,6 +289,10 @@ METHODDEF(void)
+ write_icc_profile_ppm(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo,
+                       const JOCTET *icc_data_ptr, unsigned int icc_data_len)
+ {
++  (void)cinfo;
++  (void)icc_data_len;
++  (void)dinfo;  (void)icc_data_ptr;
++
+ }
+ 
+ 
+diff --git a/src/wrtarga.c b/src/wrtarga.c
+index 4b5559e..bf16070 100644
+--- a/src/wrtarga.c
++++ b/src/wrtarga.c
+@@ -94,6 +94,8 @@ put_pixel_rows(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo,
+                JDIMENSION rows_supplied)
+ /* used for unquantized full-color output */
+ {
++  (void)rows_supplied;
++
+   tga_dest_ptr dest = (tga_dest_ptr)dinfo;
+   register JSAMPROW inptr;
+   register char *outptr;
+@@ -115,6 +117,8 @@ put_gray_rows(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo,
+               JDIMENSION rows_supplied)
+ /* used for grayscale OR quantized color output */
+ {
++  (void)rows_supplied;
++
+   tga_dest_ptr dest = (tga_dest_ptr)dinfo;
+   register JSAMPROW inptr;
+   register char *outptr;
+@@ -135,6 +139,8 @@ METHODDEF(void)
+ put_demapped_gray(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo,
+                   JDIMENSION rows_supplied)
+ {
++  (void)rows_supplied;
++
+   tga_dest_ptr dest = (tga_dest_ptr)dinfo;
+   register JSAMPROW inptr;
+   register char *outptr;
+@@ -198,6 +204,11 @@ METHODDEF(void)
+ write_icc_profile_tga(j_decompress_ptr cinfo, djpeg_dest_ptr dinfo,
+                       const JOCTET *icc_data_ptr, unsigned int icc_data_len)
+ {
++  (void)cinfo;
++  (void)dinfo;
++  (void)icc_data_len;
++  (void)icc_data_ptr;
++
+ }
+ 
+ 

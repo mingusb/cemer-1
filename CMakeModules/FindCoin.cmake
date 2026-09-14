@@ -4,7 +4,7 @@
 # COIN_LIBRARY     - full path to the Coin library
 # COIN_FOUND       - TRUE if Coin was found
 
-FIND_PATH(COIN_INCLUDE_DIR SbVec3f.h
+FIND_PATH(COIN_INCLUDE_DIR NAMES Inventor/SbVec3f.h SbVec3f.h
     /usr/include
     /usr/local/include
 	/opt/local/include

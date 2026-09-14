@@ -1,0 +1,108 @@
+{
+  "validation_time": "2026-09-13T22:29:12.836354+00:00",
+  "application_stack": "Official Qt6.12 Beta4 + unmodified matching WebEngine; Clang24; GNU libstdc++",
+  "selected_native": [
+    {
+      "name": "coin",
+      "version": "4.0.10",
+      "revision": "2a182129c1b16d16848e2547767750546f5c56d4",
+      "install_prefix": "/home/b/toolchains/deps",
+      "cxx_standard_library": "GNU libstdc++ (Clang24 selects GCC15 headers), matching official Qt SDK ABI",
+      "test_result": "8/8 CTest suites pass (including embedded Coin unit tests)."
+    },
+    {
+      "name": "ode",
+      "version": "0.16.7-dev",
+      "revision": "232cbe216c5a762176f7754f04d190d2de00cdcc",
+      "install_prefix": "/home/b/toolchains/deps",
+      "cxx_standard_library": "GNU libstdc++ (Clang24 selects GCC15 headers), matching official Qt SDK ABI",
+      "test_result": "1/1 upstream unit-test suite passes."
+    },
+    {
+      "name": "libccd",
+      "version": "2.0 (unbumped upstream version)",
+      "revision": "7931e764a19ef6b21b443376c699bbc9c6d4fba8",
+      "install_prefix": "/home/b/toolchains/deps",
+      "test_result": "3/3 CTest suites pass."
+    }
+  ],
+  "quarter": {
+    "compile_commands": "/home/b/cemer/build-quarter-final/compile_commands.json",
+    "compile_command_count": 21,
+    "compiler_diagnostics": [],
+    "active_suppression_flags": [],
+    "configure_log": "/home/b/toolchains/quarter-final-configure.log",
+    "build_log": "/home/b/toolchains/quarter-final-build.log",
+    "tests": {
+      "normal": "2/2 PASS",
+      "dpi_150_percent": "2/2 PASS",
+      "coverage": [
+        "actual Coin OpenGL framebuffer",
+        "reparented widget context lifecycle",
+        "shared context lifecycle",
+        "all render-mode actions and GL_NO_ERROR",
+        "wheel event translation",
+        "Qt image format/alpha conversion"
+      ]
+    },
+    "test_logs": [
+      "/home/b/toolchains/quarter-final-test.log",
+      "/home/b/toolchains/quarter-final-dpi-test.log"
+    ],
+    "runtime_closure_log": "/home/b/toolchains/quarter-final-closure.log",
+    "llvm_cxx_runtime_present": false,
+    "vision_artifact": "/home/b/toolchains/quarter-gpu-evidence/software-150-percent.png",
+    "vision_observation": "A red cube is rendered on black, with distinct front, side and top shading and clean geometry at 150% display scale.",
+    "build_log_sha256": "0d2fdf1ad283ed8ab05347c2dcbd12ea4ec574fc31c3c9f8c5c42d07b43041ff",
+    "configure_log_sha256": "66bc04f265b571ae6eedd6b42a3f1079b72962624b4f0046dbb5d5c3f71da58d",
+    "hardware_gpu_validation": {
+      "platform": "isolated Xvfb :94",
+      "renderer": "D3D12 (NVIDIA RTX A5000 Laptop GPU)",
+      "test_result": "2/2 PASS including shared/nonshared contexts",
+      "renderer_observed_in_actual_widget_context": true,
+      "test_log": "/home/b/toolchains/quarter-gpu-evidence/test-details-display-94.log",
+      "framebuffer": "/home/b/toolchains/quarter-gpu-evidence/gpu-display-94.png",
+      "vision_observation": "Correct red cube on black with distinct face shading; clean geometry.",
+      "notes": "Completed evidence only. Later user steering forbids opening test windows on their actual desktop."
+    }
+  },
+  "source_experiment_archive": "/home/b/toolchains/experiments/libcxx-native",
+  "limitations": [
+    "Quarter regression validates the renderer integration; final main-application relink and end-to-end GUI interaction are coordinated separately by root.",
+    "Optional FLAC++ and experimental source Qt/FFmpeg are not selected by this runtime validation."
+  ],
+  "final_application_validation": {
+    "gui_report": "artifacts/gui-export-fixed/report.json",
+    "installed_libtemt": {
+      "path": "/home/b/cemer/install/lib/libtemt.so.8.6.1",
+      "sha256": "73163f47c9e654439d7ce7e66a49494516cb970fda520944ea91c8b4ceca320d",
+      "size_bytes": 292045416,
+      "runpath": "/home/b/toolchains/deps/lib:/home/b/toolchains/Qt/lib"
+    },
+    "build_libtemt": {
+      "path": "/home/b/cemer/build-modern-final/lib/libtemt.so.8.6.1",
+      "sha256": "b63688e9a17b61df2c8a2a990a77b58ca39e195b53d30aa35fba69982c226096",
+      "size_bytes": 292045416,
+      "runpath": "/home/b/toolchains/deps/lib:/home/b/toolchains/Qt/lib:"
+    },
+    "focused_cpu_tests": {
+      "path": "/home/b/cemer/artifacts/gui-export-fixed/focused-cpu-tests.log",
+      "sha256": "9c9fee4acf270e543ae41c24a85a4f848a4143b9921f7263f1496189be2c5f2a",
+      "size_bytes": 397
+    },
+    "result": "PASS native PNG export and error recovery, normal CSS exit, final wrapper/filer tests",
+    "cognitive_guard_checkpoint": {
+      "installed_libemergentlib": {
+        "path": "/home/b/cemer/install/lib/libemergentlib.so.8.6.1",
+        "sha256": "28a24a4d4e6e62fd2a8737531f000c98f4a83024936ad3f25bdf765f16d3d38f",
+        "size_bytes": 107198432
+      },
+      "installed_libtemt_unchanged": true,
+      "diagnosis_report": "artifacts/cognitive-semantic-gdb/report.json",
+      "note": "One-line restoration guard for preexisting partially serialized ACT-R vision references; no algorithm change or test workaround.",
+      "integration_report": "/home/b/cemer/artifacts/cognitive-actr-final/report.json",
+      "integration_report_sha256": "d73df9db000049dd7568ddd54a4f4b60fe568be6092520ac97520dcab002f53e",
+      "result": "PASS original semantic project with automatic stale buffer restoration and native classification; migrated direct/transitive/negative scenarios also pass"
+    }
+  }
+}

@@ -5,6 +5,8 @@ Run `tools/run-inductor-head` from the source checkout, or open
 The supplied launcher uses an ordinary CSS startup script to perform this
 first step. **ProjectDoc** contains the complete local wiki tutorial.
 
+![InductorHead with its native 3D circuit, task controls and CSS console](preview.png)
+
 **Generate** applies changed controls, **Run** recomputes the current query,
 **Step** advances it, and **Evaluate** records 64 unseen seeds under three
 ablation conditions in the Experiments table. **Show** restores the 3D view
@@ -28,10 +30,12 @@ entry, native network activations, both head ablations, 64 held-out vocabulary
 permutations, and saving/reloading the project. It preserves logs and never
 creates or accepts reference baselines.
 
-For the GUI startup and actual CSS keyboard checks, run inside an X11 desktop:
+For GUI startup and actual CSS keyboard checks, use an isolated Xvfb desktop
+with Openbox installed:
 
 ```sh
-python3 test/inductor_head_gui_regression.py --binary tools/run-emergent
+xvfb-run -a -s "-screen 0 1600x1000x24" sh -c \
+  'openbox >/dev/null 2>&1 & python3 test/inductor_head_gui_regression.py --binary tools/run-emergent'
 ```
 
 This compares normal project opening with the supplied CSS startup script,
@@ -40,8 +44,13 @@ the circuit, saves screenshots, and exits through CSS.
 
 The complete button walkthrough also edits controls, introduces distractors,
 runs both ablations and the held-out evaluation, scrolls the embedded wiki,
-and saves/reopens through the GUI. It uses a 1600×1000 reference X11 desktop:
+and saves/reopens through the GUI. It uses a 1600×1000 isolated X11 desktop:
 
 ```sh
-python3 test/inductor_head_walkthrough.py --binary tools/run-emergent
+xvfb-run -a -s "-screen 0 1600x1000x24" sh -c \
+  'openbox >/dev/null 2>&1 & python3 test/inductor_head_walkthrough.py --binary tools/run-emergent'
 ```
+
+The GUI drivers refuse display `:0`. They use real keyboard and mouse input,
+so always keep automation on its own display. NVIDIA rendering remains available
+on the isolated WSL display through the launcher.

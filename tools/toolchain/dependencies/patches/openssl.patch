@@ -1,0 +1,500 @@
+diff --git a/Configurations/unix-Makefile.tmpl b/Configurations/unix-Makefile.tmpl
+index f8a5b16..01c2e35 100644
+--- a/Configurations/unix-Makefile.tmpl
++++ b/Configurations/unix-Makefile.tmpl
+@@ -397,6 +397,8 @@ CPPFLAGS={- our $cppflags1 = join(" ",
+                                   (map { "-D".$_} @{$config{CPPDEFINES}}),
+                                   (map { "-I".$_} @{$config{CPPINCLUDES}}),
+                                   @{$config{CPPFLAGS}}) -}
++# Keep assembler forwarding switches out of link-only driver commands.
++AS_FLAG_COMMA=,
+ CFLAGS={- join(' ', @{$config{CFLAGS}}) -}
+ CXXFLAGS={- join(' ', @{$config{CXXFLAGS}}) -}
+ LDFLAGS= {- join(' ', @{$config{LDFLAGS}}) -}
+@@ -1826,6 +1828,10 @@ EOF
+       my $recipe;
+       # extension-specific rules
+       if (grep /\.s$/, @srcs) {
++          # Raw assembler inputs have no C preprocessor or optimization pass.
++          # Preserve assembler/target/diagnostic flags, without passing C-only
++          # switches that Clang correctly diagnoses as unused.
++          $cmdflags = '$(filter-out -pthread -O% -D%,' . $cmdflags . ')';
+           $recipe .= <<"EOF";
+ $obj: $deps
+ 	$cmd $cmdflags -c -o \$\@ $srcs
+@@ -1976,7 +1982,7 @@ EOF
+       if (!run_on_windows()) {
+           $recipe .= <<"EOF";
+ $full: $fulldeps
+-	\$(CC) \$(LIB_CFLAGS) $linkflags\$(LIB_LDFLAGS)$shared_soname$shared_imp \\
++	\$(CC) \$(filter-out -Wa\$(AS_FLAG_COMMA)%,\$(LIB_CFLAGS)) $linkflags\$(LIB_LDFLAGS)$shared_soname$shared_imp \\
+ 		-o $full$shared_def \\
+ 		$fullobjs \\
+ 		$linklibs \$(LIB_EX_LIBS)
+@@ -1987,7 +1993,7 @@ $full: $fulldeps
+ 	\$(file >\$@.lst, \\
+ 		$fullobjs \\
+ 	)
+-	\$(CC) \$(LIB_CFLAGS) $linkflags\$(LIB_LDFLAGS)$shared_soname$shared_imp \\
++	\$(CC) \$(filter-out -Wa\$(AS_FLAG_COMMA)%,\$(LIB_CFLAGS)) $linkflags\$(LIB_LDFLAGS)$shared_soname$shared_imp \\
+ 		-o $full$shared_def \\
+ 		@\$@.lst \\
+ 		$linklibs \$(LIB_EX_LIBS)
+@@ -2052,7 +2058,7 @@ EOF
+ 
+       return <<"EOF";
+ $dso: $deps
+-	\$(CC) \$(DSO_CFLAGS) $linkflags\$(DSO_LDFLAGS) \\
++	\$(CC) \$(filter-out -Wa\$(AS_FLAG_COMMA)%,\$(DSO_CFLAGS)) $linkflags\$(DSO_LDFLAGS) \\
+ 		-o $dso$shared_def \\
+ 		$objs \\
+ 		$linklibs\$(DSO_EX_LIBS)
+@@ -2110,10 +2116,10 @@ EOF
+       my $linkflags = join("", map { $_." " } @linkdirs);
+       my $linklibs = join("", map { $_." " } @linklibs);
+       my $cmd = '$(CC)';
+-      my $cmdflags = '$(BIN_CFLAGS)';
++      my $cmdflags = '$(filter-out -Wa$(AS_FLAG_COMMA)%,$(BIN_CFLAGS))';
+       if (grep /_cc\.o$/, @{$args{objs}}) {
+           $cmd = '$(CXX)';
+-          $cmdflags = '$(BIN_CXXFLAGS)';
++          $cmdflags = '$(filter-out -Wa$(AS_FLAG_COMMA)%,$(BIN_CXXFLAGS))';
+       }
+ 
+       my $objs = join(" \\\n\t\t", fill_lines(' ', $COLUMNS - 16, @objs));
+diff --git a/Configure b/Configure
+index 1d9c890..6108f00 100755
+--- a/Configure
++++ b/Configure
+@@ -1829,7 +1829,7 @@ if (!$disabled{asm} && !$predefined_C{__MACH__} && $^O ne 'VMS' && !$predefined_
+         # but it apparently recognizes the option in question on all
+         # supported platforms even when it's meaningless. In other words
+         # probe would fail, but probed option always accepted...
+-        push @{$config{cflags}}, "-Wa,--noexecstack", "-Qunused-arguments";
++        push @{$config{cflags}}, "-Wa,--noexecstack";
+     } else {
+         my $cc = $config{CROSS_COMPILE}.$config{CC};
+         open(PIPE, "$cc -Wa,--help -c -o null.$$.o -x assembler /dev/null 2>&1 |");
+diff --git a/apps/s_server.c b/apps/s_server.c
+index f9ff9b7..d4ab819 100644
+--- a/apps/s_server.c
++++ b/apps/s_server.c
+@@ -134,8 +134,10 @@ static int keymatexportlen = 20;
+ 
+ static int async = 0;
+ 
++#ifndef OPENSSL_NO_KTLS
+ static int use_sendfile = 0;
+ static int use_zc_sendfile = 0;
++#endif
+ 
+ static const char *session_id_prefix = NULL;
+ 
+@@ -1778,8 +1780,10 @@ int s_server_main(int argc, char *argv[])
+     s_quiet = 0;
+     s_brief = 0;
+     async = 0;
++#ifndef OPENSSL_NO_KTLS
+     use_sendfile = 0;
+     use_zc_sendfile = 0;
++#endif
+ 
+     port = OPENSSL_strdup(PORT);
+     cctx = SSL_CONF_CTX_new();
+diff --git a/crypto/bn/bn_lib.c b/crypto/bn/bn_lib.c
+index 3d432fb..494561b 100644
+--- a/crypto/bn/bn_lib.c
++++ b/crypto/bn/bn_lib.c
+@@ -28,13 +28,9 @@
+  * 8 - 256 == 8192
+  */
+ static int bn_limit_bits = 0;
+-static int bn_limit_num = 8; /* (1<<bn_limit_bits) */
+ static int bn_limit_bits_low = 0;
+-static int bn_limit_num_low = 8; /* (1<<bn_limit_bits_low) */
+ static int bn_limit_bits_high = 0;
+-static int bn_limit_num_high = 8; /* (1<<bn_limit_bits_high) */
+ static int bn_limit_bits_mont = 0;
+-static int bn_limit_num_mont = 8; /* (1<<bn_limit_bits_mont) */
+ 
+ void BN_set_params(int mult, int high, int low, int mont)
+ {
+@@ -42,25 +38,21 @@ void BN_set_params(int mult, int high, int low, int mont)
+         if (mult > (int)(sizeof(int) * 8) - 1)
+             mult = sizeof(int) * 8 - 1;
+         bn_limit_bits = mult;
+-        bn_limit_num = 1 << mult;
+     }
+     if (high >= 0) {
+         if (high > (int)(sizeof(int) * 8) - 1)
+             high = sizeof(int) * 8 - 1;
+         bn_limit_bits_high = high;
+-        bn_limit_num_high = 1 << high;
+     }
+     if (low >= 0) {
+         if (low > (int)(sizeof(int) * 8) - 1)
+             low = sizeof(int) * 8 - 1;
+         bn_limit_bits_low = low;
+-        bn_limit_num_low = 1 << low;
+     }
+     if (mont >= 0) {
+         if (mont > (int)(sizeof(int) * 8) - 1)
+             mont = sizeof(int) * 8 - 1;
+         bn_limit_bits_mont = mont;
+-        bn_limit_num_mont = 1 << mont;
+     }
+ }
+ 
+diff --git a/fuzz/client.c b/fuzz/client.c
+index 64d30dd..de1446b 100644
+--- a/fuzz/client.c
++++ b/fuzz/client.c
+@@ -18,9 +18,6 @@
+ #include <openssl/err.h>
+ #include "fuzzer.h"
+ 
+-/* unused, to avoid warning. */
+-static int idx;
+-
+ #define FUZZTIME 1485898104
+ 
+ #define TIME_IMPL(t)       \
+@@ -50,7 +47,7 @@ time_t time(time_t *t) TIME_IMPL(t)
+     OPENSSL_init_ssl(OPENSSL_INIT_LOAD_SSL_STRINGS, NULL);
+     ERR_clear_error();
+     CRYPTO_free_ex_index(0, -1);
+-    idx = SSL_get_ex_data_X509_STORE_CTX_idx();
++    (void)SSL_get_ex_data_X509_STORE_CTX_idx();
+     comp_methods = SSL_COMP_get_compression_methods();
+     if (comp_methods != NULL)
+         sk_SSL_COMP_sort(comp_methods);
+diff --git a/fuzz/dtlsclient.c b/fuzz/dtlsclient.c
+index b475a7d..09ddf84 100644
+--- a/fuzz/dtlsclient.c
++++ b/fuzz/dtlsclient.c
+@@ -18,9 +18,6 @@
+ #include <openssl/err.h>
+ #include "fuzzer.h"
+ 
+-/* unused, to avoid warning. */
+-static int idx;
+-
+ #define FUZZTIME 1485898104
+ 
+ #define TIME_IMPL(t)       \
+@@ -50,7 +47,7 @@ time_t time(time_t *t) TIME_IMPL(t)
+     OPENSSL_init_ssl(OPENSSL_INIT_LOAD_SSL_STRINGS, NULL);
+     ERR_clear_error();
+     CRYPTO_free_ex_index(0, -1);
+-    idx = SSL_get_ex_data_X509_STORE_CTX_idx();
++    (void)SSL_get_ex_data_X509_STORE_CTX_idx();
+     comp_methods = SSL_COMP_get_compression_methods();
+     if (comp_methods != NULL)
+         sk_SSL_COMP_sort(comp_methods);
+diff --git a/fuzz/dtlsserver.c b/fuzz/dtlsserver.c
+index 1e8868c..78f7299 100644
+--- a/fuzz/dtlsserver.c
++++ b/fuzz/dtlsserver.c
+@@ -735,9 +735,6 @@ static const char DSACertPEM[] = {
+ };
+ #endif
+ 
+-/* unused, to avoid warning. */
+-static int idx;
+-
+ #define FUZZTIME 1485898104
+ 
+ #define TIME_IMPL(t)       \
+@@ -767,7 +764,7 @@ time_t time(time_t *t) TIME_IMPL(t)
+     OPENSSL_init_ssl(OPENSSL_INIT_LOAD_SSL_STRINGS, NULL);
+     ERR_clear_error();
+     CRYPTO_free_ex_index(0, -1);
+-    idx = SSL_get_ex_data_X509_STORE_CTX_idx();
++    (void)SSL_get_ex_data_X509_STORE_CTX_idx();
+     comp_methods = SSL_COMP_get_compression_methods();
+     if (comp_methods != NULL)
+         sk_SSL_COMP_sort(comp_methods);
+diff --git a/fuzz/hashtable.c b/fuzz/hashtable.c
+index 119c9b0..92fd7f6 100644
+--- a/fuzz/hashtable.c
++++ b/fuzz/hashtable.c
+@@ -36,14 +36,9 @@ typedef struct fuzzer_value_st {
+ 
+ IMPLEMENT_HT_VALUE_TYPE_FNS(FUZZER_VALUE, fz, static)
+ 
+-static size_t skipped_values = 0;
+ static size_t inserts = 0;
+ static size_t replacements = 0;
+-static size_t deletes = 0;
+ static size_t flushes = 0;
+-static size_t lookups = 0;
+-static size_t foreaches = 0;
+-static size_t filters = 0;
+ static int valfound;
+ 
+ static FUZZER_VALUE *prediction_table = NULL;
+@@ -134,7 +129,7 @@ int FuzzerTestOneInput(const uint8_t *buf, size_t len)
+      * for the lookup key, and 8 bytes of value
+      */
+     if (len < 11) {
+-        skipped_values++;
++
+         return -1;
+     }
+ 
+@@ -217,7 +212,7 @@ int FuzzerTestOneInput(const uint8_t *buf, size_t len)
+          * successful deletion if there wasn't a conflict
+          */
+         if (rc == 1)
+-            deletes++;
++
+ 
+         break;
+ 
+@@ -271,7 +266,7 @@ int FuzzerTestOneInput(const uint8_t *buf, size_t len)
+ 
+             v = ossl_ht_fz_FUZZER_VALUE_to_value(lval, &tv);
+             OPENSSL_assert(v->value == lval);
+-            lookups++;
++
+         }
+ 
+         break;
+@@ -281,7 +276,7 @@ int FuzzerTestOneInput(const uint8_t *buf, size_t len)
+          * only flush the table rarely
+          */
+         if ((flushes % 100000) != 1) {
+-            skipped_values++;
++
+             flushes++;
+             return 0;
+         }
+@@ -315,7 +310,6 @@ int FuzzerTestOneInput(const uint8_t *buf, size_t len)
+ 
+         OPENSSL_assert(valfound == rc_prediction);
+ 
+-        foreaches++;
+         break;
+ 
+     case OP_FILTER:
+@@ -329,7 +323,7 @@ int FuzzerTestOneInput(const uint8_t *buf, size_t len)
+         if (htvlist != NULL) {
+             OPENSSL_assert(htvlist->list_len == (size_t)rc_prediction);
+             ossl_ht_value_list_free(htvlist);
+-            filters++;
++
+         }
+         break;
+ 
+diff --git a/fuzz/quic-client.c b/fuzz/quic-client.c
+index 11a833f..528eb0c 100644
+--- a/fuzz/quic-client.c
++++ b/fuzz/quic-client.c
+@@ -16,9 +16,6 @@
+ #include "internal/time.h"
+ #include "internal/quic_ssl.h"
+ 
+-/* unused, to avoid warning. */
+-static int idx;
+-
+ static OSSL_TIME fake_now;
+ 
+ static OSSL_TIME fake_now_cb(void *arg)
+@@ -35,7 +32,7 @@ int FuzzerInitialize(int *argc, char ***argv)
+     OPENSSL_init_ssl(OPENSSL_INIT_LOAD_SSL_STRINGS, NULL);
+     ERR_clear_error();
+     CRYPTO_free_ex_index(0, -1);
+-    idx = SSL_get_ex_data_X509_STORE_CTX_idx();
++    (void)SSL_get_ex_data_X509_STORE_CTX_idx();
+     comp_methods = SSL_COMP_get_compression_methods();
+     if (comp_methods != NULL)
+         sk_SSL_COMP_sort(comp_methods);
+diff --git a/fuzz/quic-server.c b/fuzz/quic-server.c
+index 6be099d..92504b7 100644
+--- a/fuzz/quic-server.c
++++ b/fuzz/quic-server.c
+@@ -16,9 +16,6 @@
+ #include "internal/time.h"
+ #include "internal/quic_ssl.h"
+ 
+-/* unused, to avoid warning. */
+-static int idx;
+-
+ static OSSL_TIME fake_now;
+ 
+ static OSSL_TIME fake_now_cb(void *arg)
+@@ -35,7 +32,7 @@ int FuzzerInitialize(int *argc, char ***argv)
+     OPENSSL_init_ssl(OPENSSL_INIT_LOAD_SSL_STRINGS, NULL);
+     ERR_clear_error();
+     CRYPTO_free_ex_index(0, -1);
+-    idx = SSL_get_ex_data_X509_STORE_CTX_idx();
++    (void)SSL_get_ex_data_X509_STORE_CTX_idx();
+     comp_methods = SSL_COMP_get_compression_methods();
+     if (comp_methods != NULL)
+         sk_SSL_COMP_sort(comp_methods);
+diff --git a/fuzz/server.c b/fuzz/server.c
+index 740ade8..57cf10b 100644
+--- a/fuzz/server.c
++++ b/fuzz/server.c
+@@ -551,9 +551,6 @@ static const char DSACertPEM[] = {
+ };
+ #endif
+ 
+-/* unused, to avoid warning. */
+-static int idx;
+-
+ #define FUZZTIME 1485898104
+ 
+ #define TIME_IMPL(t)       \
+@@ -583,7 +580,7 @@ time_t time(time_t *t) TIME_IMPL(t)
+     OPENSSL_init_ssl(OPENSSL_INIT_LOAD_SSL_STRINGS, NULL);
+     ERR_clear_error();
+     CRYPTO_free_ex_index(0, -1);
+-    idx = SSL_get_ex_data_X509_STORE_CTX_idx();
++    (void)SSL_get_ex_data_X509_STORE_CTX_idx();
+     comp_methods = SSL_COMP_get_compression_methods();
+     if (comp_methods != NULL)
+         sk_SSL_COMP_sort(comp_methods);
+diff --git a/ssl/ssl_init.c b/ssl/ssl_init.c
+index 634fd39..5b31b0a 100644
+--- a/ssl/ssl_init.c
++++ b/ssl/ssl_init.c
+@@ -19,7 +19,6 @@
+ static int stopped;
+ 
+ static CRYPTO_ONCE ssl_base = CRYPTO_ONCE_STATIC_INIT;
+-static int ssl_base_inited = 0;
+ DEFINE_RUN_ONCE_STATIC(ossl_init_ssl_base)
+ {
+ #ifndef OPENSSL_NO_COMP
+@@ -33,7 +32,6 @@ DEFINE_RUN_ONCE_STATIC(ossl_init_ssl_base)
+ #endif
+     ssl_sort_cipher_list();
+     OSSL_TRACE(INIT, "ossl_init_ssl_base: SSL_add_ssl_module()\n");
+-    ssl_base_inited = 1;
+     return 1;
+ }
+ 
+diff --git a/test/dtlsssllistenertest.c b/test/dtlsssllistenertest.c
+index e173a9b..856ac6c 100644
+--- a/test/dtlsssllistenertest.c
++++ b/test/dtlsssllistenertest.c
+@@ -4615,7 +4615,6 @@ static SSL_CTX *new_pending_cb_expected_ctx;
+ static void *new_pending_cb_expected_arg;
+ static int new_pending_cb_ctx_matched;
+ static int new_pending_cb_arg_matched;
+-static SSL *new_pending_cb_last_ssl;
+ 
+ /*
+  * Reset the file-scope callback state before registering the callback for
+@@ -4643,13 +4642,12 @@ static void new_pending_cb_reset(SSL_CTX *ctx, void *arg, int allow_remaining)
+     new_pending_cb_expected_arg = arg;
+     new_pending_cb_ctx_matched = 1;
+     new_pending_cb_arg_matched = 1;
+-    new_pending_cb_last_ssl = NULL;
+ }
+ 
+ static int new_pending_cb_fn(SSL_CTX *ctx, SSL *new_ssl, void *arg)
+ {
+     new_pending_cb_call_count++;
+-    new_pending_cb_last_ssl = new_ssl;
++    (void)new_ssl;
+     if (ctx != new_pending_cb_expected_ctx)
+         new_pending_cb_ctx_matched = 0;
+     if (arg != new_pending_cb_expected_arg)
+diff --git a/test/fake_rsaprov.c b/test/fake_rsaprov.c
+index c81377a..bf45fd0 100644
+--- a/test/fake_rsaprov.c
++++ b/test/fake_rsaprov.c
+@@ -29,10 +29,6 @@ static OSSL_FUNC_keymgmt_export_fn fake_rsa_keymgmt_export;
+ static OSSL_FUNC_keymgmt_export_types_fn fake_rsa_keymgmt_exptypes;
+ static OSSL_FUNC_keymgmt_load_fn fake_rsa_keymgmt_load;
+ 
+-static int has_selection;
+-static int imptypes_selection;
+-static int exptypes_selection;
+-static int query_id;
+ static int key_deleted;
+ 
+ unsigned fake_rsa_query_operation_name = 0;
+@@ -64,12 +60,6 @@ static void *fake_rsa_keymgmt_new(void *provctx)
+     if (!TEST_ptr(key = OPENSSL_zalloc(sizeof(struct fake_rsa_keydata))))
+         return NULL;
+ 
+-    /* clear test globals */
+-    has_selection = 0;
+-    imptypes_selection = 0;
+-    exptypes_selection = 0;
+-    query_id = 0;
+-
+     return key;
+ }
+ 
+@@ -80,16 +70,14 @@ static void fake_rsa_keymgmt_free(void *keydata)
+ 
+ static int fake_rsa_keymgmt_has(const void *key, int selection)
+ {
+-    /* record global for checking */
+-    has_selection = selection;
++    (void)selection;
+ 
+     return 1;
+ }
+ 
+ static const char *fake_rsa_keymgmt_query(int id)
+ {
+-    /* record global for checking */
+-    query_id = id;
++    (void)id;
+ 
+     return fake_rsa_query_operation_name ? NULL : "RSA";
+ }
+@@ -202,8 +190,7 @@ static const OSSL_PARAM fake_rsa_import_key_types[] = {
+ 
+ static const OSSL_PARAM *fake_rsa_keymgmt_imptypes(int selection)
+ {
+-    /* record global for checking */
+-    imptypes_selection = selection;
++    (void)selection;
+ 
+     return fake_rsa_import_key_types;
+ }
+@@ -216,8 +203,7 @@ static const OSSL_PARAM fake_rsa_export_key_types[] = {
+ 
+ static const OSSL_PARAM *fake_rsa_keymgmt_exptypes(int selection)
+ {
+-    /* record global for checking */
+-    exptypes_selection = selection;
++    (void)selection;
+ 
+     return fake_rsa_export_key_types;
+ }
+diff --git a/test/quic_cfq_test.c b/test/quic_cfq_test.c
+index b17e298..085ec38 100644
+--- a/test/quic_cfq_test.c
++++ b/test/quic_cfq_test.c
+@@ -54,13 +54,10 @@ static const uint32_t expect[QUIC_PN_SPACE_NUM][11] = {
+ 
+ static QUIC_CFQ_ITEM *items[QUIC_PN_SPACE_NUM][10];
+ 
+-static unsigned char *g_free;
+-static size_t g_free_len;
+-
+ static void free_cb(unsigned char *buf, size_t buf_len, void *arg)
+ {
+-    g_free = buf;
+-    g_free_len = buf_len;
++    (void)buf;
++    (void)buf_len;
+ }
+ 
+ static int check(QUIC_CFQ *cfq)
+@@ -108,8 +105,6 @@ static int test_cfq(void)
+     if (!TEST_ptr(cfq = ossl_quic_cfq_new()))
+         goto err;
+ 
+-    g_free = NULL;
+-    g_free_len = 0;
+ 
+     for (i = 0; i < OSSL_NELEM(ref_buf); ++i) {
+         if (!TEST_ptr(item = ossl_quic_cfq_add_frame(cfq, ref_priority[i],

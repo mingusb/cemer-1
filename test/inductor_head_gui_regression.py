@@ -18,6 +18,15 @@ import traceback
 
 from modern_stack_regressions import Case, Server, REPO, require, runtime_diagnostics, stop
 
+def capture_screenshot(path):
+    # ImageMagick is a host tool. The application's dependency prefix can load
+    # a newer FreeType/PNG ABI into that separately built executable.
+    environment = os.environ.copy()
+    for variable in ('LD_LIBRARY_PATH', 'LD_PRELOAD', 'QT_PLUGIN_PATH', 'QT_QPA_PLATFORM_PLUGIN_PATH'):
+        environment.pop(variable, None)
+    subprocess.run(['import', '-window', 'root', str(path)], check=True, env=environment)
+
+
 class GuiCase(Case):
     def command(self, *extra, **kwargs):
         result = super().command(*extra, **kwargs)
@@ -106,7 +115,9 @@ def main():
     parser.add_argument('--output', type=Path, default=REPO / 'artifacts/inductor-gui-regression')
     parser.add_argument('--timeout', type=float, default=120)
     args = parser.parse_args()
-    require(bool(os.environ.get('DISPLAY')), 'DISPLAY must select an existing X11 desktop')
+    display = os.environ.get('DISPLAY', '')
+    if not display or display.rsplit(':', 1)[-1] in {'0', '0.0'}:
+        parser.error('Run GUI tests on a dedicated Xvfb display, e.g. DISPLAY=:93.')
     os.environ['QT_QPA_PLATFORM'] = 'xcb'
     args.binary = args.binary.resolve()
     args.output = args.output.resolve()
@@ -137,7 +148,7 @@ def main():
                     server.console('taMisc::ConsoleOutput("GUI_NOT_STARTED " + String(!.projects[0].networks["InductionCircuit"].CheckBuild(true)));',
                                    'GUI_NOT_STARTED true')
                 case.checks.append({'check': 'startup_script_controls_initialization', 'actual': enabled, 'expected': enabled})
-                subprocess.run(['import', '-window', 'root', str(case.directory / 'startup.png')], check=True)
+                capture_screenshot(case.directory / 'startup.png')
                 if enabled:
                     server.run('StepToken')
                     case.equal('step_token_cursor', server.variable('RunCircuit', 'cursor'), 1)

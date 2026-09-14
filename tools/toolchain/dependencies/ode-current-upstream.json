@@ -1,0 +1,10 @@
+{
+  "id": "ode",
+  "repository": "https://github.com/odedevs/ode.git",
+  "branch": "master",
+  "commit": "232cbe216c5a762176f7754f04d190d2de00cdcc",
+  "commit_date": "2026-08-07T22:47:08Z",
+  "commit_subject": "Improve version number handling.",
+  "commit_url": "https://github.com/odedevs/ode/commit/232cbe216c5a762176f7754f04d190d2de00cdcc",
+  "relocation_evidence": "https://bitbucket.org/odedevs/ode/src/0e0e94b59d4336be322a1f654eda0da711d28d3a/README.md"
+}

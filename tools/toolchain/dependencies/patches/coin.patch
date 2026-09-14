@@ -1,0 +1,1139 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 384af90e7..a48ac755d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -870,7 +870,7 @@ endif()
+ 
+ check_cxx_source_compiles("
+   #define TEST_QUOTE(str) #str
+-  int main(void) { char xx[] = TEST_QUOTE(str) \"xxx\"; return 0; }
++  int main(void) { char xx[] = TEST_QUOTE(str) \"xxx\"; return xx[0] == 0; }
+ " HAVE_HASH_QUOTING)
+ 
+ if(NOT HAVE_HASH_QUOTING)
+diff --git a/include/Inventor/SoInput.h b/include/Inventor/SoInput.h
+index a9f2993fd..d2c8d3db7 100644
+--- a/include/Inventor/SoInput.h
++++ b/include/Inventor/SoInput.h
+@@ -165,8 +165,11 @@ protected:
+   SbBool readInteger(int32_t & l);
+   SbBool readUnsignedInteger(uint32_t & l);
+   SbBool readReal(double & d);
++  [[deprecated("Unsafe, will be removed from Coin 5")]]
+   SbBool readUnsignedIntegerString(char * str);
++  [[deprecated("Unsafe, will be removed from Coin 5")]]
+   int readDigits(char * str);
++  [[deprecated("Unsafe, will be removed from Coin 5")]]
+   int readHexDigits(char * str);
+   int readChar(char * str, char charToRead);
+ 
+diff --git a/include/Inventor/elements/SoTextureCombineElement.h b/include/Inventor/elements/SoTextureCombineElement.h
+index b94d188b4..25bd94564 100644
+--- a/include/Inventor/elements/SoTextureCombineElement.h
++++ b/include/Inventor/elements/SoTextureCombineElement.h
+@@ -125,6 +125,7 @@ public:
+   class UnitData {
+   public:
+     UnitData();
++    UnitData & operator=(const UnitData &) = default;
+     UnitData(const UnitData & org); // keep it for ABI compatibility with 4.0.10
+ 
+     SbUniqueId nodeid;
+diff --git a/src/base/SbBSPTree.cpp b/src/base/SbBSPTree.cpp
+index 517571b8e..a7ff2391c 100644
+--- a/src/base/SbBSPTree.cpp
++++ b/src/base/SbBSPTree.cpp
+@@ -270,7 +270,7 @@ coin_bspnode::split()
+ 
+   this->dimension = dim; // set the dimension
+ 
+-  float mid = (box.getMin()[dim] + box.getMax()[dim]) / 2.0f;
++  float mid = (box.getMin()[dim] + box.getMax()[dim]) / 2.0f; (void)mid;
+ #ifdef BSP_SORTED_SPLIT
+   this->sort(); // sort vertices on ascending dimension values
+ 
+diff --git a/src/base/SbDPRotation.cpp b/src/base/SbDPRotation.cpp
+index 0a1d5ef30..d623f25c3 100644
+--- a/src/base/SbDPRotation.cpp
++++ b/src/base/SbDPRotation.cpp
+@@ -646,6 +646,6 @@ SbDPRotation::print(FILE * COIN_UNUSED_ARG(fp)) const
+ #include <Inventor/SbVec3d.h>
+ 
+ BOOST_AUTO_TEST_CASE(tgsCompliance) {
+-  SbDPRotation v = SbRotationd(SbVec3d(0,1,2),3);
++  SbDPRotation v = SbRotationd(SbVec3d(0,1,2),3); (void)v;
+ }
+ #endif //COIN_TEST_SUITE
+diff --git a/src/base/SbDPViewVolume.cpp b/src/base/SbDPViewVolume.cpp
+index dba89ff6c..4211bcfaf 100644
+--- a/src/base/SbDPViewVolume.cpp
++++ b/src/base/SbDPViewVolume.cpp
+@@ -618,7 +618,7 @@ SbDPViewVolume::getWorldToScreenScale(const SbVec3d& worldCenter,
+ 
+     // Find tangent point of sphere.
+     SbVec3f tangentpt;
+-    SbBool result = p.intersect(tl, tangentpt);
++    SbBool result = p.intersect(tl, tangentpt); (void)result;
+     assert(result != FALSE);
+ 
+     // Return radius (which is equal to the scale factor, since we're
+diff --git a/src/caches/SoNormalCache.cpp b/src/caches/SoNormalCache.cpp
+index 889c35447..6582391c8 100644
+--- a/src/caches/SoNormalCache.cpp
++++ b/src/caches/SoNormalCache.cpp
+@@ -464,7 +464,7 @@ SoNormalCache::generatePerFace(const SbVec3f * const coords,
+   PRIVATE(this)->indices.truncate(0);
+   PRIVATE(this)->normalArray.truncate(0, TRUE);
+ 
+-  const int32_t * cstart = cind;
++  const int32_t * cstart = cind; (void)cstart;
+   const int32_t * endptr = cind + nv;
+ 
+   SbVec3f tmpvec;
+@@ -619,7 +619,7 @@ SoNormalCache::generatePerFaceStrip(const SbVec3f * const coords,
+   PRIVATE(this)->indices.truncate(0);
+   PRIVATE(this)->normalArray.truncate(0, TRUE);
+ 
+-  const int32_t * cstart = cind;
++  const int32_t * cstart = cind; (void)cstart;
+   const int32_t * endptr = cind + nv;
+ 
+   const SbVec3f * c0, * c1, * c2;
+@@ -778,7 +778,7 @@ SoNormalCache::generatePerStrip(const SbVec3f * const coords,
+   PRIVATE(this)->indices.truncate(0);
+   PRIVATE(this)->normalArray.truncate(0, TRUE);
+ 
+-  const int32_t * cstart = cind;
++  const int32_t * cstart = cind; (void)cstart;
+   const int32_t * endptr = cind + nv;
+ 
+   const SbVec3f * c0, * c1, * c2;
+diff --git a/src/draggers/SoDirectionalLightDragger.cpp b/src/draggers/SoDirectionalLightDragger.cpp
+index 3379078a0..6279c5355 100644
+--- a/src/draggers/SoDirectionalLightDragger.cpp
++++ b/src/draggers/SoDirectionalLightDragger.cpp
+@@ -199,9 +199,9 @@ SoDirectionalLightDragger::SoDirectionalLightDragger(void)
+   SO_KIT_ADD_FIELD(translation, (0.0f, 0.0f, 0.0f));
+   SO_KIT_INIT_INSTANCE();
+ 
+-  SoDragger *pdragger = SO_GET_ANY_PART(this, "translator", SoDragPointDragger);
++  SoDragger *pdragger = SO_GET_ANY_PART(this, "translator", SoDragPointDragger); (void)pdragger;
+   assert(pdragger);
+-  SoDragger *sdragger = SO_GET_ANY_PART(this, "rotator", SoDragPointDragger);
++  SoDragger *sdragger = SO_GET_ANY_PART(this, "rotator", SoDragPointDragger); (void)sdragger;
+   assert(sdragger);
+ 
+   this->setPartAsDefault("material", "directionalLightOverallMaterial");
+diff --git a/src/draggers/SoPointLightDragger.cpp b/src/draggers/SoPointLightDragger.cpp
+index 1b5f84178..17749b2fd 100644
+--- a/src/draggers/SoPointLightDragger.cpp
++++ b/src/draggers/SoPointLightDragger.cpp
+@@ -154,7 +154,7 @@ SoPointLightDragger::SoPointLightDragger(void)
+   SO_KIT_ADD_FIELD(translation, (0.0f, 0.0f, 0.0f));
+   SO_KIT_INIT_INSTANCE();
+ 
+-  SoDragger *pdragger = SO_GET_ANY_PART(this, "translator", SoDragPointDragger);
++  SoDragger *pdragger = SO_GET_ANY_PART(this, "translator", SoDragPointDragger); (void)pdragger;
+   assert(pdragger);
+ 
+   this->setPartAsDefault("material", "pointLightOverallMaterial");
+diff --git a/src/draggers/SoSpotLightDragger.cpp b/src/draggers/SoSpotLightDragger.cpp
+index 7d4389498..f102cbd07 100644
+--- a/src/draggers/SoSpotLightDragger.cpp
++++ b/src/draggers/SoSpotLightDragger.cpp
+@@ -231,9 +231,9 @@ SoSpotLightDragger::SoSpotLightDragger(void)
+   SO_KIT_ADD_FIELD(angle, (1.0f));
+   SO_KIT_INIT_INSTANCE();
+ 
+-  SoDragger *pdragger = SO_GET_ANY_PART(this, "translator", SoDragPointDragger);
++  SoDragger *pdragger = SO_GET_ANY_PART(this, "translator", SoDragPointDragger); (void)pdragger;
+   assert(pdragger);
+-  SoDragger *sdragger = SO_GET_ANY_PART(this, "rotator", SoDragPointDragger);
++  SoDragger *sdragger = SO_GET_ANY_PART(this, "rotator", SoDragPointDragger); (void)sdragger;
+   assert(sdragger);
+ 
+   this->setPartAsDefault("beam", "spotLightBeam");
+diff --git a/src/elements/GL/SoGLClipPlaneElement.cpp b/src/elements/GL/SoGLClipPlaneElement.cpp
+index de0cabf24..bf0e59c6a 100644
+--- a/src/elements/GL/SoGLClipPlaneElement.cpp
++++ b/src/elements/GL/SoGLClipPlaneElement.cpp
+@@ -118,7 +118,7 @@ SoGLClipPlaneElement::getMaxGLPlanes(void)
+   GLint val;
+   glGetIntegerv(GL_MAX_CLIP_PLANES, &val);
+ 
+-  GLenum err = sogl_glerror_debugging() ? glGetError() : GL_NO_ERROR;
++  GLenum err = sogl_glerror_debugging() ? glGetError() : GL_NO_ERROR; (void)err;
+   assert(err == GL_NO_ERROR &&
+          "GL error when calling glGetInteger() -- no current GL context?");
+ 
+diff --git a/src/elements/GL/SoGLLightIdElement.cpp b/src/elements/GL/SoGLLightIdElement.cpp
+index f2d01beb8..c9475ff29 100644
+--- a/src/elements/GL/SoGLLightIdElement.cpp
++++ b/src/elements/GL/SoGLLightIdElement.cpp
+@@ -181,7 +181,7 @@ SoGLLightIdElement::getMaxGLSources(void)
+   GLint val;
+   glGetIntegerv(GL_MAX_LIGHTS, &val);
+ 
+-  GLenum err = sogl_glerror_debugging() ? glGetError() : GL_NO_ERROR;
++  GLenum err = sogl_glerror_debugging() ? glGetError() : GL_NO_ERROR; (void)err;
+   assert(err == GL_NO_ERROR &&
+          "GL error when calling glGetInteger() -- no current GL context?");
+ 
+diff --git a/src/elements/GL/SoGLVertexAttributeElement.cpp b/src/elements/GL/SoGLVertexAttributeElement.cpp
+index de1b9ba5a..885db06a7 100644
+--- a/src/elements/GL/SoGLVertexAttributeElement.cpp
++++ b/src/elements/GL/SoGLVertexAttributeElement.cpp
+@@ -206,7 +206,7 @@ static void enable_vbo(const Key & COIN_UNUSED_ARG(key),
+   const cc_glglue * glue = sogl_glue_instance(action->getState());
+ 
+   const SoCoordinateElement * coords =
+-    SoCoordinateElement::getInstance(action->getState());
++    SoCoordinateElement::getInstance(action->getState()); (void)coords;
+   assert(coords->getNum() == attribdata->data->getNum());
+ 
+   const void * dataptr = NULL;
+diff --git a/src/engines/SoConvertAll.cpp b/src/engines/SoConvertAll.cpp
+index c608afec5..5306c7b9a 100644
+--- a/src/engines/SoConvertAll.cpp
++++ b/src/engines/SoConvertAll.cpp
+@@ -664,7 +664,7 @@ register_convertfunc(convert_func * f, SoType from, SoType to)
+ {
+   SoDB::addConverter(from, to, SoConvertAll::getClassTypeId());
+   uint32_t val = (static_cast<uint32_t>(from.getKey()) << 16) + to.getKey();
+-  SbBool nonexist = convertfunc_dict->put(val, f);
++  SbBool nonexist = convertfunc_dict->put(val, f); (void)nonexist;
+   assert(nonexist);
+ }
+ 
+diff --git a/src/engines/SoEngine.cpp b/src/engines/SoEngine.cpp
+index 7e4340e13..9c1a6efaa 100644
+--- a/src/engines/SoEngine.cpp
++++ b/src/engines/SoEngine.cpp
+@@ -469,7 +469,7 @@ SoEngine::copy(void) const
+   cp->ref();
+ 
+   // Call findCopy() to have copyContents() run once.
+-  SoEngine * dummy = coin_assert_cast<SoEngine *>(SoFieldContainer::findCopy(this, TRUE));
++  SoEngine * dummy = coin_assert_cast<SoEngine *>(SoFieldContainer::findCopy(this, TRUE)); (void)dummy;
+   assert(dummy == cp);
+ 
+   SoFieldContainer::copyDone();
+diff --git a/src/fields/SoFieldContainer.cpp b/src/fields/SoFieldContainer.cpp
+index f33f4ebe2..25300551d 100644
+--- a/src/fields/SoFieldContainer.cpp
++++ b/src/fields/SoFieldContainer.cpp
+@@ -935,7 +935,7 @@ SoFieldContainer::findCopy(const SoFieldContainer * orig,
+   // here in those cases to be compatible with SGI Inventor.
+   if (copydict->copiedinstancestack->getLength() == 0) return NULL;
+ 
+-  SoFieldContainerCopyMap * copiedinstances = (*(copydict->copiedinstancestack))[0];
++  SoFieldContainerCopyMap * copiedinstances = (*(copydict->copiedinstancestack))[0]; (void)copiedinstances;
+   ContentsCopiedMap * contentscopied  = (*(copydict->contentscopiedstack))[0];
+ 
+   assert(copiedinstances);
+diff --git a/src/fields/SoMField.cpp b/src/fields/SoMField.cpp
+index ed83c0f4d..6c406ed4c 100644
+--- a/src/fields/SoMField.cpp
++++ b/src/fields/SoMField.cpp
+@@ -688,7 +688,7 @@ SoMField::deleteValues(int start, int numarg)
+ 
+   if (numarg == -1) numarg = oldnum - start;
+   if (numarg == 0) return;
+-  int end = start + numarg; // First element behind the delete block.
++  int end = start + numarg; (void)end; // First element behind the delete block.
+ 
+ #if COIN_DEBUG
+   if (start < 0 || start >= oldnum || end > oldnum || numarg < -1) {
+diff --git a/src/fields/SoSFVec4us.cpp b/src/fields/SoSFVec4us.cpp
+index 9d245f2d0..0916a1095 100644
+--- a/src/fields/SoSFVec4us.cpp
++++ b/src/fields/SoSFVec4us.cpp
+@@ -131,7 +131,7 @@ BOOST_AUTO_TEST_CASE(textinput)
+   SoSFVec4us field;
+   field.set("1 2 3 4");
+   BOOST_CHECK_EQUAL(field.getValue(), SbVec4us(1, 2, 3, 4));
+-  const char * filters[] = { "read error", NULL }; // all read error messages
++  const char * filters[] = { "read error", NULL }; (void)filters; // all read error messages
+   TestSuite::ResetReadErrorCount();
+   // TestSuite::PushMessageSuppressFilters(filters);
+   SbBool ok;
+diff --git a/src/foreignfiles/SoSTLFileKit.cpp b/src/foreignfiles/SoSTLFileKit.cpp
+index 86bd66f37..841930bd7 100644
+--- a/src/foreignfiles/SoSTLFileKit.cpp
++++ b/src/foreignfiles/SoSTLFileKit.cpp
+@@ -689,7 +689,7 @@ SoSTLFileKit::organizeModel(void)
+ #endif // COIN_EXTRA_DEBUG
+ 
+   SoIndexedFaceSet * facets =
+-    SO_GET_ANY_PART(this, "facets", SoIndexedFaceSet);
++    SO_GET_ANY_PART(this, "facets", SoIndexedFaceSet); (void)facets;
+ 
+   assert(facets->coordIndex.getNum() == PRIVATE(this)->numfacets*4);
+   assert(facets->normalIndex.getNum() == (PRIVATE(this)->numfacets));
+diff --git a/src/geo/SoGeo.cpp b/src/geo/SoGeo.cpp
+index c99ead5d4..5ff403717 100644
+--- a/src/geo/SoGeo.cpp
++++ b/src/geo/SoGeo.cpp
+@@ -207,37 +207,7 @@ static SbDPMatrix find_coordinate_system(const SbString * system,
+ #pragma warning(push)
+ #pragma warning(disable: 4505) // unreferenced local function removed -- kept intentionally, see comment above
+ #endif
+-static SbUTMProjection find_utm_projection(const SbString * system,
+-                                           const int COIN_UNUSED_ARG(numsystem),
+-                                           const SbVec3d & coords,
+-                                           SbVec3d & projcoords)
+-{
+-  if (system[0] != "UTM") { // find an UTM zone to project into
+-    assert(system[0] == "GD");
+-    // project to an UTM zone
+-
+-    double degree = coords[1];
+-    int zone = int ((degree + 180.0) / 6.0);
+-
+-    SbGeoAngle lat(coords[0], 0.0, 0.0, 'N');
+-    SbGeoAngle lng(coords[1], 0.0, 0.0, 'N');
+-
+-    SbUTMProjection proj(zone, SbGeoEllipsoid("WGS84"));
+-
+-    double east, north;
+-    proj.project(lat, lng, &east, &north);
+-
+-    projcoords[0] = east;
+-    projcoords[1] = north;
+-    projcoords[2] = coords[2];
+ 
+-    return proj;
+-  }
+-
+-  // just return the original UTM Zone and coords
+-  projcoords = coords;
+-  return SbUTMProjection(find_utm_zone(system[1]), SbGeoEllipsoid("WGS84"));
+-}
+ #ifdef _MSC_VER
+ #pragma warning(pop)
+ #endif
+diff --git a/src/glue/GLUWrapper.cpp b/src/glue/GLUWrapper.cpp
+index 09d124236..d09a876a1 100644
+--- a/src/glue/GLUWrapper.cpp
++++ b/src/glue/GLUWrapper.cpp
+@@ -115,7 +115,7 @@ GLUWrapper_cleanup(void)
+   free(GLU_instance);
+   GLU_instance = NULL;
+   GLU_failed_to_load = 0;
+-  GLU_is_initializing = 0;
++  GLU_is_initializing = 0; (void)GLU_is_initializing;
+ }
+ 
+ /* ******************************************************************** */
+@@ -353,7 +353,7 @@ GLUWrapper(void)
+ 
+   /* Detect recursive calls. */
+   assert(GLU_is_initializing == 0);
+-  GLU_is_initializing = 1;
++  GLU_is_initializing = 1; (void)GLU_is_initializing;
+ 
+ 
+   /* First invocation, do initializations. */
+diff --git a/src/glue/GLUWrapper.h b/src/glue/GLUWrapper.h
+index e442dcf5f..70902e404 100644
+--- a/src/glue/GLUWrapper.h
++++ b/src/glue/GLUWrapper.h
+@@ -60,7 +60,7 @@ extern "C" {
+ #endif /* __cplusplus */
+ 
+ /* Callback func type. */
+-typedef void (APIENTRY * gluNurbsCallback_cb_t)(void *, ...);
++typedef void (APIENTRY * gluNurbsCallback_cb_t)(void);
+ 
+ /* Typedefinitions of function signatures for GLU calls we use. We
+    need these for casting from the void-pointer return of dlsym().*/
+diff --git a/src/glue/gl.cpp b/src/glue/gl.cpp
+index 39412a7c8..6a0275785 100644
+--- a/src/glue/gl.cpp
++++ b/src/glue/gl.cpp
+@@ -298,7 +298,9 @@ static cc_list * gl_instance_created_cblist = NULL;
+ static int COIN_MAXIMUM_TEXTURE2_SIZE = -1;
+ static int COIN_MAXIMUM_TEXTURE3_SIZE = -1;
+ static cc_glglue_offscreen_cb_functions* offscreen_cb = NULL;
++#ifdef HAVE_AGL
+ static int COIN_USE_AGL = -1;
++#endif
+ static int COIN_USE_EGL = -1;
+ 
+ /* ********************************************************************** */
+@@ -2225,7 +2227,7 @@ cc_glglue_instance(int contextid)
+       chk = coin_getenv("COIN_GL_NO_CURRENT_CONTEXT_CHECK") ? 0 : 1;
+     }
+     if (chk) {
+-      const void * current_ctx = coin_gl_current_context();
++      const void * current_ctx = coin_gl_current_context(); (void)current_ctx;
+       assert(current_ctx && "Must have a current GL context when instantiating cc_glglue!! (Note: if you are using an old Mesa GL version, set the environment variable COIN_GL_NO_CURRENT_CONTEXT_CHECK to get around what may be a Mesa bug.)");
+     }
+ 
+diff --git a/src/glue/gl_egl.cpp b/src/glue/gl_egl.cpp
+index 95cd18c21..c19980d51 100644
+--- a/src/glue/gl_egl.cpp
++++ b/src/glue/gl_egl.cpp
+@@ -267,7 +267,7 @@ void *
+ eglglue_context_create_offscreen(unsigned int width, unsigned int height)
+ {
+   struct eglglue_contextdata * ctx;
+-  EGLint format;
++  EGLint format; (void)format;
+   EGLint numConfigs;
+   EGLConfig config;
+   EGLint attrib[] = {
+@@ -478,7 +478,7 @@ eglglue_context_can_render_to_texture(void * ctx)
+ SbBool
+ eglglue_context_pbuffer_max(void * ctx, unsigned int * lims)
+ {
+-  int returnval, attribval, i;
++  int returnval, attribval, i; (void)returnval;
+   const int attribs[] = {
+     EGL_MAX_PBUFFER_WIDTH, EGL_MAX_PBUFFER_HEIGHT, EGL_MAX_PBUFFER_PIXELS
+   };
+diff --git a/src/glue/gl_glx.cpp b/src/glue/gl_glx.cpp
+index 7660f397b..c3b89a850 100644
+--- a/src/glue/gl_glx.cpp
++++ b/src/glue/gl_glx.cpp
+@@ -596,7 +596,7 @@ glxglue_find_gl_visual(void)
+   if (glxglue_get_display() == NULL) { return NULL; }
+ 
+   while (visinfo == NULL && trynum < 8) {
+-    int arraysize = glxglue_build_GL_attrs(attrs, trynum);
++    int arraysize = glxglue_build_GL_attrs(attrs, trynum); (void)arraysize;
+     assert(arraysize < ARRAYSIZE);
+     visinfo = glXChooseVisual(glxglue_get_display(), DefaultScreen(glxglue_get_display()),
+                               attrs);
+diff --git a/src/glue/openal_wrapper.cpp b/src/glue/openal_wrapper.cpp
+index 7ffd12c75..311e55cb7 100644
+--- a/src/glue/openal_wrapper.cpp
++++ b/src/glue/openal_wrapper.cpp
+@@ -85,7 +85,7 @@ openal_wrapper_cleanup(void)
+   free(openal_instance);
+   openal_instance = NULL;
+   openal_failed_to_load = 0;
+-  openal_is_initializing = 0;
++  openal_is_initializing = 0; (void)openal_is_initializing;
+ }
+ 
+ /* Implemented by using the singleton pattern. */
+@@ -105,7 +105,7 @@ openal_wrapper(void)
+     /* Detect recursive calls. */
+     {
+       assert(openal_is_initializing == 0);
+-      openal_is_initializing = 1;
++      openal_is_initializing = 1; (void)openal_is_initializing;
+     }
+ 
+     /* The common case is that simage is either available from the
+diff --git a/src/glue/simage_wrapper.cpp b/src/glue/simage_wrapper.cpp
+index 794d3a8ed..64feea081 100644
+--- a/src/glue/simage_wrapper.cpp
++++ b/src/glue/simage_wrapper.cpp
+@@ -102,7 +102,7 @@ simage_wrapper_cleanup(void)
+   free(simage_instance);
+   simage_instance = NULL;
+   simage_failed_to_load = 0;
+-  simage_is_initializing = 0;
++  simage_is_initializing = 0; (void)simage_is_initializing;
+ }
+ 
+ /* backup-functions. More robust when simage is an old version, or not
+@@ -166,89 +166,29 @@ simage_wrapper_get_saver_description(void * COIN_UNUSED_ARG(handle))
+   return NULL;
+ }
+ 
+-static unsigned char *
+-simage_wrapper_resize3d(unsigned char * COIN_UNUSED_ARG(imagedata),
+-                        int COIN_UNUSED_ARG(width), int COIN_UNUSED_ARG(height),
+-                        int COIN_UNUSED_ARG(numcomponents),
+-                        int COIN_UNUSED_ARG(layers),
+-                        int COIN_UNUSED_ARG(newwidth),
+-                        int COIN_UNUSED_ARG(newheight),
+-                        int COIN_UNUSED_ARG(newlayers))
+-{
+-  return NULL;
+-}
+ 
+-static s_params *
+-simage_wrapper_s_params_create(void)
+-{
+-  return NULL;
+-}
+ 
+-static void
+-simage_wrapper_s_params_destroy(s_params * COIN_UNUSED_ARG(params))
+-{
+-  return;
+-}
+ 
+-static void
+-simage_wrapper_s_params_set(s_params * COIN_UNUSED_ARG(params), ...)
+-{
+-  return;
+-}
+ 
+-static int
+-simage_wrapper_s_params_get(s_params * COIN_UNUSED_ARG(params), ...)
+-{
+-  return 0;
+-}
+ 
+-static s_stream *
+-simage_wrapper_s_stream_open(const char * COIN_UNUSED_ARG(filename),
+-              s_params * COIN_UNUSED_ARG(params) /* | NULL */)
+-{
+-  return NULL;
+-}
+ 
+-static s_stream *
+-simage_wrapper_s_stream_create(const char * COIN_UNUSED_ARG(filename),
+-                s_params * COIN_UNUSED_ARG(params) /* | NULL */)
+-{
+-  return NULL;
+-}
+ 
+-static void *
+-simage_wrapper_s_stream_get_buffer(s_stream * COIN_UNUSED_ARG(stream),
+-                    void * COIN_UNUSED_ARG(prealloc) /* | NULL */,
+-                    int * COIN_UNUSED_ARG(size) /* | NULL */,
+-                    s_params * COIN_UNUSED_ARG(params) /* | NULL */)
+-{
+-  return NULL;
+-}
+ 
+-static int
+-simage_wrapper_s_stream_put_buffer(s_stream * COIN_UNUSED_ARG(stream), void * COIN_UNUSED_ARG(buffer),
+-                    int COIN_UNUSED_ARG(size), s_params * COIN_UNUSED_ARG(params) /* | NULL */)
+-{
+-  return 0;
+-}
+ 
+-static void
+-simage_wrapper_s_stream_close(s_stream * COIN_UNUSED_ARG(stream))
+-{
+-  return;
+-}
+ 
+-static void
+-simage_wrapper_s_stream_destroy(s_stream * COIN_UNUSED_ARG(stream))
+-{
+-  return;
+-}
+ 
+-static s_params *
+-simage_wrapper_s_stream_params(s_stream * COIN_UNUSED_ARG(stream))
+-{
+-  return NULL;
+-}
++
++
++
++
++
++
++
++
++
++
++
++
+ 
+ 
+ /* Implemented by using the singleton pattern. */
+@@ -268,7 +208,7 @@ simage_wrapper(void)
+ 
+     /* Detect recursive calls. */
+     assert(simage_is_initializing == 0);
+-    simage_is_initializing = 1;
++    simage_is_initializing = 1; (void)simage_is_initializing;
+ 
+     si->versionMatchesAtLeast = simage_wrapper_versionMatchesAtLeast;
+ 
+@@ -449,7 +389,7 @@ simage_wrapper(void)
+         si->s_stream_params = NULL;
+       }
+     }
+-    simage_is_initializing = 0;
++    simage_is_initializing = 0; (void)simage_is_initializing;
+   }
+   CC_SYNC_END(simage_wrapper);
+   return simage_instance;
+diff --git a/src/glue/spidermonkey.cpp b/src/glue/spidermonkey.cpp
+index e4568781c..0ff5b4e9f 100644
+--- a/src/glue/spidermonkey.cpp
++++ b/src/glue/spidermonkey.cpp
+@@ -106,7 +106,7 @@ spidermonkey_cleanup(void)
+   free(spidermonkey_instance);
+   spidermonkey_instance = NULL;
+   spidermonkey_failed_to_load = FALSE;
+-  spidermonkey_is_initializing = 0;
++  spidermonkey_is_initializing = 0; (void)spidermonkey_is_initializing;
+ }
+ 
+ /* ******************************************************************** */
+@@ -124,7 +124,7 @@ spidermonkey(void)
+   /* Detect recursive calls. */
+   {
+     assert(spidermonkey_is_initializing == 0);
+-    spidermonkey_is_initializing = 1;
++    spidermonkey_is_initializing = 1; (void)spidermonkey_is_initializing;
+   }
+ 
+ 
+diff --git a/src/io/SoInput.cpp b/src/io/SoInput.cpp
+index a33e74deb..e4211330a 100644
+--- a/src/io/SoInput.cpp
++++ b/src/io/SoInput.cpp
+@@ -2239,15 +2239,7 @@ SoInput::readReal(double & d)
+   return fi->readReal(d);
+ }
+ 
+-/* The public compatibility wrappers below intentionally call the deprecated
+-   buffer-based private helpers. Keep their warning suppression local. */
+-#if defined(_MSC_VER)
+-#pragma warning(push)
+-#pragma warning(disable: 4996)
+-#elif defined(__GNUC__) || defined(__clang__)
+-#pragma GCC diagnostic push
+-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+-#endif
++/* Compatibility wrappers retain the legacy buffer-based API. */
+ 
+ /*!
+   Reads a set of bytes from the stream making up an unsigned integer and
+@@ -2294,11 +2286,6 @@ SoInput::readHexDigits(char * str)
+   return fi->readHexDigits(str);
+ }
+ 
+-#if defined(_MSC_VER)
+-#pragma warning(pop)
+-#elif defined(__GNUC__) || defined(__clang__)
+-#pragma GCC diagnostic pop
+-#endif
+ 
+ /*!
+   Reads the next character in stream and compares it to \a charToRead.
+diff --git a/src/io/SoInput_FileInfo.cpp b/src/io/SoInput_FileInfo.cpp
+index d034ec589..b259b103a 100644
+--- a/src/io/SoInput_FileInfo.cpp
++++ b/src/io/SoInput_FileInfo.cpp
+@@ -518,13 +518,6 @@ SoInput_FileInfo::readUnsignedIntegerString()
+ }
+ 
+ /* This implementation is retained for the deprecated buffer-based API. */
+-#if defined(_MSC_VER)
+-#pragma warning(push)
+-#pragma warning(disable: 4996)
+-#elif defined(__GNUC__) || defined(__clang__)
+-#pragma GCC diagnostic push
+-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+-#endif
+ 
+ /*!
+   \deprecated Will not be available in Coin 5 due to absence of bounds checking.
+@@ -554,11 +547,6 @@ SoInput_FileInfo::readUnsignedIntegerString(char * str)
+   return TRUE;
+ }
+ 
+-#if defined(_MSC_VER)
+-#pragma warning(pop)
+-#elif defined(__GNUC__) || defined(__clang__)
+-#pragma GCC diagnostic pop
+-#endif
+ 
+ SbBool
+ SoInput_FileInfo::readUnsignedInteger(uint32_t & l)
+diff --git a/src/io/SoWriterefCounter.cpp b/src/io/SoWriterefCounter.cpp
+index a6ff55dc0..b6bf2458d 100644
+--- a/src/io/SoWriterefCounter.cpp
++++ b/src/io/SoWriterefCounter.cpp
+@@ -213,7 +213,7 @@ SoWriterefCounter::create(SoOutput * out, SoOutput * copyfrom)
+ {
+   SoWriterefCounter * inst = new SoWriterefCounter(out, copyfrom);
+   CC_MUTEX_LOCK(SoWriterefCounterP::mutex);
+-  SbBool ret = SoWriterefCounterP::outputdict->put(out, inst);
++  SbBool ret = SoWriterefCounterP::outputdict->put(out, inst); (void)ret;
+   assert(ret && "writeref instance already exists!");
+   CC_MUTEX_UNLOCK(SoWriterefCounterP::mutex);
+ }
+diff --git a/src/lists/SoCallbackList.cpp b/src/lists/SoCallbackList.cpp
+index 9ecb65159..4a4c5950e 100644
+--- a/src/lists/SoCallbackList.cpp
++++ b/src/lists/SoCallbackList.cpp
+@@ -330,7 +330,8 @@ BOOST_AUTO_TEST_CASE(typed_callback_copies_preserve_dispatch_and_lifetime)
+     SoCallbackList copy(selection->callbacks());
+     SoCallbackList assigned;
+     assigned = copy;
+-    assigned = assigned;
++    const SoCallbackList * self = &assigned;
++    assigned = *self;
+     selection->callbacks().clearCallbacks();
+     selection->unref();
+     copy.invokeCallbacks(NULL);
+diff --git a/src/misc/SoBase.cpp b/src/misc/SoBase.cpp
+index 18ced75cf..6bf3efc2a 100644
+--- a/src/misc/SoBase.cpp
++++ b/src/misc/SoBase.cpp
+@@ -1591,8 +1591,9 @@ SoBase::createNotRec(void)
+ #include <Inventor/actions/SoToVRML2Action.h>
+ #include <Inventor/VRMLnodes/SoVRMLGroup.h>
+ 
++#ifdef HAVE_VRML97
+  static char * buffer;
+-  static size_t buffer_size = 0;
++
+ 
+ //
+ // If function is copied from SoWriterefCounter.cpp as pricate classes cannot be called from the test suite
+@@ -1619,15 +1620,17 @@ dont_mangle_output_names(const SoBase *base)
+   buffer_realloc(void * bufptr, size_t size)
+   {
+     buffer = (char *)realloc(bufptr, size);
+-    buffer_size = size;
++
+     return buffer;
+   }
+ 
+ 
++#endif
++
+ BOOST_AUTO_TEST_CASE(checkWriteWithMultiref)
+ {
+ 	SoDB::init();
+-	   SoNode* scenegraph;
++	   SoNode* scenegraph; (void)scenegraph;
+        SoSeparator *root = new SoSeparator;
+        root->ref();
+        root->setName("root");
+diff --git a/src/misc/SoCompactPathList.cpp b/src/misc/SoCompactPathList.cpp
+index 40102d7e9..46bd93c25 100644
+--- a/src/misc/SoCompactPathList.cpp
++++ b/src/misc/SoCompactPathList.cpp
+@@ -63,7 +63,7 @@ SoCompactPathList::SoCompactPathList(const SoPathList & list)
+   : stack(256)
+ {
+   assert(list.getLength());
+-  SoNode * head = FULL_PATH(list, 0)->getHead();
++  SoNode * head = FULL_PATH(list, 0)->getHead(); (void)head;
+   int numnodes = 0;
+ 
+   for (int i = 0; i < list.getLength(); i++) {
+diff --git a/src/misc/SoConfigSettings.cpp b/src/misc/SoConfigSettings.cpp
+index 955aed37c..a30ed298a 100644
+--- a/src/misc/SoConfigSettings.cpp
++++ b/src/misc/SoConfigSettings.cpp
+@@ -19,6 +19,7 @@ namespace {
+     return sizeof(VALID_OPTIONS)/sizeof(VALID_OPTIONS[0]);
+   }
+ 
++  #if COIN_DEBUG
+   SbBool isValidOption(const SbString & option)
+   {
+     size_t i;
+@@ -26,6 +27,8 @@ namespace {
+     return (i!=options_size());
+   }
+ 
++  #endif
++
+   const SbString INVALID_SETTING("");
+ };
+ 
+diff --git a/src/misc/SoContextHandler.cpp b/src/misc/SoContextHandler.cpp
+index f85043828..7629f4144 100644
+--- a/src/misc/SoContextHandler.cpp
++++ b/src/misc/SoContextHandler.cpp
+@@ -258,7 +258,7 @@ SoContextHandler::removeContextDestructionCallback(ContextDestructionCB * func,
+   item.closure = closure;
+ 
+   CC_MUTEX_LOCK(socontexthandler_mutex);
+-  size_t didremove = socontexthandler_hashlist->erase(item);
++  size_t didremove = socontexthandler_hashlist->erase(item); (void)didremove;
+   assert(didremove);
+   CC_MUTEX_UNLOCK(socontexthandler_mutex);
+ }
+diff --git a/src/misc/SoDB.cpp b/src/misc/SoDB.cpp
+index a51c9df74..2d23c7848 100644
+--- a/src/misc/SoDB.cpp
++++ b/src/misc/SoDB.cpp
+@@ -199,6 +199,8 @@ static uint32_t a_static_variable = 0xdeadbeef;
+ void
+ SoDB::init(void)
+ {
++  SoDB_compileTimeAsserts();
++  (void)a_static_variable;
+   COIN_INIT_CHECK_THREAD();
+ 
+   // This is to catch the (unlikely) event that the C++ compiler adds
+@@ -1261,7 +1263,7 @@ SoDB::readAllWrapper(SoInput * in, const SoType & grouptype)
+     return NULL;
+   }
+ 
+-  const int stackdepth = in->filestack.getLength();
++  const int stackdepth = in->filestack.getLength(); (void)stackdepth;
+ 
+   SoGroup * root = (SoGroup *)grouptype.createInstance();
+   SoNode * topnode;
+diff --git a/src/misc/SoJavaScriptEngine.cpp b/src/misc/SoJavaScriptEngine.cpp
+index aaec345ab..c832b5464 100644
+--- a/src/misc/SoJavaScriptEngine.cpp
++++ b/src/misc/SoJavaScriptEngine.cpp
+@@ -177,7 +177,7 @@ static void printJSException(JSContext *cx)
+   */
+   // FIXME: this looks ugly. 20050719 erikgors.
+   // FIXME: indeed it does. we shouldn't use stderr directly anywhere, for starters.  -mortene.
+-  const size_t wrote = fwrite(cstr, 1, len, stderr);
++  const size_t wrote = fwrite(cstr, 1, len, stderr); (void)wrote;
+   assert(wrote == len);
+   (void)fprintf(stderr, "\n");
+   if (!spidermonkey()->JS_RemoveRoot(cx, &s)) assert(!"JS_RemoveRoot failed");
+diff --git a/src/misc/SoType.cpp b/src/misc/SoType.cpp
+index b40c7b076..e822187b1 100644
+--- a/src/misc/SoType.cpp
++++ b/src/misc/SoType.cpp
+@@ -977,7 +977,7 @@ BOOST_AUTO_TEST_CASE(testRemoveType)
+ {
+   BOOST_CHECK_MESSAGE(SoType::fromName(SbName("MyClass")) == SoType::badType(),
+                       "Type didn't init to badType");
+-  SoType newtype = SoType::createType(SoNode::getClassTypeId(), SbName("MyClass"), createInstance, 0);
++  SoType newtype = SoType::createType(SoNode::getClassTypeId(), SbName("MyClass"), createInstance, 0); (void)newtype;
+   BOOST_CHECK_MESSAGE(SoType::fromName(SbName("MyClass")) != SoType::badType(),
+                       "Type didn't init correctly");
+   bool success = SoType::removeType(SbName("MyClass"));
+diff --git a/src/profiler/SbProfilingData.cpp b/src/profiler/SbProfilingData.cpp
+index 0c7feefd6..b0bd3e394 100644
+--- a/src/profiler/SbProfilingData.cpp
++++ b/src/profiler/SbProfilingData.cpp
+@@ -673,8 +673,8 @@ SbProfilingData::getIndexForwardCreate(const SoFullPath * fullpath, int pathlen,
+   assert(pathlen > 1);
+ 
+   SbProfilingNodeKey parent =
+-    static_cast<SbProfilingNodeKey>(fullpath->getNode(pathlen - 2));
+-  int pidx = fullpath->getIndex(pathlen - 2);
++    static_cast<SbProfilingNodeKey>(fullpath->getNode(pathlen - 2)); (void)parent;
++  int pidx = fullpath->getIndex(pathlen - 2); (void)pidx;
+   SoNode * tailnode = fullpath->getNode(pathlen - 1);
+   SbProfilingNodeKey tail = static_cast<SbProfilingNodeKey>(tailnode);
+   int tidx = fullpath->getIndex(pathlen - 1);
+@@ -714,8 +714,8 @@ SbProfilingData::getIndexForwardNoCreate(const SoFullPath * fullpath, int pathle
+   assert(pathlen > 1);
+ 
+   SbProfilingNodeKey parent =
+-    static_cast<SbProfilingNodeKey>(fullpath->getNode(pathlen - 2));
+-  int pidx = fullpath->getIndex(pathlen - 2);
++    static_cast<SbProfilingNodeKey>(fullpath->getNode(pathlen - 2)); (void)parent;
++  int pidx = fullpath->getIndex(pathlen - 2); (void)pidx;
+   SbProfilingNodeKey tail =
+     static_cast<SbProfilingNodeKey>(fullpath->getNode(pathlen - 1));
+   int tidx = fullpath->getIndex(pathlen - 1);
+diff --git a/src/rendering/SoOffscreenRenderer.cpp b/src/rendering/SoOffscreenRenderer.cpp
+index d30a11757..d21b4caeb 100644
+--- a/src/rendering/SoOffscreenRenderer.cpp
++++ b/src/rendering/SoOffscreenRenderer.cpp
+@@ -888,9 +888,9 @@ SoOffscreenRendererP::renderFromBase(SoBase * base)
+           FILE * f = fopen(s.getString(), "wb");
+ 		  if (f) {
+             SbBool w = SoOffscreenRendererP::writeToRGB(f, fullsize[0], fullsize[1],
+-                                                        nrcomp, this->buffer);
++                                                        nrcomp, this->buffer); (void)w;
+             assert(w);
+-            const int r = fclose(f);
++            const int r = fclose(f); (void)r;
+             assert(r == 0);
+ 		  }
+ 
+@@ -1123,7 +1123,7 @@ SoOffscreenRendererP::writeToRGB(FILE * fp, unsigned int w, unsigned int h,
+   (void)memset(buf, 0, BUFSIZE);
+   buf[7] = 255; // set maximum pixel value to 255
+   strcpy((char *)buf+8, "https://github.com/coin3d/");
+-  const size_t wrote = fwrite(buf, 1, BUFSIZE, fp);
++  const size_t wrote = fwrite(buf, 1, BUFSIZE, fp); (void)wrote;
+   assert(wrote == BUFSIZE);
+ 
+   unsigned char * tmpbuf = new unsigned char[w];
+diff --git a/src/scxml/ScXMLMinimumEvaluator.cpp b/src/scxml/ScXMLMinimumEvaluator.cpp
+index efc457d4b..7be335a52 100644
+--- a/src/scxml/ScXMLMinimumEvaluator.cpp
++++ b/src/scxml/ScXMLMinimumEvaluator.cpp
+@@ -371,7 +371,7 @@ BOOST_AUTO_TEST_CASE(MimimumExpressions)
+   //FIXME, this test is not finished. BFG 20090831
+ 
+   static const char foo [] =
+-    "<scxml version=\"1.0\" profile=\"minimum\" name=\"foo\" initial=\"active\"><state id=\"active\"></state><state id=\"inactive\"></state></scxml>";
++    "<scxml version=\"1.0\" profile=\"minimum\" name=\"foo\" initial=\"active\"><state id=\"active\"></state><state id=\"inactive\"></state></scxml>"; (void)foo;
+   /*
+   ScXMLDocument * doc = ScXMLDocument::readBuffer(SbByteBuffer(sizeof(foo),foo));
+   assert(doc->getRoot());
+diff --git a/src/scxml/ScXMLSendElt.cpp b/src/scxml/ScXMLSendElt.cpp
+index 9d2160cd2..648ef7ff5 100644
+--- a/src/scxml/ScXMLSendElt.cpp
++++ b/src/scxml/ScXMLSendElt.cpp
+@@ -404,7 +404,7 @@ ScXMLSendElt::createEvent(ScXMLEventTarget * host) const
+     ScXMLStateMachine * sm = static_cast<ScXMLStateMachine *>(host);
+ 
+     // user-specific associations
+-    std::string nameliststr = this->namelist;
++    std::string nameliststr = this->namelist; (void)nameliststr;
+     std::vector<std::string> tokens;
+     tokenize(this->namelist, " ", tokens);
+ 
+diff --git a/src/shapenodes/SoIndexedShape.cpp b/src/shapenodes/SoIndexedShape.cpp
+index be07b38bd..79451e67c 100644
+--- a/src/shapenodes/SoIndexedShape.cpp
++++ b/src/shapenodes/SoIndexedShape.cpp
+@@ -106,7 +106,8 @@ SoIndexedShape::initClass(void)
+ 
+ // Collects common error msg code for computeBBox() for both
+ // Coordinate3 and Coordinate4 loops.
+-static void
++#if COIN_DEBUG
++static inline void
+ error_idx_out_of_bounds(const SoIndexedShape * node, int idxidx, int upper)
+ {
+   SbName n = node->getName();
+@@ -136,6 +137,8 @@ error_idx_out_of_bounds(const SoIndexedShape * node, int idxidx, int upper)
+                      node->coordIndex[idxidx],
+                      bounds.getString());
+ }
++#endif
++
+ 
+ // Documented in superclass. Overridden to calculate bounding box of
+ // all indexed coordinates, using the coordIndex field.
+diff --git a/src/shapenodes/SoNurbsCurve.cpp b/src/shapenodes/SoNurbsCurve.cpp
+index d4ff5aae7..0083a77c3 100644
+--- a/src/shapenodes/SoNurbsCurve.cpp
++++ b/src/shapenodes/SoNurbsCurve.cpp
+@@ -250,7 +250,7 @@ SoNurbsCurve::computeBBox(SoAction * action, SbBox3f & box, SbVec3f & center)
+   const SoCoordinateElement * coordelem =
+     SoCoordinateElement::getInstance(state);
+ 
+-  int numCoords = coordelem->getNum();
++  int numCoords = coordelem->getNum(); (void)numCoords;
+   int num = this->numControlPoints.getValue();
+ 
+   assert(num <= numCoords);
+diff --git a/src/shapenodes/soshape_bumprender.cpp b/src/shapenodes/soshape_bumprender.cpp
+index 3cb2debfb..614d369d9 100644
+--- a/src/shapenodes/soshape_bumprender.cpp
++++ b/src/shapenodes/soshape_bumprender.cpp
+@@ -229,31 +229,9 @@ SbBool bumphack = TRUE;
+ 
+ // *************************************************************************
+ 
+-static void
+-soshape_bumprender_diffuseprogramdeletion(unsigned long COIN_UNUSED_ARG(key), void * COIN_UNUSED_ARG(value))
+-{
+-#if 0 // FIXME: cleanup routines not implemented yet (for no good
+-      // reason, really). 20050524 mortene.
+-  diffuse_programidx * pidx = (diffuse_programidx *) value;
+-  /* FIXME: There are no pointlight program initialized for diffuse
+-     rendering yet. Enable when implemented. (20040209 handegar) */
+-  //pidx->glue->glDeleteProgramsARB(1, &pidx->pointlight);
+-  cc_glglue_glDeletePrograms(pidx->glue, 1, &pidx->dirlight);
+-  cc_glglue_glDeletePrograms(pidx->glue, 1, &pidx->normalrendering);
+-#endif // FIXME
+-}
+ 
+-static void
+-soshape_bumprender_specularprogramdeletion(unsigned long COIN_UNUSED_ARG(key), void * COIN_UNUSED_ARG(value))
+-{
+-#if 0 // FIXME: cleanup routines not implemented yet (for no good
+-      // reason, really). 20050524 mortene.
+-  spec_programidx * pidx = (spec_programidx *) value;
+-  cc_glglue_glDeletePrograms(pidx->glue, 1, &pidx->pointlight);
+-  cc_glglue_glDeletePrograms(pidx->glue, 1, &pidx->dirlight);
+-  cc_glglue_glDeletePrograms(pidx->glue, 1, &pidx->fragment);
+-#endif // FIXME
+-}
++
++
+ 
+ soshape_bumprender::soshape_bumprender(void)
+ {
+diff --git a/src/tidbits.cpp b/src/tidbits.cpp
+index 8275f6b51..08476848a 100644
+--- a/src/tidbits.cpp
++++ b/src/tidbits.cpp
+@@ -1403,7 +1403,7 @@ coin_locale_set_portable(cc_string * storeold)
+ void
+ coin_locale_reset(cc_string * storedold)
+ {
+-  const char * l = setlocale(LC_NUMERIC, cc_string_get_text(storedold));
++  const char * l = setlocale(LC_NUMERIC, cc_string_get_text(storedold)); (void)l;
+   assert(l != NULL && "could not reset locale");
+   cc_string_clean(storedold);
+ }
+@@ -1780,6 +1780,7 @@ coin_debug_extra(void)
+ #if COIN_DEBUG
+   return COIN_DEBUG_EXTRA;
+ #else /* COIN_DEBUG */
++  (void)COIN_DEBUG_EXTRA;
+   return 0;
+ #endif /* !COIN_DEBUG */
+ }
+@@ -1795,6 +1796,7 @@ coin_debug_normalize(void)
+ #if COIN_DEBUG
+   return COIN_DEBUG_NORMALIZE;
+ #else /* COIN_DEBUG */
++  (void)COIN_DEBUG_NORMALIZE;
+   return 0;
+ #endif /* !COIN_DEBUG */
+ }
+diff --git a/src/vrml97/IndexedLine.cpp b/src/vrml97/IndexedLine.cpp
+index c60aa1744..677dbc93b 100644
+--- a/src/vrml97/IndexedLine.cpp
++++ b/src/vrml97/IndexedLine.cpp
+@@ -87,7 +87,7 @@ SoVRMLIndexedLine::computeBBox(SoAction * COIN_UNUSED_ARG(action),
+   SoVRMLCoordinate * node = (SoVRMLCoordinate*) this->coord.getValue();
+   if (node == NULL) return;
+ 
+-  int numCoords = node->point.getNum();
++  int numCoords = node->point.getNum(); (void)numCoords;
+   const SbVec3f * coords = node->point.getValues(0);
+ 
+   box.makeEmpty();
+diff --git a/src/vrml97/TimeSensor.cpp b/src/vrml97/TimeSensor.cpp
+index f3f8e4e58..76b0999f6 100644
+--- a/src/vrml97/TimeSensor.cpp
++++ b/src/vrml97/TimeSensor.cpp
+@@ -401,7 +401,7 @@ SoVRMLTimeSensor::inputChanged(SoField * which)
+     if (!PRIVATE(this)->running) {
+       PRIVATE(this)->starttime = this->startTime.getValue().getValue();
+       if (currtime >= PRIVATE(this)->starttime) {
+-        SbBool old = this->timeIn.enableNotify(TRUE);
++        SbBool old = this->timeIn.enableNotify(TRUE); (void)old;
+         assert(old == FALSE);
+         which = &this->timeIn; // warning, hack
+       } else {
+diff --git a/src/xml/attribute.cpp b/src/xml/attribute.cpp
+index 989762b6f..8935a69ed 100644
+--- a/src/xml/attribute.cpp
++++ b/src/xml/attribute.cpp
+@@ -180,7 +180,7 @@ cc_xml_attr_write_to_buffer(const cc_xml_attr * attr, char * buffer, size_t COIN
+   // usage, since this must be calculated correctly for not getting memory corruption
+   // on invalid buffer size allocation before writing.
+   const char * const origbufferptr = buffer;
+-  const size_t assumed = cc_xml_attr_calculate_size(attr);
++  const size_t assumed = cc_xml_attr_calculate_size(attr); (void)assumed;
+   assert(assumed < bufsize);
+   size_t namelen = strlen(attr->name);
+   strcpy(buffer, attr->name);
+diff --git a/src/xml/document.cpp b/src/xml/document.cpp
+index b4ea4fa41..23ab40aa8 100644
+--- a/src/xml/document.cpp
++++ b/src/xml/document.cpp
+@@ -759,7 +759,7 @@ cc_xml_doc_write_to_file(const cc_xml_doc * doc, const char * path)
+     buffer.reset(bufptr);
+   }
+ 
+-  const size_t bytes = strlen(buffer.get());
++  const size_t bytes = strlen(buffer.get()); (void)bytes;
+   assert(bufsize == bytes);
+   FILE * fp = NULL;
+   if (strcmp(path, "-") == 0)
+diff --git a/src/xml/element.cpp b/src/xml/element.cpp
+index a88d29102..f97bda824 100644
+--- a/src/xml/element.cpp
++++ b/src/xml/element.cpp
+@@ -501,7 +501,7 @@ cc_xml_elt_insert_child_x(cc_xml_elt * elt, cc_xml_elt * child, int idx)
+     // FIXME: error, child already a child of another element
+     return;
+   }
+-  const int numchildren = elt->children.getLength();
++  const int numchildren = elt->children.getLength(); (void)numchildren;
+   assert(idx >= 0 && idx <= numchildren);
+   elt->children.insert(child, idx);
+   child->parent = elt;
+@@ -1122,7 +1122,7 @@ cc_xml_elt_write_to_buffer(const cc_xml_elt * elt, char * buffer, size_t bufsize
+   assert(elt->type);
+   assert(indent >= 0);
+ 
+-  const size_t assumed = cc_xml_elt_calculate_size(elt, indent, indentincrement);
++  const size_t assumed = cc_xml_elt_calculate_size(elt, indent, indentincrement); (void)assumed;
+ 
+   size_t bytes = 0;
+   char * hereptr = buffer;
+diff --git a/src/xml/path.cpp b/src/xml/path.cpp
+index 8c3d25ca7..464905028 100644
+--- a/src/xml/path.cpp
++++ b/src/xml/path.cpp
+@@ -78,7 +78,7 @@ path_node_clone(path_node * node)
+   return path_node_new(node->element, node->idx);
+ }
+ 
+-static
++static inline
+ path_node *
+ path_node_delete(path_node * node)
+ {
+@@ -94,10 +94,7 @@ void
+ path_node_delete_chain(path_node * head)
+ {
+   while ( head != NULL ) {
+-    path_node * prev = head;
+-    head = head->next;
+-    delete[] prev->element;
+-    delete prev;
++    head = path_node_delete(head);
+   }
+ }
+ 
+diff --git a/testsuite/CMakeLists.txt b/testsuite/CMakeLists.txt
+index cff5dd56b..f7a6d7cc6 100644
+--- a/testsuite/CMakeLists.txt
++++ b/testsuite/CMakeLists.txt
+@@ -120,9 +120,5 @@ endforeach()
+ 
+ include(CheckCoreGLHeaders.cmake)
+ 
+-# Many warnings are generated from test macros on macOS with Xcode.
+-include(CheckCXXCompilerFlag)
+-CHECK_CXX_COMPILER_FLAG(-Wtautological-compare DISABLE_WARNING_TAUTOLOGCOMPARE)
+-if(DISABLE_WARNING_TAUTOLOGCOMPARE)
+-	target_compile_options(CoinTests PUBLIC -Wno-tautological-compare)
+-endif()
++
++set_property(TARGET CoinTests PROPERTY CXX_STANDARD 20)
+diff --git a/testsuite/CoinTest.h b/testsuite/CoinTest.h
+index 7689a2fc4..bcbd31fa6 100644
+--- a/testsuite/CoinTest.h
++++ b/testsuite/CoinTest.h
+@@ -6,6 +6,8 @@
+ #include <sstream>
+ #include <string>
+ #include <vector>
++#include <type_traits>
++#include <utility>
+ 
+ namespace CoinTest {
+ 
+@@ -93,7 +95,12 @@ inline void check_equal(const A & a, const B & b,
+                         const char * file, int line)
+ {
+   add_check();
+-  if (!(a == b)) {
++  bool equal;
++  if constexpr (std::is_integral_v<A> && std::is_integral_v<B>)
++    equal = std::cmp_equal(a, b);
++  else
++    equal = a == b;
++  if (!equal) {
+     add_failure(file, line,
+                 std::string("check failed: (") + aexpr + " == " + bexpr + ") (" +
+                   stringify(a) + " != " + stringify(b) + ")");
+diff --git a/testsuite/TestSuiteUtils.cpp b/testsuite/TestSuiteUtils.cpp
+index fae3544a6..6f3819287 100644
+--- a/testsuite/TestSuiteUtils.cpp
++++ b/testsuite/TestSuiteUtils.cpp
+@@ -409,7 +409,7 @@ TestSuite::test_all_files(const std::string & search_directory,
+                           std::vector<std::string> & suffixes,
+                           test_files_CB * testFunction)
+ {
+-  std::string basepath = coin_getcwd();
++  std::string basepath = coin_getcwd(); (void)basepath;
+ 
+   std::vector<std::string> paths;
+   for (

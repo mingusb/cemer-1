@@ -1,0 +1,829 @@
+[
+  {
+    "name": "zlib",
+    "revision": "e3dc0a85b7032e98380dec011bc8f2c2ee0d8fca",
+    "source_url": "https://github.com/madler/zlib.git",
+    "source_path": "/home/b/toolchains/sources/zlib",
+    "build_path": "/home/b/toolchains/build-deps/zlib",
+    "install_prefix": "/home/b/toolchains/deps",
+    "source_patch": null,
+    "source_patch_sha256": null,
+    "license_files": [
+      "/home/b/toolchains/sources/zlib/LICENSE"
+    ],
+    "compiler": "Clang 24.0.0 58c46bae2118",
+    "status": "installed; validation evidence is recorded below; the final package inventory determines shipment",
+    "recipe": {
+      "source": "/home/b/toolchains/sources/zlib",
+      "commit": "e3dc0a85b7032e98380dec011bc8f2c2ee0d8fca",
+      "commands": [
+        [
+          "cmake",
+          "-S",
+          "/home/b/toolchains/sources/zlib",
+          "-B",
+          "/home/b/toolchains/build-deps/zlib",
+          "-G",
+          "Ninja",
+          "-DCMAKE_LINKER_TYPE=LLD",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DCMAKE_C_FLAGS_RELEASE=-O2",
+          "-DCMAKE_CXX_FLAGS_RELEASE=-O2",
+          "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+          "-DBUILD_SHARED_LIBS=ON",
+          "-DCMAKE_INSTALL_PREFIX=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_LIBDIR=lib",
+          "-DCMAKE_PREFIX_PATH=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_RPATH=/home/b/toolchains/deps/lib"
+        ],
+        [
+          "cmake",
+          "--build",
+          "/home/b/toolchains/build-deps/zlib",
+          "--parallel",
+          "2"
+        ],
+        [
+          "ctest",
+          "--test-dir",
+          "/home/b/toolchains/build-deps/zlib",
+          "--output-on-failure"
+        ],
+        [
+          "cmake",
+          "--install",
+          "/home/b/toolchains/build-deps/zlib"
+        ]
+      ]
+    },
+    "compile_command_count": 37,
+    "compile_commands": "/home/b/toolchains/build-deps/zlib/compile_commands.json",
+    "cxx_standard_library": "GNU libstdc++ (Clang 24 default GCC 15 headers; Ubuntu libstdc++6 runtime package 16-20260322-1ubuntu1)",
+    "build_log": "/home/b/toolchains/build-deps/zlib/build.log",
+    "test_log": "/home/b/toolchains/build-deps/zlib/test.log",
+    "install_log": "/home/b/toolchains/build-deps/zlib/install.log",
+    "validation": "Upstream registered tests passed; retained unfiltered test log is authoritative for test count.",
+    "component_role": "library",
+    "package_selection_status": "not established by this installation record"
+  },
+  {
+    "name": "expat",
+    "revision": "594e860114cda04d048248649f07f34f7178942a",
+    "source_url": "https://github.com/libexpat/libexpat.git",
+    "source_path": "/home/b/toolchains/sources/expat",
+    "build_path": "/home/b/toolchains/build-deps/expat",
+    "install_prefix": "/home/b/toolchains/deps",
+    "source_patch": null,
+    "source_patch_sha256": null,
+    "license_files": [
+      "/home/b/toolchains/sources/expat/COPYING",
+      "/home/b/toolchains/sources/expat/expat/COPYING"
+    ],
+    "compiler": "Clang 24.0.0 58c46bae2118",
+    "status": "installed; validation evidence is recorded below; the final package inventory determines shipment",
+    "recipe": {
+      "source": "/home/b/toolchains/sources/expat",
+      "commit": "594e860114cda04d048248649f07f34f7178942a",
+      "commands": [
+        [
+          "cmake",
+          "-S",
+          "/home/b/toolchains/sources/expat/expat",
+          "-B",
+          "/home/b/toolchains/build-deps/expat",
+          "-G",
+          "Ninja",
+          "-DCMAKE_LINKER_TYPE=LLD",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DCMAKE_C_FLAGS_RELEASE=-O2",
+          "-DCMAKE_CXX_FLAGS_RELEASE=-O2",
+          "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+          "-DBUILD_SHARED_LIBS=ON",
+          "-DCMAKE_INSTALL_PREFIX=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_LIBDIR=lib",
+          "-DCMAKE_PREFIX_PATH=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_RPATH=/home/b/toolchains/deps/lib",
+          "-DEXPAT_BUILD_DOCS=OFF"
+        ],
+        [
+          "cmake",
+          "--build",
+          "/home/b/toolchains/build-deps/expat",
+          "--parallel",
+          "2"
+        ],
+        [
+          "ctest",
+          "--test-dir",
+          "/home/b/toolchains/build-deps/expat",
+          "--output-on-failure"
+        ],
+        [
+          "cmake",
+          "--install",
+          "/home/b/toolchains/build-deps/expat"
+        ]
+      ]
+    },
+    "compile_command_count": 37,
+    "compile_commands": "/home/b/toolchains/build-deps/expat/compile_commands.json",
+    "cxx_standard_library": "GNU libstdc++ (Clang 24 default GCC 15 headers; Ubuntu libstdc++6 runtime package 16-20260322-1ubuntu1)",
+    "build_log": "/home/b/toolchains/build-deps/expat/build.log",
+    "test_log": "/home/b/toolchains/build-deps/expat/test.log",
+    "install_log": "/home/b/toolchains/build-deps/expat/install.log",
+    "validation": "Upstream registered tests passed; retained unfiltered test log is authoritative for test count.",
+    "component_role": "library",
+    "package_selection_status": "not established by this installation record"
+  },
+  {
+    "name": "lz4",
+    "revision": "0774d05537f9762f838f7ab541b7765f1a729cb5",
+    "source_url": "https://github.com/lz4/lz4.git",
+    "source_path": "/home/b/toolchains/sources/lz4",
+    "build_path": "/home/b/toolchains/build-deps/lz4",
+    "install_prefix": "/home/b/toolchains/deps",
+    "source_patch": null,
+    "source_patch_sha256": null,
+    "license_files": [
+      "/home/b/toolchains/sources/lz4/LICENSE",
+      "/home/b/toolchains/sources/lz4/lib/LICENSE"
+    ],
+    "compiler": "Clang 24.0.0 58c46bae2118",
+    "status": "installed; validation evidence is recorded below; the final package inventory determines shipment",
+    "recipe": {
+      "source": "/home/b/toolchains/sources/lz4",
+      "commit": "0774d05537f9762f838f7ab541b7765f1a729cb5",
+      "commands": [
+        [
+          "cmake",
+          "-S",
+          "/home/b/toolchains/sources/lz4/build/cmake",
+          "-B",
+          "/home/b/toolchains/build-deps/lz4",
+          "-G",
+          "Ninja",
+          "-DCMAKE_LINKER_TYPE=LLD",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DCMAKE_C_FLAGS_RELEASE=-O2",
+          "-DCMAKE_CXX_FLAGS_RELEASE=-O2",
+          "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+          "-DBUILD_SHARED_LIBS=ON",
+          "-DCMAKE_INSTALL_PREFIX=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_LIBDIR=lib",
+          "-DCMAKE_PREFIX_PATH=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_RPATH=/home/b/toolchains/deps/lib"
+        ],
+        [
+          "cmake",
+          "--build",
+          "/home/b/toolchains/build-deps/lz4",
+          "--parallel",
+          "2"
+        ],
+        [
+          "ctest",
+          "--test-dir",
+          "/home/b/toolchains/build-deps/lz4",
+          "--output-on-failure"
+        ],
+        [
+          "cmake",
+          "--install",
+          "/home/b/toolchains/build-deps/lz4"
+        ]
+      ]
+    },
+    "compile_command_count": 17,
+    "compile_commands": "/home/b/toolchains/build-deps/lz4/compile_commands.json",
+    "cxx_standard_library": "GNU libstdc++ (Clang 24 default GCC 15 headers; Ubuntu libstdc++6 runtime package 16-20260322-1ubuntu1)",
+    "build_log": "/home/b/toolchains/build-deps/lz4/build.log",
+    "test_log": "/home/b/toolchains/build-deps/lz4/test.log",
+    "install_log": "/home/b/toolchains/build-deps/lz4/install.log",
+    "validation": "Upstream registered tests passed; retained unfiltered test log is authoritative for test count.",
+    "component_role": "library",
+    "package_selection_status": "not established by this installation record"
+  },
+  {
+    "name": "utf8proc",
+    "revision": "0075ed7d0adba45682ee6bf7a83b10f8fd110163",
+    "source_url": "https://github.com/JuliaStrings/utf8proc.git",
+    "source_path": "/home/b/toolchains/sources/utf8proc",
+    "build_path": "/home/b/toolchains/build-deps/utf8proc",
+    "install_prefix": "/home/b/toolchains/deps",
+    "source_patch": "patches/utf8proc.patch",
+    "source_patch_sha256": "ec86ad15edb053d325f0c303be2b7fec6ac875b2bfef640fb4e074ed3c7948e7",
+    "license_files": [
+      "/home/b/toolchains/sources/utf8proc/LICENSE.md"
+    ],
+    "compiler": "Clang 24.0.0 58c46bae2118",
+    "status": "installed; validation evidence is recorded below; the final package inventory determines shipment",
+    "recipe": {
+      "source": "/home/b/toolchains/sources/utf8proc",
+      "commit": "0075ed7d0adba45682ee6bf7a83b10f8fd110163",
+      "commands": [
+        [
+          "cmake",
+          "-S",
+          "/home/b/toolchains/sources/utf8proc",
+          "-B",
+          "/home/b/toolchains/build-deps/utf8proc",
+          "-G",
+          "Ninja",
+          "-DCMAKE_LINKER_TYPE=LLD",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DCMAKE_C_FLAGS_RELEASE=-O2",
+          "-DCMAKE_CXX_FLAGS_RELEASE=-O2",
+          "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+          "-DBUILD_SHARED_LIBS=ON",
+          "-DCMAKE_INSTALL_PREFIX=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_LIBDIR=lib",
+          "-DCMAKE_PREFIX_PATH=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_RPATH=/home/b/toolchains/deps/lib",
+          "-DUTF8PROC_ENABLE_TESTING=ON"
+        ],
+        [
+          "cmake",
+          "--build",
+          "/home/b/toolchains/build-deps/utf8proc",
+          "--parallel",
+          "2"
+        ],
+        [
+          "ctest",
+          "--test-dir",
+          "/home/b/toolchains/build-deps/utf8proc",
+          "--output-on-failure"
+        ],
+        [
+          "cmake",
+          "--install",
+          "/home/b/toolchains/build-deps/utf8proc"
+        ]
+      ]
+    },
+    "compile_command_count": 23,
+    "compile_commands": "/home/b/toolchains/build-deps/utf8proc/compile_commands.json",
+    "cxx_standard_library": "GNU libstdc++ (Clang 24 default GCC 15 headers; Ubuntu libstdc++6 runtime package 16-20260322-1ubuntu1)",
+    "build_log": "/home/b/toolchains/build-deps/utf8proc/build.log",
+    "test_log": "/home/b/toolchains/build-deps/utf8proc/test.log",
+    "install_log": "/home/b/toolchains/build-deps/utf8proc/install.log",
+    "validation": "Upstream registered tests passed; retained unfiltered test log is authoritative for test count.",
+    "component_role": "library",
+    "package_selection_status": "not established by this installation record"
+  },
+  {
+    "name": "brotli",
+    "revision": "09e1ac6c7eea9d3b53f85bcdde6347358dbe1281",
+    "source_url": "https://github.com/google/brotli.git",
+    "source_path": "/home/b/toolchains/sources/brotli",
+    "build_path": "/home/b/toolchains/build-deps/brotli",
+    "install_prefix": "/home/b/toolchains/deps",
+    "source_patch": "patches/brotli.patch",
+    "source_patch_sha256": "c09a0c32b9650fddff276d99cda1ecbb3b37e81de2a57e26494578017e661789",
+    "license_files": [
+      "/home/b/toolchains/sources/brotli/LICENSE"
+    ],
+    "compiler": "Clang 24.0.0 58c46bae2118",
+    "status": "installed; validation evidence is recorded below; the final package inventory determines shipment",
+    "recipe": {
+      "source": "/home/b/toolchains/sources/brotli",
+      "commit": "09e1ac6c7eea9d3b53f85bcdde6347358dbe1281",
+      "commands": [
+        [
+          "cmake",
+          "-S",
+          "/home/b/toolchains/sources/brotli",
+          "-B",
+          "/home/b/toolchains/build-deps/brotli",
+          "-G",
+          "Ninja",
+          "-DCMAKE_LINKER_TYPE=LLD",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DCMAKE_C_FLAGS_RELEASE=-O2",
+          "-DCMAKE_CXX_FLAGS_RELEASE=-O2",
+          "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+          "-DBUILD_SHARED_LIBS=ON",
+          "-DCMAKE_INSTALL_PREFIX=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_LIBDIR=lib",
+          "-DCMAKE_PREFIX_PATH=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_RPATH=/home/b/toolchains/deps/lib"
+        ],
+        [
+          "cmake",
+          "--build",
+          "/home/b/toolchains/build-deps/brotli",
+          "--parallel",
+          "2"
+        ],
+        [
+          "ctest",
+          "--test-dir",
+          "/home/b/toolchains/build-deps/brotli",
+          "--output-on-failure"
+        ],
+        [
+          "cmake",
+          "--install",
+          "/home/b/toolchains/build-deps/brotli"
+        ]
+      ]
+    },
+    "compile_command_count": 36,
+    "compile_commands": "/home/b/toolchains/build-deps/brotli/compile_commands.json",
+    "cxx_standard_library": "GNU libstdc++ (Clang 24 default GCC 15 headers; Ubuntu libstdc++6 runtime package 16-20260322-1ubuntu1)",
+    "build_log": "/home/b/toolchains/build-deps/brotli/build.log",
+    "test_log": "/home/b/toolchains/build-deps/brotli/test.log",
+    "install_log": "/home/b/toolchains/build-deps/brotli/install.log",
+    "validation": "Upstream registered tests passed; retained unfiltered test log is authoritative for test count.",
+    "component_role": "library",
+    "package_selection_status": "not established by this installation record"
+  },
+  {
+    "name": "ninja",
+    "revision": "0f507b509621ed96171efa35332ce6e74fa0e08c",
+    "source_url": "https://github.com/ninja-build/ninja.git",
+    "source_path": "/home/b/toolchains/sources/ninja",
+    "build_path": "/home/b/toolchains/build-deps/ninja",
+    "install_prefix": "/home/b/toolchains/deps",
+    "source_patch": "patches/ninja.patch",
+    "source_patch_sha256": "74c763b8922b5cbc9f709d338f63b64e31a13f18ce20078f6c3cc234dadbedef",
+    "license_files": [
+      "/home/b/toolchains/sources/ninja/COPYING"
+    ],
+    "compiler": "Clang 24.0.0 58c46bae2118",
+    "status": "installed; validation evidence is recorded below; the final package inventory determines shipment",
+    "recipe": {
+      "source": "/home/b/toolchains/sources/ninja",
+      "commit": "0f507b509621ed96171efa35332ce6e74fa0e08c",
+      "commands": [
+        [
+          "cmake",
+          "-S",
+          "/home/b/toolchains/sources/ninja",
+          "-B",
+          "/home/b/toolchains/build-deps/ninja",
+          "-G",
+          "Ninja",
+          "-DCMAKE_LINKER_TYPE=LLD",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DCMAKE_C_FLAGS_RELEASE=-O2",
+          "-DCMAKE_CXX_FLAGS_RELEASE=-O2",
+          "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+          "-DBUILD_SHARED_LIBS=ON",
+          "-DCMAKE_CXX_FLAGS=-Wall -Wextra -Werror -Woverloaded-virtual",
+          "-DCMAKE_INSTALL_PREFIX=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_LIBDIR=lib",
+          "-DCMAKE_PREFIX_PATH=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_RPATH=/home/b/toolchains/deps/lib",
+          "-DBUILD_TESTING=ON"
+        ],
+        [
+          "cmake",
+          "--build",
+          "/home/b/toolchains/build-deps/ninja",
+          "--parallel",
+          "2"
+        ],
+        [
+          "ctest",
+          "--test-dir",
+          "/home/b/toolchains/build-deps/ninja",
+          "--output-on-failure"
+        ],
+        [
+          "cmake",
+          "--install",
+          "/home/b/toolchains/build-deps/ninja"
+        ]
+      ]
+    },
+    "compile_command_count": 67,
+    "compile_commands": "/home/b/toolchains/build-deps/ninja/compile_commands.json",
+    "cxx_standard_library": "GNU libstdc++ (Clang 24 default GCC 15 headers; Ubuntu libstdc++6 runtime package 16-20260322-1ubuntu1)",
+    "build_log": "/home/b/toolchains/build-deps/ninja/build.log",
+    "test_log": "/home/b/toolchains/build-deps/ninja/test.log",
+    "install_log": "/home/b/toolchains/build-deps/ninja/install.log",
+    "validation": "Upstream registered tests passed; retained unfiltered test log is authoritative for test count.",
+    "component_role": "build_tool",
+    "package_selection_status": "not established by this installation record"
+  },
+  {
+    "name": "zstd",
+    "revision": "d79e72359582d2326c63e9669fe05c2f6580fec5",
+    "source_url": "https://github.com/facebook/zstd.git",
+    "source_path": "/home/b/toolchains/sources/zstd",
+    "build_path": "/home/b/toolchains/build-deps/zstd",
+    "install_prefix": "/home/b/toolchains/deps",
+    "source_patch": null,
+    "source_patch_sha256": null,
+    "license_files": [
+      "/home/b/toolchains/sources/zstd/LICENSE",
+      "/home/b/toolchains/sources/zstd/COPYING"
+    ],
+    "compiler": "Clang 24.0.0 58c46bae2118",
+    "status": "installed; validation evidence is recorded below; the final package inventory determines shipment",
+    "recipe": {
+      "source": "/home/b/toolchains/sources/zstd",
+      "commit": "d79e72359582d2326c63e9669fe05c2f6580fec5",
+      "commands": [
+        [
+          "cmake",
+          "-S",
+          "/home/b/toolchains/sources/zstd/build/cmake",
+          "-B",
+          "/home/b/toolchains/build-deps/zstd",
+          "-G",
+          "Ninja",
+          "-DCMAKE_LINKER_TYPE=LLD",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DCMAKE_C_FLAGS_RELEASE=-O2",
+          "-DCMAKE_CXX_FLAGS_RELEASE=-O2",
+          "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+          "-DBUILD_SHARED_LIBS=ON",
+          "-DCMAKE_INSTALL_PREFIX=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_LIBDIR=lib",
+          "-DCMAKE_PREFIX_PATH=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_RPATH=/home/b/toolchains/deps/lib",
+          "-DZSTD_BUILD_TESTS=OFF"
+        ],
+        [
+          "cmake",
+          "--build",
+          "/home/b/toolchains/build-deps/zstd",
+          "--parallel",
+          "4"
+        ],
+        [
+          "ctest",
+          "--test-dir",
+          "/home/b/toolchains/build-deps/zstd",
+          "--output-on-failure"
+        ],
+        [
+          "cmake",
+          "--install",
+          "/home/b/toolchains/build-deps/zstd"
+        ]
+      ]
+    },
+    "compile_command_count": 76,
+    "compile_commands": "/home/b/toolchains/build-deps/zstd/compile_commands.json",
+    "cxx_standard_library": "GNU libstdc++ (Clang 24 default GCC 15 headers; Ubuntu libstdc++6 runtime package 16-20260322-1ubuntu1)",
+    "build_log": "/home/b/toolchains/build-deps/zstd/build.log",
+    "test_log": "/home/b/toolchains/build-deps/zstd/test.log",
+    "install_log": "/home/b/toolchains/build-deps/zstd/install.log",
+    "validation": "PASS: real consumer smoke (SQLite WAL/JSON/math/transaction/reopen/integrity; XXH64 known vector; Zstd1.19MB binary round-trip; WebP64x48 RGBA lossless round-trip).",
+    "consumer_smoke_report": "/home/b/cemer/artifacts/foundation-consumer-smoke1/report.json",
+    "consumer_smoke_recipe": "foundation-smoke.py",
+    "component_role": "library",
+    "package_selection_status": "not established by this installation record"
+  },
+  {
+    "name": "xxhash",
+    "revision": "c0b5ea995d66691734b1a79ad89e73a0d2fd5a53",
+    "source_url": "https://github.com/Cyan4973/xxHash.git",
+    "source_path": "/home/b/toolchains/sources/xxhash",
+    "build_path": "/home/b/toolchains/build-deps/xxhash",
+    "install_prefix": "/home/b/toolchains/deps",
+    "source_patch": null,
+    "source_patch_sha256": null,
+    "license_files": [
+      "/home/b/toolchains/sources/xxhash/LICENSE"
+    ],
+    "compiler": "Clang 24.0.0 58c46bae2118",
+    "status": "installed; validation evidence is recorded below; the final package inventory determines shipment",
+    "recipe": {
+      "source": "/home/b/toolchains/sources/xxhash",
+      "commit": "c0b5ea995d66691734b1a79ad89e73a0d2fd5a53",
+      "commands": [
+        [
+          "cmake",
+          "-S",
+          "/home/b/toolchains/sources/xxhash/build/cmake",
+          "-B",
+          "/home/b/toolchains/build-deps/xxhash",
+          "-G",
+          "Ninja",
+          "-DCMAKE_LINKER_TYPE=LLD",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DCMAKE_C_FLAGS_RELEASE=-O2",
+          "-DCMAKE_CXX_FLAGS_RELEASE=-O2",
+          "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+          "-DBUILD_SHARED_LIBS=ON",
+          "-DCMAKE_INSTALL_PREFIX=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_LIBDIR=lib",
+          "-DCMAKE_PREFIX_PATH=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_RPATH=/home/b/toolchains/deps/lib"
+        ],
+        [
+          "cmake",
+          "--build",
+          "/home/b/toolchains/build-deps/xxhash",
+          "--parallel",
+          "2"
+        ],
+        [
+          "ctest",
+          "--test-dir",
+          "/home/b/toolchains/build-deps/xxhash",
+          "--output-on-failure"
+        ],
+        [
+          "cmake",
+          "--install",
+          "/home/b/toolchains/build-deps/xxhash"
+        ]
+      ]
+    },
+    "compile_command_count": 7,
+    "compile_commands": "/home/b/toolchains/build-deps/xxhash/compile_commands.json",
+    "cxx_standard_library": "GNU libstdc++ (Clang 24 default GCC 15 headers; Ubuntu libstdc++6 runtime package 16-20260322-1ubuntu1)",
+    "build_log": "/home/b/toolchains/build-deps/xxhash/build.log",
+    "test_log": "/home/b/toolchains/build-deps/xxhash/test.log",
+    "install_log": "/home/b/toolchains/build-deps/xxhash/install.log",
+    "validation": "PASS: real consumer smoke (SQLite WAL/JSON/math/transaction/reopen/integrity; XXH64 known vector; Zstd1.19MB binary round-trip; WebP64x48 RGBA lossless round-trip).",
+    "consumer_smoke_report": "/home/b/cemer/artifacts/foundation-consumer-smoke1/report.json",
+    "consumer_smoke_recipe": "foundation-smoke.py",
+    "component_role": "library",
+    "package_selection_status": "not established by this installation record"
+  },
+  {
+    "name": "libwebp",
+    "revision": "1f346354b670aeb804cb68fcd7e1718a1b8ea555",
+    "source_url": "https://chromium.googlesource.com/webm/libwebp",
+    "source_path": "/home/b/toolchains/sources/libwebp",
+    "build_path": "/home/b/toolchains/build-deps/libwebp",
+    "install_prefix": "/home/b/toolchains/deps",
+    "source_patch": null,
+    "source_patch_sha256": null,
+    "license_files": [
+      "/home/b/toolchains/sources/libwebp/COPYING"
+    ],
+    "compiler": "Clang 24.0.0 58c46bae2118",
+    "status": "installed; validation evidence is recorded below; the final package inventory determines shipment",
+    "recipe": {
+      "source": "/home/b/toolchains/sources/libwebp",
+      "commit": "1f346354b670aeb804cb68fcd7e1718a1b8ea555",
+      "commands": [
+        [
+          "cmake",
+          "-S",
+          "/home/b/toolchains/sources/libwebp",
+          "-B",
+          "/home/b/toolchains/build-deps/libwebp",
+          "-G",
+          "Ninja",
+          "-DCMAKE_LINKER_TYPE=LLD",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DCMAKE_C_FLAGS_RELEASE=-O2",
+          "-DCMAKE_CXX_FLAGS_RELEASE=-O2",
+          "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+          "-DBUILD_SHARED_LIBS=ON",
+          "-DCMAKE_INSTALL_PREFIX=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_LIBDIR=lib",
+          "-DCMAKE_PREFIX_PATH=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_RPATH=/home/b/toolchains/deps/lib"
+        ],
+        [
+          "cmake",
+          "--build",
+          "/home/b/toolchains/build-deps/libwebp",
+          "--parallel",
+          "2"
+        ],
+        [
+          "ctest",
+          "--test-dir",
+          "/home/b/toolchains/build-deps/libwebp",
+          "--output-on-failure"
+        ],
+        [
+          "cmake",
+          "--install",
+          "/home/b/toolchains/build-deps/libwebp"
+        ]
+      ]
+    },
+    "compile_command_count": 200,
+    "compile_commands": "/home/b/toolchains/build-deps/libwebp/compile_commands.json",
+    "cxx_standard_library": "GNU libstdc++ (Clang 24 default GCC 15 headers; Ubuntu libstdc++6 runtime package 16-20260322-1ubuntu1)",
+    "build_log": "/home/b/toolchains/build-deps/libwebp/build.log",
+    "test_log": "/home/b/toolchains/build-deps/libwebp/test.log",
+    "install_log": "/home/b/toolchains/build-deps/libwebp/install.log",
+    "validation": "PASS: real consumer smoke (SQLite WAL/JSON/math/transaction/reopen/integrity; XXH64 known vector; Zstd1.19MB binary round-trip; WebP64x48 RGBA lossless round-trip).",
+    "consumer_smoke_report": "/home/b/cemer/artifacts/foundation-consumer-smoke1/report.json",
+    "consumer_smoke_recipe": "foundation-smoke.py",
+    "component_role": "library",
+    "package_selection_status": "not established by this installation record"
+  },
+  {
+    "name": "libtiff",
+    "revision": "dd0ed2c6198fb8fe736ec0329d24a50cfbb2f2ae",
+    "source_url": "https://gitlab.com/libtiff/libtiff.git",
+    "source_path": "/home/b/toolchains/sources/libtiff",
+    "build_path": "/home/b/toolchains/build-deps/libtiff",
+    "install_prefix": "/home/b/toolchains/deps",
+    "source_patch": "patches/libtiff.patch",
+    "source_patch_sha256": "9e7246f7b7686c0cf91e376e86d858d03074d5497c62518e75234069b1f1da1f",
+    "license_files": [
+      "/home/b/toolchains/sources/libtiff/LICENSE.md"
+    ],
+    "compiler": "Clang 24.0.0 58c46bae2118",
+    "status": "installed; validation evidence is recorded below; the final package inventory determines shipment",
+    "recipe": {
+      "source": "/home/b/toolchains/sources/libtiff",
+      "commit": "dd0ed2c6198fb8fe736ec0329d24a50cfbb2f2ae",
+      "commands": [
+        [
+          "cmake",
+          "-S",
+          "/home/b/toolchains/sources/libtiff",
+          "-B",
+          "/home/b/toolchains/build-deps/libtiff",
+          "-G",
+          "Ninja",
+          "-DCMAKE_LINKER_TYPE=LLD",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DCMAKE_C_FLAGS_RELEASE=-O2",
+          "-DCMAKE_CXX_FLAGS_RELEASE=-O2",
+          "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+          "-DBUILD_SHARED_LIBS=ON",
+          "-DCMAKE_CXX_FLAGS=-Wall -Wextra -Werror -Woverloaded-virtual",
+          "-DCMAKE_INSTALL_PREFIX=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_LIBDIR=lib",
+          "-DCMAKE_PREFIX_PATH=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_RPATH=/home/b/toolchains/deps/lib",
+          "-Dtiff-docs=OFF"
+        ],
+        [
+          "cmake",
+          "--build",
+          "/home/b/toolchains/build-deps/libtiff",
+          "--parallel",
+          "2"
+        ],
+        [
+          "ctest",
+          "--test-dir",
+          "/home/b/toolchains/build-deps/libtiff",
+          "--output-on-failure"
+        ],
+        [
+          "cmake",
+          "--install",
+          "/home/b/toolchains/build-deps/libtiff"
+        ]
+      ]
+    },
+    "compile_command_count": 103,
+    "compile_commands": "/home/b/toolchains/build-deps/libtiff/compile_commands.json",
+    "cxx_standard_library": "GNU libstdc++ (Clang 24 default GCC 15 headers; Ubuntu libstdc++6 runtime package 16-20260322-1ubuntu1)",
+    "build_log": "/home/b/toolchains/build-deps/libtiff/build.log",
+    "test_log": "/home/b/toolchains/build-deps/libtiff/test.log",
+    "install_log": "/home/b/toolchains/build-deps/libtiff/install.log",
+    "validation": "Upstream registered tests passed; retained unfiltered test log is authoritative for test count.",
+    "component_role": "library",
+    "package_selection_status": "not established by this installation record"
+  },
+  {
+    "name": "pcre2",
+    "revision": "e6a61f8e5c5cf77fc2854c60b3ab2f9b745b25e4",
+    "source_url": "https://github.com/PCRE2Project/pcre2.git",
+    "source_path": "/home/b/toolchains/sources/pcre2",
+    "build_path": "/home/b/toolchains/build-deps/pcre2",
+    "install_prefix": "/home/b/toolchains/deps",
+    "source_patch": null,
+    "source_patch_sha256": null,
+    "license_files": [
+      "/home/b/toolchains/sources/pcre2/COPYING",
+      "/home/b/toolchains/sources/pcre2/LICENCE.md",
+      "/home/b/toolchains/sources/pcre2/deps/sljit/LICENSE"
+    ],
+    "compiler": "Clang 24.0.0 58c46bae2118",
+    "status": "installed; validation evidence is recorded below; the final package inventory determines shipment",
+    "recipe": {
+      "source": "/home/b/toolchains/sources/pcre2",
+      "commit": "e6a61f8e5c5cf77fc2854c60b3ab2f9b745b25e4",
+      "commands": [
+        [
+          "cmake",
+          "-S",
+          "/home/b/toolchains/sources/pcre2",
+          "-B",
+          "/home/b/toolchains/build-deps/pcre2",
+          "-G",
+          "Ninja",
+          "-DCMAKE_LINKER_TYPE=LLD",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DCMAKE_C_FLAGS_RELEASE=-O2",
+          "-DCMAKE_CXX_FLAGS_RELEASE=-O2",
+          "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+          "-DBUILD_SHARED_LIBS=ON",
+          "-DCMAKE_INSTALL_PREFIX=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_LIBDIR=lib",
+          "-DCMAKE_PREFIX_PATH=/home/b/toolchains/deps",
+          "-DCMAKE_INSTALL_RPATH=/home/b/toolchains/deps/lib",
+          "-DPCRE2_BUILD_PCRE2_16=ON",
+          "-DPCRE2_BUILD_PCRE2_32=ON",
+          "-DPCRE2_SUPPORT_JIT=ON"
+        ],
+        [
+          "cmake",
+          "--build",
+          "/home/b/toolchains/build-deps/pcre2",
+          "--parallel",
+          "2"
+        ],
+        [
+          "ctest",
+          "--test-dir",
+          "/home/b/toolchains/build-deps/pcre2",
+          "--output-on-failure"
+        ],
+        [
+          "cmake",
+          "--install",
+          "/home/b/toolchains/build-deps/pcre2"
+        ]
+      ]
+    },
+    "compile_command_count": 192,
+    "compile_commands": "/home/b/toolchains/build-deps/pcre2/compile_commands.json",
+    "cxx_standard_library": "GNU libstdc++ (Clang 24 default GCC 15 headers; Ubuntu libstdc++6 runtime package 16-20260322-1ubuntu1)",
+    "build_log": "/home/b/toolchains/build-deps/pcre2/build.log",
+    "test_log": "/home/b/toolchains/build-deps/pcre2/test.log",
+    "install_log": "/home/b/toolchains/build-deps/pcre2/install.log",
+    "submodules": "3908d4c1d46764b7f86e172411e28cec3d0d601c deps/sljit (heads/master)",
+    "validation": "Upstream registered tests passed; retained unfiltered test log is authoritative for test count.",
+    "component_role": "library",
+    "package_selection_status": "not established by this installation record"
+  },
+  {
+    "name": "apr",
+    "revision": "c5db070f0800834ec9cbfef4a44862cdf87ccdf0",
+    "source_url": "https://github.com/apache/apr.git",
+    "source_path": "/home/b/toolchains/sources/apr",
+    "build_path": "/home/b/toolchains/build-deps/apr",
+    "install_prefix": "/home/b/toolchains/deps",
+    "source_patch": "patches/apr.patch",
+    "source_patch_sha256": "6715cbe8221e8ca070f21f8b33e6a2bbe15c8e43c40d2b7b2ad4b9e85cf3988e",
+    "license_files": [
+      "/home/b/toolchains/sources/apr/LICENSE",
+      "/home/b/toolchains/sources/apr/NOTICE"
+    ],
+    "compiler": "Clang 24.0.0 58c46bae2118",
+    "status": "installed; validation evidence is recorded below; the final package inventory determines shipment",
+    "build_log": "/home/b/toolchains/build-deps/apr/build4.log",
+    "install_log": "/home/b/toolchains/build-deps/apr/install.log",
+    "validation": "Installed APR2 is exercised by Serf 11/11 and Subversion 125/125 upstream suites; no independent APR full-suite pass is claimed.",
+    "build_attempt_logs": [
+      "/home/b/toolchains/build-deps/apr/build.log",
+      "/home/b/toolchains/build-deps/apr/build2.log",
+      "/home/b/toolchains/build-deps/apr/build3.log",
+      "/home/b/toolchains/build-deps/apr/build4.log"
+    ],
+    "build_log_sha256": "832d7338358c94fe3d1e02d6b3b99b8b8f159e26d2125e1f18681c775bc6281d",
+    "replay_recipe": "build-make-foundations.py",
+    "replay_validation": "Dry-run command and pin verification only; the recipe has not been replayed over the active installation.",
+    "consumer_validation_manifest": "networking-svn-installed.json",
+    "component_role": "library",
+    "package_selection_status": "not established by this installation record"
+  },
+  {
+    "name": "sqlite",
+    "revision": "7936c5107fa4081c347852dc84054a7bb5c5fbe3",
+    "source_url": "https://github.com/sqlite/sqlite.git",
+    "source_path": "/home/b/toolchains/sources/sqlite",
+    "build_path": "/home/b/toolchains/build-deps/sqlite",
+    "install_prefix": "/home/b/toolchains/deps",
+    "source_patch": "patches/sqlite.patch",
+    "source_patch_sha256": "a05908e66f91cd4f50fc70f6e3b176ef3b2f928b044f6cc97fc666a350aeaaa0",
+    "license_files": [
+      "/home/b/toolchains/sources/sqlite/LICENSE.md"
+    ],
+    "compiler": "Clang 24.0.0 58c46bae2118",
+    "status": "installed; validation evidence is recorded below; the final package inventory determines shipment",
+    "build_log": "/home/b/toolchains/build-deps/sqlite/build-lib2.log",
+    "install_log": "/home/b/toolchains/build-deps/sqlite/install.log",
+    "validation": "PASS: real consumer smoke (SQLite WAL/JSON/math/transaction/reopen/integrity; XXH64 known vector; Zstd1.19MB binary round-trip; WebP64x48 RGBA lossless round-trip).",
+    "consumer_smoke_report": "/home/b/cemer/artifacts/foundation-consumer-smoke1/report.json",
+    "consumer_smoke_recipe": "foundation-smoke.py",
+    "build_attempt_logs": [
+      "/home/b/toolchains/build-deps/sqlite/build-lib.log",
+      "/home/b/toolchains/build-deps/sqlite/build-lib2.log",
+      "/home/b/toolchains/build-deps/sqlite/build.log"
+    ],
+    "build_log_sha256": "9e6158573c8c0a794feb26fc0301c4b1dfd2e1b525046294bf6e71d4101ae159",
+    "replay_recipe": "build-make-foundations.py",
+    "replay_validation": "Dry-run command and pin verification only; the recipe has not been replayed over the active installation.",
+    "selected_targets": [
+      "libsqlite3.so",
+      "install-dll",
+      "install-headers",
+      "install-pc"
+    ],
+    "host_generator_note": "Original generated helpers used host cc; replay explicitly selects Clang24 and -Werror. Five helper translation units passed a Clang24 syntax-only check; the optional Tcl shell is outside the selected runtime.",
+    "component_role": "library",
+    "package_selection_status": "not established by this installation record"
+  }
+]

@@ -4,6 +4,7 @@ set -euo pipefail
 repo_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 app_prefix=${EMERGENT_PREFIX_DIR:-"$repo_dir/install"}
 qt_prefix=${EMERGENT_QT_DIR:-"$HOME/toolchains/Qt"}
+dependency_prefix=${EMERGENT_DEPENDENCY_DIR:-"$HOME/toolchains/deps"}
 
 if [[ ! -x "$app_prefix/bin/emergent" ]]; then
   echo "Emergent is not installed at $app_prefix. Build and run cmake --install first." >&2
@@ -14,7 +15,28 @@ if [[ ! -d "$qt_prefix/lib" ]]; then
   exit 1
 fi
 
+. "$repo_dir/tools/rendering-env.sh"
+if [ -z "${SSL_CERT_FILE+x}" ] && [ -r /etc/ssl/certs/ca-certificates.crt ]; then
+  export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+fi
+
 export EMERGENT_PREFIX_DIR="$app_prefix"
-export PATH="$app_prefix/bin:$qt_prefix/bin:$PATH"
-export LD_LIBRARY_PATH="$app_prefix/lib:$qt_prefix/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+toolchain_bin_path=""
+for tool_dir in "$dependency_prefix/bin" /usr/lib/llvm-24/bin; do
+  if [[ -d "$tool_dir" ]]; then toolchain_bin_path+=":$tool_dir"; fi
+done
+export PATH="$app_prefix/bin$toolchain_bin_path:$qt_prefix/bin:$PATH"
+if [[ -z "${CC+x}" && -x /usr/lib/llvm-24/bin/clang ]]; then
+  export CC=/usr/lib/llvm-24/bin/clang
+fi
+if [[ -z "${CXX+x}" && -x /usr/lib/llvm-24/bin/clang++ ]]; then
+  export CXX=/usr/lib/llvm-24/bin/clang++
+fi
+export CMAKE_PREFIX_PATH="$dependency_prefix:$qt_prefix${CMAKE_PREFIX_PATH:+:$CMAKE_PREFIX_PATH}"
+export PKG_CONFIG_PATH="$dependency_prefix/lib/pkgconfig:$dependency_prefix/lib64/pkgconfig:$dependency_prefix/share/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+dependency_lib_path=""
+for library_dir in "$dependency_prefix/lib" "$dependency_prefix/lib64"; do
+  if [[ -d "$library_dir" ]]; then dependency_lib_path+=":$library_dir"; fi
+done
+export LD_LIBRARY_PATH="$app_prefix/lib$dependency_lib_path:$qt_prefix/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 exec "$app_prefix/bin/emergent" "$@"

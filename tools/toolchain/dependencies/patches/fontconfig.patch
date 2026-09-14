@@ -1,0 +1,483 @@
+diff --git a/src/fccache.c b/src/fccache.c
+index cdb36ea..d883230 100644
+--- a/src/fccache.c
++++ b/src/fccache.c
+@@ -62,6 +62,10 @@ FcDirCacheCreateUUID (FcChar8  *dir,
+                       FcBool    force,
+                       FcConfig *config)
+ {
++  (void)config;
++  (void)dir;
++  (void)force;
++
+     return FcTrue;
+ }
+ 
+@@ -793,6 +797,8 @@ FcCacheFini (void)
+ static FcBool
+ FcCacheIsNewVersion (FcConfig *config, FcCache *cache)
+ {
++  (void)config;
++
+     int64_t       version = (FC_VERSION_MAJOR << 24) +
+                             (FC_VERSION_MINOR << 12) +
+                             FC_VERSION_MICRO;
+@@ -878,13 +884,13 @@ FcCacheOffsetsValid (FcCache *cache)
+     FcFontSet *fs;
+     int        i, j;
+ 
+-    if (cache->dir < 0 || cache->dir > cache->size - sizeof (intptr_t) ||
++    if (cache->dir < 0 || cache->dir > cache->size - (ptrdiff_t)sizeof (intptr_t) ||
+         memchr (base + cache->dir, '\0', cache->size - cache->dir) == NULL)
+ 	return FcFalse;
+ 
+     if (cache->dirs < 0 || cache->dirs >= cache->size ||
+         cache->dirs_count < 0 ||
+-        cache->dirs_count > (cache->size - cache->dirs) / sizeof (intptr_t))
++        cache->dirs_count > (cache->size - cache->dirs) / (ptrdiff_t)sizeof (intptr_t))
+ 	return FcFalse;
+ 
+     dirs = FcCacheDirs (cache);
+@@ -893,7 +899,7 @@ FcCacheOffsetsValid (FcCache *cache)
+ 	    FcChar8 *dir;
+ 
+ 	    if (dirs[i] < 0 ||
+-	        dirs[i] > end - (char *)dirs - sizeof (intptr_t))
++	        dirs[i] > end - (char *)dirs - (ptrdiff_t)sizeof (intptr_t))
+ 		return FcFalse;
+ 
+ 	    dir = FcOffsetToPtr (dirs, dirs[i], FcChar8);
+@@ -902,12 +908,12 @@ FcCacheOffsetsValid (FcCache *cache)
+ 	}
+     }
+ 
+-    if (cache->set < 0 || cache->set > cache->size - sizeof (FcFontSet))
++    if (cache->set < 0 || cache->set > cache->size - (ptrdiff_t)sizeof (FcFontSet))
+ 	return FcFalse;
+ 
+     fs = FcCacheSet (cache);
+     if (fs) {
+-	if (fs->nfont > (end - (char *)fs) / sizeof (FcPattern))
++	if (fs->nfont > (end - (char *)fs) / (ptrdiff_t)sizeof (FcPattern))
+ 	    return FcFalse;
+ 
+ 	if (!FcIsEncodedOffset (fs->fonts))
+@@ -923,10 +929,10 @@ FcCacheOffsetsValid (FcCache *cache)
+ 	    const FcChar8   *s;
+ 
+ 	    if ((char *)font < base ||
+-	        (char *)font > end - sizeof (FcFontSet) ||
++	        (char *)font > end - (ptrdiff_t)sizeof (FcFontSet) ||
+ 	        font->elts_offset < 0 ||
+ 	        font->elts_offset > end - (char *)font ||
+-	        font->num > (end - (char *)font - font->elts_offset) / sizeof (FcPatternElt) ||
++	        font->num > (end - (char *)font - font->elts_offset) / (ptrdiff_t)sizeof (FcPatternElt) ||
+ 	        !FcRefIsConst (&font->ref))
+ 		return FcFalse;
+ 
+@@ -937,7 +943,7 @@ FcCacheOffsetsValid (FcCache *cache)
+ 	    for (j = 0; j < font->num; j++) {
+ 		last_offset = (char *)font + font->elts_offset;
+ 		for (l = FcPatternEltValues (&e[j]); l; l = FcValueListNext (l)) {
+-		    if ((char *)l < last_offset || (char *)l > end - sizeof (*l) ||
++		    if ((char *)l < last_offset || (char *)l > end - (ptrdiff_t)sizeof (*l) ||
+ 		        (l->next != NULL && !FcIsEncodedOffset (l->next)))
+ 			return FcFalse;
+ 		    switch (l->value.type) {
+@@ -951,7 +957,7 @@ FcCacheOffsetsValid (FcCache *cache)
+ 		    case FcTypeString:
+ 			s = FcValueString (&l->value);
+ 			if ((intptr_t)s < (intptr_t)&e[j] ||
+-			    (intptr_t)&l->value > (intptr_t)end - sizeof (*l) ||
++			    (intptr_t)&l->value > (intptr_t)end - (ptrdiff_t)sizeof (*l) ||
+ 			    !FcIsEncodedOffset (l->value.u.s)) {
+ 			    if (FcDebug() & FC_DBG_CACHE) {
+ 				fprintf (stderr, "Fontconfig warning: invalid cache: broken string pointer\n");
+@@ -963,7 +969,7 @@ FcCacheOffsetsValid (FcCache *cache)
+ 			/* FcCharSet might be re-used by FcCharSetFindFrozen
+ 			 * which would means a pointer might be out of Elts
+ 			 */
+-			if ((intptr_t)&l->value > (intptr_t)end - sizeof (*l) ||
++			if ((intptr_t)&l->value > (intptr_t)end - (ptrdiff_t)sizeof (*l) ||
+ 			    !FcIsEncodedOffset (l->value.u.c)) {
+ 			    if (FcDebug() & FC_DBG_CACHE) {
+ 				fprintf (stderr, "Fontconfig warning: invalid cache: broken charset\n");
+@@ -975,7 +981,7 @@ FcCacheOffsetsValid (FcCache *cache)
+ 			    intptr_t *leaves;
+ 			    int k;
+ 
+-			    if ((char *)cs < base || (char *)cs > end - sizeof (FcCharSet) ||
++			    if ((char *)cs < base || (char *)cs > end - (ptrdiff_t)sizeof (FcCharSet) ||
+ 			        !FcRefIsConst (&cs->ref)) {
+ 				if (FcDebug() & FC_DBG_CACHE) {
+ 				    fprintf (stderr, "Fontconfig warning: invalid cache: non-constant or out-of-bounds charset\n");
+@@ -987,7 +993,7 @@ FcCacheOffsetsValid (FcCache *cache)
+ 			    if (cs->num > 0) {
+ 				if (cs->leaves_offset < 0 ||
+ 				    cs->leaves_offset > end - (char *)cs ||
+-				    cs->num > (end - (char *)cs - cs->leaves_offset) / sizeof (intptr_t)) {
++				    cs->num > (end - (char *)cs - cs->leaves_offset) / (ptrdiff_t)sizeof (intptr_t)) {
+ 				    if (FcDebug() & FC_DBG_CACHE) {
+ 					fprintf (stderr, "Fontconfig warning: invalid cache: broken charset leaves offset\n");
+ 				    }
+@@ -995,7 +1001,7 @@ FcCacheOffsetsValid (FcCache *cache)
+ 				}
+ 				if (cs->numbers_offset < 0 ||
+ 				    cs->numbers_offset > end - (char *)cs ||
+-				    cs->num > (end - (char *)cs - cs->numbers_offset) / sizeof (FcChar16)) {
++				    cs->num > (end - (char *)cs - cs->numbers_offset) / (ptrdiff_t)sizeof (FcChar16)) {
+ 				    if (FcDebug() & FC_DBG_CACHE) {
+ 					fprintf (stderr, "Fontconfig warning: invalid cache: broken charset numbers offset\n");
+ 				    }
+@@ -1017,7 +1023,7 @@ FcCacheOffsetsValid (FcCache *cache)
+ 		    case FcTypeLangSet:
+ 			ls = FcValueLangSet (&l->value);
+ 			if ((intptr_t)ls < (intptr_t)&e[j] ||
+-			    (intptr_t)&l->value > (intptr_t)end - sizeof (*l) ||
++			    (intptr_t)&l->value > (intptr_t)end - (ptrdiff_t)sizeof (*l) ||
+ 			    !FcIsEncodedOffset (l->value.u.l)) {
+ 			    if (FcDebug() & FC_DBG_CACHE) {
+ 				fprintf (stderr, "Fontconfig warning: invalid cache: broken langset\n");
+@@ -1035,7 +1041,7 @@ FcCacheOffsetsValid (FcCache *cache)
+ 		    case FcTypeRange:
+ 			r = FcValueRange (&l->value);
+ 			if ((intptr_t)r < (intptr_t)&e[j] ||
+-			    (intptr_t)&l->value > (intptr_t)end - sizeof (*l) ||
++			    (intptr_t)&l->value > (intptr_t)end - (ptrdiff_t)sizeof (*l) ||
+ 			    !FcIsEncodedOffset (l->value.u.r)) {
+ 			    if (FcDebug() & FC_DBG_CACHE) {
+ 				fprintf (stderr, "Fontconfig warning: invalid cache: broken range\n");
+@@ -1304,6 +1310,8 @@ FcCacheGetChecksum (FcCache *cache)
+ static int64_t
+ FcDirChecksumNano (struct stat *statb)
+ {
++  (void)statb;
++
+ #ifdef HAVE_STRUCT_STAT_ST_MTIM
+     /* No nanosecond component to parse */
+     if (getenv ("SOURCE_DATE_EPOCH"))
+@@ -1321,6 +1329,9 @@ FcDirChecksumNano (struct stat *statb)
+ static FcBool
+ FcDirCacheValidateHelper (FcConfig *config, int fd, struct stat *fd_stat, struct stat *dir_stat, struct timeval *latest_cache_mtime, void *closure FC_UNUSED)
+ {
++  (void)config;
++  (void)latest_cache_mtime;
++
+     FcBool  ret = FcTrue;
+     FcCache c;
+ 
+diff --git a/src/fccfg.c b/src/fccfg.c
+index c98805b..d739aa6 100644
+--- a/src/fccfg.c
++++ b/src/fccfg.c
+@@ -1000,6 +1000,10 @@ FcConfigAddRule (FcConfig   *config,
+                  FcRule     *rule,
+                  FcMatchKind kind)
+ {
++  (void)config;
++  (void)kind;
++  (void)rule;
++
+     /* deprecated */
+     return FcFalse;
+ }
+diff --git a/src/fcconffile.c b/src/fcconffile.c
+index a817f0f..3dfb38b 100644
+--- a/src/fcconffile.c
++++ b/src/fcconffile.c
+@@ -9,6 +9,8 @@ FcConfigFileGenerateGenericAlias (FcConfig  *config,
+                                   FcPattern *font,
+                                   FcStrBuf  *buf)
+ {
++  (void)config;
++
+     FcChar8        *family = NULL, *file = NULL;
+     const FcChar8  *gf, *s;
+     int             generic_family;
+diff --git a/src/fcdefault.c b/src/fcdefault.c
+index 88b1caf..6a593d6 100644
+--- a/src/fcdefault.c
++++ b/src/fcdefault.c
+@@ -191,7 +191,7 @@ retry:
+ 		free (buf);
+ 		break;
+ 	    }
+-	    if (len < size - 1) {
++	    if ((size_t)len < size - 1) {
+ 		buf[len] = 0;
+ 		p = buf;
+ 		break;
+diff --git a/src/fcformat.c b/src/fcformat.c
+index 105713b..3e20399 100644
+--- a/src/fcformat.c
++++ b/src/fcformat.c
+@@ -891,6 +891,8 @@ const_chars (FcFormatContext *c,
+              const FcChar8   *str,
+              FcStrBuf        *buf)
+ {
++  (void)c;
++
+     int            n;
+     char          *p = NULL;
+     const FcChar8 *con;
+diff --git a/src/fcfreetype.c b/src/fcfreetype.c
+index b029766..92f9faf 100644
+--- a/src/fcfreetype.c
++++ b/src/fcfreetype.c
+@@ -2214,6 +2214,8 @@ FcFreeTypeQueryAll (const FcChar8 *file,
+                     int           *count,
+                     FcFontSet     *set)
+ {
++  (void)blanks;
++
+     FT_Face        face = NULL;
+     FT_Library     ftLibrary = NULL;
+     FcCharSet     *cs = NULL;
+diff --git a/src/fcmatch.c b/src/fcmatch.c
+index 3a29154..ed5fb46 100644
+--- a/src/fcmatch.c
++++ b/src/fcmatch.c
+@@ -582,6 +582,10 @@ FcCompareFamilies (FcPattern     *pat,
+                    FcResult      *result,
+                    FcHashTable   *table)
+ {
++  (void)fnt;
++  (void)pat;
++  (void)result;
++
+     FcValueListPtr v2;
+     double         strong_value;
+     double         weak_value;
+diff --git a/src/fcname.c b/src/fcname.c
+index 8485799..01674ba 100644
+--- a/src/fcname.c
++++ b/src/fcname.c
+@@ -48,6 +48,9 @@ FcObjectFindById (FcObject object)
+ FcBool
+ FcNameRegisterObjectTypes (const FcObjectType *types, int ntypes)
+ {
++  (void)ntypes;
++  (void)types;
++
+     /* Deprecated. */
+     return FcFalse;
+ }
+@@ -55,6 +58,9 @@ FcNameRegisterObjectTypes (const FcObjectType *types, int ntypes)
+ FcBool
+ FcNameUnregisterObjectTypes (const FcObjectType *types, int ntypes)
+ {
++  (void)ntypes;
++  (void)types;
++
+     /* Deprecated. */
+     return FcFalse;
+ }
+@@ -141,6 +147,9 @@ typedef FcChar8 *FC8;
+ FcBool
+ FcNameRegisterConstants (const FcConstant *consts, int nconsts)
+ {
++  (void)consts;
++  (void)nconsts;
++
+     /* Deprecated. */
+     return FcFalse;
+ }
+@@ -148,6 +157,9 @@ FcNameRegisterConstants (const FcConstant *consts, int nconsts)
+ FcBool
+ FcNameUnregisterConstants (const FcConstant *consts, int nconsts)
+ {
++  (void)consts;
++  (void)nconsts;
++
+     /* Deprecated. */
+     return FcFalse;
+ }
+diff --git a/src/fcpat.c b/src/fcpat.c
+index dd8b394..6c1d931 100644
+--- a/src/fcpat.c
++++ b/src/fcpat.c
+@@ -394,7 +394,7 @@ FcPatternCacheRewriteFile (const FcPattern *p,
+     new_p->elts_offset = FcPtrToOffset (new_p, new_elts);
+ 
+     /* Copy all but the FILE values from the cache */
+-    for (i = 0, j = 0; i < p->num; i++) {
++    for (i = 0, j = 0; i < (size_t)p->num; i++) {
+ 	FcPatternElt *elt = &elts[i];
+ 	new_elts[j].object = elt->object;
+ 	if (elt->object != FC_FILE_OBJECT)
+@@ -1354,6 +1354,7 @@ FcPatternFindIter (const FcPattern *pat, FcPatternIter *iter, const char *object
+ FcBool
+ FcPatternIterIsValid (const FcPattern *pat, FcPatternIter *iter)
+ {
++    (void)pat;
+     FcPatternPrivateIter *priv = (FcPatternPrivateIter *)iter;
+ 
+     if (priv && priv->elt)
+@@ -1365,6 +1366,7 @@ FcPatternIterIsValid (const FcPattern *pat, FcPatternIter *iter)
+ FcObject
+ FcPatternIterGetObjectId (const FcPattern *pat, FcPatternIter *iter)
+ {
++    (void)pat;
+     FcPatternPrivateIter *priv = (FcPatternPrivateIter *)iter;
+ 
+     if (priv && priv->elt)
+@@ -1382,6 +1384,7 @@ FcPatternIterGetObject (const FcPattern *pat, FcPatternIter *iter)
+ FcValueListPtr
+ FcPatternIterGetValues (const FcPattern *pat, FcPatternIter *iter)
+ {
++    (void)pat;
+     FcPatternPrivateIter *priv = (FcPatternPrivateIter *)iter;
+ 
+     if (priv && priv->elt)
+diff --git a/src/fcxml.c b/src/fcxml.c
+index 1ab0c19..3945c84 100644
+--- a/src/fcxml.c
++++ b/src/fcxml.c
+@@ -2091,6 +2091,8 @@ _FcParseAliasAddScanRule (FcConfigParse *parse,
+                           FcOp           op,
+                           FcValueBinding binding)
+ {
++  (void)op;
++
+     FcExpr           *e, *ex;
+     FcTest           *t;
+     FcEdit           *ed;
+diff --git a/test/test-bz106618.c b/test/test-bz106618.c
+index 14e7e87..4272968 100644
+--- a/test/test-bz106618.c
++++ b/test/test-bz106618.c
+@@ -28,6 +28,9 @@
+ int
+ main (int argc, char **argv)
+ {
++  (void)argc;
++  (void)argv;
++
+     const FcFontSet *fs = FcConfigGetFonts (NULL, FcSetSystem);
+     int        i;
+ 
+diff --git a/test/test-bz96676.c b/test/test-bz96676.c
+index 8d37f40..5c5e56c 100644
+--- a/test/test-bz96676.c
++++ b/test/test-bz96676.c
+@@ -29,5 +29,8 @@
+ int
+ main (int argc, char **argv)
+ {
++  (void)argc;
++  (void)argv;
++
+     return FcWeightFromOpenType (INT_MAX) != FC_WEIGHT_EXTRABLACK;
+ }
+diff --git a/test/test-crbug1004254.c b/test/test-crbug1004254.c
+index e14c2a4..b33331c 100644
+--- a/test/test-crbug1004254.c
++++ b/test/test-crbug1004254.c
+@@ -82,6 +82,9 @@ run_test_in_thread (void *arg)
+ int
+ main (int argc, char **argv)
+ {
++  (void)argc;
++  (void)argv;
++
+     pthread_t        threads[NTEST];
+     struct thr_arg_s thr_arg[NTEST];
+     int              i, j;
+diff --git a/test/test-mt-appfontclear-race.c b/test/test-mt-appfontclear-race.c
+index a04e72f..635024b 100644
+--- a/test/test-mt-appfontclear-race.c
++++ b/test/test-mt-appfontclear-race.c
+@@ -33,5 +33,8 @@ writer_clear (FcConfig *config)
+ int
+ main (int argc, char **argv)
+ {
++  (void)argc;
++  (void)argv;
++
+     return run_font_race_test_full (reader_clear_race, writer_clear);
+ }
+diff --git a/test/test-mt-fccfg.c b/test/test-mt-fccfg.c
+index 3b7d843..45c480a 100644
+--- a/test/test-mt-fccfg.c
++++ b/test/test-mt-fccfg.c
+@@ -34,6 +34,8 @@ setenv (const char *name, const char *value, int o)
+ static void *
+ run_test_in_thread (void *arg)
+ {
++  (void)arg;
++
+     FcPattern *pat, *m;
+     FcResult   result;
+ 
+@@ -88,5 +90,8 @@ test (void)
+ int
+ main (int argc, char **argv)
+ {
++  (void)argc;
++  (void)argv;
++
+     return test();
+ }
+diff --git a/test/test-mt-fontlist-race.c b/test/test-mt-fontlist-race.c
+index b5ec477..c887bd5 100644
+--- a/test/test-mt-fontlist-race.c
++++ b/test/test-mt-fontlist-race.c
+@@ -21,5 +21,8 @@ reader_list (void)
+ int
+ main (int argc, char **argv)
+ {
++  (void)argc;
++  (void)argv;
++
+     return run_font_race_test (reader_list);
+ }
+diff --git a/test/test-mt-fontmatch-race.c b/test/test-mt-fontmatch-race.c
+index 9d80f5f..85b3130 100644
+--- a/test/test-mt-fontmatch-race.c
++++ b/test/test-mt-fontmatch-race.c
+@@ -23,5 +23,8 @@ reader_match (void)
+ int
+ main (int argc, char **argv)
+ {
++  (void)argc;
++  (void)argv;
++
+     return run_font_race_test (reader_match);
+ }
+diff --git a/test/test-mt-fontsort-race.c b/test/test-mt-fontsort-race.c
+index 03381e0..d67ed9d 100644
+--- a/test/test-mt-fontsort-race.c
++++ b/test/test-mt-fontsort-race.c
+@@ -23,5 +23,8 @@ reader_sort (void)
+ int
+ main (int argc, char **argv)
+ {
++  (void)argc;
++  (void)argv;
++
+     return run_font_race_test (reader_sort);
+ }
+diff --git a/test/test-pthread.c b/test/test-pthread.c
+index aacb19b..da3c582 100644
+--- a/test/test-pthread.c
++++ b/test/test-pthread.c
+@@ -48,6 +48,9 @@ static atomic_bool go;
+ static void
+ test_match (int thr_num, int test_num)
+ {
++  (void)test_num;
++  (void)thr_num;
++
+     FcPattern *pat;
+     FcPattern *match;
+     FcResult   result;
+@@ -86,6 +89,9 @@ run_test_in_thread (void *arg)
+ int
+ main (int argc, char **argv)
+ {
++  (void)argc;
++  (void)argv;
++
+     pthread_t        threads[NTHR];
+     struct thr_arg_s thr_args[NTHR];
+     int              i, j;

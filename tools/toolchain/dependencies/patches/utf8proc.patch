@@ -1,0 +1,13 @@
+diff --git a/test/fuzzer.c b/test/fuzzer.c
+index 1c216ef..c21b04d 100644
+--- a/test/fuzzer.c
++++ b/test/fuzzer.c
+@@ -17,7 +17,7 @@ int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size)
+     utf8proc_uint8_t *str = NULL;
+     size_t len = strlen((const char*)data);
+ 
+-    while(bytes != len)
++    while((size_t)bytes != len)
+     {
+         ret = utf8proc_iterate(ptr, -1, &c);
+ 

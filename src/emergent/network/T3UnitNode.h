@@ -77,7 +77,7 @@ public:
 protected:
   float                 spacing;                      // unit spacing
   float                 disp_scale;                   // overall scaling
-  void                  setDefaultCaptionTransform(); // override, sets text justif and transform for 3D
+  void                  setDefaultCaptionTransform() override; // sets text justif and transform for 3D
   virtual void  setAppearance_impl(NetView* nv, float act, const iColor& color,
                                    float max_z, bool act_invalid);
   // act is -1:1; max_z is net->max_size.z; trans is transparency; act_invalid true for nan/inf -- act has been set to 0.0f

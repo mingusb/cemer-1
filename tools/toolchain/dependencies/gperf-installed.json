@@ -1,0 +1,203 @@
+{
+  "name": "gperf",
+  "version": "GNU gperf 3.3",
+  "source": {
+    "url": "https://git.savannah.gnu.org/git/gperf.git",
+    "commit": "38ddb4c4e4c1f349af5a8c5c534271c119c0f5ed"
+  },
+  "gnulib": {
+    "url": "https://git.savannah.gnu.org/git/gnulib.git",
+    "commit": "0b46adb38251519e5c0a3020e31b02cc31e967cc"
+  },
+  "patch": "patches/gperf.patch",
+  "status": "installed_binary_reproduced_by_clean_fresh_build_and_upstream_tests",
+  "environment": {
+    "CC": "/usr/lib/llvm-24/bin/clang",
+    "CXX": "/usr/lib/llvm-24/bin/clang++"
+  },
+  "configure": [
+    "configure",
+    "--prefix={prefix}"
+  ],
+  "configure_flags": {
+    "CFLAGS": "-O2",
+    "CXXFLAGS": "-O2 -stdlib=libc++",
+    "LDFLAGS": "-fuse-ld=lld"
+  },
+  "build_flags": {
+    "CFLAGS": "-O2 -Wall -Werror",
+    "CXXFLAGS": "-O2 -stdlib=libc++ -Wall -Wextra -Werror -Woverloaded-virtual",
+    "GL_CFLAG_GNULIB_WARNINGS": "-Wimplicit-fallthrough",
+    "GL_CFLAG_ALLOW_WARNINGS": ""
+  },
+  "build_targets": [
+    "lib all",
+    "src all"
+  ],
+  "test_targets": [
+    "tests check"
+  ],
+  "notes": [
+    "Bootstrap autogen.sh with GNULIB_SRCDIR at the pinned gnulib source.",
+    "PDF documentation requires TeX; the application build uses the generator executable.",
+    "A fresh out-of-tree build removes upstream gnulib suppression flags through make variable overrides while retaining its positive -Wimplicit-fallthrough plus -Wall -Werror.",
+    "All 13 C++ translation units (12 generator files and lib/hash.cc) use Clang24, libc++, -Wall -Wextra -Werror -Woverloaded-virtual; no diagnostic-suppression flags occur in actual C or C++ source/test compiler invocations.",
+    "Fresh generator SHA256 exactly matches the installed executable, so no installed file replacement was necessary. This is a build generator, separate from the application GNU libstdc++ ABI.",
+    "The first fresh verification attempt at gperf-final passed tests but exposed gnulib C suppression flags; it is retained and superseded by gperf-final-strict."
+  ],
+  "evidence": {
+    "build": "/home/b/toolchains/build-deps/gperf/build2.log",
+    "test": "/home/b/toolchains/build-deps/gperf/test.log",
+    "install": "/home/b/toolchains/build-deps/gperf/install.log",
+    "fresh_configure": "/home/b/toolchains/build-deps/gperf-final-strict/configure.log",
+    "fresh_library_build": "/home/b/toolchains/build-deps/gperf-final-strict/build-lib.log",
+    "fresh_cpp_build": "/home/b/toolchains/build-deps/gperf-final-strict/build-src.log",
+    "fresh_test": "/home/b/toolchains/build-deps/gperf-final-strict/test.log",
+    "compile_audit": "/home/b/toolchains/build-deps/gperf-final-strict/compile-audit.json"
+  },
+  "historical_status": "installed; full upstream test groups passed; fresh complete compile audit pending",
+  "historical_evidence": {
+    "build": "/home/b/toolchains/build-deps/gperf/build2.log",
+    "test": "/home/b/toolchains/build-deps/gperf/test.log",
+    "install": "/home/b/toolchains/build-deps/gperf/install.log",
+    "fresh_configure": "/home/b/toolchains/build-deps/gperf-final-strict/configure.log",
+    "fresh_library_build": "/home/b/toolchains/build-deps/gperf-final-strict/build-lib.log",
+    "fresh_cpp_build": "/home/b/toolchains/build-deps/gperf-final-strict/build-src.log",
+    "fresh_test": "/home/b/toolchains/build-deps/gperf-final-strict/test.log",
+    "compile_audit": "/home/b/toolchains/build-deps/gperf-final-strict/compile-audit.json"
+  },
+  "fresh_validation": {
+    "status": "PASS",
+    "compiler_command_count": 46,
+    "cpp_compiler_command_count": 14,
+    "cpp_object_count": 13,
+    "cpp_object_sources": [
+      "/home/b/toolchains/sources/gperf/lib/hash.cc",
+      "/home/b/toolchains/sources/gperf/src/arraylist.cc",
+      "/home/b/toolchains/sources/gperf/src/bool-array.cc",
+      "/home/b/toolchains/sources/gperf/src/hash-table.cc",
+      "/home/b/toolchains/sources/gperf/src/input.cc",
+      "/home/b/toolchains/sources/gperf/src/keyword-list.cc",
+      "/home/b/toolchains/sources/gperf/src/keyword.cc",
+      "/home/b/toolchains/sources/gperf/src/main.cc",
+      "/home/b/toolchains/sources/gperf/src/options.cc",
+      "/home/b/toolchains/sources/gperf/src/output.cc",
+      "/home/b/toolchains/sources/gperf/src/positions.cc",
+      "/home/b/toolchains/sources/gperf/src/search.cc",
+      "/home/b/toolchains/sources/gperf/src/version.cc"
+    ],
+    "suppression_commands": [],
+    "diagnostics": [],
+    "cpp_missing_flags": [],
+    "test_result": "PASS: all nine upstream make check groups; no disabled groups or accepted baselines",
+    "test_groups": [
+      "check-c",
+      "check-ada",
+      "check-modula3",
+      "check-pascal",
+      "check-lang-utf8",
+      "check-lang-ucs2",
+      "check-smtp",
+      "check-test",
+      "check-large"
+    ],
+    "installed_binary_reproduced": true,
+    "binary_sha256": "27d9e65507de876c58ec14e98141494c348f3d2a636325a3cf614e320bc2c457",
+    "built_binary": "/home/b/toolchains/build-deps/gperf-final-strict/src/gperf",
+    "installed_binary": "/home/b/toolchains/deps/bin/gperf",
+    "logs": {
+      "configure.log": {
+        "path": "/home/b/toolchains/build-deps/gperf-final-strict/configure.log",
+        "sha256": "dcebb4b35ed37ca890e8e4782c2802fbfe4418513aed3f210308c6a2081f5e92"
+      },
+      "build-lib.log": {
+        "path": "/home/b/toolchains/build-deps/gperf-final-strict/build-lib.log",
+        "sha256": "6e3c332f6bfb79226a80f51a22284189cde5844d428dd4d1ba92e8b2b1947d28"
+      },
+      "build-src.log": {
+        "path": "/home/b/toolchains/build-deps/gperf-final-strict/build-src.log",
+        "sha256": "010b9a9b7cfadf78120b854f97d7d14cc9fcd7cbf313ef63922a2cab7d6c57e0"
+      },
+      "test.log": {
+        "path": "/home/b/toolchains/build-deps/gperf-final-strict/test.log",
+        "sha256": "c7154843d6fe3856503b8883e6776699a6ea30ab322b16fdc7378ed6d254f40d"
+      }
+    },
+    "boundary": "Installed prefix and source were not modified. Earlier historical compile invocations remain retained separately; this fresh strict build reproduces the installed bytes.",
+    "recipe": {
+      "source": {
+        "url": "https://git.savannah.gnu.org/git/gperf.git",
+        "commit": "38ddb4c4e4c1f349af5a8c5c534271c119c0f5ed"
+      },
+      "gnulib": {
+        "url": "https://git.savannah.gnu.org/git/gnulib.git",
+        "commit": "0b46adb38251519e5c0a3020e31b02cc31e967cc"
+      },
+      "patch_sha256": "148f9f660506ddc9cdba8f0c8d0e704be946a0ee3ebaa7d2f40ab0b3e55c27e7",
+      "environment": {
+        "CC": "/usr/lib/llvm-24/bin/clang",
+        "CXX": "/usr/lib/llvm-24/bin/clang++",
+        "CFLAGS": "-O2",
+        "CXXFLAGS": "-O2 -stdlib=libc++",
+        "LDFLAGS": "-fuse-ld=lld"
+      },
+      "commands": [
+        {
+          "stage": "configure",
+          "argv": [
+            "/home/b/toolchains/sources/gperf/configure",
+            "--prefix=/home/b/toolchains/deps"
+          ],
+          "cwd": "/home/b/toolchains/build-deps/gperf-final-strict"
+        },
+        {
+          "stage": "build-lib",
+          "argv": [
+            "make",
+            "-C",
+            "/home/b/toolchains/build-deps/gperf-final-strict/lib",
+            "-j2",
+            "all",
+            "GL_CFLAG_GNULIB_WARNINGS=-Wimplicit-fallthrough",
+            "GL_CFLAG_ALLOW_WARNINGS=",
+            "CFLAGS=-O2 -Wall -Werror",
+            "CXXFLAGS=-O2 -stdlib=libc++ -Wall -Wextra -Werror -Woverloaded-virtual"
+          ],
+          "cwd": "/home/b/toolchains/build-deps/gperf-final-strict"
+        },
+        {
+          "stage": "build-src",
+          "argv": [
+            "make",
+            "-C",
+            "/home/b/toolchains/build-deps/gperf-final-strict/src",
+            "-j2",
+            "all",
+            "GL_CFLAG_GNULIB_WARNINGS=-Wimplicit-fallthrough",
+            "GL_CFLAG_ALLOW_WARNINGS=",
+            "CFLAGS=-O2 -Wall -Werror",
+            "CXXFLAGS=-O2 -stdlib=libc++ -Wall -Wextra -Werror -Woverloaded-virtual"
+          ],
+          "cwd": "/home/b/toolchains/build-deps/gperf-final-strict"
+        },
+        {
+          "stage": "test",
+          "argv": [
+            "make",
+            "-C",
+            "/home/b/toolchains/build-deps/gperf-final-strict/tests",
+            "-j2",
+            "check",
+            "GL_CFLAG_GNULIB_WARNINGS=-Wimplicit-fallthrough",
+            "GL_CFLAG_ALLOW_WARNINGS=",
+            "CFLAGS=-O2 -Wall -Werror",
+            "CXXFLAGS=-O2 -stdlib=libc++ -Wall -Wextra -Werror -Woverloaded-virtual"
+          ],
+          "cwd": "/home/b/toolchains/build-deps/gperf-final-strict"
+        }
+      ],
+      "installation": "No installed prefix writes; verification build only."
+    },
+    "validated_at": "2026-09-13T23:22:51.913921+00:00"
+  }
+}

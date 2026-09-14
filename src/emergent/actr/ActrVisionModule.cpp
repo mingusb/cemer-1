@@ -48,7 +48,7 @@ void ActrVisionModule::Initialize() {
 }
 
 void ActrVisionModule::InitModule() {
-  if((bool)buffer) return;
+  if((bool)buffer && (bool)location_buffer) return;
   if(!Model()) return;
   ActrModel* mod = Model();
   bool made_new;

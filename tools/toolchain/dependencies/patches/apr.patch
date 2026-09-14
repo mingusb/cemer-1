@@ -1,0 +1,1447 @@
+diff --git a/atomic/unix/builtins.c b/atomic/unix/builtins.c
+index 9a45dfb..58fb18e 100644
+--- a/atomic/unix/builtins.c
++++ b/atomic/unix/builtins.c
+@@ -27,6 +27,7 @@
+ 
+ APR_DECLARE(apr_status_t) apr_atomic_init(apr_pool_t *p)
+ {
++    (void)p;
+ #if defined (USE_ATOMICS_GENERIC64)
+     return apr__atomic_generic64_init(p);
+ #else
+diff --git a/buckets/apr_brigade.c b/buckets/apr_brigade.c
+index 18fc989..accb1df 100644
+--- a/buckets/apr_brigade.c
++++ b/buckets/apr_brigade.c
+@@ -434,7 +434,7 @@ APR_DECLARE(apr_status_t) apr_brigade_split_boundary(apr_bucket_brigade *bbOut,
+         return APR_EINVAL;
+     }
+ 
+-    if (APR_BUCKETS_STRING == boundary_len) {
++    if ((apr_size_t)APR_BUCKETS_STRING == boundary_len) {
+         boundary_len = strlen(boundary);
+     }
+ 
+diff --git a/buckets/apr_buckets.c b/buckets/apr_buckets.c
+index 0c2caa3..703a857 100644
+--- a/buckets/apr_buckets.c
++++ b/buckets/apr_buckets.c
+@@ -19,28 +19,37 @@
+ APR_DECLARE_NONSTD(apr_status_t) apr_bucket_setaside_noop(apr_bucket *data,
+                                                           apr_pool_t *pool)
+ {
++    (void)data;
++    (void)pool;
+     return APR_SUCCESS;
+ }
+ 
+ APR_DECLARE_NONSTD(apr_status_t) apr_bucket_setaside_notimpl(apr_bucket *data,
+                                                              apr_pool_t *pool)
+ {
++    (void)data;
++    (void)pool;
+     return APR_ENOTIMPL;
+ }
+ 
+ APR_DECLARE_NONSTD(apr_status_t) apr_bucket_split_notimpl(apr_bucket *data,
+                                                           apr_size_t point)
+ {
++    (void)data;
++    (void)point;
+     return APR_ENOTIMPL;
+ }
+ 
+ APR_DECLARE_NONSTD(apr_status_t) apr_bucket_copy_notimpl(apr_bucket *e,
+                                                          apr_bucket **c)
+ {
++    (void)c;
++    (void)e;
+     return APR_ENOTIMPL;
+ }
+ 
+ APR_DECLARE_NONSTD(void) apr_bucket_destroy_noop(void *data)
+ {
++    (void)data;
+     return;
+ }
+diff --git a/buckets/apr_buckets_eos.c b/buckets/apr_buckets_eos.c
+index 561cab6..c2ff6a0 100644
+--- a/buckets/apr_buckets_eos.c
++++ b/buckets/apr_buckets_eos.c
+@@ -19,6 +19,8 @@
+ static apr_status_t eos_bucket_read(apr_bucket *b, const char **str,
+                                     apr_size_t *len, apr_read_type_e block)
+ {
++    (void)b;
++    (void)block;
+     *str = NULL;
+     *len = 0;
+     return APR_SUCCESS;
+diff --git a/buckets/apr_buckets_flush.c b/buckets/apr_buckets_flush.c
+index 0d5645a..e807342 100644
+--- a/buckets/apr_buckets_flush.c
++++ b/buckets/apr_buckets_flush.c
+@@ -19,6 +19,8 @@
+ static apr_status_t flush_bucket_read(apr_bucket *b, const char **str,
+                                       apr_size_t *len, apr_read_type_e block)
+ {
++    (void)b;
++    (void)block;
+     *str = NULL;
+     *len = 0;
+     return APR_SUCCESS;
+diff --git a/buckets/apr_buckets_heap.c b/buckets/apr_buckets_heap.c
+index 81e0cfa..1d12819 100644
+--- a/buckets/apr_buckets_heap.c
++++ b/buckets/apr_buckets_heap.c
+@@ -21,6 +21,7 @@
+ static apr_status_t heap_bucket_read(apr_bucket *b, const char **str,
+                                      apr_size_t *len, apr_read_type_e block)
+ {
++    (void)block;
+     apr_bucket_heap *h = b->data;
+ 
+     *str = h->base + b->start;
+diff --git a/buckets/apr_buckets_mmap.c b/buckets/apr_buckets_mmap.c
+index 9a111a7..4282e10 100644
+--- a/buckets/apr_buckets_mmap.c
++++ b/buckets/apr_buckets_mmap.c
+@@ -21,6 +21,7 @@
+ static apr_status_t mmap_bucket_read(apr_bucket *b, const char **str,
+                                      apr_size_t *length, apr_read_type_e block)
+ {
++    (void)block;
+     apr_bucket_mmap *m = b->data;
+     apr_status_t ok;
+     void *addr;
+diff --git a/buckets/apr_buckets_pool.c b/buckets/apr_buckets_pool.c
+index 2d68da5..d4b7d3d 100644
+--- a/buckets/apr_buckets_pool.c
++++ b/buckets/apr_buckets_pool.c
+@@ -45,6 +45,7 @@ static apr_status_t pool_bucket_cleanup(void *data)
+ static apr_status_t pool_bucket_read(apr_bucket *b, const char **str,
+                                      apr_size_t *len, apr_read_type_e block)
+ {
++    (void)block;
+     apr_bucket_pool *p = b->data;
+     const char *base = p->base;
+ 
+diff --git a/buckets/apr_buckets_simple.c b/buckets/apr_buckets_simple.c
+index fbe7981..c43f782 100644
+--- a/buckets/apr_buckets_simple.c
++++ b/buckets/apr_buckets_simple.c
+@@ -48,6 +48,7 @@ APR_DECLARE_NONSTD(apr_status_t) apr_bucket_simple_split(apr_bucket *a,
+ static apr_status_t simple_bucket_read(apr_bucket *b, const char **str,
+                                        apr_size_t *len, apr_read_type_e block)
+ {
++    (void)block;
+     *str = (char *)b->data + b->start;
+     *len = b->length;
+     return APR_SUCCESS;
+@@ -88,6 +89,7 @@ APR_DECLARE(apr_bucket *) apr_bucket_immortal_create(const char *buf,
+  */
+ static apr_status_t transient_bucket_setaside(apr_bucket *b, apr_pool_t *pool)
+ {
++    (void)pool;
+     b = apr_bucket_heap_make(b, (char *)b->data + b->start, b->length, NULL);
+     if (b == NULL) {
+         return APR_ENOMEM;
+diff --git a/dbd/apr_dbd.c b/dbd/apr_dbd.c
+index 39e3ad1..0a614b8 100644
+--- a/dbd/apr_dbd.c
++++ b/dbd/apr_dbd.c
+@@ -77,6 +77,7 @@ APR_DECLARE(apr_status_t) apr_dbd_mutex_unlock(void) {
+ 
+ static apr_status_t apr_dbd_term(void *ptr)
+ {
++    (void)ptr;
+     /* set drivers to NULL so init can work again */
+     drivers = NULL;
+ 
+@@ -480,6 +481,7 @@ APR_DECLARE(int) apr_dbd_pquery(const apr_dbd_driver_t *driver,
+                                 apr_dbd_prepared_t *statement,
+                                 int nargs, const char **args)
+ {
++    (void)nargs;
+     return driver->pquery(pool,handle,nrows,statement,args);
+ }
+ 
+@@ -489,6 +491,7 @@ APR_DECLARE(int) apr_dbd_pselect(const apr_dbd_driver_t *driver,
+                                  apr_dbd_prepared_t *statement, int random,
+                                  int nargs, const char **args)
+ {
++    (void)nargs;
+     return driver->pselect(pool,handle,res,statement,random,args);
+ }
+ 
+diff --git a/dbd/apr_dbd_sqlite3.c b/dbd/apr_dbd_sqlite3.c
+index bbdc9f7..1034a7a 100644
+--- a/dbd/apr_dbd_sqlite3.c
++++ b/dbd/apr_dbd_sqlite3.c
+@@ -87,6 +87,7 @@ static int dbd_sqlite3_select_internal(apr_pool_t *pool,
+                                        apr_dbd_results_t **results,
+                                        sqlite3_stmt *stmt, int seek)
+ {
++    (void)sql;
+     int ret, retry_count = 0, column_count;
+     size_t i, num_tuples = 0;
+     int increment = 0;
+@@ -216,6 +217,7 @@ static const char *dbd_sqlite3_get_name(const apr_dbd_results_t *res, int n)
+ static int dbd_sqlite3_get_row(apr_pool_t *pool, apr_dbd_results_t *res,
+                                apr_dbd_row_t **rowp, int rownum)
+ {
++    (void)pool;
+     int i = 0;
+ 
+     if (rownum == -1) {
+@@ -333,6 +335,7 @@ static apr_status_t dbd_sqlite3_datum_get(const apr_dbd_row_t *row, int n,
+ 
+ static const char *dbd_sqlite3_error(apr_dbd_t *sql, int n)
+ {
++    (void)n;
+     return sqlite3_errmsg(sql->conn);
+ }
+ 
+@@ -403,6 +406,7 @@ static apr_status_t free_mem(void *data)
+ static const char *dbd_sqlite3_escape(apr_pool_t *pool, const char *arg,
+                                       apr_dbd_t *sql)
+ {
++    (void)sql;
+     char *ret = sqlite3_mprintf("%q", arg);
+     apr_pool_cleanup_register(pool, ret, free_mem,
+                               apr_pool_cleanup_null);
+@@ -414,6 +418,8 @@ static int dbd_sqlite3_prepare(apr_pool_t *pool, apr_dbd_t *sql,
+                                int nargs, int nvals, apr_dbd_type_e *types,
+                                apr_dbd_prepared_t **statement)
+ {
++    (void)label;
++    (void)pool;
+     sqlite3_stmt *stmt;
+     const char *tail = NULL;
+     int ret;
+@@ -482,6 +488,7 @@ static int dbd_sqlite3_pquery(apr_pool_t *pool, apr_dbd_t *sql,
+                               int *nrows, apr_dbd_prepared_t *statement,
+                               const char **values)
+ {
++    (void)pool;
+     sqlite3_stmt *stmt = statement->stmt;
+     int ret = -1;
+ 
+@@ -662,6 +669,7 @@ static int dbd_sqlite3_pbquery(apr_pool_t * pool, apr_dbd_t * sql,
+                                int *nrows, apr_dbd_prepared_t * statement,
+                                const void **values)
+ {
++    (void)pool;
+     sqlite3_stmt *stmt = statement->stmt;
+     int ret = -1;
+ 
+@@ -855,12 +863,16 @@ static apr_status_t dbd_sqlite3_close(apr_dbd_t *handle)
+ static apr_status_t dbd_sqlite3_check_conn(apr_pool_t *pool,
+                                            apr_dbd_t *handle)
+ {
++    (void)pool;
+     return (handle->conn != NULL) ? APR_SUCCESS : APR_EGENERAL;
+ }
+ 
+ static int dbd_sqlite3_select_db(apr_pool_t *pool, apr_dbd_t *handle,
+                                  const char *name)
+ {
++    (void)handle;
++    (void)name;
++    (void)pool;
+     return APR_ENOTIMPL;
+ }
+ 
+diff --git a/dbm/apr_dbm.c b/dbm/apr_dbm.c
+index a93e8fc..74babc3 100644
+--- a/dbm/apr_dbm.c
++++ b/dbm/apr_dbm.c
+@@ -69,6 +69,7 @@ static apr_uint32_t initialised = 0, in_init = 1;
+ 
+ static apr_status_t dbm_term(void *ptr)
+ {
++    (void)ptr;
+     /* set drivers to NULL so init can work again */
+     drivers = NULL;
+ 
+diff --git a/dbm/apr_dbm_sdbm.c b/dbm/apr_dbm_sdbm.c
+index 1e7c0b4..dbf1606 100644
+--- a/dbm/apr_dbm_sdbm.c
++++ b/dbm/apr_dbm_sdbm.c
+@@ -200,6 +200,8 @@ static apr_status_t vt_sdbm_nextkey(apr_dbm_t *dbm, apr_datum_t *pkey)
+ 
+ static void vt_sdbm_freedatum(apr_dbm_t *dbm, apr_datum_t data)
+ {
++    (void)data;
++    (void)dbm;
+ }
+ 
+ static void vt_sdbm_usednames(apr_pool_t *pool, const char *pathname,
+diff --git a/dbm/sdbm/sdbm_pair.c b/dbm/sdbm/sdbm_pair.c
+index 70bcdd1..b5a29dc 100644
+--- a/dbm/sdbm/sdbm_pair.c
++++ b/dbm/sdbm/sdbm_pair.c
+@@ -281,7 +281,7 @@ chkpage(char *pag)
+ 	register int off;
+ 	register short *ino = (short *) pag;
+ 
+-	if ((n = ino[0]) < 0 || n > PBLKSIZ / sizeof(short))
++	if ((n = ino[0]) < 0 || (size_t)n > PBLKSIZ / sizeof(short))
+ 		return 0;
+ 
+ 	if (n > 0) {
+diff --git a/file_io/unix/dir.c b/file_io/unix/dir.c
+index b6ef3d4..ebed8ce 100644
+--- a/file_io/unix/dir.c
++++ b/file_io/unix/dir.c
+@@ -218,7 +218,7 @@ apr_status_t apr_dir_read(apr_finfo_t *finfo, apr_int32_t wanted,
+     }
+ #endif
+ #ifdef DIRENT_INODE
+-    if (thedir->entry->DIRENT_INODE && thedir->entry->DIRENT_INODE != -1) {
++    if (thedir->entry->DIRENT_INODE && thedir->entry->DIRENT_INODE != (apr_ino_t)-1) {
+ #ifdef APR_USE_READDIR64_R
+         /* If readdir64_r is used, check for the overflow case of trying
+          * to fit a 64-bit integer into a 32-bit integer. */
+@@ -272,7 +272,7 @@ apr_status_t apr_dir_read(apr_finfo_t *finfo, apr_int32_t wanted,
+         }
+ #endif
+ #ifdef DIRENT_INODE
+-        if (thedir->entry->DIRENT_INODE && thedir->entry->DIRENT_INODE != -1) {
++        if (thedir->entry->DIRENT_INODE && thedir->entry->DIRENT_INODE != (apr_ino_t)-1) {
+             finfo->inode = thedir->entry->DIRENT_INODE;
+             finfo->valid |= APR_FINFO_INODE;
+         }
+@@ -297,6 +297,7 @@ apr_status_t apr_dir_rewind(apr_dir_t *thedir)
+ apr_status_t apr_dir_make(const char *path, apr_fileperms_t perm,
+                           apr_pool_t *pool)
+ {
++    (void)pool;
+     mode_t mode = apr_unix_perms2mode(perm);
+ 
+     if (mkdir(path, mode) == 0) {
+@@ -342,6 +343,7 @@ apr_status_t apr_dir_make_recursive(const char *path, apr_fileperms_t perm,
+ 
+ apr_status_t apr_dir_remove(const char *path, apr_pool_t *pool)
+ {
++    (void)pool;
+     if (rmdir(path) == 0) {
+         return APR_SUCCESS;
+     }
+diff --git a/file_io/unix/filepath.c b/file_io/unix/filepath.c
+index 377dcd2..4e96285 100644
+--- a/file_io/unix/filepath.c
++++ b/file_io/unix/filepath.c
+@@ -37,6 +37,7 @@
+ APR_DECLARE(apr_status_t) apr_filepath_get(char **defpath, apr_int32_t flags,
+                                            apr_pool_t *p)
+ {
++    (void)flags;
+     char path[APR_PATH_MAX];
+ 
+     if (!getcwd(path, sizeof(path))) {
+@@ -55,6 +56,7 @@ APR_DECLARE(apr_status_t) apr_filepath_get(char **defpath, apr_int32_t flags,
+  */
+ APR_DECLARE(apr_status_t) apr_filepath_set(const char *path, apr_pool_t *p)
+ {
++    (void)p;
+     if (chdir(path) != 0)
+         return errno;
+ 
+@@ -66,6 +68,7 @@ APR_DECLARE(apr_status_t) apr_filepath_root(const char **rootpath,
+                                             apr_int32_t flags,
+                                             apr_pool_t *p)
+ {
++    (void)flags;
+     if (**inpath == '/') {
+         *rootpath = apr_pstrdup(p, "/");
+         do {
+@@ -291,6 +294,7 @@ APR_DECLARE(apr_status_t) apr_filepath_merge(char **newpath,
+ 
+ APR_DECLARE(apr_status_t) apr_filepath_encoding(int *style, apr_pool_t *p)
+ {
++    (void)p;
+ #if defined(DARWIN)
+     *style = APR_FILEPATH_ENCODING_UTF8;
+ #else
+diff --git a/file_io/unix/filestat.c b/file_io/unix/filestat.c
+index 604d95b..6496ac3 100644
+--- a/file_io/unix/filestat.c
++++ b/file_io/unix/filestat.c
+@@ -70,6 +70,7 @@ static apr_filetype_e filetype_from_mode(mode_t mode)
+ static void fill_out_finfo(apr_finfo_t *finfo, struct_stat *info,
+                            apr_int32_t wanted)
+ {
++    (void)wanted;
+     finfo->valid = APR_FINFO_MIN | APR_FINFO_IDENT | APR_FINFO_NLINK
+                  | APR_FINFO_OWNER | APR_FINFO_PROT;
+     finfo->protection = apr_unix_mode2perms(info->st_mode);
+diff --git a/file_io/unix/open.c b/file_io/unix/open.c
+index f697a1e..56d824b 100644
+--- a/file_io/unix/open.c
++++ b/file_io/unix/open.c
+@@ -277,6 +277,7 @@ APR_DECLARE(apr_status_t) apr_file_close(apr_file_t *file)
+ 
+ APR_DECLARE(apr_status_t) apr_file_remove(const char *path, apr_pool_t *pool)
+ {
++    (void)pool;
+     if (unlink(path) == 0) {
+         return APR_SUCCESS;
+     }
+@@ -289,6 +290,7 @@ APR_DECLARE(apr_status_t) apr_file_rename(const char *from_path,
+                                           const char *to_path,
+                                           apr_pool_t *p)
+ {
++    (void)p;
+     if (rename(from_path, to_path) != 0) {
+         return errno;
+     }
+diff --git a/file_io/unix/pipe.c b/file_io/unix/pipe.c
+index 45a8168..aa93c5c 100644
+--- a/file_io/unix/pipe.c
++++ b/file_io/unix/pipe.c
+@@ -245,6 +245,7 @@ APR_DECLARE(apr_status_t) apr_file_pipe_create_pools(apr_file_t **in,
+ APR_DECLARE(apr_status_t) apr_file_namedpipe_create(const char *filename,
+                                                     apr_fileperms_t perm, apr_pool_t *pool)
+ {
++    (void)pool;
+     mode_t mode = apr_unix_perms2mode(perm);
+ 
+     if (mkfifo(filename, mode) == -1) {
+diff --git a/file_io/unix/readwrite.c b/file_io/unix/readwrite.c
+index dbb549f..dbe4999 100644
+--- a/file_io/unix/readwrite.c
++++ b/file_io/unix/readwrite.c
+@@ -234,8 +234,8 @@ APR_DECLARE(apr_status_t) apr_file_write(apr_file_t *thefile, const void *buf, a
+ 
+     if (thefile->buffered) {
+         char *pos = (char *)buf;
+-        int blocksize;
+-        int size = *nbytes;
++        apr_size_t blocksize;
++        apr_size_t size = *nbytes;
+ 
+         file_lock(thefile);
+ 
+@@ -404,7 +404,8 @@ apr_status_t apr_file_flush_locked(apr_file_t *thefile)
+     apr_status_t rv = APR_SUCCESS;
+ 
+     if (thefile->direction == 1 && thefile->bufpos) {
+-        apr_ssize_t written = 0, ret;
++        apr_size_t written = 0;
++        apr_ssize_t ret;
+ 
+         do {
+             ret = write(thefile->filedes, thefile->buffer + written,
+diff --git a/file_io/unix/seek.c b/file_io/unix/seek.c
+index 2e97337..2a05d10 100644
+--- a/file_io/unix/seek.c
++++ b/file_io/unix/seek.c
+@@ -30,7 +30,7 @@ static apr_status_t setptr(apr_file_t *thefile, apr_off_t pos )
+     }
+ 
+     newbufpos = pos - (thefile->filePtr - thefile->dataRead);
+-    if (newbufpos >= 0 && newbufpos <= thefile->dataRead) {
++    if (newbufpos >= 0 && (apr_size_t)newbufpos <= thefile->dataRead) {
+         thefile->bufpos = newbufpos;
+         rv = APR_SUCCESS;
+     }
+@@ -108,7 +108,7 @@ apr_status_t apr_file_trunc(apr_file_t *fp, apr_off_t offset)
+                  * Figure out if and what needs to be flushed.
+                  */
+                 apr_off_t off = len - offset;
+-                if (off >= 0 && off <= fp->bufpos)
++                if (off >= 0 && (apr_size_t)off <= fp->bufpos)
+                     fp->bufpos = fp->bufpos - (size_t)off;
+                 else
+                     fp->bufpos = 0;
+diff --git a/file_io/unix/tempdir.c b/file_io/unix/tempdir.c
+index 3829179..2b46703 100644
+--- a/file_io/unix/tempdir.c
++++ b/file_io/unix/tempdir.c
+@@ -45,7 +45,7 @@ APR_DECLARE(apr_status_t) apr_temp_dir_get(const char **temp_dir,
+     const char *try_envs[] = { "TMPDIR", "TMP", "TEMP"};
+     const char *dir;
+     char *cwd;
+-    int i;
++    size_t i;
+ 
+     /* Our goal is to find a temporary directory suitable for writing
+        into.
+diff --git a/jose/apr_jose_decode.c b/jose/apr_jose_decode.c
+index af10e35..63a8715 100644
+--- a/jose/apr_jose_decode.c
++++ b/jose/apr_jose_decode.c
+@@ -43,6 +43,9 @@ apr_status_t apr_jose_decode_jwk(apr_jose_t **jose,
+         const char *typ, apr_bucket_brigade *bb, apr_jose_cb_t *cb,
+         int level, int flags, apr_pool_t *pool)
+ {
++    (void)cb;
++    (void)flags;
++    (void)typ;
+     apr_json_value_t *key;
+     apr_jose_text_t in;
+     apr_off_t offset;
+@@ -79,6 +82,9 @@ apr_status_t apr_jose_decode_jwks(apr_jose_t **jose,
+         const char *typ, apr_bucket_brigade *bb, apr_jose_cb_t *cb,
+         int level, int flags, apr_pool_t *pool)
+ {
++    (void)cb;
++    (void)flags;
++    (void)typ;
+     apr_json_value_t *keys;
+     apr_jose_text_t in;
+     apr_off_t offset;
+@@ -121,6 +127,9 @@ apr_status_t apr_jose_decode_jwt(apr_jose_t **jose,
+         const char *typ, apr_bucket_brigade *bb, apr_jose_cb_t *cb,
+         int level, int flags, apr_pool_t *pool)
+ {
++    (void)cb;
++    (void)flags;
++    (void)typ;
+     apr_json_value_t *claims;
+     apr_jose_text_t in;
+     apr_off_t offset;
+@@ -157,6 +166,9 @@ apr_status_t apr_jose_decode_data(apr_jose_t **jose, const char *typ,
+         apr_bucket_brigade *brigade, apr_jose_cb_t *cb, int level, int flags,
+         apr_pool_t *pool)
+ {
++    (void)cb;
++    (void)flags;
++    (void)level;
+     apr_jose_text_t in;
+     apr_status_t status;
+ 
+@@ -181,6 +193,9 @@ apr_status_t apr_jose_decode_jws_signature(apr_jose_t **jose,
+         apr_json_value_t *uh, apr_jose_cb_t *cb, int level, int *flags,
+         apr_pool_t *pool, apr_bucket_brigade *bb)
+ {
++    (void)cty;
++    (void)pl64;
++    (void)typ;
+     const char *phs;
+     apr_size_t phlen;
+     apr_off_t offset;
+@@ -282,6 +297,9 @@ apr_status_t apr_jose_decode_jwe_recipient(apr_jose_t **jose,
+         apr_jose_text_t *ph64, apr_jose_text_t *aad64, apr_jose_cb_t *cb,
+         int level, int *dflags, apr_pool_t *pool)
+ {
++    (void)cty;
++    (void)level;
++    (void)typ;
+     apr_json_value_t *header;
+     apr_status_t status;
+ 
+@@ -400,6 +418,7 @@ apr_status_t apr_jose_decode_compact_jws(apr_jose_t **jose,
+         apr_jose_text_t *in, apr_jose_text_t *ph64, apr_jose_cb_t *cb,
+         int level, int flags, apr_pool_t *pool, apr_bucket_brigade *bb)
+ {
++    (void)flags;
+     apr_jose_jws_t *jws;
+     apr_jose_text_t sig64;
+     apr_jose_text_t pl64;
+@@ -501,6 +520,8 @@ apr_status_t apr_jose_decode_compact_jwe(apr_jose_t **jose, const char *left,
+         apr_jose_cb_t *cb, int level, int flags, apr_pool_t *pool,
+         apr_bucket_brigade *bb)
+ {
++    (void)enc;
++    (void)flags;
+     const char *dot;
+     apr_jose_jwe_t *jwe;
+     apr_jose_text_t aad64;
+diff --git a/locks/unix/proc_mutex.c b/locks/unix/proc_mutex.c
+index 88ca37c..039aac2 100644
+--- a/locks/unix/proc_mutex.c
++++ b/locks/unix/proc_mutex.c
+@@ -36,6 +36,9 @@ static apr_status_t proc_mutex_no_child_init(apr_proc_mutex_t **mutex,
+                                              apr_pool_t *cont,
+                                              const char *fname)
+ {
++    (void)cont;
++    (void)fname;
++    (void)mutex;
+     return APR_SUCCESS;
+ }
+ #endif
+@@ -46,6 +49,10 @@ static apr_status_t proc_mutex_no_perms_set(apr_proc_mutex_t *mutex,
+                                             apr_uid_t uid,
+                                             apr_gid_t gid)
+ {
++    (void)gid;
++    (void)mutex;
++    (void)perms;
++    (void)uid;
+     return APR_ENOTIMPL;
+ }
+ #endif
+@@ -142,7 +149,7 @@ static apr_status_t proc_mutex_posix_create(apr_proc_mutex_t *new_mutex,
+         int i;
+         apr_md5(digest, fname, strlen(fname));
+         *p++ = '/';     /* must start with /, right? */
+-        for (i = 0; i < sizeof(digest); i++) {
++        for (i = 0; i < (int)sizeof(digest); i++) {
+             *p++ = hex[digest[i] >> 4];
+             *p++ = hex[digest[i] & 0xF];
+         }
+@@ -316,6 +323,7 @@ static apr_status_t proc_mutex_sysv_cleanup(void *mutex_)
+ static apr_status_t proc_mutex_sysv_create(apr_proc_mutex_t *new_mutex,
+                                            const char *fname)
+ {
++    (void)fname;
+     union semun ick;
+     apr_status_t rv;
+ 
+@@ -580,6 +588,7 @@ static apr_status_t proc_mutex_pthread_cleanup(void *mutex_)
+ static apr_status_t proc_mutex_pthread_create(apr_proc_mutex_t *new_mutex,
+                                               const char *fname)
+ {
++    (void)fname;
+     apr_status_t rv;
+     int fd;
+     pthread_mutexattr_t mattr;
+@@ -689,6 +698,7 @@ static apr_status_t proc_mutex_pthread_child_init(apr_proc_mutex_t **mutex,
+                                                   apr_pool_t *pool,
+                                                   const char *fname)
+ {
++    (void)fname;
+     (*mutex)->curr_locked = 0;
+     if (proc_pthread_mutex_inc(*mutex)) {
+         apr_pool_cleanup_register(pool, *mutex, proc_pthread_mutex_unref,
+diff --git a/memcache/apr_memcache.c b/memcache/apr_memcache.c
+index 0ce831e..4355df1 100644
+--- a/memcache/apr_memcache.c
++++ b/memcache/apr_memcache.c
+@@ -111,6 +111,7 @@ struct cache_server_query_t {
+ 
+ static apr_status_t make_server_dead(apr_memcache_t *mc, apr_memcache_server_t *ms)
+ {
++    (void)mc;
+ #if APR_HAS_THREADS
+     apr_thread_mutex_lock(ms->lock);
+ #endif
+@@ -124,6 +125,7 @@ static apr_status_t make_server_dead(apr_memcache_t *mc, apr_memcache_server_t *
+ 
+ static apr_status_t make_server_live(apr_memcache_t *mc, apr_memcache_server_t *ms)
+ {
++    (void)mc;
+     ms->status = APR_MC_SERVER_LIVE;
+     return APR_SUCCESS;
+ }
+@@ -160,6 +162,7 @@ APR_DECLARE(apr_memcache_server_t *)
+ apr_memcache_find_server_hash_default(void *baton, apr_memcache_t *mc,
+                                       const apr_uint32_t hash)
+ {
++    (void)baton;
+     apr_memcache_server_t *ms = NULL;
+     apr_uint32_t h = hash ? hash : 1;
+     apr_uint32_t i = 0;
+@@ -436,6 +439,8 @@ mc_conn_construct(void **conn_, void *params, apr_pool_t *pool)
+ static apr_status_t
+ mc_conn_destruct(void *conn_, void *params, apr_pool_t *pool)
+ {
++    (void)params;
++    (void)pool;
+     apr_memcache_conn_t *conn = (apr_memcache_conn_t*)conn_;
+     struct iovec vec[2];
+     apr_size_t written;
+@@ -529,6 +534,7 @@ APR_DECLARE(apr_status_t) apr_memcache_create(apr_pool_t *p,
+                                               apr_uint16_t max_servers, apr_uint32_t flags,
+                                               apr_memcache_t **memcache)
+ {
++    (void)flags;
+     apr_status_t rv = APR_SUCCESS;
+     apr_memcache_t *mc;
+ 
+@@ -625,6 +631,7 @@ APR_DECLARE(apr_uint32_t) apr_memcache_hash_crc32(void *baton,
+                                                   const char *data,
+                                                   const apr_size_t data_len)
+ {
++    (void)baton;
+     apr_uint32_t i;
+     apr_uint32_t crc;
+     crc = ~0;
+@@ -1656,6 +1663,7 @@ static const char *stat_read_string(apr_pool_t *p, char *buf, apr_size_t len)
+ 
+ static apr_uint32_t stat_read_uint32(apr_pool_t *p, char *buf, apr_size_t  len)
+ {
++    (void)p;
+     if (len < 2) {
+         return 0;
+     }
+@@ -1665,6 +1673,7 @@ static apr_uint32_t stat_read_uint32(apr_pool_t *p, char *buf, apr_size_t  len)
+ 
+ static apr_uint64_t stat_read_uint64(apr_pool_t *p, char *buf, apr_size_t  len)
+ {
++    (void)p;
+     if (len < 2) {
+         return 0;
+     }
+@@ -1674,6 +1683,7 @@ static apr_uint64_t stat_read_uint64(apr_pool_t *p, char *buf, apr_size_t  len)
+ 
+ static apr_time_t stat_read_time(apr_pool_t *p, char *buf, apr_size_t  len)
+ {
++    (void)p;
+     if (len < 2) {
+         return 0;
+     }
+@@ -1683,6 +1693,7 @@ static apr_time_t stat_read_time(apr_pool_t *p, char *buf, apr_size_t  len)
+ 
+ static apr_time_t stat_read_rtime(apr_pool_t *p, char *buf, apr_size_t  len)
+ {
++    (void)p;
+     char *tok;
+     char *secs;
+     char *usecs;
+diff --git a/memory/unix/apr_pools.c b/memory/unix/apr_pools.c
+index af01bed..687cc78 100644
+--- a/memory/unix/apr_pools.c
++++ b/memory/unix/apr_pools.c
+@@ -810,10 +810,14 @@ static APR_INLINE void pool_concurrency_set_destroyed(apr_pool_t *pool)
+     pool->in_use_by = apr_os_thread_current();
+ }
+ #else
+-static APR_INLINE void pool_concurrency_init(apr_pool_t *pool)          { }
+-static APR_INLINE void pool_concurrency_set_used(apr_pool_t *pool)      { }
+-static APR_INLINE void pool_concurrency_set_idle(apr_pool_t *pool)      { }
+-static APR_INLINE void pool_concurrency_set_destroyed(apr_pool_t *pool) { }
++static APR_INLINE void pool_concurrency_init(apr_pool_t *pool)          {
++    (void)pool; }
++static APR_INLINE void pool_concurrency_set_used(apr_pool_t *pool)      {
++    (void)pool; }
++static APR_INLINE void pool_concurrency_set_idle(apr_pool_t *pool)      {
++    (void)pool; }
++static APR_INLINE void pool_concurrency_set_destroyed(apr_pool_t *pool) {
++    (void)pool; }
+ #endif /* APR_POOL_CONCURRENCY_CHECK */
+ 
+ /*
+@@ -2701,6 +2705,7 @@ APR_DECLARE(void) apr_pool_cleanup_for_exec(void)
+ 
+ APR_DECLARE_NONSTD(apr_status_t) apr_pool_cleanup_null(void *data)
+ {
++    (void)data;
+     /* do nothing cleanup routine */
+     return APR_SUCCESS;
+ }
+@@ -2830,24 +2835,28 @@ static void free_proc_chain(struct process_chain *procs)
+ APR_DECLARE(void *) apr_palloc_debug(apr_pool_t *pool, apr_size_t size,
+                                      const char *file_line)
+ {
++    (void)file_line;
+     return apr_palloc(pool, size);
+ }
+ 
+ APR_DECLARE(void *) apr_pcalloc_debug(apr_pool_t *pool, apr_size_t size,
+                                       const char *file_line)
+ {
++    (void)file_line;
+     return apr_pcalloc(pool, size);
+ }
+ 
+ APR_DECLARE(void) apr_pool_clear_debug(apr_pool_t *pool,
+                                        const char *file_line)
+ {
++    (void)file_line;
+     apr_pool_clear(pool);
+ }
+ 
+ APR_DECLARE(void) apr_pool_destroy_debug(apr_pool_t *pool,
+                                          const char *file_line)
+ {
++    (void)file_line;
+     apr_pool_destroy(pool);
+ }
+ 
+@@ -2857,6 +2866,7 @@ APR_DECLARE(apr_status_t) apr_pool_create_ex_debug(apr_pool_t **newpool,
+                                                    apr_allocator_t *allocator,
+                                                    const char *file_line)
+ {
++    (void)file_line;
+     return apr_pool_create_ex(newpool, parent, abort_fn, allocator);
+ }
+ 
+@@ -2865,6 +2875,7 @@ APR_DECLARE(apr_status_t) apr_pool_create_unmanaged_ex_debug(apr_pool_t **newpoo
+                                                    apr_allocator_t *allocator,
+                                                    const char *file_line)
+ {
++    (void)file_line;
+     return apr_pool_create_unmanaged_ex(newpool, abort_fn, allocator);
+ }
+ 
+@@ -2875,24 +2886,33 @@ APR_DECLARE(apr_status_t) apr_pool_create_unmanaged_ex_debug(apr_pool_t **newpoo
+ 
+ APR_DECLARE(void) apr_pool_owner_set(apr_pool_t *pool, apr_uint32_t flags)
+ {
++    (void)flags;
++    (void)pool;
+ }
+ 
+ APR_DECLARE(void) apr_pool_join(apr_pool_t *p, apr_pool_t *sub)
+ {
++    (void)p;
++    (void)sub;
+ }
+ 
+ APR_DECLARE(apr_pool_t *) apr_pool_find(const void *mem)
+ {
++    (void)mem;
+     return NULL;
+ }
+ 
+ APR_DECLARE(apr_size_t) apr_pool_num_bytes(apr_pool_t *pool, int recurse)
+ {
++    (void)pool;
++    (void)recurse;
+     return 0;
+ }
+ 
+ APR_DECLARE(void) apr_pool_lock(apr_pool_t *pool, int flag)
+ {
++    (void)flag;
++    (void)pool;
+ }
+ 
+ #else /* APR_POOL_DEBUG */
+diff --git a/misc/unix/charset.c b/misc/unix/charset.c
+index a16310c..5c46e18 100644
+--- a/misc/unix/charset.c
++++ b/misc/unix/charset.c
+@@ -35,6 +35,7 @@
+ 
+ APR_DECLARE(const char*) apr_os_default_encoding (apr_pool_t *pool)
+ {
++    (void)pool;
+ #ifdef __MVS__
+ #    ifdef __CODESET__
+         return __CODESET__;
+diff --git a/misc/unix/env.c b/misc/unix/env.c
+index b41f8f1..80637cc 100644
+--- a/misc/unix/env.c
++++ b/misc/unix/env.c
+@@ -32,6 +32,7 @@ APR_DECLARE(apr_status_t) apr_env_get(char **value,
+                                       const char *envvar,
+                                       apr_pool_t *pool)
+ {
++    (void)pool;
+ #ifdef HAVE_GETENV
+ 
+     char *val = getenv(envvar);
+@@ -50,6 +51,7 @@ APR_DECLARE(apr_status_t) apr_env_set(const char *envvar,
+                                       const char *value,
+                                       apr_pool_t *pool)
+ {
++    (void)pool;
+ #if defined(HAVE_SETENV)
+ 
+     if (0 > setenv(envvar, value, 1))
+@@ -70,6 +72,7 @@ APR_DECLARE(apr_status_t) apr_env_set(const char *envvar,
+ 
+ APR_DECLARE(apr_status_t) apr_env_delete(const char *envvar, apr_pool_t *pool)
+ {
++    (void)pool;
+ #ifdef HAVE_UNSETENV
+ 
+     unsetenv(envvar);
+diff --git a/misc/unix/getopt.c b/misc/unix/getopt.c
+index 77391a4..b06c737 100644
+--- a/misc/unix/getopt.c
++++ b/misc/unix/getopt.c
+@@ -37,6 +37,14 @@
+ 
+ #define EMSG    ""
+ 
++static void default_getopt_error(void *stream, const char *format, ...)
++{
++    va_list args;
++    va_start(args, format);
++    vfprintf((FILE *)stream, format, args);
++    va_end(args);
++}
++
+ APR_DECLARE(apr_status_t) apr_getopt_init(apr_getopt_t **os, apr_pool_t *cont,
+                                       int argc, const char *const *argv)
+ {
+@@ -45,7 +53,7 @@ APR_DECLARE(apr_status_t) apr_getopt_init(apr_getopt_t **os, apr_pool_t *cont,
+     *os = apr_palloc(cont, sizeof(apr_getopt_t));
+     (*os)->cont = cont;
+     (*os)->reset = 0;
+-    (*os)->errfn = (apr_getopt_err_fn_t*)(fprintf);
++    (*os)->errfn = default_getopt_error;
+     (*os)->errarg = (void*)(stderr);
+ 
+     (*os)->place = EMSG;
+diff --git a/misc/unix/otherchild.c b/misc/unix/otherchild.c
+index 794d032..f8a9215 100644
+--- a/misc/unix/otherchild.c
++++ b/misc/unix/otherchild.c
+@@ -53,6 +53,7 @@ APR_DECLARE(void) apr_proc_other_child_register(apr_proc_t *proc,
+                      void (*maintenance) (int reason, void *, int status),
+                      void *data, apr_file_t *write_fd, apr_pool_t *p)
+ {
++    (void)write_fd;
+     apr_other_child_rec_t *ocr;
+ 
+     ocr = apr_palloc(p, sizeof(*ocr));
+diff --git a/misc/unix/start.c b/misc/unix/start.c
+index 7a9c215..f103ad9 100644
+--- a/misc/unix/start.c
++++ b/misc/unix/start.c
+@@ -28,6 +28,9 @@ APR_DECLARE(apr_status_t) apr_app_initialize(int *argc,
+                                              const char * const * *argv,
+                                              const char * const * *env)
+ {
++    (void)argc;
++    (void)argv;
++    (void)env;
+     /* An absolute noop.  At present, only Win32 requires this stub, but it's
+      * required in order to move command arguments passed through the service
+      * control manager into the process, and it's required to fix the char*
+diff --git a/network_io/unix/inet_ntop.c b/network_io/unix/inet_ntop.c
+index 78dd3ba..33a1c6d 100644
+--- a/network_io/unix/inet_ntop.c
++++ b/network_io/unix/inet_ntop.c
+@@ -201,7 +201,7 @@ inet_ntop6(const unsigned char *src, char *dst, apr_size_t size)
+      * Format the result.
+      */
+     tp = tmp;
+-    for (i = 0; i < (IN6ADDRSZ / INT16SZ);) {
++    for (i = 0; i < (int)(IN6ADDRSZ / INT16SZ);) {
+         /* Are we inside the best run of 0x00's? */
+         if (i == best.base) {
+             *tp++ = ':';
+diff --git a/network_io/unix/sendrecv.c b/network_io/unix/sendrecv.c
+index 34e4b8e..72745c6 100644
+--- a/network_io/unix/sendrecv.c
++++ b/network_io/unix/sendrecv.c
+@@ -60,7 +60,7 @@ do_select:
+         *len = 0;
+         return errno;
+     }
+-    if ((sock->timeout > 0) && (rv < *len)) {
++    if ((sock->timeout > 0) && ((apr_size_t)rv < *len)) {
+         sock->options |= APR_INCOMPLETE_WRITE;
+     }
+     (*len) = rv;
+@@ -99,7 +99,7 @@ do_select:
+         (*len) = 0;
+         return errno;
+     }
+-    if ((sock->timeout > 0) && (rv < *len)) {
++    if ((sock->timeout > 0) && ((apr_size_t)rv < *len)) {
+         sock->options |= APR_INCOMPLETE_READ;
+     }
+     (*len) = rv;
+@@ -266,6 +266,7 @@ apr_status_t apr_socket_sendfile(apr_socket_t *sock, apr_file_t *file,
+                                  apr_hdtr_t *hdtr, apr_off_t *offset,
+                                  apr_size_t *len, apr_int32_t flags)
+ {
++    (void)flags;
+     int nopush_set = 0, rv, i;
+     apr_size_t bytes_to_send = *len;
+     apr_status_t arv;
+diff --git a/network_io/unix/sockaddr.c b/network_io/unix/sockaddr.c
+index 89e138b..6273e60 100644
+--- a/network_io/unix/sockaddr.c
++++ b/network_io/unix/sockaddr.c
+@@ -338,6 +338,7 @@ static apr_status_t call_resolver(apr_sockaddr_t **sa,
+                                   apr_port_t port, apr_int32_t flags,
+                                   apr_pool_t *p)
+ {
++    (void)flags;
+     struct addrinfo hints, *ai, *ai_list;
+     apr_sockaddr_t *prev_sa;
+     int error;
+@@ -965,7 +966,7 @@ APR_DECLARE(int) apr_sockaddr_is_wildcard(const apr_sockaddr_t *addr)
+     ] = {0};
+ 
+     if (addr->ipaddr_ptr /* IP address initialized */
+-        && addr->ipaddr_len <= sizeof inaddr_any) { /* else bug elsewhere? */
++        && addr->ipaddr_len >= 0 && (size_t)addr->ipaddr_len <= sizeof inaddr_any) { /* else bug elsewhere? */
+         if (!memcmp(inaddr_any, addr->ipaddr_ptr, addr->ipaddr_len)) {
+             return 1;
+         }
+@@ -1112,7 +1113,7 @@ static void fix_subnet(apr_ipsubnet_t *ipsub)
+      */
+     int i;
+ 
+-    for (i = 0; i < sizeof ipsub->mask / sizeof(apr_int32_t); i++) {
++    for (i = 0; i < (int)(sizeof ipsub->mask / sizeof(apr_int32_t)); i++) {
+         ipsub->sub[i] &= ipsub->mask[i];
+     }
+ }
+diff --git a/network_io/unix/sockopt.c b/network_io/unix/sockopt.c
+index 7ebc170..4a69e11 100644
+--- a/network_io/unix/sockopt.c
++++ b/network_io/unix/sockopt.c
+@@ -362,6 +362,7 @@ apr_status_t apr_socket_atmark(apr_socket_t *sock, int *atmark)
+ 
+ apr_status_t apr_gethostname(char *buf, apr_int32_t len, apr_pool_t *cont)
+ {
++    (void)cont;
+     if (gethostname(buf, len) != 0) {
+         buf[0] = '\0';
+         return errno;
+diff --git a/poll/unix/epoll.c b/poll/unix/epoll.c
+index 77caa67..c78bc96 100644
+--- a/poll/unix/epoll.c
++++ b/poll/unix/epoll.c
+@@ -346,6 +346,7 @@ static apr_status_t impl_pollcb_create(apr_pollcb_t *pollcb,
+                                        apr_pool_t *p,
+                                        apr_uint32_t flags)
+ {
++    (void)flags;
+     int fd;
+ 
+ #ifdef HAVE_EPOLL_CREATE1
+diff --git a/poll/unix/poll.c b/poll/unix/poll.c
+index c1cbd76..d428fd3 100644
+--- a/poll/unix/poll.c
++++ b/poll/unix/poll.c
+@@ -321,6 +321,10 @@ static apr_status_t impl_pollcb_create(apr_pollcb_t *pollcb,
+                                        apr_pool_t *p,
+                                        apr_uint32_t flags)
+ {
++    (void)flags;
++    (void)p;
++    (void)pollcb;
++    (void)size;
+ #if APR_HAS_THREADS
+     return APR_ENOTIMPL;
+ #else
+diff --git a/redis/apr_redis.c b/redis/apr_redis.c
+index d0d5bf6..777f972 100644
+--- a/redis/apr_redis.c
++++ b/redis/apr_redis.c
+@@ -122,6 +122,7 @@ struct apr_redis_conn_t
+ static apr_status_t make_server_dead(apr_redis_t *rc,
+                                      apr_redis_server_t *rs)
+ {
++    (void)rc;
+ #if APR_HAS_THREADS
+     apr_thread_mutex_lock(rs->lock);
+ #endif
+@@ -136,6 +137,7 @@ static apr_status_t make_server_dead(apr_redis_t *rc,
+ static apr_status_t make_server_live(apr_redis_t *rc,
+                                      apr_redis_server_t *rs)
+ {
++    (void)rc;
+     rs->status = APR_RC_SERVER_LIVE;
+     return APR_SUCCESS;
+ }
+@@ -169,6 +171,7 @@ APR_DECLARE(apr_redis_server_t *)
+ apr_redis_find_server_hash_default(void *baton, apr_redis_t *rc,
+                                    const apr_uint32_t hash)
+ {
++    (void)baton;
+     apr_redis_server_t *rs = NULL;
+     apr_uint32_t h = hash ? hash : 1;
+     apr_uint32_t i = 0;
+@@ -391,6 +394,8 @@ rc_conn_construct(void **conn_, void *params, apr_pool_t *pool)
+ static apr_status_t
+ rc_conn_destruct(void *conn_, void *params, apr_pool_t *pool)
+ {
++    (void)params;
++    (void)pool;
+     apr_redis_conn_t *conn = (apr_redis_conn_t *) conn_;
+     struct iovec vec[3];
+     apr_size_t written;
+@@ -485,6 +490,7 @@ APR_DECLARE(apr_status_t) apr_redis_create(apr_pool_t *p,
+                                            apr_uint32_t flags,
+                                            apr_redis_t **redis)
+ {
++    (void)flags;
+     apr_status_t rv = APR_SUCCESS;
+     apr_redis_t *rc;
+ 
+@@ -580,6 +586,7 @@ APR_DECLARE(apr_uint32_t) apr_redis_hash_crc32(void *baton,
+                                                const char *data,
+                                                const apr_size_t data_len)
+ {
++    (void)baton;
+     apr_uint32_t i;
+     apr_uint32_t crc;
+     crc = ~0;
+@@ -642,6 +649,7 @@ APR_DECLARE(apr_status_t) apr_redis_set(apr_redis_t *rc,
+                                         const apr_size_t data_size,
+                                         apr_uint16_t flags)
+ {
++    (void)flags;
+     apr_uint32_t hash;
+     apr_redis_server_t *rs;
+     apr_redis_conn_t *conn;
+@@ -744,6 +752,7 @@ APR_DECLARE(apr_status_t) apr_redis_setex(apr_redis_t *rc,
+                                           apr_uint32_t timeout,
+                                           apr_uint16_t flags)
+ {
++    (void)flags;
+     apr_uint32_t hash;
+     apr_redis_server_t *rs;
+     apr_redis_conn_t *conn;
+@@ -942,6 +951,7 @@ APR_DECLARE(apr_status_t) apr_redis_getp(apr_redis_t *rc,
+                                          apr_size_t *new_length,
+                                          apr_uint16_t *flags)
+ {
++    (void)flags;
+     apr_status_t rv;
+     apr_redis_server_t *rs;
+     apr_redis_conn_t *conn;
+@@ -1029,6 +1039,7 @@ APR_DECLARE(apr_status_t) apr_redis_getp(apr_redis_t *rc,
+ APR_DECLARE(apr_status_t)
+     apr_redis_delete(apr_redis_t *rc, const char *key, apr_uint32_t timeout)
+ {
++    (void)timeout;
+     apr_status_t rv;
+     apr_redis_server_t *rs;
+     apr_redis_conn_t *conn;
+@@ -1411,6 +1422,10 @@ apr_redis_multgetp(apr_redis_t *rc,
+                    apr_pool_t *data_pool,
+                    apr_hash_t *values)
+ {
++    (void)data_pool;
++    (void)rc;
++    (void)temp_pool;
++    (void)values;
+     return APR_ENOTIMPL;
+ }
+ 
+diff --git a/shmem/unix/shm.c b/shmem/unix/shm.c
+index 6cdc33c..41e56ec 100644
+--- a/shmem/unix/shm.c
++++ b/shmem/unix/shm.c
+@@ -424,6 +424,7 @@ APR_DECLARE(apr_status_t) apr_shm_create_ex(apr_shm_t **m,
+                                             apr_pool_t *p,
+                                             apr_int32_t flags)
+ {
++    (void)flags;
+     return apr_shm_create(m, reqsize, filename, p);
+ }
+ 
+@@ -665,6 +666,7 @@ APR_DECLARE(apr_status_t) apr_shm_attach_ex(apr_shm_t **m,
+                                             apr_pool_t *pool,
+                                             apr_int32_t flags)
+ {
++    (void)flags;
+     return apr_shm_attach(m, filename, pool);
+ }
+ 
+@@ -755,6 +757,8 @@ APR_POOL_IMPLEMENT_ACCESSOR(shm)
+ APR_DECLARE(apr_status_t) apr_os_shm_get(apr_os_shm_t *osshm,
+                                          apr_shm_t *shm)
+ {
++    (void)osshm;
++    (void)shm;
+     return APR_ENOTIMPL;
+ }
+ 
+@@ -762,6 +766,9 @@ APR_DECLARE(apr_status_t) apr_os_shm_put(apr_shm_t **m,
+                                          apr_os_shm_t *osshm,
+                                          apr_pool_t *pool)
+ {
++    (void)m;
++    (void)osshm;
++    (void)pool;
+     return APR_ENOTIMPL;
+ }
+ 
+diff --git a/strings/apr_snprintf.c b/strings/apr_snprintf.c
+index b483d30..ddd62c1 100644
+--- a/strings/apr_snprintf.c
++++ b/strings/apr_snprintf.c
+@@ -1364,6 +1364,7 @@ APR_DECLARE(int) apr_vformatter(int (*flush_func)(apr_vformatter_buff_t *),
+ 
+ static int snprintf_flush(apr_vformatter_buff_t *vbuff)
+ {
++    (void)vbuff;
+     /* if the buffer fills we have to abort immediately, there is no way
+      * to "flush" an apr_snprintf... there's nowhere to flush it to.
+      */
+diff --git a/strmatch/apr_strmatch.c b/strmatch/apr_strmatch.c
+index e5a0a81..7d90d7c 100644
+--- a/strmatch/apr_strmatch.c
++++ b/strmatch/apr_strmatch.c
+@@ -28,6 +28,8 @@
+ static const char *match_no_op(const apr_strmatch_pattern *this_pattern,
+                                const char *s, apr_size_t slen)
+ {
++    (void)slen;
++    (void)this_pattern;
+     return s;
+ }
+ 
+diff --git a/tables/apr_skiplist.c b/tables/apr_skiplist.c
+index eb6f40f..71678a8 100644
+--- a/tables/apr_skiplist.c
++++ b/tables/apr_skiplist.c
+@@ -414,6 +414,7 @@ APR_DECLARE(apr_skiplistnode *) apr_skiplist_getlist(apr_skiplist *sl)
+ 
+ APR_DECLARE(void *) apr_skiplist_next(apr_skiplist *sl, apr_skiplistnode **iter)
+ {
++    (void)sl;
+     if (!*iter) {
+         return NULL;
+     }
+@@ -423,6 +424,7 @@ APR_DECLARE(void *) apr_skiplist_next(apr_skiplist *sl, apr_skiplistnode **iter)
+ 
+ APR_DECLARE(void *) apr_skiplist_previous(apr_skiplist *sl, apr_skiplistnode **iter)
+ {
++    (void)sl;
+     if (!*iter) {
+         return NULL;
+     }
+diff --git a/tables/apr_tables.c b/tables/apr_tables.c
+index d39aed4..dc6500d 100644
+--- a/tables/apr_tables.c
++++ b/tables/apr_tables.c
+@@ -1257,6 +1257,7 @@ APR_DECLARE(void) apr_table_overlap(apr_table_t *a, const apr_table_t *b,
+ 
+ static int table_getm_do(void *v, const char *key, const char *val)
+ {
++    (void)key;
+     table_getm_t *state = (table_getm_t *) v;
+ 
+     if (!state->first) {
+diff --git a/threadproc/unix/proc.c b/threadproc/unix/proc.c
+index 695c621..8fca817 100644
+--- a/threadproc/unix/proc.c
++++ b/threadproc/unix/proc.c
+@@ -24,7 +24,7 @@
+ /* Heavy on no'ops, here's what we want to pass if there is APR_NO_FILE
+  * requested for a specific child handle;
+  */
+-static apr_file_t no_file = { NULL, -1, };
++static apr_file_t no_file = { .pool = NULL, .filedes = -1 };
+ 
+ APR_DECLARE(apr_status_t) apr_procattr_create(apr_procattr_t **new,
+                                               apr_pool_t *pool)
+@@ -219,6 +219,7 @@ APR_DECLARE(apr_status_t) apr_procattr_detach_set(apr_procattr_t *attr,
+ 
+ APR_DECLARE(apr_status_t) apr_proc_fork(apr_proc_t *proc, apr_pool_t *pool)
+ {
++    (void)pool;
+     int pid;
+ 
+     memset(proc, 0, sizeof(apr_proc_t));
+@@ -327,6 +328,8 @@ APR_DECLARE(apr_status_t) apr_procattr_error_check_set(apr_procattr_t *attr,
+ APR_DECLARE(apr_status_t) apr_procattr_addrspace_set(apr_procattr_t *attr,
+                                                        apr_int32_t addrspace)
+ {
++    (void)addrspace;
++    (void)attr;
+     /* won't ever be used on this platform, so don't save the flag */
+     return APR_SUCCESS;
+ }
+@@ -335,6 +338,7 @@ APR_DECLARE(apr_status_t) apr_procattr_user_set(apr_procattr_t *attr,
+                                                 const char *username,
+                                                 const char *password)
+ {
++    (void)password;
+     apr_status_t rv;
+     apr_gid_t    gid;
+ 
+@@ -345,7 +349,7 @@ APR_DECLARE(apr_status_t) apr_procattr_user_set(apr_procattr_t *attr,
+     }
+ 
+     /* Use default user group if not already set */
+-    if (attr->gid == -1) {
++    if (attr->gid == (apr_gid_t)-1) {
+         attr->gid = gid;
+     }
+     return APR_SUCCESS;
+@@ -495,7 +499,7 @@ APR_DECLARE(apr_status_t) apr_proc_create(apr_proc_t *new,
+             }
+         }
+         /* Only try to switch if we are running as root */
+-        if (attr->gid != -1 && !geteuid()) {
++        if (attr->gid != (apr_gid_t)-1 && !geteuid()) {
+             if (setgid(attr->gid)) {
+                 if (attr->errfn) {
+                     attr->errfn(pool, errno, "setting of group failed");
+@@ -504,7 +508,7 @@ APR_DECLARE(apr_status_t) apr_proc_create(apr_proc_t *new,
+             }
+         }
+ 
+-        if (attr->uid != -1 && !geteuid()) {
++        if (attr->uid != (apr_uid_t)-1 && !geteuid()) {
+             if (setuid(attr->uid)) {
+                 if (attr->errfn) {
+                     attr->errfn(pool, errno, "setting of user failed");
+@@ -635,6 +639,7 @@ APR_DECLARE(apr_status_t) apr_proc_wait_all_procs(apr_proc_t *proc,
+                                                   apr_wait_how_e waithow,
+                                                   apr_pool_t *p)
+ {
++    (void)p;
+     proc->pid = -1;
+     return apr_proc_wait(proc, exitcode, exitwhy, waithow);
+ }
+diff --git a/threadproc/unix/thread.c b/threadproc/unix/thread.c
+index ccc34c4..9a0662e 100644
+--- a/threadproc/unix/thread.c
++++ b/threadproc/unix/thread.c
+@@ -290,6 +290,7 @@ APR_DECLARE(apr_status_t) apr_thread_name_set(const char *name,
+                                               apr_thread_t *thread,
+                                               apr_pool_t *pool)
+ {
++    (void)pool;
+ #if HAVE_PTHREAD_SETNAME_NP
+     pthread_t td;
+ 
+diff --git a/time/unix/time.c b/time/unix/time.c
+index 81c7f15..35d06f4 100644
+--- a/time/unix/time.c
++++ b/time/unix/time.c
+@@ -197,6 +197,7 @@ APR_DECLARE(apr_status_t) apr_os_imp_time_put(apr_time_t *aprtime,
+                                               apr_os_imp_time_t **ostime,
+                                               apr_pool_t *cont)
+ {
++    (void)cont;
+     *aprtime = (*ostime)->tv_sec * APR_USEC_PER_SEC + (*ostime)->tv_usec;
+     return APR_SUCCESS;
+ }
+@@ -205,6 +206,7 @@ APR_DECLARE(apr_status_t) apr_os_exp_time_put(apr_time_exp_t *aprtime,
+                                               apr_os_exp_time_t **ostime,
+                                               apr_pool_t *cont)
+ {
++    (void)cont;
+     aprtime->tm_sec = (*ostime)->tm_sec;
+     aprtime->tm_min = (*ostime)->tm_min;
+     aprtime->tm_hour = (*ostime)->tm_hour;
+@@ -329,6 +331,7 @@ APR_DECLARE(void) apr_unix_setup_time(void)
+ /* A noop on all known Unix implementations */
+ APR_DECLARE(void) apr_time_clock_hires(apr_pool_t *p)
+ {
++    (void)p;
+     return;
+ }
+ 
+diff --git a/uri/apr_uri.c b/uri/apr_uri.c
+index 4c1dba3..98ef68e 100644
+--- a/uri/apr_uri.c
++++ b/uri/apr_uri.c
+@@ -82,7 +82,7 @@ static schemes_t schemes[] =
+ static apr_status_t detect_scope_zone_id(int *have_zone_id, char const *ipv6addr,
+                                          size_t len)
+ {
+-    char *s;
++    const char *s;
+ 
+     *have_zone_id = 0;
+ 
+diff --git a/user/unix/groupinfo.c b/user/unix/groupinfo.c
+index 78b686a..54a1209 100644
+--- a/user/unix/groupinfo.c
++++ b/user/unix/groupinfo.c
+@@ -61,6 +61,7 @@ APR_DECLARE(apr_status_t) apr_gid_name_get(char **groupname, apr_gid_t groupid,
+ APR_DECLARE(apr_status_t) apr_gid_get(apr_gid_t *groupid,
+                                       const char *groupname, apr_pool_t *p)
+ {
++    (void)p;
+     struct group *gr;
+ 
+ #if APR_HAS_THREADS && defined(_POSIX_THREAD_SAFE_FUNCTIONS) && defined(HAVE_GETGRNAM_R)
+diff --git a/user/unix/userinfo.c b/user/unix/userinfo.c
+index 6469a95..dd41c43 100644
+--- a/user/unix/userinfo.c
++++ b/user/unix/userinfo.c
+@@ -92,6 +92,7 @@ APR_DECLARE(apr_status_t) apr_uid_current(apr_uid_t *uid,
+                                           apr_gid_t *gid,
+                                           apr_pool_t *p)
+ {
++    (void)p;
+     *uid = getuid();
+     *gid = getgid();
+ 
+@@ -104,6 +105,7 @@ APR_DECLARE(apr_status_t) apr_uid_current(apr_uid_t *uid,
+ APR_DECLARE(apr_status_t) apr_uid_get(apr_uid_t *uid, apr_gid_t *gid,
+                                       const char *username, apr_pool_t *p)
+ {
++    (void)p;
+     struct passwd pw;
+     char pwbuf[PWBUF_SIZE];
+     apr_status_t rv;
+diff --git a/util-misc/apr_rmm.c b/util-misc/apr_rmm.c
+index a9c0c7c..8bdf879 100644
+--- a/util-misc/apr_rmm.c
++++ b/util-misc/apr_rmm.c
+@@ -300,6 +300,7 @@ APR_DECLARE(apr_status_t) apr_rmm_attach(apr_rmm_t **rmm, apr_anylock_t *lock,
+ 
+ APR_DECLARE(apr_status_t) apr_rmm_detach(apr_rmm_t *rmm)
+ {
++    (void)rmm;
+     /* A noop until we introduce locked/refcounts */
+     return APR_SUCCESS;
+ }
+diff --git a/util-misc/apu_dso.c b/util-misc/apu_dso.c
+index 8a8a0ac..a2c2445 100644
+--- a/util-misc/apu_dso.c
++++ b/util-misc/apu_dso.c
+@@ -59,6 +59,7 @@ apr_status_t apu_dso_mutex_unlock(void) {
+ 
+ static apr_status_t apu_dso_term(void *ptr)
+ {
++    (void)ptr;
+     if (apr_atomic_inc32(&in_init)) {
+         while (apr_atomic_read32(&in_init) > 1); /* wait until we get fully inited */
+     }
+@@ -183,7 +184,7 @@ apr_status_t apu_dso_load(apr_dso_handle_t **dlhandleptr,
+ #endif
+         {
+             eos = apr_cpystrn(path, ((char**)paths->elts)[i], sizeof(path));
+-            if ((eos > path) && (eos - path < sizeof(path) - 1))
++            if ((eos > path) && ((size_t)(eos - path) < sizeof(path) - 1))
+                 *(eos++) = '/';
+         }
+         apr_cpystrn(eos, module, sizeof(path) - (eos - path));
+diff --git a/xlate/xlate.c b/xlate/xlate.c
+index 212ef37..d2c328d 100644
+--- a/xlate/xlate.c
++++ b/xlate/xlate.c
+@@ -107,7 +107,7 @@ static void check_sbcs(apr_xlate_t *convset)
+     int i;
+     apr_size_t translated;
+ 
+-    for (i = 0; i < sizeof(inbuf); i++) {
++    for (i = 0; i < (int)sizeof(inbuf); i++) {
+         inbuf[i] = i;
+     }
+ 
+@@ -147,7 +147,7 @@ static void check_sbcs(apr_xlate_t *convset)
+     apr_size_t translated;
+     apr_status_t rv;
+ 
+-    for (i = 0; i < sizeof(inbuf); i++) {
++    for (i = 0; i < (int)sizeof(inbuf); i++) {
+         inbuf[i] = i;
+     }
+ 
+diff --git a/xml/apr_xml.c b/xml/apr_xml.c
+index 349efcb..882aa96 100644
+--- a/xml/apr_xml.c
++++ b/xml/apr_xml.c
+@@ -306,6 +306,7 @@ static void start_handler(void *userdata, const char *name, const char **attrs)
+ 
+ static void end_handler(void *userdata, const char *name)
+ {
++    (void)name;
+     apr_xml_parser *parser = userdata;
+ 
+     /* punt once we find an error */
+diff --git a/xml/apr_xml_expat.c b/xml/apr_xml_expat.c
+index 1df2799..03d5125 100644
+--- a/xml/apr_xml_expat.c
++++ b/xml/apr_xml_expat.c
+@@ -80,6 +80,14 @@ static void entity_declaration(void *userData, const XML_Char *entityName,
+                                const XML_Char *systemId, const XML_Char *publicId,
+                                const XML_Char *notationName)
+ {
++    (void)base;
++    (void)entityName;
++    (void)is_parameter_entity;
++    (void)notationName;
++    (void)publicId;
++    (void)systemId;
++    (void)value;
++    (void)value_length;
+     apr_xml_parser *parser = userData;
+ 
+     XML_StopParser(parser->xp, XML_FALSE);

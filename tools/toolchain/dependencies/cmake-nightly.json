@@ -1,0 +1,9 @@
+{
+  "name": "cmake",
+  "version": "4.4.20260912-g5ffa52d",
+  "url": "https://cmake.org/files/dev/cmake-4.4.20260912-g5ffa52d-linux-x86_64.tar.gz",
+  "sha256": "8370a3ec3db597e944d5c60b7e77e4d15b2717256adf0ebf3b6fc3ae6634c63f",
+  "source_repository": "https://github.com/Kitware/CMake.git",
+  "revision": "5ffa52d",
+  "prefix": "/home/b/toolchains/cmake-4.4.20260912-g5ffa52d-linux-x86_64"
+}

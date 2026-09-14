@@ -3,6 +3,7 @@
 
 Source the modern toolchain environment, then run:
   python3 test/modern_plugin_regression.py --prefix install
+  python3 test/modern_plugin_regression.py --prefix install --launcher tools/run-emergent
 
 Requires a completed emergent installation. Does not modify existing plugins.
 """
@@ -53,6 +54,12 @@ def exercise(case, prefix):
     environment.update(EMERGENT_PREFIX_DIR=str(prefix),
                        EMERGENT_USER_PLUGIN_DIR=str(plugin_install),
                        LD_LIBRARY_PATH=str(prefix / "lib") + ":" + environment.get("LD_LIBRARY_PATH", ""))
+    wizard_environment = environment.copy()
+    if case.args.launcher:
+        # Exercise the launcher defaults instead of inheriting this test's
+        # compiler settings. The separate manual build keeps its toolchain env.
+        wizard_environment.pop("CC", None)
+        wizard_environment.pop("CXX", None)
     case.css(f'''
 PluginWizard modern_wizard;
 modern_wizard.plugin_name = "modernprobe";
@@ -71,11 +78,17 @@ else cout << "MODERN_FAIL plugin_create" << endl;
 if(modern_wizard.Compile()) cout << "MODERN_PASS plugin_compile" << endl;
 else cout << "MODERN_FAIL plugin_compile" << endl;
 cout << "MODERN_COMPLETE" << endl;
-''', ["plugin_validate", "plugin_create", "plugin_compile"], name="generate", extra=common, env=environment)
+''', ["plugin_validate", "plugin_create", "plugin_compile"], name="generate", extra=common, env=wizard_environment)
     generated_log = (case.directory / "generate.log").read_text(errors="replace")
     require(not re.search(r"\b(?:warning|error):|W!!:|CMake Warning", generated_log, re.IGNORECASE),
             "wizard compile emitted diagnostics; see generate.log")
     require((plugin_source / "PluginWizard.wiz").is_file(), "wizard did not save its configuration")
+    wizard_cache = (plugin_source / "build/CMakeCache.txt").read_text()
+    compiler = re.search(r"^CMAKE_CXX_COMPILER:[^=]+=(.+)$", wizard_cache, re.MULTILINE)
+    require(compiler is not None, "wizard build did not record its C++ compiler")
+    require(Path(compiler.group(1)).resolve() == Path("/usr/lib/llvm-24/bin/clang++").resolve(),
+            "wizard did not select the recorded Clang24 compiler")
+    case.checks.append({"check": "plugin_wizard_compiler", "compiler": compiler.group(1)})
     generated = (plugin_source / "modernprobe_pl.cpp").read_text()
     require('return "https://github.com/emer/cemer";' in generated,
             "wizard did not preserve the plugin URL")
@@ -111,20 +124,27 @@ cout << "MODERN_COMPLETE" << endl;
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--prefix", type=Path, default=REPO / "install")
+    parser.add_argument("--launcher", type=Path,
+                        help="optional executable wrapper, e.g. tools/run-emergent")
     parser.add_argument("--output", type=Path)
     parser.add_argument("--timeout", type=float, default=300)
     args = parser.parse_args()
     prefix = args.prefix.resolve()
-    args.binary = prefix / "bin/emergent"
-    if not args.binary.is_file():
-        parser.error(f"emergent is not installed: {args.binary}")
+    installed_binary = prefix / "bin/emergent"
+    if not installed_binary.is_file():
+        parser.error(f"emergent is not installed: {installed_binary}")
+    args.binary = args.launcher.resolve() if args.launcher else installed_binary
+    if not args.binary.is_file() or not os.access(args.binary, os.X_OK):
+        parser.error(f"launcher is not executable: {args.binary}")
     if args.output:
         args.output = args.output.resolve()
         args.output.mkdir(parents=True, exist_ok=False)
     else:
         args.output = Path(tempfile.mkdtemp(prefix="emergent-modern-plugin-"))
     case = Case(args, "plugin")
-    report = {"binary": str(args.binary), "output": str(args.output), "status": "PASS", "checks": case.checks}
+    report = {"binary": str(args.binary), "installed_binary": str(installed_binary),
+              "binary_sha256": hashlib.sha256(installed_binary.read_bytes()).hexdigest(),
+              "output": str(args.output), "status": "PASS", "checks": case.checks}
     started = time.monotonic()
     print(f"Evidence: {args.output}", flush=True)
     try:

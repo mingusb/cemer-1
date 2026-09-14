@@ -11,3 +11,7 @@ ctest --test-dir build-subversion-test --output-on-failure
 The executable compiles with `-Wall -Wextra -Werror` under Clang and GCC. Each CTest run creates a fresh local `file://` repository and working copy; no network or credentials are used. The test exercises checkout, add, copy, move, mkdir, commit callbacks, no-op commits, info, listing, cat, diff, revert, repository-root lookup, delete, and cleanup using the modern APIs adopted by `SubversionClient`.
 
 This tests the SDK calls and their arguments independently of the application. It does not instantiate the application wrapper or test its UI. Failed runs retain their temporary repository under the build directory for diagnosis; successful runs remove it.
+
+To also test the actual `SubversionClient` wrapper after building Emergent, configure with `-DCEMER_TEMT_LIBRARY=/absolute/path/to/libtemt.so` and include the matching Qt and native library prefixes in `CMAKE_PREFIX_PATH`. Put the corresponding `svnadmin` on `PATH` and its shared libraries on the runtime library path. The additional `subversion_wrapper` CTest uses `QCoreApplication` and an isolated local repository, without opening a window.
+
+The same optional library setting adds the `ta_filer` regression. It checks safe cleanup of absent, unopened, failed-open and closed streams, successful flushing of open streams (including an open stream with `badbit` set), and recovery to a valid output file. This covers the file-opening failure behind the reproduced image-export error-dialog crash. It uses no GUI.

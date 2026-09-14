@@ -1,0 +1,131 @@
+diff --git a/src/output.cc b/src/output.cc
+index fa7adb3..df441d4 100644
+--- a/src/output.cc
++++ b/src/output.cc
+@@ -43,13 +43,10 @@
+    Attention: depending on your implementation my_array is either the array
+    itself or a pointer to the array! Always use my_array only as expression!
+  */
+-#if HAVE_DYNAMIC_ARRAY
+-  #define DYNAMIC_ARRAY(var,eltype,size) eltype var[size]
+-  #define FREE_DYNAMIC_ARRAY(var)
+-#else
++// Standard C++ uses heap storage for arrays whose size is determined at runtime.
+   #define DYNAMIC_ARRAY(var,eltype,size) eltype *var = new eltype[size]
+   #define FREE_DYNAMIC_ARRAY(var) delete[] var
+-#endif
++
+ 
+ /* ========================================================================= */
+ 
+@@ -82,7 +79,7 @@ smallest_integral_type (int n)
+ static const char *
+ smallest_integral_type (int min, int max)
+ {
+-  if (option[ANSIC] | option[CPLUSPLUS])
++  if (option[ANSIC] || option[CPLUSPLUS])
+     if (min >= SCHAR_MIN && max <= SCHAR_MAX) return "signed char";
+   if (min >= SHRT_MIN && max <= SHRT_MAX) return "short";
+   return "int";
+@@ -324,9 +321,7 @@ output_upperlower_strcmp ()
+                "(s1, s2)\n"
+           "     %sconst char *s1;\n"
+           "     %sconst char *s2;\n" :
+-          option[ANSIC] | option[CPLUSPLUS] ?
+-               "(%sconst char *s1, %sconst char *s2)\n" :
+-          "",
++               "(%sconst char *s1, %sconst char *s2)\n",
+           register_scs, register_scs);
+   #if USE_DOWNCASE_TABLE
+   printf ("{\n"
+@@ -377,9 +372,7 @@ output_upperlower_strncmp ()
+           "     %sconst char *s1;\n"
+           "     %sconst char *s2;\n"
+           "     %ssize_t n;\n" :
+-          option[ANSIC] | option[CPLUSPLUS] ?
+-               "(%sconst char *s1, %sconst char *s2, %ssize_t n)\n" :
+-          "",
++               "(%sconst char *s1, %sconst char *s2, %ssize_t n)\n",
+           register_scs, register_scs, register_scs);
+   #if USE_DOWNCASE_TABLE
+   printf ("{\n"
+@@ -438,9 +431,7 @@ output_upperlower_memcmp ()
+           "     %sconst char *s1;\n"
+           "     %sconst char *s2;\n"
+           "     %ssize_t n;\n" :
+-          option[ANSIC] | option[CPLUSPLUS] ?
+-               "(%sconst char *s1, %sconst char *s2, %ssize_t n)\n" :
+-          "",
++               "(%sconst char *s1, %sconst char *s2, %ssize_t n)\n",
+           register_scs, register_scs, register_scs);
+   #if USE_DOWNCASE_TABLE
+   printf ("{\n"
+@@ -807,7 +798,7 @@ Output::output_hash_function () const
+   /* Output the function's head.  */
+   if (option[CPLUSPLUS])
+     printf ("inline ");
+-  else if (option[KRC] | option[C] | option[ANSIC])
++  else if (option[KRC] || option[C] || option[ANSIC])
+     printf ("#ifdef __GNUC__\n"
+             "__inline\n"
+             "#else\n"
+@@ -828,7 +819,7 @@ Output::output_hash_function () const
+     /* Pacify lint.  */
+     printf ("/*ARGSUSED*/\n");
+ 
+-  if (option[KRC] | option[C] | option[ANSIC])
++  if (option[KRC] || option[C] || option[ANSIC])
+     printf ("static ");
+   printf ("unsigned int\n");
+   if (option[CPLUSPLUS])
+@@ -845,9 +836,7 @@ Output::output_hash_function () const
+                  "(str, len)\n"
+             "     %sconst char *str;\n"
+             "     %ssize_t len;\n" :
+-          option[ANSIC] | option[CPLUSPLUS] ?
+-                 "(%sconst char *str, %ssize_t len)\n" :
+-          "",
++                 "(%sconst char *str, %ssize_t len)\n",
+           register_scs, register_scs);
+ 
+   /* Note that when the hash function is called, it has already been verified
+@@ -2064,9 +2053,7 @@ Output::output_lookup_function () const
+                  "(str, len)\n"
+             "     %sconst char *str;\n"
+             "     %ssize_t len;\n" :
+-          option[ANSIC] | option[CPLUSPLUS] ?
+-                 "(%sconst char *str, %ssize_t len)\n" :
+-          "",
++                 "(%sconst char *str, %ssize_t len)\n",
+           register_scs, register_scs);
+ 
+   /* Output the function's body.  */
+@@ -2113,7 +2100,7 @@ Output::output ()
+   else
+     register_scs = "register ";
+ 
+-  if (option[C] | option[ANSIC] | option[CPLUSPLUS])
++  if (option[C] || option[ANSIC] || option[CPLUSPLUS])
+     {
+       const_always = "const ";
+       const_readonly_array = (option[CONST] ? "const " : "");
+diff --git a/src/search.cc b/src/search.cc
+index 175dc00..e8ec9fd 100644
+--- a/src/search.cc
++++ b/src/search.cc
+@@ -50,13 +50,10 @@
+    Attention: depending on your implementation my_array is either the array
+    itself or a pointer to the array! Always use my_array only as expression!
+  */
+-#if HAVE_DYNAMIC_ARRAY
+-  #define DYNAMIC_ARRAY(var,eltype,size) eltype var[size]
+-  #define FREE_DYNAMIC_ARRAY(var)
+-#else
++// Standard C++ uses heap storage for arrays whose size is determined at runtime.
+   #define DYNAMIC_ARRAY(var,eltype,size) eltype *var = new eltype[size]
+   #define FREE_DYNAMIC_ARRAY(var) delete[] var
+-#endif
++
+ 
+ /* ================================ Theory ================================= */
+ 

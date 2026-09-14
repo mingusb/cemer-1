@@ -16,7 +16,7 @@ import sys
 import time
 import traceback
 
-from inductor_head_gui_regression import GuiCase, GuiServer
+from inductor_head_gui_regression import GuiCase, GuiServer, capture_screenshot
 from modern_stack_regressions import REPO, require, runtime_diagnostics
 
 
@@ -37,7 +37,7 @@ class Walkthrough(GuiServer):
         self.xdotool('mousemove', x, y, 'click', 1)
 
     def screenshot(self, name):
-        subprocess.run(['import', '-window', 'root', str(self.case.directory / (name + '.png'))], check=True)
+        capture_screenshot(self.case.directory / (name + '.png'))
 
     def edit(self, name, row, value):
         self.click('edit ' + name, 508, (254 if self.interactive else 198) + 23 * row)
@@ -75,6 +75,9 @@ def main():
     parser.add_argument('--output', type=Path, default=REPO / 'artifacts/inductor-walkthrough')
     parser.add_argument('--timeout', type=float, default=180)
     args = parser.parse_args()
+    display = os.environ.get('DISPLAY', '')
+    if not display or display.rsplit(':', 1)[-1] in {'0', '0.0'}:
+        parser.error('Run GUI tests on a dedicated Xvfb display, e.g. DISPLAY=:93.')
     args.binary = args.binary.resolve()
     args.output = args.output.resolve()
     args.output.mkdir(parents=True, exist_ok=False)

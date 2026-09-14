@@ -1,0 +1,44 @@
+diff --git a/src/func.c b/src/func.c
+index 99c39c3..41821f4 100644
+--- a/src/func.c
++++ b/src/func.c
+@@ -2476,6 +2476,7 @@ static void ceilingFunc(
+   int argc,
+   sqlite3_value **argv
+ ){
++  (void)argc;
+   assert( argc==1 );
+   switch( sqlite3_value_numeric_type(argv[0]) ){
+     case SQLITE_INTEGER: {
+@@ -2582,6 +2583,7 @@ static void math1Func(
+   int argc,
+   sqlite3_value **argv
+ ){
++  (void)argc;
+   int type0;
+   double v0, ans;
+   double (*x)(double);
+@@ -2604,6 +2606,7 @@ static void math2Func(
+   int argc,
+   sqlite3_value **argv
+ ){
++  (void)argc;
+   int type0, type1;
+   double v0, v1, ans;
+   double (*x)(double,double);
+@@ -2627,6 +2630,7 @@ static void piFunc(
+   int argc,
+   sqlite3_value **argv
+ ){
++  (void)argc;
+   assert( argc==0 );
+   (void)argv;
+   sqlite3_result_double(context, M_PI);
+@@ -3059,6 +3063,7 @@ static void percentSort(
+ ** row that was previously inserted by "step".
+ */
+ static void percentInverse(sqlite3_context *pCtx,int argc,sqlite3_value **argv){
++  (void)argc;
+   Percentile *p;
+   int eType;
+   double y;
