@@ -95,6 +95,17 @@ def main():
                     time.sleep(.5)
                     click_mask(server, True)
                     click_mask(server, False)
+                    server.xdotool('mousemove', 473, 181, 'click', '--repeat', 2,
+                                   '--delay', 100, 1)
+                    time.sleep(.6)
+                    viewer = subprocess.run(
+                        ['xdotool', 'search', '--all', '--onlyvisible', '--pid',
+                         str(server.process.pid), '--name', 'cell view'],
+                        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+                    case.equal('checkbox_double_click_opens_no_cell_view', viewer.returncode, 1)
+                    case.equal('checkbox_double_click_updates_value',
+                               server.cell('Experiments', 0, 'mask'), True)
+                    click_mask(server, False)
                 else:
                     server.console('.projects[0].data["Experiments"].EditPanel(); '
                                    'taMisc::ConsoleOutput("JSON_REOPENED");', 'JSON_REOPENED')

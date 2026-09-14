@@ -443,7 +443,7 @@ void iDataTableView::RowColOp_impl(int op_code, const CellRange& sel) {
 void iDataTableView::doubleClicked(const QModelIndex& index) {
   iDataTableModel* model = dataTable()->GetTableModel();
   Qt::ItemFlags flags = model->flags(index);
-  if(!flags.testFlag(Qt::ItemIsEditable)) {
+  if(!flags.testFlag(Qt::ItemIsEditable) && !flags.testFlag(Qt::ItemIsUserCheckable)) {
     ViewAction(0);
   }
 }
