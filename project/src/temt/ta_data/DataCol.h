@@ -252,8 +252,8 @@ public:
   bool          SetValAsByte(byte val, int row)
   // #EXPERT #CAT_Modify valid if type is numeric, -ve row is from end (-1=last)
   {return SetValAsInt((int)val, row);}
-  byte          GetValAsBool(int row) const {return GetValAsBool_impl(row, 0);}
-  // #EXPERT #CAT_Access valid only if type is byte, -ve row is from end (-1=last)
+  bool          GetValAsBool(int row) const {return GetValAsBool_impl(row, 0);}
+  // #EXPERT #CAT_Access valid only if type is bool, -ve row is from end (-1=last)
   bool          SetValAsBool(bool val, int row);
   // #EXPERT #CAT_Modify valid if type is numeric, -ve row is from end (-1=last)
 

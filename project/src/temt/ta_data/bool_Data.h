@@ -41,6 +41,8 @@ public:
   TA_BASEFUNS_NOCOPY(bool_Data);
   
 protected:
+  bool         GetValAsBool_impl(int row, int cell) const override
+  { return ar.SafeEl_Flat(IndexOfEl_Flat(row, cell)); }
   int          GetValAsInt_impl(int row, int cell) const override
   { return (int)ar.SafeEl_Flat(IndexOfEl_Flat(row, cell)); }
   byte         GetValAsByte_impl(int row, int cell) const override

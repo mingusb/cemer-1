@@ -2682,6 +2682,36 @@ bool DataTable::GetDataAsJSON(QJsonObject& json_obj, const String& column_name, 
     }
     
     if(dc->is_matrix) {
+      if (dc->cell_geom.dims() == 1) {
+        QJsonArray matrixValues;
+        for (int row=start_row; row < stop_row; row++) {
+          QJsonArray cells;
+          for (int cell=0; cell < dc->cell_geom.size(0); cell++) {
+            switch (dc->valType()) {
+              case VT_DOUBLE:
+                cells.append(dc->GetValAsDoubleM(row, cell));
+                break;
+              case VT_FLOAT:
+                cells.append(dc->GetValAsFloatM(row, cell));
+                break;
+              case VT_INT:
+                cells.append(dc->GetValAsIntM(row, cell));
+                break;
+              case VT_BOOL:
+                cells.append(dc->GetValAsBoolM(row, cell));
+                break;
+              case VT_BYTE:
+                cells.append(dc->GetValAsByteM(row, cell));
+                break;
+              default:
+                cells.append(QString(dc->GetValAsStringM(row, cell).chars()));
+                break;
+            }
+          }
+          matrixValues.append(cells);
+        }
+        aColumn.insert("values", matrixValues);
+      }
       if (dc->cell_geom.dims() == 2) {
         QJsonArray matrixValues;
         for (int row=start_row; row < stop_row; row++) {
@@ -3394,7 +3424,7 @@ DataCol::ValType DataTable::StrToValType(String valTypeStr) {
     return VT_BYTE;
   else if (valTypeStr == "bool")
     return VT_BOOL;
-  else if (valTypeStr == "var")
+  else if (valTypeStr == "Variant" || valTypeStr == "var")
     return VT_VARIANT;
   else {
     taMisc::Info("DataTable::StrToValType -- json column type string not found -- using variant type");
@@ -3442,9 +3472,6 @@ void DataTable::ImportDataJSONString(const String& json_as_string) {
   if (rval == false) {
     taMisc::Error("ImportDataJSON: ", "Something has gone awry with the import. Please file a bug and include the file to be imported");
   }
-  else {
-    taMisc::Error("ImportDataJSON: ", "The json file has a format error, look for missing/extra bracket, brace or quotation");
-  }
 #else
   taMisc::Error("Requires Qt 5.0 or greater");
 #endif
@@ -3456,6 +3483,7 @@ bool DataTable::SetDataFromJSON(const QJsonObject& root_object, int start_row, i
   
   bool any_errors = false;
   bool has_column_node = false;
+  bool has_nested_columns = false;
   QJsonObject::const_iterator obj_iter = root_object.constBegin();
   while (obj_iter != root_object.constEnd()) {
     // recursively call ourselves to dig deeper into the tree
@@ -3464,10 +3492,11 @@ bool DataTable::SetDataFromJSON(const QJsonObject& root_object, int start_row, i
           has_column_node = true;
           break;
       }
-      bool rval = SetDataFromJSON(obj_iter.value().toObject());
+      bool rval = SetDataFromJSON(obj_iter.value().toObject(), start_row, start_cell);
       if (rval == false) {
         return false;
       }
+      has_nested_columns = true;
     }
     ++obj_iter;
   }
@@ -3477,8 +3506,9 @@ bool DataTable::SetDataFromJSON(const QJsonObject& root_object, int start_row, i
     if (start_row < 0) {
       start_row = rows + start_row + 1;
     }
-    QJsonArray::const_iterator columns = obj_iter.value().toArray().constBegin();
-    while (columns != obj_iter.value().toArray().constEnd()) {
+    const QJsonArray column_array = obj_iter.value().toArray();
+    QJsonArray::const_iterator columns = column_array.constBegin();
+    while (columns != column_array.constEnd()) {
       QJsonValue value = *columns;
       const QJsonObject aCol = value.toObject();
       bool rval = SetColumnFromJSON(aCol, start_row, start_cell);
@@ -3488,7 +3518,7 @@ bool DataTable::SetDataFromJSON(const QJsonObject& root_object, int start_row, i
       columns++;
     }
   }
-  else {
+  else if (!has_nested_columns) {
    AppendJsonErrorMsg("No 'column' member' in data");
     return false;
   }
