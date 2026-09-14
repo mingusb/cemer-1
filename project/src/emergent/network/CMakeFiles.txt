@@ -138,6 +138,7 @@ set(network_HEADS_MAKETA_MI_DEPS
 set(network_HEADS_NOMAKETA
   network_def.h
 
+  State_base.h
   State_defs.h
   State_cpp.h
   State_main.h
