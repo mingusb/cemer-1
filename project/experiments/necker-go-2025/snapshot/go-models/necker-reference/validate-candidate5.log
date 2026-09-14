@@ -1,0 +1,4 @@
+PASS zero-noise {'maximum': 1.4544677739980472e-08, 'at': {'trial': 0, 'cycle': 28, 'unit': 0, 'go': 0.2766013, 'cpp': 0.27660131454467773}}
+PASS zero-noise-adaptation {'maximum': 5.809106826681898e-07, 'at': {'trial': 0, 'cycle': 28, 'unit': 0, 'go': 0.2329835, 'cpp': 0.23298408091068268}}
+PASS authored-default {'maximum': 3.621408447262997e-05, 'at': {'trial': 7, 'cycle': 55, 'unit': 11, 'go': 0.42052934, 'cpp': 0.42049312591552734}}
+FAIL /home/b/cemer/artifacts/go-models/necker-native-validation5/report.json

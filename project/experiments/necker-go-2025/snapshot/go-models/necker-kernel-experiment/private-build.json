@@ -1,0 +1,15 @@
+{
+  "status": "BUILT_ISOLATED_EXPERIMENT",
+  "frozen_prefix": "/home/b/cemer/install-legacy-checkpoint",
+  "private_prefix": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/prefix",
+  "replacement_objects": [
+    "LeabraUnitSpec_cpp.cpp.o"
+  ],
+  "changes": [
+    "Pinned Go FastExp quartic spline and exponent>50 cutoff in both NoisyXX1 paths; no ABI or field changes."
+  ],
+  "sha256": {
+    "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/LeabraUnitSpec_cpp.cpp.o": "eed893d918ff46122b07162e46943a0401944e9c5e4b6ac8d62710a664c98114",
+    "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/prefix/lib/libemergentlib.so.8.6.1": "1499222a7117e9055a570799be8984ed4dea6c437310d87a3682deb38f646e3e"
+  }
+}

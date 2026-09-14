@@ -1,0 +1,73 @@
+{
+  "name": "necker_cube",
+  "source_url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_3/necker_cube.proj",
+  "source_sha256": "85125e0468938134a54f973172fc1ac6141fcc96f4dfa6dda958940937cd48bc",
+  "source_format": "// ta_Dump File v3.0 -- code v8.5.0.0 rev11328",
+  "project_file": "necker_cube.proj",
+  "project_sha256": "43677d993f52012facbfba075221171f7ae317b3acbb250e76713e141ca08340",
+  "offline_html": "necker_cube.html",
+  "offline_html_sha256": "d78b97130d628ec99d2a73afa889859769471001ef0ec3702f369e7952cb035e",
+  "cached_original_html_sha256": "d1339f1d2904234f06d09a21825902e20da16ba2f15743338bbc88df257a3d74",
+  "figure": {
+    "file": "fig_necker_cube.png",
+    "source_url": "https://raw.githubusercontent.com/CompCogNeuro/sims/619a8bf188722ab0ea68dd73f4d83446dbea0567/ch3/necker_cube/fig_necker_cube.png",
+    "sha256": "e60c589195cb350a748c602b9df8b4d5aa9d35bcf40fcfce10a880d1196be9a6"
+  },
+  "companions": [
+    {
+      "file": "NeckerCubeNet.wts",
+      "source_url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_3/NeckerCubeNet.wts",
+      "sha256": "43b5e7dc76844ddf9a2a1041ff9bdac6465beb983dfcc2032618ddae34b99109",
+      "runtime_required": false,
+      "note": "Original course companion retained; current project embeds its weights and positions units natively."
+    },
+    {
+      "file": "necker_cube_weights.wts",
+      "source_url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_3/necker_cube_weights.wts",
+      "sha256": "7cb4aaa080544595babe35b4bea75eb4ccea52e57c9b56a9427cffc284bc73ce",
+      "runtime_required": false,
+      "note": "Original course companion retained; current project embeds its weights and positions units natively."
+    },
+    {
+      "file": "necker_cube_img1.iv",
+      "source_url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_3/necker_cube_img1.iv",
+      "sha256": "eafb97257f4b018a7e819fe421b5b4c2fe9b6632acd199715fa98f22bf7af0bc",
+      "runtime_required": false,
+      "note": "Original course companion retained; current project embeds its weights and positions units natively."
+    },
+    {
+      "file": "necker_cube_img2.iv",
+      "source_url": "https://www.ida.liu.se/~729G83/labs/bio/lab_files/chapter_3/necker_cube_img2.iv",
+      "sha256": "3785aba91ca51eaf8b858401705e2fe434c94d4111f03e4e5d0be5ce45e4417c",
+      "runtime_required": false,
+      "note": "Original course companion retained; current project embeds its weights and positions units natively."
+    }
+  ],
+  "license": "GPLv2 project; CC BY-SA 3.0 author wiki/figure and offline formatting adaptation",
+  "article_url": "https://grey.colorado.edu/CompCogNeuro/index.php/CCNBook/Sims/Networks/Necker_Cube",
+  "migration": "Ordinary Load/SaveCopy; cached author article and pinned figure made local. Network, parameters, native programs and embedded weights unchanged.",
+  "native_listing_preserved": true,
+  "historical_mechanism_boundary": "Current authored 8.5 uses FFFB inhibition, net-input noise and KNa adaptation; cached earlier kWTA/membrane-noise/AdEx narrative is retained with an explicit version note.",
+  "checks": [
+    {
+      "check": "console_exit",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "check": "server.runtime_diagnostics",
+      "actual": [],
+      "expected": []
+    },
+    {
+      "check": "console_exit",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "check": "server.runtime_diagnostics",
+      "actual": [],
+      "expected": []
+    }
+  ]
+}

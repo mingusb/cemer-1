@@ -1,0 +1,4 @@
+PASS zero-noise
+PASS zero-noise-adaptation
+PASS authored-default
+PASS authored-adaptation

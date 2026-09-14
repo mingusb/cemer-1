@@ -1,0 +1,5 @@
+=== RUN   TestPinnedActivationOracle
+    kernel_oracle_test.go:8: wrote258008 exact float32 oracle samples from unchanged pinned functions
+--- PASS: TestPinnedActivationOracle (0.05s)
+PASS
+ok  	github.com/compcogneuro/sims/v2	0.063s

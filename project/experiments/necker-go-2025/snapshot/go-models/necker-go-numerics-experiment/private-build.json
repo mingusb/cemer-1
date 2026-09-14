@@ -1,0 +1,15 @@
+{
+  "status": "BUILT_ISOLATED_EXPERIMENT",
+  "frozen_prefix": "/home/b/cemer/install-legacy-checkpoint",
+  "private_prefix": "/home/b/cemer/artifacts/go-models/necker-go-numerics-experiment/prefix",
+  "replacement_objects": [
+    "LeabraUnitSpec_cpp.cpp.o"
+  ],
+  "changes": [
+    "Pinned Go FastExp quartic spline and exponent>50 cutoff in both NoisyXX1 paths; no ABI or field changes. Also allow negative integrated Ge exactly as pinned Go GFromRaw and sum current E+L+I+K in pinned Go order."
+  ],
+  "sha256": {
+    "/home/b/cemer/artifacts/go-models/necker-go-numerics-experiment/LeabraUnitSpec_cpp.cpp.o": "3cd58df0901a6dc59da62a466785a162239dd7140b5240f518d7e95610fbae9f",
+    "/home/b/cemer/artifacts/go-models/necker-go-numerics-experiment/prefix/lib/libemergentlib.so.8.6.1": "897f0ad92680b1d4c327d5775179b444f7f24441df1f1b7f2cd23ac45fc5444f"
+  }
+}

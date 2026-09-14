@@ -1,0 +1,249 @@
+########### emergent leabra files ###############
+
+# IMPORTANT: this is just a list of files -- the compile commands are all located
+# in the emergent/lib dir, which is where everything is actually built
+# other targets are in CMakeLists.txt in this directory
+
+# although some attempt is made to keep track of gui-related files, a huge amount
+# of additional work would be required to fully split this out, and we need Qt
+# anyway, so there really isn't any point to it anymore
+
+# all headers that need maketa run on them
+set(leabra_HEADS_MAKETA
+  LeabraAvgMax.h
+  LeabraCon.h
+
+  LeabraProject.h
+
+  LeabraWizard.h
+
+  MSNCon.h
+)
+
+# multiple inheritence -- in correspondence with deps below
+set(leabra_HEADS_MAKETA_MI
+  LeabraConState_cpp.h
+  LeabraUnitState_cpp.h
+  LeabraUnGpState_cpp.h
+  LeabraPrjnState_cpp.h
+  LeabraLayerState_cpp.h
+  LeabraNetworkState_cpp.h
+
+  LeabraConSpec_cpp.h
+  LeabraConSpec.h
+  LeabraBiasSpec_cpp.h
+  LeabraBiasSpec.h
+
+  LeabraUnitSpec_cpp.h
+  LeabraUnitSpec.h
+
+  LeabraLayerSpec_cpp.h
+  LeabraLayerSpec.h
+
+  LeabraPrjn.h
+  LeabraLayer.h
+
+  LeabraNetwork.h
+
+  LeabraExtraConSpecs_cpp.h
+  LeabraExtraConSpecs.h
+  LeabraExtraUnitSpecs_cpp.h
+  LeabraExtraUnitSpecs.h
+  LeabraExtraLayerSpecs_cpp.h
+  LeabraExtraLayerSpecs.h
+)
+
+# note: there must be exactly same number of dependencies for each item
+# you can just add redundant ones to make it all work out
+set(leabra_HEADS_MAKETA_MI_DEPS
+  "LeabraConState_core.h;LeabraNetworkState_core.h;LeabraNetworkState_core.h"
+  "LeabraUnitState_core.h;LeabraNetworkState_core.h;LeabraNetworkState_core.h"
+  "LeabraUnGpState_core.h;LeabraNetworkState_core.h;LeabraNetworkState_core.h"
+  "LeabraPrjnState_core.h;LeabraNetworkState_core.h;LeabraNetworkState_core.h"
+  "LeabraLayerState_core.h;LeabraNetworkState_core.h;LeabraLayer_core.h"
+  "LeabraNetworkState_core.h;LeabraNetwork_core.h;LeabraNetworkState_core.h"
+
+  "LeabraConSpec_core.h;LeabraConSpec_mbrs.h;LeabraNetworkState_core.h"
+  "LeabraConSpec_core.h;LeabraConSpec_mbrs.h;LeabraNetworkState_core.h"
+  "LeabraBiasSpec_core.h;LeabraConSpec_core.h;LeabraNetworkState_core.h"
+  "LeabraBiasSpec_core.h;LeabraConSpec_core.h;LeabraNetworkState_core.h"
+
+  "LeabraUnitSpec_core.h;LeabraUnitSpec_mbrs.h;LeabraNetworkState_core.h"
+  "LeabraUnitSpec_core.h;LeabraUnitSpec_mbrs.h;LeabraNetworkState_core.h"
+
+  "LeabraLayerSpec_core.h;LeabraLayerSpec_mbrs.h;LeabraNetworkState_core.h"
+  "LeabraLayerSpec_core.h;LeabraLayerSpec_mbrs.h;LeabraNetworkState_core.h"
+
+  "LeabraPrjnState_core.h;LeabraNetworkState_core.h;LeabraNetworkState_core.h"
+  "LeabraLayer_core.h;LeabraLayerState_core.h;LeabraNetworkState_core.h"
+
+  "LeabraNetworkState_core.h;LeabraNetwork_core.h;LeabraNetworkState_core.h"
+
+  "LeabraConSpec_core.h;LeabraConSpec_mbrs.h;LeabraNetworkState_core.h"
+  "LeabraConSpec_core.h;LeabraConSpec_mbrs.h;LeabraNetworkState_core.h"
+  
+  "LeabraUnitSpec_core.h;LeabraUnitSpec_mbrs.h;LeabraNetworkState_core.h"
+  "LeabraUnitSpec_core.h;LeabraUnitSpec_mbrs.h;LeabraNetworkState_core.h"
+  
+  "LeabraLayerSpec_core.h;LeabraLayerSpec_mbrs.h;LeabraNetworkState_core.h"
+  "LeabraLayerSpec_core.h;LeabraLayerSpec_mbrs.h;LeabraNetworkState_core.h"
+)
+
+set(leabra_HEADS_NOMAKETA
+  LeabraGoMath.h
+  LeabraConState_core.h
+  LeabraUnitState_core.h
+
+  LeabraAvgMax_core.h
+  LeabraUnGpState_mbrs.h
+  LeabraUnGpState_core.h
+  LeabraPrjnState_core.h
+  LeabraLayer_core.h
+  LeabraLayer_mbrs.h
+  LeabraLayerState_core.h
+  
+  LeabraNetwork_mbrs.h
+  LeabraNetwork_core.h
+  LeabraNetworkState_core.h
+
+  LeabraConSpec_mbrs.h
+  LeabraConSpec_core.h
+  LeabraUnitSpec_mbrs.h
+  LeabraUnitSpec_core.h
+  LeabraLayerSpec_mbrs.h
+  LeabraLayerSpec_core.h
+
+  # all of these are included in the appropriate ExtraSpecs file
+  LeabraExtraConSpecs_mbrs.h
+
+  DeepCtxtConSpec.h
+  SendDeepRawConSpec.h
+  SendDeepModConSpec.h
+
+  MarkerConSpec.h
+  LeabraLimPrecConSpec.h
+
+  LeabraDeltaConSpec.h
+  DaDeltaConSpec.h
+  DaHebbConSpec.h
+  CHLConSpec.h
+
+  TDRewPredConSpec.h
+  LatAmygConSpec.h
+  BasAmygConSpec.h
+  BLAmygConSpec.h
+  CElAmygConSpec.h
+  MSNConSpec.h
+  HippoEncoderConSpec.h
+  CerebPfPcConSpec.h
+  
+  LeabraExtraUnitSpecs_mbrs.h
+  LayerActUnitSpec.h
+  DeepCopyUnitSpec.h
+  ThalSendUnitSpec.h
+  PoolInputsUnitSpec.h
+  
+  TDRewPredUnitSpec.h
+  TDRewIntegUnitSpec.h
+  TDDeltaUnitSpec.h
+
+  D1D2UnitSpec.h
+  BasAmygUnitSpec.h
+  BLAmygUnitSpec.h
+  CElAmygUnitSpec.h
+  PPTgUnitSpec.h
+  LHbRMTgUnitSpec.h
+  VTAUnitSpec.h
+  DRNUnitSpec.h
+  ClampDaUnitSpec.h
+  BFCSUnitSpec.h
+
+  MSNUnitSpec.h
+  TANUnitSpec.h
+  PatchUnitSpec.h
+  GPiInvUnitSpec.h
+  InvertUnitSpec.h
+  PFCUnitSpec.h
+  
+  ECoutUnitSpec.h
+  CA1UnitSpec.h
+  CerebGranuleUnitSpec.h
+  LeabraMultCopyUnitSpec.h
+  LeabraContextUnitSpec.h
+  LeabraTickDecodeUnitSpec.h
+
+  LeabraExtraLayerSpecs_mbrs.h
+  ScalarValLayerSpec.h
+  ExtRewLayerSpec.h
+  TwoDValLayerSpec.h
+  DecodeTwoDValLayerSpec.h
+  
+#  MotorForceLayerSpec.h
+#  LeabraV1LayerSpec.h
+#  GPiSoftMaxLayerSpec.h
+#  SubiculumLayerSpec.h
+
+#  LeabraExtraConSpecs_cuda.h
+#  LeabraExtraUnitSpecs_cuda.h
+#  LeabraExtraLayerSpecs_cuda.h
+)
+
+# all heads -- include maketa generated ones here
+set(leabra_HEADS
+  ${leabra_HEADS_MAKETA}
+  ${leabra_HEADS_MAKETA_MI}
+  ${leabra_HEADS_NOMAKETA}
+  ${leabra_HEADS_MAKETA_MI}
+)
+
+# all source files to compile: NOTE: do NOT include TA_ or .moc files -- auto generated
+set(leabra_SRCS
+  LeabraAvgMax.cpp
+  LeabraCon.cpp
+  LeabraConState_cpp.cpp
+  LeabraUnitState_cpp.cpp
+
+  LeabraUnGpState_cpp.cpp
+  LeabraPrjnState_cpp.cpp
+  LeabraLayerState_cpp.cpp
+  LeabraNetworkState_cpp.cpp
+
+  LeabraConSpec_cpp.cpp
+  LeabraConSpec.cpp
+  LeabraBiasSpec_cpp.cpp
+  LeabraBiasSpec.cpp
+
+  LeabraUnitSpec_cpp.cpp
+  LeabraUnitSpec.cpp
+
+  LeabraLayerSpec_cpp.cpp
+  LeabraLayerSpec.cpp
+  
+  LeabraPrjn.cpp
+  LeabraLayer.cpp
+  LeabraNetwork.cpp
+
+  LeabraProject.cpp
+
+  LeabraWizard.cpp
+
+  LeabraExtraConSpecs_cpp.cpp
+  LeabraExtraConSpecs.cpp
+  LeabraExtraUnitSpecs_cpp.cpp
+  LeabraExtraUnitSpecs.cpp
+  LeabraExtraLayerSpecs_cpp.cpp
+  LeabraExtraLayerSpecs.cpp
+
+#   MSNCon.cpp
+  LeabraExtraConSpecs_mbrs.cpp
+  LeabraExtraUnitSpecs_mbrs.cpp
+  LeabraExtraLayerSpecs_mbrs.cpp
+)
+
+set(leabra_CUDA
+  LeabraConSpec_cuda.cu
+
+  LeabraExtraConSpecs_cuda.cpp
+  LeabraExtraUnitSpecs_cuda.cpp
+  LeabraExtraLayerSpecs_cuda.cpp
+)

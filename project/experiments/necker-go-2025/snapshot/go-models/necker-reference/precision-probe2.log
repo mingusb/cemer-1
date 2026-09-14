@@ -1,0 +1,16 @@
+=== RUN   TestNeckerPrecisionSensitivity
+=== RUN   TestNeckerPrecisionSensitivity/exact-repeat
+    precision_test.go:51: cycles100000 exactNoisetrue maxActDifference0
+=== RUN   TestNeckerPrecisionSensitivity/one-ulp-one-channel-once
+    precision_test.go:51: cycles100000 exactNoisetrue maxActDifference0
+=== RUN   TestNeckerPrecisionSensitivity/one-ulp-all-channels-once
+    precision_test.go:51: cycles100000 exactNoisetrue maxActDifference0.91473085
+=== RUN   TestNeckerPrecisionSensitivity/one-ulp-all-channels-every-trial
+    precision_test.go:51: cycles100000 exactNoisetrue maxActDifference0.92133725
+--- PASS: TestNeckerPrecisionSensitivity (4.81s)
+    --- PASS: TestNeckerPrecisionSensitivity/exact-repeat (0.47s)
+    --- PASS: TestNeckerPrecisionSensitivity/one-ulp-one-channel-once (0.38s)
+    --- PASS: TestNeckerPrecisionSensitivity/one-ulp-all-channels-once (0.33s)
+    --- PASS: TestNeckerPrecisionSensitivity/one-ulp-all-channels-every-trial (0.32s)
+PASS
+ok  	github.com/compcogneuro/sims/v2	4.858s

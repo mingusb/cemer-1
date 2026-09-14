@@ -1,0 +1,4 @@
+# github.com/compcogneuro/sims/v2
+precision_test.go:38:55: expected boolean expression, found simple statement (missing parentheses around composite literal?)
+FAIL	github.com/compcogneuro/sims/v2 [setup failed]
+FAIL

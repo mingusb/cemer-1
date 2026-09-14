@@ -1,0 +1,43 @@
+{
+  "status": "PAUSED_BY_REQUEST",
+  "date_utc": "2026-09-14T03:28:03.446627+00:00",
+  "tracked_cpp_changes": false,
+  "active_own_processes": [],
+  "completed_evidence": {
+    "kernel_oracle": "258,008 float32 samples; 0 bit mismatches; strict Clang24 and UBSan pass.",
+    "complete_dynamic_cases": [
+      "authored-high-noise: 100 x 100 cycles",
+      "authored-low-noise: 100 x 100 cycles",
+      "authored-adaptation: 100 x 1000 cycles"
+    ],
+    "dynamic_comparison": "All eight recorded fields have maximum absolute float32 difference 0. These completed reports compare numeric float32 values; the later stronger sweep additionally checks raw bits.",
+    "stronger_sweep": "zero-noise 100 x 100 cycles passed raw float32 bit equality; interrupted during second case at user request."
+  },
+  "remaining": [
+    "Review and build artifact-only opt-in production patch; no production changes yet.",
+    "Re-run seven-condition full raw-bit differential gate against opt-in production build.",
+    "Complete native GUI controls, save/reopen and offline documentation acceptance.",
+    "Integrate tested project, portable runner, oracle and provenance only after acceptance."
+  ],
+  "artifacts": {
+    "necker-go-numerics-validation1/report.json": "0a7223ee716ccc05614241322869233c644683bafc6e2532939f44d64cb452b0",
+    "necker-go-numerics-final/report.json": "33fbaa1d24e219aac97eafff13f501c9d39a5bfbae78c741e571fd4165d967fb",
+    "necker-kernel-experiment/kernel-report.json": "cbc6f7dcfd71d0cbd689b9da6b15cccb0eee6e939be6f2798ca44f2c0d277706",
+    "necker-production-patch/necker-go-numerics.patch": "05e14d214feb119e401e4b80666bd95996ad6802d4fadf44c78ca35763e649dc",
+    "necker-native-candidate6/necker_cube.proj": "116b6efd2b6e148ae63ed309daf189c50fe8e8e87a02c12b760cc9ac35634a56",
+    "necker-reference/validate_go_numerics_final.py": "b16ebeada8356d91590832654b012a26b6dcd3858097fac885d88205b0482e76",
+    "necker-reference/native_gui.py": "85fa7b51cc508b42974ddc34a7e0c6410ec188475427946463d9812023a20f54"
+  },
+  "failed_history_retained": [
+    "necker-native-validation5",
+    "necker-kernel-validation2",
+    "necker-kernel-validation3",
+    "necker-kernel-ge-validation1"
+  ],
+  "candidate": "necker-native-candidate6",
+  "private_proven_kernel_prefix": "necker-go-numerics-experiment/prefix",
+  "notes": [
+    "Current candidate requires private combined kernel; unchanged production build does not contain the opt-in numerical mode.",
+    "No new ETA; work paused as requested."
+  ]
+}

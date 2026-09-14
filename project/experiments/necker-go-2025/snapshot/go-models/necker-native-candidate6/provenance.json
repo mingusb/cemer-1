@@ -1,0 +1,36 @@
+{
+  "status": "CANDIDATE_UNDER_VALIDATION",
+  "source_repository": "https://github.com/CompCogNeuro/sims",
+  "revision": "619a8bf188722ab0ea68dd73f4d83446dbea0567",
+  "source_path": "ch3/necker_cube",
+  "model_pinned_engine": "79e931d6fe3b",
+  "native_base_sha256": "43677d993f52012facbfba075221171f7ae317b3acbb250e76713e141ca08340",
+  "project_sha256": "116b6efd2b6e148ae63ed309daf189c50fe8e8e87a02c12b760cc9ac35634a56",
+  "changes": [
+    "Map Erev.K from0.1 to current Go default0.25.",
+    "Use100 all-one input trials as in current Go looper.",
+    "Preserve three KNa channels across trials, while first-cycle Vm/Act uses decayed aggregateGk; native UserScript recurrence.",
+    "Keep only current trial cycle log, as in Go ResetLogBelow.",
+    "Refresh native view every10cycles, matching Go GUI interval.",
+    "Map current Go per-trial pool activity/conductance average decay before first cycle; native older trial decay omits these averages.",
+    "Use existing native KNaAdaptSpec.Compute_dKNa_rate on restored channels after first-cycle act; preserves float32 expression ordering instead of CSS double intermediates.",
+    "Map Go inclusive poolGe statistics using native absolute net_thr=-FLT_MAX and thr_rel=false."
+  ],
+  "limits": [
+    "Cross-language all100-trial validation pending.",
+    "Native quarter_cycles maps authored100/1000-cycle exercises; arbitrary nonmultiples-of-four GoCycles not yet mapped.",
+    "Original Go PlusPhase flag stays at75 after changingCycles1000; native quarter phase follows750. This nonlearning Input-layer task does not use target clamping, but internal phase flags are not yet equivalent."
+  ],
+  "generation_checks": [
+    {
+      "check": "console_exit",
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "check": "server.runtime_diagnostics",
+      "actual": [],
+      "expected": []
+    }
+  ]
+}

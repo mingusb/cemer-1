@@ -1,0 +1,101 @@
+{
+  "status": "FAIL",
+  "cases": [
+    {
+      "name": "authored-high-noise",
+      "checks": [
+        {
+          "check": "LeabraEpoch.run_state",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "all100_trials_ran",
+          "actual": 10000,
+          "expected": 10000
+        },
+        {
+          "check": "correct_cycle_counters",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "correct_trial_counters",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "noise_replay_exact_float32",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "activation_within_declared_tolerance",
+          "actual": false,
+          "expected": true
+        }
+      ],
+      "maximum_absolute_differences": {
+        "Noise": {
+          "maximum": 0,
+          "at": null
+        },
+        "Act": {
+          "maximum": 0.9654789896594593,
+          "at": {
+            "trial": 44,
+            "cycle": 77,
+            "unit": 4,
+            "go": 0.96563214,
+            "cpp": 0.00015315097698476166
+          }
+        },
+        "Ge": {
+          "maximum": 0.47690480947494507,
+          "at": {
+            "trial": 68,
+            "cycle": 90,
+            "unit": 14,
+            "go": 0.74263346,
+            "cpp": 0.2657286524772644
+          }
+        },
+        "Gi": {
+          "maximum": 0.29917630553245544,
+          "at": {
+            "trial": 41,
+            "cycle": 69,
+            "unit": 0,
+            "go": 0.4770129,
+            "cpp": 0.7761892080307007
+          }
+        },
+        "Vm": {
+          "maximum": 0.28845205903053284,
+          "at": {
+            "trial": 27,
+            "cycle": 62,
+            "unit": 2,
+            "go": 0.54330564,
+            "cpp": 0.25485357642173767
+          }
+        },
+        "KFast": {
+          "maximum": 0,
+          "at": null
+        },
+        "KMed": {
+          "maximum": 0,
+          "at": null
+        },
+        "KSlow": {
+          "maximum": 0,
+          "at": null
+        }
+      }
+    }
+  ],
+  "scope": "All100 native trials, exact author model-pinned Go reference; injected reference noise only in disposable validation copy to isolate RNG differences.",
+  "error": "activation_within_declared_tolerance: got False, expected True",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/b/cemer/artifacts/go-models/necker-reference/validate_kernel_ge1.py\", line 49, in <module>\n    c.equal('activation_within_declared_tolerance',item['maximum_absolute_differences']['Act']['maximum']<(0.01 if noise else 0.00001),True)\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/b/cemer/project/test/modern_stack_regressions.py\", line 261, in equal\n    require(actual == expected, f\"{name}: got {actual!r}, expected {expected!r}\")\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/b/cemer/project/test/modern_stack_regressions.py\", line 201, in require\n    raise AssertionError(detail)\nAssertionError: activation_within_declared_tolerance: got False, expected True\n"
+}

@@ -1,0 +1,17 @@
+{
+  "model_repository": "https://github.com/CompCogNeuro/sims",
+  "model_revision": "619a8bf188722ab0ea68dd73f4d83446dbea0567",
+  "model_path": "ch3/necker_cube",
+  "engine_revision": "79e931d6fe3b",
+  "source_files_unchanged": {
+    "fig_necker_cube.png": "e60c589195cb350a748c602b9df8b4d5aa9d35bcf40fcfce10a880d1196be9a6",
+    "LICENSE": "0c38cff9044c821607ce7142a1367421a48dc6c258f66901c43a9d05d1caf0b2",
+    "necker_cube.go": "cbb88def1a8f1b7a796de6742fe8fd942400effb348f0f17148b14ee225f5289",
+    "typegen.go": "b4cc4ba14393347a125f31455f2c890262ef6f8aae560c70f2e7648cb7c122c2",
+    "go.sum": "ea8bef5d93b333f916845cdf4371aabb08a7904e0689202fc890564c1b75f560",
+    "necker_cube.wts": "106fb8cdffb20a05446f99ec72d4f7b9fe33fc0463a14d735ace25b39d33c786",
+    "README.md": "e5c3e1bf8f88c6a6ec1051130fc80605049c6ddbadeb53e5230d529a997a172d",
+    "go.mod": "cab657c7ef85c53b579bb1bb3c178c5747af6ed36c8907c11d313ef930d11e8a"
+  },
+  "headless_instrumentation": "Original Sim.New/ConfigAll/Init/Looper run. Test removes only callbacks whose name starts GUI; read-only Cycle-end observer records engine state."
+}

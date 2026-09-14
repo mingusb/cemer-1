@@ -1,0 +1,154 @@
+--- a/project/src/emergent/leabra/LeabraUnitSpec_mbrs.h
++++ b/project/src/emergent/leabra/LeabraUnitSpec_mbrs.h
+@@ -25,10 +25,19 @@
+ #endif
+ 
+ 
++#ifndef __MAKETA__
++#include <LeabraGoMath>
++#endif
++
+ class STATE_CLASS(LeabraActFunSpec) : public STATE_CLASS(SpecMemberBase) {
+   // ##INLINE ##NO_TOKENS ##CAT_Leabra activation function specifications, using the gelin (g_e linear) activation function by default
+ INHERITED(SpecMemberBase)
+ public:
++  enum Numerics {
++    LEGACY_CPP,                     // historical Emergent activation and conductance arithmetic
++    GO_LEABRA_2025                  // pinned Go Leabra 79e931d: FastExp activation, signed Ge, and E+L+I+K current order
++  };
++  Numerics      numerics;           // #DEF_LEGACY_CPP #EXPERT select the numerical conventions required by the model; historical projects retain LEGACY_CPP
+   float         thr;                // #DEF_0.5 threshold value Theta (Q) for firing output activation (.5 is more accurate value based on AdEx biological parameters and normalization -- see BioParams button)
+   float         gain;                // #DEF_80;100;40;20 #MIN_0 gain (gamma) of the rate-coded activation functions -- 100 is default, 80 works better for larger models, and 20 is closer to the actual spiking behavior of the AdEx model -- use lower values for more graded signals, generally in lower input/sensory layers of the network
+   float         nvar;                // #DEF_0.005;0.01 #MIN_0 variance of the Gaussian noise kernel for convolving with XX1 in NOISY_XX1 and NOISY_LINEAR -- determines the level of curvature of the activation function near the threshold -- increase for more graded responding there -- note that this is not actual stochastic noise, just constant convolved gaussian smoothness to the activation function
+@@ -63,6 +72,11 @@
+   
+   INLINE float  NoisyXX1(float x) {
+     if(x < 0.0f) {        // sigmoidal for < 0
++      if(numerics == GO_LEABRA_2025) {
++        const float exponent = -(x * sig_gain_nvar);
++        if(exponent > 50.0f) return 0.0f;
++        return sig_mult_eff / (1.0f + LeabraGoFastExp(exponent));
++      }
+       return sig_mult_eff / (1.0f + expf(-(x * sig_gain_nvar)));
+     }
+     else if(x < interp_range) {
+@@ -92,6 +106,11 @@
+       float sig_val_at_0_arg = 0.5f * sig_mult_eff_arg;
+     
+       if(x < 0.0f) {        // sigmoidal for < 0
++        if(numerics == GO_LEABRA_2025) {
++          const float exponent = -(x * sig_gain_nvar);
++          if(exponent > 50.0f) return 0.0f;
++          return sig_mult_eff_arg / (1.0f + LeabraGoFastExp(exponent));
++        }
+         return sig_mult_eff_arg / (1.0f + expf(-(x * sig_gain_nvar)));
+       }
+       else { // else x < interp_range
+@@ -121,6 +140,7 @@
+ 
+   void        Initialize()      { Defaults_init(); }
+   void        Defaults_init() {
++    numerics = LEGACY_CPP;
+     thr = 0.5f;  gain = 100.0f;  nvar = 0.005f;  vm_act_thr = 0.01f; avg_correct = 1.0f;
+     sig_mult = 0.33f; sig_mult_pow = 0.8f; sig_gain = 3.0f;
+     interp_range = 0.01f; gain_cor_range = 10.0f; gain_cor = 0.1f;
+--- a/project/src/emergent/leabra/LeabraUnitSpec_core.h
++++ b/project/src/emergent/leabra/LeabraUnitSpec_core.h
+@@ -766,6 +766,10 @@
+ 
+   INLINE float Compute_INet_impl(LEABRA_UNIT_STATE* u, const float v_m_eff, const float net_eff,
+                                  const float gc_i, const float gc_k) { (void)u;
++    if(act.numerics == STATE_CLASS(LeabraActFunSpec)::GO_LEABRA_2025) {
++      return net_eff * (e_rev.e - v_m_eff) + g_bar.l * (e_rev.l - v_m_eff) +
++        gc_i * (e_rev.i - v_m_eff) + gc_k * (e_rev.k - v_m_eff);
++    }
+     return net_eff * (e_rev.e - v_m_eff) + g_bar.l * (e_rev.l - v_m_eff) +
+       gc_k * (e_rev.k - v_m_eff) + gc_i * (e_rev.i - v_m_eff);
+   }
+--- a/project/src/emergent/leabra/LeabraUnitSpec_core.cpp
++++ b/project/src/emergent/leabra/LeabraUnitSpec_core.cpp
+@@ -522,8 +522,8 @@
+   }
+   else {
+     u->net += dt.integ * dt.net_dt * (net_tot - u->net);
+-    if(act_fun != SIGMOID) {
+-      if(u->net < 0.0f) u->net = 0.0f; // negative netin doesn't make any sense
++    if(act_fun != SIGMOID && act.numerics != STATE_CLASS(LeabraActFunSpec)::GO_LEABRA_2025) {
++      if(u->net < 0.0f) u->net = 0.0f; // historical rate-code conductance clamp
+     }
+   }
+ 
+--- a/project/src/emergent/leabra/CMakeFiles.txt
++++ b/project/src/emergent/leabra/CMakeFiles.txt
+@@ -90,6 +90,7 @@
+ )
+ 
+ set(leabra_HEADS_NOMAKETA
++  LeabraGoMath.h
+   LeabraConState_core.h
+   LeabraUnitState_core.h
+ 
+--- a/project/src/emergent/leabra/LeabraGoMath.h
++++ b/project/src/emergent/leabra/LeabraGoMath.h
+@@ -0,0 +1,30 @@
++// Copyright 2021 Cogent Core. All rights reserved.
++// BSD-3-Clause; see LeabraGoMath.LICENSE.
++// Translation of cogentcore/core math32.FastExp at 0361cb48ba1c.
++// Used by the opt-in Go Leabra numerical mode; the NoisyXX1 caller bounds
++// the exponent to [0, 50]. This approximation is not a general exp replacement.
++#ifndef LeabraGoMath_h
++#define LeabraGoMath_h 1
++
++#include <cstdint>
++#include <cstring>
++
++#if defined(__CUDACC__)
++__host__ __device__
++#endif
++inline float LeabraGoFastExp(float x) {
++  if(x <= -88.02969f) return 0.0f;
++  std::int32_t i = static_cast<std::int32_t>(12102203.0f * x) + 127 * (std::int32_t{1} << 23);
++  const std::int32_t m = (i >> 7) & 0xFFFF;
++  i += (((((((((((3537 * m) >> 16) + 13668) * m) >> 18) + 15817) * m) >> 14) - 80470) * m) >> 11);
++#if defined(__CUDA_ARCH__)
++  return __int_as_float(i);
++#else
++  const auto bits = static_cast<std::uint32_t>(i);
++  float result;
++  std::memcpy(&result, &bits, sizeof(result));
++  return result;
++#endif
++}
++
++#endif
+--- a/project/src/emergent/leabra/LeabraGoMath.LICENSE
++++ b/project/src/emergent/leabra/LeabraGoMath.LICENSE
+@@ -0,0 +1,28 @@
++BSD 3-Clause License
++
++Copyright (c) 2018, Cogent Core
++
++Redistribution and use in source and binary forms, with or without
++modification, are permitted provided that the following conditions are met:
++
++1. Redistributions of source code must retain the above copyright notice, this
++   list of conditions and the following disclaimer.
++
++2. Redistributions in binary form must reproduce the above copyright notice,
++   this list of conditions and the following disclaimer in the documentation
++   and/or other materials provided with the distribution.
++
++3. Neither the name of the copyright holder nor the names of its
++   contributors may be used to endorse or promote products derived from
++   this software without specific prior written permission.
++
++THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
++AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
++IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
++DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
++FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
++DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
++SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
++OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

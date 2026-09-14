@@ -1,0 +1,16 @@
+{
+  "all_65536_mantissas_checked": true,
+  "integer_product_minima": [
+    0,
+    0,
+    0,
+    -1478816775
+  ],
+  "integer_product_maxima": [
+    231797295,
+    1127464140,
+    1318367595,
+    0
+  ],
+  "all_int32_products_in_range": true
+}

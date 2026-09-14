@@ -1,0 +1,34 @@
+{
+  "Noise": {
+    "maximum": 0,
+    "at": null
+  },
+  "Act": {
+    "maximum": 0,
+    "at": null
+  },
+  "Ge": {
+    "maximum": 0,
+    "at": null
+  },
+  "Gi": {
+    "maximum": 0,
+    "at": null
+  },
+  "Vm": {
+    "maximum": 0,
+    "at": null
+  },
+  "KFast": {
+    "maximum": 0,
+    "at": null
+  },
+  "KMed": {
+    "maximum": 0,
+    "at": null
+  },
+  "KSlow": {
+    "maximum": 0,
+    "at": null
+  }
+}

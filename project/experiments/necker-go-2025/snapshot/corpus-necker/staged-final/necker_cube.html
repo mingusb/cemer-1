@@ -1,0 +1,129 @@
+<html><head><meta charset="utf-8"><style>body{font:16px sans-serif;line-height:1.45;padding:14px;color:#17212b;background:white}table{max-width:100%}a{color:#1659a0}.provenance{background:#edf4fa;padding:10px}img{max-width:100%}</style></head><body><div class="provenance"><b>Necker Cube — competing interpretations</b><p>Open ControlPanel, use PositionUnits_Run to arrange the two cubes, then Init and Run. Step Cycle shows settling; CycleOutputData plots harmony. Noise variance 0 keeps the alternatives tied; restore 0.01 to break symmetry. To explore switching, enable kna_adapt_on and set quarter_cycles to 250, then Init and Run.</p><p>This is the author's maintained 8.5 project, whose changelog explicitly updates adaptation and unit positioning. Its current mechanisms are FFFB pooled inhibition, Gaussian noise added to net input, and sodium-activated potassium-channel adaptation. The cached older article below refers to kWTA, membrane-potential noise and AdEx; those historical mechanisms are not claimed reproduced here. The network, embedded fixed weights and native programs remain unchanged.</p></div><table style="width: 35em; font-size: 90%; border: 1px solid #aaaaaa; background-color: #f9f9f9; color: black; margin-bottom: 0.5em; margin-left: 1em; padding: 0.2em; float: right; clear: right; text-align:left;">
+<tbody><tr>
+<th style="text-align: center; background-color:#ccccff;" colspan="2"><big>CCNBook/Sims/Networks/Necker Cube</big>
+</th></tr>
+<tr>
+<th> Project Name
+</th>
+<td> necker_cube
+</td></tr>
+<tr>
+<th> Filename
+</th>
+<td> <a href="https://grey.colorado.edu/CompCogNeuro/index.php/File:necker_cube.proj" title="File:necker cube.proj">File:necker cube.proj</a> <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.OpenProjectFromWeb(necker_cube.proj,https://grey.colorado.edu/CompCogNeuro/index.php/MainPage)&amp;action=edit&amp;redlink=1" class="new" title=".OpenProjectFromWeb(necker cube.proj,https://grey.colorado.edu/CompCogNeuro/index.php/MainPage) (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Open Project in emergent</span></a>
+</td></tr>
+<tr>
+<th> Author
+</th>
+<td>  Randall C. O'Reilly
+</td></tr>
+<tr>
+<th> Email
+</th>
+<td> emergent-users@grey.colorado.edu
+</td></tr>
+<tr>
+<th> Publication
+</th>
+<td> <a href="https://grey.colorado.edu/CompCogNeuro/index.php/OReillyMunakataFrankEtAl12" title="OReillyMunakataFrankEtAl12">(O'Reilly, Munakata, Frank, Hazy, &amp; Contributors, 2012)</a>
+</td></tr>
+<tr>
+<th> First Published
+</th>
+<td> Jul 28 2016
+</td></tr>
+<tr>
+<th> Tags
+</th>
+<td>  Constraint Satisfaction, Settling, Harmony, Energy Minimization, Adaptation
+</td></tr>
+<tr>
+<th> Description
+</th>
+<td>  Simulates the competition between two interepretations of the Necker Cube, and the constraint-satisfaction process of settling into one interpretation.
+</td></tr>
+<tr>
+<th> Updated
+</th>
+<td> 28 July 2016,  6 September 2016,  13 January 2017
+</td></tr>
+<tr>
+<th> Versions
+</th>
+<td> 8.0.0,  8.0.2,  8.0.3
+</td></tr>
+<tr>
+<th> Emergent Versions
+</th>
+<td> 8.0.0,  8.0.4
+</td></tr>
+<tr>
+<th> Other Files
+</th>
+<td> <a href="https://grey.colorado.edu/CompCogNeuro/index.php/File:NeckerCubeNet.wts" title="File:NeckerCubeNet.wts">File:NeckerCubeNet.wts</a>
+</td></tr></tbody></table>
+<p><br>
+Back to <a href="https://grey.colorado.edu/CompCogNeuro/index.php/CCNBook/Sims/All" title="CCNBook/Sims/All">CCNBook/Sims/All</a> or <a href="https://grey.colorado.edu/CompCogNeuro/index.php/CCNBook/Networks" title="CCNBook/Networks">Networks Chapter</a>.
+</p>
+<h1><span class="mw-headline" id="Introduction">Introduction</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=CCNBook/Sims/Networks/Necker_Cube&amp;action=edit&amp;section=1" title="Edit section: Introduction">edit</a><span class="mw-editsection-bracket">]</span></span></h1>
+<div class="thumb tright"><div class="thumbinner" style="width:302px;"><a href="https://grey.colorado.edu/CompCogNeuro/index.php/File:fig_necker_cube.png" class="image"><img alt="a: ambiguous cube; b and c: its two coherent interpretations" width="300" height="96" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlsAAADBCAYAAAD4p3V9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAXEgAAFxIBZ5/SUgAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAB/QSURBVHic7d15dFN1/sbxp0BZVEAEWizIDoKsMijLuIxH3GYUFZTF5Tgt0IKytegIBXeUcePQFto6LAkwIm5sgkWHM1IQRAcRiuDQUpZDyza0UJQWgTa/Pzz015q0gcDNN7d5v87JOZN8c5OPY655+uTmJsTlcrkEAAAAS1QzPQAAAEBVRtgCAACwEGELAADAQoQtAAAACxG2AAAALETYAgAAsBBhCwAAwEJ+DVs5OTnav3+/P58SCDj79+/Xf//7X504ceKCtzl69Kj27duns2fPWjgZULXk5ubynoOA4NewNXXqVLVs2VIrVqzw59MCAWXw4MHq2LGjPvzwwwve5uOPP1arVq305ptvWjgZULX8/e9/V8uWLfXpp5+aHgVBLsSfZ5DPyclRu3bt1Lx5c/34448KDQ3111MDAaN379769ttvlZqaqpiYmAva5syZM2rfvr3y8vKUlZWlJk2aWDwlYH+HDh1SmzZtFBERoZ07d6pmzZqmR0KQ8muz1axZMw0bNkyZmZn6xz/+4c+nBmytZs2aio+P1y+//KKXXnrJ9DiALVx77bWKiYlRdna2kpOTTY+DIOb3A+SjoqIkSQkJCeJnGYELN2TIENWuXVsLFixQfn6+6XEAW4iMjJQkJSYmqqSkxPA0CFaXHLYOHDigtWvX6sMPP9SaNWu0b9++Sl/QPXr0UIcOHZSVlaU1a9Zc6tMDVcKePXu0dOlS7dixo8L9p169eurfv79Onz4th8Ph5wmBwHPgwAF9+eWX+uijj7Ru3TodP37c7T5du3ZVly5dtHfvXq1evdrAlMAlhK3U1FR16tRJzZs31x133KEhQ4borrvuUqtWrdSjRw9t3ry5wm0ffPBBSdKCBQt8fXqgSli7dq0iIiLUpk0bDRgwQJ07d1Z4eLi++OILj/c/v+8sXLjQn2MCAeWDDz5QeHi4mjdvrnvuuUeDBw/W7bffriZNmuiJJ55wuz/7DUyr4euGK1as0L59+/Twww+rVatWCgsL05EjR5SWlqZt27apd+/e2rx5s7p37+62bd++fSVJX331le+TAza3fv16TZgwQa1bt9ZTTz2lGjVq6Msvv9R3332nv/zlL3I6nW5vHH369JEkZWRkKC8vTw0bNjQxOmDM448/rkWLFkmSbrnlFt10001q2LCh9u7dq/T0dI/vK7znwDiXj/7973+7CgoK3G4/d+6cKzo62iXJdfvtt3vc9siRIy5JLkmurKwsX0cAbKlXr16lr//Bgwe7fv3119K14uJi19NPP+2S5AoPD3edOnXKbfvw8HCXJNeSJUv8OTZg3EcffeSS5AoNDXU5HA639ZKSEtfGjRvdbs/Pzy/d53766Sc/TAqU5/PHiHfccYfq1avndnv16tWVlJSkK664Qunp6Tp27JjbfcLCwlS7dm1JUlZWlq8jALZ25ZVXKjk5udzX0atVq6bp06crPDxcR44cUWpqqtt2LVq0kCRlZmb6bVbAtOLiYsXFxUmSYmJi9Ne//tXtPiEhIaXtb1kNGjRQ3bp1JbHfwIzL8m3EEydO6Mcff1R6errWrl2rjRs3KiIiQtJvB/56cs0110j67czYQDAaMGBA6X5QVq1atfTkk09Kkr755hu39fPb/O9//7N2QCCA7NmzRzk5OZKk55577qK3Z7+BST4fs1VYWKiUlBQlJCTowIEDFd5v//79uvnmm91ur1evng4ePHhRP1kCVCWtWrXyupadne22dv4vdPYdBJNdu3ZJkq644go1b978ordnv4FJPoUtl8ulwYMHa+XKlapVq5b69++vTp06qV69eqUfDyYkJGjfvn06d+6cx8c4efKkJOnqq6/2cXTA3io7uP382uHDh93Wfv75Z0nsOwgu51stX389gf0GJvkUtj755BOtXLlSjRs31jfffKM2bdq43WfmzJmVPsb5kzKGhYX5MgJge56OZ/z9WtOmTd3Wzu87jRs3tmYwIACdb7MOHjwol8ulkJCQi9qe/QYm+XTM1rfffitJGjhwoMeg9euvv2rfvn0Vbn/06FGdPn1aktSuXTtfRgBsr6LjGcuutW7d2m1t//79kqT27dtbMxgQgDp06CBJOn36tPbu3XtR2x4/fry02WK/gQk+ha28vDxJ8ni2Xum3E54WFxdXuP2mTZsk/fZXe9u2bX0ZAbC9JUuWePyCSGFhYekJf2+77bZya3v37tWRI0cUEhLitgZUZS1btiz94/6NN964qG3Pv+eEh4eXhjbAn3wK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553q37+/MjIyPDYmJu3YsaPc9X379ik1NdXQNGbk5OTI6XQqNzfXbY02y3ozZszQ888/rzNnzritdevWTY899pgKCgqC7nVpBwUFBfr000/1n//8x22NNst6y5cv18iRI3X48GG3tZ49e8rpdNJmIWBdVNg6f/6SirhcLq1Zs0Zr1qy55MH8Ydu2bRo1apTpMQICbZZ/pKenewxa0m+vx23btvl5IlyM0NBQt9vuvfdezZ49W82aNTMwUfDYunWrW9CqWbOmXn75ZdosBLxqpgeAWc2aNVNaWprmzp1L0LKYw+FQnz59FBISYnoU+Khp06al/7t+/fqaO3eu0tLSCFoWW7FihRo1alTu49mePXtqy5YtmjRpEkELAc+vP0SNwNKzZ0+tWbOGkOUnsbGxHo/zgX3s27dPknTttdfqu+++I2T5yfTp05Wenl56feTIkUpKSlKNGryFwR4u6ZVat25dRUVFXa5ZLLd//34tW7as9Hrr1q31wAMPGJzIvzZs2KDNmzeXXh84cCBBy6DRo0fzF7lNZGZmKi0trfT6bbfdRtAy6KmnniJowVYu6dV6zTXXaMaMGZdrFsutXr26XNjq0qWLrea/VBMnTiwXtmDW22+/rdq1a5seAxdg8eLF5cIWAFwMjtkCAACwEGELAADAQoQtAAAACxG2AAAALETYAgAAsBBhCwAAwEKELQAAAAsRtgAAACxE2AIAALAQYQsAAMBChC0AAAALEbYAAAAsRNgCAACwEGELAADAQoQtAAAACxG2AAAALETYAgAAsBBhCwAAwEKELQAAAAsRtgAAACxE2AIAALAQYQsAAMBChC0AAAALEbYAAAAsRNgCAACwEGELAADAQoQtAAAACxG2AAAALETYAgAAsBBhCwAAwEKELQAAAAsRtgAAACxE2AIAALAQYQsAAMBChC0AAAALEbYAAAAsRNgCAACwEGELAADAQoQtAAAACxG2AAAALETYAgAAsBBhCwAAwEKELQAAAAsRtgAAACxE2AIAALAQYQsAAMBChC0AAAALEbYAAAAsRNgCAACwEGELAADAQoQtAAAACxG2AAAALETYAgAAsBBhCwAAwEKELQAAAAsRtgAAACxE2AIAALAQYQsAAMBChC0AAAALEbYAAAAsRNgCAACwEGELAADAQoQtAAAACxG2AAAALETYAgAAsBBhCwAAwEKELQAAAAsRtgAAACxE2AIAALAQYQsAAMBChC0AAAALEbYAAAAsRNgCAACwEGELAADAQjVMD2DSt99+q4ceesj0GH6zc+fOctcXLlyoTZs2GZrm4tlpVgA4z+Vylbv++OOPKzQ01NA0uBi5ubmX5XGCJmzl5+frrbfeKnfb4cOHtXz5ckMTmbdz5063AAagasnOztaiRYtMjxG0Fi5cqJ9//rncbZ9//rmhaWBKUISt5cuXa+TIkTp8+LDpUQDAL1wul2bOnKmJEyeqsLBQktSvXz8988wz6tSpk+Hpqr5Dhw4pJiZGn332mSSpevXqCg0N1enTpw1PBl/Uq1dPTqdT1113nU/bV+ljtvLz8/XEE0/ooYceImgBCBrZ2dn605/+pLFjx5YGLUlas2aN6tSpo3bt2hmcrupbuHChOnXqVBq0JKm4uFhnz541OBUuxcmTJ7V//3717NnTp+2rbLNVWZvVrl07xcXFqWXLlv4fzKB58+bp448/Lr0eGRmpQYMGGZzIs9OnT2vevHlauXKl27EOISEhGjhwoJ588kmfX/RAVeWpzSrrgQceUNeuXQ1MFhwOHTqk6OhorVy50m2tbt26GjZsmO6++26FhIQYmA7ebNq0SUlJScrPz3db69y5s+6++26fH7vKha38/HyNHTtW77//vttazZo19eKLL+r5559XjRpV7h/dq7Vr15a73r59e917771mhqnA2rVr9cwzz2jPnj1uax06dJDD4VDv3r0NTAYEtuzsbEVFRWndunVuaw0aNFBCQoKefPJJA5MFhwULFmj8+PE6fvy429qdd96puXPnqkWLFgYmgzfHjx/X2LFj9c9//tNtrVatWnrllVf07LPPqnr16j4/R5VKHCtWrFBMTIzHNusPf/iDnE6nOnfubGAyeHPq1ClNnDhRs2bNcmuzqlWrpri4OL322muqXbu2oQmBwORyuZSUlKRJkyZV2Ga99957uvbaaw1MV/UdPHhQMTExFbZZb7/9tqKjo2mzAtSKFSs0cuRIHTp0yG3t5ptvlsPh0A033HDJz1MlwlZlqTTY2yw7SE9PV1RUlMc26/rrr5fD4VCfPn0MTAYENm9tVmJiop544gkDkwUH2iz7ys/P17hx4yxts8qyffqoLJXSZgU22izAN97arP79+ys1NZU2yyK0WfZW2adgl7PNKsu2Yctbm/XCCy9o4sSJtFkBijYL8M3u3bsVFRWl9evXu63RZllvwYIFGjdunE6cOOG2RpsV2Co7ptuKNqssWyaRzz77TDExMR7brB49esjpdKpLly4GJoM3p06d0qRJkzRz5kyPbVZsbKymTp1KmwX8zoW0We+9956aNGliYLqq7+DBg4qOjtaqVavc1mizAl9lZyiwqs0qy1Zh6/jx4xo3bpwWLlzotkabFfjWrVunqKgoZWdnu621b99eTqeTNgvwoLI265prrlFCQgJtloXmz5+v8ePH02bZkMk2qyzbpBLaLPsqLCzUxIkTabOAi+RyuZSYmKj4+HjaLANos+zNdJtVVsCHLW9t1pQpUzRp0iTarADlrc1yOBzq27evgcmAwOatzUpMTNTjjz9uYLLgQJtlX4HSZpUV0All5cqVio6O9thm3XjjjZo/fz5tVoAqLCzUpEmTlJSU5LHNGj9+vKZOnao6deoYmhAITCUlJUpKSqqwzXrwwQeVmppKm2UR2ix7C6Q2q6yADFvHjx/X+PHjtWDBAre10NBQvfDCC7RZAYw2C/DN7t27FRkZqa+//tptjTbLerRZ9pWfn68xY8Zo0aJFbmum2qyyAi6trFy5UjExMTp48KDb2o033iin08lvewUo2izAN7RZZuXm5iomJoY2y6aWLVumUaNGBVybVVbAhK0TJ05o3LhxFbZZU6ZMUXx8PG1WgFq/fr0iIyM9tlnt2rWTw+HQH//4RwOTAYGNNsssp9Op2NhY2iwbCvQ2q6yASC6rVq1SdHQ0bZYNFRYWKj4+XomJiR7brHHjxun111+nzQJ+p6SkpPSbhkVFRW7rtFnWys3NVXR0tD7//HO3NdqswLds2TKNHDlSR44ccVsLlDarLKNh68SJExo/frzmz5/vtkabFfjWr1+vqKgo7d69222NNguoWFZWlqKioipss5KSkvTYY48ZmCw40GbZV15ensaOHWuLNqssYymmsjare/fucjqd6tatm4HJ4M35NispKUklJSXl1mizgIp5a7MeeughpaSk0GZZhDbL3uzWZpXl97Dlrc2aPHmy4uPjFRoa6u/RcAG+/vprRUZG0mYBF4k2yyzaLPvKy8vTmDFj9MEHH7itBXKbVZZfw9bnn3+u6Oho5ebmuq3RZgW2oqKi0mOzPLVZY8eO1RtvvEGbBfzOhbRZqampCg8PNzBd1UebZW9Lly7VqFGjbNlmleWXsHXixAnFxsbK6XS6rdFmBb7K2qy2bdvK4XDolltuMTAZENiysrIUGRmpDRs2uK01bNhQiYmJtFkWcjgcio2NVUFBgdsabVZgqwptVlmWhy3aLPuizQJ8U1JSooSEBE2ePJk2y4Dc3FyNGDFCaWlpbmu0WYGvqrRZZVkWtgoKCjR+/PgK26z4+HhNnjyZNitAbdiwQZGRkcrKynJbo80CKuatzUpKStLQoUMNTBYcaLPsq6q1WWVZErbS0tI0YsQIj21Wt27d5HQ61b17dyueGpeoqKhIkydPVkJCgsc2a8yYMXrjjTd0xRVXGJoQCEze2qyHH35YKSkptFkWoc2yt6rYZpV1WcNWQUGBYmNj5XA43NZoswKftzZr3rx5uvXWWw1MBgQ22iyzaLPsKy8vT6NHj9bixYvd1uzeZpV12cIWbZZ9VdZmhYSElB6bRZsFlFdSUqIZM2ZoypQptFkG5OTkKDo6mjbLppYsWaKnn366yrZZZV1y2PLWZk2aNElTpkyhzQpQtFmAbzIzMxUZGamNGze6rdFmWW/evHmKi4ujzbKhYGmzyrqksFVUVKTOnTsrJyfHba1r166aP38+bVYAW7VqlSZPnuyxzRozZoymTZtGmwV4sGvXLnXv3p02y5DY2Fht2rTJ7XbarMC3ZMkSjRo1SkePHnVbq2ptVlmXFLY8/Z9Vo0YNxcfH02bZgKczWbdp00bz5s3TbbfdZmAiwB62bt3qdlvDhg01c+ZMDRkyxMBEwcVT0KLNCmzB2GaVdVkPkK9du7aaN2+u5cuXa/ny5ZfzoXEZHDp0qMI12iz/69WrF39924Snn3gpa8CAAUpOTqbNMqBatWqKiIjQsWPH9OCDD5oeBx6cO3dOu3fv1q+//uq2VpXbrLIua9g6ffq0MjMzL+dDwg9os8zIyMgwPQIuEW2WeSUlJcrJyfF4OAsCR4MGDcqFrWBos8qqZnoAmHO+zcrIyCBo+cH69ev1ww8/6KqrrjI9CnzUt2/f0sMjBgwYoJ07dxK0/GDOnDn64Ycf1LBhQ9OjwEdNmzZVRESEpN/arC1btuj5558PiqAl+fmHqBFYRowYocTERNNjBI0uXbpIUtD8x6Uquu666zRkyBA1btyYkOVHbdu2lSS1bt1aeXl5hqeBL6pXr67Zs2crIyNDzz33XND9dzDE5XK5LvTOZ86c0c6dO62cB34UERGhsLAw02MEne3bt6u4uNj0GPBBgwYNOADboKysLJ06dcr0GPBBnTp1dP3115sew5iLClsAAAC4OByzBQAAYCHCFgAAgIUIWwAAABYibAEAAFiIsAUAAGAhwhYAAICFCFsAAAAWImwBAABYiLAFAABgIcIWAACAhQhbAAAAFqoh6VfTQwAAAFRV/wdt0xdVYb92+gAAAABJRU5ErkJggg=="></a>  <div class="thumbcaption"><div class="magnify"><a href="https://grey.colorado.edu/CompCogNeuro/index.php/File:fig_necker_cube.png" class="internal" title="Enlarge"></a></div>The Necker cube -- panel a shows the ambiguous "transparent" version, while panels b and c show the two possible interpretations of the ambiguous version.  If you stare at panel a long enough, you will alternate between these two versions.</div></div></div>
+<p>This simulation explores the use of constraint satisfaction in processing ambiguous stimuli.  The example we will use is the <i>Necker cube</i>, which is shown in the figure to the right, and can be viewed as a cube in one of two orientations.  People tend to oscillate back and forth between viewing it one way versus the other.  However, it is very rare that they view it as both at the same time -- in other words, they tend to form a <i>consistent</i> overall interpretation of the ambiguous stimulus.  This consistency reflects the action of a constraint satisfaction system that favors interpretations that maximize the constraints imposed by the possible interpretations.  Alternatively, we can say that there are two stable attractors, one for each interpretation of the cube, and that the network will be drawn into one or the other of these attractor states.
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> It is recommended that you <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.docs.ProjectDocs.OpenInWindow()&amp;action=edit&amp;redlink=1" class="new" title=".docs.ProjectDocs.OpenInWindow() (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">click here to undock</span></a> this document from the main project window. Use the Window menu to find this window if you lose it, and you can always return to this document by browsing to this document from the <span style="background:#FFFFD0"><tt><b>docs</b></tt></span> section in the left browser panel of the project's main window. <br>
+</td></tr>
+</tbody></table>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> First, the units must be positioned to fit the necker cube diagram -- hit <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.programs.PositionUnits.Run()&amp;action=edit&amp;redlink=1" class="new" title=".programs.PositionUnits.Run() (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Position Units Run</span></a> in the <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.PanelTab.ControlPanel&amp;action=edit&amp;redlink=1" class="new" title=".PanelTab.ControlPanel (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">ControlPanel</span></a>.  <br>
+</td></tr>
+</tbody></table>
+<p>In the Network view, you should see two "cubes" having units at each vertex.   Each cube represents one of the two possible interpretations (the left cube corresponding to panel b and the right to panel c in the adjacent figure).  All of the units are within one layer, which has the basic kWTA inhibition operating with a k parameter of 8.  Thus, only one of the two cubes can be active at any given time under these constraints.
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> As usual, let's examine the weights (select r.wt, click on the units). <br>
+</td></tr>
+</tbody></table>
+<p>Notice that each unit is connected to its local neighborhood of vertices.  Thus, when one vertex gets active, it will tend to activate the others, leading to the activation of a consistent interpretation of the entire cube.  However, at the same time, the other interpretation of the cube is also activating its vertices, and, via the inhibition, competing to get active.
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> Return to viewing act in the network, and we'll run it.  Press <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.programs.gp.LeabraAll_Std.LeabraEpoch.Init()&amp;action=edit&amp;redlink=1" class="new" title=".programs.gp.LeabraAll Std.LeabraEpoch.Init() (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Init</span></a> and <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.programs.gp.LeabraAll_Std.LeabraEpoch.Run()&amp;action=edit&amp;redlink=1" class="new" title=".programs.gp.LeabraAll Std.LeabraEpoch.Run() (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">Run</span></a> in the <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.PanelTab.ControlPanel&amp;action=edit&amp;redlink=1" class="new" title=".PanelTab.ControlPanel (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">ControlPanel</span></a> to view the competition process in action. <br>
+</td></tr>
+</tbody></table>
+<p>During running, both interpretations receive equal but weak amounts of excitatory input.  You should see that as the network settles there is some flickering of the units in both cubes, with some wavering of strength back and forth until one cube eventually wins out and is fully active while the other remains inactive.  
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> Try Running many times, to see which way it tends to go. <br>
+</td></tr>
+</tbody></table>
+<p>You should note that which cube wins is random.  If you are persistent, you should eventually observe a case where part of each cube is activated, instead of one entire cube being active and the other not (warning, this could take hundreds of tries, depending on how fortuitous your random seeds are).  When this happens, note the plot of the harmony value in the graph log.  It should be substantially below all the other traces that correspond to a consistent solution on one cube.  Thus, an inconsistent partial satisfaction of the weight constraints has lower harmony than full satisfaction of the constraints in one cube.
+</p><p>Noise added to the membrane potential is playing an important role in this simulation -- without it, there is nothing to "break the tie" between the two cube interpretations.  To see this, let's manipulate the level of noise.
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> Try the following values of <span style="background:#FFFFD0"><tt><b>noise.var</b></tt></span> in the <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=.PanelTab.ControlPanel&amp;action=edit&amp;redlink=1" class="new" title=".PanelTab.ControlPanel (page does not exist)"><span style="color:#000000;background-color:#C0C0C0;font-weight:bold; border:1px solid black; padding:0 3px 0 3px">ControlPanel</span></a>: 0, .1, .01, .001. <br>
+</td></tr>
+</tbody></table>
+<hr>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#90FF90;font-size:small"><b>Question 3.5:</b> Report what differences you observed in the settling behavior of the network for the different values of noise (0, .1, .01, .001), and explain what  this tells you about how noise is affecting the process<br>
+</td></tr>
+</tbody></table>
+<hr>
+<p>Finally, one of the important psychological aspects of the Necker cube stimulus is that people tend to oscillate between the two possible interpretations.  This probably occurs because the neurons that are activated for one interpretation get <i>tired</i> eventually, allowing the other competing units to become active.  This process of neurons getting tired is called <b>accommodation</b> or <b>adaptation</b>, and is a well established property of neurons that was covered in the <a href="https://grey.colorado.edu/CompCogNeuro/index.php/CCNBook/Neuron" title="CCNBook/Neuron">Neuron Chapter</a> of the textbook (see  <a href="https://grey.colorado.edu/CompCogNeuro/index.php?title=CCNBook/Neuron/Temporal_Dynamics&amp;action=edit&amp;redlink=1" class="new" title="CCNBook/Neuron/Temporal Dynamics (page does not exist)">Temporal Dynamics</a> for details).
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> To turn on adaptation (using the standard AdEx parameters), turn the <span style="background:#FFFFD0"><tt><b>on</b></tt></span> button in the <span style="background:#FFFFD0"><tt><b>adapt</b></tt></span> field on, and also set the <span style="background:#FFFFD0"><tt><b>quarter_cycles</b></tt></span> to 250 instead of 25 (gives it more cycles to run so you can see the effects). <br>
+</td></tr>
+</tbody></table>
+<p>You should observe a few oscillations from one cube to the next as the neurons get tired.
+</p>
+<table cellpadding="10">
+<tbody><tr><td style="background-color:#FFE0E0"> <b>?</b> You may now close the project (use the window manager close button on the project window or <span style="background:#E0E0E0;border:1px solid black;"><tt>File/Close Project</tt></span> menu item) and then open a new one, or just quit emergent entirely by doing <span style="background:#E0E0E0;border:1px solid black;"><tt>Quit emergent</tt></span> menu option or clicking the close button on the root window. <br>
+</td></tr>
+</tbody></table>
+
+
+
+
+
+
+<hr><p>Randall C. O’Reilly / CCNLab, Regents of the University of Colorado. <a href="https://grey.colorado.edu/CompCogNeuro/index.php/CCNBook/Sims/Networks/Necker_Cube">Original CCNBook article</a>. Article, figure and this offline formatting adaptation: <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0 Unported</a>. Figure retained from the authors’ <a href="https://raw.githubusercontent.com/CompCogNeuro/sims/619a8bf188722ab0ea68dd73f4d83446dbea0567/ch3/necker_cube/fig_necker_cube.png">pinned simulation repository</a>. Project: GPLv2, as declared in its metadata.</p></body></html>

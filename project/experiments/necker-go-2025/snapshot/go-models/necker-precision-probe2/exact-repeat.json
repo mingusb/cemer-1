@@ -1,0 +1,3959 @@
+{
+  "Mode": "exact-repeat",
+  "TotalCycles": 100000,
+  "ExactNoise": true,
+  "Trials": [
+    {
+      "Trial": 0,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          22,
+          1
+        ],
+        [
+          304,
+          -1
+        ],
+        [
+          614,
+          1
+        ],
+        [
+          852,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          22,
+          1
+        ],
+        [
+          304,
+          -1
+        ],
+        [
+          614,
+          1
+        ],
+        [
+          852,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 1,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          121,
+          1
+        ],
+        [
+          358,
+          -1
+        ],
+        [
+          652,
+          1
+        ],
+        [
+          873,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          121,
+          1
+        ],
+        [
+          358,
+          -1
+        ],
+        [
+          652,
+          1
+        ],
+        [
+          873,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 2,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          166,
+          1
+        ],
+        [
+          405,
+          -1
+        ],
+        [
+          738,
+          1
+        ],
+        [
+          953,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          166,
+          1
+        ],
+        [
+          405,
+          -1
+        ],
+        [
+          738,
+          1
+        ],
+        [
+          953,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 3,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          438,
+          -1
+        ],
+        [
+          733,
+          1
+        ],
+        [
+          966,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          438,
+          -1
+        ],
+        [
+          733,
+          1
+        ],
+        [
+          966,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 4,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          449,
+          -1
+        ],
+        [
+          756,
+          1
+        ],
+        [
+          998,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          449,
+          -1
+        ],
+        [
+          756,
+          1
+        ],
+        [
+          998,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 5,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          65,
+          -1
+        ],
+        [
+          292,
+          1
+        ],
+        [
+          551,
+          -1
+        ],
+        [
+          797,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          65,
+          -1
+        ],
+        [
+          292,
+          1
+        ],
+        [
+          551,
+          -1
+        ],
+        [
+          797,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 6,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          81,
+          -1
+        ],
+        [
+          307,
+          1
+        ],
+        [
+          524,
+          -1
+        ],
+        [
+          814,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          81,
+          -1
+        ],
+        [
+          307,
+          1
+        ],
+        [
+          524,
+          -1
+        ],
+        [
+          814,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 7,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          46,
+          -1
+        ],
+        [
+          340,
+          1
+        ],
+        [
+          590,
+          -1
+        ],
+        [
+          912,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          46,
+          -1
+        ],
+        [
+          340,
+          1
+        ],
+        [
+          590,
+          -1
+        ],
+        [
+          912,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 8,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          71,
+          -1
+        ],
+        [
+          305,
+          1
+        ],
+        [
+          600,
+          -1
+        ],
+        [
+          819,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          71,
+          -1
+        ],
+        [
+          305,
+          1
+        ],
+        [
+          600,
+          -1
+        ],
+        [
+          819,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 9,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          131,
+          -1
+        ],
+        [
+          344,
+          1
+        ],
+        [
+          631,
+          -1
+        ],
+        [
+          886,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          131,
+          -1
+        ],
+        [
+          344,
+          1
+        ],
+        [
+          631,
+          -1
+        ],
+        [
+          886,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 10,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          148,
+          -1
+        ],
+        [
+          375,
+          1
+        ],
+        [
+          679,
+          -1
+        ],
+        [
+          893,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          148,
+          -1
+        ],
+        [
+          375,
+          1
+        ],
+        [
+          679,
+          -1
+        ],
+        [
+          893,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 11,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          185,
+          -1
+        ],
+        [
+          396,
+          1
+        ],
+        [
+          703,
+          -1
+        ],
+        [
+          944,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          185,
+          -1
+        ],
+        [
+          396,
+          1
+        ],
+        [
+          703,
+          -1
+        ],
+        [
+          944,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 12,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          419,
+          1
+        ],
+        [
+          729,
+          -1
+        ],
+        [
+          945,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          419,
+          1
+        ],
+        [
+          729,
+          -1
+        ],
+        [
+          945,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 13,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          449,
+          1
+        ],
+        [
+          798,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          449,
+          1
+        ],
+        [
+          798,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 14,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          42,
+          1
+        ],
+        [
+          302,
+          -1
+        ],
+        [
+          537,
+          1
+        ],
+        [
+          811,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          42,
+          1
+        ],
+        [
+          302,
+          -1
+        ],
+        [
+          537,
+          1
+        ],
+        [
+          811,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 15,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          51,
+          1
+        ],
+        [
+          317,
+          -1
+        ],
+        [
+          549,
+          1
+        ],
+        [
+          859,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          51,
+          1
+        ],
+        [
+          317,
+          -1
+        ],
+        [
+          549,
+          1
+        ],
+        [
+          859,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 16,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          52,
+          1
+        ],
+        [
+          318,
+          -1
+        ],
+        [
+          542,
+          1
+        ],
+        [
+          836,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          52,
+          1
+        ],
+        [
+          318,
+          -1
+        ],
+        [
+          542,
+          1
+        ],
+        [
+          836,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 17,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          50,
+          1
+        ],
+        [
+          371,
+          -1
+        ],
+        [
+          584,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          50,
+          1
+        ],
+        [
+          371,
+          -1
+        ],
+        [
+          584,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 18,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          58,
+          1
+        ],
+        [
+          269,
+          -1
+        ],
+        [
+          498,
+          1
+        ],
+        [
+          709,
+          -1
+        ],
+        [
+          945,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          58,
+          1
+        ],
+        [
+          269,
+          -1
+        ],
+        [
+          498,
+          1
+        ],
+        [
+          709,
+          -1
+        ],
+        [
+          945,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 19,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          214,
+          -1
+        ],
+        [
+          410,
+          1
+        ],
+        [
+          746,
+          -1
+        ],
+        [
+          968,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          214,
+          -1
+        ],
+        [
+          410,
+          1
+        ],
+        [
+          746,
+          -1
+        ],
+        [
+          968,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 20,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          461,
+          1
+        ],
+        [
+          798,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          461,
+          1
+        ],
+        [
+          798,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 21,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          45,
+          1
+        ],
+        [
+          316,
+          -1
+        ],
+        [
+          542,
+          1
+        ],
+        [
+          808,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          45,
+          1
+        ],
+        [
+          316,
+          -1
+        ],
+        [
+          542,
+          1
+        ],
+        [
+          808,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 22,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          51,
+          1
+        ],
+        [
+          358,
+          -1
+        ],
+        [
+          584,
+          1
+        ],
+        [
+          877,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          51,
+          1
+        ],
+        [
+          358,
+          -1
+        ],
+        [
+          584,
+          1
+        ],
+        [
+          877,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 23,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          60,
+          1
+        ],
+        [
+          276,
+          -1
+        ],
+        [
+          548,
+          1
+        ],
+        [
+          791,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          60,
+          1
+        ],
+        [
+          276,
+          -1
+        ],
+        [
+          548,
+          1
+        ],
+        [
+          791,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 24,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          102,
+          1
+        ],
+        [
+          325,
+          -1
+        ],
+        [
+          638,
+          1
+        ],
+        [
+          861,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          102,
+          1
+        ],
+        [
+          325,
+          -1
+        ],
+        [
+          638,
+          1
+        ],
+        [
+          861,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 25,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          175,
+          1
+        ],
+        [
+          393,
+          -1
+        ],
+        [
+          700,
+          1
+        ],
+        [
+          921,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          175,
+          1
+        ],
+        [
+          393,
+          -1
+        ],
+        [
+          700,
+          1
+        ],
+        [
+          921,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 26,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          203,
+          1
+        ],
+        [
+          403,
+          -1
+        ],
+        [
+          724,
+          1
+        ],
+        [
+          962,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          203,
+          1
+        ],
+        [
+          403,
+          -1
+        ],
+        [
+          724,
+          1
+        ],
+        [
+          962,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 27,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          452,
+          -1
+        ],
+        [
+          816,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          452,
+          -1
+        ],
+        [
+          816,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 28,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          44,
+          -1
+        ],
+        [
+          354,
+          1
+        ],
+        [
+          580,
+          -1
+        ],
+        [
+          905,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          44,
+          -1
+        ],
+        [
+          354,
+          1
+        ],
+        [
+          580,
+          -1
+        ],
+        [
+          905,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 29,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          60,
+          -1
+        ],
+        [
+          289,
+          1
+        ],
+        [
+          624,
+          -1
+        ],
+        [
+          846,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          60,
+          -1
+        ],
+        [
+          289,
+          1
+        ],
+        [
+          624,
+          -1
+        ],
+        [
+          846,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 30,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          174,
+          -1
+        ],
+        [
+          401,
+          1
+        ],
+        [
+          688,
+          -1
+        ],
+        [
+          914,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          174,
+          -1
+        ],
+        [
+          401,
+          1
+        ],
+        [
+          688,
+          -1
+        ],
+        [
+          914,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 31,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          419,
+          1
+        ],
+        [
+          757,
+          -1
+        ],
+        [
+          984,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          419,
+          1
+        ],
+        [
+          757,
+          -1
+        ],
+        [
+          984,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 32,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          432,
+          1
+        ],
+        [
+          782,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          432,
+          1
+        ],
+        [
+          782,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 33,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          43,
+          1
+        ],
+        [
+          319,
+          -1
+        ],
+        [
+          557,
+          1
+        ],
+        [
+          841,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          43,
+          1
+        ],
+        [
+          319,
+          -1
+        ],
+        [
+          557,
+          1
+        ],
+        [
+          841,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 34,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          65,
+          1
+        ],
+        [
+          354,
+          -1
+        ],
+        [
+          572,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          65,
+          1
+        ],
+        [
+          354,
+          -1
+        ],
+        [
+          572,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 35,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          49,
+          1
+        ],
+        [
+          271,
+          -1
+        ],
+        [
+          527,
+          1
+        ],
+        [
+          813,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          49,
+          1
+        ],
+        [
+          271,
+          -1
+        ],
+        [
+          527,
+          1
+        ],
+        [
+          813,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 36,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          49,
+          1
+        ],
+        [
+          334,
+          -1
+        ],
+        [
+          560,
+          1
+        ],
+        [
+          881,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          49,
+          1
+        ],
+        [
+          334,
+          -1
+        ],
+        [
+          560,
+          1
+        ],
+        [
+          881,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 37,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          52,
+          1
+        ],
+        [
+          322,
+          -1
+        ],
+        [
+          554,
+          1
+        ],
+        [
+          873,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          52,
+          1
+        ],
+        [
+          322,
+          -1
+        ],
+        [
+          554,
+          1
+        ],
+        [
+          873,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 38,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          54,
+          1
+        ],
+        [
+          326,
+          -1
+        ],
+        [
+          544,
+          1
+        ],
+        [
+          870,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          54,
+          1
+        ],
+        [
+          326,
+          -1
+        ],
+        [
+          544,
+          1
+        ],
+        [
+          870,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 39,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          49,
+          1
+        ],
+        [
+          338,
+          -1
+        ],
+        [
+          602,
+          1
+        ],
+        [
+          840,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          49,
+          1
+        ],
+        [
+          338,
+          -1
+        ],
+        [
+          602,
+          1
+        ],
+        [
+          840,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 40,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          147,
+          1
+        ],
+        [
+          363,
+          -1
+        ],
+        [
+          685,
+          1
+        ],
+        [
+          911,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          147,
+          1
+        ],
+        [
+          363,
+          -1
+        ],
+        [
+          685,
+          1
+        ],
+        [
+          911,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 41,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          389,
+          -1
+        ],
+        [
+          704,
+          1
+        ],
+        [
+          921,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          389,
+          -1
+        ],
+        [
+          704,
+          1
+        ],
+        [
+          921,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 42,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          432,
+          -1
+        ],
+        [
+          754,
+          1
+        ],
+        [
+          979,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          432,
+          -1
+        ],
+        [
+          754,
+          1
+        ],
+        [
+          979,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 43,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          419,
+          -1
+        ],
+        [
+          749,
+          1
+        ],
+        [
+          974,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          419,
+          -1
+        ],
+        [
+          749,
+          1
+        ],
+        [
+          974,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 44,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          266,
+          1
+        ],
+        [
+          444,
+          -1
+        ],
+        [
+          801,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          266,
+          1
+        ],
+        [
+          444,
+          -1
+        ],
+        [
+          801,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 45,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          44,
+          -1
+        ],
+        [
+          322,
+          1
+        ],
+        [
+          558,
+          -1
+        ],
+        [
+          838,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          44,
+          -1
+        ],
+        [
+          322,
+          1
+        ],
+        [
+          558,
+          -1
+        ],
+        [
+          838,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 46,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          53,
+          -1
+        ],
+        [
+          356,
+          1
+        ],
+        [
+          577,
+          -1
+        ],
+        [
+          905,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          53,
+          -1
+        ],
+        [
+          356,
+          1
+        ],
+        [
+          577,
+          -1
+        ],
+        [
+          905,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 47,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          58,
+          -1
+        ],
+        [
+          274,
+          1
+        ],
+        [
+          494,
+          -1
+        ],
+        [
+          701,
+          1
+        ],
+        [
+          931,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          58,
+          -1
+        ],
+        [
+          274,
+          1
+        ],
+        [
+          494,
+          -1
+        ],
+        [
+          701,
+          1
+        ],
+        [
+          931,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 48,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          165,
+          1
+        ],
+        [
+          383,
+          -1
+        ],
+        [
+          673,
+          1
+        ],
+        [
+          897,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          165,
+          1
+        ],
+        [
+          383,
+          -1
+        ],
+        [
+          673,
+          1
+        ],
+        [
+          897,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 49,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          180,
+          1
+        ],
+        [
+          381,
+          -1
+        ],
+        [
+          604,
+          1
+        ],
+        [
+          838,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          180,
+          1
+        ],
+        [
+          381,
+          -1
+        ],
+        [
+          604,
+          1
+        ],
+        [
+          838,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 50,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          80,
+          1
+        ],
+        [
+          301,
+          -1
+        ],
+        [
+          558,
+          1
+        ],
+        [
+          794,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          80,
+          1
+        ],
+        [
+          301,
+          -1
+        ],
+        [
+          558,
+          1
+        ],
+        [
+          794,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 51,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          118,
+          1
+        ],
+        [
+          320,
+          -1
+        ],
+        [
+          576,
+          1
+        ],
+        [
+          805,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          118,
+          1
+        ],
+        [
+          320,
+          -1
+        ],
+        [
+          576,
+          1
+        ],
+        [
+          805,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 52,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          119,
+          1
+        ],
+        [
+          335,
+          -1
+        ],
+        [
+          657,
+          1
+        ],
+        [
+          894,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          119,
+          1
+        ],
+        [
+          335,
+          -1
+        ],
+        [
+          657,
+          1
+        ],
+        [
+          894,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 53,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          198,
+          1
+        ],
+        [
+          404,
+          -1
+        ],
+        [
+          747,
+          1
+        ],
+        [
+          971,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          198,
+          1
+        ],
+        [
+          404,
+          -1
+        ],
+        [
+          747,
+          1
+        ],
+        [
+          971,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 54,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          429,
+          -1
+        ],
+        [
+          697,
+          1
+        ],
+        [
+          930,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          429,
+          -1
+        ],
+        [
+          697,
+          1
+        ],
+        [
+          930,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 55,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          110,
+          1
+        ],
+        [
+          303,
+          -1
+        ],
+        [
+          550,
+          1
+        ],
+        [
+          892,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          110,
+          1
+        ],
+        [
+          303,
+          -1
+        ],
+        [
+          550,
+          1
+        ],
+        [
+          892,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 56,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          52,
+          1
+        ],
+        [
+          272,
+          -1
+        ],
+        [
+          500,
+          1
+        ],
+        [
+          718,
+          -1
+        ],
+        [
+          923,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          52,
+          1
+        ],
+        [
+          272,
+          -1
+        ],
+        [
+          500,
+          1
+        ],
+        [
+          718,
+          -1
+        ],
+        [
+          923,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 57,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          133,
+          -1
+        ],
+        [
+          337,
+          1
+        ],
+        [
+          563,
+          -1
+        ],
+        [
+          769,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          133,
+          -1
+        ],
+        [
+          337,
+          1
+        ],
+        [
+          563,
+          -1
+        ],
+        [
+          769,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 58,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          152,
+          -1
+        ],
+        [
+          372,
+          1
+        ],
+        [
+          666,
+          -1
+        ],
+        [
+          961,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          152,
+          -1
+        ],
+        [
+          372,
+          1
+        ],
+        [
+          666,
+          -1
+        ],
+        [
+          961,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 59,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          85,
+          -1
+        ],
+        [
+          303,
+          1
+        ],
+        [
+          536,
+          -1
+        ],
+        [
+          780,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          85,
+          -1
+        ],
+        [
+          303,
+          1
+        ],
+        [
+          536,
+          -1
+        ],
+        [
+          780,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 60,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          175,
+          -1
+        ],
+        [
+          394,
+          1
+        ],
+        [
+          754,
+          -1
+        ],
+        [
+          977,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          175,
+          -1
+        ],
+        [
+          394,
+          1
+        ],
+        [
+          754,
+          -1
+        ],
+        [
+          977,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 61,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          455,
+          1
+        ],
+        [
+          799,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          455,
+          1
+        ],
+        [
+          799,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 62,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          44,
+          1
+        ],
+        [
+          357,
+          -1
+        ],
+        [
+          578,
+          1
+        ],
+        [
+          876,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          44,
+          1
+        ],
+        [
+          357,
+          -1
+        ],
+        [
+          578,
+          1
+        ],
+        [
+          876,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 63,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          56,
+          1
+        ],
+        [
+          348,
+          -1
+        ],
+        [
+          571,
+          1
+        ],
+        [
+          857,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          56,
+          1
+        ],
+        [
+          348,
+          -1
+        ],
+        [
+          571,
+          1
+        ],
+        [
+          857,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 64,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          53,
+          1
+        ],
+        [
+          363,
+          -1
+        ],
+        [
+          594,
+          1
+        ],
+        [
+          895,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          53,
+          1
+        ],
+        [
+          363,
+          -1
+        ],
+        [
+          594,
+          1
+        ],
+        [
+          895,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 65,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          64,
+          1
+        ],
+        [
+          274,
+          -1
+        ],
+        [
+          519,
+          1
+        ],
+        [
+          751,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          64,
+          1
+        ],
+        [
+          274,
+          -1
+        ],
+        [
+          519,
+          1
+        ],
+        [
+          751,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 66,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          144,
+          1
+        ],
+        [
+          389,
+          -1
+        ],
+        [
+          686,
+          1
+        ],
+        [
+          901,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          144,
+          1
+        ],
+        [
+          389,
+          -1
+        ],
+        [
+          686,
+          1
+        ],
+        [
+          901,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 67,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          204,
+          1
+        ],
+        [
+          403,
+          -1
+        ],
+        [
+          722,
+          1
+        ],
+        [
+          937,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          204,
+          1
+        ],
+        [
+          403,
+          -1
+        ],
+        [
+          722,
+          1
+        ],
+        [
+          937,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 68,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          229,
+          1
+        ],
+        [
+          425,
+          -1
+        ],
+        [
+          748,
+          1
+        ],
+        [
+          963,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          229,
+          1
+        ],
+        [
+          425,
+          -1
+        ],
+        [
+          748,
+          1
+        ],
+        [
+          963,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 69,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          448,
+          -1
+        ],
+        [
+          788,
+          1
+        ],
+        [
+          1000,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          448,
+          -1
+        ],
+        [
+          788,
+          1
+        ],
+        [
+          1000,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 70,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          48,
+          -1
+        ],
+        [
+          297,
+          1
+        ],
+        [
+          550,
+          -1
+        ],
+        [
+          874,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          48,
+          -1
+        ],
+        [
+          297,
+          1
+        ],
+        [
+          550,
+          -1
+        ],
+        [
+          874,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 71,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          50,
+          -1
+        ],
+        [
+          354,
+          1
+        ],
+        [
+          604,
+          -1
+        ],
+        [
+          915,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          50,
+          -1
+        ],
+        [
+          354,
+          1
+        ],
+        [
+          604,
+          -1
+        ],
+        [
+          915,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 72,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          119,
+          -1
+        ],
+        [
+          359,
+          1
+        ],
+        [
+          677,
+          -1
+        ],
+        [
+          897,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          119,
+          -1
+        ],
+        [
+          359,
+          1
+        ],
+        [
+          677,
+          -1
+        ],
+        [
+          897,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 73,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          440,
+          1
+        ],
+        [
+          759,
+          -1
+        ],
+        [
+          980,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          440,
+          1
+        ],
+        [
+          759,
+          -1
+        ],
+        [
+          980,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 74,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          466,
+          1
+        ],
+        [
+          775,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          466,
+          1
+        ],
+        [
+          775,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 75,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          151,
+          1
+        ],
+        [
+          380,
+          -1
+        ],
+        [
+          718,
+          1
+        ],
+        [
+          936,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          151,
+          1
+        ],
+        [
+          380,
+          -1
+        ],
+        [
+          718,
+          1
+        ],
+        [
+          936,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 76,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          450,
+          -1
+        ],
+        [
+          801,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          450,
+          -1
+        ],
+        [
+          801,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 77,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          44,
+          -1
+        ],
+        [
+          312,
+          1
+        ],
+        [
+          547,
+          -1
+        ],
+        [
+          839,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          44,
+          -1
+        ],
+        [
+          312,
+          1
+        ],
+        [
+          547,
+          -1
+        ],
+        [
+          839,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 78,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          56,
+          -1
+        ],
+        [
+          365,
+          1
+        ],
+        [
+          593,
+          -1
+        ],
+        [
+          871,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          56,
+          -1
+        ],
+        [
+          365,
+          1
+        ],
+        [
+          593,
+          -1
+        ],
+        [
+          871,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 79,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          55,
+          -1
+        ],
+        [
+          315,
+          1
+        ],
+        [
+          546,
+          -1
+        ],
+        [
+          822,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          55,
+          -1
+        ],
+        [
+          315,
+          1
+        ],
+        [
+          546,
+          -1
+        ],
+        [
+          822,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 80,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          53,
+          -1
+        ],
+        [
+          340,
+          1
+        ],
+        [
+          561,
+          -1
+        ],
+        [
+          871,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          53,
+          -1
+        ],
+        [
+          340,
+          1
+        ],
+        [
+          561,
+          -1
+        ],
+        [
+          871,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 81,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          59,
+          -1
+        ],
+        [
+          299,
+          1
+        ],
+        [
+          538,
+          -1
+        ],
+        [
+          876,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          59,
+          -1
+        ],
+        [
+          299,
+          1
+        ],
+        [
+          538,
+          -1
+        ],
+        [
+          876,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 82,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          50,
+          -1
+        ],
+        [
+          292,
+          1
+        ],
+        [
+          598,
+          -1
+        ],
+        [
+          830,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          50,
+          -1
+        ],
+        [
+          292,
+          1
+        ],
+        [
+          598,
+          -1
+        ],
+        [
+          830,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 83,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          152,
+          -1
+        ],
+        [
+          381,
+          1
+        ],
+        [
+          718,
+          -1
+        ],
+        [
+          954,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          152,
+          -1
+        ],
+        [
+          381,
+          1
+        ],
+        [
+          718,
+          -1
+        ],
+        [
+          954,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 84,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          413,
+          1
+        ],
+        [
+          714,
+          -1
+        ],
+        [
+          947,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          413,
+          1
+        ],
+        [
+          714,
+          -1
+        ],
+        [
+          947,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 85,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          425,
+          1
+        ],
+        [
+          751,
+          -1
+        ],
+        [
+          969,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          425,
+          1
+        ],
+        [
+          751,
+          -1
+        ],
+        [
+          969,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 86,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          408,
+          1
+        ],
+        [
+          719,
+          -1
+        ],
+        [
+          947,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          408,
+          1
+        ],
+        [
+          719,
+          -1
+        ],
+        [
+          947,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 87,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          443,
+          1
+        ],
+        [
+          782,
+          -1
+        ],
+        [
+          999,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          443,
+          1
+        ],
+        [
+          782,
+          -1
+        ],
+        [
+          999,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 88,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          49,
+          1
+        ],
+        [
+          331,
+          -1
+        ],
+        [
+          563,
+          1
+        ],
+        [
+          896,
+          -1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          49,
+          1
+        ],
+        [
+          331,
+          -1
+        ],
+        [
+          563,
+          1
+        ],
+        [
+          896,
+          -1
+        ]
+      ]
+    },
+    {
+      "Trial": 89,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          54,
+          1
+        ],
+        [
+          262,
+          -1
+        ],
+        [
+          487,
+          1
+        ],
+        [
+          693,
+          -1
+        ],
+        [
+          915,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          54,
+          1
+        ],
+        [
+          262,
+          -1
+        ],
+        [
+          487,
+          1
+        ],
+        [
+          693,
+          -1
+        ],
+        [
+          915,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 90,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          108,
+          -1
+        ],
+        [
+          301,
+          1
+        ],
+        [
+          545,
+          -1
+        ],
+        [
+          826,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          108,
+          -1
+        ],
+        [
+          301,
+          1
+        ],
+        [
+          545,
+          -1
+        ],
+        [
+          826,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 91,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          50,
+          -1
+        ],
+        [
+          347,
+          1
+        ],
+        [
+          560,
+          -1
+        ],
+        [
+          860,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          50,
+          -1
+        ],
+        [
+          347,
+          1
+        ],
+        [
+          560,
+          -1
+        ],
+        [
+          860,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 92,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          58,
+          -1
+        ],
+        [
+          378,
+          1
+        ],
+        [
+          589,
+          -1
+        ],
+        [
+          899,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          58,
+          -1
+        ],
+        [
+          378,
+          1
+        ],
+        [
+          589,
+          -1
+        ],
+        [
+          899,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 93,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          84,
+          -1
+        ],
+        [
+          327,
+          1
+        ],
+        [
+          644,
+          -1
+        ],
+        [
+          874,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          84,
+          -1
+        ],
+        [
+          327,
+          1
+        ],
+        [
+          644,
+          -1
+        ],
+        [
+          874,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 94,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          179,
+          -1
+        ],
+        [
+          393,
+          1
+        ],
+        [
+          700,
+          -1
+        ],
+        [
+          925,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          179,
+          -1
+        ],
+        [
+          393,
+          1
+        ],
+        [
+          700,
+          -1
+        ],
+        [
+          925,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 95,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          408,
+          1
+        ],
+        [
+          719,
+          -1
+        ],
+        [
+          933,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          408,
+          1
+        ],
+        [
+          719,
+          -1
+        ],
+        [
+          933,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 96,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          200,
+          -1
+        ],
+        [
+          391,
+          1
+        ],
+        [
+          695,
+          -1
+        ],
+        [
+          993,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          200,
+          -1
+        ],
+        [
+          391,
+          1
+        ],
+        [
+          695,
+          -1
+        ],
+        [
+          993,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 97,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          477,
+          -1
+        ],
+        [
+          803,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          477,
+          -1
+        ],
+        [
+          803,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 98,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          127,
+          -1
+        ],
+        [
+          348,
+          1
+        ],
+        [
+          689,
+          -1
+        ],
+        [
+          911,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          127,
+          -1
+        ],
+        [
+          348,
+          1
+        ],
+        [
+          689,
+          -1
+        ],
+        [
+          911,
+          1
+        ]
+      ]
+    },
+    {
+      "Trial": 99,
+      "MaxActivationDifference": 0,
+      "MaxChannelDifference": 0,
+      "FirstCycleOver01": 0,
+      "ReferenceTransitions": [
+        [
+          423,
+          1
+        ],
+        [
+          753,
+          -1
+        ],
+        [
+          978,
+          1
+        ]
+      ],
+      "ProbeTransitions": [
+        [
+          423,
+          1
+        ],
+        [
+          753,
+          -1
+        ],
+        [
+          978,
+          1
+        ]
+      ]
+    }
+  ]
+}

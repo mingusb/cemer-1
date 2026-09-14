@@ -1,0 +1,138 @@
+{
+  "status": "INTERRUPTED_BY_REQUEST",
+  "cases": [
+    {
+      "name": "zero-noise",
+      "checks": [
+        {
+          "check": "LeabraEpoch.run_state",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "all100_trials_ran",
+          "actual": 10000,
+          "expected": 10000
+        },
+        {
+          "check": "correct_cycle_counters",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "correct_trial_counters",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "noise_replay_exact_float32",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "Noise_exact_float32_bits",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "Act_exact_float32_bits",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "Ge_exact_float32_bits",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "Gi_exact_float32_bits",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "Vm_exact_float32_bits",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "KFast_exact_float32_bits",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "KMed_exact_float32_bits",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "KSlow_exact_float32_bits",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "console_exit",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "server.runtime_diagnostics",
+          "actual": [],
+          "expected": []
+        },
+        {
+          "check": "css_diagnostics",
+          "actual": [],
+          "expected": []
+        }
+      ],
+      "maximum_absolute_differences": {
+        "Noise": {
+          "maximum": 0,
+          "at": null,
+          "bit_mismatches": 0
+        },
+        "Act": {
+          "maximum": 0,
+          "at": null,
+          "bit_mismatches": 0
+        },
+        "Ge": {
+          "maximum": 0,
+          "at": null,
+          "bit_mismatches": 0
+        },
+        "Gi": {
+          "maximum": 0,
+          "at": null,
+          "bit_mismatches": 0
+        },
+        "Vm": {
+          "maximum": 0,
+          "at": null,
+          "bit_mismatches": 0
+        },
+        "KFast": {
+          "maximum": 0,
+          "at": null,
+          "bit_mismatches": 0
+        },
+        "KMed": {
+          "maximum": 0,
+          "at": null,
+          "bit_mismatches": 0
+        },
+        "KSlow": {
+          "maximum": 0,
+          "at": null,
+          "bit_mismatches": 0
+        }
+      }
+    }
+  ],
+  "scope": "All100 native trials, exact author model-pinned Go reference; injected reference noise only in disposable validation copy to isolate RNG differences.",
+  "interruption": {
+    "reason": "User requested pausing further port development; seven-case sweep stopped during comparison of second case. First case complete; remaining cases not accepted.",
+    "driver_exit": 130,
+    "app_process_cleaned_up": true
+  }
+}

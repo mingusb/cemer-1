@@ -1,0 +1,16 @@
+=== RUN   TestOriginalNeckerReference
+=== RUN   TestOriginalNeckerReference/zero-noise
+    reference_test.go:75: captured 10000/10000 cycles from all100 authored trials
+=== RUN   TestOriginalNeckerReference/zero-noise-adaptation
+    reference_test.go:75: captured 100000/100000 cycles from all100 authored trials
+=== RUN   TestOriginalNeckerReference/authored-default
+    reference_test.go:75: captured 10000/10000 cycles from all100 authored trials
+=== RUN   TestOriginalNeckerReference/authored-adaptation
+    reference_test.go:75: captured 100000/100000 cycles from all100 authored trials
+--- PASS: TestOriginalNeckerReference (4.78s)
+    --- PASS: TestOriginalNeckerReference/zero-noise (0.24s)
+    --- PASS: TestOriginalNeckerReference/zero-noise-adaptation (2.42s)
+    --- PASS: TestOriginalNeckerReference/authored-default (0.18s)
+    --- PASS: TestOriginalNeckerReference/authored-adaptation (1.94s)
+PASS
+ok  	github.com/compcogneuro/sims/v2	4.842s

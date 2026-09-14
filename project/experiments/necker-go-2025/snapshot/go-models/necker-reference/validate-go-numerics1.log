@@ -1,0 +1,4 @@
+PASS authored-high-noise {'maximum': 0, 'at': None}
+PASS authored-low-noise {'maximum': 0, 'at': None}
+PASS authored-adaptation {'maximum': 0, 'at': None}
+PASS /home/b/cemer/artifacts/go-models/necker-go-numerics-validation1/report.json

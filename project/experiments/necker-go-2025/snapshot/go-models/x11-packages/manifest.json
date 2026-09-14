@@ -1,0 +1,31 @@
+{
+  "source": "Ubuntu apt signed package metadata",
+  "installation": "private extraction, no host package changes",
+  "prefix": "/home/b/toolchains/go-x11",
+  "packages": [
+    {
+      "file": "libxxf86vm1_1%3a1.1.4-2_amd64.deb",
+      "sha256": "ff01ae50526c23c6c747e1efd98ee3785a1d28458e865277fc367c565bb94703",
+      "package": "libxxf86vm1",
+      "version": "1:1.1.4-2"
+    },
+    {
+      "file": "libxinerama-dev_2%3a1.1.4-3build2_amd64.deb",
+      "sha256": "c5e93ecadece96f8abcf2e6a3f967a562e4a6801cfdfddc64e1f82093e6ee63d",
+      "package": "libxinerama-dev",
+      "version": "2:1.1.4-3build2"
+    },
+    {
+      "file": "libxinerama1_2%3a1.1.4-3build2_amd64.deb",
+      "sha256": "02d3dce422acc3ac9b5491f47acdd07bc7c3f78ce193865f2920d38b10fbadf5",
+      "package": "libxinerama1",
+      "version": "2:1.1.4-3build2"
+    },
+    {
+      "file": "libxxf86vm-dev_1%3a1.1.4-2_amd64.deb",
+      "sha256": "2613080981f2f4d3467b9570f6c6933b2e1c43533608c7d241931242110b4899",
+      "package": "libxxf86vm-dev",
+      "version": "1:1.1.4-2"
+    }
+  ]
+}

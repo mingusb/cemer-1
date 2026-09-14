@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "oracle_samples": 258008,
+  "bit_mismatches": 0,
+  "upstream_source": "cogentcore.org/core@v0.3.11-0.20250804181427-0361cb48ba1c/math32/fastexp.go",
+  "activation_source": "github.com/emer/leabra/v2@v2.0.0-dev0.5.5.0.20250128232242-79e931d6fe3b/nxx1/nxx1.go",
+  "compiler": "/usr/lib/llvm-24/bin/clang++",
+  "strict_cpp_flags": [
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-Woverloaded-virtual"
+  ],
+  "sanitizer": "undefined; abort on first finding",
+  "diagnostics": [],
+  "default_target": "x86_64/SSE2; no FMA target flag in actual model compile command",
+  "files": {
+    "include/go_fast_exp.h": "95420c7548bae0e02a9b98a6048a93a68d352551f9126feed6b07d173da9f4d9",
+    "include/LeabraUnitSpec_mbrs": "23ca3cdaa5012e4813e2a622c8fb9d1a35228649e3da79720b719f804dbe0d02",
+    "oracle.cpp": "dd34a25c1129c3d4091964a7ba25f8652b90dfed259f21f5b7e9bffa53d938f4",
+    "oracle.tsv": "c268cd452b0f9d9e7b5a49f4d08072b3b04d787de9d74eee38dda13d4360555c",
+    "oracle-result.log": "3c5fbd9a0f2bb2511e1408fb1f792b01f806b10306f2fbe5ffb1c95d67d3865a",
+    "integer-range-proof.json": "d877a256a0e5e56f1238d73dcd229627341afa8eb8d42be72d0ea353ed117731",
+    "COGENTCORE-LICENSE": "c6297bf0da1f70caea4ef25247a6d11650cb1c87b0b0a28a53a6bc725fe451d1"
+  }
+}

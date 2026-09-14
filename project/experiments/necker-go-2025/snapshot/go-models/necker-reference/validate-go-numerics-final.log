@@ -1,0 +1,29 @@
+PASS zero-noise {'maximum': 0, 'at': None, 'bit_mismatches': 0}
+Traceback (most recent call last):
+  File "/home/b/cemer/artifacts/go-models/necker-reference/validate_go_numerics_final.py", line 41, in <module>
+    vals=flat(actual);require(len(vals)==16 and all(math.isfinite(x) for x in vals),'nonfinite or wrong-shaped native trace')
+  File "/home/b/cemer/artifacts/corpus-necker/necker_regressions.py", line 18, in flat
+    return sum((flat(x) for x in value),[]) if isinstance(value,list) else [value]
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/b/cemer/artifacts/corpus-necker/necker_regressions.py", line 18, in <genexpr>
+    return sum((flat(x) for x in value),[]) if isinstance(value,list) else [value]
+                ~~~~^^^
+  File "/home/b/cemer/artifacts/corpus-necker/necker_regressions.py", line 18, in flat
+    return sum((flat(x) for x in value),[]) if isinstance(value,list) else [value]
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/b/cemer/artifacts/corpus-necker/necker_regressions.py", line 18, in <genexpr>
+    return sum((flat(x) for x in value),[]) if isinstance(value,list) else [value]
+                ~~~~^^^
+  File "/home/b/cemer/artifacts/corpus-necker/necker_regressions.py", line 18, in flat
+    return sum((flat(x) for x in value),[]) if isinstance(value,list) else [value]
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/b/cemer/artifacts/corpus-necker/necker_regressions.py", line 18, in <genexpr>
+    return sum((flat(x) for x in value),[]) if isinstance(value,list) else [value]
+                ~~~~^^^
+  File "/home/b/cemer/artifacts/corpus-necker/necker_regressions.py", line 18, in flat
+    return sum((flat(x) for x in value),[]) if isinstance(value,list) else [value]
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/b/cemer/artifacts/corpus-necker/necker_regressions.py", line 18, in <genexpr>
+    return sum((flat(x) for x in value),[]) if isinstance(value,list) else [value]
+    
+KeyboardInterrupt

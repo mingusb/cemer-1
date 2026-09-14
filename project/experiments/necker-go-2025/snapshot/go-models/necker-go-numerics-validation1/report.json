@@ -1,0 +1,258 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "name": "authored-high-noise",
+      "checks": [
+        {
+          "check": "LeabraEpoch.run_state",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "all100_trials_ran",
+          "actual": 10000,
+          "expected": 10000
+        },
+        {
+          "check": "correct_cycle_counters",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "correct_trial_counters",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "noise_replay_exact_float32",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "activation_within_declared_tolerance",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "console_exit",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "server.runtime_diagnostics",
+          "actual": [],
+          "expected": []
+        },
+        {
+          "check": "css_diagnostics",
+          "actual": [],
+          "expected": []
+        }
+      ],
+      "maximum_absolute_differences": {
+        "Noise": {
+          "maximum": 0,
+          "at": null
+        },
+        "Act": {
+          "maximum": 0,
+          "at": null
+        },
+        "Ge": {
+          "maximum": 0,
+          "at": null
+        },
+        "Gi": {
+          "maximum": 0,
+          "at": null
+        },
+        "Vm": {
+          "maximum": 0,
+          "at": null
+        },
+        "KFast": {
+          "maximum": 0,
+          "at": null
+        },
+        "KMed": {
+          "maximum": 0,
+          "at": null
+        },
+        "KSlow": {
+          "maximum": 0,
+          "at": null
+        }
+      }
+    },
+    {
+      "name": "authored-low-noise",
+      "checks": [
+        {
+          "check": "LeabraEpoch.run_state",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "all100_trials_ran",
+          "actual": 10000,
+          "expected": 10000
+        },
+        {
+          "check": "correct_cycle_counters",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "correct_trial_counters",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "noise_replay_exact_float32",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "activation_within_declared_tolerance",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "console_exit",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "server.runtime_diagnostics",
+          "actual": [],
+          "expected": []
+        },
+        {
+          "check": "css_diagnostics",
+          "actual": [],
+          "expected": []
+        }
+      ],
+      "maximum_absolute_differences": {
+        "Noise": {
+          "maximum": 0,
+          "at": null
+        },
+        "Act": {
+          "maximum": 0,
+          "at": null
+        },
+        "Ge": {
+          "maximum": 0,
+          "at": null
+        },
+        "Gi": {
+          "maximum": 0,
+          "at": null
+        },
+        "Vm": {
+          "maximum": 0,
+          "at": null
+        },
+        "KFast": {
+          "maximum": 0,
+          "at": null
+        },
+        "KMed": {
+          "maximum": 0,
+          "at": null
+        },
+        "KSlow": {
+          "maximum": 0,
+          "at": null
+        }
+      }
+    },
+    {
+      "name": "authored-adaptation",
+      "checks": [
+        {
+          "check": "LeabraEpoch.run_state",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "all100_trials_ran",
+          "actual": 100000,
+          "expected": 100000
+        },
+        {
+          "check": "correct_cycle_counters",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "correct_trial_counters",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "noise_replay_exact_float32",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "activation_within_declared_tolerance",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "console_exit",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "server.runtime_diagnostics",
+          "actual": [],
+          "expected": []
+        },
+        {
+          "check": "css_diagnostics",
+          "actual": [],
+          "expected": []
+        }
+      ],
+      "maximum_absolute_differences": {
+        "Noise": {
+          "maximum": 0,
+          "at": null
+        },
+        "Act": {
+          "maximum": 0,
+          "at": null
+        },
+        "Ge": {
+          "maximum": 0,
+          "at": null
+        },
+        "Gi": {
+          "maximum": 0,
+          "at": null
+        },
+        "Vm": {
+          "maximum": 0,
+          "at": null
+        },
+        "KFast": {
+          "maximum": 0,
+          "at": null
+        },
+        "KMed": {
+          "maximum": 0,
+          "at": null
+        },
+        "KSlow": {
+          "maximum": 0,
+          "at": null
+        }
+      }
+    }
+  ],
+  "scope": "All100 native trials, exact author model-pinned Go reference; injected reference noise only in disposable validation copy to isolate RNG differences."
+}

@@ -1,0 +1,10 @@
+=== RUN   TestOriginalNeckerReference
+=== RUN   TestOriginalNeckerReference/authored-high-noise
+    reference_test.go:77: captured 10000/10000 cycles from all100 authored trials
+=== RUN   TestOriginalNeckerReference/authored-low-noise
+    reference_test.go:77: captured 10000/10000 cycles from all100 authored trials
+--- PASS: TestOriginalNeckerReference (0.64s)
+    --- PASS: TestOriginalNeckerReference/authored-high-noise (0.43s)
+    --- PASS: TestOriginalNeckerReference/authored-low-noise (0.21s)
+PASS
+ok  	github.com/compcogneuro/sims/v2	0.681s

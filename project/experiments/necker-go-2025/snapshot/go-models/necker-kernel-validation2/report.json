@@ -1,0 +1,203 @@
+{
+  "status": "FAIL",
+  "cases": [
+    {
+      "name": "authored-default",
+      "checks": [
+        {
+          "check": "LeabraEpoch.run_state",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "all100_trials_ran",
+          "actual": 10000,
+          "expected": 10000
+        },
+        {
+          "check": "correct_cycle_counters",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "correct_trial_counters",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "noise_replay_exact_float32",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "activation_within_declared_tolerance",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "console_exit",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "server.runtime_diagnostics",
+          "actual": [],
+          "expected": []
+        },
+        {
+          "check": "css_diagnostics",
+          "actual": [],
+          "expected": []
+        }
+      ],
+      "maximum_absolute_differences": {
+        "Noise": {
+          "maximum": 0,
+          "at": null
+        },
+        "Act": {
+          "maximum": 0,
+          "at": null
+        },
+        "Ge": {
+          "maximum": 0,
+          "at": null
+        },
+        "Gi": {
+          "maximum": 0,
+          "at": null
+        },
+        "Vm": {
+          "maximum": 0,
+          "at": null
+        },
+        "KFast": {
+          "maximum": 0,
+          "at": null
+        },
+        "KMed": {
+          "maximum": 0,
+          "at": null
+        },
+        "KSlow": {
+          "maximum": 0,
+          "at": null
+        }
+      }
+    },
+    {
+      "name": "authored-adaptation",
+      "checks": [
+        {
+          "check": "LeabraEpoch.run_state",
+          "actual": 0,
+          "expected": 0
+        },
+        {
+          "check": "all100_trials_ran",
+          "actual": 100000,
+          "expected": 100000
+        },
+        {
+          "check": "correct_cycle_counters",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "correct_trial_counters",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "noise_replay_exact_float32",
+          "actual": true,
+          "expected": true
+        },
+        {
+          "check": "activation_within_declared_tolerance",
+          "actual": false,
+          "expected": true
+        }
+      ],
+      "maximum_absolute_differences": {
+        "Noise": {
+          "maximum": 0,
+          "at": null
+        },
+        "Act": {
+          "maximum": 0.7303517311811447,
+          "at": {
+            "trial": 99,
+            "cycle": 768,
+            "unit": 9,
+            "go": 0.06768568,
+            "cpp": 0.7980374097824097
+          }
+        },
+        "Ge": {
+          "maximum": 0.281130813062191,
+          "at": {
+            "trial": 99,
+            "cycle": 981,
+            "unit": 1,
+            "go": 0.38325056,
+            "cpp": 0.10211975127458572
+          }
+        },
+        "Gi": {
+          "maximum": 0.3181457370519638,
+          "at": {
+            "trial": 99,
+            "cycle": 981,
+            "unit": 0,
+            "go": 0.4438404,
+            "cpp": 0.12569467723369598
+          }
+        },
+        "Vm": {
+          "maximum": 0.06420978903770447,
+          "at": {
+            "trial": 99,
+            "cycle": 983,
+            "unit": 13,
+            "go": 0.3953566,
+            "cpp": 0.4595663845539093
+          }
+        },
+        "KFast": {
+          "maximum": 0.027625235728919506,
+          "at": {
+            "trial": 99,
+            "cycle": 769,
+            "unit": 14,
+            "go": 0.03952629,
+            "cpp": 0.011901055462658405
+          }
+        },
+        "KMed": {
+          "maximum": 0.014436649158596992,
+          "at": {
+            "trial": 99,
+            "cycle": 774,
+            "unit": 14,
+            "go": 0.03311885,
+            "cpp": 0.018682202324271202
+          }
+        },
+        "KSlow": {
+          "maximum": 0.006186455488204956,
+          "at": {
+            "trial": 99,
+            "cycle": 782,
+            "unit": 14,
+            "go": 0.091753,
+            "cpp": 0.08556654304265976
+          }
+        }
+      }
+    }
+  ],
+  "scope": "All100 native trials, exact author model-pinned Go reference; injected reference noise only in disposable validation copy to isolate RNG differences.",
+  "error": "activation_within_declared_tolerance: got False, expected True",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/b/cemer/artifacts/go-models/necker-reference/validate_kernel2.py\", line 49, in <module>\n    c.equal('activation_within_declared_tolerance',item['maximum_absolute_differences']['Act']['maximum']<(0.01 if noise else 0.00001),True)\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/b/cemer/project/test/modern_stack_regressions.py\", line 261, in equal\n    require(actual == expected, f\"{name}: got {actual!r}, expected {expected!r}\")\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/b/cemer/project/test/modern_stack_regressions.py\", line 201, in require\n    raise AssertionError(detail)\nAssertionError: activation_within_declared_tolerance: got False, expected True\n"
+}

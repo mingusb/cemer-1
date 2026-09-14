@@ -1,0 +1,7 @@
+=== RUN   TestOriginalNeckerReference
+=== RUN   TestOriginalNeckerReference/authored-long-no-adaptation
+    reference_test.go:78: captured 100000/100000 cycles from all100 authored trials
+--- PASS: TestOriginalNeckerReference (6.02s)
+    --- PASS: TestOriginalNeckerReference/authored-long-no-adaptation (6.02s)
+PASS
+ok  	github.com/compcogneuro/sims/v2	6.440s

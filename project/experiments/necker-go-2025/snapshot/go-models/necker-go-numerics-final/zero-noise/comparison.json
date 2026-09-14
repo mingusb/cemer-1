@@ -1,0 +1,42 @@
+{
+  "Noise": {
+    "maximum": 0,
+    "at": null,
+    "bit_mismatches": 0
+  },
+  "Act": {
+    "maximum": 0,
+    "at": null,
+    "bit_mismatches": 0
+  },
+  "Ge": {
+    "maximum": 0,
+    "at": null,
+    "bit_mismatches": 0
+  },
+  "Gi": {
+    "maximum": 0,
+    "at": null,
+    "bit_mismatches": 0
+  },
+  "Vm": {
+    "maximum": 0,
+    "at": null,
+    "bit_mismatches": 0
+  },
+  "KFast": {
+    "maximum": 0,
+    "at": null,
+    "bit_mismatches": 0
+  },
+  "KMed": {
+    "maximum": 0,
+    "at": null,
+    "bit_mismatches": 0
+  },
+  "KSlow": {
+    "maximum": 0,
+    "at": null,
+    "bit_mismatches": 0
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "version": "go1.27.1",
+  "source": "https://go.dev/dl/go1.27.1.linux-amd64.tar.gz",
+  "sha256": "63d339f0da5ab53635a56f2490a7984dfe12dfcff22ad749f63edaf590168445",
+  "metadata_source": "https://go.dev/dl/?mode=json",
+  "purpose": "Run pinned author Go models as differential references for native C++ ports",
+  "path": "/home/b/toolchains/go1.27.1/go/bin/go"
+}

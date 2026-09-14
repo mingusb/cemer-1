@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/b/cemer/artifacts/go-models/necker-reference/validate_native_candidate.py", line 28, in <module>
+    s.run('LeabraEpoch');values=s.call('GetData',table='CycleOutputData');(c.directory/'cycles.json').write_text(json.dumps(values)+'\n');cols={x['name']:x['values'] for x in values['columns']}
+                                ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/b/cemer/project/test/modern_stack_regressions.py", line 384, in call
+    reply, length = json.JSONDecoder().raw_decode(self.buffer)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/json/decoder.py", line 361, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ~~~~~~~~~~~~~~^^^^^^^^
+KeyboardInterrupt

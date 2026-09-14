@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/b/cemer/artifacts/go-models/necker-reference/cpp_noise_replay.py", line 14, in <module>
+    s.console('ncspec->e_rev.k=0.25; ncspec->noise_type.trial_fixed=true; ncspec->UpdateAfterEdit(); DataTable* nr=.projects[0].data.New(1,taMisc::FindTypeName("DataTable"),"ReferenceNoise"); nr->ImportDataJSON('+json.dumps(str(noise_file))+'); cout << "REPLAY_ROWS " << nr->rows << endl;','REPLAY_ROWS '+str(len(noise)))
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/b/cemer/project/test/modern_stack_regressions.py", line 431, in console
+    require(self.process.poll() is None, "process exited while evaluating CSS console input")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/b/cemer/project/test/modern_stack_regressions.py", line 201, in require
+    raise AssertionError(detail)
+AssertionError: process exited while evaluating CSS console input

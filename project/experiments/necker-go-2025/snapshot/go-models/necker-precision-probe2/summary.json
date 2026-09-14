@@ -1,0 +1,24 @@
+{
+  "one-ulp-one-channel-once": {
+    "max": 0,
+    "first_over01": null
+  },
+  "one-ulp-all-channels-once": {
+    "max": 0.91473085,
+    "first_over01": {
+      "trial": 70,
+      "cycle": 810
+    }
+  },
+  "exact-repeat": {
+    "max": 0,
+    "first_over01": null
+  },
+  "one-ulp-all-channels-every-trial": {
+    "max": 0.92133725,
+    "first_over01": {
+      "trial": 70,
+      "cycle": 810
+    }
+  }
+}

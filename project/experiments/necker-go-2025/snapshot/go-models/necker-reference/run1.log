@@ -1,0 +1,9 @@
+# github.com/go-gl/glfw/v3.3/glfw
+In file included from /home/b/toolchains/go-modules/github.com/go-gl/glfw/v3.3/glfw@v0.0.0-20240506104042-037f3cc74f2a/vulkan.go:4:
+In file included from ./glfw/src/internal.h:188:
+./glfw/src/x11_platform.h:45:10: fatal error: 'X11/extensions/Xinerama.h' file not found
+   45 | #include <X11/extensions/Xinerama.h>
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+FAIL	github.com/compcogneuro/sims/v2 [build failed]
+FAIL

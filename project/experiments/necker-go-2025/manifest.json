@@ -1,0 +1,1055 @@
+{
+  "status": "PAUSED_UNINTEGRATED_WIP",
+  "base_commit": "801d218c6265d24e22b2a31f7488bd85552566cf",
+  "preservation_only": true,
+  "selected_files": [
+    {
+      "path": "snapshot/corpus-necker/necker_regressions.py",
+      "original_path": "/home/b/cemer/artifacts/corpus-necker/necker_regressions.py",
+      "bytes": 9619,
+      "sha256": "aae4906767b023e0963dc57c4b143d978732f44347d3acee93f913f1cdaa27dd"
+    },
+    {
+      "path": "snapshot/corpus-necker/ready-test/cecn_necker_gui.py",
+      "original_path": "/home/b/cemer/artifacts/corpus-necker/ready-test/cecn_necker_gui.py",
+      "bytes": 9488,
+      "sha256": "3b70705b1f1833297ea49905ef2c4131bd11f830d7d752cefb12aa4c96e55eda"
+    },
+    {
+      "path": "snapshot/corpus-necker/ready-test/cecn_necker_regressions.py",
+      "original_path": "/home/b/cemer/artifacts/corpus-necker/ready-test/cecn_necker_regressions.py",
+      "bytes": 10607,
+      "sha256": "88520255dc7f1452fd2168e00a6b19839e435b65bdbecab6bc14cd6f6b60ab7d"
+    },
+    {
+      "path": "snapshot/corpus-necker/ready-test/migrate_cecn_necker.py",
+      "original_path": "/home/b/cemer/artifacts/corpus-necker/ready-test/migrate_cecn_necker.py",
+      "bytes": 7609,
+      "sha256": "bc3abeeef063f3fe0b1e69f7ced0bfd15396b426e3384130ce8c2189e250304d"
+    },
+    {
+      "path": "snapshot/corpus-necker/staged-final/NeckerCubeNet.wts",
+      "original_path": "/home/b/cemer/artifacts/corpus-necker/staged-final/NeckerCubeNet.wts",
+      "bytes": 2291,
+      "sha256": "43b5e7dc76844ddf9a2a1041ff9bdac6465beb983dfcc2032618ddae34b99109"
+    },
+    {
+      "path": "snapshot/corpus-necker/staged-final/README-necker.md",
+      "original_path": "/home/b/cemer/artifacts/corpus-necker/staged-final/README-necker.md",
+      "bytes": 3393,
+      "sha256": "88d98ad90b5d60df1a8b1b681fafe909b4998c3c7e1679d1a5dc5ae8a2d6eec7"
+    },
+    {
+      "path": "snapshot/corpus-necker/staged-final/fig_necker_cube.png",
+      "original_path": "/home/b/cemer/artifacts/corpus-necker/staged-final/fig_necker_cube.png",
+      "bytes": 8275,
+      "sha256": "e60c589195cb350a748c602b9df8b4d5aa9d35bcf40fcfce10a880d1196be9a6"
+    },
+    {
+      "path": "snapshot/corpus-necker/staged-final/necker-provenance.json",
+      "original_path": "/home/b/cemer/artifacts/corpus-necker/staged-final/necker-provenance.json",
+      "bytes": 3488,
+      "sha256": "4bf9c4c5a53aec53db1a6fc7103e539ca2bc9e919c7bd5f9fbd957a2a85a0a76"
+    },
+    {
+      "path": "snapshot/corpus-necker/staged-final/necker_cube.html",
+      "original_path": "/home/b/cemer/artifacts/corpus-necker/staged-final/necker_cube.html",
+      "bytes": 25467,
+      "sha256": "d78b97130d628ec99d2a73afa889859769471001ef0ec3702f369e7952cb035e"
+    },
+    {
+      "path": "snapshot/corpus-necker/staged-final/necker_cube.proj",
+      "original_path": "/home/b/cemer/artifacts/corpus-necker/staged-final/necker_cube.proj",
+      "bytes": 226152,
+      "sha256": "43677d993f52012facbfba075221171f7ae317b3acbb250e76713e141ca08340"
+    },
+    {
+      "path": "snapshot/corpus-necker/staged-final/necker_cube_img1.iv",
+      "original_path": "/home/b/cemer/artifacts/corpus-necker/staged-final/necker_cube_img1.iv",
+      "bytes": 248,
+      "sha256": "eafb97257f4b018a7e819fe421b5b4c2fe9b6632acd199715fa98f22bf7af0bc"
+    },
+    {
+      "path": "snapshot/corpus-necker/staged-final/necker_cube_img2.iv",
+      "original_path": "/home/b/cemer/artifacts/corpus-necker/staged-final/necker_cube_img2.iv",
+      "bytes": 252,
+      "sha256": "3785aba91ca51eaf8b858401705e2fe434c94d4111f03e4e5d0be5ce45e4417c"
+    },
+    {
+      "path": "snapshot/corpus-necker/staged-final/necker_cube_weights.wts",
+      "original_path": "/home/b/cemer/artifacts/corpus-necker/staged-final/necker_cube_weights.wts",
+      "bytes": 2285,
+      "sha256": "7cb4aaa080544595babe35b4bea75eb4ccea52e57c9b56a9427cffc284bc73ce"
+    },
+    {
+      "path": "snapshot/go-models/go-reference-toolchain.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/go-reference-toolchain.json",
+      "bytes": 365,
+      "sha256": "a83515121642031b5eb99331c1ad33ef4946d71b53474c7fba83a11cd7dac89d"
+    },
+    {
+      "path": "snapshot/go-models/necker-go-numerics-experiment/COGENTCORE-LICENSE",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-go-numerics-experiment/COGENTCORE-LICENSE",
+      "bytes": 1498,
+      "sha256": "c6297bf0da1f70caea4ef25247a6d11650cb1c87b0b0a28a53a6bc725fe451d1"
+    },
+    {
+      "path": "snapshot/go-models/necker-go-numerics-experiment/LeabraUnitSpec_core.cpp",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-go-numerics-experiment/LeabraUnitSpec_core.cpp",
+      "bytes": 28399,
+      "sha256": "de4b66e41c8da4355c90979d1e651d50949e699f4d7ed4941f9284294be563cd"
+    },
+    {
+      "path": "snapshot/go-models/necker-go-numerics-experiment/LeabraUnitSpec_cpp.cpp",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-go-numerics-experiment/LeabraUnitSpec_cpp.cpp",
+      "bytes": 1003,
+      "sha256": "b5ecb0957a376d1cc8c31e4f1e11fca92cdcd07456006162be90ed125c97dbbe"
+    },
+    {
+      "path": "snapshot/go-models/necker-go-numerics-experiment/build-private.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-go-numerics-experiment/build-private.log",
+      "bytes": 86,
+      "sha256": "4a8372ae1cd00dd8b6caaa455ee3f534c9f77712732632d1798942656654d1e8"
+    },
+    {
+      "path": "snapshot/go-models/necker-go-numerics-experiment/build-private.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-go-numerics-experiment/build-private.py",
+      "bytes": 2919,
+      "sha256": "b635f6c2cd3cfc364a61614fcebf21b512bfcf612eea1c1a54911f9a72b6294d"
+    },
+    {
+      "path": "snapshot/go-models/necker-go-numerics-experiment/include/LeabraUnitSpec_core",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-go-numerics-experiment/include/LeabraUnitSpec_core",
+      "bytes": 47342,
+      "sha256": "6e6b2c377b57b6cb5be19ee013169e6b3cdddc05f2a1e019e6f281a753e394ca"
+    },
+    {
+      "path": "snapshot/go-models/necker-go-numerics-experiment/include/LeabraUnitSpec_mbrs",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-go-numerics-experiment/include/LeabraUnitSpec_mbrs",
+      "bytes": 64519,
+      "sha256": "23ca3cdaa5012e4813e2a622c8fb9d1a35228649e3da79720b719f804dbe0d02"
+    },
+    {
+      "path": "snapshot/go-models/necker-go-numerics-experiment/include/go_fast_exp.h",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-go-numerics-experiment/include/go_fast_exp.h",
+      "bytes": 710,
+      "sha256": "95420c7548bae0e02a9b98a6048a93a68d352551f9126feed6b07d173da9f4d9"
+    },
+    {
+      "path": "snapshot/go-models/necker-go-numerics-experiment/private-build.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-go-numerics-experiment/private-build.json",
+      "bytes": 858,
+      "sha256": "6025271cb7e7751bed1613ec3c9a468cb78ee503c55e26a3bdc404ddf7c0a0e9"
+    },
+    {
+      "path": "snapshot/go-models/necker-go-numerics-experiment/private-compile-command.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-go-numerics-experiment/private-compile-command.json",
+      "bytes": 2798,
+      "sha256": "a27026766ecee8289987b2dedd752927eea95ca8f4e95a42137f3d0038cb9845"
+    },
+    {
+      "path": "snapshot/go-models/necker-go-numerics-experiment/private-compile.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-go-numerics-experiment/private-compile.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "snapshot/go-models/necker-go-numerics-experiment/private-link-command.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-go-numerics-experiment/private-link-command.json",
+      "bytes": 42483,
+      "sha256": "254ca663d9ce1b80a88dea36c07e3e86803fd62d6bb9ffdbcde710f9d851e60d"
+    },
+    {
+      "path": "snapshot/go-models/necker-go-numerics-experiment/private-link.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-go-numerics-experiment/private-link.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "snapshot/go-models/necker-go-numerics-final/report.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-go-numerics-final/report.json",
+      "bytes": 3259,
+      "sha256": "33fbaa1d24e219aac97eafff13f501c9d39a5bfbae78c741e571fd4165d967fb"
+    },
+    {
+      "path": "snapshot/go-models/necker-go-numerics-final/zero-noise/comparison.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-go-numerics-final/zero-noise/comparison.json",
+      "bytes": 599,
+      "sha256": "cd5840af903b0a707a9256304d6efdb182b2f12efb6603e30c80bcccb0acbb7d"
+    },
+    {
+      "path": "snapshot/go-models/necker-go-numerics-validation1/authored-adaptation/comparison.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-go-numerics-validation1/authored-adaptation/comparison.json",
+      "bytes": 399,
+      "sha256": "8e1cd9cd1459dfdb61d729da3a50a91c1926d70fc1f9d3378cf59b5c7394aaec"
+    },
+    {
+      "path": "snapshot/go-models/necker-go-numerics-validation1/authored-high-noise/comparison.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-go-numerics-validation1/authored-high-noise/comparison.json",
+      "bytes": 399,
+      "sha256": "8e1cd9cd1459dfdb61d729da3a50a91c1926d70fc1f9d3378cf59b5c7394aaec"
+    },
+    {
+      "path": "snapshot/go-models/necker-go-numerics-validation1/authored-low-noise/comparison.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-go-numerics-validation1/authored-low-noise/comparison.json",
+      "bytes": 399,
+      "sha256": "8e1cd9cd1459dfdb61d729da3a50a91c1926d70fc1f9d3378cf59b5c7394aaec"
+    },
+    {
+      "path": "snapshot/go-models/necker-go-numerics-validation1/report.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-go-numerics-validation1/report.json",
+      "bytes": 5494,
+      "sha256": "0a7223ee716ccc05614241322869233c644683bafc6e2532939f44d64cb452b0"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/COGENTCORE-LICENSE",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/COGENTCORE-LICENSE",
+      "bytes": 1498,
+      "sha256": "c6297bf0da1f70caea4ef25247a6d11650cb1c87b0b0a28a53a6bc725fe451d1"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/build-private.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/build-private.log",
+      "bytes": 81,
+      "sha256": "72bd494e5ef8746cd461f1da90d5a61ecefdc2acb1572ee7ddd1c76bf8bd851c"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/build-private.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/build-private.py",
+      "bytes": 2702,
+      "sha256": "ff1c98acc3fe30d3561b0e35dca50f3dbdbb7fcca2ee497aa961c1540301bee5"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/clang-default-floating-point.txt",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/clang-default-floating-point.txt",
+      "bytes": 1696,
+      "sha256": "e08e42394ab0caf3171b239cb53f6d921c03aa52fd29b75b757649f156a17757"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/include/LeabraUnitSpec_mbrs",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/include/LeabraUnitSpec_mbrs",
+      "bytes": 64519,
+      "sha256": "23ca3cdaa5012e4813e2a622c8fb9d1a35228649e3da79720b719f804dbe0d02"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/include/go_fast_exp.h",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/include/go_fast_exp.h",
+      "bytes": 710,
+      "sha256": "95420c7548bae0e02a9b98a6048a93a68d352551f9126feed6b07d173da9f4d9"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/integer-range-proof.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/integer-range-proof.json",
+      "bytes": 241,
+      "sha256": "d877a256a0e5e56f1238d73dcd229627341afa8eb8d42be72d0ea353ed117731"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/kernel-report.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/kernel-report.json",
+      "bytes": 1266,
+      "sha256": "cbc6f7dcfd71d0cbd689b9da6b15cccb0eee6e939be6f2798ca44f2c0d277706"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/oracle-compile-command.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/oracle-compile-command.json",
+      "bytes": 2858,
+      "sha256": "f12b8f115cc1c6b9202aad4866e7bfbf6c82d3c4bb08996f4d25a67a512d4f61"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/oracle-compile.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/oracle-compile.log",
+      "bytes": 215,
+      "sha256": "9a0781c8d9b4ead4974ac4bbd1d00ab42cef6700be88c4a1756ee0a50db8dae0"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/oracle-compile2.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/oracle-compile2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/oracle-result.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/oracle-result.log",
+      "bytes": 28,
+      "sha256": "3c5fbd9a0f2bb2511e1408fb1f792b01f806b10306f2fbe5ffb1c95d67d3865a"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/oracle.cpp",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/oracle.cpp",
+      "bytes": 818,
+      "sha256": "dd34a25c1129c3d4091964a7ba25f8652b90dfed259f21f5b7e9bffa53d938f4"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/oracle.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/oracle.log",
+      "bytes": 233,
+      "sha256": "d3eb626f5097cf9203c79bc77d53aabb446ba3e40ea1614616b047b257715eea"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/original-header.sha256",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/original-header.sha256",
+      "bytes": 65,
+      "sha256": "894852fbc5c73e3c7979326c8f774a35cc3f9530a4a8fba70a1a8d5d255adee9"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/prepare.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/prepare.py",
+      "bytes": 1489,
+      "sha256": "872c244d8ab6216f393988a63a1381de2a7305ee37a735ed96a0531792a0e00d"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/private-build.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/private-build.json",
+      "bytes": 735,
+      "sha256": "4b4d2c9d83a2c3fd1b60790aaf2272bc1b3fb7d76bd991bc538e84230a370e78"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/private-compile-command.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/private-compile-command.json",
+      "bytes": 2717,
+      "sha256": "60e9d03d1b5d8c7dcad90ad989f6df10fb7b99c3e3e088f4bfb1e57b6c5be0e9"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/private-compile.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/private-compile.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/private-link-command.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/private-link-command.json",
+      "bytes": 42468,
+      "sha256": "14852546122501817c37f48c153f311c80bed4b38669416b0e53922283800b6f"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-experiment/private-link.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-experiment/private-link.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-ge-validation1/authored-high-noise/comparison.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-ge-validation1/authored-high-noise/comparison.json",
+      "bytes": 931,
+      "sha256": "cf8ac5ea3c6458afd8f81ccb992ba70bc878af9ad98166d8f504d2b4e0c5eb3e"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-ge-validation1/earliest-mismatch.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-ge-validation1/earliest-mismatch.json",
+      "bytes": 509,
+      "sha256": "53082aa0bcfab872ea3ec7307dea2e731fec81327fa67e9671aa55d757a5a1c3"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-ge-validation1/report.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-ge-validation1/report.json",
+      "bytes": 3296,
+      "sha256": "f7108e69a9d28fa7b8e65e8b333749ecd451d86511a5351be2302908f4657b08"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-validation2/authored-adaptation/comparison.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-validation2/authored-adaptation/comparison.json",
+      "bytes": 1336,
+      "sha256": "444795652c5ae5d75b3708bbda6fc513151e8636ce58244b98acf5b9264497b5"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-validation2/authored-default/comparison.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-validation2/authored-default/comparison.json",
+      "bytes": 399,
+      "sha256": "8e1cd9cd1459dfdb61d729da3a50a91c1926d70fc1f9d3378cf59b5c7394aaec"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-validation2/earliest-mismatch.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-validation2/earliest-mismatch.json",
+      "bytes": 854,
+      "sha256": "f059a2f4b243aeb7ceed61871d6a5c508f88c7f993e713cf2b806609531a0d26"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-validation2/report.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-validation2/report.json",
+      "bytes": 5568,
+      "sha256": "e40ff746d14b6c0647c0f634ad2562ea9246be17e321739e62fdae8fa9bc94c8"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-validation3/authored-adaptation/comparison.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-validation3/authored-adaptation/comparison.json",
+      "bytes": 1336,
+      "sha256": "cece494a7eccd6865d3bae5c6c939d60c6e1df2dd1d1feda841d94793abc0bbb"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-validation3/earliest-mismatch.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-validation3/earliest-mismatch.json",
+      "bytes": 854,
+      "sha256": "f059a2f4b243aeb7ceed61871d6a5c508f88c7f993e713cf2b806609531a0d26"
+    },
+    {
+      "path": "snapshot/go-models/necker-kernel-validation3/report.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-kernel-validation3/report.json",
+      "bytes": 3808,
+      "sha256": "09a57c5e55439473e1bc8c3391fe1048f7018ea2a290018f73c29cb44fd636da"
+    },
+    {
+      "path": "snapshot/go-models/necker-native-candidate6/GO-LICENSE",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-native-candidate6/GO-LICENSE",
+      "bytes": 1544,
+      "sha256": "0c38cff9044c821607ce7142a1367421a48dc6c258f66901c43a9d05d1caf0b2"
+    },
+    {
+      "path": "snapshot/go-models/necker-native-candidate6/GO-README.md",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-native-candidate6/GO-README.md",
+      "bytes": 5247,
+      "sha256": "e5c3e1bf8f88c6a6ec1051130fc80605049c6ddbadeb53e5230d529a997a172d"
+    },
+    {
+      "path": "snapshot/go-models/necker-native-candidate6/necker_cube.html",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-native-candidate6/necker_cube.html",
+      "bytes": 17670,
+      "sha256": "7f1c57bc9fb6947b0b9e3339c0a559a803291016593b5a75eb885cf2202fc62a"
+    },
+    {
+      "path": "snapshot/go-models/necker-native-candidate6/necker_cube.proj",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-native-candidate6/necker_cube.proj",
+      "bytes": 223054,
+      "sha256": "116b6efd2b6e148ae63ed309daf189c50fe8e8e87a02c12b760cc9ac35634a56"
+    },
+    {
+      "path": "snapshot/go-models/necker-native-candidate6/provenance.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-native-candidate6/provenance.json",
+      "bytes": 1861,
+      "sha256": "72a60aac976bc1512ed90ad408be0219bfaeb8100ac3ab1ad36d66fe249b929e"
+    },
+    {
+      "path": "snapshot/go-models/necker-native-validation5/authored-adaptation/comparison.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-native-validation5/authored-adaptation/comparison.json",
+      "bytes": 1477,
+      "sha256": "c363cb6d9af282c076b6b32922368a406f156e2d193570501a6ec5fc514a3393"
+    },
+    {
+      "path": "snapshot/go-models/necker-native-validation5/authored-default/comparison.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-native-validation5/authored-default/comparison.json",
+      "bytes": 1073,
+      "sha256": "6ad129e968877e6436308108960538feb876a0766e6081ff410b1f635a4b3975"
+    },
+    {
+      "path": "snapshot/go-models/necker-native-validation5/earliest-mismatch.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-native-validation5/earliest-mismatch.json",
+      "bytes": 13317,
+      "sha256": "6bcc6de99a6e72c8fe4c3da941314336c2cb85e041b2aa93a42ac7e3853d2c57"
+    },
+    {
+      "path": "snapshot/go-models/necker-native-validation5/report.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-native-validation5/report.json",
+      "bytes": 12001,
+      "sha256": "08526a948f70316b9998d63700a5c3dd7bc86a63cbcac7b782899ecd8909d9e1"
+    },
+    {
+      "path": "snapshot/go-models/necker-native-validation5/transition-comparison.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-native-validation5/transition-comparison.json",
+      "bytes": 142147,
+      "sha256": "d0822122b747c531dfb880b2c46161e7d90e36d98d255ba3cf31768948e584d8"
+    },
+    {
+      "path": "snapshot/go-models/necker-native-validation5/zero-noise-adaptation/comparison.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-native-validation5/zero-noise-adaptation/comparison.json",
+      "bytes": 1338,
+      "sha256": "bb6d45374597c5cdca0977c8a8360f9e49690c5ade7dbc410b4104a99f4200d2"
+    },
+    {
+      "path": "snapshot/go-models/necker-native-validation5/zero-noise/comparison.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-native-validation5/zero-noise/comparison.json",
+      "bytes": 935,
+      "sha256": "78de7c301d485f38cf6e4554ff80031e5f363aa006c57f7670b9005e82e9efb3"
+    },
+    {
+      "path": "snapshot/go-models/necker-paused-checkpoint.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-paused-checkpoint.json",
+      "bytes": 2504,
+      "sha256": "8614fc47491963baac1eb6d623b6d1792b4b0361ed20767505d8ed26ba54feb2"
+    },
+    {
+      "path": "snapshot/go-models/necker-precision-probe2/exact-repeat.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-precision-probe2/exact-repeat.json",
+      "bytes": 56281,
+      "sha256": "04e6cbb0dfcfe2c5b8bf9e07bd3229b3a75ba0b33d24ed27c14fe7714e28ab84"
+    },
+    {
+      "path": "snapshot/go-models/necker-precision-probe2/one-ulp-all-channels-every-trial.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-precision-probe2/one-ulp-all-channels-every-trial.json",
+      "bytes": 58654,
+      "sha256": "c46369ca3aa4555d8709929dcf67401278726290e2e1617fccdcd7621f2d1ef3"
+    },
+    {
+      "path": "snapshot/go-models/necker-precision-probe2/one-ulp-all-channels-once.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-precision-probe2/one-ulp-all-channels-once.json",
+      "bytes": 58735,
+      "sha256": "10124470bcddb12c7329da8a79eaad0b687711a711a84887545055524429b342"
+    },
+    {
+      "path": "snapshot/go-models/necker-precision-probe2/one-ulp-one-channel-once.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-precision-probe2/one-ulp-one-channel-once.json",
+      "bytes": 56293,
+      "sha256": "b8df30cf85ce4edf5832f840853cbab314090810d492fd0b5d9891583986642b"
+    },
+    {
+      "path": "snapshot/go-models/necker-precision-probe2/summary.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-precision-probe2/summary.json",
+      "bytes": 404,
+      "sha256": "1d7bcdc80b756854f8c2e3a3571ef76e82fe628cd2349030288d0a3c5d0ea724"
+    },
+    {
+      "path": "snapshot/go-models/necker-production-patch/necker-go-numerics.patch",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-production-patch/necker-go-numerics.patch",
+      "bytes": 7256,
+      "sha256": "05e14d214feb119e401e4b80666bd95996ad6802d4fadf44c78ca35763e649dc"
+    },
+    {
+      "path": "snapshot/go-models/necker-production-patch/src/emergent/leabra/CMakeFiles.txt",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-production-patch/src/emergent/leabra/CMakeFiles.txt",
+      "bytes": 6206,
+      "sha256": "9ccaeea3dc69f793fc389700ddeece64663412d05304b7dc3f0d0602b6d7b6d8"
+    },
+    {
+      "path": "snapshot/go-models/necker-production-patch/src/emergent/leabra/LeabraGoMath.LICENSE",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-production-patch/src/emergent/leabra/LeabraGoMath.LICENSE",
+      "bytes": 1498,
+      "sha256": "c6297bf0da1f70caea4ef25247a6d11650cb1c87b0b0a28a53a6bc725fe451d1"
+    },
+    {
+      "path": "snapshot/go-models/necker-production-patch/src/emergent/leabra/LeabraGoMath.h",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-production-patch/src/emergent/leabra/LeabraGoMath.h",
+      "bytes": 978,
+      "sha256": "f6c1ce4aff923ef3bd246ba53ddbbb7f2222cef0bad4db5ecaabf3b36f52984f"
+    },
+    {
+      "path": "snapshot/go-models/necker-production-patch/src/emergent/leabra/LeabraUnitSpec_core.cpp",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-production-patch/src/emergent/leabra/LeabraUnitSpec_core.cpp",
+      "bytes": 28517,
+      "sha256": "5b211b1b2eb836f99418b22e817743182f129900b8d5ae5390eb642e6dac8216"
+    },
+    {
+      "path": "snapshot/go-models/necker-production-patch/src/emergent/leabra/LeabraUnitSpec_core.h",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-production-patch/src/emergent/leabra/LeabraUnitSpec_core.h",
+      "bytes": 47562,
+      "sha256": "78c08e3123297b4e84c94a8515769d26e9c4330919b577f0596986b74c3bce39"
+    },
+    {
+      "path": "snapshot/go-models/necker-production-patch/src/emergent/leabra/LeabraUnitSpec_mbrs.h",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-production-patch/src/emergent/leabra/LeabraUnitSpec_mbrs.h",
+      "bytes": 65229,
+      "sha256": "8c39fa25f0e831740dc699104bd464d8f1e866feee6247b0911f660319497312"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/LICENSE",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/LICENSE",
+      "bytes": 1544,
+      "sha256": "0c38cff9044c821607ce7142a1367421a48dc6c258f66901c43a9d05d1caf0b2"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/README.md",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/README.md",
+      "bytes": 5247,
+      "sha256": "e5c3e1bf8f88c6a6ec1051130fc80605049c6ddbadeb53e5230d529a997a172d"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/compare_transitions.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/compare_transitions.py",
+      "bytes": 2010,
+      "sha256": "0274c9bfe6e0c948364f421d61cfc9bbc22644ceb622dd6d8a541c5730fcced6"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/cpp-candidate1.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/cpp-candidate1.log",
+      "bytes": 90,
+      "sha256": "322b3ffc8dd8b7cf83d0b4922b060aa29afab8b2254d400c0b5c6ca327277530"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/cpp-noise-replay1.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/cpp-noise-replay1.log",
+      "bytes": 1240,
+      "sha256": "5cc844ddff56004d6b6184f9783ffe75319dfd013fb5c74010fb2335962d61e3"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/cpp-noise-replay2.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/cpp-noise-replay2.log",
+      "bytes": 47,
+      "sha256": "70a9f940a6b4b91e1ab9eddab9dbbee96cb51264a725978fc13ef29bd26ff55d"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/cpp-trace.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/cpp-trace.log",
+      "bytes": 90,
+      "sha256": "322b3ffc8dd8b7cf83d0b4922b060aa29afab8b2254d400c0b5c6ca327277530"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/cpp_noise_replay.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/cpp_noise_replay.py",
+      "bytes": 2250,
+      "sha256": "ada0a3751d593f33a5c054d6c3413f03ff4d92c7b62609a87cc039e8afced641"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/cpp_noise_replay2.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/cpp_noise_replay2.py",
+      "bytes": 2196,
+      "sha256": "867681858d01cace2fe52d6a641e148765cb57a1e107d28fbceaceec1b5deb02"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/cpp_trace.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/cpp_trace.py",
+      "bytes": 1125,
+      "sha256": "1103c836155ea8804a829ae1f311fe36b63f74ddf9c66cde7e8ca5737fc45a80"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/cpp_trace_candidate1.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/cpp_trace_candidate1.py",
+      "bytes": 1245,
+      "sha256": "3deddaffc453b7ea1171c6b1d9df416d8628cbd9f3673d2d7b1d6074199257eb"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/earliest-mismatch.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/earliest-mismatch.log",
+      "bytes": 1191,
+      "sha256": "376423105abc11b42a5cf9ded78924534fb9abe89f415fa440629baf147c7ce0"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/earliest_mismatch.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/earliest_mismatch.py",
+      "bytes": 1510,
+      "sha256": "65825527d519d4176fe4a5b4836f0ba3a4da3754ad140fbb6961b1f357ce32d2"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/fig_necker_cube.png",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/fig_necker_cube.png",
+      "bytes": 8275,
+      "sha256": "e60c589195cb350a748c602b9df8b4d5aa9d35bcf40fcfce10a880d1196be9a6"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/go.mod",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/go.mod",
+      "bytes": 2048,
+      "sha256": "cab657c7ef85c53b579bb1bb3c178c5747af6ed36c8907c11d313ef930d11e8a"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/go.sum",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/go.sum",
+      "bytes": 12987,
+      "sha256": "ea8bef5d93b333f916845cdf4371aabb08a7904e0689202fc890564c1b75f560"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/kernel-first-mismatch.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/kernel-first-mismatch.log",
+      "bytes": 1818,
+      "sha256": "9fea30a6978bf0d1ba2333dbaf23ed43e3d8d7bc9b36aa44ef9cfcfc2d298ea4"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/kernel_first_mismatch.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/kernel_first_mismatch.py",
+      "bytes": 1098,
+      "sha256": "c2109456a6d82b1e91c801200b13d9060664f69d50a36f3d883dde6800e2938e"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/kernel_oracle_test.go",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/kernel_oracle_test.go",
+      "bytes": 1033,
+      "sha256": "d1801639f704d9d1092e2d168e22f6f589ecf17127b9555f0ab4968d0468c7d1"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/make-candidate1.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/make-candidate1.log",
+      "bytes": 86,
+      "sha256": "253da878cd6bb834c3258826499af35eec668f8d4071bd52617b0c01510a5a4b"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/make-candidate2.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/make-candidate2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/make-candidate3.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/make-candidate3.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/make-candidate4.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/make-candidate4.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/make-candidate5.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/make-candidate5.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/make-candidate6.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/make-candidate6.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/make_native_candidate.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/make_native_candidate.py",
+      "bytes": 6441,
+      "sha256": "db4ed71c33cd6b8780e28a891c8bb5a33d9df90039e8d5ea3fb5b4147bc91af6"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/make_native_candidate2.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/make_native_candidate2.py",
+      "bytes": 1753,
+      "sha256": "5f05cf98ff7da3a6d7f27678738c0367d9386d67a3316edec56c930b78d487cc"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/make_native_candidate3.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/make_native_candidate3.py",
+      "bytes": 1803,
+      "sha256": "f76fa7fa2a7bccef690aa30b67a7473694f00ea040b6816006be76b29b442667"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/make_native_candidate4.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/make_native_candidate4.py",
+      "bytes": 1817,
+      "sha256": "97b941e5fff7bd5c819fdcc5ec6c93eee359850f5b3fe344d7f025c6e67239ec"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/make_native_candidate5.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/make_native_candidate5.py",
+      "bytes": 1810,
+      "sha256": "f5a09aeeeba5fa14a04ae50aada2aa3a74b277e9e8f809d1eaf0cf68168c2c5a"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/make_native_candidate6.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/make_native_candidate6.py",
+      "bytes": 1183,
+      "sha256": "942395b7d3d9ebc34143ddd5249b9300598e515570455ffd55eff707fda99497"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/mapping.md",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/mapping.md",
+      "bytes": 4901,
+      "sha256": "97b84c4575d567c10fe210eb9e79fe23af368958450a150a3134ff74cf0f886b"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/native_gui.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/native_gui.py",
+      "bytes": 6382,
+      "sha256": "85fa7b51cc508b42974ddc34a7e0c6410ec188475427946463d9812023a20f54"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/necker_cube.go",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/necker_cube.go",
+      "bytes": 12647,
+      "sha256": "cbb88def1a8f1b7a796de6742fe8fd942400effb348f0f17148b14ee225f5289"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/necker_cube.wts",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/necker_cube.wts",
+      "bytes": 3120,
+      "sha256": "106fb8cdffb20a05446f99ec72d4f7b9fe33fc0463a14d735ace25b39d33c786"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/precision-probe1.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/precision-probe1.log",
+      "bytes": 216,
+      "sha256": "b7a4196935ab82692e708047629d71638feb031c22dffde11d2ec047b22218a4"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/precision-probe2.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/precision-probe2.log",
+      "bytes": 1015,
+      "sha256": "8cd9c8c599ec125722496d7bec31b0d39b15c9c00a7e5028b16f5073d5494e6c"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/precision_test.go",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/precision_test.go",
+      "bytes": 4163,
+      "sha256": "b2ec6cea653b127220a9d615217a687750a1f66d033b9bad6d82f088ba83d87b"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/probe-state.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/probe-state.log",
+      "bytes": 415,
+      "sha256": "99d12538fec4ee34ab7567b6c097eec7910df6a11a72604ec55ec7edf2220640"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/probe_state.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/probe_state.py",
+      "bytes": 718,
+      "sha256": "14d5b299b8189c75804a0d4b1c6f7f75b351ebfdfdf9ac3aab7429439a65c406"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/reference-inputs.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/reference-inputs.json",
+      "bytes": 1108,
+      "sha256": "6f17017d7592b10431324de1635460752675f707ca6d46da630b636d4e05f64b"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/reference_test.go",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/reference_test.go",
+      "bytes": 3539,
+      "sha256": "ac923d8772978176ae35be529d1b62803e9414c053121661faef9b34351b1e32"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/run-reference.sh",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/run-reference.sh",
+      "bytes": 749,
+      "sha256": "597b510f79ba3674dd136c02a8b563dcb55f95f593dad23eef4d6cc0ec36d9e7"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/run1.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/run1.log",
+      "bytes": 470,
+      "sha256": "0eba28d9ade70ec13fcd89be9503030412944f757551737550b463cdd571341e"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/run2.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/run2.log",
+      "bytes": 949,
+      "sha256": "49ad88fffaf258280d7c99118ae1d439afd05a1285b99f37e112f0be531e3177"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/run3-all.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/run3-all.log",
+      "bytes": 957,
+      "sha256": "9ac3c827e19dc8a448ed00977446d327d4de8101a4435a6a37f003792d1f79eb"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/run4-noise-exercises.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/run4-noise-exercises.log",
+      "bytes": 2763,
+      "sha256": "0a88081f2c603cb37d495d9d36671c6e93f5b86ce1b86aa0970875b8ed299573"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/run5-noise-exercises.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/run5-noise-exercises.log",
+      "bytes": 551,
+      "sha256": "e29ab625e2fa0ef0d0b30605b6a71f2e0c5cac2f74f5156185423f9a4caa1a54"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/run6-adaptation-control.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/run6-adaptation-control.log",
+      "bytes": 361,
+      "sha256": "1ad3c3dab1448c988aca93da14af3e9524546ab5b6074fba579c9c8a807af57e"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/transition-comparison.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/transition-comparison.log",
+      "bytes": 101,
+      "sha256": "a6e2c2fd1518a796967c8342d33ad45d38af92c81d43e75a355cc904cc9e6e40"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/typegen.go",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/typegen.go",
+      "bytes": 1546,
+      "sha256": "b4cc4ba14393347a125f31455f2c890262ef6f8aae560c70f2e7648cb7c122c2"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate-candidate1.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate-candidate1.log",
+      "bytes": 787,
+      "sha256": "7f058db7ad78d6d799a3e901aed03df99ef51ffa00c99d255ac7820d76d266fe"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate-candidate2.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate-candidate2.log",
+      "bytes": 77,
+      "sha256": "f669b85e2d16cc3a95267bde39d91ac5a0193ddeb0f1353261d92f87356a7d59"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate-candidate3.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate-candidate3.log",
+      "bytes": 77,
+      "sha256": "e082a9ebda82a4beb115c6d023b6377e0cf5543bd92d95365a6c5998050c7a0d"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate-candidate4.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate-candidate4.log",
+      "bytes": 77,
+      "sha256": "7151fad4c3eb5f647084fd324694bffe0f7a15092750abc5e68c31647bce15ad"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate-candidate5.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate-candidate5.log",
+      "bytes": 517,
+      "sha256": "698f22e616bfa6e944289ceb0cb739424cd9d7eeff2ce47a64773791a9a8d081"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate-go-numerics-final.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate-go-numerics-final.log",
+      "bytes": 1988,
+      "sha256": "9c2a8ebcc5b29f00d0e605cce3932cb7863938380556638d04409fd483c313b1"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate-go-numerics1.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate-go-numerics1.log",
+      "bytes": 237,
+      "sha256": "6cf73642de173c8f7c2a80c9608c2ee5eecbcf94e8ac9e29421827b0a9132203"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate-kernel-ge1.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate-kernel-ge1.log",
+      "bytes": 80,
+      "sha256": "6d407c0a684f221b8815eb3c027c240a39da43aff5348ac0c007a2dccc0bc897"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate-kernel1.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate-kernel1.log",
+      "bytes": 77,
+      "sha256": "78283fc81063cea28f28ae6c354e6591d22f1a5841c1fb1da4c545a1b3644475"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate-kernel2.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate-kernel2.log",
+      "bytes": 126,
+      "sha256": "b1314148db20ee7083aa0add1931c262fd81c569d9e5e94cf6493201613aa6e2"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate-kernel3.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate-kernel3.log",
+      "bytes": 77,
+      "sha256": "394b4a543f62f0fae5377362e7eb0482440a986ea1d11134d9ac70bead93fe21"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate-noise-exercises.log",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate-noise-exercises.log",
+      "bytes": 93,
+      "sha256": "c6d36afc94431a223dfdcfbafca181ab39a57fab947e3244604bca1665b2128a"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate_go_numerics1.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate_go_numerics1.py",
+      "bytes": 5278,
+      "sha256": "4b555ea4ed08f55cd954ff114a150be5142cd8aa0d8c48c32fcbdc8bd67dafe2"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate_go_numerics_final.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate_go_numerics_final.py",
+      "bytes": 5623,
+      "sha256": "b16ebeada8356d91590832654b012a26b6dcd3858097fac885d88205b0482e76"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate_kernel1.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate_kernel1.py",
+      "bytes": 5224,
+      "sha256": "a33f2c3f9f2fe888bc2cf46e31d6a7e69146d6c2100631a4357a713cc9790781"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate_kernel2.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate_kernel2.py",
+      "bytes": 5234,
+      "sha256": "c88a2cfdeb8a1899c7314041f0b0da86b633b56f90fe968ff57d27cf1f0e8616"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate_kernel3.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate_kernel3.py",
+      "bytes": 5200,
+      "sha256": "91d46f2ed173771710962a30989ded6f27137a7f40cc0d74ba4663e8abf9d6b5"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate_kernel_ge1.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate_kernel_ge1.py",
+      "bytes": 5239,
+      "sha256": "01ec2a6b39ec03e857896dc12d2d8635a408517bcb291e012da03b7c5c65d047"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate_native_candidate.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate_native_candidate.py",
+      "bytes": 4933,
+      "sha256": "a3495467fd6b0e575b5d47e386d713594b5c170b8a14420a3520e545b7f3030a"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate_native_candidate2.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate_native_candidate2.py",
+      "bytes": 5325,
+      "sha256": "4898b4d73a5b9f869dbf545681091788846f84a98c3de28e36dfdd4a461cf347"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate_native_candidate3.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate_native_candidate3.py",
+      "bytes": 5337,
+      "sha256": "7e62ad13719fa45f28c16e78fa712a148335e3e6207fcb3f34874234071caee2"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate_native_candidate4.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate_native_candidate4.py",
+      "bytes": 5337,
+      "sha256": "7ccf5d5e3f44d2012cb65a105e7da1d1347972005216bf0bc4d3ae4f08418fe1"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate_native_candidate5.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate_native_candidate5.py",
+      "bytes": 5337,
+      "sha256": "d3b156a0437a2a851a44c2d5ffaf01c1b8c4e3ca18086199749883e81d43cceb"
+    },
+    {
+      "path": "snapshot/go-models/necker-reference/validate_noise_exercises.py",
+      "original_path": "/home/b/cemer/artifacts/go-models/necker-reference/validate_noise_exercises.py",
+      "bytes": 5292,
+      "sha256": "274fa40847c0486071bdfbb3b21197e364ae779ee86f021592f5783859ea9bfb"
+    },
+    {
+      "path": "snapshot/go-models/x11-packages/manifest.json",
+      "original_path": "/home/b/cemer/artifacts/go-models/x11-packages/manifest.json",
+      "bytes": 1055,
+      "sha256": "71d2effe03dd6a4b08cd07c4fcdcc9ec54722a7275b0007c63cbb4ce2152b135"
+    }
+  ],
+  "omitted_generated_files": [
+    {
+      "path": "go-models/necker-reference/traces-all/authored-adaptation.json",
+      "bytes": 295316521,
+      "sha256": "ed534b4341598bc6dd53c44706d65c6f50e863eb70b8a86d4004462d5529a636",
+      "reason": "Bulk generated reference trace; regenerate with preserved pinned Go harness."
+    },
+    {
+      "path": "go-models/necker-reference/traces-all/authored-default.json",
+      "bytes": 24608447,
+      "sha256": "c7a26e4e1ae5a6516643f1124c0d0d366fd6c272d1a0225c055a35ff88228c02",
+      "reason": "Bulk generated reference trace; regenerate with preserved pinned Go harness."
+    },
+    {
+      "path": "go-models/necker-reference/traces-all/authored-high-noise.json",
+      "bytes": 24454905,
+      "sha256": "dfef0b42cf5266ca4bb849712a427978735a7d1d547ad21e603e5b543db42611",
+      "reason": "Bulk generated reference trace; regenerate with preserved pinned Go harness."
+    },
+    {
+      "path": "go-models/necker-reference/traces-all/authored-long-no-adaptation.json",
+      "bytes": 243115736,
+      "sha256": "c7d49b46e5f954ca7737045bb54616a128287fc2954e02bd8e76d6086844abde",
+      "reason": "Bulk generated reference trace; regenerate with preserved pinned Go harness."
+    },
+    {
+      "path": "go-models/necker-reference/traces-all/authored-low-noise.json",
+      "bytes": 24770599,
+      "sha256": "d6e9a01cf0b7f642c6cf306b56c6e122e42f509952d23836d969a3a66c61b2e4",
+      "reason": "Bulk generated reference trace; regenerate with preserved pinned Go harness."
+    },
+    {
+      "path": "go-models/necker-reference/traces-all/zero-noise-adaptation.json",
+      "bytes": 278758277,
+      "sha256": "ec452a14768f8d7c7cb78a0befbea15aa2e2423fcc8fb4d79c72a1f70a473a85",
+      "reason": "Bulk generated reference trace; regenerate with preserved pinned Go harness."
+    },
+    {
+      "path": "go-models/necker-reference/traces-all/zero-noise.json",
+      "bytes": 22769866,
+      "sha256": "2c55093d378ffb8340c025e68550fbfc13f0628010cc95f7ad008d6f9cc2811c",
+      "reason": "Bulk generated reference trace; regenerate with preserved pinned Go harness."
+    },
+    {
+      "path": "go-models/necker-kernel-experiment/oracle.tsv",
+      "bytes": 5987137,
+      "sha256": "c268cd452b0f9d9e7b5a49f4d08072b3b04d787de9d74eee38dda13d4360555c",
+      "reason": "Generated oracle samples; regenerate with kernel_oracle_test.go."
+    }
+  ],
+  "omitted_other_categories": [
+    "binaries and libraries",
+    "object files and build output",
+    "native cycle JSON dumps and replay TSVs",
+    "runtime user directories",
+    "Git repositories and toolchains",
+    "screenshots from historical C++ Necker acceptance"
+  ]
+}
