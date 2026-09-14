@@ -23,10 +23,10 @@ Sources: [original PDP handbook introduction](https://web.stanford.edu/~jlmcc/pa
 
 ## Run on Linux
 
-Download and launch the [Linux x86_64 preview](https://github.com/mingusb/cemer-1/releases/tag/v8.6.1-clang24-qt6.12-preview.1):
+Download and launch the [Linux x86_64 preview](https://github.com/mingusb/emergent/releases/tag/v8.6.1-clang24-qt6.12-preview.1):
 
 ```sh
-curl -fL https://github.com/mingusb/cemer-1/releases/download/v8.6.1-clang24-qt6.12-preview.1/emergent-linux-x86_64.tar.xz -o emergent-linux-x86_64.tar.xz
+curl -fL https://github.com/mingusb/emergent/releases/download/v8.6.1-clang24-qt6.12-preview.1/emergent-linux-x86_64.tar.xz -o emergent-linux-x86_64.tar.xz
 tar -xJf emergent-linux-x86_64.tar.xz
 ./emergent-linux-x86_64/run-inductor-head
 ```
