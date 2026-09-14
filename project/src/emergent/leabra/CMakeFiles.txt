@@ -22,6 +22,8 @@ set(leabra_HEADS_MAKETA
 
 # multiple inheritence -- in correspondence with deps below
 set(leabra_HEADS_MAKETA_MI
+  PBWM2025UnitSpec.h
+  PBWM2025UnitSpec_cpp.h
   LeabraConState_cpp.h
   LeabraUnitState_cpp.h
   LeabraUnGpState_cpp.h
@@ -56,6 +58,8 @@ set(leabra_HEADS_MAKETA_MI
 # note: there must be exactly same number of dependencies for each item
 # you can just add redundant ones to make it all work out
 set(leabra_HEADS_MAKETA_MI_DEPS
+  "PBWM2025UnitSpec_core.h;LeabraUnitSpec_core.h;LeabraNetworkState_core.h"
+  "PBWM2025UnitSpec_core.h;LeabraUnitSpec_core.h;LeabraNetworkState_core.h"
   "LeabraConState_core.h;LeabraNetworkState_core.h;LeabraNetworkState_core.h"
   "LeabraUnitState_core.h;LeabraNetworkState_core.h;LeabraNetworkState_core.h"
   "LeabraUnGpState_core.h;LeabraNetworkState_core.h;LeabraNetworkState_core.h"
@@ -90,6 +94,7 @@ set(leabra_HEADS_MAKETA_MI_DEPS
 )
 
 set(leabra_HEADS_NOMAKETA
+  PBWM2025UnitSpec_core.h
   LeabraConState_core.h
   LeabraUnitState_core.h
 
@@ -197,6 +202,7 @@ set(leabra_HEADS
 
 # all source files to compile: NOTE: do NOT include TA_ or .moc files -- auto generated
 set(leabra_SRCS
+  PBWM2025UnitSpec.cpp
   LeabraAvgMax.cpp
   LeabraCon.cpp
   LeabraConState_cpp.cpp

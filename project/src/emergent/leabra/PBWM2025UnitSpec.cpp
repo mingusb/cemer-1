@@ -1,0 +1,2 @@
+#include "PBWM2025UnitSpec.h"
+TA_BASEFUNS_CTORS_DEFN(PBWM2025UnitSpec);
