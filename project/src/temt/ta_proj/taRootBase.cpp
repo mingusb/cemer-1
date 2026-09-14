@@ -1273,6 +1273,11 @@ namespace { // anon
       String tmp_dir = bin_dir.at(0, bin_dir.length() - 4);
       app_dir = tmp_dir + "/share/" + taMisc::default_app_install_folder_name;
       if (IsAppDir(app_dir, &app_plugin_dir)) {
+        if (QDir(app_dir).exists(".source-tree")) {
+          taMisc::Info("Note: running development executable: not loading plugins.");
+          taMisc::in_dev_exe = true;
+          taMisc::use_plugins = false;
+        }
         return true;
       }
 

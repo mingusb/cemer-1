@@ -79,6 +79,10 @@ tools/run-emergent
 ```
 
 The linker selection requires CMake 3.29 or newer.
+On Unix, CMake also links source resources into `build/share/Emergent`, so
+`build/bin/emergent` can run before installation. Development executables keep
+automatic plugin loading disabled. Building source plugins still requires the
+installed development headers and matching Qt SDK.
 Use a new build directory when changing compilers. For later configuration
 changes in the same directory, omit the compiler arguments: changing between
 aliases for the same compiler can cause CMake to reset other cache settings.
