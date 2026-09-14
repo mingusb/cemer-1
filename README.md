@@ -4,10 +4,10 @@ This fork modernizes the original C++ Emergent neural network simulator for
 Clang 24 nightly, Qt 6.12 Beta 4, and C++17. It retains the CSS (C Super Script)
 interpreter, reflected object system, and Coin/Quarter 3D interface.
 
-Development is targeting **Emergent 9.0**. The [major-release gates](docs/RELEASE_PLAN.md)
-require the complete model corpus to work; the download below is an interim preview.
+Development is targeting **Emergent 9.0**. The [major-release gates](project/docs/RELEASE_PLAN.md)
+require the latest selected implementation of each model to work; the download below is an interim preview.
 
-See [modern stack setup and verification](tools/toolchain/README.md) for the
+See [modern stack setup and verification](project/tools/toolchain/README.md) for the
 pinned SDK, build instructions, and test commands. C++ builds require
 `-Wall -Wextra -Werror -Woverloaded-virtual`, with no warning suppression flags.
 
@@ -21,9 +21,9 @@ tar -xJf emergent-linux-x86_64.tar.xz
 ./emergent-linux-x86_64/run-inductor-head
 ```
 
-This opens the interactive [Inductor Head tutorial](demo/InductorHead/README.md), with the original native 3D viewer, controls, and CSS console. Use `./emergent-linux-x86_64/emergent` to open the general application instead. The runtime includes Qt, WebEngine, and its required libraries; no compiler or separate Qt installation is needed. It requires Ubuntu 26.04 x86_64 or a compatible newer glibc environment, with working host graphics drivers, display/audio services, fonts and a CA trust store.
+This opens the interactive [Inductor Head tutorial](project/demo/InductorHead/README.md), with the original native 3D viewer, controls, and CSS console. Use `./emergent-linux-x86_64/emergent` to open the general application instead. The runtime includes Qt, WebEngine, and its required libraries; no compiler or separate Qt installation is needed. It requires Ubuntu 26.04 x86_64 or a compatible newer glibc environment, with working host graphics drivers, display/audio services, fonts and a CA trust store.
 
-![InductorHead running with the modern Qt stack](demo/InductorHead/preview.png)
+![InductorHead running with the modern Qt stack](project/demo/InductorHead/preview.png)
 
 On WSL with the NVIDIA/D3D12 runtime present, the launcher selects the NVIDIA GPU for the native 3D viewer and software composition for embedded web pages. It needs no Linux NVIDIA kernel driver installation. `EMERGENT_WSL_GPU=0` disables that automatic selection.
 
@@ -35,12 +35,14 @@ EMERGENT_SOFTWARE_RENDERING=1 ./emergent-linux-x86_64/run-inductor-head
 
 This keeps the native 3D viewer and embedded browser available using CPU rendering. The same option works with the `emergent` launcher.
 
-For development, follow the [source build instructions](tools/toolchain/README.md). The portable runtime and source build are separate downloads.
+For development, enter `project/` and follow the [source build instructions](project/tools/toolchain/README.md). The portable runtime and source build are separate downloads.
 
-The source branch also contains a growing [historical cognitive-model collection](demo/LegacyModels/README.md),
+The source branch also contains a growing [cognitive-model collection](project/demo/LegacyModels/README.md),
 with native tutorial tasks, offline author documentation and behavioral integration
 tests. These additions follow the preview release; each model records its original
-version, license and the results actually verified.
+version, license and the results actually verified. The release targets the latest
+author-maintained version of each distinct model, including Go-era successors;
+older versions serve as references rather than separate porting targets.
 
 The original [emer/cemer](https://github.com/emer/cemer) history, authorship,
 and licenses are preserved. Its upstream team moved development to the
@@ -50,6 +52,8 @@ documentation is on the [upstream wiki](https://github.com/emer/cemer/wiki).
 Historical releases include [8.6.1 sources](https://github.com/emer/cemer/releases/tag/v8.6.1),
 [8.5.2 packages](https://github.com/emer/cemer/releases/tag/v8.5.2), and
 [8.5.1 dependencies](https://github.com/emer/cemer/releases/tag/v8.5.1).
+
+The repository root stays small; see the [project layout](project/docs/REPOSITORY_LAYOUT.md) for source, models, resources and historical material.
 
 # About
 

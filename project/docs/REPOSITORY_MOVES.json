@@ -1,0 +1,279 @@
+{
+  "base_revision": "64e0f3739",
+  "moves": [
+    {
+      "previous": "AUTHORS",
+      "current": "project/docs/AUTHORS"
+    },
+    {
+      "previous": "COPYING",
+      "current": "LICENSE"
+    },
+    {
+      "previous": "COPYING.LIB",
+      "current": "project/docs/licenses/COPYING.LIB"
+    },
+    {
+      "previous": "COPYING.txt",
+      "current": "project/docs/licenses/COPYING.txt"
+    },
+    {
+      "previous": "README.txt",
+      "current": "project/docs/history/README.txt"
+    },
+    {
+      "previous": "test_commit.txt",
+      "current": "project/docs/history/test_commit.txt"
+    },
+    {
+      "previous": "CTestConfig.cmake",
+      "current": "project/docs/history/CTestConfig.cmake"
+    },
+    {
+      "previous": "CMakeModules",
+      "current": "project/cmake/modules"
+    },
+    {
+      "previous": "cmake_config.h.in",
+      "current": "project/cmake/templates/cmake_config.h.in"
+    },
+    {
+      "previous": "cmake_temt_version.h.in",
+      "current": "project/cmake/templates/cmake_temt_version.h.in"
+    },
+    {
+      "previous": "cmake_uninstall.cmake.in",
+      "current": "project/cmake/templates/cmake_uninstall.cmake.in"
+    },
+    {
+      "previous": "Emergent.ico",
+      "current": "project/src/emergent/bin/Emergent.ico"
+    },
+    {
+      "previous": "plugins",
+      "current": "project/src/plugins"
+    },
+    {
+      "previous": "bin",
+      "current": "project/tools/bin"
+    },
+    {
+      "previous": "cluster_run",
+      "current": "project/tools/cluster_run"
+    },
+    {
+      "previous": "bench",
+      "current": "project/test/bench"
+    },
+    {
+      "previous": "test_auto",
+      "current": "project/test/legacy/automation"
+    },
+    {
+      "previous": "qt3d",
+      "current": "project/test/legacy/qt3d"
+    },
+    {
+      "previous": "qt_bugs",
+      "current": "project/test/legacy/qt_bugs"
+    },
+    {
+      "previous": "quarter_examiner_viewer",
+      "current": "project/test/legacy/quarter_examiner_viewer"
+    },
+    {
+      "previous": "Matlab",
+      "current": "project/tools/integrations/Matlab"
+    },
+    {
+      "previous": "ros",
+      "current": "project/tools/integrations/ros"
+    },
+    {
+      "previous": "patch_gen",
+      "current": "project/tools/legacy/patch_gen"
+    },
+    {
+      "previous": "gendoc",
+      "current": "project/tools/legacy/gendoc"
+    },
+    {
+      "previous": "package",
+      "current": "project/tools/legacy/platforms/package"
+    },
+    {
+      "previous": "install_mac_app",
+      "current": "project/tools/legacy/platforms/install_mac_app"
+    },
+    {
+      "previous": "win_build",
+      "current": "project/tools/legacy/platforms/win_build"
+    },
+    {
+      "previous": "emergent_build.app",
+      "current": "project/tools/legacy/platforms/emergent_build.app"
+    },
+    {
+      "previous": "emergent_build_dbg.app",
+      "current": "project/tools/legacy/platforms/emergent_build_dbg.app"
+    },
+    {
+      "previous": "3dobj_lib",
+      "current": "project/resources/3dobj_lib"
+    },
+    {
+      "previous": "css_lib",
+      "current": "project/resources/css_lib"
+    },
+    {
+      "previous": "data",
+      "current": "project/resources/data"
+    },
+    {
+      "previous": "patch_lib",
+      "current": "project/resources/patch_lib"
+    },
+    {
+      "previous": "prog_lib",
+      "current": "project/resources/prog_lib"
+    },
+    {
+      "previous": "proj_templates",
+      "current": "project/resources/proj_templates"
+    },
+    {
+      "previous": "doc",
+      "current": "project/docs/doc"
+    },
+    {
+      "previous": "manual",
+      "current": "project/docs/manual"
+    },
+    {
+      "previous": "wiki",
+      "current": "project/docs/wiki"
+    },
+    {
+      "previous": "changelogs",
+      "current": "project/docs/changelogs"
+    },
+    {
+      "previous": "reference_card",
+      "current": "project/docs/reference_card"
+    },
+    {
+      "previous": "emergent_wiki_skin",
+      "current": "project/docs/emergent_wiki_skin"
+    },
+    {
+      "previous": "Makefile",
+      "current": "project/tools/legacy/build/Makefile"
+    },
+    {
+      "previous": "configure",
+      "current": "project/tools/legacy/build/configure"
+    },
+    {
+      "previous": "reconfigure",
+      "current": "project/tools/legacy/build/reconfigure"
+    },
+    {
+      "previous": "build_all.sh",
+      "current": "project/tools/legacy/build/build_all.sh"
+    },
+    {
+      "previous": "build_all_dbg.sh",
+      "current": "project/tools/legacy/build/build_all_dbg.sh"
+    },
+    {
+      "previous": "rebuild_dream_mpi.sh",
+      "current": "project/tools/legacy/build/rebuild_dream_mpi.sh"
+    },
+    {
+      "previous": "rebuild_dream_opt.sh",
+      "current": "project/tools/legacy/build/rebuild_dream_opt.sh"
+    },
+    {
+      "previous": "rebuild_grey_dbg.sh",
+      "current": "project/tools/legacy/build/rebuild_grey_dbg.sh"
+    },
+    {
+      "previous": "rebuild_grey_opt.sh",
+      "current": "project/tools/legacy/build/rebuild_grey_opt.sh"
+    },
+    {
+      "previous": "rebuild_notify.sh",
+      "current": "project/tools/legacy/build/rebuild_notify.sh"
+    },
+    {
+      "previous": "rebuild_reality.sh",
+      "current": "project/tools/legacy/build/rebuild_reality.sh"
+    },
+    {
+      "previous": "pgo",
+      "current": "project/tools/legacy/build/pgo"
+    },
+    {
+      "previous": "findgrep",
+      "current": "project/tools/legacy/search/findgrep"
+    },
+    {
+      "previous": "grep_all",
+      "current": "project/tools/legacy/search/grep_all"
+    },
+    {
+      "previous": "grep_all_cpp",
+      "current": "project/tools/legacy/search/grep_all_cpp"
+    },
+    {
+      "previous": "grep_all_h",
+      "current": "project/tools/legacy/search/grep_all_h"
+    },
+    {
+      "previous": "svn_changelog_style.xsl",
+      "current": "project/tools/legacy/svn/svn_changelog_style.xsl"
+    },
+    {
+      "previous": "svn_revert_conf",
+      "current": "project/tools/legacy/svn/svn_revert_conf"
+    },
+    {
+      "previous": "svn_to_changelog.sh",
+      "current": "project/tools/legacy/svn/svn_to_changelog.sh"
+    },
+    {
+      "previous": "CMakeLists.txt",
+      "current": "project/CMakeLists.txt"
+    },
+    {
+      "previous": "demo",
+      "current": "project/demo"
+    },
+    {
+      "previous": "docs",
+      "current": "project/docs"
+    },
+    {
+      "previous": "include",
+      "current": "project/include"
+    },
+    {
+      "previous": "src",
+      "current": "project/src"
+    },
+    {
+      "previous": "test",
+      "current": "project/test"
+    },
+    {
+      "previous": "tools",
+      "current": "project/tools"
+    }
+  ],
+  "root_entries": [
+    ".gitignore",
+    "LICENSE",
+    "README.md",
+    "project"
+  ]
+}

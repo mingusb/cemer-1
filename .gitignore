@@ -15,3 +15,14 @@ __pycache__/
 
 /css-diagnostics/
 /regression-css-preflight/
+
+# Local outputs inside the buildable project tree.
+/project/build*/
+/project/install*/
+/project/artifacts/
+/project/taconfig.h
+/project/temt_version.h
+/project/*.log
+/project/CMakeUserPresets.json
+/project/tools/toolchain/Qt/
+/project/tools/toolchain/downloads/*.7z

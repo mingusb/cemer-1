@@ -1,0 +1,53 @@
+{
+  "fixtures": [
+    {
+      "source": "test/legacy/automation/EmergentTestFramework/test-projects/TestBP.proj",
+      "source_sha256": "324c177471f81353bcc4f5b3f6520560cd9b5c6d4d1e3504106672d326659b81",
+      "destination": "test/fixtures/modern/TestBP.proj",
+      "destination_sha256": "1ccab0c3371fdb6be9722fdd5d2620b52467f0faea0c84f446be09f4c2f54a36",
+      "method": "actual emergent load, BpTrain.Init(), SaveCopy, reload; no training or baseline creation",
+      "preserved": {
+        "topology": [
+          "MIGRATION_PROJECT 14 5 3",
+          "MIGRATION_LAYER Input 5 5 1 1 false 0",
+          "MIGRATION_LAYER Hidden 5 5 1 1 false 1",
+          "MIGRATION_LAYER Output 5 5 1 1 false 1"
+        ],
+        "input_data_sha256": "9db8700252b43de820e1ea5cec305913e713e4e1d5111959468058628564733b"
+      },
+      "legacy_status": "STALE_SERIALIZATION",
+      "legacy_diagnostics": [
+        "***ERROR: FindGlobalTypeName: type named: Unit_Group not found!"
+      ],
+      "evidence": "/home/b/cemer/artifacts/fixture-migration-second",
+      "expected_results": "unchanged original test_auto learning/error-count and weight-roundtrip assertions"
+    },
+    {
+      "source": "test/legacy/automation/EmergentTestFramework/test-projects/TestLoadSaveWeight.proj",
+      "source_sha256": "6feb50966ea4bc15df1a56aa9ff0588e5008ff404d3cc75e2a81b2c999740e1f",
+      "destination": "test/fixtures/modern/TestLoadSaveWeight.proj",
+      "destination_sha256": "180f0eebb851742a3451f914f690312db33734943f4f10ca9397aaa76ed0b644",
+      "method": "actual emergent load, MasterTrain.Init(), SaveCopy, reload; no training or baseline creation",
+      "preserved": {
+        "topology": [
+          "MIGRATION_PROJECT 32 4 5",
+          "MIGRATION_LAYER Input 5 5 1 1 false 0",
+          "MIGRATION_LAYER Hidden 5 5 1 1 false 3",
+          "MIGRATION_LAYER Output 5 5 1 1 false 1",
+          "MIGRATION_LAYER ScalarLayer 1 10 1 1 false 0"
+        ],
+        "input_data_sha256": "d8c6a79e7619e3f09b8ad66dfba03d263e6524b81107692525fefb77d67712be"
+      },
+      "legacy_status": "STALE_SERIALIZATION",
+      "legacy_diagnostics": [
+        "***ERROR: FindGlobalTypeName: type named: Unit_Group not found!",
+        "***WARNING: Missing '{' in dump file for inline type: LeabraNoiseSpec",
+        "***WARNING: Enum named: MANUAL_POS not found in enum type: NetFlags",
+        "***WARNING: Enum named: ABS_POS not found in enum type: NetFlags",
+        "***WARNING: Scalar val must have UnitSpec.act_misc.rec_nd = false, to record value in act_eq of first unit.  I changed"
+      ],
+      "evidence": "/home/b/cemer/artifacts/fixture-migration-second",
+      "expected_results": "unchanged original test_auto learning/error-count and weight-roundtrip assertions"
+    }
+  ]
+}
